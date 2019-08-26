@@ -1,0 +1,29 @@
+stages:
+  - build
+
+variables:
+  MAVEN_CLI_OPTS: "--batch-mode"
+  MAVEN_OPTS: "-Xms1g -Xmx2g -Xss2m -XX:TieredStopAtLevel=1 -Dmaven.repo.local=.m2/repository"
+
+cache:
+  paths:
+    - java-remap-sdk-1.2/.m2/repository/
+
+build:
+  before_script:
+    - git clone https://github.com/moysklad/java-remap-sdk-1.2.git
+    - cd java-remap-sdk-1.2
+  script:
+    - if [ -z "BRANCH" ]; then
+        BRANCH='master';
+      fi
+      git checkout $BRANCH;
+      lastTag=$(git describe --abbrev=0 --tags);
+      commitCount=$(git rev-list $lastTag.. --count);
+      if [[ $commitCount = 0 && $BRANCH = 'master' ]] || [[ $BRANCH = v* ]]; then
+        version=${lastTag#v};
+      else
+        version=${lastTag#v}-${BRANCH}-SNAPSHOT;
+      fi
+      mvn versions:set -DnewVersion=$version -DgenerateBackupPoms=false;
+      mvn $MAVEN_CLI_OPTS clean deploy
