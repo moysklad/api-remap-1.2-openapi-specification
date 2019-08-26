@@ -10,6 +10,7 @@ cache:
     - java-remap-sdk-1.2/.m2/repository/
 
 build:
+  stage: build
   before_script:
     - git clone https://github.com/moysklad/java-remap-sdk-1.2.git
     - cd java-remap-sdk-1.2
