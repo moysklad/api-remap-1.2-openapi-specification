@@ -20,13 +20,13 @@ build:
     - if [ -z "BRANCH" ]; then
         BRANCH='master';
       fi
-      git checkout $BRANCH;
-      lastTag=$(git describe --abbrev=0 --tags);
-      commitCount=$(git rev-list $lastTag.. --count);
-      if [[ $commitCount = 0 && $BRANCH = 'master' ]] || [[ $BRANCH = v* ]]; then
+    - git checkout $BRANCH;
+    - lastTag=$(git describe --abbrev=0 --tags);
+    - commitCount=$(git rev-list $lastTag.. --count);
+    - if [[ $commitCount = 0 && $BRANCH = 'master' ]] || [[ $BRANCH = v* ]]; then
         version=${lastTag#v};
       else
         version=${lastTag#v}-${BRANCH}-SNAPSHOT;
       fi
-      mvn versions:set -DnewVersion=$version -DgenerateBackupPoms=false;
-      mvn $MAVEN_CLI_OPTS clean deploy
+    - mvn versions:set -DnewVersion=$version -DgenerateBackupPoms=false;
+    - mvn $MAVEN_CLI_OPTS clean deploy;
