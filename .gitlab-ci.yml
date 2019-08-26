@@ -1,4 +1,4 @@
-image: jamesdbloom/docker-java8-maven
+image: maven:3.6.1-jdk-8
 
 stages:
   - build
@@ -14,6 +14,7 @@ cache:
 build:
   stage: build
   before_script:
+    - apt-get install git
     - git clone https://github.com/moysklad/java-remap-sdk-1.2.git
     - cd java-remap-sdk-1.2
   script:
