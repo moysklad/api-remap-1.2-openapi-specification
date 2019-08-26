@@ -14,14 +14,13 @@ cache:
 build:
   stage: build
   before_script:
-    - apt-get install git
     - git clone https://github.com/moysklad/java-remap-sdk-1.2.git
     - cd java-remap-sdk-1.2
   script:
     - if [ -z "BRANCH" ]; then
         BRANCH='master';
       fi
-    - git checkout $BRANCH;
+    - git checkout -b $BRANCH origin/$BRANCH;
     - lastTag=$(git describe --abbrev=0 --tags);
     - commitCount=$(git rev-list $lastTag.. --count);
     - if [[ $commitCount = 0 && $BRANCH = 'master' ]] || [[ $BRANCH = v* ]]; then
