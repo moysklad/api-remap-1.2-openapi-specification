@@ -6,6 +6,7 @@ stages:
 variables:
   MAVEN_CLI_OPTS: "--batch-mode"
   MAVEN_OPTS: "-Xms1g -Xmx2g -Xss2m -XX:TieredStopAtLevel=1 -Dmaven.repo.local=.m2/repository"
+  TZ: 'Europe/Moscow'
 
 cache:
   paths:
