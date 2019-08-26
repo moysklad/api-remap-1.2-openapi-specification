@@ -1,4 +1,4 @@
-image: docker-registry.moysklad.ru:5000/wildfly10-arquillian:8.0-release
+image: jamesdbloom/docker-java8-maven
 
 stages:
   - build
