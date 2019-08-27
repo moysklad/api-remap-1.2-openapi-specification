@@ -5,14 +5,8 @@ stages:
 
 variables:
   MAVEN_CLI_OPTS: "--batch-mode"
-  MAVEN_OPTS: "-Xms1g -Xmx2g -Xss2m -XX:TieredStopAtLevel=1 -Dmaven.repo.local=.m2/repository"
-  TZ: 'Europe/Moscow'
   ARTIFACTORY_USER: ereztsov
   ARTIFACTORY_PASSWORD: AP8USX6SJ8NDNDPDtRs81QVm3JhLWhN4mWJBpQ
-
-cache:
-  paths:
-    - java-remap-sdk-1.2/.m2/repository/
 
 build:
   stage: build
@@ -20,6 +14,7 @@ build:
     - apk add git
     - git clone https://github.com/moysklad/java-remap-sdk-1.2.git
     - cd java-remap-sdk-1.2
+    - export TZ='Europe/Moscow'
   script:
     - if [ -z "BRANCH" ]; then
         BRANCH='master';
