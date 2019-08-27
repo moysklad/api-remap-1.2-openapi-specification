@@ -1,4 +1,4 @@
-image: maven:3.6.1-jdk-8
+image: docker-registry.moysklad.ru:5000/docker-maven
 
 stages:
   - build
@@ -7,6 +7,8 @@ variables:
   MAVEN_CLI_OPTS: "--batch-mode"
   MAVEN_OPTS: "-Xms1g -Xmx2g -Xss2m -XX:TieredStopAtLevel=1 -Dmaven.repo.local=.m2/repository"
   TZ: 'Europe/Moscow'
+  ARTIFACTORY_USER: ereztsov
+  ARTIFACTORY_PASSWORD: AP8USX6SJ8NDNDPDtRs81QVm3JhLWhN4mWJBpQ
 
 cache:
   paths:
