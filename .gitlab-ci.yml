@@ -5,8 +5,6 @@ stages:
 
 variables:
   MAVEN_CLI_OPTS: "--batch-mode"
-  ARTIFACTORY_USER: ereztsov
-  ARTIFACTORY_PASSWORD: AP8USX6SJ8NDNDPDtRs81QVm3JhLWhN4mWJBpQ
 
 build:
   stage: build
