@@ -5,6 +5,7 @@ stages:
 
 variables:
   MAVEN_CLI_OPTS: "--batch-mode"
+  ARTIFACTORY_USER: $ARTIFACTORY_USER
 
 build:
   stage: build
