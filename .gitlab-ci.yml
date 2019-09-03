@@ -5,7 +5,6 @@ stages:
 
 variables:
   MAVEN_CLI_OPTS: "--batch-mode"
-  ARTIFACTORY_USER: $ARTIFACTORY_USER
 
 build:
   stage: build
@@ -15,7 +14,6 @@ build:
     - cd java-remap-sdk-1.2
     - export TZ='Europe/Moscow'
   script:
-    - echo ${env.ARTIFACTORY_USER}
     - if [ -z "BRANCH" ]; then
         BRANCH='master';
       fi
