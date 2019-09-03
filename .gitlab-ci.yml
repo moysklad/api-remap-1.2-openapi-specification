@@ -14,6 +14,7 @@ build:
     - cd java-remap-sdk-1.2
     - export TZ='Europe/Moscow'
   script:
+    - echo $ARTIFACTORY_USER
     - if [ -z "BRANCH" ]; then
         BRANCH='master';
       fi
