@@ -1,0 +1,29 @@
+image: docker-registry.moysklad.ru:5000/maven:1.4-release
+
+stages:
+  - build
+
+variables:
+  MAVEN_CLI_OPTS: "--batch-mode"
+
+build:
+  stage: build
+  before_script:
+    - apk add git
+    - git clone https://github.com/moysklad/java-remap-sdk-1.2.git
+    - cd java-remap-sdk-1.2
+    - export TZ='Europe/Moscow'
+  script:
+    - if [ -z "BRANCH" ]; then
+        BRANCH='master';
+      fi
+    - git checkout $BRANCH;
+    - lastTag=$(git describe --abbrev=0 --tags);
+    - commitCount=$(git rev-list $lastTag.. --count);
+    - if [[ $commitCount = 0 && $BRANCH = 'master' ]] || [[ $BRANCH = v* ]]; then
+        version=${lastTag#v};
+      else
+        version=${lastTag#v}-${BRANCH}-SNAPSHOT;
+      fi
+    - mvn versions:set -DnewVersion=$version -DgenerateBackupPoms=false;
+    - mvn $MAVEN_CLI_OPTS clean deploy;
