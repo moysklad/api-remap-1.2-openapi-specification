@@ -23,7 +23,7 @@ build:
     - if [[ $commitCount = 0 && $BRANCH = 'master' ]] || [[ $BRANCH = v* ]]; then
         version=${lastTag#v};
       else
-        version=${lastTag#v}-${BRANCH}-SNAPSHOT;
+        version=${BRANCH}-${CI_PIPELINE_ID};
       fi
     - mvn versions:set -DnewVersion=$version -DgenerateBackupPoms=false;
     - mvn $MAVEN_CLI_OPTS clean deploy;
