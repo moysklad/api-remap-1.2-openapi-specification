@@ -1,4 +1,4 @@
-image: docker-registry.moysklad.ru:5000/maven:1.4-release
+image: docker.lognex.ru/maven:1.4-release
 
 stages:
   - build
