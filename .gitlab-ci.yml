@@ -15,15 +15,15 @@ build:
     - export TZ='Europe/Moscow'
   script:
     - if [ -z "BRANCH" ]; then
-        BRANCH='master';
-      fi
-    - git checkout $BRANCH;
-    - lastTag=$(git describe --abbrev=0 --tags);
-    - commitCount=$(git rev-list $lastTag.. --count);
-    - if [[ $commitCount = 0 && $BRANCH = 'master' ]] || [[ $BRANCH = v* ]]; then
-        version=${lastTag#v};
+        export CI_REGISTRY=ossrh;
+        export CI_REGISTRY_USER=${OSSRH_USER};
+        export CI_REGISTRY_PASSWORD=${OSSRH_PASSWORD};
+        echo "$GPG_SECRET_KEY" | gpg --import
+
+        mvn $MAVEN_CLI_OPTS -Dusername=$GIT_USER -Dpassword=$GIT_PASSWORD release:prepare
+        mvn release:perform
       else
-        version=${BRANCH}-${CI_PIPELINE_ID};
+        git checkout $BRANCH;
+        mvn versions:set -DnewVersion=${BRANCH}-${CI_PIPELINE_ID}-SNAPSHOT -DgenerateBackupPoms=false;
+        mvn $MAVEN_CLI_OPTS clean deploy;
       fi
-    - mvn versions:set -DnewVersion=$version -DgenerateBackupPoms=false;
-    - mvn $MAVEN_CLI_OPTS clean deploy;
