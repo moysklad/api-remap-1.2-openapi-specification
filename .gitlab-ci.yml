@@ -2,6 +2,8 @@ image: docker.lognex.ru/maven:1.4-release
 
 stages:
   - build
+  - prepare
+  - deploy
 
 variables:
   MAVEN_CLI_OPTS: "--batch-mode"
@@ -14,16 +16,40 @@ build:
     - cd java-remap-sdk-1.2
     - export TZ='Europe/Moscow'
   script:
-    - if [ -z "BRANCH" ]; then
-        export CI_REGISTRY=ossrh;
-        export CI_REGISTRY_USER=${OSSRH_USER};
-        export CI_REGISTRY_PASSWORD=${OSSRH_PASSWORD};
-        echo "$GPG_SECRET_KEY" | gpg --import
+    - [ -z "BRANCH" ] BRANCH='master'
+    - [ "${BRANCH}" != 'release' ] && git checkout $BRANCH;
+    - mvn test
 
-        mvn $MAVEN_CLI_OPTS -Dusername=$GIT_USER -Dpassword=$GIT_PASSWORD release:prepare
-        mvn release:perform
-      else
-        git checkout $BRANCH;
-        mvn versions:set -DnewVersion=${BRANCH}-${CI_PIPELINE_ID}-SNAPSHOT -DgenerateBackupPoms=false;
-        mvn $MAVEN_CLI_OPTS clean deploy;
-      fi
+deploy-snapshot:
+  stage: deploy
+  needs: [build]
+  only:
+    variables:
+      - $BRANCH != release
+  script:
+    - mvn versions:set -DnewVersion=${BRANCH}-${CI_PIPELINE_ID}-SNAPSHOT -DgenerateBackupPoms=false;
+    - mvn $MAVEN_CLI_OPTS clean deploy;
+
+prepare-release:
+  stage: prepare
+  needs: [build]
+  when: manual
+  only:
+    variables:
+      - $BRANCH == release
+  script:
+      - export CI_REGISTRY=ossrh;
+      - export CI_REGISTRY_USER=${OSSRH_USER};
+      - export CI_REGISTRY_PASSWORD=${OSSRH_PASSWORD};
+      - echo "$GPG_SECRET_KEY" | gpg --import
+
+      - mvn $MAVEN_CLI_OPTS -Dusername=$GIT_USER -Dpassword=$GIT_PASSWORD release:prepare
+
+deploy-release:
+  stage: deploy
+  needs: [prepare-release]
+  only:
+    variables:
+      - $BRANCH == release
+  script:
+    - mvn release:perform
