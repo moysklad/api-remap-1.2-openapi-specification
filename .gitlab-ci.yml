@@ -8,7 +8,7 @@ stages:
 variables:
   MAVEN_CLI_OPTS: "--batch-mode"
 
-build:
+build-and-test:
   stage: build
   before_script:
     - apk add git
@@ -22,7 +22,7 @@ build:
 
 deploy-snapshot:
   stage: deploy
-  needs: ["build"]
+  needs: ["build-and-test"]
   rules:
     - if: '$BRANCH != "release"'
   script:
@@ -31,7 +31,7 @@ deploy-snapshot:
 
 prepare-release:
   stage: prepare
-  needs: ["build"]
+  needs: ["build-and-test"]
   rules:
     - if: '$BRANCH == "release"'
       when: manual
