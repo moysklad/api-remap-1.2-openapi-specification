@@ -20,8 +20,10 @@ build-for-tests:
         BRANCH='master';
       fi
     - git checkout $BRANCH;
-    - mvn versions:set -DnewVersion=${BRANCH}-${CI_PIPELINE_ID}-SNAPSHOT -DgenerateBackupPoms=false;
+    - ARTEFACT_VERSION = ${BRANCH}-${CI_PIPELINE_ID}-SNAPSHOT
+    - mvn versions:set -DnewVersion=$ARTEFACT_VERSION -DgenerateBackupPoms=false;
     - mvn $MAVEN_CLI_OPTS clean deploy;
+    - echo "Complete. Version $ARTEFACT_VERSION"
 
 deploy-to-maven:
   stage: build
