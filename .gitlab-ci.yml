@@ -31,12 +31,13 @@ deploy-to-maven:
     - if: '$BRANCH == "release"'
   before_script:
     - apk add git
+    - apk add gnupg
     - git clone https://github.com/moysklad/java-remap-sdk-1.2.git
     - cd java-remap-sdk-1.2
     - export TZ='Europe/Moscow'
   script:
-    - echo git config user.name
-    - echo git config user.email
+    - echo $(git config user.name)
+    - echo $(git config user.email)
     - export CI_REGISTRY=ossrh;
     - export CI_REGISTRY_USER=${OSSRH_USER};
     - export CI_REGISTRY_PASSWORD=${OSSRH_PASSWORD};
