@@ -20,15 +20,6 @@ build-and-test:
     - if [ "${BRANCH}" != 'release' ]; then git checkout $BRANCH;
     - mvn test
 
-deploy-snapshot:
-  stage: deploy
-  needs: ["build-and-test"]
-  rules:
-    - if: '$BRANCH != "release"'
-  script:
-    - mvn versions:set -DnewVersion=${BRANCH}-${CI_PIPELINE_ID}-SNAPSHOT -DgenerateBackupPoms=false;
-    - mvn $MAVEN_CLI_OPTS clean deploy;
-
 prepare-release:
   stage: prepare
   needs: ["build-and-test"]
@@ -50,3 +41,12 @@ deploy-release:
     - if: '$BRANCH == "release"'
   script:
     - mvn release:perform
+
+deploy-snapshot:
+  stage: deploy
+  needs: ["build-and-test"]
+  rules:
+    - if: '$BRANCH != "release"'
+  script:
+    - mvn versions:set -DnewVersion=${BRANCH}-${CI_PIPELINE_ID}-SNAPSHOT -DgenerateBackupPoms=false;
+    - mvn $MAVEN_CLI_OPTS clean deploy;
