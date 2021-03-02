@@ -41,5 +41,4 @@ deploy-to-maven:
     - echo "$GPG_SECRET_KEY" | gpg --import
     - git config user.name "$GIT_USER"
     - git config user.email "$GIT_MAIL"
-    - mvn $MAVEN_CLI_OPTS -Dusername=$GIT_USER -Dpassword=$GIT_PASSWORD release:prepare
-    - mvn release:perform
+    - echo 'release it'
