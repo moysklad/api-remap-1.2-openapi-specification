@@ -35,8 +35,8 @@ deploy-to-maven:
     - cd java-remap-sdk-1.2
     - export TZ='Europe/Moscow'
   script:
-    - git config user.name
-    - git config user.email
+    - echo git config user.name
+    - echo git config user.email
     - export CI_REGISTRY=ossrh;
     - export CI_REGISTRY_USER=${OSSRH_USER};
     - export CI_REGISTRY_PASSWORD=${OSSRH_PASSWORD};
