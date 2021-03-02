@@ -2,51 +2,44 @@ image: docker.lognex.ru/maven:1.4-release
 
 stages:
   - build
-  - prepare
-  - deploy
 
 variables:
   MAVEN_CLI_OPTS: "--batch-mode"
 
-build-and-test:
+build-for-tests:
   stage: build
+  rules:
+    - if: '$BRANCH != "release"'
   before_script:
     - apk add git
     - git clone https://github.com/moysklad/java-remap-sdk-1.2.git
     - cd java-remap-sdk-1.2
     - export TZ='Europe/Moscow'
   script:
-    - if [ -z "$BRANCH" ]; then export BRANCH='master'; fi
-    - if [ "${BRANCH}" != 'release' ]; then git checkout $BRANCH;
-    - mvn test
+    - if [ -z "$BRANCH" ]; then
+        BRANCH='master';
+      fi
+    - git checkout $BRANCH;
+    - mvn versions:set -DnewVersion=${BRANCH}-${CI_PIPELINE_ID}-SNAPSHOT -DgenerateBackupPoms=false;
+    - mvn $MAVEN_CLI_OPTS clean deploy;
 
-prepare-release:
-  stage: prepare
-  needs: ["build-and-test"]
+deploy-to-maven:
+  stage: build
   rules:
     - if: '$BRANCH == "release"'
-      when: manual
+  before_script:
+    - apk add git
+    - git clone https://github.com/moysklad/java-remap-sdk-1.2.git
+    - cd java-remap-sdk-1.2
+    - export TZ='Europe/Moscow'
   script:
+    - git config user.name
+    - git config user.email
     - export CI_REGISTRY=ossrh;
     - export CI_REGISTRY_USER=${OSSRH_USER};
     - export CI_REGISTRY_PASSWORD=${OSSRH_PASSWORD};
     - echo "$GPG_SECRET_KEY" | gpg --import
-
+    - git config user.name "$GIT_USER"
+    - git config user.email "$GIT_MAIL"
     - mvn $MAVEN_CLI_OPTS -Dusername=$GIT_USER -Dpassword=$GIT_PASSWORD release:prepare
-
-deploy-release:
-  stage: deploy
-  needs: ["prepare-release"]
-  rules:
-    - if: '$BRANCH == "release"'
-  script:
     - mvn release:perform
-
-deploy-snapshot:
-  stage: deploy
-  needs: ["build-and-test"]
-  rules:
-    - if: '$BRANCH != "release"'
-  script:
-    - mvn versions:set -DnewVersion=${BRANCH}-${CI_PIPELINE_ID}-SNAPSHOT -DgenerateBackupPoms=false;
-    - mvn $MAVEN_CLI_OPTS clean deploy;
