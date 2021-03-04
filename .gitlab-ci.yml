@@ -20,7 +20,7 @@ build-for-tests:
         BRANCH='master';
       fi
     - git checkout $BRANCH;
-    - ARTEFACT_VERSION = ${BRANCH}-${CI_PIPELINE_ID}-SNAPSHOT
+    - ARTEFACT_VERSION="${BRANCH}-${CI_PIPELINE_ID}-SNAPSHOT"
     - mvn versions:set -DnewVersion=$ARTEFACT_VERSION -DgenerateBackupPoms=false;
     - mvn $MAVEN_CLI_OPTS clean deploy;
     - echo "Complete. Version $ARTEFACT_VERSION"
@@ -30,18 +30,18 @@ deploy-to-maven:
   rules:
     - if: '$BRANCH == "release"'
   before_script:
-    - apk add git
     - apk add gnupg
+    - echo "$GPG_SECRET_KEY" | gpg --import
+    - apk add git
     - git clone https://github.com/moysklad/java-remap-sdk-1.2.git
     - cd java-remap-sdk-1.2
     - export TZ='Europe/Moscow'
   script:
-    - echo $(git config user.name)
-    - echo $(git config user.email)
     - export CI_REGISTRY=ossrh;
     - export CI_REGISTRY_USER=${OSSRH_USER};
     - export CI_REGISTRY_PASSWORD=${OSSRH_PASSWORD};
-    - echo "$GPG_SECRET_KEY" | gpg --import
+    - git checkout master
     - git config user.name "$GIT_USER"
     - git config user.email "$GIT_MAIL"
-    - echo 'release it'
+    - mvn $MAVEN_CLI_OPTS -Dusername=$GIT_USER -Dpassword=$GIT_PASSWORD release:prepare
+    - mvn release:perform
