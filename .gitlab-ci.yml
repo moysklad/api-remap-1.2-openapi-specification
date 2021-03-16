@@ -22,7 +22,7 @@ build-for-tests:
     - git checkout $BRANCH;
     - ARTEFACT_VERSION="${BRANCH}-${CI_PIPELINE_ID}-SNAPSHOT"
     - mvn versions:set -DnewVersion=$ARTEFACT_VERSION -DgenerateBackupPoms=false;
-    - mvn $MAVEN_CLI_OPTS -Dgpg.skip -Dmaven.javadoc.skip=true clean deploy;
+    - mvn $MAVEN_CLI_OPTS clean deploy;
     - echo "Complete. Version $ARTEFACT_VERSION"
 
 deploy-to-maven:
@@ -43,5 +43,5 @@ deploy-to-maven:
     - git checkout master
     - git config user.name "$GIT_USER"
     - git config user.email "$GIT_MAIL"
-    - mvn $MAVEN_CLI_OPTS -Dusername=$GIT_USER -Dpassword=$GIT_PASSWORD release:prepare
-    - mvn release:perform
+    - mvn $MAVEN_CLI_OPTS -Dusername=$GIT_USER -Dpassword=$GIT_PASSWORD -Ppublishing release:prepare
+    - mvn -Ppublishing release:perform
