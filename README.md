@@ -17,16 +17,16 @@
 
 ### Сборка из ветки для тестирования
 * задеплоить изменения в основном проекте в тестовое окружение
-* создать пользователя в тестовом окружении из шага 1 (для api-1 [https://online-api-1.testms.lognex.ru](https://online-api-1.testms.lognex.ru/app/))
-* выдать пользователю корпоративный аккаунт (для api-1 [https://admin-api-1.testms.lognex.ru](https://admin-api-1.testms.lognex.ru/))
+* создать пользователя в тестовом окружении из шага 1 (для api-1 [https://online-api-1.testms-test.lognex.ru](https://online-api-1.testms-test.lognex.ru/app/))
+* выдать пользователю корпоративный аккаунт (для api-1 [https://admin-api-1.testms-test.lognex.ru](https://admin-api-1.testms-test.lognex.ru/))
 * запустить новый пайплайн Remap 1.2 SDK deployer, указав:
     1. ветку пайплайна master - проект нужен только для сборки;
     2. параметр **BRANCH** - имя ветки в репозитории SDK. Ветка должна начинаться на *MC-* или быть *master*;
-    3. параметр **API_HOST** - адрес хоста, на котором будут проходить тесты. Пример: `https://online-api-1.testms.lognex.ru`;
+    3. параметр **API_HOST** - адрес хоста, на котором будут проходить тесты. Пример: `https://online-api-1.testms-test.lognex.ru`;
     4. параметр **API_LOGIN** - логин аккаунта для тестов. Для успешного прохождения тестов у указанного аккаунта должна быть доступна работа с пользовательскими справочниками и должно быть несколько точек продаж (для этого можно сделать у пользователя тариф корпоративный).  Пример: `admin@test123`;
     5. параметр **API_PASSWORD** - пароль от аккаунта для тестов.
 
-[Ссылка на предзаполненный пайплайн](https://git.moysklad.ru/moysklad/misc/api-sdk-builder/-/pipelines/new?ref=master&var[BRANCH]=MC-&var[API_HOST]=https://online-api-1.testms.lognex.ru&var[API_LOGIN]=admin@test_user&var[API_PASSWORD]=123123)
+[Ссылка на предзаполненный пайплайн](https://git.moysklad.ru/moysklad/misc/api-sdk-builder/-/pipelines/new?ref=master&var[BRANCH]=MC-&var[API_HOST]=https://online-api-1.testms-test.lognex.ru&var[API_LOGIN]=admin@test_user&var[API_PASSWORD]=123123)
 
 
 ### Релиз в публичный maven репозиторий после ревью
@@ -34,11 +34,11 @@
 * запустить новый пайплайн Remap 1.2 SDK deployer, указав:
   1. ветку пайплайна master - проект нужен только для сборки;
   2. параметр **BRANCH** - *release* (зарезервированное название для релизов);
-  3. параметр **API_HOST** - адрес хоста, на котором будут проходить тесты. Пример: `https://online-api-1.testms.lognex.ru`;
+  3. параметр **API_HOST** - адрес хоста, на котором будут проходить тесты. Пример: `https://online-api-1.testms-test.lognex.ru`;
   4. параметр **API_LOGIN** - логин аккаунта для тестов. Для успешного прохождения тестов у указанного аккаунта должна быть доступна работа с пользовательскими справочниками и должно быть несколько точек продаж (для этого можно сделать у пользователя тариф корпоративный).  Пример: `admin@test123`;
   5. параметр **API_PASSWORD** - пароль от аккаунта для тестов.
 
-[Ссылка на предзаполненный релизный пайплайн](https://git.moysklad.ru/moysklad/misc/api-sdk-builder/-/pipelines/new?ref=master&var[BRANCH]=release&var[API_HOST]=https://online-api-1.testms.lognex.ru&&var[API_LOGIN]=admin@test_user&var[API_PASSWORD]=123123)
+[Ссылка на предзаполненный релизный пайплайн](https://git.moysklad.ru/moysklad/misc/api-sdk-builder/-/pipelines/new?ref=master&var[BRANCH]=release&var[API_HOST]=https://online-api-1.testms.lognex-test.ru&&var[API_LOGIN]=admin@test_user&var[API_PASSWORD]=123123)
 
 #### Действия после релиза
 После завершения релиза необходимо описать изменения релиза в github:
