@@ -1,4 +1,4 @@
-image: docker.lognex.ru/maven:1.4-release
+image: $GLOBAL_DOCKER_URL/maven:1.4-release
 
 stages:
   - build
