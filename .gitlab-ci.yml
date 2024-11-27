@@ -11,7 +11,7 @@ build-for-tests:
   rules:
     - if: '$BRANCH != "release"'
   before_script:
-    - apk add git
+    - apt-get install git
     - git clone https://github.com/moysklad/java-remap-sdk-1.2.git
     - cd java-remap-sdk-1.2
     - export TZ='Europe/Moscow'
