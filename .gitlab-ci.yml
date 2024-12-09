@@ -1,4 +1,4 @@
-image: $GLOBAL_DOCKER_URL/maven:1.4-release
+image: $GLOBAL_DOCKER_URL/maven:3.4-release
 
 stages:
   - build
@@ -11,7 +11,8 @@ build-for-tests:
   rules:
     - if: '$BRANCH != "release"'
   before_script:
-    - apk add git
+    - apt-get update
+    - apt-get install -y --no-install-recommends git
     - git clone https://github.com/moysklad/java-remap-sdk-1.2.git
     - cd java-remap-sdk-1.2
     - export TZ='Europe/Moscow'
@@ -30,9 +31,9 @@ deploy-to-maven:
   rules:
     - if: '$BRANCH == "release"'
   before_script:
-    - apk add gnupg
     - echo "$GPG_SECRET_KEY" | gpg --import
-    - apk add git
+    - apt-get update
+    - apt-get install -y --no-install-recommends git
     - git clone https://github.com/moysklad/java-remap-sdk-1.2.git
     - cd java-remap-sdk-1.2
     - export TZ='Europe/Moscow'

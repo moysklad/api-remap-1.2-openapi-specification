@@ -26,7 +26,7 @@
     4. параметр **API_LOGIN** - логин аккаунта для тестов. Для успешного прохождения тестов у указанного аккаунта должна быть доступна работа с пользовательскими справочниками и должно быть несколько точек продаж (для этого можно сделать у пользователя тариф корпоративный).  Пример: `admin@test123`;
     5. параметр **API_PASSWORD** - пароль от аккаунта для тестов.
 
-[Ссылка на предзаполненный пайплайн](https://git.moysklad.ru/moysklad/misc/api-sdk-builder/-/pipelines/new?ref=master&var[BRANCH]=MC-&var[API_HOST]=https://api-api-1.testms-test.lognex.ru&var[API_LOGIN]=admin@test_user&var[API_PASSWORD]=123123)
+[Ссылка на предзаполненный пайплайн](https://git.company.lognex/moysklad/misc/api-sdk-builder/-/pipelines/new?ref=master&var[BRANCH]=MC-&var[API_HOST]=https://api-api-1.testms-test.lognex.ru&var[API_LOGIN]=admin@test_user&var[API_PASSWORD]=123123)
 
 
 ### Релиз в публичный maven репозиторий после ревью
@@ -39,7 +39,7 @@
   4. параметр **API_LOGIN** - логин аккаунта для тестов. Для успешного прохождения тестов у указанного аккаунта должна быть доступна работа с пользовательскими справочниками и должно быть несколько точек продаж (для этого можно сделать у пользователя тариф корпоративный).  Пример: `admin@test123`;
   5. параметр **API_PASSWORD** - пароль от аккаунта для тестов.
 
-[Ссылка на предзаполненный релизный пайплайн](https://git.moysklad.ru/moysklad/misc/api-sdk-builder/-/pipelines/new?ref=master&var[BRANCH]=release&var[API_HOST]=https://api-api-1.testms-test.lognex.ru&&var[API_LOGIN]=admin@test_user&var[API_PASSWORD]=123123)
+[Ссылка на предзаполненный релизный пайплайн](https://git.company.lognex/moysklad/misc/api-sdk-builder/-/pipelines/new?ref=master&var[BRANCH]=release&var[API_HOST]=https://api-api-1.testms-test.lognex.ru&&var[API_LOGIN]=admin@test_user&var[API_PASSWORD]=123123)
 
 #### Действия после релиза
 После завершения релиза необходимо описать изменения релиза в github:
