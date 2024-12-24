@@ -38,9 +38,15 @@ deploy-to-maven:
     - cd java-remap-sdk-1.2
     - export TZ='Europe/Moscow'
   script:
-    - export CI_REGISTRY=ossrh;
-    - export CI_REGISTRY_USER=${OSSRH_USER};
-    - export CI_REGISTRY_PASSWORD=${OSSRH_PASSWORD};
+    - |
+      echo "Adding the ossrh server inside <servers> section"
+        sed -i '/<servers>/a \
+        <server>\
+          <id>ossrh</id>\
+          <username>${OSSRH_USER}</username>\
+          <password>${OSSRH_PASSWORD}</password>\
+        </server>' ~/.m2/settings.xml
+
     - git checkout master
     - git config user.name "$GIT_USER"
     - git config user.email "$GIT_MAIL"
