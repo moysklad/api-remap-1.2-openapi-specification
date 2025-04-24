@@ -23,7 +23,7 @@ build-for-tests:
     - git checkout $BRANCH;
     - ARTEFACT_VERSION="${BRANCH}-${CI_PIPELINE_ID}"
     - mvn versions:set -DnewVersion=$ARTEFACT_VERSION -DgenerateBackupPoms=false;
-    - mvn $MAVEN_CLI_OPTS -Ppublishing-artifactory clean deploy;
+    - mvn $MAVEN_CLI_OPTS -Ppublishing-artifactory clean deploy -DartifactoryRepo=${ARTIFACTORY_REPO_URL};
     - echo "Complete. Version $ARTEFACT_VERSION"
 
 deploy-to-maven:
