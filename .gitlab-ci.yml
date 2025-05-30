@@ -47,8 +47,8 @@ deploy-to-maven:
           <password>${CENTRAL_PASSWORD}</password>\
         </server>' ~/.m2/settings.xml
 
-    - git checkout MC-83441
+    - git checkout master
     - git config user.name "$GIT_USER"
     - git config user.email "$GIT_MAIL"
-    - mvn $MAVEN_CLI_OPTS -Darguments=-DskipTests -Dusername=$GIT_USER -Dpassword=$GIT_PASSWORD -Ppublishing-central release:prepare
-    - mvn -Darguments=-DskipTests -Ppublishing-central release:perform
+    - mvn $MAVEN_CLI_OPTS -Dusername=$GIT_USER -Dpassword=$GIT_PASSWORD -Ppublishing-central release:prepare
+    - mvn -Ppublishing-central release:perform
