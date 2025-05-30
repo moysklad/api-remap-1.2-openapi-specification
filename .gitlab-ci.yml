@@ -42,13 +42,13 @@ deploy-to-maven:
       echo "Adding the ossrh server inside <servers> section"
         sed -i '/<servers>/a \
         <server>\
-          <id>ossrh</id>\
-          <username>${OSSRH_USER}</username>\
-          <password>${OSSRH_PASSWORD}</password>\
+          <id>central</id>\
+          <username>${CENTRAL_USER}</username>\
+          <password>${CENTRAL_PASSWORD}</password>\
         </server>' ~/.m2/settings.xml
 
-    - git checkout master
+    - git checkout MC-83441
     - git config user.name "$GIT_USER"
     - git config user.email "$GIT_MAIL"
-    - mvn $MAVEN_CLI_OPTS -Dusername=$GIT_USER -Dpassword=$GIT_PASSWORD -Ppublishing-central release:prepare
-    - mvn -Ppublishing-central release:perform
+    - mvn $MAVEN_CLI_OPTS -Darguments=-DskipTests -Dusername=$GIT_USER -Dpassword=$GIT_PASSWORD -Ppublishing-central release:prepare
+    - mvn -Darguments=-DskipTests -Ppublishing-central release:perform
