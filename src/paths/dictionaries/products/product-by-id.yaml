@@ -14,7 +14,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/entities/product.yaml'
+            $ref: '../../../components/schemas/dictionary/product.yaml'
     '404':
       $ref: '../../../components/responses.yaml#/NotFound'
 
@@ -33,14 +33,14 @@ put:
     content:
       application/json:
         schema:
-          $ref: '../../../components/schemas/entities/product.yaml'
+          $ref: '../../../components/schemas/dictionary/product.yaml'
   responses:
     '200':
       description: Товар успешно обновлен
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/entities/product.yaml'
+            $ref: '../../../components/schemas/dictionary/product.yaml'
     '400':
       $ref: '../../../components/responses.yaml#/BadRequest'
     '404':

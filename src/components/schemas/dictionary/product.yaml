@@ -147,7 +147,7 @@ properties:
     type: array
     description: Упаковки товара
     items:
-      $ref: '../entities/pack.yaml'
+      $ref: '../../../openapi.yaml#/components/schemas/Pack'
   trackingType:
     type: string
     enum:

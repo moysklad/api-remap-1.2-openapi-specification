@@ -40,94 +40,96 @@ paths:
 #  /entity/product/delete:
 #    $ref: './paths/dictionaries/products/products-delete.yaml'
   /entity/product/metadata:
-    $ref: './paths/dictionaries/products/metadata.yaml'
+    $ref: './paths/common/metadata/metadata.yaml'
 
 components:
   schemas:
-    Owner:
-      $ref: './components/schemas/entities/employee.yaml'
-    Group:
-      $ref: './components/schemas/entities/group.yaml'
-    Country:
-      $ref: './components/schemas/entities/country.yaml'
-    Region:
-      $ref: './components/schemas/entities/region.yaml'
-    Currency:
-      $ref: './components/schemas/entities/currency.yaml'
-    Uom:
-      $ref: './components/schemas/entities/uom.yaml'
-    Store:
-      $ref: './components/schemas/entities/store.yaml'
-    ProductFolder:
-      $ref: './components/schemas/entities/productFolder.yaml'
-    Product:
-      $ref: './components/schemas/entities/product.yaml'
-    File:
-      $ref: './components/schemas/common/file.yaml'
-    Image:
-      $ref: './components/schemas/common/image.yaml'
-    FileList:
-      $ref: './components/schemas/common/fileList.yaml'
-    ImageList:
-      $ref: './components/schemas/common/imageList.yaml'
-    RetailStore:
-      $ref: './components/schemas/entities/retailStore.yaml'
-    Employee:
-      $ref: './components/schemas/entities/employee.yaml'
-    Cashier:
-      $ref: './components/schemas/entities/cashier.yaml'
-    Counterparty:
-      $ref: './components/schemas/entities/counterparty.yaml'
+    Account:
+      $ref: './components/schemas/dictionary/account.yaml'
+    Address:
+      $ref: './components/schemas/dictionary/address.yaml'
     Application:
-      $ref: './components/schemas/entities/application.yaml'
-    Barcode:
-      $ref: './components/schemas/entities/barcode.yaml'
-    BuyPrice:
-      $ref: './components/schemas/entities/buyPrice.yaml'
-    MinPrice:
-      $ref: './components/schemas/entities/minPrice.yaml'
-    SalePrice:
-      $ref: './components/schemas/entities/salePrice.yaml'
-    PriceType:
-      $ref: './components/schemas/entities/priceType.yaml'
+      $ref: './components/schemas/dictionary/application.yaml'
     AttributeAbstract:
       $ref: './components/schemas/common/attributeAbstract.yaml'
-    AttributeString:
-      $ref: './components/schemas/common/attributeString.yaml'
-    AttributeText:
-      $ref: './components/schemas/common/attributeText.yaml'
-    AttributeLink:
-      $ref: './components/schemas/common/attributeLink.yaml'
-    AttributeFile:
-      $ref: './components/schemas/common/attributeFile.yaml'
-    AttributeDateTime:
-      $ref: './components/schemas/common/attributeDateTime.yaml'
-    AttributeDouble:
-      $ref: './components/schemas/common/attributeDouble.yaml'
-    AttributeLong:
-      $ref: './components/schemas/common/attributeLong.yaml'
     AttributeBool:
       $ref: './components/schemas/common/attributeBool.yaml'
     AttributeCustomEntity:
       $ref: './components/schemas/common/attributeCustomEntity.yaml'
-    AttributeObject:
-      $ref: './components/schemas/common/attributeObject.yaml'
+    AttributeDateTime:
+      $ref: './components/schemas/common/attributeDateTime.yaml'
+    AttributeDouble:
+      $ref: './components/schemas/common/attributeDouble.yaml'
+    AttributeFile:
+      $ref: './components/schemas/common/attributeFile.yaml'
+    AttributeLink:
+      $ref: './components/schemas/common/attributeLink.yaml'
+    AttributeLong:
+      $ref: './components/schemas/common/attributeLong.yaml'
     AttributeMetaInfo:
       $ref: './components/schemas/common/attributeMetaInfo.yaml'
     AttributeMetaInfoList:
       $ref: './components/schemas/common/attributeMetaInfoList.yaml'
-    Note:
-      $ref: './components/schemas/entities/note.yaml'
+    AttributeObject:
+      $ref: './components/schemas/common/attributeObject.yaml'
+    AttributeString:
+      $ref: './components/schemas/common/attributeString.yaml'
+    AttributeText:
+      $ref: './components/schemas/common/attributeText.yaml'
+    Barcode:
+      $ref: './components/schemas/dictionary/barcode.yaml'
+    BuyPrice:
+      $ref: './components/schemas/dictionary/buyPrice.yaml'
+    Cashier:
+      $ref: './components/schemas/dictionary/cashier.yaml'
     ContactPerson:
-      $ref: './components/schemas/entities/contactPerson.yaml'
-    Account:
-      $ref: './components/schemas/entities/account.yaml'
+      $ref: './components/schemas/dictionary/contactPerson.yaml'
+    Counterparty:
+      $ref: './components/schemas/dictionary/counterparty.yaml'
+    Country:
+      $ref: './components/schemas/dictionary/country.yaml'
+    Currency:
+      $ref: './components/schemas/dictionary/currency.yaml'
+    Employee:
+      $ref: './components/schemas/dictionary/employee.yaml'
+    File:
+      $ref: './components/schemas/common/file.yaml'
+    FileList:
+      $ref: './components/schemas/common/fileList.yaml'
+    Group:
+      $ref: './components/schemas/dictionary/group.yaml'
+    Image:
+      $ref: './components/schemas/common/image.yaml'
+    ImageList:
+      $ref: './components/schemas/common/imageList.yaml'
+    MinPrice:
+      $ref: './components/schemas/dictionary/minPrice.yaml'
+    Note:
+      $ref: './components/schemas/dictionary/note.yaml'
+    Owner:
+      $ref: './components/schemas/dictionary/employee.yaml'
+    Pack:
+      $ref: './components/schemas/dictionary/pack.yaml'
+    PriceType:
+      $ref: './components/schemas/dictionary/priceType.yaml'
+    Product:
+      $ref: './components/schemas/dictionary/product.yaml'
+    ProductFolder:
+      $ref: './components/schemas/dictionary/productFolder.yaml'
+    Region:
+      $ref: './components/schemas/dictionary/region.yaml'
+    RetailStore:
+      $ref: './components/schemas/dictionary/retailStore.yaml'
+    SalePrice:
+      $ref: './components/schemas/dictionary/salePrice.yaml'
     State:
-      $ref: './components/schemas/entities/state.yaml'
-    Address:
-      $ref: './components/schemas/entities/address.yaml'
+      $ref: './components/schemas/dictionary/state.yaml'
+    Store:
+      $ref: './components/schemas/dictionary/store.yaml'
     StoreBalance:
-      $ref: './components/schemas/entities/storeBalance.yaml'
+      $ref: './components/schemas/dictionary/storeBalance.yaml'
+    Uom:
+      $ref: './components/schemas/dictionary/uom.yaml'
 
   securitySchemes:
     basicAuth:
