@@ -1,0 +1,144 @@
+openapi: 3.0.3
+info:
+  title: МойСклад JSON API
+  description: |
+    API для манипуляции с сущностями и создания отчетов в онлайн-сервисе МойСклад.
+    
+    ## Аутентификация
+    
+    МойСклад поддерживает аутентификацию по протоколу Basic Auth и с использованием токена доступа:
+    - Basic Auth: заголовок `Authorization` со значением пары `логин:пароль`, закодированным в Base64
+    - Bearer Token: заголовок `Authorization` со значением `Bearer <Access-Token>`
+    
+    ## Ограничения
+    
+    - Не более 45 запросов за 3 секундный период от аккаунта
+    - Не более 5 параллельных запросов от одного пользователя  
+    - Не более 20 параллельных запросов от аккаунта
+    - Не более 20 Мб данных в одном запросе
+    - Максимум 1000 элементов в массиве
+    - Обязательное использование сжатия gzip
+  version: "1.0.0"
+
+servers:
+  - url: https://api.moysklad.ru/api/remap/1.2
+    description: Production server
+
+security:
+  - basicAuth: []
+  - bearerAuth: []
+
+paths:
+  # Dictionaries
+  #
+  # Products
+  /entity/product:
+    $ref: './paths/dictionaries/products/products.yaml'
+  /entity/product/{id}:
+    $ref: './paths/dictionaries/products/product-by-id.yaml'
+#TODO пока закоментил, работа с массовым эндпоинтом будет сделана отдельной задачей
+#  /entity/product/delete:
+#    $ref: './paths/dictionaries/products/products-delete.yaml'
+  /entity/product/metadata:
+    $ref: './paths/dictionaries/products/metadata.yaml'
+
+components:
+  schemas:
+    Owner:
+      $ref: './components/schemas/entities/employee.yaml'
+    Group:
+      $ref: './components/schemas/entities/group.yaml'
+    Country:
+      $ref: './components/schemas/entities/country.yaml'
+    Region:
+      $ref: './components/schemas/entities/region.yaml'
+    Currency:
+      $ref: './components/schemas/entities/currency.yaml'
+    Uom:
+      $ref: './components/schemas/entities/uom.yaml'
+    Store:
+      $ref: './components/schemas/entities/store.yaml'
+    ProductFolder:
+      $ref: './components/schemas/entities/productFolder.yaml'
+    Product:
+      $ref: './components/schemas/entities/product.yaml'
+    File:
+      $ref: './components/schemas/common/file.yaml'
+    Image:
+      $ref: './components/schemas/common/image.yaml'
+    FileList:
+      $ref: './components/schemas/common/fileList.yaml'
+    ImageList:
+      $ref: './components/schemas/common/imageList.yaml'
+    RetailStore:
+      $ref: './components/schemas/entities/retailStore.yaml'
+    Employee:
+      $ref: './components/schemas/entities/employee.yaml'
+    Cashier:
+      $ref: './components/schemas/entities/cashier.yaml'
+    Counterparty:
+      $ref: './components/schemas/entities/counterparty.yaml'
+    Application:
+      $ref: './components/schemas/entities/application.yaml'
+    Barcode:
+      $ref: './components/schemas/entities/barcode.yaml'
+    BuyPrice:
+      $ref: './components/schemas/entities/buyPrice.yaml'
+    MinPrice:
+      $ref: './components/schemas/entities/minPrice.yaml'
+    SalePrice:
+      $ref: './components/schemas/entities/salePrice.yaml'
+    PriceType:
+      $ref: './components/schemas/entities/priceType.yaml'
+    AttributeAbstract:
+      $ref: './components/schemas/common/attributeAbstract.yaml'
+    AttributeString:
+      $ref: './components/schemas/common/attributeString.yaml'
+    AttributeText:
+      $ref: './components/schemas/common/attributeText.yaml'
+    AttributeLink:
+      $ref: './components/schemas/common/attributeLink.yaml'
+    AttributeFile:
+      $ref: './components/schemas/common/attributeFile.yaml'
+    AttributeDateTime:
+      $ref: './components/schemas/common/attributeDateTime.yaml'
+    AttributeDouble:
+      $ref: './components/schemas/common/attributeDouble.yaml'
+    AttributeLong:
+      $ref: './components/schemas/common/attributeLong.yaml'
+    AttributeBool:
+      $ref: './components/schemas/common/attributeBool.yaml'
+    AttributeCustomEntity:
+      $ref: './components/schemas/common/attributeCustomEntity.yaml'
+    AttributeObject:
+      $ref: './components/schemas/common/attributeObject.yaml'
+    AttributeMetaInfo:
+      $ref: './components/schemas/common/attributeMetaInfo.yaml'
+    AttributeMetaInfoList:
+      $ref: './components/schemas/common/attributeMetaInfoList.yaml'
+    Note:
+      $ref: './components/schemas/entities/note.yaml'
+    ContactPerson:
+      $ref: './components/schemas/entities/contactPerson.yaml'
+    Account:
+      $ref: './components/schemas/entities/account.yaml'
+    State:
+      $ref: './components/schemas/entities/state.yaml'
+    Address:
+      $ref: './components/schemas/entities/address.yaml'
+    StoreBalance:
+      $ref: './components/schemas/entities/storeBalance.yaml'
+
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Basic аутентификация с логином и паролем
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Bearer токен аутентификация
+
+tags:
+  - name: Products
+    description: Операции с товарами

@@ -1,0 +1,10 @@
+type: object
+description: Закупочная цена
+properties:
+  value:
+    type: number
+    format: float
+    description: Значение цены
+  currency:
+    description: Ссылка на валюту в формате Метаданных
+    $ref: '../../../openapi.yaml#/components/schemas/Currency'

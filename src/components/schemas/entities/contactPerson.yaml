@@ -1,0 +1,43 @@
+type: object
+description: Контактные лица Контрагентов
+properties:
+  meta:
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID контактного лица
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  updated:
+    type: string
+    format: date-time
+    description: Время последнего изменения
+    readOnly: true
+  name:
+    type: string
+    description: ФИО контактного лица
+  description:
+    type: string
+    description: Описание контактного лица
+  email:
+    type: string
+    format: email
+    description: Адрес электронной почты
+  phone:
+    type: string
+    description: Номер телефона
+  position:
+    type: string
+    description: Должность
+  externalCode:
+    type: string
+    maxLength: 255
+    description: Внешний код контактного лица
+  agent:
+    description: Ссылка на контрагента-владельца счета
+    $ref: '../../../openapi.yaml#/components/schemas/Counterparty'

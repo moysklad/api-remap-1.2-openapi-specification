@@ -1,0 +1,25 @@
+type: object
+description: Группа/отдел
+properties:
+  meta:
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID группы
+    readOnly: true
+    example: "12a8b923-692c-11e6-8a84-bae500000055"
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  name:
+    type: string
+    maxLength: 255
+    description: Наименование группы
+    example: "Отдел продаж"
+  index:
+    type: integer
+    description: Порядковый номер в списке групп
+    example: 1

@@ -1,0 +1,34 @@
+type: object
+description: Регион
+properties:
+  meta:
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID Региона
+    readOnly: true
+    example: "12a8b923-692c-11e6-8a84-bae500000057"
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  name:
+    type: string
+    description: Наименование Региона
+  code:
+    type: string
+    description: Код Региона
+  externalCode:
+    type: string
+    description: Внешний код Региона
+  updated:
+    type: string
+    format: date-time
+    description: Время последнего изменения
+    readOnly: true
+  version:
+    type: integer
+    description: Версия сущности
+    readOnly: true

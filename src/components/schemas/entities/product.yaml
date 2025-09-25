@@ -1,0 +1,307 @@
+type: object
+properties:
+  meta:
+    description: Метаданные Товара
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID товара
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  alcoholic:
+    type: object
+    description: Объект, содержащий поля алкогольной продукции
+    properties:
+      excise:
+        type: boolean
+        description: Содержит акцизную марку
+      type:
+        type: integer
+        description: Код вида продукции
+      strength:
+        type: number
+        format: float
+        description: Крепость
+      volume:
+        type: number
+        format: float
+        description: Объём тары
+  archived:
+    type: boolean
+    description: Добавлен ли товар в архив
+  tobacco:
+    type: boolean
+    description: Признак товара, как табачной продукции
+    readOnly: true
+  name:
+    type: string
+    maxLength: 255
+    description: Наименование товара
+    example: "Товар 1"
+  code:
+    type: string
+    maxLength: 255
+    description: Код товара
+  externalCode:
+    type: string
+    maxLength: 255
+    description: Внешний код товара
+  pathName:
+    type: string
+    description: Наименование группы, в которую входит товар
+    readOnly: true
+  article:
+    type: string
+    maxLength: 255
+    description: Артикул
+  description:
+    type: string
+    maxLength: 4096
+    description: Описание товара
+  vat:
+    type: integer
+    description: НДС %
+  vatEnabled:
+    type: boolean
+    description: Включен ли НДС для товара
+  useParentVat:
+    type: boolean
+    description: Используется ли ставка НДС родительской группы
+  effectiveVat:
+    type: integer
+    description: Реальный НДС %
+    readOnly: true
+  effectiveVatEnabled:
+    type: boolean
+    description: Дополнительный признак для определения разграничения реального НДС
+    readOnly: true
+  discountProhibited:
+    type: boolean
+    description: Признак запрета скидок
+  variantsCount:
+    type: integer
+    description: Количество модификаций у данного товара
+    readOnly: true
+  isSerialTrackable:
+    type: boolean
+    description: Учет по серийным номерам
+  shared:
+    type: boolean
+    description: Общий доступ
+  group:
+    description: Метаданные отдела сотрудника
+    $ref: '../../../openapi.yaml#/components/schemas/Group'
+  owner:
+    description: Метаданные владельца (Сотрудника)
+    $ref: '../../../openapi.yaml#/components/schemas/Owner'
+  updated:
+    type: string
+    format: date-time
+    description: Момент последнего обновления сущности
+    readOnly: true
+  weight:
+    type: number
+    format: float
+    description: Вес
+  volume:
+    type: number
+    format: float
+    description: Объем
+  buyPrice:
+    description: Закупочная цена
+    $ref: '../../../openapi.yaml#/components/schemas/BuyPrice'
+  salePrices:
+    type: array
+    description: Цены продажи
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/SalePrice'
+  supplier:
+    description: Метаданные контрагента-поставщика
+    $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
+  country:
+    description: Метаданные Страны
+    $ref: '../../../openapi.yaml#/components/schemas/Country'
+  uom:
+    description: Метаданные единиц измерения
+    $ref: '../../../openapi.yaml#/components/schemas/Uom'
+  productFolder:
+    description: Метаданные группы Товара
+    $ref: '../../../openapi.yaml#/components/schemas/ProductFolder'
+  images:
+    description: Массив изображений
+    $ref: '../../../openapi.yaml#/components/schemas/ImageList'
+  files:
+    description: Метаданные массива Файлов
+    $ref: '../../../openapi.yaml#/components/schemas/FileList'
+  barcodes:
+    type: array
+    description: Штрихкоды товара
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/Barcode'
+  packs:
+    type: array
+    description: Упаковки товара
+    items:
+      $ref: '../entities/pack.yaml'
+  trackingType:
+    type: string
+    enum:
+      - BEER_ALCOHOL
+      - BICYCLE
+      - ELECTRONICS
+      - FOOD_SUPPLEMENT
+      - LP_CLOTHES
+      - LP_LINENS
+      - MEDICAL_DEVICES
+      - MILK
+      - NABEER
+      - NCP
+      - NOT_TRACKED
+      - OTP
+      - PERFUMERY
+      - PET_FOOD
+      - SANITIZER
+      - SEAFOOD
+      - SHOES
+      - SOFT_DRINKS
+      - TIRES
+      - TOBACCO
+      - VEGETABLE_OIL
+      - VETPHARMA
+      - WATER
+    description: Тип маркируемой продукции
+  tnved:
+    type: string
+    maxLength: 255
+    description: Код ТН ВЭД
+  paymentItemType:
+    type: string
+    enum:
+      - GOOD
+      - EXCISABLE_GOOD
+      - COMPOUND_PAYMENT_ITEM
+      - ANOTHER_PAYMENT_ITEM
+    description: Признак предмета расчета
+  taxSystem:
+    type: string
+    enum:
+      - GENERAL_TAX_SYSTEM
+      - SIMPLIFIED_TAX_SYSTEM_INCOME
+      - SIMPLIFIED_TAX_SYSTEM_INCOME_OUTCOME
+      - UNIFIED_AGRICULTURAL_TAX
+      - PRESUMPTIVE_TAX_SYSTEM
+      - PATENT_BASED
+      - TAX_SYSTEM_SAME_AS_GROUP
+    description: Код системы налогообложения
+  attributes:
+    type: array
+    description: Дополнительные поля
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
+  minimumBalance:
+    type: number
+    format: float
+    description: Неснижаемый остаток (устаревшее)
+    deprecated: true
+  minimumStock:
+    type: object
+    description: Неснижаемый остаток
+    properties:
+      type:
+        type: string
+        enum:
+          - ALL_WAREHOUSE_SUM
+          - ALL_WAREHOUSE_SAME
+          - WAREHOUSE_VARIED
+        description: Тип неснижаемого остатка
+      quantity:
+        type: number
+        format: float
+        description: Количество неснижаемого остатка
+      storeBalances:
+        type: object
+        description: Неснижаемые остатки по складам
+        properties:
+          meta:
+            $ref: '../common/metaList.yaml'
+          rows:
+            type: array
+            items:
+              $ref: '../../../openapi.yaml#/components/schemas/StoreBalance'
+  minPrice:
+    description: Минимальная цена
+    $ref: '../../../openapi.yaml#/components/schemas/MinPrice'
+  weighed:
+    type: boolean
+    description: Поле, показывающее является ли товар весовым
+  onTap:
+    type: boolean
+    description: Поле, показывающее является ли товар разливным
+  partialDisposal:
+    type: boolean
+    description: Управление состоянием частичного выбытия маркированного товара
+  things:
+    type: array
+    description: Серийные номера
+    items:
+      type: string
+  syncId:
+    type: string
+    format: uuid
+    description: ID синхронизации
+    readOnly: true
+  ppeType:
+    type: string
+    enum:
+      - "2400001225408"
+      - "2400001225606"
+      - "2400001226108"
+      - "2400001226306"
+      - "2400001226405"
+      - "2400001323807"
+      - "2400001368105"
+      - "2400001393107"
+      - "2400001393503"
+      - "2400001393602"
+      - "2400001565306"
+      - "2400001807703"
+      - "2400001818303"
+      - "2400001857005"
+      - "2400001857203"
+      - "2400001858309"
+      - "2400001858507"
+      - "2400002015909"
+      - "2400002016005"
+      - "2400002016104"
+      - "2400002052805"
+      - "2400002052904"
+      - "2400002186203"
+      - "2400002886707"
+      - "2400002886806"
+      - "2400002984502"
+      - "2400003117107"
+      - "2400003117206"
+      - "2400003161209"
+      - "2400003207907"
+      - "2400003215308"
+      - "2400003227806"
+      - "2400003237409"
+      - "2400003263408"
+      - "2400003297700"
+      - "2400003356704"
+      - "2400003356803"
+      - "2400003356902"
+      - "2400003433108"
+      - "2400003492303"
+      - "2400003495700"
+      - "2400003495809"
+      - "2400003495908"
+      - "2400003496004"
+      - "2400003496103"
+      - "2400003675805"
+    description: Код вида номенклатурной классификации медицинских средств индивидуальной защиты
