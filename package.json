@@ -1,0 +1,50 @@
+{
+    "name": "moysklad-openapi",
+    "version": "1.0.0",
+    "description": "OpenAPI спецификация для МойСклад JSON API 1.2",
+    "main": "src/openapi.yaml",
+    "scripts": {
+        "validate": "swagger-cli validate src/openapi.yaml",
+        "bundle": "swagger-cli bundle src/openapi.yaml --outfile dist/openapi.yaml --type yaml",
+        "bundle-json": "swagger-cli bundle src/openapi.yaml --outfile dist/openapi.json --type json",
+        "docs": "redoc-cli build src/openapi.yaml --output docs/index.html",
+        "serve-docs": "redoc-cli serve src/openapi.yaml",
+        "lint": "redoc-cli lint src/openapi.yaml",
+        "generate-js": "openapi-generator-cli generate -i src/openapi.yaml -g javascript -o clients/javascript",
+        "generate-php": "openapi-generator-cli generate -i src/openapi.yaml -g php --additional-properties=phpVersion=7.4 -o clients/php -t customtemplates/php",
+        "generate-java": "openapi-generator-cli generate -i src/openapi.yaml -g java -o clients/java",
+        "generate-python": "openapi-generator-cli generate -i src/openapi.yaml -g python -o clients/python",
+        "generate-typescript": "openapi-generator-cli generate -i src/openapi.yaml -g typescript-axios -o clients/typescript",
+        "build": "npm run validate && npm run bundle && npm run bundle-json && npm run docs",
+        "clean": "rm -rf dist clients docs"
+    },
+    "keywords": [
+        "openapi",
+        "swagger",
+        "moysklad",
+        "api",
+        "specification"
+    ],
+    "author": "МойСклад API Team",
+    "license": "MIT",
+    "devDependencies": {
+        "@apidevtools/swagger-cli": "^4.0.4",
+        "@openapitools/openapi-generator-cli": "^2.7.0",
+        "@stoplight/spectral-cli": "^6.11.0",
+        "redoc-cli": "^0.13.21"
+    },
+    "files": [
+        "src/openapi.yaml",
+        "src/components/**/*.yaml",
+        "src/paths/**/*.yaml",
+        "dist/**/*"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/moysklad/openapi-spec.git"
+    },
+    "bugs": {
+        "url": "https://github.com/moysklad/openapi-spec/issues"
+    },
+    "homepage": "https://github.com/moysklad/openapi-spec#readme"
+}

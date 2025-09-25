@@ -1,0 +1,38 @@
+# Node.js / npm
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+.pnpm-debug.log*
+
+# nvm
+.nvmrc
+
+# IntelliJ IDEA
+.idea/
+*.iml
+out/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Coverage / test outputs
+coverage/
+.nyc_output/
+
+# Build artifacts
+dist/
+build/
+clients/*
+.tmp/
+.cache/
+
+# Env files
+.env
+.env.local
+.env.*.local
