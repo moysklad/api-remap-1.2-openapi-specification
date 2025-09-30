@@ -4,19 +4,18 @@
     "description": "OpenAPI спецификация для МойСклад JSON API 1.2",
     "main": "src/openapi.yaml",
     "scripts": {
-        "validate": "swagger-cli validate src/openapi.yaml",
-        "bundle": "swagger-cli bundle src/openapi.yaml --outfile dist/openapi.yaml --type yaml",
-        "bundle-json": "swagger-cli bundle src/openapi.yaml --outfile dist/openapi.json --type json",
-        "docs": "redoc-cli build src/openapi.yaml --output docs/index.html",
-        "serve-docs": "redoc-cli serve src/openapi.yaml",
-        "lint": "redoc-cli lint src/openapi.yaml",
-        "generate-js": "openapi-generator-cli generate -i src/openapi.yaml -g javascript -o clients/javascript",
+        "validate": "redocly lint src/openapi.yaml",
+        "bundle": "redocly bundle src/openapi.yaml -o dist/openapi.yaml --ext yaml",
+        "bundle-json": "redocly bundle src/openapi.yaml -o dist/openapi.json --ext json",
+        "docs": "redocly build-docs src/openapi.yaml -o docs/index.html",
+        "serve-docs": "redocly preview-docs src/openapi.yaml",
         "generate-php": "openapi-generator-cli generate -i src/openapi.yaml -g php --additional-properties=phpVersion=7.4 -o clients/php -t customtemplates/php",
-        "generate-java": "openapi-generator-cli generate -i src/openapi.yaml -g java -o clients/java",
-        "generate-python": "openapi-generator-cli generate -i src/openapi.yaml -g python -o clients/python",
-        "generate-typescript": "openapi-generator-cli generate -i src/openapi.yaml -g typescript-axios -o clients/typescript",
         "build": "npm run validate && npm run bundle && npm run bundle-json && npm run docs",
         "clean": "rm -rf dist clients docs"
+    },
+    "engines": {
+        "node": ">=16.0.0",
+        "npm": ">=8.0.0"
     },
     "keywords": [
         "openapi",
@@ -28,10 +27,9 @@
     "author": "МойСклад API Team",
     "license": "MIT",
     "devDependencies": {
-        "@apidevtools/swagger-cli": "^4.0.4",
+        "@redocly/cli": "^1.0.0",
         "@openapitools/openapi-generator-cli": "^2.7.0",
-        "@stoplight/spectral-cli": "^6.11.0",
-        "redoc-cli": "^0.13.21"
+        "@stoplight/spectral-cli": "^6.11.0"
     },
     "files": [
         "src/openapi.yaml",
@@ -41,10 +39,10 @@
     ],
     "repository": {
         "type": "git",
-        "url": "https://github.com/moysklad/openapi-spec.git"
+        "url": "https://github.com/moysklad/api-remap-1.2-openapi-specification.git"
     },
     "bugs": {
-        "url": "https://github.com/moysklad/openapi-spec/issues"
+        "url": "https://github.com/moysklad/api-remap-1.2-openapi-specification/issues"
     },
-    "homepage": "https://github.com/moysklad/openapi-spec#readme"
+    "homepage": "https://github.com/moysklad/api-remap-1.2-openapi-specification#readme"
 }
