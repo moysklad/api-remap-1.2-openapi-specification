@@ -1,4 +1,5 @@
 type: object
+x-entitytype-product: true
 properties:
   meta:
     description: Метаданные Товара
@@ -19,16 +20,23 @@ properties:
     properties:
       excise:
         type: boolean
+        nullable: true
         description: Содержит акцизную марку
       type:
         type: integer
+        minimum: 0
+        nullable: true
         description: Код вида продукции
       strength:
         type: number
+        minimum: 0
+        nullable: true
         format: float
         description: Крепость
       volume:
         type: number
+        minimum: 0
+        nullable: true
         format: float
         description: Объём тары
   archived:
@@ -62,9 +70,12 @@ properties:
   description:
     type: string
     maxLength: 4096
+    nullable: true
     description: Описание товара
   vat:
     type: integer
+    minimum: 0
+    maximum: 99
     description: НДС %
   vatEnabled:
     type: boolean
@@ -98,7 +109,9 @@ properties:
     $ref: '../../../openapi.yaml#/components/schemas/Group'
   owner:
     description: Метаданные владельца (Сотрудника)
-    $ref: '../../../openapi.yaml#/components/schemas/Owner'
+    nullable: true
+    oneOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Owner'
   updated:
     type: string
     format: date-time
@@ -107,10 +120,12 @@ properties:
   weight:
     type: number
     format: float
+    minimum: 0
     description: Вес
   volume:
     type: number
     format: float
+    minimum: 0
     description: Объем
   buyPrice:
     description: Закупочная цена
@@ -122,22 +137,34 @@ properties:
       $ref: '../../../openapi.yaml#/components/schemas/SalePrice'
   supplier:
     description: Метаданные контрагента-поставщика
-    $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
+    nullable: true
+    oneOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
   country:
     description: Метаданные Страны
-    $ref: '../../../openapi.yaml#/components/schemas/Country'
+    nullable: true
+    oneOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Country'
   uom:
     description: Метаданные единиц измерения
-    $ref: '../../../openapi.yaml#/components/schemas/Uom'
+    nullable: true
+    oneOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Uom'
   productFolder:
     description: Метаданные группы Товара
-    $ref: '../../../openapi.yaml#/components/schemas/ProductFolder'
+    nullable: true
+    oneOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/ProductFolder'
   images:
     description: Массив изображений
-    $ref: '../../../openapi.yaml#/components/schemas/ImageList'
+    nullable: true
+    oneOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/ImageList'
   files:
     description: Метаданные массива Файлов
-    $ref: '../../../openapi.yaml#/components/schemas/FileList'
+    nullable: true
+    oneOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/FileList'
   barcodes:
     type: array
     description: Штрихкоды товара
@@ -150,31 +177,7 @@ properties:
       $ref: '../../../openapi.yaml#/components/schemas/Pack'
   trackingType:
     type: string
-    enum:
-      - BEER_ALCOHOL
-      - BICYCLE
-      - ELECTRONICS
-      - FOOD_SUPPLEMENT
-      - LP_CLOTHES
-      - LP_LINENS
-      - MEDICAL_DEVICES
-      - MILK
-      - NABEER
-      - NCP
-      - NOT_TRACKED
-      - OTP
-      - PERFUMERY
-      - PET_FOOD
-      - SANITIZER
-      - SEAFOOD
-      - SHOES
-      - SOFT_DRINKS
-      - TIRES
-      - TOBACCO
-      - VEGETABLE_OIL
-      - VETPHARMA
-      - WATER
-    description: Тип маркируемой продукции
+    description: Тип маркируемой продукции. Допустимые значения перечислены в константах класса
   tnved:
     type: string
     maxLength: 255
@@ -209,30 +212,10 @@ properties:
     description: Неснижаемый остаток (устаревшее)
     deprecated: true
   minimumStock:
-    type: object
     description: Неснижаемый остаток
-    properties:
-      type:
-        type: string
-        enum:
-          - ALL_WAREHOUSE_SUM
-          - ALL_WAREHOUSE_SAME
-          - WAREHOUSE_VARIED
-        description: Тип неснижаемого остатка
-      quantity:
-        type: number
-        format: float
-        description: Количество неснижаемого остатка
-      storeBalances:
-        type: object
-        description: Неснижаемые остатки по складам
-        properties:
-          meta:
-            $ref: '../common/metaList.yaml'
-          rows:
-            type: array
-            items:
-              $ref: '../../../openapi.yaml#/components/schemas/StoreBalance'
+    nullable: true
+    oneOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/MinimumStockAbstract'
   minPrice:
     description: Минимальная цена
     $ref: '../../../openapi.yaml#/components/schemas/MinPrice'
@@ -248,60 +231,13 @@ properties:
   things:
     type: array
     description: Серийные номера
+    readOnly: true
     items:
       type: string
   syncId:
     type: string
     format: uuid
     description: ID синхронизации
-    readOnly: true
   ppeType:
     type: string
-    enum:
-      - "2400001225408"
-      - "2400001225606"
-      - "2400001226108"
-      - "2400001226306"
-      - "2400001226405"
-      - "2400001323807"
-      - "2400001368105"
-      - "2400001393107"
-      - "2400001393503"
-      - "2400001393602"
-      - "2400001565306"
-      - "2400001807703"
-      - "2400001818303"
-      - "2400001857005"
-      - "2400001857203"
-      - "2400001858309"
-      - "2400001858507"
-      - "2400002015909"
-      - "2400002016005"
-      - "2400002016104"
-      - "2400002052805"
-      - "2400002052904"
-      - "2400002186203"
-      - "2400002886707"
-      - "2400002886806"
-      - "2400002984502"
-      - "2400003117107"
-      - "2400003117206"
-      - "2400003161209"
-      - "2400003207907"
-      - "2400003215308"
-      - "2400003227806"
-      - "2400003237409"
-      - "2400003263408"
-      - "2400003297700"
-      - "2400003356704"
-      - "2400003356803"
-      - "2400003356902"
-      - "2400003433108"
-      - "2400003492303"
-      - "2400003495700"
-      - "2400003495809"
-      - "2400003495908"
-      - "2400003496004"
-      - "2400003496103"
-      - "2400003675805"
-    description: Код вида номенклатурной классификации медицинских средств индивидуальной защиты
+    description: Код вида номенклатурной классификации медицинских средств индивидуальной защиты. Допустимые значения перечислены в константах класса
