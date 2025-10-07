@@ -84,7 +84,9 @@ properties:
     $ref: '../../../openapi.yaml#/components/schemas/Group'
   owner:
     description: Метаданные владельца (Сотрудника)
-    $ref: '../../../openapi.yaml#/components/schemas/Owner'
+    nullable: true
+    oneOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Owner'
   inn:
     type: string
     maxLength: 255
@@ -104,6 +106,7 @@ properties:
     properties:
       value:
         type: number
+        minimum: 0
         format: float
         description: Сумма оклада
   cashiers:
@@ -114,7 +117,9 @@ properties:
       $ref: '../../../openapi.yaml#/components/schemas/Cashier'
   image:
     description: Фотография сотрудника
-    $ref: '../../../openapi.yaml#/components/schemas/Image'
+    nullable: true
+    oneOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Image'
   attributes:
     type: array
     description: Дополнительные поля

@@ -1,8 +1,11 @@
 type: object
+required:
+  - priceType
 description: Цена продажи
 properties:
   value:
     type: number
+    minimum: 0
     format: float
     description: Значение цены
   currency:

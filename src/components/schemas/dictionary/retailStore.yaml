@@ -62,7 +62,9 @@ properties:
     $ref: '../../../openapi.yaml#/components/schemas/Group'
   owner:
     description: Метаданные владельца (сотрудника)
-    $ref: '../../../openapi.yaml#/components/schemas/Owner'
+    nullable: true
+    oneOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Owner'
   priceType:
     description: Тип цены, используемый в Точке продаж
     $ref: '../../../openapi.yaml#/components/schemas/PriceType'

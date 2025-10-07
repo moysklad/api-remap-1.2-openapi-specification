@@ -11,6 +11,7 @@ properties:
     example: "12a8b923-692c-11e6-8a84-bae500000057"
   name:
     type: string
+    maxLength: 255
     description: Наименование статуса
     example: "Новый"
   accountId:

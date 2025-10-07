@@ -5,10 +5,12 @@ properties:
     type: string
     format: uuid
     description: ID позиции неснижаемого остатка
+    readonly: true
   accountId:
     type: string
     format: uuid
     description: ID учетной записи
+    readonly: true
   meta:
     $ref: '../common/meta.yaml'
   store:
@@ -16,4 +18,5 @@ properties:
   quantity:
     type: number
     format: float
+    minimum: 0
     description: Количество неснижаемого остатка для склада

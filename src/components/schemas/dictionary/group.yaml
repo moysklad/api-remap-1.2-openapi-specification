@@ -21,5 +21,6 @@ properties:
     example: "Отдел продаж"
   index:
     type: integer
+    minimum: 0
     description: Порядковый номер в списке групп
     example: 1

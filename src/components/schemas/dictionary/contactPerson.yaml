@@ -40,4 +40,5 @@ properties:
     description: Внешний код контактного лица
   agent:
     description: Ссылка на контрагента-владельца счета
+    readOnly: true
     $ref: '../../../openapi.yaml#/components/schemas/Counterparty'

@@ -3,6 +3,7 @@ description: Минимальная цена
 properties:
   value:
     type: number
+    minimum: 0
     format: float
     description: Значение цены
   currency:
