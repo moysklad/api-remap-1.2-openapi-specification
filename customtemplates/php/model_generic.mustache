@@ -1,7 +1,7 @@
 class {{classname}} {{#parentSchema}}extends {{{parent}}}{{/parentSchema}}{{^parentSchema}}implements ModelInterface, ArrayAccess, \JsonSerializable{{/parentSchema}}
 {
     public const DISCRIMINATOR = {{#discriminator}}'{{discriminatorName}}'{{/discriminator}}{{^discriminator}}null{{/discriminator}};
-
+{{>model_constant}}
     /**
       * The original name of the model.
       *
