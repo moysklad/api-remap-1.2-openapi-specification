@@ -1,0 +1,14 @@
+type: object
+allOf:
+  - $ref: '../../../openapi.yaml#/components/schemas/MinimumStockAbstract'
+properties:
+  type:
+    type: string
+    default: ALL_WAREHOUSE_SAME
+    enum: [ALL_WAREHOUSE_SAME]
+    readonly: true
+  quantity:
+    type: number
+    format: float
+    minimum: 0
+    description: Количество неснижаемого остатка

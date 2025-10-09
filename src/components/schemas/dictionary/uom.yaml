@@ -22,6 +22,7 @@ properties:
   description:
     type: string
     maxLength: 4096
+    nullable: true
     description: Описание единицы измерения
     example: "Штука"
   code:
@@ -34,7 +35,9 @@ properties:
     $ref: '../../../openapi.yaml#/components/schemas/Group'
   owner:
     description: Метаданные владельца (Сотрудника)
-    $ref: '../../../openapi.yaml#/components/schemas/Owner'
+    nullable: true
+    oneOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Owner'
   updated:
     type: string
     format: date-time

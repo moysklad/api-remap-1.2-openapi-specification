@@ -16,12 +16,15 @@ properties:
     readOnly: true
   name:
     type: string
+    maxLength: 255
     description: Наименование Региона
   code:
     type: string
+    maxLength: 255
     description: Код Региона
   externalCode:
     type: string
+    maxLength: 255
     description: Внешний код Региона
   updated:
     type: string

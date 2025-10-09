@@ -137,7 +137,9 @@ properties:
     $ref: '../../../openapi.yaml#/components/schemas/Group'
   owner:
     description: Метаданные владельца (Сотрудника)
-    $ref: '../../../openapi.yaml#/components/schemas/Owner'
+    nullable: true
+    oneOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Owner'
   salesAmount:
     type: integer
     description: Сумма продаж

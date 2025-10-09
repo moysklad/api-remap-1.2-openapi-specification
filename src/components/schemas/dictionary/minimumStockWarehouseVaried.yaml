@@ -1,0 +1,13 @@
+type: object
+allOf:
+  - $ref: '../../../openapi.yaml#/components/schemas/MinimumStockAbstract'
+properties:
+  type:
+    type: string
+    default: WAREHOUSE_VARIED
+    enum: [WAREHOUSE_VARIED]
+    readonly: true
+  storeBalances:
+    type: object
+    description: Неснижаемые остатки по складам
+    $ref: '../../../openapi.yaml#/components/schemas/StoreBalanceList'

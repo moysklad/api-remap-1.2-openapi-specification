@@ -102,6 +102,14 @@ components:
       $ref: './components/schemas/common/image.yaml'
     ImageList:
       $ref: './components/schemas/common/imageList.yaml'
+    MinimumStockAbstract:
+      $ref: './components/schemas/dictionary/minimumStockAbstract.yaml'
+    MinimumStockAllWarehouseSame:
+      $ref: './components/schemas/dictionary/minimumStockAllWarehouseSame.yaml'
+    MinimumStockAllWarehouseSum:
+      $ref: './components/schemas/dictionary/minimumStockAllWarehouseSum.yaml'
+    MinimumStockWarehouseVaried:
+      $ref: './components/schemas/dictionary/minimumStockWarehouseVaried.yaml'
     MinPrice:
       $ref: './components/schemas/dictionary/minPrice.yaml'
     Note:
@@ -128,6 +136,8 @@ components:
       $ref: './components/schemas/dictionary/store.yaml'
     StoreBalance:
       $ref: './components/schemas/dictionary/storeBalance.yaml'
+    StoreBalanceList:
+      $ref: './components/schemas/dictionary/storeBalanceList.yaml'
     Uom:
       $ref: './components/schemas/dictionary/uom.yaml'
 

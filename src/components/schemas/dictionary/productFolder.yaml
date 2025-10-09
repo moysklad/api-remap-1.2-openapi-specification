@@ -39,9 +39,12 @@ properties:
   description:
     type: string
     maxLength: 4096
+    nullable: true
     description: Описание группы товаров
   vat:
     type: integer
+    minimum: 0
+    maximum: 99
     description: НДС %
     example: 20
   vatEnabled:
@@ -70,7 +73,9 @@ properties:
     $ref: '../../../openapi.yaml#/components/schemas/Group'
   owner:
     description: Владелец группы товаров. Может быть Meta объектом или полным объектом в зависимости от expand параметра
-    $ref: '../../../openapi.yaml#/components/schemas/Owner'
+    nullable: true
+    oneOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Owner'
   updated:
     type: string
     format: date-time
@@ -78,7 +83,9 @@ properties:
     readOnly: true
   productFolder:
     description: Родительская группа товаров
-    $ref: '../../../openapi.yaml#/components/schemas/ProductFolder'
+    nullable: true
+    oneOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/ProductFolder'
   taxSystem:
     type: string
     enum:

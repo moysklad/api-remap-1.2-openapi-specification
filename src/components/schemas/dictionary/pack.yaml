@@ -11,6 +11,7 @@ properties:
     $ref: '../../../openapi.yaml#/components/schemas/Uom'
   quantity:
     type: number
+    minimum: 0
     format: float
     description: Количество товаров в упаковке
   barcodes:
