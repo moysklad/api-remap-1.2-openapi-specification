@@ -1,0 +1,11 @@
+type: array
+description: Массив мета-объектов для массового удаления сущностей
+minItems: 1
+maxItems: 1000
+items:
+  type: object
+  required:
+    - meta
+  properties:
+    meta:
+      $ref: './meta.yaml'

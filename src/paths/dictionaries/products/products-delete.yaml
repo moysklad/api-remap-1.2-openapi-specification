@@ -1,0 +1,31 @@
+post:
+  tags:
+    - Products
+  summary: Удалить товары
+  description: Массовое удаление товаров по их мета-объектам.
+  parameters:
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../openapi.yaml#/components/schemas/MetaArray'
+  responses:
+    '200':
+      description: Товары успешно удалены
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/DeleteResponse'
+    '400':
+      $ref: '../../../components/responses.yaml#/BadRequest'
+    '401':
+      $ref: '../../../components/responses.yaml#/Unauthorized'
+    '403':
+      $ref: '../../../components/responses.yaml#/Forbidden'
+    '404':
+      $ref: '../../../components/responses.yaml#/NotFound'
+    '409':
+      $ref: '../../../components/responses.yaml#/Conflict'
