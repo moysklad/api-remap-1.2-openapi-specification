@@ -29,8 +29,8 @@ get:
 post:
   tags:
     - Products
-  summary: Создать товар
-  description: Создание нового товара
+  summary: Создать товар(ы)
+  description: Создание одного или нескольких товаров.
   parameters:
     - $ref: '../../../components/parameters.yaml#/expand'
     - $ref: '../../../components/headers.yaml#/AcceptHeader'
@@ -40,14 +40,18 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../../../components/schemas/dictionary/product.yaml'
+          oneOf:
+            - $ref: '../../../components/schemas/dictionary/product.yaml'
+            - $ref: '../../../components/schemas/dictionary/productArray.yaml'
   responses:
     '200':
-      description: Товар успешно создан
+      description: Товар(ы) успешно создан(ы)
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/product.yaml'
+            oneOf:
+              - $ref: '../../../components/schemas/dictionary/product.yaml'
+              - $ref: '../../../components/schemas/dictionary/productArray.yaml'
     '400':
       $ref: '../../../components/responses.yaml#/BadRequest'
     '401':

@@ -36,9 +36,8 @@ paths:
     $ref: './paths/dictionaries/products/products.yaml'
   /entity/product/{id}:
     $ref: './paths/dictionaries/products/product-by-id.yaml'
-#TODO пока закоментил, работа с массовым эндпоинтом будет сделана отдельной задачей
-#  /entity/product/delete:
-#    $ref: './paths/dictionaries/products/products-delete.yaml'
+  /entity/product/delete:
+    $ref: './paths/dictionaries/products/products-delete.yaml'
   /entity/product/metadata:
     $ref: './paths/common/metadata/metadata.yaml'
 
@@ -78,6 +77,10 @@ components:
       $ref: './components/schemas/common/attributeText.yaml'
     Barcode:
       $ref: './components/schemas/dictionary/barcode.yaml'
+    MetaArray:
+      $ref: './components/schemas/common/metaArray.yaml'
+    DeleteResponse:
+      $ref: './components/schemas/common/deleteResponse.yaml'
     BuyPrice:
       $ref: './components/schemas/dictionary/buyPrice.yaml'
     Cashier:
