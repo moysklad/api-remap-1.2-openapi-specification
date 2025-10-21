@@ -40,18 +40,14 @@ post:
     content:
       application/json:
         schema:
-          oneOf:
-            - $ref: '../../../components/schemas/dictionary/product.yaml'
-            - $ref: '../../../components/schemas/dictionary/productArray.yaml'
+          $ref: '../../../components/schemas/dictionary/product.yaml'
   responses:
     '200':
       description: Товар(ы) успешно создан(ы)
       content:
         application/json:
           schema:
-            oneOf:
-              - $ref: '../../../components/schemas/dictionary/product.yaml'
-              - $ref: '../../../components/schemas/dictionary/productArray.yaml'
+            $ref: '../../../components/schemas/dictionary/product.yaml'
     '400':
       $ref: '../../../components/responses.yaml#/BadRequest'
     '401':

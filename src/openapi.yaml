@@ -38,6 +38,8 @@ paths:
     $ref: './paths/dictionaries/products/product-by-id.yaml'
   /entity/product/delete:
     $ref: './paths/dictionaries/products/products-delete.yaml'
+  /entity/product/batch:
+    $ref: './paths/dictionaries/products/products-batch.yaml'
   /entity/product/metadata:
     $ref: './paths/common/metadata/metadata.yaml'
 
@@ -77,10 +79,8 @@ components:
       $ref: './components/schemas/common/attributeText.yaml'
     Barcode:
       $ref: './components/schemas/dictionary/barcode.yaml'
-    MetaArray:
-      $ref: './components/schemas/common/metaArray.yaml'
-    DeleteResponse:
-      $ref: './components/schemas/common/deleteResponse.yaml'
+    DeleteInfo:
+      $ref: './components/schemas/common/deleteInfo.yaml'
     BuyPrice:
       $ref: './components/schemas/dictionary/buyPrice.yaml'
     Cashier:
