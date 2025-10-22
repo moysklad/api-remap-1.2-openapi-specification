@@ -1,5 +1,0 @@
-type: array
-items:
-  $ref: '../../../openapi.yaml#/components/schemas/Product'
-minItems: 1
-maxItems: 1000

@@ -14,6 +14,8 @@ post:
           type: array
           items:
             $ref: '../../../openapi.yaml#/components/schemas/Product'
+          minItems: 1
+          maxItems: 1000
   responses:
     '200':
       description: Товары успешно удалены
@@ -23,6 +25,8 @@ post:
             type: array
             items:
               $ref: '../../../openapi.yaml#/components/schemas/DeleteInfo'
+            minItems: 1
+            maxItems: 1000
     '400':
       $ref: '../../../components/responses.yaml#/BadRequest'
     '401':

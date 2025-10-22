@@ -29,8 +29,8 @@ get:
 post:
   tags:
     - Products
-  summary: Создать товар(ы)
-  description: Создание одного или нескольких товаров.
+  summary: Создать товар
+  description: Создание нового товара
   parameters:
     - $ref: '../../../components/parameters.yaml#/expand'
     - $ref: '../../../components/headers.yaml#/AcceptHeader'
@@ -43,7 +43,7 @@ post:
           $ref: '../../../components/schemas/dictionary/product.yaml'
   responses:
     '200':
-      description: Товар(ы) успешно создан(ы)
+      description: Товар успешно создан
       content:
         application/json:
           schema:

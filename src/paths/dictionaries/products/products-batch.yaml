@@ -1,8 +1,8 @@
 post:
   tags:
     - Products
-  summary: Создать товар(ы)
-  description: Создание одного или нескольких товаров.
+  summary: Создать или изменить товары
+  description: Создание или изменение нескольких товаров.
   parameters:
     - $ref: '../../../components/parameters.yaml#/expand'
     - $ref: '../../../components/headers.yaml#/AcceptHeader'
@@ -19,7 +19,7 @@ post:
           maxItems: 1000
   responses:
     '200':
-      description: Товар(ы) успешно создан(ы)
+      description: Товары успешно созданы или изменены
       content:
         application/json:
           schema:
