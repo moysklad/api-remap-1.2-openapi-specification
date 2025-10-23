@@ -1,0 +1,29 @@
+check-env:
+  stage: verify
+  script:
+    - |
+      set -euo pipefail
+      
+      echo "🔍 Проверка переменных окружения..."
+      env_missing=0
+      
+      if [ "$API_HOST" = "https://api-.testms-test.lognex.ru" ]; then
+        echo "❌ ОШИБКА: Не задано окружение. Необходимо задать окружение через переменную API_NAMESPACE, либо напрямую адрес хоста через переменную API_HOST"
+        env_missing=1
+      else
+        echo "✅ API_HOST - OK"
+      fi
+      
+      for var in API_LOGIN API_PASSWORD; do
+        value="$(printenv "$var" || true)"
+        if [ -z "$value" ]; then
+          echo "❌ ОШИБКА: Не задана обязательная переменная $var"
+          env_missing=1
+        else
+          echo "✅ $var - OK"
+        fi
+      done
+      
+      if [ $env_missing -eq 1 ]; then
+        exit 1
+      fi

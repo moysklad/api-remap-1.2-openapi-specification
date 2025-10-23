@@ -1,66 +1,25 @@
-image: $GLOBAL_DOCKER_URL/maven:3.4-release
-
 workflow:
   name: '$PROJECT1_PIPELINE_NAME'
   rules:
-    - if: '$BRANCH != "release" && $CI_PIPELINE_SOURCE == "web"'
-      variables:
-        PROJECT1_PIPELINE_NAME: 'Feature $BRANCH pipeline'
-    - if: '$BRANCH == "release" && $CI_PIPELINE_SOURCE == "web"'
-      variables:
-        PROJECT1_PIPELINE_NAME: 'Release pipeline'
+    PROJECT1_PIPELINE_NAME: 'Release pipeline'
 
 stages:
-  - build
+  - verify
+  - prepare
+  - test
+  - publish
 
 variables:
   MAVEN_CLI_OPTS: "--batch-mode"
+  JAVA_SDR_REPO_URL: "https://github.com/moysklad/java-remap-sdk-1.2.git"
+  PHP_SDR_REPO_URL: "https://github.com/moysklad/php-remap-1.2-sdk.git"
+  MAVEN_IMAGE_VERSION: "5.3-release"
+  COMPOSER_IMAGE_VERSION: "2.7"
+  API_HOST: "https://api-$API_NAMESPACE.testms-test.lognex.ru"
 
-build-for-tests:
-  stage: build
-  rules:
-    - if: '$BRANCH != "release"'
-  before_script:
-    - rm -f /etc/apt/sources.list.d/*pgdg*.list || true
-    - apt-get update
-    - apt-get install -y --no-install-recommends git
-    - git clone https://github.com/moysklad/java-remap-sdk-1.2.git
-    - cd java-remap-sdk-1.2
-    - export TZ='Europe/Moscow'
-  script:
-    - if [ -z "$BRANCH" ]; then
-        BRANCH='master';
-      fi
-    - git checkout $BRANCH;
-    - ARTEFACT_VERSION="${BRANCH}-${CI_PIPELINE_ID}"
-    - mvn versions:set -DnewVersion=$ARTEFACT_VERSION -DgenerateBackupPoms=false;
-    - mvn $MAVEN_CLI_OPTS -Ppublishing-artifactory clean deploy -DartifactoryRepo=${ARTIFACTORY_REPO_URL};
-    - echo "Complete. Version $ARTEFACT_VERSION"
-
-deploy-to-maven:
-  stage: build
-  rules:
-    - if: '$BRANCH == "release"'
-  before_script:
-    - rm -f /etc/apt/sources.list.d/*pgdg*.list || true
-    - echo "$GPG_SECRET_KEY" | gpg --import
-    - apt-get update
-    - apt-get install -y --no-install-recommends git
-    - git clone https://github.com/moysklad/java-remap-sdk-1.2.git
-    - cd java-remap-sdk-1.2
-    - export TZ='Europe/Moscow'
-  script:
-    - |
-      echo "Adding the ossrh server inside <servers> section"
-        sed -i '/<servers>/a \
-        <server>\
-          <id>central</id>\
-          <username>${CENTRAL_USER}</username>\
-          <password>${CENTRAL_PASSWORD}</password>\
-        </server>' ~/.m2/settings.xml
-
-    - git checkout master
-    - git config user.name "$GIT_USER"
-    - git config user.email "$GIT_MAIL"
-    - mvn $MAVEN_CLI_OPTS -Dusername=$GIT_USER -Dpassword=$GIT_PASSWORD -Ppublishing-central release:prepare
-    - mvn -Ppublishing-central release:perform
+include:
+  - local: gitlab/common.gitlab-ci.yml
+  - local: gitlab/verify.gitlab-ci.yml
+  - local: gitlab/prepare.gitlab-ci.yml
+  - local: gitlab/test.gitlab-ci.yml
+  - local: gitlab/publish.gitlab-ci.yml

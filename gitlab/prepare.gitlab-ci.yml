@@ -1,0 +1,38 @@
+prepare-java-sdk:
+  extends: .common-java
+  stage: prepare
+  script:
+    - rm -f /etc/apt/sources.list.d/*pgdg*.list || true
+    - echo "$GPG_SECRET_KEY" | gpg --import
+    - apt-get update
+    - apt-get install -y --no-install-recommends git
+    - git clone "$JAVA_SDR_REPO_URL"
+    - cd java-remap-sdk-1.2
+    - if [ -z "$BRANCH" ]; then
+      BRANCH='master';
+      fi
+    - git checkout "$BRANCH"
+    - export TZ='Europe/Moscow'
+  artifacts:
+    paths:
+      - java-remap-sdk-1.2/
+    expire_in: 2 hour
+
+
+prepare-php-sdk:
+  extends: .common-php
+  stage: prepare
+  script:
+    - apt-get update -yqq && apt-get install -yqq unzip libzip-dev zip git
+    - git clone "$PHP_SDR_REPO_URL"
+    - cd php-remap-1.2-sdk
+    - if [ -z "$BRANCH" ]; then
+      BRANCH='master';
+      fi
+    - git checkout "$BRANCH"
+    - export TZ='Europe/Moscow'
+    - composer install --no-interaction --no-progress --prefer-dist --optimize-autoloader
+  artifacts:
+    paths:
+      - php-remap-1.2-sdk/
+    expire_in: 2 hour

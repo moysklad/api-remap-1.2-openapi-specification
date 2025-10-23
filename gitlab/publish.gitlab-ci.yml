@@ -1,0 +1,35 @@
+publish-java-sdk:
+  extends: .common-java
+  stage: publish
+  needs:
+    - test-java-sdk
+  script:
+    - cd java-remap-sdk-1.2
+    - ARTEFACT_VERSION="${BRANCH}-${CI_PIPELINE_ID}"
+    - mvn versions:set -DnewVersion=$ARTEFACT_VERSION -DgenerateBackupPoms=false;
+    - mvn $MAVEN_CLI_OPTS -Ppublishing-artifactory clean deploy -DartifactoryRepo=${ARTIFACTORY_REPO_URL};
+    - echo "Complete. Version $ARTEFACT_VERSION"
+
+
+publish-java-sdk-to-maven:
+  extends: .common-java
+  stage: publish
+  rules:
+    - if: '$BRANCH == "release"'
+  needs:
+    - test-java-sdk
+  script:
+    - |
+      echo "Adding the ossrh server inside <servers> section"
+        sed -i '/<servers>/a \
+        <server>\
+          <id>central</id>\
+          <username>${CENTRAL_USER}</username>\
+          <password>${CENTRAL_PASSWORD}</password>\
+        </server>' ~/.m2/settings.xml
+
+    - git checkout master
+    - git config user.name "$GIT_USER"
+    - git config user.email "$GIT_MAIL"
+    - mvn $MAVEN_CLI_OPTS -Dusername=$GIT_USER -Dpassword=$GIT_PASSWORD -Ppublishing-central release:prepare
+    - mvn -Ppublishing-central release:perform
