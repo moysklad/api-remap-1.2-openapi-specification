@@ -45,6 +45,7 @@ jobs:
           rsync -a --delete clients/php/ sdk-repo/
 
       - name: Commit & push to external repo
+        id: push_sdk                      # ← добавили id
         working-directory: sdk-repo
         env:
           SDK_BRANCH: ${{ github.ref_name }}
@@ -53,28 +54,29 @@ jobs:
           git config user.name  "sdk-bot"
           git config user.email "sdk-bot@users.noreply.github.com"
 
-          # Создаём ветку
           git checkout -B "${SDK_BRANCH}"
-
-          # Добавляем все изменения (если .gitignore мешает — форсим)
           git add -A
           if git diff --staged --quiet; then
             echo "No changes to commit in SDK repository"
+            echo "did_push=false" >> "$GITHUB_OUTPUT"   # ← флаг
             exit 0
           fi
 
           git commit -m "Auto-generated PHP SDK from OpenAPI specification"
-          git push origin "${SDK_BRANCH}"
+          git push --set-upstream origin "${SDK_BRANCH}"
+          echo "did_push=true" >> "$GITHUB_OUTPUT"      # ← флаг
 
       - name: Create pull request in external repo
-        if: success()    # только если был пуш новой ветки
+        if: steps.push_sdk.outputs.did_push == 'true'    # ← запускаем PR только если был пуш
         working-directory: sdk-repo
         env:
-          GH_TOKEN: ${{ secrets.SDK_REPO_TOKEN }}   # gh использует GH_TOKEN
+          GH_TOKEN: ${{ secrets.SDK_REPO_TOKEN }}        # gh использует GH_TOKEN
           SDK_BRANCH: ${{ github.ref_name }}
+          SDK_REPO: moysklad/php-remap-1.2-sdk
         run: |
           set -e
           gh pr create \
+            --repo "$SDK_REPO"                           # ← явно целевой репозиторий
             --title "Auto-generated SDK update" \
             --body "This PR contains auto-generated SDK updates from the OpenAPI specification." \
             --base main \
