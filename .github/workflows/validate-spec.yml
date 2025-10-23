@@ -1,0 +1,41 @@
+name: Validate OpenAPI Specification
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Validate OpenAPI specification
+      run: npm run validate
+
+    - name: Bundle specification
+      run: |
+        npm run bundle
+        npm run bundle-json
+
+    - name: Check bundled files
+      run: |
+        if [ -f "dist/openapi.yaml" ] && [ -f "dist/openapi.json" ]; then
+          echo "✅ Bundled files created successfully"
+        else
+          echo "❌ Bundled files not found"
+          exit 1
+        fi
