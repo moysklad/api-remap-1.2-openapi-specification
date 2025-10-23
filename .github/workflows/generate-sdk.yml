@@ -11,80 +11,78 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - name: Checkout specification repository
-      uses: actions/checkout@v4
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        fetch-depth: 0
+      - name: Checkout specification repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18'
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
 
-    - name: Install dependencies
-      run: npm install
+      - name: Install dependencies
+        run: npm install
 
-    - name: Validate OpenAPI specification
-      run: npm run validate
-      continue-on-error: true #Убрать, как устраним проблемы валидации
+      - name: Validate OpenAPI specification
+        run: npm run validate
+        continue-on-error: true  # TODO: убрать, когда почините валидацию
 
-    - name: Generate PHP SDK
-      run: npm run generate-php
+      - name: Generate PHP SDK
+        run: npm run generate-php
 
-    - name: Setup Git
-      run: |
-        git config --global user.name "${{ github.actor }}"
-        git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+      - name: Prepare SDK branch name
+        id: prep
+        run: |
+          SDK_BRANCH="${{ github.ref_name }}
+          echo "SDK_BRANCH=$SDK_BRANCH" >> $GITHUB_ENV
+          echo "branch=$SDK_BRANCH" >> $GITHUB_OUTPUT
 
-    - name: Create SDK branch
-      run: |
-        SDK_BRANCH="sdk-$(date +%Y%m%d-%H%M%S)"
-        echo "SDK_BRANCH=$SDK_BRANCH" >> $GITHUB_ENV
-        git checkout -b $SDK_BRANCH
+      - name: Clone external SDK repository
+        env:
+          SDK_REPO: moysklad/php-remap-1.2-sdk
+          SDK_REPO_TOKEN: ${{ secrets.SDK_REPO_TOKEN }}   # PAT с правами на SDK-репозиторий
+        run: |
+          set -e
+          git clone "https://x-access-token:${SDK_REPO_TOKEN}@github.com/${SDK_REPO}.git" sdk-repo
 
-    - name: Commit generated SDK
-      run: |
-        git add clients/php/
-        if git diff --staged --quiet; then
-          echo "No changes to commit"
-        else
+      - name: Copy generated SDK into external repo
+        run: |
+          set -e
+          rsync -a --delete clients/php/ sdk-repo/
+
+      - name: Commit & push to external repo
+        working-directory: sdk-repo
+        env:
+          SDK_BRANCH: ${{ env.SDK_BRANCH }}
+        run: |
+          set -e
+          git config user.name  "sdk-bot"
+          git config user.email "sdk-bot@users.noreply.github.com"
+
+          # Создаём ветку
+          git checkout -b "${SDK_BRANCH}"
+
+          # Добавляем все изменения (если .gitignore мешает — форсим)
+          git add -A
+          if git diff --staged --quiet; then
+            echo "No changes to commit in SDK repository"
+            exit 0
+          fi
+
           git commit -m "Auto-generated PHP SDK from OpenAPI specification"
-        fi
+          git push origin "${SDK_BRANCH}"
 
-    - name: Push SDK branch
-      run: |
-        git push origin $SDK_BRANCH
-
-    - name: Create SDK repository branch
-      run: |
-        SDK_REPO="moysklad/php-remap-1.2-sdk"
-        SDK_BRANCH="${{ env.SDK_BRANCH }}"
-        
-        # Clone SDK repository
-        git clone https://github.com/$SDK_REPO.git sdk-repo
-        cd sdk-repo
-        
-        # Create and checkout new branch
-        git checkout -b $SDK_BRANCH
-        
-        # Copy generated files
-        cp -r ../clients/php/* .
-        
-        # Add and commit changes
-        git add .
-        if git diff --staged --quiet; then
-          echo "No changes to commit in SDK repository"
-        else
-          git commit -m "Update SDK from specification repository"
-          git push origin $SDK_BRANCH
-          
-          # Create pull request
+      - name: Create pull request in external repo
+        if: success()    # только если был пуш новой ветки
+        working-directory: sdk-repo
+        env:
+          GH_TOKEN: ${{ secrets.SDK_REPO_TOKEN }}   # gh использует GH_TOKEN
+          SDK_BRANCH: ${{ env.SDK_BRANCH }}
+        run: |
+          set -e
           gh pr create \
             --title "Auto-generated SDK update" \
             --body "This PR contains auto-generated SDK updates from the OpenAPI specification." \
             --base main \
-            --head $SDK_BRANCH
-        fi
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            --head "${SDK_BRANCH}"
