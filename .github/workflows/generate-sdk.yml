@@ -31,53 +31,50 @@ jobs:
       - name: Generate PHP SDK
         run: npm run generate-php
 
-      - name: Clone external SDK repository
-        env:
-          SDK_REPO: moysklad/php-remap-1.2-sdk
-          SDK_REPO_TOKEN: ${{ secrets.SDK_REPO_TOKEN }}   # PAT с правами на SDK-репозиторий
-        run: |
-          set -e
-          git clone "https://x-access-token:${SDK_REPO_TOKEN}@github.com/${SDK_REPO}.git" sdk-repo
-
-      - name: Copy generated SDK into external repo
-        run: |
-          set -e
-          rsync -a --delete clients/php/ sdk-repo/
-
-      - name: Commit & push to external repo
-        id: push_sdk                      # ← добавили id
-        working-directory: sdk-repo
+      - name: Clone → Copy → Commit/Push → PR (one step)
+        shell: bash
         env:
           SDK_BRANCH: ${{ github.ref_name }}
         run: |
-          set -e
-          git config user.name  "sdk-bot"
-          git config user.email "sdk-bot@users.noreply.github.com"
-
-          git checkout -B "${SDK_BRANCH}"
-          git add -A
-          if git diff --staged --quiet; then
-            echo "No changes to commit in SDK repository"
-            echo "did_push=false" >> "$GITHUB_OUTPUT"   # ← флаг
+          set -euo pipefail
+          
+          echo "::group::Clone external SDK repo"
+          git clone "https://x-access-token:${SDK_REPO_TOKEN}@github.com/${SDK_REPO}.git" sdk-repo
+          echo "::endgroup::"
+          
+          echo "::group::Copy generated SDK into external repo"
+          if [ ! -d "clients/php" ]; then
+            echo "Directory clients/php not found. Nothing to sync."
             exit 0
           fi
-
+          rsync -a --delete "clients/php/" "sdk-repo/"
+          echo "::endgroup::"
+          
+          echo "::group::Commit & push"
+          cd sdk-dopeo
+          git config user.name  "sdk-bot"
+          git config user.email "sdk-bot@users.noreply.github.com"
+          git checkout -B "${SDK_BRANCH}"
+          git add -A
+          
+          if git diff --staged --quiet; then
+            echo "No changes to commit in SDK repository. Skipping push & PR."
+            exit 0
+          fi
+          
           git commit -m "Auto-generated PHP SDK from OpenAPI specification"
           git push --set-upstream origin "${SDK_BRANCH}"
-          echo "did_push=true" >> "$GITHUB_OUTPUT"      # ← флаг
-
-      - name: Create pull request in external repo
-        if: steps.push_sdk.outputs.did_push == 'true'    # ← запускаем PR только если был пуш
-        working-directory: sdk-repo
-        env:
-          GH_TOKEN: ${{ secrets.SDK_REPO_TOKEN }}        # gh использует GH_TOKEN
-          SDK_BRANCH: ${{ github.ref_name }}
-          SDK_REPO: moysklad/php-remap-1.2-sdk
-        run: |
-          set -e
+          echo "::endgroup::"
+          
+          echo "::group::Create pull request"
+          # Аутентифицируем gh (на раннерах уже установлен)
+          echo "${GHUTOKEN:-$GH_TOKEN}" | gh auth login --with-token
+          # Если PR уже есть — не падать
+          gh pr view --repo "$SDK_REPO" "${SDK_BRANCH}" >/dev/null 2>&1 || \
           gh pr create \
-            --repo "$SDK_REPO"                           # ← явно целевой репозиторий
+            --repo "$SDK_REPO" \
             --title "Auto-generated SDK update" \
             --body "This PR contains auto-generated SDK updates from the OpenAPI specification." \
             --base main \
             --head "${SDK_BRANCH}"
+          echo "::endgroup::"
