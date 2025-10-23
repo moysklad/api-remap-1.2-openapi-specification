@@ -54,7 +54,7 @@ jobs:
           git config user.email "sdk-bot@users.noreply.github.com"
 
           # Создаём ветку
-          git checkout -b "${SDK_BRANCH}"
+          git checkout -B "${SDK_BRANCH}"
 
           # Добавляем все изменения (если .gitignore мешает — форсим)
           git add -A
