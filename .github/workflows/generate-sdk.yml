@@ -39,7 +39,7 @@ jobs:
           set -euo pipefail
           
           echo "::group::Clone external SDK repo"
-          git clone "https://x-access-token:${SDK_REPO_TOKEN}@github.com/${SDK_REPO}.git" sdk-repo
+          git clone "https://github.com/moysklad/php-remap-1.2-sdk.git" sdk-repo
           echo "::endgroup::"
           
           echo "::group::Copy generated SDK into external repo"
@@ -51,7 +51,7 @@ jobs:
           echo "::endgroup::"
           
           echo "::group::Commit & push"
-          cd sdk-dopeo
+          cd sdk-repo
           git config user.name  "sdk-bot"
           git config user.email "sdk-bot@users.noreply.github.com"
           git checkout -B "${SDK_BRANCH}"
