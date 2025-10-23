@@ -31,13 +31,6 @@ jobs:
       - name: Generate PHP SDK
         run: npm run generate-php
 
-      - name: Prepare SDK branch name
-        id: prep
-        run: |
-          SDK_BRANCH="${{ github.ref_name }}
-          echo "SDK_BRANCH=$SDK_BRANCH" >> $GITHUB_ENV
-          echo "branch=$SDK_BRANCH" >> $GITHUB_OUTPUT
-
       - name: Clone external SDK repository
         env:
           SDK_REPO: moysklad/php-remap-1.2-sdk
@@ -54,7 +47,7 @@ jobs:
       - name: Commit & push to external repo
         working-directory: sdk-repo
         env:
-          SDK_BRANCH: ${{ env.SDK_BRANCH }}
+          SDK_BRANCH: ${{ github.ref_name }}
         run: |
           set -e
           git config user.name  "sdk-bot"
@@ -78,7 +71,7 @@ jobs:
         working-directory: sdk-repo
         env:
           GH_TOKEN: ${{ secrets.SDK_REPO_TOKEN }}   # gh использует GH_TOKEN
-          SDK_BRANCH: ${{ env.SDK_BRANCH }}
+          SDK_BRANCH: ${{ github.ref_name }}
         run: |
           set -e
           gh pr create \
