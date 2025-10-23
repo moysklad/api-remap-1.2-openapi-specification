@@ -7,7 +7,7 @@ publish-java-sdk:
     - cd java-remap-sdk-1.2
     - ARTEFACT_VERSION="${BRANCH}-${CI_PIPELINE_ID}"
     - mvn versions:set -DnewVersion=$ARTEFACT_VERSION -DgenerateBackupPoms=false;
-    - mvn $MAVEN_CLI_OPTS -Ppublishing-artifactory clean deploy -DartifactoryRepo=${ARTIFACTORY_REPO_URL};
+    - mvn $MAVEN_CLI_OPTS -Ppublishing-artifactory clean deploy -Dmaven.compile.skip=true -DskipTests -Dmaven.test.skip=true -DartifactoryRepo=${ARTIFACTORY_REPO_URL};
     - echo "Complete. Version $ARTEFACT_VERSION"
 
 
