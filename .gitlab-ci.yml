@@ -16,8 +16,8 @@ stages:
 
 variables:
   MAVEN_CLI_OPTS: "--batch-mode"
-  JAVA_SDR_REPO_URL: "https://github.com/moysklad/java-remap-sdk-1.2.git"
-  PHP_SDR_REPO_URL: "https://github.com/moysklad/php-remap-1.2-sdk.git"
+  JAVA_SDK_REPO_URL: "https://github.com/moysklad/java-remap-sdk-1.2.git"
+  PHP_SDK_REPO_URL: "https://github.com/moysklad/php-remap-1.2-sdk.git"
   MAVEN_IMAGE_VERSION: "3.4-release"
   COMPOSER_IMAGE_VERSION: "2.7"
   API_HOST: "https://api-$API_NAMESPACE.testms-test.lognex.ru"
