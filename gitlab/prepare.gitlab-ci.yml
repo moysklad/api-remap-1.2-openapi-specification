@@ -23,7 +23,6 @@ prepare-php-sdk:
   extends: .common-php
   stage: prepare
   script:
-    - apt-get update -yqq && apt-get install -yqq unzip libzip-dev zip git
     - git clone --depth 1 "$PHP_SDK_REPO_URL"
     - cd php-remap-1.2-sdk
     - if [ -z "$BRANCH" ]; then
