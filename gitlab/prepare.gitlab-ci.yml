@@ -6,12 +6,11 @@ prepare-java-sdk:
     - echo "$GPG_SECRET_KEY" | gpg --import
     - apt-get update
     - apt-get install -y --no-install-recommends git
-    - git clone --depth 1 "$JAVA_SDK_REPO_URL"
-    - cd java-remap-sdk-1.2
     - if [ -z "$BRANCH" ]; then
-      BRANCH='master';
+        BRANCH='master';
       fi
-    - git checkout "$BRANCH"
+    - git clone --branch "$BRANCH" --depth 1 "$JAVA_SDK_REPO_URL"
+    - cd java-remap-sdk-1.2
     - export TZ='Europe/Moscow'
   artifacts:
     paths:
@@ -23,12 +22,11 @@ prepare-php-sdk:
   extends: .common-php
   stage: prepare
   script:
-    - git clone --depth 1 "$PHP_SDK_REPO_URL"
-    - cd php-remap-1.2-sdk
     - if [ -z "$BRANCH" ]; then
-      BRANCH='master';
+        BRANCH='master';
       fi
-    - git checkout "$BRANCH"
+    - git clone --branch "$BRANCH" --depth 1 "$PHP_SDK_REPO_URL"
+    - cd php-remap-1.2-sdk
     - export TZ='Europe/Moscow'
     - composer install --no-interaction --no-progress --prefer-dist --optimize-autoloader --no-scripts
   artifacts:
