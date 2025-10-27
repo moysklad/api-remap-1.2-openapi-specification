@@ -1,0 +1,14 @@
+.common-java:
+  image: docker.infra.lognex/maven:${MAVEN_IMAGE_VERSION}
+  cache:
+    paths:
+      - .m2/repository/
+
+.common-php:
+  image: composer:${COMPOSER_IMAGE_VERSION}
+  cache:
+    key: composer-cache
+    paths:
+      - /tmp/composer/cache
+  variables:
+    COMPOSER_CACHE_DIR: "/tmp/composer/cache"
