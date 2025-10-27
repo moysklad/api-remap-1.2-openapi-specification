@@ -11,6 +11,7 @@ workflow:
 stages:
   - verify
   - prepare
+  - generate-sdk
   - test
   - publish
 
@@ -26,5 +27,6 @@ include:
   - local: gitlab/common.gitlab-ci.yml
   - local: gitlab/verify.gitlab-ci.yml
   - local: gitlab/prepare.gitlab-ci.yml
+  - local: gitlab/generate-sdk.gitlab-ci.yml
   - local: gitlab/test.gitlab-ci.yml
   - local: gitlab/publish.gitlab-ci.yml
