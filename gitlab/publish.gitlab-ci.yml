@@ -1,6 +1,8 @@
 publish-java-sdk:
   extends: .common-java
   stage: publish
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "web"'
   needs:
     - test-java-sdk
   script:
@@ -15,7 +17,7 @@ publish-java-sdk-to-maven:
   extends: .common-java
   stage: publish
   rules:
-    - if: '$BRANCH == "release"'
+    - if: '$CI_PIPELINE_SOURCE == "web" && $BRANCH == "release"'
   needs:
     - test-java-sdk
   script:

@@ -1,12 +1,12 @@
 workflow:
   name: '$PROJECT1_PIPELINE_NAME'
   rules:
-    - if: '$BRANCH != "release" && $CI_PIPELINE_SOURCE == "web"'
+    - if: '$CI_PIPELINE_SOURCE == "web"'
       variables:
-        PROJECT1_PIPELINE_NAME: 'Feature $BRANCH pipeline'
-    - if: '$BRANCH == "release" && $CI_PIPELINE_SOURCE == "web"'
+        PROJECT1_PIPELINE_NAME: '$BRANCH == "release" ? "Release pipeline" : "Feature $BRANCH pipeline"'
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH != "master" && $CI_COMMIT_BRANCH != "release"'
       variables:
-        PROJECT1_PIPELINE_NAME: 'Release pipeline'
+        PROJECT1_PIPELINE_NAME: 'Auto $CI_COMMIT_BRANCH pipeline'
 
 stages:
   - verify

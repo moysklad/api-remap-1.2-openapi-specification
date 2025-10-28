@@ -1,6 +1,8 @@
 prepare-java-sdk:
   extends: .common-java
   stage: prepare
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "web"'
   script:
     - rm -f /etc/apt/sources.list.d/*pgdg*.list || true
     - echo "$GPG_SECRET_KEY" | gpg --import
@@ -22,6 +24,8 @@ prepare-java-sdk:
 prepare-php-sdk:
   extends: .common-php
   stage: prepare
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "web"'
   script:
     - apt-get update -yqq && apt-get install -yqq unzip libzip-dev zip git
     - git clone "$PHP_SDR_REPO_URL"

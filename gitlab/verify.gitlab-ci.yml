@@ -1,5 +1,7 @@
 check-env:
   stage: verify
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "web"'
   script:
     - |
       set -euo pipefail
