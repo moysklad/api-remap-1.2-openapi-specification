@@ -12,14 +12,9 @@ generate-php-sdk:
         exit 0
       fi
 
-    - git clone \
-      --depth=1 \
-      --single-branch \
-      --branch master \
-      "https://x-access-token:${SDK_PHP_REPO_TOKEN}@github.com/${SDK_REPO}.git" \
-      sdk-repo
+    - git clone --depth=1 --single-branch --branch master "https://x-access-token:${SDK_PHP_REPO_TOKEN}@${SDK_REPO_URL}.git" sdk-repo
     - cd sdk-repo
-    - git remote set-url origin "https://x-access-token:${SDK_PHP_REPO_TOKEN}@github.com/${SDK_REPO}.git"
+    - git remote set-url origin "https://x-access-token:${SDK_PHP_REPO_TOKEN}@${SDK_REPO_URL}.git"
     - git checkout -B "$SDK_BRANCH"
     - rsync -a --delete ../clients/php/ ./
 

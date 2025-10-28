@@ -14,17 +14,19 @@
     COMPOSER_CACHE_DIR: "/tmp/composer/cache"
 
 .common-generate-php-sdk:
-  image: node:18-alpine
+  image: node:22-alpine
   stage: generate-sdk
   cache:
-    key: npm-cache
+    key:
+      files:
+        - package-lock.json
     paths:
       - node_modules/
   before_script:
-    - apk add --no-cache git rsync
+    - apk add --no-cache git rsync openjdk21-jre-headless
     - git config --global user.name "sdk-bot"
     - git config --global user.email "sdk-bot@users.noreply.github.com"
+    - node -v && java -version
   variables:
     SDK_BRANCH: $CI_COMMIT_REF_NAME
-    SDK_REPO: moysklad/php-remap-1.2-sdk1
-    SDK_REPO_URL: https://github.com/moysklad/php-remap-1.2-sdk.git
+    SDK_REPO_URL: github.com/moysklad/php-remap-1.2-sdk
