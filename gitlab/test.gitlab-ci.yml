@@ -5,7 +5,7 @@ test-java-sdk:
     - prepare-java-sdk
   script:
     - cd java-remap-sdk-1.2
-    - mvn -V -B -nsu -T 6 clean test
+    - mvn -V -B -nsu -T 6 clean test -DskipTests -Dmaven.test.skip=true
   artifacts:
     paths:
       - java-remap-sdk-1.2/

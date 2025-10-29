@@ -22,6 +22,10 @@ prepare-php-sdk:
   extends: .common-php
   stage: prepare
   script:
+    - if [ "$BRANCH" = "release" ]; then
+        git config user.name "$GIT_USER"
+        git config user.email "$GIT_MAIL"
+      fi
     - if [ -z "$BRANCH" -o "$BRANCH" = "release" ]; then
         BRANCH='master';
       fi
