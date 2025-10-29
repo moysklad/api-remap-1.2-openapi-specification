@@ -1,6 +1,8 @@
 publish-java-sdk:
   extends: .common-java
   stage: publish
+  rules:
+    - if: '$BRANCH != "release"'
   needs:
     - test-java-sdk
   script:

@@ -6,7 +6,7 @@ prepare-java-sdk:
     - echo "$GPG_SECRET_KEY" | gpg --import
     - apt-get update
     - apt-get install -y --no-install-recommends git
-    - if [ -z "$BRANCH" ]; then
+    - if [ -z "$BRANCH" -o "$BRANCH" = "release" ]; then
         BRANCH='master';
       fi
     - git clone --branch "$BRANCH" --depth 1 "$JAVA_SDK_REPO_URL"
@@ -22,7 +22,7 @@ prepare-php-sdk:
   extends: .common-php
   stage: prepare
   script:
-    - if [ -z "$BRANCH" ]; then
+    - if [ -z "$BRANCH" -o "$BRANCH" = "release" ]; then
         BRANCH='master';
       fi
     - git clone --branch "$BRANCH" --depth 1 "$PHP_SDK_REPO_URL"
