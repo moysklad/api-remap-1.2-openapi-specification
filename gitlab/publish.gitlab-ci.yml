@@ -31,5 +31,5 @@ publish-java-sdk-to-maven:
     - git checkout master
     - git config user.name "$GIT_USER"
     - git config user.email "$GIT_MAIL"
-    - mvn $MAVEN_CLI_OPTS -Dusername=$GIT_USER -Dpassword=$GIT_PASSWORD -Ppublishing-central release:prepare
-    - mvn -Ppublishing-central release:perform
+    - mvn $MAVEN_CLI_OPTS -Dusername=$GIT_USER -Dpassword=$GIT_PASSWORD -Ppublishing-central -Dmaven.compile.skip=true -DskipTests -Dmaven.test.skip=true release:prepare
+    - mvn -Ppublishing-central -Dmaven.compile.skip=true -DskipTests -Dmaven.test.skip=true release:perform
