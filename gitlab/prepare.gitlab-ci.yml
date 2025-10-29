@@ -6,6 +6,9 @@ prepare-java-sdk:
     - echo "$GPG_SECRET_KEY" | gpg --import
     - apt-get update
     - apt-get install -y --no-install-recommends git
+    - if [ "$BRANCH" = "release" ]; then
+        git config user.name "$GIT_USER" && git config user.email "$GIT_MAIL";
+      fi
     - if [ -z "$BRANCH" -o "$BRANCH" = "release" ]; then
         BRANCH='master';
       fi
@@ -22,10 +25,6 @@ prepare-php-sdk:
   extends: .common-php
   stage: prepare
   script:
-    - if [ "$BRANCH" = "release" ]; then
-        git config user.name "$GIT_USER"
-        git config user.email "$GIT_MAIL"
-      fi
     - if [ -z "$BRANCH" -o "$BRANCH" = "release" ]; then
         BRANCH='master';
       fi

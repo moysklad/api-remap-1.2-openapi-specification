@@ -30,5 +30,6 @@ publish-java-sdk-to-maven:
           <password>${CENTRAL_PASSWORD}</password>\
         </server>' ~/.m2/settings.xml
 
+    - cd java-remap-sdk-1.2
     - mvn $MAVEN_CLI_OPTS -Dusername=$GIT_USER -Dpassword=$GIT_PASSWORD -Ppublishing-central -Dmaven.compile.skip=true -DskipTests -Dmaven.test.skip=true release:prepare
     - mvn -Ppublishing-central -Dmaven.compile.skip=true -DskipTests -Dmaven.test.skip=true release:perform
