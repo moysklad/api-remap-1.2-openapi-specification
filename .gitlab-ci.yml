@@ -1,30 +1,8 @@
-workflow:
-  name: '$PROJECT1_PIPELINE_NAME'
-  rules:
-    - if: '$BRANCH != "release" && $CI_PIPELINE_SOURCE == "web"'
-      variables:
-        PROJECT1_PIPELINE_NAME: 'Feature $BRANCH pipeline'
-    - if: '$BRANCH == "release" && $CI_PIPELINE_SOURCE == "web"'
-      variables:
-        PROJECT1_PIPELINE_NAME: 'Release pipeline'
-
-stages:
-  - verify
-  - prepare
-  - test
-  - publish
-
-variables:
-  MAVEN_CLI_OPTS: "--batch-mode"
-  JAVA_SDK_REPO_URL: "https://github.com/moysklad/java-remap-sdk-1.2.git"
-  PHP_SDK_REPO_URL: "https://github.com/moysklad/php-remap-1.2-sdk.git"
-  MAVEN_IMAGE_VERSION: "3.4-release"
-  COMPOSER_IMAGE_VERSION: "2.7"
-  API_HOST: "https://api-$API_NAMESPACE.testms-test.lognex.ru"
-
+# Сделано через два отдельных пути, чтобы разделить пайплайн где сдк генерится openapi и старой ручной java sdk
 include:
-  - local: gitlab/common.gitlab-ci.yml
-  - local: gitlab/verify.gitlab-ci.yml
-  - local: gitlab/prepare.gitlab-ci.yml
-  - local: gitlab/test.gitlab-ci.yml
-  - local: gitlab/publish.gitlab-ci.yml
+  - local: '.gitlab-ci-java-sdk.yml'
+    rules:
+      - if: '$SPEC_SDK_GENERATION == "false"'
+  - local: '.gitlab-ci-spec-gen.yml'
+    rules:
+      - if: '$SPEC_SDK_GENERATION == "true"'
