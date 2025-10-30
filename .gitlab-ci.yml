@@ -2,7 +2,7 @@
 include:
   - local: '.gitlab-ci-java-sdk.yml'
     rules:
-      - if: '$SPEC_SDK_GENERATION == "false"'
+      - if: '$SPEC_SDK_GENERATION != "false"'
   - local: '.gitlab-ci-spec-gen.yml'
     rules:
       - if: '$SPEC_SDK_GENERATION == "true"'
