@@ -2,7 +2,6 @@ stages:
   - verify
   - prepare
   - test
-  - publish
 
 variables:
   PHP_SDK_REPO_URL: "https://github.com/moysklad/php-remap-1.2-sdk.git"
