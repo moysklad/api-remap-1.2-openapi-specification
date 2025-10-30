@@ -10,14 +10,12 @@
 Проект SDK на языке java располагается в [GitHub-репозитории](https://github.com/moysklad/java-remap-sdk-1.2).
 Проект SDK на языке php располагается в [GitHub-репозитории](https://github.com/moysklad/php-remap-1.2-sdk).
 
-#### Версионирование
-##### Java
+## Java
+### Версионирование
 * при тестировании из ветки, артефакту назначается версия по номеру тикета и пайплайна `ветка`-`номер пайплайна`-SNAPSHOT
 * при релизе выставляется версия из pom.xml, затем увеличивается минорная версия (`1.1-SNAPSHOT` выпускается как `1.1-RELEASE` с изменением версии на `1.2-SNAPSHOT`)
 * в коммитах, ломающих обратную совместимость, необходимо изменять мажорную версию в pom.xml (`2.4-SNAPSHOT` -> `3.0-SNAPSHOT`)
 
-##### PHP
-Будет описан в тикете https://lognex.atlassian.net/browse/ATK-23
 
 ### Сборка из ветки для тестирования
 * задеплоить изменения в основном проекте в тестовое окружение
@@ -25,12 +23,12 @@
 * выдать пользователю корпоративный аккаунт, добавить ему дополнительно опцию с 15-ю точками продаж и подключить опцию "Управление производством" (для api-1 [https://admin-ms-api-1.test-okd.infra.lognex](https://admin-ms-api-1.test-okd.infra.lognex))
 * запустить новый пайплайн Remap 1.2 SDK deployer, указав:
     1. ветку пайплайна master - проект нужен только для сборки;
-    2. параметр **BRANCH** - имя ветки в репозитории SDK. Ветка должна начинаться на *MC-* или быть *master*;
-    3. параметр **API_HOST**, либо **API_NAMESPACE** - адрес хоста, на котором будут проходить тесты. Пример: `https://api-api-1.testms-test.lognex.ru`; Либо немспейс, пример `api-1` 
+    2. параметр **BRANCH** - имя ветки в репозитории SDK;
+    3. параметр **API_HOST** - адрес хоста, на котором будут проходить тесты. Пример: `https://api-api-1.testms-test.lognex.ru`;
     4. параметр **API_LOGIN** - логин аккаунта для тестов. Для успешного прохождения тестов у указанного аккаунта должна быть доступна работа с пользовательскими справочниками и должно быть несколько точек продаж (для этого можно сделать у пользователя тариф корпоративный).  Пример: `admin@test123`;
     5. параметр **API_PASSWORD** - пароль от аккаунта для тестов.
 
-[Ссылка на предзаполненный пайплайн](https://git.company.lognex/moysklad/misc/api-sdk-builder/-/pipelines/new?ref=master&var[BRANCH]=MC-&var[API_NAMESPACE]=api-1&var[API_LOGIN]=admin@test_user&var[API_PASSWORD]=123123)
+[Ссылка на предзаполненный пайплайн](https://git.company.lognex/moysklad/misc/api-sdk-builder/-/pipelines/new?ref=master&var[BRANCH]=MC-&var[API_HOST]=https://api-api-1.testms-test.lognex.ru&var[API_LOGIN]=admin@test_user&var[API_PASSWORD]=123123)
 
 
 ### Релиз в публичный maven репозиторий после ревью
@@ -39,15 +37,32 @@
 * запустить новый пайплайн Remap 1.2 SDK deployer, указав:
   1. ветку пайплайна master - проект нужен только для сборки;
   2. параметр **BRANCH** - *release* (зарезервированное название для релизов);
-  3. параметр **API_HOST**, либо **API_NAMESPACE** - адрес хоста, на котором будут проходить тесты. Пример: `https://api-api-1.testms-test.lognex.ru`; Либо немспейс, пример `api-1`
+  3. параметр **API_HOST** - адрес хоста, на котором будут проходить тесты. Пример: `https://api-api-1.testms-test.lognex.ru`;
   4. параметр **API_LOGIN** - логин аккаунта для тестов. Для успешного прохождения тестов у указанного аккаунта должна быть доступна работа с пользовательскими справочниками и должно быть несколько точек продаж (для этого можно сделать у пользователя тариф корпоративный).  Пример: `admin@test123`;
   5. параметр **API_PASSWORD** - пароль от аккаунта для тестов.
 * тегнуть team-api-group в канале team-api, чтобы ответственный завершил релиз через https://central.sonatype.com/publishing/deployments
 
-[Ссылка на предзаполненный релизный пайплайн](https://git.company.lognex/moysklad/misc/api-sdk-builder/-/pipelines/new?ref=master&var[BRANCH]=release&var[API_NAMESPACE]=api-1&&var[API_LOGIN]=admin@test_user&var[API_PASSWORD]=123123)
+[Ссылка на предзаполненный релизный пайплайн](https://git.company.lognex/moysklad/misc/api-sdk-builder/-/pipelines/new?ref=master&var[BRANCH]=release&var[API_HOST]=https://api-api-1.testms-test.lognex.ru&&var[API_LOGIN]=admin@test_user&var[API_PASSWORD]=123123)
 
-#### Действия после релиза
+### Действия после релиза
 После завершения релиза необходимо описать изменения релиза в github:
 - [Создать новый github релиз](https://github.com/moysklad/java-remap-1.2-sdk/releases/new)
 - Указать в tag version последний тэг со [страницы тегов](https://github.com/moysklad/java-remap-1.2-sdk/tags) (появится надпись `Existing tag`)
 - Указать в `Release title` и `Describe this release` изменения
+
+
+## PHP
+Будет описан в тикете https://lognex.atlassian.net/browse/ATK-23
+
+### Сборка из ветки для тестирования
+* задеплоить изменения в основном проекте в тестовое окружение
+* создать пользователя в тестовом окружении из шага 1 (для api-1 [https://online-api-1.testms-test.lognex.ru](https://online-api-1.testms-test.lognex.ru/app/))
+* запустить новый пайплайн, указав:
+  1. ветку пайплайна master - проект нужен только для сборки;
+  2. параметр **BRANCH** - имя ветки в репозитории SDK
+  3. параметр **API_HOST** - адрес хоста, на котором будут проходить тесты. Пример: `https://api-api-1.testms-test.lognex.ru`;
+  4. параметр **API_LOGIN** - логин аккаунта для тестов. Для успешного прохождения тестов у указанного аккаунта должна быть доступна работа с пользовательскими справочниками и должно быть несколько точек продаж (для этого можно сделать у пользователя тариф корпоративный).  Пример: `admin@test123`;
+  5. параметр **API_PASSWORD** - пароль от аккаунта для тестов.
+  5. параметр **SPEC_SDK_GENERATION** - выставить значение true. Флаг нужен для запуска сборки SDK через openapi генератор.
+
+[Ссылка на предзаполненный пайплайн](https://git.company.lognex/moysklad/misc/api-sdk-builder/-/pipelines/new?ref=master&var[BRANCH]=MC-&var[API_HOST]=https://api-api-1.testms-test.lognex.ru&var[API_LOGIN]=admin@test_user&var[API_PASSWORD]=123123&var[SPEC_SDK_GENERATION]=true)
