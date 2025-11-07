@@ -67,8 +67,6 @@ deploy-to-maven:
 
 test-to-deploy:
   stage: build
-  rules:
-    - $test == "true"
   variables:
     PARAM_PROFILE: "remap12_minimal_ru"
     PARAM_REF: $CI_COMMIT_REF_NAME
@@ -99,3 +97,6 @@ test-to-deploy:
     - export NAMESPACE=$(cat namespace-export-file)
     - python3 env_clean.py $NAMESPACE $CI_PIPELINE_ID $CI_JOB_ID
     - tms-prepare
+  only:
+    variables:
+      - $test == "true"
