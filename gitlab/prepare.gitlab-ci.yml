@@ -1,0 +1,15 @@
+prepare-php-sdk:
+  extends: .common-php
+  stage: prepare
+  script:
+    - if [ -z "$BRANCH" -o "$BRANCH" = "release" ]; then
+        BRANCH='master';
+      fi
+    - git clone --branch "$BRANCH" --depth 1 "$PHP_SDK_REPO_URL"
+    - cd php-remap-1.2-sdk
+    - export TZ='Europe/Moscow'
+    - composer install --no-interaction --no-progress --prefer-dist --optimize-autoloader --no-scripts
+  artifacts:
+    paths:
+      - php-remap-1.2-sdk/
+    expire_in: 2 hour
