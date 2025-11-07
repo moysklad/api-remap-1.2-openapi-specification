@@ -70,6 +70,9 @@ mirror-to-github:
   stage: deploy
   only:
     - ATK-33
+  before_script:
+    - apt-get update
+    - apt-get install -y --no-install-recommends git
   script:
     - git clone $CI_REPOSITORY_URL temp_dir && cd temp_dir
     - git remote add github https://$GIT_PASSWORD@github.com/$GIT_USER/api-remap-1.2-openapi-specification.git
