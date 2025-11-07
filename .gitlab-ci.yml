@@ -69,7 +69,7 @@ deploy-to-maven:
 mirror-to-github:
   stage: deploy
   only:
-    - ATK-33
+    - master
   before_script:
     - rm -f /etc/apt/sources.list.d/*pgdg*.list || true
     - echo "$GPG_SECRET_KEY" | gpg --import
