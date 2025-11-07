@@ -22,21 +22,21 @@ build-for-tests:
   rules:
     - if: '$BRANCH != "release"'
   before_script:
-    - rm -f /etc/apt/sources.list.d/*pgdg*.list || true
-    - apt-get update
-    - apt-get install -y --no-install-recommends git
-    - git clone https://github.com/moysklad/java-remap-sdk-1.2.git
-    - cd java-remap-sdk-1.2
-    - export TZ='Europe/Moscow'
+#    - rm -f /etc/apt/sources.list.d/*pgdg*.list || true
+#    - apt-get update
+#    - apt-get install -y --no-install-recommends git
+#    - git clone https://github.com/moysklad/java-remap-sdk-1.2.git
+#    - cd java-remap-sdk-1.2
+#    - export TZ='Europe/Moscow'
   script:
     - if [ -z "$BRANCH" ]; then
         BRANCH='master';
       fi
-    - git checkout $BRANCH;
-    - ARTEFACT_VERSION="${BRANCH}-${CI_PIPELINE_ID}"
-    - mvn versions:set -DnewVersion=$ARTEFACT_VERSION -DgenerateBackupPoms=false;
-    - mvn $MAVEN_CLI_OPTS -Ppublishing-artifactory clean deploy -DartifactoryRepo=${ARTIFACTORY_REPO_URL};
-    - echo "Complete. Version $ARTEFACT_VERSION"
+#    - git checkout $BRANCH;
+#    - ARTEFACT_VERSION="${BRANCH}-${CI_PIPELINE_ID}"
+#    - mvn versions:set -DnewVersion=$ARTEFACT_VERSION -DgenerateBackupPoms=false;
+#    - mvn $MAVEN_CLI_OPTS -Ppublishing-artifactory clean deploy -DartifactoryRepo=${ARTIFACTORY_REPO_URL};
+#    - echo "Complete. Version $ARTEFACT_VERSION"
 
 deploy-to-maven:
   stage: build
@@ -66,7 +66,7 @@ deploy-to-maven:
     - mvn $MAVEN_CLI_OPTS -Dusername=$GIT_USER -Dpassword=$GIT_PASSWORD -Ppublishing-central release:prepare
     - mvn -Ppublishing-central release:perform
 
-mirror_to_github:
+mirror-to-github:
   stage: deploy
   only:
     - ATK-33
