@@ -77,7 +77,7 @@ mirror-to-github:
     - apt-get install -y --no-install-recommends git
   script:
     - git clone $CI_REPOSITORY_URL temp_dir && cd temp_dir
-    - git remote add github https://$GIT_PASSWORD@github.com/$GIT_USER/api-remap-1.2-openapi-specification.git
+    - git remote add github https://$GIT_PASSWORD@github.com/moysklad/api-remap-1.2-openapi-specification.git
     - git checkout $CI_COMMIT_REF_NAME
     - git config user.name "$GIT_USER"
     - git config user.email "$GIT_MAIL"
