@@ -6,3 +6,4 @@ include:
   - local: '.gitlab-ci-spec-gen.yml'
     rules:
       - if: '$SPEC_SDK_GENERATION == "true"'
+  - local: gitlab/generate-sdk.gitlab-ci.yml

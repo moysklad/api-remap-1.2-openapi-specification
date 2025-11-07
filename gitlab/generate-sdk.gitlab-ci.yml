@@ -1,5 +1,27 @@
+stages:
+  - verify
+  - build
+  - prepare
+  - test
+  - generate-sdk
+
 generate-php-sdk:
-  extends: .common-generate-php-sdk
+  image: node:22-alpine
+  stage: generate-sdk
+  cache:
+    key:
+      files:
+        - package-lock.json
+    paths:
+      - node_modules/
+  before_script:
+    - apk add --no-cache git rsync openjdk21-jre-headless
+    - git config --global user.name "sdk-bot"
+    - git config --global user.email "sdk-bot@users.noreply.github.com"
+    - node -v && java -version
+  variables:
+    SDK_BRANCH: $CI_COMMIT_REF_NAME
+    SDK_REPO_URL: github.com/moysklad/php-remap-1.2-sdk
   rules:
     - if: '$CI_COMMIT_BRANCH != "master" && $CI_COMMIT_BRANCH != "release"'
   script:
@@ -12,9 +34,8 @@ generate-php-sdk:
         exit 0
       fi
 
-    - git clone --depth=1 --single-branch --branch master "https://x-access-token:${SDK_PHP_REPO_TOKEN}@${SDK_REPO_URL}.git" sdk-repo
+    - git clone --depth=1 --single-branch --branch master "https://$GIT_PASSWORD@github.com/moysklad/php-remap-1.2-sdk.git" sdk-repo
     - cd sdk-repo
-    - git remote set-url origin "https://x-access-token:${SDK_PHP_REPO_TOKEN}@${SDK_REPO_URL}.git"
     - git checkout -B "$SDK_BRANCH"
     - rsync -a --delete ../clients/php/ ./
 
