@@ -93,7 +93,6 @@ test-to-deploy:
     - mvn $MAVEN_CLI_OPTS -Ppublishing-artifactory clean deploy -DartifactoryRepo=${ARTIFACTORY_REPO_URL};
     - echo "Complete. Version $ARTEFACT_VERSION"
   after_script:
-    - cd http-tests
     - export NAMESPACE=$(cat namespace-export-file)
     - python3 env_clean.py $NAMESPACE $CI_PIPELINE_ID $CI_JOB_ID
     - tms-prepare
