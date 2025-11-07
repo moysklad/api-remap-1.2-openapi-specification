@@ -72,7 +72,7 @@ mirror-to-github:
     - ATK-33
   script:
     - git clone $CI_REPOSITORY_URL temp_dir && cd temp_dir
-    - git remote add github https://$GIT_PASSWORDN@github.com/$GIT_USER/api-remap-1.2-openapi-specification.git
+    - git remote add github https://$GIT_PASSWORD@github.com/$GIT_USER/api-remap-1.2-openapi-specification.git
     - git checkout $CI_COMMIT_REF_NAME
     - |
       if [ -f ".gitlab-ci.yml" ] || [ -f ".gitlab-ci.yaml" ]; then
