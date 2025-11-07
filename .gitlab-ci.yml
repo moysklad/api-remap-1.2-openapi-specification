@@ -81,11 +81,14 @@ test-to-deploy:
     - apt-get install -y --no-install-recommends python3 python3-pip
     - git clone https://github.com/moysklad/java-remap-sdk-1.2.git
     - cd java-remap-sdk-1.2
-    - git checkout $BRANCH;
     - export TZ='Europe/Moscow'
   script:
-    - export $API_HOST=$(cat namespace-export-file)
+    - if [ -z "$BRANCH" ]; then
+      BRANCH='master';
+      fi
+    - git checkout $BRANCH;
     - python3 env_prepare.py $PARAM_REF $CI_PIPELINE_ID $CI_JOB_ID $PARAM_VERSION $PARAM_PROFILE
+    - export $API_HOST=$(cat namespace-export-file)
     - ARTEFACT_VERSION="${BRANCH}-${CI_PIPELINE_ID}"
     - mvn versions:set -DnewVersion=$ARTEFACT_VERSION -DgenerateBackupPoms=false;
     - mvn $MAVEN_CLI_OPTS -Ppublishing-artifactory clean deploy -DartifactoryRepo=${ARTIFACTORY_REPO_URL};
