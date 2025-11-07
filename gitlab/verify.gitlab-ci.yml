@@ -9,14 +9,7 @@ check-env:
       echo "🔍 Проверка переменных окружения..."
       env_missing=0
       
-      if [ "$API_HOST" = "https://api-.testms-test.lognex.ru" ]; then
-        echo "❌ ОШИБКА: Не задано окружение. Необходимо задать окружение через переменную API_NAMESPACE, либо напрямую адрес хоста через переменную API_HOST"
-        env_missing=1
-      else
-        echo "✅ API_HOST - OK"
-      fi
-      
-      for var in API_LOGIN API_PASSWORD; do
+      for var in API_HOST API_LOGIN API_PASSWORD; do
         value="$(printenv "$var" || true)"
         if [ -z "$value" ]; then
           echo "❌ ОШИБКА: Не задана обязательная переменная $var"
