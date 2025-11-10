@@ -3,7 +3,7 @@ image: $GLOBAL_DOCKER_URL/maven:3.4-release
 workflow:
   name: '$PROJECT1_PIPELINE_NAME'
   rules:
-    - if: '$BRANCH != "release" && $CI_PIPELINE_SOURCE == "web"'
+    - if: '$BRANCH != "release"'
       variables:
         PROJECT1_PIPELINE_NAME: 'Feature $BRANCH pipeline'
     - if: '$BRANCH == "release" && $CI_PIPELINE_SOURCE == "web"'
