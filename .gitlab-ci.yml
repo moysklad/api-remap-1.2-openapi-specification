@@ -8,7 +8,7 @@ include:
       - if: '$SPEC_SDK_GENERATION == "true"'
   - local: '.gitlab-ci-github-mirror.yml'
     rules:
-      - if: '$CI_COMMIT_REF_NAME == "ATK-33"'
+      - if: '$CI_COMMIT_REF_NAME == "master"'
 
 stages:
   - verify
