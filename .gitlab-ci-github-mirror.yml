@@ -1,10 +1,10 @@
 image: $GLOBAL_DOCKER_URL/maven:3.4-release
 
-stages:
-  - deploy
+#stages:
+#  - deploy
 
 mirror-to-github:
-  stage: deploy
+  stage: build
   before_script:
     - rm -f /etc/apt/sources.list.d/*pgdg*.list || true
     - echo "$GPG_SECRET_KEY" | gpg --import
