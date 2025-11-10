@@ -1,0 +1,37 @@
+image: $GLOBAL_DOCKER_URL/maven:3.4-release
+
+stages:
+  - deploy
+
+mirror-to-github:
+  stage: deploy
+  before_script:
+    - rm -f /etc/apt/sources.list.d/*pgdg*.list || true
+    - echo "$GPG_SECRET_KEY" | gpg --import
+    - apt-get update
+    - apt-get install -y --no-install-recommends git
+  script:
+    - git clone $CI_REPOSITORY_URL temp_dir && cd temp_dir
+    - git remote add github https://$GIT_PASSWORD@github.com/moysklad/api-remap-1.2-openapi-specification.git
+    - git checkout $CI_COMMIT_REF_NAME
+    - git config user.name "$GIT_USER"
+    - git config user.email "$GIT_MAIL"
+    - |
+      if [ -f ".gitlab-ci.yml" ] || [ -f ".gitlab-ci.yaml" ]; then
+        echo "Found GitLab CI files, removing them..."
+        rm -f .gitlab-ci.yml .gitlab-ci.yaml
+        git add -A
+        if git diff-index --quiet HEAD --; then
+          echo "No changes to commit"
+        else
+          git commit -m "Remove GitLab CI files for GitHub mirror [skip ci]"
+          echo "GitLab CI files removed and committed"
+        fi
+        git push github $CI_COMMIT_REF_NAME --force
+        echo "Successfully mirrored to GitHub without GitLab CI files"
+      else
+        git push github $CI_COMMIT_REF_NAME --force
+        echo "Successfully mirrored to GitHub (no GitLab CI files found)"
+      fi
+  variables:
+    GIT_STRATEGY: clone
