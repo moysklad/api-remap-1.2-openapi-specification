@@ -1,0 +1,12 @@
+test-php-sdk:
+  extends: .common-php
+  stage: test
+  needs:
+    - prepare-php-sdk
+  script:
+    - cd php-remap-1.2-sdk
+    - vendor/bin/phpunit --colors=never ./test
+  artifacts:
+    paths:
+      - php-remap-1.2-sdk/
+    expire_in: 2 hour
