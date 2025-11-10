@@ -68,3 +68,40 @@ deploy-to-maven:
     - git config user.email "$GIT_MAIL"
     - mvn $MAVEN_CLI_OPTS -Dusername=$GIT_USER -Dpassword=$GIT_PASSWORD -Ppublishing-central release:prepare
     - mvn -Ppublishing-central release:perform
+
+test-to-deploy:
+  stage: build
+  variables:
+    PARAM_PROFILE: "remap12_minimal_ru"
+    PARAM_REF: $CI_COMMIT_REF_NAME
+    PARAM_VERSION: "$CI_COMMIT_REF_NAME-$CI_PIPELINE_ID"
+    GITLAB_TEST_TYPE: e2e
+    GITLAB_TEST_TYPE_VARIANT: api
+  before_script:
+    - rm -f /etc/apt/sources.list.d/*pgdg*.list || true
+    - echo "$GPG_SECRET_KEY" | gpg --import
+    - apt-get update
+    - apt-get install -y --no-install-recommends git
+    - git clone https://github.com/moysklad/java-remap-sdk-1.2.git
+    - git clone git@git.company.lognex:moysklad/misc/api-sdk-builder.git
+    - cd api-sdk-builder
+    - export TZ='Europe/Moscow'
+  script:
+    - if [ -z "$BRANCH" ]; then
+      BRANCH='master';
+      fi
+    - git checkout $BRANCH;
+    - python3 env_prepare.py $PARAM_REF $CI_PIPELINE_ID $CI_JOB_ID $PARAM_VERSION $PARAM_PROFILE
+    - export $API_HOST=$(cat namespace-export-file)
+    - ARTEFACT_VERSION="${BRANCH}-${CI_PIPELINE_ID}"
+    - cd java-remap-sdk-1.2
+    - mvn versions:set -DnewVersion=$ARTEFACT_VERSION -DgenerateBackupPoms=false;
+    - mvn $MAVEN_CLI_OPTS -Ppublishing-artifactory clean deploy -DartifactoryRepo=${ARTIFACTORY_REPO_URL};
+    - echo "Complete. Version $ARTEFACT_VERSION"
+  after_script:
+    - export NAMESPACE=$(cat namespace-export-file)
+    - python3 env_clean.py $NAMESPACE $CI_PIPELINE_ID $CI_JOB_ID
+    - tms-prepare
+  only:
+    variables:
+      - $test == "true"
