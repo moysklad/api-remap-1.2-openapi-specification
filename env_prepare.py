@@ -2,6 +2,9 @@
 
 import sys
 
+import requests
+from requests import Response
+
 from utils_python.client import setup_namespace
 
 
