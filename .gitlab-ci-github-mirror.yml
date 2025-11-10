@@ -1,5 +1,8 @@
 image: $GLOBAL_DOCKER_URL/maven:3.4-release
 
+stages:
+  - mirror
+
 mirror-to-github:
   stage: mirror
   before_script:

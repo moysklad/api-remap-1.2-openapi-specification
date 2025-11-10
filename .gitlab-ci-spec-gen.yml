@@ -1,3 +1,8 @@
+stages:
+  - verify
+  - prepare
+  - test
+
 variables:
   PHP_SDK_REPO_URL: "https://github.com/moysklad/php-remap-1.2-sdk.git"
   COMPOSER_IMAGE_VERSION: "2.7"
