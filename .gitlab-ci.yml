@@ -10,9 +10,9 @@ include:
     rules:
       - if: '$CI_COMMIT_REF_NAME == "ATK-33"'
 
-#stages:
-#  - verify
-#  - prepare
-#  - test
-#  - build
-#  - mirror
+stages:
+  - verify
+  - prepare
+  - test
+  - build
+  - mirror
