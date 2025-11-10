@@ -24,7 +24,7 @@ build-for-tests:
   stage: build
   rules:
     - if: '$BRANCH != "release"'
-  before_script:
+#  before_script:
 #    - rm -f /etc/apt/sources.list.d/*pgdg*.list || true
 #    - apt-get update
 #    - apt-get install -y --no-install-recommends git
@@ -32,9 +32,9 @@ build-for-tests:
 #    - cd java-remap-sdk-1.2
 #    - export TZ='Europe/Moscow'
   script:
-#    - if [ -z "$BRANCH" ]; then
-#      BRANCH='master';
-#      fi
+    - if [ -z "$BRANCH" ]; then
+      BRANCH='master';
+      fi
 #    - git checkout $BRANCH;
 #    - ARTEFACT_VERSION="${BRANCH}-${CI_PIPELINE_ID}"
 #    - mvn versions:set -DnewVersion=$ARTEFACT_VERSION -DgenerateBackupPoms=false;
