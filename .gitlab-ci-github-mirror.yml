@@ -1,7 +1,7 @@
 image: $GLOBAL_DOCKER_URL/maven:3.4-release
 
-stages:
-  - deploy
+#stages:
+#  - deploy
 
 mirror-to-github:
   stage: deploy
