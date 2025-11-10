@@ -1,7 +1,7 @@
-stages:
-  - verify
-  - prepare
-  - test
+#stages:
+#  - verify
+#  - prepare
+#  - test
 
 variables:
   PHP_SDK_REPO_URL: "https://github.com/moysklad/php-remap-1.2-sdk.git"
