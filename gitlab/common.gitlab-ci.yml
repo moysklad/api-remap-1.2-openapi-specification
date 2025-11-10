@@ -1,0 +1,8 @@
+.common-php:
+  image: composer:${COMPOSER_IMAGE_VERSION}
+  cache:
+    key: composer-cache
+    paths:
+      - /tmp/composer/cache
+  variables:
+    COMPOSER_CACHE_DIR: "/tmp/composer/cache"
