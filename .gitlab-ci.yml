@@ -9,10 +9,3 @@ include:
   - local: '.gitlab-ci-github-mirror.yml'
     rules:
       - if: '$CI_COMMIT_REF_NAME == "ATK-33"'
-
-stages:
-  - verify
-  - prepare
-  - test
-  - build
-  - deploy
