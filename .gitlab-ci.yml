@@ -9,3 +9,11 @@ include:
   - local: '.gitlab-ci-sdk-php-gen.yml'
     rules:
       - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH != "master" && $CI_COMMIT_BRANCH != "release"'
+
+stages:
+  - verify
+  - prepare
+  - test
+  - build
+  - mirror
+  - generate-sdk
