@@ -18,5 +18,5 @@ stages:
   - prepare
   - test
   - build
-  - mirror
   - generate-sdk
+  - mirror
