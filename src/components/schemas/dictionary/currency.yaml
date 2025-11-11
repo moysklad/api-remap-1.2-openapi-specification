@@ -1,0 +1,105 @@
+type: object
+description: Валюта
+properties:
+  meta:
+    description: Метаданные Валюты
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID валюты
+    readOnly: true
+    example: "12a8b923-692c-11e6-8a84-bae50000005c"
+  system:
+    type: boolean
+    description: Системная валюта
+    readOnly: true
+    example: true
+  name:
+    type: string
+    description: Краткое наименование валюты
+    example: "руб"
+  fullName:
+    type: string
+    description: Полное наименование валюты
+    example: "Российский рубль"
+  code:
+    type: string
+    description: Цифровой код валюты
+    example: "643"
+  isoCode:
+    type: string
+    description: Буквенный код валюты
+    example: "RUB"
+  multiplicity:
+    type: integer
+    description: Кратность курса валюты
+    example: 1
+  rate:
+    type: number
+    format: float
+    description: Курс валюты
+    example: 1.0
+  margin:
+    type: number
+    format: float
+    description: Наценка при автоматическом обновлении курса
+    example: 1.0
+  indirect:
+    type: boolean
+    description: Признак обратного курса валюты
+    example: false
+  rateUpdateType:
+    type: string
+    description: Способ обновления курса валюты
+    enum: [manual, auto]
+    example: "manual"
+  archived:
+    type: boolean
+    description: Добавлена ли валюта в архив
+    example: false
+  default:
+    type: boolean
+    description: Валюта учета по умолчанию
+    example: false
+  majorUnit:
+    type: object
+    description: Формы единиц целой части Валюты
+    properties:
+      gender:
+        type: string
+        description: Пол
+        enum: [masculine, feminine]
+        example: "masculine"
+      s1:
+        type: string
+        description: Форма единицы, используемая при числительном 1
+        example: "рубль"
+      s2:
+        type: string
+        description: Форма единицы, используемая при числительном 2
+        example: "рубля"
+      s5:
+        type: string
+        description: Форма единицы, используемая при числительном 5
+        example: "рублей"
+  minorUnit:
+    type: object
+    description: Форма разменной единицы
+    properties:
+      gender:
+        type: string
+        description: Пол
+        example: "feminine"
+      s1:
+        type: string
+        description: Форма единицы, используемая при числительном 1
+        example: "копейка"
+      s2:
+        type: string
+        description: Форма единицы, используемая при числительном 2
+        example: "копейки"
+      s5:
+        type: string
+        description: Форма единицы, используемая при числительном 5
+        example: "копеек"

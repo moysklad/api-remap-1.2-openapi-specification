@@ -1,0 +1,42 @@
+type: object
+required:
+  - errors
+properties:
+  errors:
+    type: array
+    items:
+      type: object
+      required:
+        - error
+      properties:
+        error:
+          type: string
+          description: Заголовок ошибки
+          example: "Ошибка в структуре JSON передаваемого запроса"
+        parameter:
+          type: string
+          description: Параметр, на котором произошла ошибка
+        code:
+          type: integer
+          description: Код ошибки
+          example: 1000
+        error_message:
+          type: string
+          description: Сообщение, прилагаемое к ошибке
+        moreInfo:
+          type: string
+          format: uri
+          description: Ссылка на документацию с описанием ошибки
+        line:
+          type: integer
+          description: Строка JSON, на которой произошла ошибка
+        column:
+          type: integer
+          description: Координата элемента в строке, на котором произошла ошибка
+        dependencies:
+          type: array
+          description: Список метаданных зависимых сущностей
+          items:
+            $ref: './meta.yaml'
+        meta:
+          $ref: './meta.yaml'

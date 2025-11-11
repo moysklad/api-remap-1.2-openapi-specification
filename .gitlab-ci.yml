@@ -2,13 +2,16 @@
 include:
   - local: '.gitlab-ci-java-sdk.yml'
     rules:
-      - if: '$SPEC_SDK_GENERATION != "true"'
+      - if: '$SPEC_SDK_GENERATION != "true" && $CI_PIPELINE_SOURCE != "push"'
   - local: '.gitlab-ci-spec-gen.yml'
     rules:
-      - if: '$SPEC_SDK_GENERATION == "true"'
+      - if: '$SPEC_SDK_GENERATION == "true" && $CI_PIPELINE_SOURCE != "push"'
+  - local: '.gitlab-ci-sdk-php-gen.yml'
+    rules:
+      - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH != "master" && $CI_COMMIT_BRANCH != "release"'
   - local: '.gitlab-ci-github-mirror.yml'
     rules:
-      - if: '$CI_COMMIT_REF_NAME == "master"'
+      - if: '$CI_COMMIT_REF_NAME == "ATK-33"'
 
 stages:
   - verify
@@ -16,3 +19,4 @@ stages:
   - test
   - build
   - mirror
+  - generate-sdk

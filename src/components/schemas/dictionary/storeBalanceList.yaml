@@ -1,0 +1,12 @@
+type: object
+description: Неснижаемые остатки по складам
+required:
+  - meta
+  - rows
+properties:
+  meta:
+    $ref: '../common/metaList.yaml'
+  rows:
+    type: array
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/StoreBalance'

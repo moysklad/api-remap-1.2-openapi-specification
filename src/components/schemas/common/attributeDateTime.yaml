@@ -1,0 +1,10 @@
+type: object
+allOf:
+  - $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
+properties:
+  type:
+    type: string
+    enum: [time]
+  value:
+    type: string
+    format: date-time
