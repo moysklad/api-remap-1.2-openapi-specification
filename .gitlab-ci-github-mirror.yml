@@ -14,21 +14,35 @@ mirror-to-github:
     - git config user.name "$GIT_USER"
     - git config user.email "$GIT_MAIL"
     - |
-      if [ -f ".gitlab-ci.yml" ] || [ -f ".gitlab-ci.yaml" ]; then
-        echo "Found GitLab CI files, removing them..."
-        rm -f .gitlab-ci.yml .gitlab-ci.yaml
+      HAS_CHANGES=false
+      
+      echo "Checking for YAML files to remove..."
+      find . -maxdepth 1 -type f \( -name "*.yml" -o -name "*.yaml" \) -exec echo "Removing: {}" \; -delete
+
+      if find . -maxdepth 1 -type f \( -name "*.yml" -o -name "*.yaml" \) | grep -q .; then
+        echo "YAML files were found and removed"
+        HAS_CHANGES=true
+      fi
+
+      if [ -d "gitlab" ]; then
+        echo "Removing gitlab directory..."
+        rm -rf gitlab
+        HAS_CHANGES=true
+      fi
+
+      if [ "$HAS_CHANGES" = true ]; then
         git add -A
         if git diff-index --quiet HEAD --; then
           echo "No changes to commit"
         else
-          git commit -m "Remove GitLab CI files for GitHub mirror [skip ci]"
-          echo "GitLab CI files removed and committed"
+          git commit -m "Remove GitLab-specific files for GitHub mirror"
+          echo "GitLab-specific files removed and committed"
         fi
-        git push github $CI_COMMIT_REF_NAME --force
-        echo "Successfully mirrored to GitHub without GitLab CI files"
       else
-        git push github $CI_COMMIT_REF_NAME --force
-        echo "Successfully mirrored to GitHub (no GitLab CI files found)"
+        echo "No GitLab-specific files found to remove"
       fi
+      
+      git push github $CI_COMMIT_REF_NAME --force
+      echo "Successfully mirrored to GitHub without GitLab-specific files"
   variables:
     GIT_STRATEGY: clone
