@@ -6,23 +6,21 @@ generate-php-sdk:
       files:
         - package-lock.json
     paths:
-      - node_modules/
       - /root/.npm/
   before_script:
     - apk add --no-cache git rsync openjdk21-jre-headless
     - apk add --no-cache github-cli --repository=https://dl-cdn.alpinelinux.org/alpine/edge/community
     - git config --global user.name "sdk-bot"
     - git config --global user.email "sdk-bot@users.noreply.github.com"
-    - node -v && java -version
-    - set -euo pipefail
+    - npm install -g npm@10.8.2
+    - npm i -g @openapitools/openapi-generator-cli@2.12.1
   variables:
     SDK_BRANCH: $CI_COMMIT_REF_NAME
     SDK_REPO_URL: github.com/moysklad/php-remap-1.2-sdk
     SDK_REPO_SLUG: moysklad/php-remap-1.2-sdk
   script:
-    - if [ ! -f package-lock.json ]; then npm install --package-lock-only --ignore-scripts --no-audit; fi
-    - npm ci --prefer-offline
-    - set +e
+    - npm ci
+    - set +e #Валидация не доделана, отключаем
     - npm run validate
     - echo "Validation may have failed, but continuing..."
     - set -e
@@ -50,7 +48,3 @@ generate-php-sdk:
 
     - export GH_TOKEN="${GIT_PASSWORD}"
     - gh pr create --repo "$SDK_REPO_SLUG" --base "master" --head "$SDK_BRANCH" --title "$SDK_BRANCH Auto-generated PHP SDK from OpenAPI specification" --body "This PR updates the auto-generated PHP SDK from the OpenAPI spec." --fill --web=false || true
-  artifacts:
-    paths:
-      - clients/php/
-    expire_in: 1 hour
