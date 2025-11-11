@@ -42,7 +42,11 @@ mirror-to-github:
         echo "No GitLab-specific files found to remove"
       fi
       
-      git push github $CI_COMMIT_REF_NAME --force
+      git filter-branch --force --index-filter \
+      "git rm --cached --ignore-unmatch -r ./*.yml ./*.yaml ./gitlab" \
+      --prune-empty --tag-name-filter cat -- --all
+      
+      git push github $CI_COMMIT_REF_NAME --force --no-verify
       echo "Successfully mirrored to GitHub without GitLab-specific files"
   variables:
     GIT_STRATEGY: clone
