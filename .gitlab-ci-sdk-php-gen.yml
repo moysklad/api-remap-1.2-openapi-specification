@@ -1,0 +1,50 @@
+generate-php-sdk:
+  image: node:22-alpine
+  stage: generate-sdk
+  cache:
+    key:
+      files:
+        - package-lock.json
+    paths:
+      - /root/.npm/
+  before_script:
+    - apk add --no-cache git rsync openjdk21-jre-headless
+    - apk add --no-cache github-cli --repository=https://dl-cdn.alpinelinux.org/alpine/edge/community
+    - git config --global user.name "sdk-bot"
+    - git config --global user.email "sdk-bot@users.noreply.github.com"
+    - npm install -g npm@10.8.2
+    - npm i -g @openapitools/openapi-generator-cli@2.12.1
+  variables:
+    SDK_BRANCH: $CI_COMMIT_REF_NAME
+    SDK_REPO_URL: github.com/moysklad/php-remap-1.2-sdk
+    SDK_REPO_SLUG: moysklad/php-remap-1.2-sdk
+  script:
+    - npm ci
+    - set +e #Валидация не доделана, отключаем
+    - npm run validate
+    - echo "Validation may have failed, but continuing..."
+    - set -e
+    - npm run generate-php
+    - |
+      if [ ! -d "clients/php" ]; then
+        echo "Directory clients/php not found. Nothing to sync."
+        exit 0
+      fi
+
+    - git clone --depth=1 --filter=blob:none --single-branch --branch master "https://$GIT_PASSWORD@${SDK_REPO_URL}.git" sdk-repo
+    - cd sdk-repo
+    - git checkout -B "$SDK_BRANCH"
+
+    - rsync -a --delete --exclude ".git" ../clients/php/lib ./
+
+    - git add -A
+    - |
+      if git diff --staged --quiet; then
+        echo "No changes to commit in SDK repository. Skipping push."
+        exit 0
+      fi
+    - git commit -m "$SDK_BRANCH Auto-generated PHP SDK from OpenAPI specification"
+    - git push -u origin "$SDK_BRANCH" --force
+
+    - export GH_TOKEN="${GIT_PASSWORD}"
+    - gh pr create --repo "$SDK_REPO_SLUG" --base "master" --head "$SDK_BRANCH" --title "$SDK_BRANCH Auto-generated PHP SDK from OpenAPI specification" --body "This PR updates the auto-generated PHP SDK from the OpenAPI spec." --fill --web=false || true

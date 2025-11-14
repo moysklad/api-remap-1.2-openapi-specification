@@ -2,7 +2,18 @@
 include:
   - local: '.gitlab-ci-java-sdk.yml'
     rules:
-      - if: '$SPEC_SDK_GENERATION != "true"'
+      - if: '$SPEC_SDK_GENERATION != "true" && $CI_PIPELINE_SOURCE != "push"'
   - local: '.gitlab-ci-spec-gen.yml'
     rules:
-      - if: '$SPEC_SDK_GENERATION == "true"'
+      - if: '$SPEC_SDK_GENERATION == "true" && $CI_PIPELINE_SOURCE != "push"'
+  - local: '.gitlab-ci-sdk-php-gen.yml'
+    rules:
+      - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH != "master" && $CI_COMMIT_BRANCH != "release"'
+
+stages:
+  - verify
+  - prepare
+  - test
+  - build
+  - mirror
+  - generate-sdk
