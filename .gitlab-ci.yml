@@ -9,11 +9,14 @@ include:
   - local: '.gitlab-ci-sdk-php-gen.yml'
     rules:
       - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH != "master" && $CI_COMMIT_BRANCH != "release"'
+  - local: '.gitlab-ci-github-mirror.yml'
+    rules:
+      - if: '$CI_COMMIT_REF_NAME == "master"'
 
 stages:
   - verify
   - prepare
   - test
   - build
-  - mirror
   - generate-sdk
+  - mirror
