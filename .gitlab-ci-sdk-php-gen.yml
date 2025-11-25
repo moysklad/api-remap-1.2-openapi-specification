@@ -1,5 +1,5 @@
 generate-php-sdk:
-  image: node:22-alpine
+  image: docker.infra.lognex/docker-openapitools:1.0-release
   stage: generate-sdk
   cache:
     key:
@@ -8,12 +8,8 @@ generate-php-sdk:
     paths:
       - /root/.npm/
   before_script:
-    - apk add --no-cache git rsync openjdk21-jre-headless
-    - apk add --no-cache github-cli --repository=https://dl-cdn.alpinelinux.org/alpine/edge/community
     - git config --global user.name "sdk-bot"
     - git config --global user.email "sdk-bot@users.noreply.github.com"
-    - npm install -g npm@10.8.2
-    - npm i -g @openapitools/openapi-generator-cli@2.12.1
   variables:
     SDK_BRANCH: $CI_COMMIT_REF_NAME
     SDK_REPO_URL: github.com/moysklad/php-remap-1.2-sdk
