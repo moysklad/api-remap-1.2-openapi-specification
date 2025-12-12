@@ -28,7 +28,7 @@
     "license": "MIT",
     "devDependencies": {
         "@redocly/cli": "^1.0.0",
-        "@openapitools/openapi-generator-cli": "^2.7.0",
+        "@openapitools/openapi-generator-cli": "^2.25.2",
         "@stoplight/spectral-cli": "^6.11.0"
     },
     "files": [
