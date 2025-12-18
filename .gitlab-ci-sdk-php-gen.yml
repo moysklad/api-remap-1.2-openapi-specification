@@ -1,6 +1,12 @@
 generate-php-sdk:
   image: docker.infra.lognex/docker-openapitools:1.0-release
   stage: generate-sdk
+  only:
+    changes:
+      - package-lock.json
+      - openapitools.json
+      - src/**/*
+      - customtemplates/**/*
   cache:
     key:
       files:
