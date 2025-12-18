@@ -1,32 +1,25 @@
-image: $GLOBAL_DOCKER_URL/maven:3.4-release
-
 mirror-to-github:
+  image: docker.infra.lognex/docker-openapitools:1.0-release
   stage: mirror
   before_script:
-    - rm -f /etc/apt/sources.list.d/*pgdg*.list || true
-    - echo "$GPG_SECRET_KEY" | gpg --import
-    - apt-get update
-    - apt-get install -y --no-install-recommends git
+    - git config --global user.name "$GIT_USER"
+    - git config --global user.email "$GIT_MAIL"
   script:
     - git clone $CI_REPOSITORY_URL temp_dir && cd temp_dir
     - git remote add github https://$GIT_PASSWORD@github.com/moysklad/api-remap-1.2-openapi-specification.git
     - git checkout $CI_COMMIT_REF_NAME
-    - git config user.name "$GIT_USER"
-    - git config user.email "$GIT_MAIL"
     - |
       HAS_CHANGES=false
-      
-      echo "Checking for YAML files to remove..."
-      find . -maxdepth 1 -type f \( -name "*.yml" -o -name "*.yaml" \) -exec echo "Removing: {}" \; -delete
-
-      if find . -maxdepth 1 -type f \( -name "*.yml" -o -name "*.yaml" \) | grep -q .; then
-        echo "YAML files were found and removed"
-        HAS_CHANGES=true
-      fi
 
       if [ -d "gitlab" ]; then
         echo "Removing gitlab directory..."
         rm -rf gitlab
+        HAS_CHANGES=true
+      fi
+      
+      if [ -d ".gitlab-ci.yml" ]; then
+        echo "Removing gitlab-ci.yml..."
+        rm -rf gitlab-ci.yml
         HAS_CHANGES=true
       fi
 
@@ -43,7 +36,7 @@ mirror-to-github:
       fi
       
       git filter-branch --force --index-filter \
-      "git rm --cached --ignore-unmatch -r ./*.yml ./*.yaml ./gitlab" \
+      "git rm --cached --ignore-unmatch -r ./.gitlab-ci.yml ./.gitlab-ci.yaml ./gitlab" \
       --prune-empty --tag-name-filter cat -- --all
       
       git push github $CI_COMMIT_REF_NAME --force --no-verify
