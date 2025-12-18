@@ -13,13 +13,11 @@ mirror-to-github:
       if [ -d "gitlab" ]; then
         echo "Removing gitlab directory..."
         rm -rf gitlab
-        HAS_CHANGES=true
       fi
       
-      if [ -d ".gitlab-ci.yml" ]; then
+      if [ -f ".gitlab-ci.yml" ]; then
         echo "Removing gitlab-ci.yml..."
         rm -rf gitlab-ci.yml
-        HAS_CHANGES=true
       fi
 
       # создаем новый корневой commit
