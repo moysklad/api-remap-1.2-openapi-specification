@@ -11,7 +11,7 @@ include:
       - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH != "master" && $CI_COMMIT_BRANCH != "release"'
   - local: 'gitlab/.gitlab-ci-github-mirror.yml'
     rules:
-      - if: '$CI_COMMIT_REF_NAME == "MC-90498"'
+      - if: '$CI_COMMIT_REF_NAME == "master"'
 
 stages:
   - verify
