@@ -3,7 +3,7 @@ variables:
   COMPOSER_IMAGE_VERSION: "2.7"
 
 include:
-  - local: php/common.gitlab-ci.yml
-  - local: php/verify.gitlab-ci.yml
-  - local: php/prepare.gitlab-ci.yml
-  - local: php/test.gitlab-ci.yml
+  - local: gitlab/php/common.gitlab-ci.yml
+  - local: gitlab/php/verify.gitlab-ci.yml
+  - local: gitlab/php/prepare.gitlab-ci.yml
+  - local: gitlab/php/test.gitlab-ci.yml
