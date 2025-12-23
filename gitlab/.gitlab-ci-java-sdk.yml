@@ -11,7 +11,7 @@ workflow:
         PROJECT1_PIPELINE_NAME: 'Release pipeline'
 
 include:
-  - local: gitlab/php/verify.gitlab-ci.yml
+  - local: gitlab/common/verify.gitlab-ci.yml
 
 variables:
   MAVEN_CLI_OPTS: "--batch-mode"

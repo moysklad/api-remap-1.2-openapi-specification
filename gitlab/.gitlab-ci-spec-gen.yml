@@ -4,6 +4,6 @@ variables:
 
 include:
   - local: gitlab/php/common.gitlab-ci.yml
-  - local: gitlab/php/verify.gitlab-ci.yml
+  - local: gitlab/common/verify.gitlab-ci.yml
   - local: gitlab/php/prepare.gitlab-ci.yml
   - local: gitlab/php/test.gitlab-ci.yml
