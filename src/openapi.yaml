@@ -42,6 +42,12 @@ paths:
     $ref: './paths/dictionaries/products/products-batch.yaml'
   /entity/product/metadata:
     $ref: './paths/common/metadata/metadata.yaml'
+  #
+  # Groups
+  /entity/group:
+    $ref: './paths/dictionaries/groups/groups.yaml'
+  /entity/group/{id}:
+    $ref: './paths/dictionaries/groups/group-by-id.yaml'
 
 components:
   schemas:
