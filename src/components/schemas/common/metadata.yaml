@@ -1,0 +1,11 @@
+type: object
+description: Метаданные объекта
+properties:
+  meta:
+    $ref: '../common/meta.yaml'
+  attributes:
+    description: Массив дополнительных полей
+    $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfoList'
+  createShared:
+    type: boolean
+    description: Создавать новые документы с общим доступом

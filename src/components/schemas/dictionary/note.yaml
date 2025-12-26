@@ -1,0 +1,36 @@
+type: object
+description: Событие Контрагента
+properties:
+  meta:
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID События
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  agent:
+    description: Метаданные Контрагента
+    $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
+    readOnly: true
+  author:
+    description: Метаданные Сотрудника - создателя события
+    $ref: '../../../openapi.yaml#/components/schemas/Employee'
+    readOnly: true
+  authorApplication:
+    description: Метаданные Решения - создателя события
+    $ref: '../../../openapi.yaml#/components/schemas/Application'
+    readOnly: true
+  created:
+    type: string
+    format: date-time
+    description: Время создания объекта
+    readOnly: true
+  description:
+    type: string
+    maxLength: 4096
+    description: Текст события Контрагента
