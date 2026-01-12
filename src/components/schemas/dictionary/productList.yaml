@@ -12,6 +12,6 @@ properties:
     $ref: '../common/metaList.yaml'
   rows:
     type: array
-    description: Массив групп
+    description: Массив товаров
     items:
       $ref: '../../../openapi.yaml#/components/schemas/Product'
