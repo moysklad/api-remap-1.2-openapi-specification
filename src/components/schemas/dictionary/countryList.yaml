@@ -12,6 +12,6 @@ properties:
     $ref: '../common/metaList.yaml'
   rows:
     type: array
-    description: Массив товаров
+    description: Массив стран
     items:
-      $ref: '../../../openapi.yaml#/components/schemas/Product'
+      $ref: '../../../openapi.yaml#/components/schemas/Country'

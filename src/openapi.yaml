@@ -48,6 +48,16 @@ paths:
     $ref: './paths/dictionaries/groups/groups.yaml'
   /entity/group/{id}:
     $ref: './paths/dictionaries/groups/group-by-id.yaml'
+  #
+  # Countries
+  /entity/country:
+    $ref: './paths/dictionaries/countries/countries.yaml'
+  /entity/country/{id}:
+    $ref: './paths/dictionaries/countries/country-by-id.yaml'
+  /entity/country/delete:
+    $ref: './paths/dictionaries/countries/countries-delete.yaml'
+  /entity/country/batch:
+    $ref: './paths/dictionaries/countries/countries-batch.yaml'
 
 components:
   schemas:
@@ -163,3 +173,7 @@ components:
 tags:
   - name: Products
     description: Операции с товарами
+  - name: Groups
+    description: Операции с группами
+  - name: Countries
+    description: Операции со странами
