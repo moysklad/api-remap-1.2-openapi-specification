@@ -58,6 +58,16 @@ paths:
     $ref: './paths/dictionaries/countries/countries-delete.yaml'
   /entity/country/batch:
     $ref: './paths/dictionaries/countries/countries-batch.yaml'
+  #
+  # Products
+  /entity/productfolder:
+    $ref: './paths/dictionaries/productFolders/productFolders.yaml'
+  /entity/productfolder/{id}:
+    $ref: './paths/dictionaries/productFolders/productFolders-by-id.yaml'
+  /entity/productfolder/delete:
+    $ref: './paths/dictionaries/productFolders/productFolders-delete.yaml'
+  /entity/productfolder/batch:
+    $ref: './paths/dictionaries/productFolders/productFolders-batch.yaml'
 
 components:
   schemas:
@@ -175,3 +185,5 @@ tags:
     description: Операции с группами
   - name: Countries
     description: Операции со странами
+  - name: ProductFolders
+    description: Операции с группами товаров
