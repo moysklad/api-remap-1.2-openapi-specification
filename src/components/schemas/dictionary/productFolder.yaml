@@ -74,8 +74,8 @@ properties:
   owner:
     description: Владелец группы товаров. Может быть Meta объектом или полным объектом в зависимости от expand параметра
     nullable: true
-    oneOf:
-      - $ref: '../../../openapi.yaml#/components/schemas/Owner'
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Employee'
   updated:
     type: string
     format: date-time
@@ -84,7 +84,7 @@ properties:
   productFolder:
     description: Родительская группа товаров
     nullable: true
-    oneOf:
+    allOf:
       - $ref: '../../../openapi.yaml#/components/schemas/ProductFolder'
   taxSystem:
     type: string

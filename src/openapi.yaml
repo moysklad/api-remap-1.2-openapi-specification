@@ -133,8 +133,6 @@ components:
       $ref: './components/schemas/dictionary/minPrice.yaml'
     Note:
       $ref: './components/schemas/dictionary/note.yaml'
-    Owner:
-      $ref: './components/schemas/dictionary/employee.yaml'
     Pack:
       $ref: './components/schemas/dictionary/pack.yaml'
     PriceType:

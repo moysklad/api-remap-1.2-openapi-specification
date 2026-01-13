@@ -138,8 +138,8 @@ properties:
   owner:
     description: Метаданные владельца (Сотрудника)
     nullable: true
-    oneOf:
-      - $ref: '../../../openapi.yaml#/components/schemas/Owner'
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Employee'
   salesAmount:
     type: integer
     description: Сумма продаж
