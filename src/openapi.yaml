@@ -59,7 +59,7 @@ paths:
   /entity/country/batch:
     $ref: './paths/dictionaries/countries/countries-batch.yaml'
   #
-  # Products
+  # ProductFolders
   /entity/productfolder:
     $ref: './paths/dictionaries/productFolders/productFolders.yaml'
   /entity/productfolder/{id}:
@@ -68,6 +68,16 @@ paths:
     $ref: './paths/dictionaries/productFolders/productFolders-delete.yaml'
   /entity/productfolder/batch:
     $ref: './paths/dictionaries/productFolders/productFolders-batch.yaml'
+  #
+  # Uoms
+  /entity/uom:
+    $ref: './paths/dictionaries/uoms/uoms.yaml'
+  /entity/uom/{id}:
+    $ref: './paths/dictionaries/uoms/uom-by-id.yaml'
+  /entity/uom/delete:
+    $ref: './paths/dictionaries/uoms/uoms-delete.yaml'
+  /entity/uom/batch:
+    $ref: './paths/dictionaries/uoms/uoms-batch.yaml'
 
 components:
   schemas:
@@ -187,3 +197,5 @@ tags:
     description: Операции со странами
   - name: ProductFolders
     description: Операции с группами товаров
+  - name: Uoms
+    description: Операции с единицами измерений
