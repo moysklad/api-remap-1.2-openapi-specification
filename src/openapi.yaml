@@ -98,6 +98,16 @@ paths:
     $ref: './paths/dictionaries/employees/employees-delete.yaml'
   /entity/employee/batch:
     $ref: './paths/dictionaries/employees/employees-batch.yaml'
+  #
+  # Counterparties
+  /entity/counterparty:
+    $ref: './paths/dictionaries/counterparties/counterparties.yaml'
+  /entity/counterparty/{id}:
+    $ref: './paths/dictionaries/counterparties/counterparty-by-id.yaml'
+  /entity/counterparty/delete:
+    $ref: './paths/dictionaries/counterparties/counterparties-delete.yaml'
+  /entity/counterparty/batch:
+    $ref: './paths/dictionaries/counterparties/counterparties-batch.yaml'
 
 components:
   schemas:
@@ -223,3 +233,5 @@ tags:
     description: Операции с валютами
   - name: Employees
     description: Операции с сотрудниками
+  - name: Counterparties
+    description: Операции с контрагентами
