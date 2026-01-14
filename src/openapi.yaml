@@ -88,6 +88,16 @@ paths:
     $ref: './paths/dictionaries/currencies/currencies-delete.yaml'
   /entity/currency/batch:
     $ref: './paths/dictionaries/currencies/currencies-batch.yaml'
+  #
+  # Employees
+  /entity/employee:
+    $ref: './paths/dictionaries/employees/employees.yaml'
+  /entity/employee/{id}:
+    $ref: './paths/dictionaries/employees/employee-by-id.yaml'
+  /entity/employee/delete:
+    $ref: './paths/dictionaries/employees/employees-delete.yaml'
+  /entity/employee/batch:
+    $ref: './paths/dictionaries/employees/employees-batch.yaml'
 
 components:
   schemas:
@@ -211,3 +221,5 @@ tags:
     description: Операции с единицами измерений
   - name: Currencies
     description: Операции с валютами
+  - name: Employees
+    description: Операции с сотрудниками
