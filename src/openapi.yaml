@@ -78,6 +78,16 @@ paths:
     $ref: './paths/dictionaries/uoms/uoms-delete.yaml'
   /entity/uom/batch:
     $ref: './paths/dictionaries/uoms/uoms-batch.yaml'
+  #
+  # Currencies
+  /entity/currency:
+    $ref: './paths/dictionaries/currencies/currencies.yaml'
+  /entity/currency/{id}:
+    $ref: './paths/dictionaries/currencies/currency-by-id.yaml'
+  /entity/currency/delete:
+    $ref: './paths/dictionaries/currencies/currencies-delete.yaml'
+  /entity/currency/batch:
+    $ref: './paths/dictionaries/currencies/currencies-batch.yaml'
 
 components:
   schemas:
@@ -199,3 +209,5 @@ tags:
     description: Операции с группами товаров
   - name: Uoms
     description: Операции с единицами измерений
+  - name: Currencies
+    description: Операции с валютами
