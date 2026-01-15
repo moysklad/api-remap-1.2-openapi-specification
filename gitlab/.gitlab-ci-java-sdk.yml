@@ -18,6 +18,8 @@ variables:
 
 build-for-tests:
   stage: build
+  rules:
+    - if: '$BRANCH != "release" && $auto != "yes"'
   before_script:
     - rm -f /etc/apt/sources.list.d/*pgdg*.list || true
     - apt-get update
@@ -34,10 +36,6 @@ build-for-tests:
     - mvn versions:set -DnewVersion=$ARTEFACT_VERSION -DgenerateBackupPoms=false;
     - mvn $MAVEN_CLI_OPTS -Ppublishing-artifactory clean deploy -DartifactoryRepo=${ARTIFACTORY_REPO_URL};
     - echo "Complete. Version $ARTEFACT_VERSION"
-  only:
-    variables:
-      - $auto != "yes"
-      - $BRANCH != "release"
 
 deploy-to-maven:
   stage: build
@@ -123,13 +121,13 @@ test-sdk:
     - deploy-job
     - test-create-user
   image: $GLOBAL_DOCKER_URL/maven:3.4-release
+  rules:
+    - if: '$BRANCH != "release" && $auto == "yes"'
   stage: build
   before_script:
     - rm -f /etc/apt/sources.list.d/*pgdg*.list || true
-    - echo "$GPG_SECRET_KEY" | gpg --import
     - apt-get update
     - apt-get install -y --no-install-recommends git
-    - git clone $CI_REPOSITORY_URL
   script:
     - git clone https://github.com/moysklad/java-remap-sdk-1.2.git
     - cd java-remap-sdk-1.2
@@ -141,9 +139,6 @@ test-sdk:
     - mvn versions:set -DnewVersion=$ARTEFACT_VERSION -DgenerateBackupPoms=false;
     - mvn $MAVEN_CLI_OPTS -Ppublishing-artifactory clean deploy -DartifactoryRepo=${ARTIFACTORY_REPO_URL};
     - echo "Complete. Version $ARTEFACT_VERSION"
-  only:
-    variables:
-      - $sdk == "java"
 
 remove-space:
   image: $GLOBAL_DOCKER_URL/maven:7.8-release
