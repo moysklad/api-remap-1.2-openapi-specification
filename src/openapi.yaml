@@ -108,6 +108,16 @@ paths:
     $ref: './paths/dictionaries/counterparties/counterparties-delete.yaml'
   /entity/counterparty/batch:
     $ref: './paths/dictionaries/counterparties/counterparties-batch.yaml'
+  #
+  # Services
+  /entity/service:
+    $ref: './paths/dictionaries/services/services.yaml'
+  /entity/service/{id}:
+    $ref: './paths/dictionaries/services/service-by-id.yaml'
+  /entity/service/delete:
+    $ref: './paths/dictionaries/services/services-delete.yaml'
+  /entity/service/batch:
+    $ref: './paths/dictionaries/services/services-batch.yaml'
 
 components:
   schemas:
@@ -189,6 +199,8 @@ components:
       $ref: './components/schemas/dictionary/priceType.yaml'
     Product:
       $ref: './components/schemas/dictionary/product.yaml'
+    Service:
+      $ref: './components/schemas/dictionary/service.yaml'
     ProductFolder:
       $ref: './components/schemas/dictionary/productFolder.yaml'
     Region:
@@ -235,3 +247,5 @@ tags:
     description: Операции с сотрудниками
   - name: Counterparties
     description: Операции с контрагентами
+  - name: Services
+    description: Операции с услугами
