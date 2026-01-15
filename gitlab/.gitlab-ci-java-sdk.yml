@@ -36,7 +36,7 @@ build-for-tests:
     - echo "Complete. Version $ARTEFACT_VERSION"
   only:
     variables:
-      - $auto == "no"
+      - $auto != "yes"
       - $BRANCH != "release"
 
 deploy-to-maven:
