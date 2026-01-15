@@ -36,6 +36,9 @@ build-for-tests:
     - mvn versions:set -DnewVersion=$ARTEFACT_VERSION -DgenerateBackupPoms=false;
     - mvn $MAVEN_CLI_OPTS -Ppublishing-artifactory clean deploy -DartifactoryRepo=${ARTIFACTORY_REPO_URL};
     - echo "Complete. Version $ARTEFACT_VERSION"
+  only:
+    variables:
+      - $auto == "no"
 
 deploy-to-maven:
   stage: build
@@ -65,44 +68,90 @@ deploy-to-maven:
     - mvn $MAVEN_CLI_OPTS -Dusername=$GIT_USER -Dpassword=$GIT_PASSWORD -Ppublishing-central release:prepare
     - mvn -Ppublishing-central release:perform
 
-test-to-auto-deploy:
-  stage: build
+
+deploy-job:
+  image: $GLOBAL_DOCKER_URL/maven:7.8-release
+  stage: deploy-for-space
   variables:
-    PARAM_PROFILE: "test_ru"
+    PARAM_PROFILE: "remap12_minimal_ru"
     PARAM_REF: $CI_COMMIT_REF_NAME
-    PARAM_VERSION: "R1588" #возможно стоит брать последний релиз, но пока что будет конкретный.
+    #    PARAM_VERSION: VERSION_PIPE #версия окружения ремапа#
     GITLAB_TEST_TYPE: e2e
     GITLAB_TEST_TYPE_VARIANT: api
+  before_script:
+    - python3 env_prepare.py $PARAM_REF $CI_PIPELINE_ID $CI_JOB_ID $PARAM_VERSION $PARAM_PROFILE
+  script:
+    - export NAMESPACE=$(cat namespace-export-file)
+    - export HTTP_API='https://api'
+    - export DMS_API_ENDPOINT='testms-test.lognex.ru'
+    - export API_HOST=$HTTP_API-$NAMESPACE.$DMS_API_ENDPOINT
+    - echo "API_HOST=${API_HOST}" >> variable.env
+    - echo "NAMESPACE=${NAMESPACE}" >> variable.env
+  artifacts:
+    reports:
+      dotenv: variable.env
+
+
+test-create-user:
+  dependencies:
+    - deploy-job
+  image: alpine:latest
+  stage: create-user
+  script:
+    - apk add --no-cache curl jq
+    - |
+      RESPONSE=$(curl --location -X POST $API_HOST/api/remap/1.2/register \
+      --header 'Content-Type: application/x-www-form-urlencoded' \
+      --header 'Accept-Encoding: gzip' \
+      --data-urlencode 'email=megorov@moysklad.ru')
+
+    - echo $RESPONSE
+    - API_PASSWORD=$(echo "$RESPONSE" | sed -n 's/.*"password"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p')
+    - echo "$API_PASSWORD"
+    - echo API_PASSWORD=$API_PASSWORD >> user.env
+    - API_LOGIN=$(echo "$RESPONSE" | sed -n 's/.*"uid"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p')
+    - echo "$API_LOGIN"
+    - echo API_LOGIN=$API_LOGIN >> user.env
+  artifacts:
+    reports:
+      dotenv: user.env
+  only:
+    variables:
+      - $auto == "yes"
+
+test-sdk:
+  dependencies:
+    - deploy-job
+    - test-create-user
+  image: $GLOBAL_DOCKER_URL/maven:3.4-release
+  stage: build
   before_script:
     - rm -f /etc/apt/sources.list.d/*pgdg*.list || true
     - echo "$GPG_SECRET_KEY" | gpg --import
     - apt-get update
     - apt-get install -y --no-install-recommends git
     - git clone $CI_REPOSITORY_URL
-    - cd api-sdk-builder
-    - git checkout 'ATK-28'; #изменить на мастер после влития
-    - export TZ='Europe/Moscow'
   script:
-    - export NAMESPACE=$(cat namespace-export-file)
-    - HTTP_API='https://api'
-    - DMS_API_ENDPOINT='testms-test.lognex.ru'
-    - export API_HOST=$HTTP_API-$NAMESPACE.$DMS_API_ENDPOINT #хост
-    - export API_LOGIN='admin@moysklad.ru' #дефолтный пользователь
-    - export API_PASSWORD='tutorial1'
     - git clone https://github.com/moysklad/java-remap-sdk-1.2.git
     - cd java-remap-sdk-1.2
     - if [ -z "$BRANCH" ]; then
       BRANCH='master';
       fi
-    - git checkout $BRANCH
-    - ARTEFACT_VERSION="$BRANCH-${CI_PIPELINE_ID}"
+    - git checkout $BRANCH;
+    - export ARTEFACT_VERSION="$BRANCH-${CI_PIPELINE_ID}"
     - mvn versions:set -DnewVersion=$ARTEFACT_VERSION -DgenerateBackupPoms=false;
     - mvn $MAVEN_CLI_OPTS -Ppublishing-artifactory clean deploy -DartifactoryRepo=${ARTIFACTORY_REPO_URL};
     - echo "Complete. Version $ARTEFACT_VERSION"
-  after_script:
-    - export NAMESPACE=$(cat namespace-export-file)
-    - python3 env_clean.py $NAMESPACE $CI_PIPELINE_ID $CI_JOB_ID
-    - tms-prepare
   only:
     variables:
-      - $auto == "yes" # пока надо указывать этот параметр для прохождения пайпа (в дальнейшем отсутсвии параметра будет проходить без проверки параметра)
+      - $sdk == "java"
+
+remove-space:
+  image: $GLOBAL_DOCKER_URL/maven:7.8-release
+  dependencies:
+    - deploy-job
+    - test-sdk
+  stage: delete-space
+  script:
+    - python3 env_clean.py $NAMESPACE $CI_PIPELINE_ID $CI_JOB_ID
+  when: manual
