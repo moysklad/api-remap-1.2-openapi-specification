@@ -154,4 +154,5 @@ remove-space:
   stage: delete-space
   script:
     - python3 env_clean.py $NAMESPACE $CI_PIPELINE_ID $CI_JOB_ID
+    - tms-prepare
   when: manual
