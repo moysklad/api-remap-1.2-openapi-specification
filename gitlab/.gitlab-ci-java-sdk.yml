@@ -145,7 +145,6 @@ remove-space:
   image: $GLOBAL_DOCKER_URL/maven:7.8-release
   dependencies:
     - deploy-job
-    - test-sdk
   stage: delete-space
   script:
     - python3 env_clean.py $NAMESPACE $CI_PIPELINE_ID $CI_JOB_ID
