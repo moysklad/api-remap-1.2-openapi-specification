@@ -16,7 +16,10 @@ include:
 stages:
   - verify
   - prepare
+  - deploy-for-space
+  - create-user
   - test
   - build
+  - delete-space
   - generate-sdk
   - mirror
