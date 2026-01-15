@@ -18,8 +18,6 @@ variables:
 
 build-for-tests:
   stage: build
-  rules:
-    - if: '$BRANCH != "release"'
   before_script:
     - rm -f /etc/apt/sources.list.d/*pgdg*.list || true
     - apt-get update
@@ -39,6 +37,7 @@ build-for-tests:
   only:
     variables:
       - $auto == "no"
+      - $BRANCH != "release"
 
 deploy-to-maven:
   stage: build
@@ -154,5 +153,4 @@ remove-space:
   stage: delete-space
   script:
     - python3 env_clean.py $NAMESPACE $CI_PIPELINE_ID $CI_JOB_ID
-    - tms-prepare
   when: manual
