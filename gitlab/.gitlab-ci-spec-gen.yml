@@ -1,0 +1,9 @@
+variables:
+  PHP_SDK_REPO_URL: "https://github.com/moysklad/php-remap-1.2-sdk.git"
+  COMPOSER_IMAGE_VERSION: "2.7"
+
+include:
+  - local: gitlab/php/common.gitlab-ci.yml
+  - local: gitlab/common/verify.gitlab-ci.yml
+  - local: gitlab/php/prepare.gitlab-ci.yml
+  - local: gitlab/php/test.gitlab-ci.yml

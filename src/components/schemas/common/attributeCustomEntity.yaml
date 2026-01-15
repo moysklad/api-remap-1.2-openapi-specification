@@ -1,0 +1,14 @@
+type: object
+allOf:
+  - $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
+properties:
+  type:
+    type: string
+    enum: [customentity]
+  value:
+    properties:
+      meta:
+        $ref: '../common/meta.yaml'
+      name:
+        type: string
+        description: Наименование элемента кастомного справочника

@@ -10,12 +10,8 @@ workflow:
       variables:
         PROJECT1_PIPELINE_NAME: 'Release pipeline'
 
-stages:
-  - verify
-  - build
-
 include:
-  - local: gitlab/verify.gitlab-ci.yml
+  - local: gitlab/common/verify.gitlab-ci.yml
 
 variables:
   MAVEN_CLI_OPTS: "--batch-mode"

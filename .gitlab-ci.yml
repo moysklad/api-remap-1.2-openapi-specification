@@ -1,8 +1,22 @@
 # Сделано через два отдельных пути, чтобы разделить пайплайн где сдк генерится openapi и старой ручной java sdk
 include:
-  - local: '.gitlab-ci-java-sdk.yml'
+  - local: 'gitlab/.gitlab-ci-java-sdk.yml'
     rules:
-      - if: '$SPEC_SDK_GENERATION != "true"'
-  - local: '.gitlab-ci-spec-gen.yml'
+      - if: '$SPEC_SDK_GENERATION != "true" && $CI_PIPELINE_SOURCE != "push"'
+  - local: 'gitlab/.gitlab-ci-spec-gen.yml'
     rules:
-      - if: '$SPEC_SDK_GENERATION == "true"'
+      - if: '$SPEC_SDK_GENERATION == "true" && $CI_PIPELINE_SOURCE != "push"'
+  - local: 'gitlab/.gitlab-ci-sdk-php-gen.yml'
+    rules:
+      - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH != "master" && $CI_COMMIT_BRANCH != "release"'
+  - local: 'gitlab/.gitlab-ci-github-mirror.yml'
+    rules:
+      - if: '$CI_COMMIT_REF_NAME == "master"'
+
+stages:
+  - verify
+  - prepare
+  - test
+  - build
+  - generate-sdk
+  - mirror

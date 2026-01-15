@@ -1,0 +1,44 @@
+type: object
+description: Счета Контрагентов
+properties:
+  meta:
+    description: Метаданные Счета Контрагента
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID счета
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  updated:
+    type: string
+    format: date-time
+    description: Время последнего изменения
+    readOnly: true
+  isDefault:
+    type: boolean
+    description: Основной счет
+    example: false
+  accountNumber:
+    type: string
+    description: Номер счета
+    example: "40702810123456789012"
+  bankName:
+    type: string
+    description: Наименование банка
+    example: "ПАО Сбербанк"
+  bankLocation:
+    type: string
+    description: Адрес банка
+  correspondentAccount:
+    type: string
+    description: Корр. счет
+    example: "30101810400000000225"
+  bic:
+    type: string
+    description: БИК
+    example: "044525225"

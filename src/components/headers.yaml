@@ -1,0 +1,13 @@
+AcceptHeader:
+#  Заголовок указан в нижнем регистре намеренно, иначе после генерации происходит перезатирание значения с content
+  name: accept
+  in: header
+  schema:
+    type: string
+    default: application/json;charset=utf-8
+AcceptEncoding:
+  name: Accept-Encoding
+  in: header
+  schema:
+    type: string
+    default: gzip
