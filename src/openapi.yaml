@@ -126,8 +126,6 @@ paths:
     $ref: './paths/dictionaries/pricetypes/pricetype-by-id.yaml'
   /context/companysettings/pricetype/default:
     $ref: './paths/dictionaries/pricetypes/pricetype-default.yaml'
-  /context/companysettings/pricetype/batch:
-    $ref: './paths/dictionaries/pricetypes/pricetypes-batch.yaml'
 
 components:
   schemas:
