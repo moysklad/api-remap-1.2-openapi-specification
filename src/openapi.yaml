@@ -118,6 +118,16 @@ paths:
     $ref: './paths/dictionaries/services/services-delete.yaml'
   /entity/service/batch:
     $ref: './paths/dictionaries/services/services-batch.yaml'
+  #
+  # PriceTypes
+  /context/companysettings/pricetype:
+    $ref: './paths/dictionaries/pricetypes/pricetypes.yaml'
+  /context/companysettings/pricetype/{id}:
+    $ref: './paths/dictionaries/pricetypes/pricetype-by-id.yaml'
+  /context/companysettings/pricetype/default:
+    $ref: './paths/dictionaries/pricetypes/pricetype-default.yaml'
+  /context/companysettings/pricetype/batch:
+    $ref: './paths/dictionaries/pricetypes/pricetypes-batch.yaml'
 
 components:
   schemas:
@@ -249,3 +259,5 @@ tags:
     description: Операции с контрагентами
   - name: Services
     description: Операции с услугами
+  - name: PriceTypes
+    description: Операции с типами цен
