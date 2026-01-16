@@ -22,4 +22,4 @@ check-env:
       fi
   only:
     variables:
-      - $auto != "yes"
+      - $PARAM_VERSION == ""
