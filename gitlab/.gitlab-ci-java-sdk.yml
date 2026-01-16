@@ -19,7 +19,7 @@ variables:
 build-for-tests:
   stage: build
   rules:
-    - if: '$BRANCH != "release" && $auto != "yes"'
+    - if: '$BRANCH != "release" && $PARAM_VERSION == ""'
   before_script:
     - rm -f /etc/apt/sources.list.d/*pgdg*.list || true
     - apt-get update
@@ -43,7 +43,6 @@ deploy-to-maven:
     - if: '$BRANCH == "release"'
   before_script:
     - rm -f /etc/apt/sources.list.d/*pgdg*.list || true
-    - echo "$GPG_SECRET_KEY" | gpg --import
     - apt-get update
     - apt-get install -y --no-install-recommends git
     - git clone https://github.com/moysklad/java-remap-sdk-1.2.git
@@ -87,6 +86,9 @@ deploy-job:
   artifacts:
     reports:
       dotenv: variable.env
+  only:
+    variables:
+      - $PARAM_VERSION != ""
 
 
 test-create-user:
@@ -114,7 +116,7 @@ test-create-user:
       dotenv: user.env
   only:
     variables:
-      - $auto == "yes"
+      - $PARAM_VERSION != ""
 
 test-sdk:
   dependencies:
@@ -122,7 +124,7 @@ test-sdk:
     - test-create-user
   image: $GLOBAL_DOCKER_URL/maven:3.4-release
   rules:
-    - if: '$BRANCH != "release" && $auto == "yes"'
+    - if: '$BRANCH != "release" && $PARAM_VERSION != ""'
   stage: build
   before_script:
     - rm -f /etc/apt/sources.list.d/*pgdg*.list || true
@@ -148,5 +150,4 @@ remove-space:
   stage: delete-space
   script:
     - python3 env_clean.py $NAMESPACE $CI_PIPELINE_ID $CI_JOB_ID
-    - tms-prepare
   when: manual
