@@ -20,3 +20,6 @@ check-env:
       if [ $env_missing -eq 1 ]; then
         exit 1
       fi
+  only:
+    variables:
+      - $PARAM_VERSION == ""
