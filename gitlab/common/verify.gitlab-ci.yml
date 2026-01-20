@@ -22,4 +22,4 @@ check-env:
       fi
   only:
     variables:
-      - $API_HOST != ""
+      - $PARAM_VERSION == "" || $PARAM_VERSION == null
