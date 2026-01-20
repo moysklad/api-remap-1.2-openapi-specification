@@ -129,7 +129,6 @@ test-sdk:
   stage: build
   before_script:
     - rm -f /etc/apt/sources.list.d/*pgdg*.list || true
-    - echo "$GPG_SECRET_KEY" | gpg --import
     - apt-get update
     - apt-get install -y --no-install-recommends git
   script:
