@@ -88,7 +88,7 @@ deploy-job:
       dotenv: variable.env
   only:
     variables:
-      - $PARAM_VERSION != ""
+      - $API_HOST == ""
 
 
 test-create-user:
@@ -116,7 +116,7 @@ test-create-user:
       dotenv: user.env
   only:
     variables:
-      - $PARAM_VERSION != ""
+      - $API_HOST == ""
 
 test-sdk:
   dependencies:
@@ -124,7 +124,7 @@ test-sdk:
     - test-create-user
   image: $GLOBAL_DOCKER_URL/maven:3.4-release
   rules:
-    - if: '$BRANCH != "release" && $PARAM_VERSION != ""'
+    - if: '$BRANCH != "release" && $API_HOST == ""'
   stage: build
   before_script:
     - rm -f /etc/apt/sources.list.d/*pgdg*.list || true
