@@ -43,6 +43,7 @@ deploy-to-maven:
     - if: '$BRANCH == "release"'
   before_script:
     - rm -f /etc/apt/sources.list.d/*pgdg*.list || true
+    - echo "$GPG_SECRET_KEY" | gpg --import
     - apt-get update
     - apt-get install -y --no-install-recommends git
     - git clone https://github.com/moysklad/java-remap-sdk-1.2.git
