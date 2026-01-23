@@ -1,0 +1,26 @@
+type: object
+description: Метаданные объекта
+properties:
+  href:
+    type: string
+    format: uri
+    description: Ссылка на объект
+  metadataHref:
+    type: string
+    format: uri
+    description: Ссылка на метаданные сущности
+  type:
+    type: string
+    description: Тип объекта
+  mediaType:
+    type: string
+    description: Тип данных
+    example: "application/json"
+  uuidHref:
+    type: string
+    format: uri
+    description: Ссылка на объект на UI
+  downloadHref:
+    type: string
+    format: uri
+    description: Ссылка на скачивание (для изображений)

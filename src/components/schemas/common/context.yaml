@@ -1,0 +1,5 @@
+type: object
+description: Метаданные о сотруднике, выполнившем запрос
+properties:
+  employee:
+    $ref: '../../../openapi.yaml#/components/schemas/Employee'
