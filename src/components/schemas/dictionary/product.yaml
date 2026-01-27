@@ -110,8 +110,8 @@ properties:
   owner:
     description: Метаданные владельца (Сотрудника)
     nullable: true
-    oneOf:
-      - $ref: '../../../openapi.yaml#/components/schemas/Owner'
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Employee'
   updated:
     type: string
     format: date-time
@@ -138,32 +138,32 @@ properties:
   supplier:
     description: Метаданные контрагента-поставщика
     nullable: true
-    oneOf:
+    allOf:
       - $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
   country:
     description: Метаданные Страны
     nullable: true
-    oneOf:
+    allOf:
       - $ref: '../../../openapi.yaml#/components/schemas/Country'
   uom:
     description: Метаданные единиц измерения
     nullable: true
-    oneOf:
+    allOf:
       - $ref: '../../../openapi.yaml#/components/schemas/Uom'
   productFolder:
     description: Метаданные группы Товара
     nullable: true
-    oneOf:
+    allOf:
       - $ref: '../../../openapi.yaml#/components/schemas/ProductFolder'
   images:
     description: Массив изображений
     nullable: true
-    oneOf:
+    allOf:
       - $ref: '../../../openapi.yaml#/components/schemas/ImageList'
   files:
     description: Метаданные массива Файлов
     nullable: true
-    oneOf:
+    allOf:
       - $ref: '../../../openapi.yaml#/components/schemas/FileList'
   barcodes:
     type: array
@@ -214,7 +214,7 @@ properties:
   minimumStock:
     description: Неснижаемый остаток
     nullable: true
-    oneOf:
+    allOf:
       - $ref: '../../../openapi.yaml#/components/schemas/MinimumStockAbstract'
   minPrice:
     description: Минимальная цена

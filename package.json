@@ -9,7 +9,7 @@
         "bundle-json": "redocly bundle src/openapi.yaml -o dist/openapi.json --ext json",
         "docs": "redocly build-docs src/openapi.yaml -o docs/index.html",
         "serve-docs": "redocly preview-docs src/openapi.yaml",
-        "generate-php": "openapi-generator-cli generate -i src/openapi.yaml -g php --additional-properties=phpVersion=7.4 -o clients/php -t customtemplates/php",
+        "generate-php": "openapi-generator-cli generate -i src/openapi.yaml -g php --additional-properties=phpVersion=8.1 -o clients/php -t customtemplates/php",
         "build": "npm run validate && npm run bundle && npm run bundle-json && npm run docs",
         "clean": "rm -rf dist clients docs"
     },

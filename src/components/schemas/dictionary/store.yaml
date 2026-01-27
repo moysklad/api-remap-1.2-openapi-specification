@@ -17,8 +17,8 @@ properties:
   owner:
     description: Владелец (Сотрудник)
     nullable: true
-    oneOf:
-      - $ref: '../../../openapi.yaml#/components/schemas/Owner'
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Employee'
   shared:
     type: boolean
     description: Общий доступ
@@ -64,7 +64,7 @@ properties:
   parent:
     description: Метаданные родительского склада (Группы)
     nullable: true
-    oneOf:
+    allOf:
       - $ref: '../../../openapi.yaml#/components/schemas/Store'
   attributes:
     type: array
