@@ -1,0 +1,50 @@
+type: object
+description: Страна
+properties:
+  meta:
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID страны
+    readOnly: true
+    example: "12a8b923-692c-11e6-8a84-bae500000057"
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+    example: "12a8b923-692c-11e6-8a84-bae500000055"
+  name:
+    type: string
+    description: Наименование страны
+    example: "Россия"
+  description:
+    type: string
+    description: Описание страны
+    example: "Российская Федерация"
+  code:
+    type: string
+    description: Код страны
+    example: "643"
+  externalCode:
+    type: string
+    description: Внешний код страны
+    example: "RU"
+  updated:
+    type: string
+    format: date-time
+    description: Момент последнего обновления сущности
+    readOnly: true
+  group:
+    description: Метаданные отдела сотрудника
+    $ref: '../../../openapi.yaml#/components/schemas/Group'
+  owner:
+    description: Метаданные владельца (Сотрудника)
+    nullable: true
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Employee'
+  shared:
+    type: boolean
+    description: Общий доступ
+    example: "true"

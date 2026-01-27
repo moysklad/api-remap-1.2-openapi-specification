@@ -1,0 +1,28 @@
+type: object
+description: Метаописание дополнительного поля
+properties:
+  id:
+    type: string
+    format: uuid
+    description: ID дополнительного поля
+  name:
+    type: string
+    description: Наименование дополнительного поля
+  type:
+    type: string
+    enum: [string, long, time, double, boolean, text, link, file, customentity]
+    description: Тип дополнительного поля
+  required:
+    type: boolean
+    description: Является ли поле обязательным
+  show:
+    type: boolean
+    description: Показывать ли поле на UI
+  description:
+    type: string
+    description: Описание дополнительного поля
+  meta:
+    $ref: '../common/meta.yaml'
+  customEntityMeta:
+    $ref: '../common/meta.yaml'
+    description: Ссылка на метаданные пользовательского справочника (только для типа customentity)

@@ -1,0 +1,36 @@
+post:
+  tags:
+    - Services
+  summary: Создать или изменить услуги
+  description: Создание или изменение нескольких услуг.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            $ref: '../../../openapi.yaml#/components/schemas/Service'
+          minItems: 1
+          maxItems: 1000
+  responses:
+    '200':
+      description: Услуги успешно созданы или изменены
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../../../openapi.yaml#/components/schemas/Service'
+            minItems: 1
+            maxItems: 1000
+    '400':
+      $ref: '../../../components/responses.yaml#/BadRequest'
+    '401':
+      $ref: '../../../components/responses.yaml#/Unauthorized'
+    '403':
+      $ref: '../../../components/responses.yaml#/Forbidden'

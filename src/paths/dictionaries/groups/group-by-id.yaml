@@ -1,0 +1,64 @@
+get:
+  tags:
+    - Groups
+  summary: Получить группу по ID
+  description: Запрос на получение отдельной группы с указанным id
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../components/schemas/dictionary/group.yaml'
+    '404':
+      $ref: '../../../components/responses.yaml#/NotFound'
+
+put:
+  tags:
+    - Groups
+  summary: Обновить группу
+  description: Обновление группы с указанным id
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../components/schemas/dictionary/group.yaml'
+  responses:
+    '200':
+      description: Группа успешно обновлена
+      content:
+        application/json:
+          schema:
+            $ref: '../../../components/schemas/dictionary/group.yaml'
+    '400':
+      $ref: '../../../components/responses.yaml#/BadRequest'
+    '404':
+      $ref: '../../../components/responses.yaml#/NotFound'
+
+delete:
+  tags:
+    - Groups
+  summary: Удалить группу
+  description: Удаление группы с указанным id
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Группа успешно удалена
+    '404':
+      $ref: '../../../components/responses.yaml#/NotFound'
+    '409':
+      $ref: '../../../components/responses.yaml#/Conflict'
