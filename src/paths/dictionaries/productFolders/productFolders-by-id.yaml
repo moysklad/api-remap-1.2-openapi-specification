@@ -1,4 +1,5 @@
 get:
+  operationId: getProductFolderById
   tags:
     - ProductFolders
   summary: Получить группу товаров по ID
@@ -19,6 +20,7 @@ get:
       $ref: '../../../components/responses.yaml#/NotFound'
 
 put:
+  operationId: updateProductFolder
   tags:
     - ProductFolders
   summary: Обновить группу товаров
@@ -47,6 +49,7 @@ put:
       $ref: '../../../components/responses.yaml#/NotFound'
 
 delete:
+  operationId: deleteProductFolder
   tags:
     - ProductFolders
   summary: Удалить группу товаров

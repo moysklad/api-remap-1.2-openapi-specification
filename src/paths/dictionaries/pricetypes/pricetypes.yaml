@@ -1,4 +1,5 @@
 get:
+  operationId: getPriceTypes
   tags:
     - PriceTypes
   summary: Получить список типов цен
@@ -23,6 +24,7 @@ get:
       $ref: '../../../components/responses.yaml#/Forbidden'
 
 post:
+  operationId: createPriceTypesBatch
   tags:
     - PriceTypes
   summary: Создать или изменить типы цен

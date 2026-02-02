@@ -1,4 +1,5 @@
 post:
+  operationId: createCurrenciesBatch
   tags:
     - Currencies
   summary: Создать или изменить валюту

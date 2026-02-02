@@ -1,4 +1,5 @@
 get:
+  operationId: getCurrencyById
   tags:
     - Currencies
   summary: Получить валюту по ID
@@ -19,6 +20,7 @@ get:
       $ref: '../../../components/responses.yaml#/NotFound'
 
 put:
+  operationId: updateCurrency
   tags:
     - Currencies
   summary: Обновить валюту
@@ -47,6 +49,7 @@ put:
       $ref: '../../../components/responses.yaml#/NotFound'
 
 delete:
+  operationId: deleteCurrency
   tags:
     - Currencies
   summary: Удалить валюту

@@ -1,4 +1,5 @@
 get:
+  operationId: getProducts
   tags:
     - Products
   summary: Получить список товаров
@@ -27,6 +28,7 @@ get:
       $ref: '../../../components/responses.yaml#/Forbidden'
 
 post:
+  operationId: createProduct
   tags:
     - Products
   summary: Создать товар

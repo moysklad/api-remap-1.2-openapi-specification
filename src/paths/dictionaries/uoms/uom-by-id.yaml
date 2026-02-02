@@ -1,4 +1,5 @@
 get:
+  operationId: getUomById
   tags:
     - Uoms
   summary: Получить единицу измерения по ID
@@ -19,6 +20,7 @@ get:
       $ref: '../../../components/responses.yaml#/NotFound'
 
 put:
+  operationId: updateUom
   tags:
     - Uoms
   summary: Обновить единицы измерения
@@ -47,6 +49,7 @@ put:
       $ref: '../../../components/responses.yaml#/NotFound'
 
 delete:
+  operationId: deleteUom
   tags:
     - Uoms
   summary: Удалить единицу измерения

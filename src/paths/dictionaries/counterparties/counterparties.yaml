@@ -1,4 +1,5 @@
 get:
+  operationId: getCounterparties
   tags:
     - Counterparties
   summary: Получить список контрагентов
@@ -27,6 +28,7 @@ get:
       $ref: '../../../components/responses.yaml#/Forbidden'
 
 post:
+  operationId: createCounterparty
   tags:
     - Counterparties
   summary: Создать контрагента

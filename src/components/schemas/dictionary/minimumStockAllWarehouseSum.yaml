@@ -6,7 +6,7 @@ properties:
     type: string
     default: ALL_WAREHOUSE_SUM
     enum: [ALL_WAREHOUSE_SUM]
-    readonly: true
+    readOnly: true
   quantity:
     type: number
     format: float

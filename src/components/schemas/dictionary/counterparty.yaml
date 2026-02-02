@@ -74,6 +74,7 @@ properties:
   actualAddressFull:
     description: Полный адрес
     nullable: true
+    type: object
     allOf:
       - $ref: '../../../openapi.yaml#/components/schemas/Address'
   legalAddress:
@@ -148,6 +149,7 @@ properties:
   owner:
     description: Метаданные владельца (Сотрудника)
     nullable: true
+    type: object
     allOf:
       - $ref: '../../../openapi.yaml#/components/schemas/Employee'
   salesAmount:

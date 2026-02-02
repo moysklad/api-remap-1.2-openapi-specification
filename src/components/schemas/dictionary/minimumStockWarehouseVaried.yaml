@@ -6,7 +6,7 @@ properties:
     type: string
     default: WAREHOUSE_VARIED
     enum: [WAREHOUSE_VARIED]
-    readonly: true
+    readOnly: true
   storeBalances:
     type: object
     description: Неснижаемые остатки по складам

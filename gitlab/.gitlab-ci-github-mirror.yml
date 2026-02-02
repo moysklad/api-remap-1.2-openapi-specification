@@ -1,3 +1,9 @@
+# Mirror Openapi specification to Remote Repository
+#
+# Этот файл содержит job'у для пуша измененной openapi спецификации в удалённый репозиторий.
+# Job'а выполняется только при merge в master ветку.
+
+# Push OpenApi Specification to GitHub
 mirror-to-github:
   image: docker.infra.lognex/docker-openapitools:1.0-release
   stage: mirror

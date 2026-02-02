@@ -1,4 +1,5 @@
 post:
+  operationId: deleteCurrenciesBatch
   tags:
     - Currencies
   summary: Удалить валюту

@@ -1,4 +1,5 @@
 post:
+  operationId: createUomsBatch
   tags:
     - Uoms
   summary: Создать или изменить единицу измерения

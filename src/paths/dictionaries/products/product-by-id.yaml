@@ -1,4 +1,5 @@
 get:
+  operationId: getProductById
   tags:
     - Products
   summary: Получить товар по ID
@@ -19,6 +20,7 @@ get:
       $ref: '../../../components/responses.yaml#/NotFound'
 
 put:
+  operationId: updateProduct
   tags:
     - Products
   summary: Обновить товар
@@ -47,6 +49,7 @@ put:
       $ref: '../../../components/responses.yaml#/NotFound'
 
 delete:
+  operationId: deleteProduct
   tags:
     - Products
   summary: Удалить товар

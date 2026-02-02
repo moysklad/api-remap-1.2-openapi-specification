@@ -1,4 +1,5 @@
 get:
+  operationId: getCountries
   tags:
     - Countries
   summary: Получить список стран
@@ -27,6 +28,7 @@ get:
       $ref: '../../../components/responses.yaml#/Forbidden'
 
 post:
+  operationId: createCountry
   tags:
     - Countries
   summary: Создать страну

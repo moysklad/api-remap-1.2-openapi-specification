@@ -63,6 +63,7 @@ properties:
   owner:
     description: Метаданные владельца (сотрудника)
     nullable: true
+    type: object
     allOf:
       - $ref: '../../../openapi.yaml#/components/schemas/Employee'
   priceType:
@@ -70,34 +71,167 @@ properties:
     $ref: '../../../openapi.yaml#/components/schemas/PriceType'
   environment:
     description: Информация о среде (оборудование, ПО и т.д.)
-    $ref: '#/components/schemas/Environment'
+    type: object
+    properties:
+      device:
+        type: string
+        maxLength: 255
+        description: Устройство
+      os:
+        type: string
+        maxLength: 255
+        description: Операционная система
+      software:
+        type: object
+        description: Информация о ПО
+        properties:
+          name:
+            type: string
+            maxLength: 255
+            description: Наименование ПО
+          vendor:
+            type: string
+            maxLength: 255
+            description: Производитель ПО
+          version:
+            type: string
+            maxLength: 255
+            description: Версия ПО
+      chequePrinter:
+        type: object
+        description: Информация о чековом принтере
+        properties:
+          driver:
+            type: object
+            description: Информация о драйвере
+            properties:
+              name:
+                type: string
+                maxLength: 255
+                description: Наименование драйвера
+              version:
+                type: string
+                maxLength: 255
+                description: Версия драйвера
+          firmwareVersion:
+            type: string
+            maxLength: 255
+            description: Версия прошивки
+          fiscalDataVersion:
+            type: string
+            maxLength: 255
+            description: Версия фискальных данных
+          fiscalMemory:
+            type: object
+            description: Фискальная память
+            properties:
+              fiscalDataVersion:
+                type: string
+                maxLength: 255
+                description: Версия фискальных данных
+              fiscalValidityDate:
+                type: string
+                format: date-time
+                description: Дата окончания действия фискальной памяти
+          name:
+            type: string
+            maxLength: 255
+            description: Наименование чекового принтера
+          serial:
+            type: string
+            maxLength: 255
+            description: Серийный номер чекового принтера
+          vendor:
+            type: string
+            maxLength: 255
+            description: Производитель чекового принтера
+      paymentTerminal:
+        type: string
+        maxLength: 255
+        description: Терминал оплаты
   state:
-    $ref: '#/components/schemas/Status'
-    description: Статус Точки продаж
+    type: object
+    description: Статус точки продаж
+    properties:
+      sync:
+        type: object
+        description: Состояние синхронизации
+        properties:
+          message:
+            type: string
+            maxLength: 255
+            description: Сообщение
+          lastAttempMoment:
+            type: string
+            format: date-time
+            description: Момент последней попытки
+      lastCheckMoment:
+        type: string
+        format: date-time
+        description: Момент последней проверки
+      fiscalMemory:
+        type: object
+        description: Статус фискальной памяти
+        properties:
+          error:
+            type: object
+            description: Ошибка фискальной памяти
+            properties:
+              code:
+                type: string
+                maxLength: 255
+                description: Код ошибки
+              message:
+                type: string
+                maxLength: 255
+                description: Сообщение ошибки
+          notSendDocCount:
+            type: integer
+            description: Количество неотправленных документов
+          notSendFirstDocMoment:
+            type: string
+            format: date-time
+            description: Момент первого неотправленного документа
+      paymentTerminal:
+        type: object
+        description: Информация о платежном терминале
+        properties:
+          acquiringType:
+            type: string
+            maxLength: 255
+            description: Тип эквайринга
   fiscalType:
-    $ref: '#/components/schemas/FiscalType'
+    type: string
     description: Фискальный режим работы Точки продаж
+    enum: [ STANDARD, MASTER, CLOUD ]
   defaultTaxSystem:
-    $ref: '#/components/schemas/TaxSystem'
+    type: string
     description: Система налогообложения по умолчанию
+    enum: [ GENERAL_TAX_SYSTEM, SIMPLIFIED_TAX_SYSTEM_INCOME, SIMPLIFIED_TAX_SYSTEM_INCOME_OUTCOME, UNIFIED_AGRICULTURAL_TAX, PRESUMPTIVE_TAX_SYSTEM, PATENT_BASED ]
   orderTaxSystem:
-    $ref: '#/components/schemas/TaxSystem'
+    type: string
     description: Система налогообложения заказов
+    enum: [ GENERAL_TAX_SYSTEM, SIMPLIFIED_TAX_SYSTEM_INCOME, SIMPLIFIED_TAX_SYSTEM_INCOME_OUTCOME, UNIFIED_AGRICULTURAL_TAX, PRESUMPTIVE_TAX_SYSTEM, PATENT_BASED ]
   minionToMasterType:
-    $ref: '#/components/schemas/MinionToMasterType'
+    type: string
     description: Ограничение связи касс-слуг с кассами-мастерами
+    enum: [ ANY, SAME_GROUP, CHOSEN ]
   tobaccoMrcControlType:
-    $ref: '#/components/schemas/TobaccoMrcControlType'
+    type: string
     description: Режим контроля минимальных розничных цен на табак
+    enum: [ USER_PRICE, MRC_PRICE, SAME_PRICE ]
   markingSellingMode:
-    $ref: '#/components/schemas/MarkingSellingMode'
+    type: string
     description: Режим продажи маркированных товаров
+    enum: [ CORRECT_MARKS_ONLY, WITHOUT_ERRORS, ALL ]
   marksCheckMode:
-    $ref: '#/components/schemas/MarksCheckMode'
+    type: string
     description: Режим проверки кодов маркировки
+    enum: [ CORRECT_MARKS_ONLY, WITHOUT_ERRORS, ALL, ALL_CHECKED ]
   priorityOfdSend:
-    $ref: '#/components/schemas/PriorityOfdSend'
+    type: string
     description: Приоритетный способ отправки чека покупателю
+    enum: [ phone, email, none ]
   allowCreateProducts:
     type: boolean
     description: Признак разрешения создания новых товаров при продаже
@@ -159,7 +293,17 @@ properties:
   lastOperationNames:
     type: array
     items:
-      $ref: '#/components/schemas/LastOperationNames'
+      type: object
+      description: Последние операции
+      properties:
+        entity:
+          type: string
+          maxLength: 255
+          description: Ключевое слово, обозначающее тип последней операции
+        name:
+          type: string
+          maxLength: 255
+          description: Наименование (номер) последней операции
     description: Последние операции
   masterRetailStores:
     type: array
@@ -275,127 +419,3 @@ properties:
       meta:
         $ref: '../common/meta.yaml'
     description: Эквайер для QR-платежей
-
-components:
-  schemas:
-    LastOperationNames:
-      type: object
-      description: Последние операции
-      properties:
-        entity: { type: string, maxLength: 255, description: Ключевое слово, обозначающее тип последней операции }
-        name: { type: string, maxLength: 255, description: Наименование (номер) последней операции }
-    Environment:
-      type: object
-      description: Среда точки продаж
-      properties:
-        device: { type: string, maxLength: 255, description: Устройство }
-        os: { type: string, maxLength: 255, description: Операционная система }
-        software: { $ref: '#/components/schemas/Software', description: Программное обеспечение }
-        chequePrinter: { $ref: '#/components/schemas/ChequePrinter', description: Чековый принтер }
-        paymentTerminal: { type: string, maxLength: 255, description: Терминал оплаты }
-
-    Software:
-      type: object
-      description: Информация о ПО
-      properties:
-        name: { type: string, maxLength: 255, description: Наименование ПО }
-        vendor: { type: string, maxLength: 255, description: Производитель ПО }
-        version: { type: string, maxLength: 255, description: Версия ПО }
-
-    ChequePrinter:
-      type: object
-      description: Информация о чековом принтере
-      properties:
-        driver: { $ref: '#/components/schemas/Driver', description: Драйвер чекового принтера }
-        firmwareVersion: { type: string, maxLength: 255, description: Версия прошивки }
-        fiscalDataVersion: { type: string, maxLength: 255, description: Версия фискальных данных }
-        fiscalMemory: { $ref: '#/components/schemas/FiscalMemory', description: Фискальная память }
-        name: { type: string, maxLength: 255, description: Наименование чекового принтера }
-        serial: { type: string, maxLength: 255, description: Серийный номер чекового принтера }
-        vendor: { type: string, maxLength: 255, description: Производитель чекового принтера }
-
-    Driver:
-      type: object
-      description: Информация о драйвере
-      properties:
-        name: { type: string, maxLength: 255, description: Наименование драйвера }
-        version: { type: string, maxLength: 255, description: Версия драйвера }
-
-    FiscalMemory:
-      type: object
-      description: Фискальная память
-      properties:
-        fiscalDataVersion: { type: string, maxLength: 255, description: Версия фискальных данных }
-        fiscalValidityDate: { type: string, format: date-time, description: Дата окончания действия фискальной памяти }
-
-    Status:
-      type: object
-      description: Статус точки продаж
-      properties:
-        sync: { $ref: '#/components/schemas/Sync', description: Состояние синхронизации }
-        lastCheckMoment: { type: string, format: date-time, description: Момент последней проверки }
-        fiscalMemory: { $ref: '#/components/schemas/FiscalStatusMemory', description: Статус фискальной памяти }
-        paymentTerminal: { $ref: '#/components/schemas/PaymentTerminal', description: Статус платежного терминала }
-
-    Sync:
-      type: object
-      description: Состояние синхронизации
-      properties:
-        message: { type: string, maxLength: 255, description: Сообщение }
-        lastAttempMoment: { type: string, format: date-time, description: Момент последней попытки }
-
-    FiscalStatusMemory:
-      type: object
-      description: Статус фискальной памяти
-      properties:
-        error: { $ref: '#/components/schemas/FiscalError', description: Ошибка фискальной памяти }
-        notSendDocCount: { type: integer, description: Количество неотправленных документов }
-        notSendFirstDocMoment: { type: string, format: date-time, description: Момент первого неотправленного документа }
-
-    FiscalError:
-      type: object
-      description: Ошибка фискальной памяти
-      properties:
-        code: { type: string, maxLength: 255, description: Код ошибки }
-        message: { type: string, maxLength: 255, description: Сообщение ошибки }
-
-    PaymentTerminal:
-      type: object
-      description: Информация о платежном терминале
-      properties:
-        acquiringType: { type: string, maxLength: 255, description: Тип эквайринга }
-
-    TaxSystem:
-      type: string
-      description: Система налогообложения
-      enum: [ GENERAL_TAX_SYSTEM, SIMPLIFIED_TAX_SYSTEM_INCOME, SIMPLIFIED_TAX_SYSTEM_INCOME_OUTCOME, UNIFIED_AGRICULTURAL_TAX, PRESUMPTIVE_TAX_SYSTEM, PATENT_BASED ]
-
-    FiscalType:
-      type: string
-      description: Фискальный режим работы
-      enum: [ STANDARD, MASTER, CLOUD ]
-
-    MinionToMasterType:
-      type: string
-      description: Ограничение связи кассы-слуги с кассой-мастером
-      enum: [ ANY, SAME_GROUP, CHOSEN ]
-
-    TobaccoMrcControlType:
-      type: string
-      description: Режим контроля минимальных розничных цен на табак
-      enum: [ USER_PRICE, MRC_PRICE, SAME_PRICE ]
-
-    MarkingSellingMode:
-      type: string
-      description: Режим продажи маркированных товаров
-      enum: [ CORRECT_MARKS_ONLY, WITHOUT_ERRORS, ALL ]
-
-    MarksCheckMode:
-      type: string
-      description: Режим проверки кодов маркировки
-      enum: [ CORRECT_MARKS_ONLY, WITHOUT_ERRORS, ALL, ALL_CHECKED ]
-
-    PriorityOfdSend:
-      type: string
-      description: Приоритетный способ отправки чека покупателю
-      enum: [ phone, email, none ]

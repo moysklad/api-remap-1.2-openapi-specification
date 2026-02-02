@@ -20,69 +20,73 @@ sdk-golden-php:
       else
         echo "WARNING: tests/php directory not found, skipping PHP golden tests"
         echo "Create tests/php directory with PHPUnit tests to enable"
+        exit 1
       fi
 
 # Python Golden JSON тесты (заглушка)
-sdk-golden-python:
-  stage: test
-  image: python:3.11
-  needs:
-    - job: generate-sdk-python
-      artifacts: true
-      optional: true
-  rules:
-    - if: '$SDK_LANGUAGES =~ /python/'
-      when: on_success
-  script:
-    - |
-      if [ -d "tests/python" ] && [ -f "tests/python/requirements.txt" ]; then
-        cd tests/python
-        pip install -r requirements.txt
-        pytest golden/ -v
-      else
-        echo "WARNING: tests/python directory not configured, skipping Python golden tests"
-        echo "Create tests/python directory with pytest tests to enable"
-      fi
+#sdk-golden-python:
+#  stage: test
+#  image: python:3.11
+#  needs:
+#    - job: generate-sdk-python
+#      artifacts: true
+#      optional: true
+#  rules:
+#    - if: '$SDK_LANGUAGES =~ /python/'
+#      when: on_success
+#  script:
+#    - |
+#      if [ -d "tests/python" ] && [ -f "tests/python/requirements.txt" ]; then
+#        cd tests/python
+#        pip install -r requirements.txt
+#        pytest golden/ -v
+#      else
+#        echo "WARNING: tests/python directory not configured, skipping Python golden tests"
+#        echo "Create tests/python directory with pytest tests to enable"
+#        exit 1
+#      fi
 
 # Java Golden JSON тесты (заглушка)
-sdk-golden-java:
-  stage: test
-  image: maven:3.9-eclipse-temurin-17
-  needs:
-    - job: generate-sdk-java
-      artifacts: true
-      optional: true
-  rules:
-    - if: '$SDK_LANGUAGES =~ /java/'
-      when: on_success
-  script:
-    - |
-      if [ -d "tests/java" ] && [ -f "tests/java/pom.xml" ]; then
-        cd tests/java
-        mvn test -Dtest=**/golden/**
-      else
-        echo "WARNING: tests/java directory not configured, skipping Java golden tests"
-        echo "Create tests/java directory with Maven project to enable"
-      fi
+#sdk-golden-java:
+#  stage: test
+#  image: maven:3.9-eclipse-temurin-17
+#  needs:
+#    - job: generate-sdk-java
+#      artifacts: true
+#      optional: true
+#  rules:
+#    - if: '$SDK_LANGUAGES =~ /java/'
+#      when: on_success
+#  script:
+#    - |
+#      if [ -d "tests/java" ] && [ -f "tests/java/pom.xml" ]; then
+#        cd tests/java
+#        mvn test -Dtest=**/golden/**
+#      else
+#        echo "WARNING: tests/java directory not configured, skipping Java golden tests"
+#        echo "Create tests/java directory with Maven project to enable"
+#        exit 1
+#      fi
 
 # JavaScript Golden JSON тесты (заглушка)
-sdk-golden-javascript:
-  stage: test
-  image: node:20
-  needs:
-    - job: generate-sdk-javascript
-      artifacts: true
-      optional: true
-  rules:
-    - if: '$SDK_LANGUAGES =~ /javascript/'
-      when: on_success
-  script:
-    - |
-      if [ -d "tests/javascript" ] && [ -f "tests/javascript/package.json" ]; then
-        cd tests/javascript
-        npm ci
-        npm run test:golden
-      else
-        echo "WARNING: tests/javascript directory not configured, skipping JavaScript golden tests"
-        echo "Create tests/javascript directory with npm project to enable"
-      fi
+#sdk-golden-javascript:
+#  stage: test
+#  image: node:20
+#  needs:
+#    - job: generate-sdk-javascript
+#      artifacts: true
+#      optional: true
+#  rules:
+#    - if: '$SDK_LANGUAGES =~ /javascript/'
+#      when: on_success
+#  script:
+#    - |
+#      if [ -d "tests/javascript" ] && [ -f "tests/javascript/package.json" ]; then
+#        cd tests/javascript
+#        npm ci
+#        npm run test:golden
+#      else
+#        echo "WARNING: tests/javascript directory not configured, skipping JavaScript golden tests"
+#        echo "Create tests/javascript directory with npm project to enable"
+#        exit 1
+#      fi

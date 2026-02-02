@@ -1,4 +1,5 @@
 get:
+  operationId: getCurrencies
   tags:
     - Currencies
   summary: Получить список валют
@@ -27,6 +28,7 @@ get:
       $ref: '../../../components/responses.yaml#/Forbidden'
 
 post:
+  operationId: createCurrency
   tags:
     - Currencies
   summary: Создать валюту

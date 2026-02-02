@@ -6,7 +6,7 @@ properties:
     type: string
     default: ALL_WAREHOUSE_SAME
     enum: [ALL_WAREHOUSE_SAME]
-    readonly: true
+    readOnly: true
   quantity:
     type: number
     format: float

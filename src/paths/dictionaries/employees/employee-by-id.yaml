@@ -1,4 +1,5 @@
 get:
+  operationId: getEmployeeById
   tags:
     - Employees
   summary: Получить сотрудника по ID
@@ -19,6 +20,7 @@ get:
       $ref: '../../../components/responses.yaml#/NotFound'
 
 put:
+  operationId: updateEmployee
   tags:
     - Employees
   summary: Обновить сотрудника
@@ -47,6 +49,7 @@ put:
       $ref: '../../../components/responses.yaml#/NotFound'
 
 delete:
+  operationId: deleteEmployee
   tags:
     - Employees
   summary: Удалить сотрудника

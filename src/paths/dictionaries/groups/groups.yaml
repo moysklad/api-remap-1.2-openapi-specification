@@ -1,4 +1,5 @@
 get:
+  operationId: getGroups
   tags:
     - Groups
   summary: Получить список групп
@@ -27,6 +28,7 @@ get:
       $ref: '../../../components/responses.yaml#/Forbidden'
 
 post:
+  operationId: createGroup
   tags:
     - Groups
   summary: Создать группу

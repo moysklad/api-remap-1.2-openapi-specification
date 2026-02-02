@@ -1,4 +1,5 @@
 get:
+  operationId: getGroupById
   tags:
     - Groups
   summary: Получить группу по ID
@@ -19,6 +20,7 @@ get:
       $ref: '../../../components/responses.yaml#/NotFound'
 
 put:
+  operationId: updateGroup
   tags:
     - Groups
   summary: Обновить группу
@@ -47,6 +49,7 @@ put:
       $ref: '../../../components/responses.yaml#/NotFound'
 
 delete:
+  operationId: deleteGroup
   tags:
     - Groups
   summary: Удалить группу

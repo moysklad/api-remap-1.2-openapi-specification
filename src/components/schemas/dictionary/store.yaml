@@ -17,6 +17,7 @@ properties:
   owner:
     description: Владелец (Сотрудник)
     nullable: true
+    type: object
     allOf:
       - $ref: '../../../openapi.yaml#/components/schemas/Employee'
   shared:
@@ -64,6 +65,7 @@ properties:
   parent:
     description: Метаданные родительского склада (Группы)
     nullable: true
+    type: object
     allOf:
       - $ref: '../../../openapi.yaml#/components/schemas/Store'
   attributes:

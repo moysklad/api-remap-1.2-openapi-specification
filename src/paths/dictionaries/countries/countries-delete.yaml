@@ -1,4 +1,5 @@
 post:
+  operationId: deleteCountriesBatch
   tags:
     - Countries
   summary: Удалить страны

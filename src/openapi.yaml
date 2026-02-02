@@ -19,6 +19,9 @@ info:
     - Максимум 1000 элементов в массиве
     - Обязательное использование сжатия gzip
   version: "1.0.0"
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org
 
 servers:
   - url: https://api.moysklad.ru/api/remap/1.2

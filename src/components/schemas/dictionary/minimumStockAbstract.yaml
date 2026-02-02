@@ -14,7 +14,7 @@ oneOf:
 properties:
   type:
     type: string
-    readonly: true
+    readOnly: true
     enum:
       - ALL_WAREHOUSE_SUM
       - ALL_WAREHOUSE_SAME

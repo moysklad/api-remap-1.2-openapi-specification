@@ -1,4 +1,5 @@
 get:
+  operationId: getServices
   tags:
     - Services
   summary: Получить список товаров
@@ -27,6 +28,7 @@ get:
       $ref: '../../../components/responses.yaml#/Forbidden'
 
 post:
+  operationId: createService
   tags:
     - Services
   summary: Создать услугу

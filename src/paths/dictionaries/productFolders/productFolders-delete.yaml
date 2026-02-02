@@ -1,4 +1,5 @@
 post:
+  operationId: deleteProductFoldersBatch
   tags:
     - ProductFolders
   summary: Удалить группы товаров

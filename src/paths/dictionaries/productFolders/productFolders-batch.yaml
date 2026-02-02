@@ -1,4 +1,5 @@
 post:
+  operationId: createProductFoldersBatch
   tags:
     - ProductFolders
   summary: Создать или изменить группы товаров

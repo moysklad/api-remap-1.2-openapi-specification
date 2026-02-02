@@ -1,4 +1,5 @@
 get:
+  operationId: getUoms
   tags:
     - Uoms
   summary: Получить список единиц измерения
@@ -27,6 +28,7 @@ get:
       $ref: '../../../components/responses.yaml#/Forbidden'
 
 post:
+  operationId: createUom
   tags:
     - Uoms
   summary: Создать единицу измерения

@@ -1,4 +1,5 @@
 post:
+  operationId: createCountriesBatch
   tags:
     - Countries
   summary: Создать или изменить страны

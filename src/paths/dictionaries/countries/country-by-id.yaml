@@ -1,4 +1,5 @@
 get:
+  operationId: getCountryById
   tags:
     - Countries
   summary: Получить страну по id
@@ -19,6 +20,7 @@ get:
       $ref: '../../../components/responses.yaml#/NotFound'
 
 put:
+  operationId: updateCountry
   tags:
     - Countries
   summary: Обновить страну
@@ -47,6 +49,7 @@ put:
       $ref: '../../../components/responses.yaml#/NotFound'
 
 delete:
+  operationId: deleteCountry
   tags:
     - Countries
   summary: Удалить страну
