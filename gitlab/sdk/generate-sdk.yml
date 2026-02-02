@@ -1,7 +1,7 @@
 # Сборка bundled OpenAPI спецификации (нужна для prism и schemathesis)
 bundle-openapi:
   stage: verify
-  image: docker.infra.lognex/docker-openapitools:1.0-release
+  image: docker.infra.lognex/docker-openapitools:ATK-75-409089
   needs:
     - job: lint-openapi
       optional: true
@@ -17,7 +17,7 @@ bundle-openapi:
 # Базовый шаблон для генерации SDK
 .generate-sdk-base:
   stage: generate-sdk
-  image: docker.infra.lognex/docker-openapitools:1.0-release
+  image: docker.infra.lognex/docker-openapitools:ATK-75-409089
   needs:
     - job: bundle-openapi
       artifacts: true

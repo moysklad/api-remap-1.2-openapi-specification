@@ -9,7 +9,7 @@
 
 # Базовый шаблон для пуша SDK
 .push-sdk-base:
-  image: docker.infra.lognex/docker-openapitools:1.0-release
+  image: docker.infra.lognex/docker-openapitools:ATK-75-409089
   stage: push-sdk
   rules:
     - if: '$PUSH_TO_REMOTE == "true" && $CI_COMMIT_BRANCH != "master" && $CI_COMMIT_BRANCH != "release"'
