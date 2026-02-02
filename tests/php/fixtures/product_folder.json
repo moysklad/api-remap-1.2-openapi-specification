@@ -1,0 +1,20 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/productfolder/55555555-5555-5555-5555-555555555555",
+    "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/productfolder/metadata",
+    "type": "productfolder",
+    "mediaType": "application/json"
+  },
+  "id": "55555555-5555-5555-5555-555555555555",
+  "accountId": "abcdef12-1234-1234-1234-123456789012",
+  "name": "Электроника",
+  "code": "ELEC",
+  "externalCode": "EXT-ELEC",
+  "archived": false,
+  "vat": 20,
+  "vatEnabled": true,
+  "useParentVat": false,
+  "effectiveVat": 20,
+  "effectiveVatEnabled": true,
+  "shared": true
+}

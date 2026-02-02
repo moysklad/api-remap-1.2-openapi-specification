@@ -1,0 +1,23 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/employee/33333333-3333-3333-3333-333333333333",
+    "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/employee/metadata",
+    "type": "employee",
+    "mediaType": "application/json"
+  },
+  "id": "33333333-3333-3333-3333-333333333333",
+  "accountId": "abcdef12-1234-1234-1234-123456789012",
+  "name": "Иванов Иван Иванович",
+  "code": "EMP-001",
+  "externalCode": "EXT-EMP-001",
+  "archived": false,
+  "uid": "admin@company",
+  "email": "ivanov@company.ru",
+  "phone": "+7 (999) 123-45-67",
+  "firstName": "Иван",
+  "middleName": "Иванович",
+  "lastName": "Иванов",
+  "fullName": "Иванов Иван Иванович",
+  "shortFio": "Иванов И. И.",
+  "shared": true
+}

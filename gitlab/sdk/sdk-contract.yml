@@ -29,8 +29,9 @@ sdk-contract:
     - |
       # Формируем Basic auth заголовок
       AUTH_HEADER=$(echo -n "${SCHEMATHESIS_LOGIN}:${SCHEMATHESIS_PASSWORD}" | base64)
-    - schemathesis run dist/openapi.yaml \
+      # Запускаем schemathesis тесты
+      schemathesis run dist/openapi.yaml \
         --base-url "$SCHEMATHESIS_HOST" \
-        -H "Authorization: Basic ${AUTH_HEADER}" \
+        -H "Authorization: Basic $AUTH_HEADER" \
         --hypothesis-max-examples=50 \
         --stateful=links

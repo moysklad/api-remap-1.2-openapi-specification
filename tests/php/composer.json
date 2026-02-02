@@ -1,7 +1,8 @@
 {
     "name": "moysklad/sdk-tests-php",
-    "description": "PHP SDK tests for MoySklad API",
+    "description": "PHP SDK tests for MoySklad API - тесты для проверки сгенерированного SDK",
     "type": "project",
+    "license": "MIT",
     "require": {
         "php": ">=8.1"
     },
@@ -23,12 +24,21 @@
     "repositories": [
         {
             "type": "path",
-            "url": "../../clients/php"
+            "url": "../../clients/php",
+            "options": {
+                "symlink": true
+            }
         }
     ],
     "scripts": {
         "test": "phpunit",
         "test:golden": "phpunit --testsuite golden",
         "test:smoke": "phpunit --testsuite smoke"
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "php-http/discovery": true
+        }
     }
 }

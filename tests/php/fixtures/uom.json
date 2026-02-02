@@ -1,0 +1,14 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/uom/77777777-7777-7777-7777-777777777777",
+    "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/uom/metadata",
+    "type": "uom",
+    "mediaType": "application/json"
+  },
+  "id": "77777777-7777-7777-7777-777777777777",
+  "accountId": "abcdef12-1234-1234-1234-123456789012",
+  "name": "шт",
+  "description": "Штука",
+  "code": "796",
+  "externalCode": "PCE"
+}

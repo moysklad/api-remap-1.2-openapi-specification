@@ -1,0 +1,24 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/service/66666666-6666-6666-6666-666666666666",
+    "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/service/metadata",
+    "type": "service",
+    "mediaType": "application/json"
+  },
+  "id": "66666666-6666-6666-6666-666666666666",
+  "accountId": "abcdef12-1234-1234-1234-123456789012",
+  "name": "Услуга доставки",
+  "code": "SRV-001",
+  "externalCode": "EXT-SRV-001",
+  "archived": false,
+  "description": "Услуга курьерской доставки по городу",
+  "vat": 20,
+  "vatEnabled": true,
+  "useParentVat": false,
+  "effectiveVat": 20,
+  "effectiveVatEnabled": true,
+  "discountProhibited": false,
+  "shared": true,
+  "paymentItemType": "SERVICE",
+  "taxSystem": "GENERAL_TAX_SYSTEM"
+}
