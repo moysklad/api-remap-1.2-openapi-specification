@@ -1,0 +1,24 @@
+# SDK Validation Pipeline
+# 
+# Включает все необходимые job'ы для валидации SDK:
+# - lint-openapi: проверка OpenAPI спецификации
+# - bundle-openapi: сборка bundled версии спецификации
+# - generate-sdk-*: генерация SDK для различных языков
+# - sdk-golden-*: golden тесты (сериализация/десериализация)
+# - sdk-prism-*: smoke тесты с Prism mock сервером
+# - sdk-contract: schemathesis тесты (только при ручном запуске)
+#
+# Переменные:
+# - SDK_LANGUAGES: языки для генерации SDK (через запятую, пустая строка = все доступные)
+#   Примеры: "php", "php,python", "" (все)
+# - PUSH_TO_REMOTE: пушить изменения в удалённые репозитории (true/false, по умолчанию false)
+# - SCHEMATHESIS_HOST: URL API для schemathesis тестов (только при ручном запуске)
+# - SCHEMATHESIS_LOGIN: логин для schemathesis тестов
+# - SCHEMATHESIS_PASSWORD: пароль для schemathesis тестов
+
+include:
+  - local: 'gitlab/sdk/lint-openapi.yml'
+  - local: 'gitlab/sdk/generate-sdk.yml'
+  - local: 'gitlab/sdk/sdk-tests-golden.yml'
+  - local: 'gitlab/sdk/sdk-tests-prism.yml'
+  - local: 'gitlab/sdk/sdk-contract.yml'

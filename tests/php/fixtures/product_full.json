@@ -1,0 +1,80 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/product/12345678-1234-1234-1234-123456789012",
+    "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/product/metadata",
+    "type": "product",
+    "mediaType": "application/json"
+  },
+  "id": "12345678-1234-1234-1234-123456789012",
+  "accountId": "abcdef12-1234-1234-1234-123456789012",
+  "name": "Товар с полными данными",
+  "code": "00002",
+  "externalCode": "EXT-002",
+  "archived": false,
+  "pathName": "Товары/Электроника",
+  "article": "ART-12345",
+  "description": "Полное описание товара с различными характеристиками",
+  "vat": 20,
+  "vatEnabled": true,
+  "useParentVat": false,
+  "effectiveVat": 20,
+  "effectiveVatEnabled": true,
+  "discountProhibited": false,
+  "weight": 1.5,
+  "volume": 0.005,
+  "isSerialTrackable": false,
+  "shared": true,
+  "updated": "2024-01-15T10:30:00.000+03:00",
+  "group": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/group/11111111-1111-1111-1111-111111111111",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/group/metadata",
+      "type": "group",
+      "mediaType": "application/json"
+    }
+  },
+  "salePrices": [
+    {
+      "value": 100000,
+      "currency": {
+        "meta": {
+          "href": "https://api.moysklad.ru/api/remap/1.2/entity/currency/22222222-2222-2222-2222-222222222222",
+          "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/currency/metadata",
+          "type": "currency",
+          "mediaType": "application/json"
+        }
+      },
+      "priceType": {
+        "meta": {
+          "href": "https://api.moysklad.ru/api/remap/1.2/context/companysettings/pricetype/33333333-3333-3333-3333-333333333333",
+          "type": "pricetype",
+          "mediaType": "application/json"
+        },
+        "id": "33333333-3333-3333-3333-333333333333",
+        "name": "Цена продажи",
+        "externalCode": "default"
+      }
+    }
+  ],
+  "buyPrice": {
+    "value": 50000,
+    "currency": {
+      "meta": {
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/currency/22222222-2222-2222-2222-222222222222",
+        "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/currency/metadata",
+        "type": "currency",
+        "mediaType": "application/json"
+      }
+    }
+  },
+  "barcodes": [
+    {
+      "ean13": "4600000000001"
+    },
+    {
+      "code128": "CODE128-001"
+    }
+  ],
+  "paymentItemType": "GOOD",
+  "taxSystem": "GENERAL_TAX_SYSTEM"
+}

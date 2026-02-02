@@ -1,0 +1,34 @@
+{
+    "name": "moysklad/sdk-tests-php",
+    "description": "PHP SDK tests for MoySklad API",
+    "type": "project",
+    "require": {
+        "php": ">=8.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.0",
+        "guzzlehttp/guzzle": "^7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "MoySklad\\Tests\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "MoySklad\\Tests\\Golden\\": "golden/",
+            "MoySklad\\Tests\\Smoke\\": "smoke/"
+        }
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../../clients/php"
+        }
+    ],
+    "scripts": {
+        "test": "phpunit",
+        "test:golden": "phpunit --testsuite golden",
+        "test:smoke": "phpunit --testsuite smoke"
+    }
+}

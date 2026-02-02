@@ -1,0 +1,117 @@
+# Сборка bundled OpenAPI спецификации (нужна для prism и schemathesis)
+bundle-openapi:
+  stage: verify
+  image: docker.infra.lognex/docker-openapitools:1.0-release
+  needs:
+    - job: lint-openapi
+      optional: true
+  script:
+    - npm ci
+    - npm run bundle
+    - npm run bundle-json
+  artifacts:
+    paths:
+      - dist/
+    expire_in: 2 hours
+
+# Базовый шаблон для генерации SDK
+.generate-sdk-base:
+  stage: generate-sdk
+  image: docker.infra.lognex/docker-openapitools:1.0-release
+  needs:
+    - job: bundle-openapi
+      artifacts: true
+  cache:
+    key:
+      files:
+        - package-lock.json
+    paths:
+      - /root/.npm/
+  artifacts:
+    paths:
+      - clients/
+    expire_in: 2 hours
+
+# Генерация PHP SDK
+generate-sdk-php:
+  extends: .generate-sdk-base
+  rules:
+    - if: '$SDK_LANGUAGES == "" || $SDK_LANGUAGES =~ /php/'
+      when: on_success
+  script:
+    - npm ci
+    - npm run generate-php
+    - echo "PHP SDK generated successfully"
+  artifacts:
+    paths:
+      - clients/php/
+    expire_in: 2 hours
+
+# Генерация Python SDK (заглушка)
+generate-sdk-python:
+  extends: .generate-sdk-base
+  rules:
+    - if: '$SDK_LANGUAGES =~ /python/'
+      when: on_success
+  script:
+    - npm ci
+    - |
+      if npm run | grep -q "generate-python"; then
+        npm run generate-python
+        echo "Python SDK generated successfully"
+      else
+        echo "WARNING: generate-python script not found in package.json"
+        echo "To enable Python SDK generation, add the script to package.json"
+        mkdir -p clients/python
+        echo "# Python SDK placeholder" > clients/python/README.md
+      fi
+  artifacts:
+    paths:
+      - clients/python/
+    expire_in: 2 hours
+
+# Генерация Java SDK (заглушка)
+generate-sdk-java:
+  extends: .generate-sdk-base
+  rules:
+    - if: '$SDK_LANGUAGES =~ /java/'
+      when: on_success
+  script:
+    - npm ci
+    - |
+      if npm run | grep -q "generate-java"; then
+        npm run generate-java
+        echo "Java SDK generated successfully"
+      else
+        echo "WARNING: generate-java script not found in package.json"
+        echo "To enable Java SDK generation, add the script to package.json"
+        mkdir -p clients/java
+        echo "# Java SDK placeholder" > clients/java/README.md
+      fi
+  artifacts:
+    paths:
+      - clients/java/
+    expire_in: 2 hours
+
+# Генерация JavaScript SDK (заглушка)
+generate-sdk-javascript:
+  extends: .generate-sdk-base
+  rules:
+    - if: '$SDK_LANGUAGES =~ /javascript/'
+      when: on_success
+  script:
+    - npm ci
+    - |
+      if npm run | grep -q "generate-javascript"; then
+        npm run generate-javascript
+        echo "JavaScript SDK generated successfully"
+      else
+        echo "WARNING: generate-javascript script not found in package.json"
+        echo "To enable JavaScript SDK generation, add the script to package.json"
+        mkdir -p clients/javascript
+        echo "# JavaScript SDK placeholder" > clients/javascript/README.md
+      fi
+  artifacts:
+    paths:
+      - clients/javascript/
+    expire_in: 2 hours

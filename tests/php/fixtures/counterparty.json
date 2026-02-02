@@ -1,0 +1,20 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/12a8b923-692c-11e6-8a84-bae500000056",
+    "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/metadata",
+    "type": "counterparty",
+    "mediaType": "application/json"
+  },
+  "id": "12a8b923-692c-11e6-8a84-bae500000056",
+  "accountId": "abcdef12-1234-1234-1234-123456789012",
+  "name": "ООО Тестовый контрагент",
+  "code": "CP-001",
+  "externalCode": "EXT-CP-001",
+  "archived": false,
+  "created": "2024-01-10T09:00:00.000+03:00",
+  "updated": "2024-01-15T10:30:00.000+03:00",
+  "companyType": "legal",
+  "email": "test@example.com",
+  "phone": "+7 (999) 123-45-67",
+  "shared": true
+}

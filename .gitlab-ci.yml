@@ -1,25 +1,112 @@
+# =============================================================================
+# МойСклад SDK Builder - GitLab CI/CD Pipeline
+# =============================================================================
+#
+# Этот пайплайн управляет генерацией и валидацией SDK для МойСклад API.
+#
+# СЦЕНАРИИ ЗАПУСКА:
+#
+# 1. Push в ветку (кроме master/release):
+#    - lint-openapi: проверка OpenAPI спецификации
+#    - bundle-openapi: сборка bundled версии
+#    - generate-sdk-*: генерация SDK для выбранных языков
+#    - sdk-golden-*: golden тесты (сериализация/десериализация)
+#    - sdk-prism-*: smoke тесты с Prism mock сервером
+#
+# 2. Ручной запуск (web) на ветке (кроме master/release/tags):
+#    - Все тесты из п.1
+#    - sdk-contract: schemathesis тесты (требуют SCHEMATHESIS_* переменные)
+#    - push-sdk-*: пуш SDK в удалённые репозитории (если PUSH_TO_REMOTE=true)
+#
+# 3. Merge в master:
+#    - lint-openapi: проверка спецификации
+#    - bundle-openapi: сборка bundled версии  
+#    - generate-sdk-*: генерация SDK
+#    - sdk-golden-*: golden тесты
+#    - sdk-prism-*: smoke тесты
+#    - mirror-to-github: зеркалирование в GitHub
+#
+# 4. Старый Java SDK пайплайн (SPEC_SDK_GENERATION != "true"):
+#    - Сохранён для обратной совместимости
+#
+# ПЕРЕМЕННЫЕ:
+#
+# SDK_LANGUAGES:
+#   Языки для генерации SDK, через запятую без пробелов.
+#   Примеры: "php", "php,python,java", "" (пустая строка = все доступные)
+#   По умолчанию: "" (генерируются все доступные SDK)
+#
+# PUSH_TO_REMOTE:
+#   Пушить изменения в удалённые репозитории SDK.
+#   Значения: "true" или "false"
+#   По умолчанию: "false"
+#   Работает только при ручном запуске (web) на ветках (не master/release)
+#
+# SCHEMATHESIS_HOST:
+#   URL API сервера для schemathesis тестов (например: https://api-api-1.testms-test.lognex.ru)
+#   Обязателен при ручном запуске
+#
+# SCHEMATHESIS_LOGIN:
+#   Логин для авторизации в API (Basic auth)
+#   Обязателен при ручном запуске
+#
+# SCHEMATHESIS_PASSWORD:
+#   Пароль для авторизации в API (Basic auth)
+#   Обязателен при ручном запуске
+#
+# GIT_PASSWORD:
+#   Токен для доступа к GitHub (нужен для PUSH_TO_REMOTE=true и зеркалирования)
+#
+# SPEC_SDK_GENERATION:
+#   Флаг для переключения между старым Java SDK и новым OpenAPI пайплайном.
+#   Значения: "true" - новый пайплайн, иначе - старый Java SDK
+#
+# =============================================================================
+
+# Переменные по умолчанию
+variables:
+  SDK_LANGUAGES: ""
+  PUSH_TO_REMOTE: "false"
+
 # Сделано через два отдельных пути, чтобы разделить пайплайн где сдк генерится openapi и старой ручной java sdk
 include:
+  # Старый Java SDK пайплайн (для обратной совместимости)
   - local: 'gitlab/.gitlab-ci-java-sdk.yml'
     rules:
-      - if: '$SPEC_SDK_GENERATION != "true" && $CI_PIPELINE_SOURCE != "push"'
+      - if: '$SPEC_SDK_GENERATION != "true" && $CI_PIPELINE_SOURCE != "push" && $CI_PIPELINE_SOURCE != "web"'
+
+  # Старый PHP SDK пайплайн через openapi (для обратной совместимости при SPEC_SDK_GENERATION=true)
   - local: 'gitlab/.gitlab-ci-spec-gen.yml'
     rules:
-      - if: '$SPEC_SDK_GENERATION == "true" && $CI_PIPELINE_SOURCE != "push"'
+      - if: '$SPEC_SDK_GENERATION == "true" && $CI_PIPELINE_SOURCE != "push" && $CI_PIPELINE_SOURCE != "web"'
+
+  # SDK Validation - при push в любую ветку
+  - local: 'gitlab/.gitlab-ci-sdk-validate.yml'
+    rules:
+      - if: '$CI_PIPELINE_SOURCE == "push"'
+      - if: '$CI_PIPELINE_SOURCE == "web" && $CI_COMMIT_BRANCH != "master" && $CI_COMMIT_BRANCH != "release" && $CI_COMMIT_TAG == null'
+
+  # SDK Push to Remote - при ручном запуске с PUSH_TO_REMOTE=true
   - local: 'gitlab/.gitlab-ci-sdk-php-gen.yml'
     rules:
-      - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH != "master" && $CI_COMMIT_BRANCH != "release"'
+      - if: '$CI_PIPELINE_SOURCE == "web" && $PUSH_TO_REMOTE == "true" && $CI_COMMIT_BRANCH != "master" && $CI_COMMIT_BRANCH != "release" && $CI_COMMIT_TAG == null'
+
+  # GitHub Mirror - при merge в master
   - local: 'gitlab/.gitlab-ci-github-mirror.yml'
     rules:
-      - if: '$CI_COMMIT_REF_NAME == "master"'
+      - if: '$CI_COMMIT_REF_NAME == "master" && $CI_PIPELINE_SOURCE == "push"'
 
 stages:
-  - verify
-  - prepare
-  - deploy-for-space
-  - create-user
-  - test
-  - build
-  - delete-space
-  - generate-sdk
-  - mirror
+  # Стадии для старого Java SDK пайплайна (сохранены для обратной совместимости)
+  - verify           # Проверка спецификации, окружения
+  - prepare          # Подготовка (старый пайплайн)
+  - deploy-for-space # Деплой тестового окружения (старый пайплайн)
+  - create-user      # Создание пользователя (старый пайплайн)
+  - build            # Сборка (старый пайплайн)
+  - delete-space     # Удаление тестового окружения (старый пайплайн)
+  
+  # Стадии для нового SDK пайплайна
+  - generate-sdk     # Генерация SDK для различных языков
+  - test             # Тестирование: golden, smoke (prism), contract (schemathesis)
+  - push-sdk         # Пуш SDK в удалённые репозитории
+  - mirror           # Зеркалирование в GitHub

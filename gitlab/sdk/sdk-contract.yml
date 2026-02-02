@@ -1,0 +1,36 @@
+# Schemathesis contract tests - выполняются только при ручном запуске (web)
+# Требуют переменные: SCHEMATHESIS_HOST, SCHEMATHESIS_LOGIN, SCHEMATHESIS_PASSWORD
+sdk-contract:
+  stage: test
+  image: python:3.11
+  needs:
+    - job: bundle-openapi
+      artifacts: true
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "web"'
+      when: always
+  before_script:
+    - |
+      # Проверка обязательных переменных
+      if [ -z "$SCHEMATHESIS_HOST" ]; then
+        echo "ERROR: SCHEMATHESIS_HOST is required"
+        exit 1
+      fi
+      if [ -z "$SCHEMATHESIS_LOGIN" ]; then
+        echo "ERROR: SCHEMATHESIS_LOGIN is required"
+        exit 1
+      fi
+      if [ -z "$SCHEMATHESIS_PASSWORD" ]; then
+        echo "ERROR: SCHEMATHESIS_PASSWORD is required"
+        exit 1
+      fi
+  script:
+    - pip install schemathesis
+    - |
+      # Формируем Basic auth заголовок
+      AUTH_HEADER=$(echo -n "${SCHEMATHESIS_LOGIN}:${SCHEMATHESIS_PASSWORD}" | base64)
+    - schemathesis run dist/openapi.yaml \
+        --base-url "$SCHEMATHESIS_HOST" \
+        -H "Authorization: Basic ${AUTH_HEADER}" \
+        --hypothesis-max-examples=50 \
+        --stateful=links

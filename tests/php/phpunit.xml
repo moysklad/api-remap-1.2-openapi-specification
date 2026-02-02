@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.0/phpunit.xsd"
+         bootstrap="vendor/autoload.php"
+         colors="true"
+         cacheDirectory=".phpunit.cache">
+    
+    <testsuites>
+        <testsuite name="golden">
+            <directory>golden</directory>
+        </testsuite>
+        <testsuite name="smoke">
+            <directory>smoke</directory>
+        </testsuite>
+    </testsuites>
+
+    <php>
+        <!-- Base URL for Prism mock server (used in smoke tests) -->
+        <env name="PRISM_BASE_URL" value="http://localhost:4010"/>
+        <!-- Path to generated SDK -->
+        <env name="SDK_PATH" value="../../clients/php"/>
+    </php>
+
+    <source>
+        <include>
+            <directory suffix=".php">../../clients/php/lib</directory>
+        </include>
+    </source>
+</phpunit>
