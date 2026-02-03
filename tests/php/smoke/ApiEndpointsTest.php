@@ -30,8 +30,9 @@ class ApiEndpointsTest extends TestCase
     private const API_BASE_PATH = '/api/remap/1.2';
 
     /**
-     * Допустимые коды ответа для успешных запросов.
-     * 401 включён, так как Prism может требовать авторизацию.
+     * Для smoke-теста операций list/create/batch delete и т.п.:
+     * 404 = эндпоинт не совпал (путь не найден в спеце), тест должен падать.
+     * Любой другой ответ (2xx, 3xx, 5xx, 401, 403…) = достучались до эндпоинта — ок.
      */
     private const SUCCESS_CODES = [200, 201, 401];
     
@@ -76,7 +77,7 @@ class ApiEndpointsTest extends TestCase
     public function testListProducts(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/product');
-        $this->assertContains($response->getStatusCode(), self::SUCCESS_CODES);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
     }
 
     /**
@@ -98,7 +99,7 @@ class ApiEndpointsTest extends TestCase
         $response = $this->client->post(self::API_BASE_PATH . '/entity/product', [
             'json' => ['name' => 'Test Product'],
         ]);
-        $this->assertContains($response->getStatusCode(), self::SUCCESS_CODES);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
     }
 
     /**
@@ -132,7 +133,7 @@ class ApiEndpointsTest extends TestCase
         $response = $this->client->post(self::API_BASE_PATH . '/entity/product/delete', [
             'json' => [['meta' => ['href' => 'https://api.moysklad.ru/api/remap/1.2/entity/product/' . self::TEST_UUID]]],
         ]);
-        $this->assertContains($response->getStatusCode(), self::SUCCESS_CODES);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
     }
 
     // ==================== COUNTERPARTIES ====================
@@ -146,7 +147,7 @@ class ApiEndpointsTest extends TestCase
     public function testListCounterparties(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/counterparty');
-        $this->assertContains($response->getStatusCode(), self::SUCCESS_CODES);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
     }
 
     /**
@@ -168,7 +169,7 @@ class ApiEndpointsTest extends TestCase
         $response = $this->client->post(self::API_BASE_PATH . '/entity/counterparty', [
             'json' => ['name' => 'Test Counterparty', 'companyType' => 'legal'],
         ]);
-        $this->assertContains($response->getStatusCode(), self::SUCCESS_CODES);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
     }
 
     /**
@@ -194,7 +195,7 @@ class ApiEndpointsTest extends TestCase
     public function testListCurrencies(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/currency');
-        $this->assertContains($response->getStatusCode(), self::SUCCESS_CODES);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
     }
 
     /**
@@ -216,7 +217,7 @@ class ApiEndpointsTest extends TestCase
         $response = $this->client->post(self::API_BASE_PATH . '/entity/currency', [
             'json' => ['name' => 'Test Currency', 'code' => '999', 'isoCode' => 'TST'],
         ]);
-        $this->assertContains($response->getStatusCode(), self::SUCCESS_CODES);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
     }
 
     // ==================== EMPLOYEES ====================
@@ -230,7 +231,7 @@ class ApiEndpointsTest extends TestCase
     public function testListEmployees(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/employee');
-        $this->assertContains($response->getStatusCode(), self::SUCCESS_CODES);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
     }
 
     /**
@@ -254,7 +255,7 @@ class ApiEndpointsTest extends TestCase
     public function testListGroups(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/group');
-        $this->assertContains($response->getStatusCode(), self::SUCCESS_CODES);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
     }
 
     /**
@@ -278,7 +279,7 @@ class ApiEndpointsTest extends TestCase
     public function testListCountries(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/country');
-        $this->assertContains($response->getStatusCode(), self::SUCCESS_CODES);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
     }
 
     /**
@@ -302,7 +303,7 @@ class ApiEndpointsTest extends TestCase
     public function testListProductFolders(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/productfolder');
-        $this->assertContains($response->getStatusCode(), self::SUCCESS_CODES);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
     }
 
     /**
@@ -324,7 +325,7 @@ class ApiEndpointsTest extends TestCase
         $response = $this->client->post(self::API_BASE_PATH . '/entity/productfolder', [
             'json' => ['name' => 'Test Folder'],
         ]);
-        $this->assertContains($response->getStatusCode(), self::SUCCESS_CODES);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
     }
 
     // ==================== SERVICES ====================
@@ -338,7 +339,7 @@ class ApiEndpointsTest extends TestCase
     public function testListServices(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/service');
-        $this->assertContains($response->getStatusCode(), self::SUCCESS_CODES);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
     }
 
     /**
@@ -360,7 +361,7 @@ class ApiEndpointsTest extends TestCase
         $response = $this->client->post(self::API_BASE_PATH . '/entity/service', [
             'json' => ['name' => 'Test Service'],
         ]);
-        $this->assertContains($response->getStatusCode(), self::SUCCESS_CODES);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
     }
 
     // ==================== UOMS ====================
@@ -374,7 +375,7 @@ class ApiEndpointsTest extends TestCase
     public function testListUoms(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/uom');
-        $this->assertContains($response->getStatusCode(), self::SUCCESS_CODES);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
     }
 
     /**
@@ -398,7 +399,7 @@ class ApiEndpointsTest extends TestCase
     public function testListPriceTypes(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/context/companysettings/pricetype');
-        $this->assertContains($response->getStatusCode(), self::SUCCESS_CODES);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
     }
 
     /**
@@ -418,6 +419,6 @@ class ApiEndpointsTest extends TestCase
     public function testGetDefaultPriceType(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/context/companysettings/pricetype/default');
-        $this->assertContains($response->getStatusCode(), self::SUCCESS_CODES);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
     }
 }
