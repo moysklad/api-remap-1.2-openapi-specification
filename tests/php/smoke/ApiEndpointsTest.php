@@ -25,9 +25,12 @@ class ApiEndpointsTest extends TestCase
     private Client $client;
     
     /**
-     * Базовый путь API
+     * Базовый путь API для запросов к Prism.
+     * Prism не поддерживает путь из servers.url (см. https://github.com/stoplightio/prism/discussions/906):
+     * сопоставление идёт только по ключам из paths. В спеце paths: /entity/product, servers: /api/remap/1.2,
+     * поэтому Prism слушает /entity/product, а не /api/remap/1.2/entity/product. Используем путь без префикса.
      */
-    private const API_BASE_PATH = '/api/remap/1.2';
+    private const API_BASE_PATH = '';
 
     /**
      * Для smoke-теста операций list/create/batch delete и т.п.:
