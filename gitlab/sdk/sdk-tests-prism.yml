@@ -36,8 +36,10 @@ sdk-prism-php:
       fi
       echo "Starting Prism mock server on port 4010..."
       PRISM_LOG=$(mktemp)
-      npx -y @stoplight/prism-cli mock -h 0.0.0.0 -p 4010 dist/openapi.yaml >"$PRISM_LOG" 2>&1 &
+      # nohup + disown чтобы процесс не получал SIGHUP при cd/composer и не завершался
+      nohup npx -y @stoplight/prism-cli mock -h 0.0.0.0 -p 4010 dist/openapi.yaml >"$PRISM_LOG" 2>&1 &
       PRISM_PID=$!
+      disown $PRISM_PID 2>/dev/null || true
       # Ждём до 90 сек: npx при первом запуске долго ставит зависимости; проверяем любой HTTP-ответ (без -f), т.к. GET / может дать 404
       for i in $(seq 1 90); do
         code=$(curl -s -o /dev/null -w "%{http_code}" --connect-timeout 2 --max-time 5 http://localhost:4010/ 2>/dev/null || true)
@@ -59,6 +61,13 @@ sdk-prism-php:
           printf '%s\n' '<?php' '$b=dirname(__DIR__,2); require __DIR__."/vendor/autoload.php"; if(file_exists($b."/clients/php/autoload.php")) require $b."/clients/php/autoload.php";' > bootstrap.php
         fi
         composer install --no-interaction
+        # Проверяем, что Prism всё ещё слушает (мог завершиться после disown)
+        code=$(curl -s -o /dev/null -w "%{http_code}" --connect-timeout 2 --max-time 5 http://localhost:4010/ 2>/dev/null || true)
+        if [ -z "$code" ]; then
+          echo "ERROR: Prism no longer responding before PHPUnit. Prism log:"
+          cat "$PRISM_LOG" 2>/dev/null || true
+          exit 1
+        fi
         echo "=== Smoke tests (PHP) vs Prism ==="
         vendor/bin/phpunit --testsuite smoke --testdox
       else
