@@ -21,24 +21,12 @@
             "MoySklad\\Tests\\Smoke\\": "smoke/"
         }
     },
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../../clients/php",
-            "options": {
-                "symlink": true
-            }
-        }
-    ],
     "scripts": {
         "test": "phpunit",
         "test:golden": "phpunit --testsuite golden",
         "test:smoke": "phpunit --testsuite smoke"
     },
     "config": {
-        "sort-packages": true,
-        "allow-plugins": {
-            "php-http/discovery": true
-        }
+        "sort-packages": true
     }
 }
