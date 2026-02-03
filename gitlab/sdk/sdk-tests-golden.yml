@@ -15,11 +15,14 @@ sdk-golden-php:
     - |
       if [ -d "tests/php" ]; then
         cd tests/php
+        # bootstrap.php обязателен для PHPUnit; создаём, если нет (на случай старого клона)
+        if [ ! -f "bootstrap.php" ]; then
+          printf '%s\n' '<?php $b=dirname(__DIR__,2); require __DIR__."/vendor/autoload.php"; if(file_exists($b."/clients/php/autoload.php")) require $b."/clients/php/autoload.php";' > bootstrap.php
+        fi
         composer install --no-interaction
         vendor/bin/phpunit --testsuite golden
       else
-        echo "WARNING: tests/php directory not found, skipping PHP golden tests"
-        echo "Create tests/php directory with PHPUnit tests to enable"
+        echo "WARNING: tests/php directory not found"
         exit 1
       fi
 

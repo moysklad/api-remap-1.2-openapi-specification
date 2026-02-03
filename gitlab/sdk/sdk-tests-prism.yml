@@ -28,11 +28,13 @@ sdk-prism-php:
     - |
       if [ -d "tests/php" ]; then
         cd tests/php
+        if [ ! -f "bootstrap.php" ]; then
+          printf '%s\n' '<?php' '$b=dirname(__DIR__,2); require __DIR__."/vendor/autoload.php"; if(file_exists($b."/clients/php/autoload.php")) require $b."/clients/php/autoload.php";' > bootstrap.php
+        fi
         composer install --no-interaction
         vendor/bin/phpunit --testsuite smoke
       else
-        echo "WARNING: tests/php directory not found, skipping PHP smoke tests"
-        echo "Create tests/php directory with PHPUnit tests to enable"
+        echo "WARNING: tests/php directory not found"
         exit 1
       fi
 
