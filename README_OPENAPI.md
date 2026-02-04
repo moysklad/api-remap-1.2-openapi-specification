@@ -5,6 +5,7 @@
 ## Содержание
 
 - [Быстрый старт](#быстрый-старт)
+- [Локальный запуск (Docker)](#локальный-запуск-docker)
 - [Структура проекта](#структура-проекта)
 - [GitLab CI/CD Pipeline](#gitlab-cicd-pipeline)
 - [Переменные окружения](#переменные-окружения)
@@ -33,6 +34,70 @@ npm run generate-php
 npm run bundle
 npm run bundle-json
 ```
+
+---
+
+## Локальный запуск (Docker)
+
+Docker-среда поддерживает несколько языков SDK (php, python, java, javascript). Сейчас реализованы генерация и тесты для PHP; для остальных языков нужно добавить скрипты в `package.json` и тесты в `tests/<language>/`.
+
+```bash
+# Сборка образа
+docker compose build
+
+# Проверка спецификации
+docker compose run --rm sdk make lint
+
+# Сборка bundled спецификации
+docker compose run --rm sdk make bundle
+
+# Генерация SDK (по умолчанию PHP; можно несколько: LANGUAGES=php,python)
+docker compose run --rm sdk make generate
+docker compose run --rm sdk make generate-php
+
+# Golden тесты (по умолчанию php)
+docker compose run --rm sdk make test-golden
+docker compose run --rm sdk make test-golden-php
+
+# Smoke тесты (Prism + тесты по языкам)
+docker compose run --rm sdk make test-smoke
+docker compose run --rm sdk make test-smoke-php
+
+# Полный прогон (lint, bundle, generate-php, test-golden, test-smoke)
+docker compose run --rm sdk make all
+```
+
+**Языки:** целевой язык задаётся через `LANGUAGES`:  
+`docker compose run --rm sdk make test-smoke LANGUAGES=php,python` (когда появятся тесты для python).
+
+**Без сборки образа** (если есть образ из CI):
+
+```bash
+docker run --rm -v "$(pwd):/workspace" -w /workspace \
+  docker.infra.lognex/docker-openapitools:1.0-release make all
+```
+
+**Локальный Docker и Nexus:** если в `package-lock.json` указан корпоративный registry (nexus.infra.lognex), при запуске в Docker задаётся `USE_PUBLIC_NPM_REGISTRY=true`. Скрипт `scripts/npm-ci-public-registry.sh` временно подменяет URL на registry.npmjs.org, чтобы не было ошибки SSL (UNABLE_TO_VERIFY_LEAF_SIGNATURE). Исходный `package-lock.json` после `npm ci` восстанавливается.
+
+**Schemathesis** (контрактные тесты против живого API):
+
+```bash
+docker compose run --rm \
+  -e SCHEMATHESIS_HOST=https://api.example.com \
+  -e SCHEMATHESIS_LOGIN=user \
+  -e SCHEMATHESIS_PASSWORD=pass \
+  sdk make schemathesis
+```
+
+Список целей: `docker compose run --rm sdk make help`.
+
+**Почему Makefile, а не только docker-compose?**
+- **Один образ, одна точка входа:** `docker compose run --rm sdk make all` (или `make lint`, `make test-golden` и т.д.). Не нужно заводить отдельный сервис под каждую проверку и помнить их имена.
+- **Работает и без Docker:** на машине с установленными node, redocly, php, composer можно вызывать `make lint`, `make bundle` и т.д. напрямую.
+- **Зависимости между шагами в одном месте:** цель `all` задаёт порядок (npm ci → lint → bundle → generate → test-golden → test-smoke) и один раз ставит зависимости.
+- **Скрипты вызываются через `sh scripts/...`** — не нужны права на выполнение (chmod +x) у файлов в `scripts/`.
+
+Вариант «только docker-compose» без Makefile: пришлось бы описать отдельные сервисы (lint, bundle, generate, test-golden, test-smoke) и вызывать, например, `docker compose run --rm lint`, `docker compose run --rm bundle`. Дублировалась бы общая логика (npm ci, порядок шагов), а без Makefile те же команды пришлось бы набирать вручную или дублировать в compose.
 
 ---
 
@@ -229,6 +294,10 @@ customtemplates/<language>/
 ---
 
 ## Тестирование
+
+### PHP тесты и сгенерированный SDK
+
+Тесты в `tests/php` не подключают сгенерированный SDK через Composer path repository: у пакета из `clients/php` в `composer.json` часто нет поля `name` в формате, который Composer ожидает для path repo, из‑за чего возникает ошибка «Unknown package has no name defined». Поэтому сгенерированный SDK подключается через `tests/php/bootstrap.php`: он подгружает `clients/php/autoload.php`, если тот есть. Сначала выполните генерацию (`make generate` или job `generate-sdk-php`), затем запускайте golden и smoke тесты.
 
 ### Типы тестов
 
