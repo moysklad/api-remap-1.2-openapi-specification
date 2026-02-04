@@ -33,5 +33,5 @@ sdk-contract:
       schemathesis run dist/openapi.yaml \
         --url "$SCHEMATHESIS_HOST" \
         -H "Authorization: Basic $AUTH_HEADER" \
-        --hypothesis-max-examples=50 \
-        --stateful=links
+        --max-examples=50 \
+        --phases examples,fuzzing,stateful
