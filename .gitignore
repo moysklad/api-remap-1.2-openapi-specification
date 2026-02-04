@@ -35,3 +35,5 @@ clients/*
 .env
 .env.local
 .env.*.local
+/.venv-schemathesis/
+/.hypothesis/
