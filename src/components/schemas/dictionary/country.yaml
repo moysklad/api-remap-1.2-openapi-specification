@@ -48,4 +48,4 @@ properties:
   shared:
     type: boolean
     description: Общий доступ
-    example: "true"
+    example: true
