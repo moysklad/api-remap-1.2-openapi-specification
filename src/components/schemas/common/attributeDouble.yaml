@@ -1,6 +1,6 @@
 type: object
 allOf:
-  - $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
+  - $ref: '../../../openapi.yaml#/components/schemas/AttributeBase'
 properties:
   type:
     type: string

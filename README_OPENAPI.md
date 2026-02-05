@@ -330,8 +330,10 @@ $this->assertContains($response->getStatusCode(), [200, 401]);
 
 ```bash
 schemathesis run dist/openapi.yaml \
-  --base-url "$SCHEMATHESIS_HOST" \
-  -H "Authorization: Basic ${AUTH_HEADER}"
+  --url "$SCHEMATHESIS_HOST" \
+  -H "Authorization: Basic ${AUTH_HEADER}" \
+  --max-examples=50 \
+  --phases examples,fuzzing,stateful
 ```
 
 ### Локальный запуск тестов
@@ -346,6 +348,58 @@ vendor/bin/phpunit --testsuite smoke  # требует запущенный Pris
 # Запуск Prism локально
 npx @stoplight/prism-cli mock src/openapi.yaml
 ```
+
+---
+
+## Contract-тесты (Schemathesis): типичные падения и что делать
+
+При ручном запуске job `sdk-contract` тесты могут падать по следующим причинам.
+
+### 1. Schema Error: цикл ссылок (attributeAbstract ↔ attributeFile)
+
+**Симптом:** `Schema #/components/schemas/attributeAbstract has required references forming a cycle: attributeAbstract -> attributeFile -> attributeAbstract`.
+
+**Исправлено в спецификации:** введена базовая схема `AttributeBase` с общими полями (id, meta, name, type, value). Все конкретные типы атрибутов (`AttributeFile`, `AttributeString` и т.д.) наследуются от `AttributeBase` через `allOf`, а не от `AttributeAbstract`, чтобы разорвать цикл. `AttributeAbstract` по-прежнему задаёт дискриминатор и `oneOf` по вариантам.
+
+### 2. Server error (503 Service Unavailable)
+
+**Симптом:** ответ 503 от API, в спецификации описаны только 200, 400, 401, 403.
+
+**Рекомендация:** либо тестовый стенд недоступен/перегружен (перезапустить пайплайн позже), либо добавить в операции ответ `503` через общий компонент, например в `components/responses.yaml`:
+
+```yaml
+ServiceUnavailable:
+  description: Сервис временно недоступен
+  content:
+    application/json:
+      schema:
+        $ref: './schemas/common/error.yaml'
+```
+
+и в нужных path-файлах в `responses` добавить `'503': $ref: '.../components/responses.yaml#/ServiceUnavailable'`.
+
+### 3. Undocumented HTTP status code (415, 400 и т.д.)
+
+**Симптом:** API вернул 415 Unsupported Media Type или 400 Bad Request, в спецификации этих кодов нет.
+
+**Рекомендация:** добавить в описание операций документированные ответы для реально возвращаемых кодов, например:
+
+- `415` — неверный Content-Type или тело запроса;
+- `400` — невалидное тело/параметры (часто уже есть через `BadRequest`).
+
+Добавить в `components/responses.yaml` при необходимости и ссылаться на них в `responses` операций.
+
+### 4. Undocumented Content-Type (text/html вместо application/json)
+
+**Симптом:** в ответе пришёл `Content-Type: text/html` (например, страница ошибки nginx), а в спецификации указан только `application/json`.
+
+**Рекомендация:** для операций, где бэкенд или прокси могут отдавать HTML при ошибках, можно описать дополнительный ответ с `content: text/html` (например, для 502/503) или оставить как известное ограничение тестового окружения и не считать падением, если это редкость.
+
+### 5. API rejected schema-compliant request
+
+**Симптом:** Schemathesis считает запрос валидным по схеме, а API отклоняет (4xx/5xx).
+
+**Рекомендация:** проверить, что запрос действительно допустим для API (обязательные поля, формат, лимиты). При необходимости ужесточить схему (required, enum, format) или расширить документированные коды ответов (400, 422 и т.д.), чтобы они считались ожидаемыми.
 
 ---
 

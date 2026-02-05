@@ -10,5 +10,9 @@
   "name": "Россия",
   "code": "643",
   "externalCode": "RU",
-  "description": "Российская Федерация"
+  "description": "Российская Федерация",
+  "updated": "2024-01-15T10:30:00.000+03:00",
+  "group": null,
+  "owner": null,
+  "shared": false
 }

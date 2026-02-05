@@ -28,5 +28,6 @@
   "rate": 1.0,
   "multiplicity": 1,
   "indirect": false,
-  "rateUpdateType": "manual"
+  "rateUpdateType": "manual",
+  "margin": 0
 }

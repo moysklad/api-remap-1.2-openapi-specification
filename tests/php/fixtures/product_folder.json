@@ -16,5 +16,12 @@
   "useParentVat": false,
   "effectiveVat": 20,
   "effectiveVatEnabled": true,
-  "shared": true
+  "shared": true,
+  "pathName": "Электроника",
+  "description": null,
+  "group": null,
+  "owner": null,
+  "productFolder": null,
+  "taxSystem": null,
+  "updated": "2024-01-15T10:30:00.000+03:00"
 }

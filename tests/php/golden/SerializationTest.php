@@ -30,7 +30,6 @@ class SerializationTest extends TestCase
         'product' => 'Product',
         'product_full' => 'Product',
         'counterparty' => 'Counterparty',
-        'counterparty_legal' => 'Counterparty',
         'currency' => 'Currency',
         'employee' => 'Employee',
         'group' => 'Group',

@@ -20,5 +20,18 @@
   "discountProhibited": false,
   "shared": true,
   "paymentItemType": "SERVICE",
-  "taxSystem": "GENERAL_TAX_SYSTEM"
+  "taxSystem": "GENERAL_TAX_SYSTEM",
+  "pathName": "Услуги",
+  "group": null,
+  "owner": null,
+  "buyPrice": null,
+  "salePrices": [],
+  "uom": null,
+  "productFolder": null,
+  "files": null,
+  "barcodes": [],
+  "attributes": [],
+  "minPrice": null,
+  "syncId": null,
+  "updated": "2024-01-15T10:30:00.000+03:00"
 }

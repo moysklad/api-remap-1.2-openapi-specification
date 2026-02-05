@@ -139,6 +139,11 @@ properties:
     type: string
     maxLength: 255
     description: Номер дисконтной карты контрагента
+  discounts:
+    type: array
+    description: Массив скидок контрагента
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/AgentDiscount'
   shared:
     type: boolean
     description: Общий доступ

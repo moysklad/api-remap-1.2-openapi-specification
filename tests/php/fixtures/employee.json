@@ -8,9 +8,14 @@
   "id": "33333333-3333-3333-3333-333333333333",
   "accountId": "abcdef12-1234-1234-1234-123456789012",
   "name": "Иванов Иван Иванович",
-  "code": "EMP-001",
   "externalCode": "EXT-EMP-001",
   "archived": false,
+  "created": "2024-01-10T09:00:00.000+03:00",
+  "description": null,
+  "group": null,
+  "owner": null,
+  "inn": null,
+  "position": "Менеджер",
   "uid": "admin@company",
   "email": "ivanov@company.ru",
   "phone": "+7 (999) 123-45-67",
@@ -19,5 +24,10 @@
   "lastName": "Иванов",
   "fullName": "Иванов Иван Иванович",
   "shortFio": "Иванов И. И.",
-  "shared": true
+  "shared": true,
+  "salary": null,
+  "cashiers": [],
+  "image": null,
+  "attributes": [],
+  "updated": "2024-01-15T10:30:00.000+03:00"
 }
