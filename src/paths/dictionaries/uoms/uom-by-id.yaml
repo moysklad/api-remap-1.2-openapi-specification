@@ -1,0 +1,64 @@
+get:
+  tags:
+    - Uoms
+  summary: Получить единицу измерения по ID
+  description: Запрос на получение отдельной единицы измерения с указанным id
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../components/schemas/dictionary/uom.yaml'
+    '404':
+      $ref: '../../../components/responses.yaml#/NotFound'
+
+put:
+  tags:
+    - Uoms
+  summary: Обновить единицы измерения
+  description: Обновление единицы измерения с указанным id
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../components/schemas/dictionary/uom.yaml'
+  responses:
+    '200':
+      description: Единица измерения успешно обновлена
+      content:
+        application/json:
+          schema:
+            $ref: '../../../components/schemas/dictionary/uom.yaml'
+    '400':
+      $ref: '../../../components/responses.yaml#/BadRequest'
+    '404':
+      $ref: '../../../components/responses.yaml#/NotFound'
+
+delete:
+  tags:
+    - Uoms
+  summary: Удалить единицу измерения
+  description: Удаление единицы измерения с указанным id
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Единица измерения успешно удалена
+    '404':
+      $ref: '../../../components/responses.yaml#/NotFound'
+    '409':
+      $ref: '../../../components/responses.yaml#/Conflict'

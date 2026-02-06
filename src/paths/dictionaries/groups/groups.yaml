@@ -1,0 +1,56 @@
+get:
+  tags:
+    - Groups
+  summary: Получить список групп
+  description: Запрос всех групп на данной учетной записи
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/limit'
+    - $ref: '../../../components/parameters.yaml#/offset'
+    - $ref: '../../../components/parameters.yaml#/search'
+    - $ref: '../../../components/parameters.yaml#/filter'
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/parameters.yaml#/order'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../components/schemas/dictionary/groupList.yaml'
+    '400':
+      $ref: '../../../components/responses.yaml#/BadRequest'
+    '401':
+      $ref: '../../../components/responses.yaml#/Unauthorized'
+    '403':
+      $ref: '../../../components/responses.yaml#/Forbidden'
+
+post:
+  tags:
+    - Groups
+  summary: Создать группу
+  description: Создание новой группы
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../components/schemas/dictionary/group.yaml'
+  responses:
+    '200':
+      description: Группа успешно создана
+      content:
+        application/json:
+          schema:
+            $ref: '../../../components/schemas/dictionary/group.yaml'
+    '400':
+      $ref: '../../../components/responses.yaml#/BadRequest'
+    '401':
+      $ref: '../../../components/responses.yaml#/Unauthorized'
+    '403':
+      $ref: '../../../components/responses.yaml#/Forbidden'

@@ -1,0 +1,35 @@
+type: object
+description: Файл
+properties:
+  meta:
+    $ref: '../common/meta.yaml'
+  title:
+    type: string
+    maxLength: 255
+    description: Название файла
+    example: "Инструкция по эксплуатации"
+  filename:
+    type: string
+    maxLength: 255
+    description: Имя файла
+    example: "instruction.pdf"
+  size:
+    type: integer
+    description: Размер файла в байтах
+    readOnly: true
+    example: 1048576
+  created:
+    type: string
+    format: date-time
+    description: Время создания объекта
+    readOnly: true
+  createdBy:
+    description: Метаданные сотрудника, загрузившего Файл
+    $ref: '../../../openapi.yaml#/components/schemas/Employee'
+    readOnly: true
+  tiny:
+    description: Метаданные уменьшенного изображения (поле передается только для Файлов изображений)
+    $ref: '../common/meta.yaml'
+  miniature:
+    description: Метаданные миниатюры изображения (поле передается только для Файлов изображений)
+    $ref: '../common/meta.yaml'

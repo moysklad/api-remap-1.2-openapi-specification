@@ -1,0 +1,70 @@
+entityId:
+  name: id
+  in: path
+  required: true
+  description: ID сущности
+  schema:
+    type: string
+    format: uuid
+    example: "12a8b923-692c-11e6-8a84-bae500000053"
+
+positionId:
+  name: positionId
+  in: path
+  required: true
+  description: ID позиции
+  schema:
+    type: string
+    format: uuid
+    example: "12a8b923-692c-11e6-8a84-bae500000054"
+
+limit:
+  name: limit
+  in: query
+  description: Максимальное количество элементов в выданном списке (максимум 1000)
+  schema:
+    type: integer
+    minimum: 1
+    maximum: 1000
+    default: 1000
+
+offset:
+  name: offset
+  in: query
+  description: Отступ в выданном списке
+  schema:
+    type: integer
+    minimum: 0
+    default: 0
+
+search:
+  name: search
+  in: query
+  description: Контекстный поиск по строковым полям сущностей
+  schema:
+    type: string
+    example: "name=123"
+
+filter:
+  name: filter
+  in: query
+  description: Фильтрация выборки
+  schema:
+    type: string
+  example: "archived=false"
+
+expand:
+  name: expand
+  in: query
+  description: Замена ссылок объектами с помощью expand
+  schema:
+    type: string
+  example: "agent,organization"
+
+order:
+  name: order
+  in: query
+  description: Сортировка
+  schema:
+    type: string
+  example: "name"
