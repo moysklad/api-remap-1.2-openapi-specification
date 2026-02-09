@@ -3,12 +3,12 @@
 # В CI используется образ docker.infra.lognex/docker-openapitools
 FROM node:22-alpine
 
-# PHP: из community (php83 в Alpine 3.21+)
+# PHP: расширения для PHPUnit — dom, xmlwriter, ctype и др.
 RUN echo "https://dl-cdn.alpinelinux.org/alpine/v3.23/community" >> /etc/apk/repositories && \
   apk add --no-cache --repository=https://dl-cdn.alpinelinux.org/alpine/v3.23/community \
-    php83 php83-curl php83-xml php83-mbstring php83-phar php83-openssl php83-json php83-dom php83-tokenizer \
+    php84 php84-curl php84-xml php84-xmlwriter php84-mbstring php84-phar php84-openssl php84-json php84-dom php84-tokenizer php84-ctype \
     composer && \
-  ln -sf /usr/bin/php83 /usr/bin/php
+  ln -sf /usr/bin/php84 /usr/bin/php
 
 # Python
 RUN apk add --no-cache python3 py3-pip
@@ -18,7 +18,8 @@ RUN apk add --no-cache openjdk21-jre-headless
 ENV JAVA_HOME=/usr/lib/jvm/java-21-openjdk
 
 # Утилиты (make для запуска целей из Makefile)
-RUN apk add --no-cache git rsync make
+RUN apk add --no-cache git rsync make && \
+  git config --global --add safe.directory /workspace
 
 # Node: redocly, openapi-generator, prism
 RUN npm install -g npm@10 && \

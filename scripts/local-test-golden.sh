@@ -7,6 +7,10 @@ LANG="${1:-php}"
 SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
 ROOT_DIR=$(cd "$SCRIPT_DIR/.." && pwd)
 cd "$ROOT_DIR"
+# При запуске в Docker репо смонтирован с хоста — Git считает владельца «ненадёжным»
+if [ -d ".git" ] && git rev-parse --git-dir >/dev/null 2>&1; then
+  git config --global --add safe.directory "$ROOT_DIR" 2>/dev/null || true
+fi
 
 run_php() {
   if [ ! -d "clients/php" ]; then

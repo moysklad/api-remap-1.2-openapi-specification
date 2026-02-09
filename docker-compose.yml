@@ -23,6 +23,8 @@ services:
     volumes:
       - .:/workspace
       - sdk_node_modules:/workspace/node_modules
+      # Кэш Composer — чтобы при повторных запусках (test-golden-php, test-smoke-php) не качать пакеты заново
+      - sdk_composer_cache:/root/.composer
     environment:
       - CI=true
       # В Docker используем публичный registry, чтобы не было UNABLE_TO_VERIFY_LEAF_SIGNATURE к Nexus
@@ -40,3 +42,4 @@ services:
 
 volumes:
   sdk_node_modules:
+  sdk_composer_cache:
