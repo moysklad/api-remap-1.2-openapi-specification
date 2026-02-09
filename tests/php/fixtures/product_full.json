@@ -171,7 +171,7 @@
           "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/download/678498fb-05ca-40d1-8460-fecb7ff3d29f?miniature=true",
           "type": "files",
           "mediaType": "image/png",
-          "downloadHref": null
+          "downloadHref": "https://miniature-test-v3.moysklad.ru/miniature-test/miniature/b2040544-01b5-11f1-0a81-181d00000002/documentminiature/6fb0df91-b057-4130-8ab0-8662abfb5d09"
         },
         "tiny": {
           "href": "https://static-test-v3.moysklad.ru/static-test/static/tinyimage/b2040544-01b5-11f1-0a81-181d00000002/tinyimage/336b889d-0546-462c-ab69-9d11a5b6c26b/t.png",

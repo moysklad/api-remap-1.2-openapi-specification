@@ -81,6 +81,12 @@ properties:
     type: string
     maxLength: 255
     description: Юридический адрес контрагента
+  legalAddressFull:
+    description: Полный юридический адрес контрагента
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Address'
   inn:
     type: string
     maxLength: 255
@@ -166,9 +172,15 @@ properties:
     description: Бонусные баллы по активной бонусной программе
     readOnly: true
   bonusProgram:
-    $ref: '../common/meta.yaml'
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/BonusProgram'
   priceType:
-    $ref: '../common/meta.yaml'
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/PriceType'
   state:
     description: Статус Контрагента
     $ref: '../../../openapi.yaml#/components/schemas/State'

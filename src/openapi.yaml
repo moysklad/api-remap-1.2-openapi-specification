@@ -172,6 +172,8 @@ components:
       $ref: './components/schemas/common/attributeText.yaml'
     Barcode:
       $ref: './components/schemas/dictionary/barcode.yaml'
+    BonusProgram:
+      $ref: './components/schemas/dictionary/bonusProgram.yaml'
     DeleteInfo:
       $ref: './components/schemas/common/deleteInfo.yaml'
     DiscountBase:

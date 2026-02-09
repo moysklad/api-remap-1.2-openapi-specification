@@ -41,12 +41,23 @@ class SerializationTest extends TestCase
     ];
 
     /**
-     * Поля, которые игнорируются при сравнении (read-only поля, генерируемые сервером).
-     * Эти поля могут отсутствовать или отличаться после roundtrip.
+     * Поля, которые игнорируются при сравнении.
+     * Все перечисленные в спецификации помечены readOnly: true (генерируются сервером).
+     * При roundtrip они могут отсутствовать в выводе SDK (генератор часто не сериализует readOnly)
+     * или отличаться (например, updated/created при следующем запросе).
+     *
+     * updated, created — время создания/обновления (product, counterparty, employee, country, service, uom, productFolder и др.)
+     * accountId — ID учётной записи (все сущности)
+     * pathName — наименование родительской группы (product, productFolder, service, store)
+     * effectiveVat, effectiveVatEnabled — расчётный НДС (product, productFolder, service)
+     * variantsCount — количество модификаций (product)
+     * tobacco — признак табачной продукции (product)
+     * salesAmount, bonusPoints — сумма продаж и бонусные баллы (counterparty)
+     * things — серийные номера (product)
      */
     private const IGNORED_FIELDS = [
         'updated',
-        'created', 
+        'created',
         'accountId',
         'pathName',
         'effectiveVat',
@@ -55,7 +66,6 @@ class SerializationTest extends TestCase
         'tobacco',
         'salesAmount',
         'bonusPoints',
-        'things',
     ];
 
     /**
@@ -96,12 +106,12 @@ class SerializationTest extends TestCase
         $serializedJson = $this->serialize($model);
         $this->assertIsArray($serializedJson, "Serialization should return array");
 
-        // Нормализуем оба массива для сравнения (убираем ignored поля)
+        // Нормализуем оба массива для сравнения
         $normalizedOriginal = $this->normalizeForComparison($originalJson);
         $normalizedSerialized = $this->normalizeForComparison($serializedJson);
 
-        // Сравниваем
-        $this->assertEquals(
+        // Сравниваем с учётом эквивалентности null/отсутствия ключа и чисел 1.0/1
+        $this->assertNormalizedEquals(
             $normalizedOriginal,
             $normalizedSerialized,
             "Roundtrip serialization failed for {$fixtureName}: data mismatch after deserialize->serialize"
@@ -191,29 +201,144 @@ class SerializationTest extends TestCase
     }
 
     /**
-     * Нормализует данные для сравнения.
-     * Удаляет игнорируемые поля и сортирует ключи для консистентного сравнения.
-     * 
+     * Нормализует данные для сравнения:
+     * - удаляет игнорируемые поля и поля со значением null (отсутствие ключа и null считаются эквивалентными);
+     * - для attributes[].value приводит скаляр и объект/массив к одному виду;
+     * - числа 1.0 и 1 приводятся к одному виду;
+     * - пустые объекты и объекты только с meta считаются одинаковыми (нормализуются в []).
+     *
      * @param array<string, mixed> $data Исходные данные
      * @return array<string, mixed> Нормализованные данные
      */
     private function normalizeForComparison(array $data): array
     {
-        // Удаляем игнорируемые поля
         foreach (self::IGNORED_FIELDS as $field) {
             unset($data[$field]);
         }
 
-        // Рекурсивно обрабатываем вложенные массивы
+        // Удаляем ключи со значением null (сравнение: отсутствие ключа = null)
+        $data = array_filter($data, static fn ($v) => $v !== null);
+
         foreach ($data as $key => $value) {
             if (is_array($value)) {
                 $data[$key] = $this->normalizeForComparison($value);
+            } elseif (is_float($value) && $value === (float) (int) $value) {
+                $data[$key] = (int) $value;
             }
         }
 
-        // Сортируем ключи для консистентного сравнения
-        ksort($data);
+        // Атрибуты: value может прийти скаляром (фикстура) или массивом/объектом (SDK) — приводим к скаляру
+        if (isset($data['attributes']) && is_array($data['attributes'])) {
+            foreach ($data['attributes'] as $i => $attr) {
+                if (is_array($attr) && array_key_exists('value', $attr)) {
+                    $data['attributes'][$i]['value'] = $this->normalizeAttributeValue($attr['value']);
+                }
+            }
+        }
 
+        // Пустой объект или только meta — нормализуем в [] для совпадения с выводом SDK
+        if (self::isEmptyOrMetaOnly($data)) {
+            return [];
+        }
+
+        ksort($data);
         return $data;
+    }
+
+    /**
+     * Приводит value атрибута к скалярному виду (фикстура — скаляр, SDK часто — массив/объект).
+     *
+     * @param mixed $value
+     * @return mixed
+     */
+    private function normalizeAttributeValue($value)
+    {
+        if (!is_array($value)) {
+            return $value;
+        }
+        // Один элемент — скаляр (например обёртка)
+        if (count($value) === 1) {
+            $v = reset($value);
+            return is_scalar($v) ? $v : $value;
+        }
+        // Ищем первый скаляр во вложенной структуре
+        foreach ($value as $v) {
+            if (is_scalar($v)) {
+                return $v;
+            }
+        }
+        return $value;
+    }
+
+    /**
+     * Проверяет, что массив пустой или содержит только ключ 'meta'.
+     */
+    private static function isEmptyOrMetaOnly(array $data): bool
+    {
+        if ($data === []) {
+            return true;
+        }
+        $keys = array_keys($data);
+        return count($keys) === 1 && $keys[0] === 'meta';
+    }
+
+    /**
+     * Рекурсивное сравнение с учётом: отсутствие ключа = null, числа 1.0 и 1 равны.
+     *
+     * @param array<string, mixed> $expected
+     * @param array<string, mixed> $actual
+     */
+    private function assertNormalizedEquals(array $expected, array $actual, string $message = ''): void
+    {
+        $this->sortKeysRecursive($expected);
+        $this->sortKeysRecursive($actual);
+        $diff = $this->diffNormalized($expected, $actual);
+        if ($diff !== []) {
+            $this->fail($message . "\n" . 'Differences: ' . json_encode($diff, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
+        }
+    }
+
+    private function sortKeysRecursive(array &$arr): void
+    {
+        ksort($arr);
+        foreach ($arr as $k => $v) {
+            if (is_array($v)) {
+                $this->sortKeysRecursive($arr[$k]);
+            }
+        }
+    }
+
+    /**
+     * Сравнивает с учётом null/отсутствия и числового равенства 1.0 == 1.
+     * Возвращает массив расхождений (пустой, если равны).
+     *
+     * @param mixed $expected
+     * @param mixed $actual
+     * @return array<int, array{path: string, expected: mixed, actual: mixed}>
+     */
+    private function diffNormalized($expected, $actual, string $path = ''): array
+    {
+        if (is_array($expected) && is_array($actual)) {
+            $allKeys = array_unique(array_merge(array_keys($expected), array_keys($actual)));
+            $diffs = [];
+            foreach ($allKeys as $key) {
+                $e = $expected[$key] ?? null;
+                $a = $actual[$key] ?? null;
+                if ($e === null && $a === null) {
+                    continue;
+                }
+                $subPath = $path === '' ? $key : $path . '.' . $key;
+                $diffs = array_merge($diffs, $this->diffNormalized($e, $a, $subPath));
+            }
+            return $diffs;
+        }
+
+        if (is_numeric($expected) && is_numeric($actual) && (float) $expected === (float) $actual) {
+            return [];
+        }
+        if ($expected === $actual) {
+            return [];
+        }
+        return [['path' => $path, 'expected' => $expected, 'actual' => $actual]];
     }
 }

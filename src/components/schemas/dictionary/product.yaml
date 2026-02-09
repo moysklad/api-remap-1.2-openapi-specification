@@ -239,7 +239,6 @@ properties:
   things:
     type: array
     description: Серийные номера
-    readOnly: true
     items:
       type: string
   syncId:
