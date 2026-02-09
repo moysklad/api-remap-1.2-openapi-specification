@@ -12,25 +12,18 @@ if [ ! -f "dist/openapi.yaml" ]; then
   exit 1
 fi
 
-start_prism() {
-  echo "Starting Prism..." >&2
-  prism mock dist/openapi.yaml -h 0.0.0.0 -p 4010 &
-  PRISM_PID=$!
-  sleep 5
-  if ! kill -0 $PRISM_PID 2>/dev/null; then
-    echo "ERROR: Prism failed to start" >&2
-    exit 1
-  fi
-  echo "Prism started (PID $PRISM_PID)" >&2
-  echo $PRISM_PID
-}
-
 run_php() {
   echo "Installing PHP deps (composer)..." >&2
   cd tests/php
   composer install --no-interaction
-  echo "Running PHPUnit smoke suite..." >&2
-  php vendor/bin/phpunit --testsuite smoke
+  echo "Running PHPUnit smoke suite (timeout 120s)..." >&2
+  timeout 120 php vendor/bin/phpunit --testsuite smoke || {
+    r=$?
+    if [ $r -eq 124 ]; then
+      echo "ERROR: Smoke tests timed out after 120s" >&2
+    fi
+    return $r
+  }
 }
 
 run_python() {
@@ -62,7 +55,34 @@ run_javascript() {
   npm run test:smoke 2>/dev/null || echo "Skipping: no test:smoke script"
 }
 
-PRISM_PID=$(start_prism)
+# Start Prism in this shell (not in a subshell) so it is not killed by SIGHUP
+echo "Starting Prism..." >&2
+prism mock dist/openapi.yaml -h 0.0.0.0 -p 4010 &
+PRISM_PID=$!
+# Prism needs ~10s to load spec and bind port; "Prism is listening" appears after route list
+sleep 25
+if ! kill -0 $PRISM_PID 2>/dev/null; then
+  echo "ERROR: Prism failed to start" >&2
+  exit 1
+fi
+echo "Prism started (PID $PRISM_PID), waiting for port 4010..." >&2
+max=60
+while [ $max -gt 0 ]; do
+  if php "$ROOT_DIR/scripts/check-port.php" 2>/dev/null; then
+    echo "Prism listening, waiting 5s for spec load..." >&2
+    sleep 5
+    echo "Prism ready." >&2
+    break
+  fi
+  sleep 1
+  max=$((max - 1))
+done
+if [ $max -eq 0 ]; then
+  echo "ERROR: Prism did not open port 4010 in time" >&2
+  kill $PRISM_PID 2>/dev/null || true
+  exit 1
+fi
+
 EXIT=0
 case "$LANG" in
   php) run_php || EXIT=$? ;;

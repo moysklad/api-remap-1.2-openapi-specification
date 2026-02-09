@@ -23,6 +23,9 @@ Thumbs.db
 # Coverage / test outputs
 coverage/
 .nyc_output/
+# PHP (composer + PHPUnit when running in Docker or locally)
+tests/php/vendor/
+tests/php/.phpunit.cache/
 
 # Build artifacts
 dist/
