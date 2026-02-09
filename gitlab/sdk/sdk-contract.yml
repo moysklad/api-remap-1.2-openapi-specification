@@ -27,11 +27,16 @@ sdk-contract:
   script:
     - pip install schemathesis
     - |
-      # Формируем Basic auth заголовок
+      # Базовый URL API должен включать путь /api/remap/1.2 (как в servers в спецификации)
+      case "$SCHEMATHESIS_HOST" in
+        */api/remap/1.2) SCHEMATHESIS_BASE_URL="$SCHEMATHESIS_HOST" ;;
+        */api/remap/1.2/) SCHEMATHESIS_BASE_URL="${SCHEMATHESIS_HOST%/}" ;;
+        *) SCHEMATHESIS_BASE_URL="${SCHEMATHESIS_HOST%/}/api/remap/1.2" ;;
+      esac
+      echo "Using base URL: $SCHEMATHESIS_BASE_URL"
       AUTH_HEADER=$(echo -n "${SCHEMATHESIS_LOGIN}:${SCHEMATHESIS_PASSWORD}" | base64)
-      # Запускаем schemathesis тесты
       schemathesis run dist/openapi.yaml \
-        --url "$SCHEMATHESIS_HOST" \
+        --url "$SCHEMATHESIS_BASE_URL" \
         -H "Authorization: Basic $AUTH_HEADER" \
         --max-examples=50 \
         --phases examples,fuzzing,stateful

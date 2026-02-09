@@ -99,6 +99,42 @@ npm run serve-docs
 npm run generate-php
 ```
 
+## Локальный запуск через Make
+
+Все шаги пайплайна (lint, bundle, генерация SDK, golden- и smoke-тесты) можно запускать локально через Make — **напрямую** или **в Docker**.
+
+### Через Docker (рекомендуется)
+
+Требуется только Docker и Docker Compose. Остальное уже есть в образе.
+
+```bash
+docker compose run --rm sdk make help          # список целей
+docker compose run --rm sdk make lint         # проверка OpenAPI
+docker compose run --rm sdk make bundle       # сборка dist/openapi.yaml
+docker compose run --rm sdk make generate-php # генерация PHP SDK
+docker compose run --rm sdk make test-golden-php  # golden-тесты
+docker compose run --rm sdk make test-smoke-php  # smoke-тесты (нужен Prism на :4010)
+docker compose run --rm sdk make all          # lint + bundle + generate-php + test-golden + test-smoke
+```
+
+Если `make test-golden-php` в контейнере падает с ошибкой про `ext-dom`, пересоберите образ:  
+`docker compose build sdk` (в Dockerfile уже указан `php83-dom`).
+
+### Локально (без Docker)
+
+На машине должны быть установлены: **Node.js**, **npm**, **PHP ≥8.1** с расширениями **dom**, **json**, **mbstring**, **curl**, **Composer**.
+
+```bash
+make help
+make lint
+make bundle
+make generate-php
+make test-golden-php   # из корня репо; в tests/php нужен composer install
+make test-smoke-php    # нужен запущенный Prism (например на http://localhost:4010)
+```
+
+Скрипты в `scripts/` определяют корень репозитория по своему пути, поэтому их можно вызывать из любой директории (и из Docker, и локально).
+
 ## Добавление новых сущностей
 
 ### 1. Создание схем
