@@ -30,6 +30,7 @@ build/
 clients/*
 .tmp/
 .cache/
+.openapi-generator/
 
 # Env files
 .env

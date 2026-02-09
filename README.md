@@ -117,6 +117,9 @@ docker compose run --rm sdk make test-smoke-php  # smoke-тесты (нужен 
 docker compose run --rm sdk make all          # lint + bundle + generate-php + test-golden + test-smoke
 ```
 
+При повторных запусках зависимости npm не перекачиваются (пропуск `npm ci`, если `package-lock.json` не менялся). Принудительная переустановка:  
+`docker compose run --rm -e NPM_CI_FORCE=1 sdk make lint`
+
 Если `make test-golden-php` в контейнере падает с ошибкой про `ext-dom`, пересоберите образ:  
 `docker compose build sdk` (в Dockerfile уже указан `php83-dom`).
 
