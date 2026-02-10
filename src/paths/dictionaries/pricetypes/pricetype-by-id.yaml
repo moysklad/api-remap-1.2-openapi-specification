@@ -15,5 +15,7 @@ get:
         application/json:
           schema:
             $ref: '../../../components/schemas/dictionary/priceType.yaml'
+    '400':
+      $ref: '../../../components/responses.yaml#/BadRequest'
     '404':
       $ref: '../../../components/responses.yaml#/NotFound'
