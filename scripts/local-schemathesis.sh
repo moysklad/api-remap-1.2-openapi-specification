@@ -15,7 +15,7 @@ if [ ! -f "dist/openapi.yaml" ]; then
   echo "ERROR: dist/openapi.yaml not found. Run: make bundle"
   exit 1
 fi
-# Базовый URL должен включать путь /api/remap/1.2 (как в servers в спецификации)
+# Базовый URL должен включать путь /api/remap/1.2
 case "$SCHEMATHESIS_HOST" in
   */api/remap/1.2) SCHEMATHESIS_BASE_URL="$SCHEMATHESIS_HOST" ;;
   */api/remap/1.2/) SCHEMATHESIS_BASE_URL="${SCHEMATHESIS_HOST%/}" ;;
@@ -33,7 +33,7 @@ fi
 SCHEMATHESIS_PHASES="${SCHEMATHESIS_PHASES:-examples}"
 AUTH_HEADER=$(echo -n "${SCHEMATHESIS_LOGIN}:${SCHEMATHESIS_PASSWORD}" | base64)
 # Исключаем positive_data_acceptance: API может вернуть 400/412 при валидной по схеме дате (бизнес-правила).
-# Коды 400/412 документированы в спецификации (вариант A из 1111.md).
+# Коды 400/412 документированы в спецификации
 exec "$SCHEMATHESIS_VENV/bin/schemathesis" run dist/openapi.yaml \
   --url "$SCHEMATHESIS_BASE_URL" \
   -H "Authorization: Basic $AUTH_HEADER" \

@@ -36,8 +36,7 @@ sdk-contract:
       echo "Using base URL: $SCHEMATHESIS_BASE_URL"
       AUTH_HEADER=$(echo -n "${SCHEMATHESIS_LOGIN}:${SCHEMATHESIS_PASSWORD}" | base64)
       # Исключаем positive_data_acceptance: API может вернуть 400/412 при валидной по схеме дате (бизнес-правила).
-      # Коды 400/412 документированы в спецификации (вариант A из 1111.md). См. scripts/local-schemathesis.sh
-      # Только фаза examples — как в local-schemathesis.sh. Fuzzing/stateful генерируют [{}] и т.п., API возвращает 412
+      # Только фаза examples. Fuzzing/stateful генерируют [{}] и т.п., API возвращает 412
       # и формат ответа (массив ошибок), из-за чего падают Response violates schema и Undocumented HTTP status code.
       schemathesis run dist/openapi.yaml \
         --url "$SCHEMATHESIS_BASE_URL" \

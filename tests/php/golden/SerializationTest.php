@@ -45,15 +45,6 @@ class SerializationTest extends TestCase
      * Все перечисленные в спецификации помечены readOnly: true (генерируются сервером).
      * При roundtrip они могут отсутствовать в выводе SDK (генератор часто не сериализует readOnly)
      * или отличаться (например, updated/created при следующем запросе).
-     *
-     * updated, created — время создания/обновления (product, counterparty, employee, country, service, uom, productFolder и др.)
-     * accountId — ID учётной записи (все сущности)
-     * pathName — наименование родительской группы (product, productFolder, service, store)
-     * effectiveVat, effectiveVatEnabled — расчётный НДС (product, productFolder, service)
-     * variantsCount — количество модификаций (product)
-     * tobacco — признак табачной продукции (product)
-     * salesAmount, bonusPoints — сумма продаж и бонусные баллы (counterparty)
-     * things — серийные номера (product)
      */
     private const IGNORED_FIELDS = [
         'updated',

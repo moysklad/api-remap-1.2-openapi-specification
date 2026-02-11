@@ -101,7 +101,7 @@ npm run generate-php
 
 ## Локальный запуск через Make
 
-Все шаги пайплайна (lint, bundle, генерация SDK, golden- и smoke-тесты) можно запускать локально через Make — **напрямую** или **в Docker**.
+Все шаги пайплайна (lint, bundle, генерация SDK, golden-, smoke-тесты, а также schemathes тесты) можно запускать локально через Make — **напрямую** или **в Docker**.
 
 ### Через Docker (рекомендуется)
 
@@ -114,14 +114,12 @@ docker compose run --rm sdk make bundle       # сборка dist/openapi.yaml
 docker compose run --rm sdk make generate-php # генерация PHP SDK
 docker compose run --rm sdk make test-golden-php  # golden-тесты
 docker compose run --rm sdk make test-smoke-php  # smoke-тесты (нужен Prism на :4010)
+docker compose run --rm -e SCHEMATHESIS_HOST=host -e SCHEMATHESIS_LOGIN=login -e SCHEMATHESIS_PASSWORD=pass sdk make schemathes # schemathes-тесты на реальном окружении
 docker compose run --rm sdk make all          # lint + bundle + generate-php + test-golden + test-smoke
 ```
 
 При повторных запусках зависимости npm не перекачиваются (пропуск `npm ci`, если `package-lock.json` не менялся). Принудительная переустановка:  
 `docker compose run --rm -e NPM_CI_FORCE=1 sdk make lint`
-
-Если `make test-golden-php` в контейнере падает с ошибкой про `ext-dom`, пересоберите образ:  
-`docker compose build sdk` (в Dockerfile уже указан `php83-dom`).
 
 ### Локально (без Docker)
 
@@ -134,6 +132,7 @@ make bundle
 make generate-php
 make test-golden-php   # из корня репо; в tests/php нужен composer install
 make test-smoke-php    # нужен запущенный Prism (например на http://localhost:4010)
+make schemathes # в скрипте нужно также задать переменные SCHEMATHESIS_HOST, SCHEMATHESIS_LOGIN, SCHEMATHESIS_PASSWORD
 ```
 
 Скрипты в `scripts/` определяют корень репозитория по своему пути, поэтому их можно вызывать из любой директории (и из Docker, и локально).

@@ -63,7 +63,10 @@ docker compose run --rm sdk make test-golden-php
 docker compose run --rm sdk make test-smoke
 docker compose run --rm sdk make test-smoke-php
 
-# Полный прогон (lint, bundle, generate-php, test-golden, test-smoke)
+# Контрактные тесты Schemathesis (один для всех языков)
+docker compose run --rm -e SCHEMATHESIS_HOST=host -e SCHEMATHESIS_LOGIN=login -e SCHEMATHESIS_PASSWORD=pass sdk make schemathes
+
+# Полный прогон (lint, bundle, generate-php, test-golden, test-smoke, schemathesis)
 docker compose run --rm sdk make all
 ```
 
@@ -91,14 +94,6 @@ docker compose run --rm \
 
 Список целей: `docker compose run --rm sdk make help`.
 
-**Почему Makefile, а не только docker-compose?**
-- **Один образ, одна точка входа:** `docker compose run --rm sdk make all` (или `make lint`, `make test-golden` и т.д.). Не нужно заводить отдельный сервис под каждую проверку и помнить их имена.
-- **Работает и без Docker:** на машине с установленными node, redocly, php, composer можно вызывать `make lint`, `make bundle` и т.д. напрямую.
-- **Зависимости между шагами в одном месте:** цель `all` задаёт порядок (npm ci → lint → bundle → generate → test-golden → test-smoke) и один раз ставит зависимости.
-- **Скрипты вызываются через `sh scripts/...`** — не нужны права на выполнение (chmod +x) у файлов в `scripts/`.
-
-Вариант «только docker-compose» без Makefile: пришлось бы описать отдельные сервисы (lint, bundle, generate, test-golden, test-smoke) и вызывать, например, `docker compose run --rm lint`, `docker compose run --rm bundle`. Дублировалась бы общая логика (npm ci, порядок шагов), а без Makefile те же команды пришлось бы набирать вручную или дублировать в compose.
-
 ---
 
 ## Структура проекта
@@ -123,10 +118,7 @@ api-sdk-builder/
 ├── customtemplates/
 │   └── php/                          # Кастомные шаблоны для PHP SDK
 ├── tests/
-│   ├── php/                          # PHP тесты (golden + smoke)
-│   ├── python/                       # Python тесты (заглушка)
-│   ├── java/                         # Java тесты (заглушка)
-│   └── javascript/                   # JavaScript тесты (заглушка)
+│   └── php/                          # PHP тесты (golden + smoke)
 └── clients/                          # Сгенерированные SDK (создаётся при генерации)
 ```
 
@@ -191,11 +183,11 @@ api-sdk-builder/
 
 Обязательны при ручном запуске (web):
 
-| Переменная              | Описание              | Пример                                    |
-|-------------------------|-----------------------|-------------------------------------------|
-| `SCHEMATHESIS_HOST`     | URL API сервера       | `https://api-api-1.testms-test.lognex.ru` |
-| `SCHEMATHESIS_LOGIN`    | Логин для Basic auth  | `admin@test_user`                         |
-| `SCHEMATHESIS_PASSWORD` | Пароль для Basic auth | `password123`                             |
+| Переменная              | Описание              | Пример            |
+|-------------------------|-----------------------|-------------------|
+| `SCHEMATHESIS_HOST`     | URL API сервера       | `host`            |
+| `SCHEMATHESIS_LOGIN`    | Логин для Basic auth  | `admin@test_user` |
+| `SCHEMATHESIS_PASSWORD` | Пароль для Basic auth | `password123`     |
 
 ### Переменные для Push/Mirror
 
@@ -267,8 +259,6 @@ tests/<language>/
 └── README.md         # Инструкции
 ```
 
-Смотрите примеры в `tests/php/` и заглушки в `tests/python/`, `tests/java/`, `tests/javascript/`.
-
 ### 3. Обновить CI job'ы
 
 Job'ы для новых языков уже созданы как заглушки в:
@@ -294,10 +284,6 @@ customtemplates/<language>/
 ---
 
 ## Тестирование
-
-### PHP тесты и сгенерированный SDK
-
-Тесты в `tests/php` не подключают сгенерированный SDK через Composer path repository: у пакета из `clients/php` в `composer.json` часто нет поля `name` в формате, который Composer ожидает для path repo, из‑за чего возникает ошибка «Unknown package has no name defined». Поэтому сгенерированный SDK подключается через `tests/php/bootstrap.php`: он подгружает `clients/php/autoload.php`, если тот есть. Сначала выполните генерацию (`make generate` или job `generate-sdk-php`), затем запускайте golden и smoke тесты.
 
 ### Типы тестов
 
@@ -335,73 +321,6 @@ schemathesis run dist/openapi.yaml \
   --max-examples=50 \
   --phases examples,fuzzing,stateful
 ```
-
-### Локальный запуск тестов
-
-```bash
-# PHP тесты
-cd tests/php
-composer install
-vendor/bin/phpunit --testsuite golden
-vendor/bin/phpunit --testsuite smoke  # требует запущенный Prism
-
-# Запуск Prism локально
-npx @stoplight/prism-cli mock src/openapi.yaml
-```
-
----
-
-## Contract-тесты (Schemathesis): типичные падения и что делать
-
-При ручном запуске job `sdk-contract` тесты могут падать по следующим причинам.
-
-### 1. Schema Error: цикл ссылок (attributeAbstract ↔ attributeFile)
-
-**Симптом:** `Schema #/components/schemas/attributeAbstract has required references forming a cycle: attributeAbstract -> attributeFile -> attributeAbstract`.
-
-**Исправлено в спецификации:** введена базовая схема `AttributeBase` с общими полями (id, meta, name, type, value). Все конкретные типы атрибутов (`AttributeFile`, `AttributeString` и т.д.) наследуются от `AttributeBase` через `allOf`, а не от `AttributeAbstract`, чтобы разорвать цикл. `AttributeAbstract` по-прежнему задаёт дискриминатор и `oneOf` по вариантам.
-
-### 2. Server error (503 Service Unavailable)
-
-**Симптом:** ответ 503 от API, в спецификации описаны только 200, 400, 401, 403.
-
-**Рекомендация:** либо тестовый стенд недоступен/перегружен (перезапустить пайплайн позже), либо добавить в операции ответ `503` через общий компонент, например в `components/responses.yaml`:
-
-```yaml
-ServiceUnavailable:
-  description: Сервис временно недоступен
-  content:
-    application/json:
-      schema:
-        $ref: './schemas/common/error.yaml'
-```
-
-и в нужных path-файлах в `responses` добавить `'503': $ref: '.../components/responses.yaml#/ServiceUnavailable'`.
-
-### 3. Undocumented HTTP status code (415, 400 и т.д.)
-
-**Симптом:** API вернул 415 Unsupported Media Type или 400 Bad Request, в спецификации этих кодов нет.
-
-**Рекомендация:** добавить в описание операций документированные ответы для реально возвращаемых кодов, например:
-
-- `415` — неверный Content-Type или тело запроса;
-- `400` — невалидное тело/параметры (часто уже есть через `BadRequest`).
-
-Добавить в `components/responses.yaml` при необходимости и ссылаться на них в `responses` операций.
-
-### 4. Undocumented Content-Type (text/html вместо application/json)
-
-**Симптом:** в ответе пришёл `Content-Type: text/html` (например, страница ошибки nginx), а в спецификации указан только `application/json`.
-
-**Рекомендация:** для операций, где бэкенд или прокси могут отдавать HTML при ошибках, можно описать дополнительный ответ с `content: text/html` (например, для 502/503) или оставить как известное ограничение тестового окружения и не считать падением, если это редкость.
-
-### 5. API rejected schema-compliant request
-
-**Симптом:** Schemathesis считает запрос валидным по схеме, а API отклоняет (4xx/5xx).
-
-**Рекомендация:** проверить, что запрос действительно допустим для API (обязательные поля, формат, лимиты). При необходимости ужесточить схему (required, enum, format) или расширить документированные коды ответов (400, 422 и т.д.), чтобы они считались ожидаемыми.
-
----
 
 ## Ссылки
 

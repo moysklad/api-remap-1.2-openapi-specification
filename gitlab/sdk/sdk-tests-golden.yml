@@ -15,7 +15,7 @@ sdk-golden-php:
     - |
       if [ -d "tests/php" ]; then
         cd tests/php
-        # bootstrap.php обязателен для PHPUnit; создаём, если нет (на случай старого клона)
+        # bootstrap.php обязателен для PHPUnit; создаём, если нет
         if [ ! -f "bootstrap.php" ]; then
           printf '%s\n' '<?php $b=dirname(__DIR__,2); require __DIR__."/vendor/autoload.php"; if(file_exists($b."/clients/php/autoload.php")) require $b."/clients/php/autoload.php";' > bootstrap.php
         fi

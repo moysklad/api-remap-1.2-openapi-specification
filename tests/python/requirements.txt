@@ -1,9 +1,0 @@
-# Python SDK test dependencies
-pytest>=7.0.0
-pytest-cov>=4.0.0
-requests>=2.28.0
-httpx>=0.24.0
-
-# SDK dependencies (will be installed from generated SDK)
-# urllib3>=1.25.3
-# python-dateutil>=2.8.2
