@@ -25,7 +25,7 @@ properties:
           description: Сообщение, прилагаемое к ошибке
         moreInfo:
           type: string
-          format: uri
+          format: uri-reference
           description: Ссылка на документацию с описанием ошибки
         line:
           type: integer

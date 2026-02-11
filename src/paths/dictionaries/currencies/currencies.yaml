@@ -26,6 +26,8 @@ get:
       $ref: '../../../components/responses.yaml#/Unauthorized'
     '403':
       $ref: '../../../components/responses.yaml#/Forbidden'
+    '412':
+      $ref: '../../../components/responses.yaml#/PreconditionFailed'
 
 post:
   operationId: createCurrency
@@ -37,6 +39,7 @@ post:
     - $ref: '../../../components/parameters.yaml#/expand'
     - $ref: '../../../components/headers.yaml#/AcceptHeader'
     - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
   requestBody:
     required: true
     content:
@@ -56,3 +59,5 @@ post:
       $ref: '../../../components/responses.yaml#/Unauthorized'
     '403':
       $ref: '../../../components/responses.yaml#/Forbidden'
+    '412':
+      $ref: '../../../components/responses.yaml#/PreconditionFailed'

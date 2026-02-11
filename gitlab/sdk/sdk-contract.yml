@@ -35,8 +35,11 @@ sdk-contract:
       esac
       echo "Using base URL: $SCHEMATHESIS_BASE_URL"
       AUTH_HEADER=$(echo -n "${SCHEMATHESIS_LOGIN}:${SCHEMATHESIS_PASSWORD}" | base64)
+      # Исключаем positive_data_acceptance: API может вернуть 400/412 при валидной по схеме дате (бизнес-правила).
+      # Коды 400/412 документированы в спецификации (вариант A из 1111.md). См. scripts/local-schemathesis.sh
       schemathesis run dist/openapi.yaml \
         --url "$SCHEMATHESIS_BASE_URL" \
         -H "Authorization: Basic $AUTH_HEADER" \
         --max-examples=50 \
-        --phases examples,fuzzing,stateful
+        --phases examples,fuzzing,stateful \
+        --exclude-checks positive_data_acceptance
