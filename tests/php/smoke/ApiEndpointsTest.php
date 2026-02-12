@@ -27,14 +27,14 @@ class ApiEndpointsTest extends TestCase
     /**
      * Базовый путь API для запросов к Prism.
      * Prism не поддерживает путь из servers.url (см. https://github.com/stoplightio/prism/discussions/906):
-     * сопоставление идёт только по ключам из paths. В спеце paths: /entity/product, servers: /api/remap/1.2,
+     * сопоставление идёт только по ключам из paths. В спеке paths: /entity/product, servers: /api/remap/1.2,
      * поэтому Prism слушает /entity/product, а не /api/remap/1.2/entity/product. Используем путь без префикса.
      */
     private const API_BASE_PATH = '';
 
     /**
      * Для smoke-теста операций list/create/batch delete и т.п.:
-     * 404 = эндпоинт не совпал (путь не найден в спеце), тест должен падать.
+     * 404 = эндпоинт не совпал (путь не найден в спеке), тест должен падать.
      * Любой другой ответ (2xx, 3xx, 5xx, 401, 403…) = достучались до эндпоинта — ок.
      */
     private const SUCCESS_CODES = [200, 201, 401];
