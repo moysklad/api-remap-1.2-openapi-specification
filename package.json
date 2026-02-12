@@ -1,0 +1,48 @@
+{
+    "name": "moysklad-openapi",
+    "version": "1.0.0",
+    "description": "OpenAPI спецификация для МойСклад JSON API 1.2",
+    "main": "src/openapi.yaml",
+    "scripts": {
+        "validate": "redocly lint src/openapi.yaml",
+        "bundle": "redocly bundle src/openapi.yaml -o dist/openapi.yaml --ext yaml",
+        "bundle-json": "redocly bundle src/openapi.yaml -o dist/openapi.json --ext json",
+        "docs": "redocly build-docs src/openapi.yaml -o docs/index.html",
+        "serve-docs": "redocly preview-docs src/openapi.yaml",
+        "generate-php": "openapi-generator-cli generate -i src/openapi.yaml -g php --additional-properties=phpVersion=8.1 -o clients/php -t customtemplates/php",
+        "build": "npm run validate && npm run bundle && npm run bundle-json && npm run docs",
+        "clean": "rm -rf dist clients docs"
+    },
+    "engines": {
+        "node": ">=16.0.0",
+        "npm": ">=8.0.0"
+    },
+    "keywords": [
+        "openapi",
+        "swagger",
+        "moysklad",
+        "api",
+        "specification"
+    ],
+    "author": "МойСклад API Team",
+    "license": "MIT",
+    "devDependencies": {
+        "@redocly/cli": "^1.0.0",
+        "@openapitools/openapi-generator-cli": "^2.7.0",
+        "@stoplight/spectral-cli": "^6.11.0"
+    },
+    "files": [
+        "src/openapi.yaml",
+        "src/components/**/*.yaml",
+        "src/paths/**/*.yaml",
+        "dist/**/*"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/moysklad/api-remap-1.2-openapi-specification.git"
+    },
+    "bugs": {
+        "url": "https://github.com/moysklad/api-remap-1.2-openapi-specification/issues"
+    },
+    "homepage": "https://github.com/moysklad/api-remap-1.2-openapi-specification#readme"
+}

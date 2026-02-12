@@ -1,0 +1,64 @@
+get:
+  tags:
+    - ProductFolders
+  summary: Получить группу товаров по ID
+  description: Запрос на получение отдельной группы товаров с указанным id
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../components/schemas/dictionary/productFolder.yaml'
+    '404':
+      $ref: '../../../components/responses.yaml#/NotFound'
+
+put:
+  tags:
+    - ProductFolders
+  summary: Обновить группу товаров
+  description: Обновление группы товаров с указанным id
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../components/schemas/dictionary/productFolder.yaml'
+  responses:
+    '200':
+      description: Группа товаров успешно обновлена
+      content:
+        application/json:
+          schema:
+            $ref: '../../../components/schemas/dictionary/productFolder.yaml'
+    '400':
+      $ref: '../../../components/responses.yaml#/BadRequest'
+    '404':
+      $ref: '../../../components/responses.yaml#/NotFound'
+
+delete:
+  tags:
+    - ProductFolders
+  summary: Удалить группу товаров
+  description: Удаление группы товаров с указанным id
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Группа товаров успешно удалена
+    '404':
+      $ref: '../../../components/responses.yaml#/NotFound'
+    '409':
+      $ref: '../../../components/responses.yaml#/Conflict'

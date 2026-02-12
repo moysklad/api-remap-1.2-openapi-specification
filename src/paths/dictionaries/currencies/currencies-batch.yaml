@@ -1,0 +1,36 @@
+post:
+  tags:
+    - Currencies
+  summary: Создать или изменить валюту
+  description: Создание или изменение нескольких валют.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            $ref: '../../../openapi.yaml#/components/schemas/Currency'
+          minItems: 1
+          maxItems: 1000
+  responses:
+    '200':
+      description: Валюты успешно созданы или изменены
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../../../openapi.yaml#/components/schemas/Currency'
+            minItems: 1
+            maxItems: 1000
+    '400':
+      $ref: '../../../components/responses.yaml#/BadRequest'
+    '401':
+      $ref: '../../../components/responses.yaml#/Unauthorized'
+    '403':
+      $ref: '../../../components/responses.yaml#/Forbidden'
