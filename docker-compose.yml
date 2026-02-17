@@ -39,7 +39,16 @@ services:
     # чтобы выполнялся make (и любой другой бинарник) внутри контейнера с нужным Node.
     entrypoint: ["/bin/sh", "-c", "exec \"$$@\"", "sh"]
     command: ["make", "help"]
+    networks:
+      - default
+      - moysklad-all_default
 
 volumes:
   sdk_node_modules:
   sdk_composer_cache:
+
+networks:
+  moysklad-all_default:
+    external: true
+
+
