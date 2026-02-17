@@ -1,0 +1,99 @@
+type: object
+description: Группа товаров
+properties:
+  meta:
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID группы товаров
+    readOnly: true
+    example: "12a8b923-692c-11e6-8a84-bae500000059"
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  name:
+    type: string
+    maxLength: 255
+    description: Наименование группы товаров
+    example: "Основная группа"
+  code:
+    type: string
+    maxLength: 255
+    description: Код группы товаров
+  externalCode:
+    type: string
+    maxLength: 255
+    description: Внешний код группы товаров
+  archived:
+    type: boolean
+    description: Добавлена ли группа товаров в архив
+    example: false
+  pathName:
+    type: string
+    description: Наименование родительской группы
+    readOnly: true
+    example: "Основная группа"
+  description:
+    type: string
+    maxLength: 4096
+    nullable: true
+    description: Описание группы товаров
+  vat:
+    type: integer
+    minimum: 0
+    maximum: 99
+    description: НДС %
+    example: 20
+  vatEnabled:
+    type: boolean
+    description: Включен ли НДС для группы
+    example: true
+  effectiveVat:
+    type: integer
+    description: Реальный НДС %
+    readOnly: true
+    example: 20
+  effectiveVatEnabled:
+    type: boolean
+    description: Дополнительный признак для определения разграничения реального НДС
+    readOnly: true
+    example: true
+  useParentVat:
+    type: boolean
+    description: Используется ли ставка НДС родительской группы
+    example: true
+  shared:
+    type: boolean
+    description: Общий доступ
+    example: true
+  group:
+    $ref: '../../../openapi.yaml#/components/schemas/Group'
+  owner:
+    description: Владелец группы товаров. Может быть Meta объектом или полным объектом в зависимости от expand параметра
+    nullable: true
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Employee'
+  updated:
+    type: string
+    format: date-time
+    description: Момент последнего обновления
+    readOnly: true
+  productFolder:
+    description: Родительская группа товаров
+    nullable: true
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/ProductFolder'
+  taxSystem:
+    type: string
+    enum:
+      - GENERAL_TAX_SYSTEM
+      - SIMPLIFIED_TAX_SYSTEM_INCOME
+      - SIMPLIFIED_TAX_SYSTEM_INCOME_OUTCOME
+      - UNIFIED_AGRICULTURAL_TAX
+      - PRESUMPTIVE_TAX_SYSTEM
+      - PATENT_BASED
+      - TAX_SYSTEM_SAME_AS_GROUP
+    description: Код системы налогообложения

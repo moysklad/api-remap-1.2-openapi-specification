@@ -1,0 +1,261 @@
+openapi: 3.0.3
+info:
+  title: МойСклад JSON API
+  description: |
+    API для манипуляции с сущностями и создания отчетов в онлайн-сервисе МойСклад.
+    
+    ## Аутентификация
+    
+    МойСклад поддерживает аутентификацию по протоколу Basic Auth и с использованием токена доступа:
+    - Basic Auth: заголовок `Authorization` со значением пары `логин:пароль`, закодированным в Base64
+    - Bearer Token: заголовок `Authorization` со значением `Bearer <Access-Token>`
+    
+    ## Ограничения
+    
+    - Не более 45 запросов за 3 секундный период от аккаунта
+    - Не более 5 параллельных запросов от одного пользователя  
+    - Не более 20 параллельных запросов от аккаунта
+    - Не более 20 Мб данных в одном запросе
+    - Максимум 1000 элементов в массиве
+    - Обязательное использование сжатия gzip
+  version: "1.0.0"
+
+servers:
+  - url: https://api.moysklad.ru/api/remap/1.2
+    description: Production server
+
+security:
+  - basicAuth: []
+  - bearerAuth: []
+
+paths:
+  # Dictionaries
+  #
+  # Products
+  /entity/product:
+    $ref: './paths/dictionaries/products/products.yaml'
+  /entity/product/{id}:
+    $ref: './paths/dictionaries/products/product-by-id.yaml'
+  /entity/product/delete:
+    $ref: './paths/dictionaries/products/products-delete.yaml'
+  /entity/product/batch:
+    $ref: './paths/dictionaries/products/products-batch.yaml'
+  /entity/product/metadata:
+    $ref: './paths/common/metadata/metadata.yaml'
+  #
+  # Groups
+  /entity/group:
+    $ref: './paths/dictionaries/groups/groups.yaml'
+  /entity/group/{id}:
+    $ref: './paths/dictionaries/groups/group-by-id.yaml'
+  #
+  # Countries
+  /entity/country:
+    $ref: './paths/dictionaries/countries/countries.yaml'
+  /entity/country/{id}:
+    $ref: './paths/dictionaries/countries/country-by-id.yaml'
+  /entity/country/delete:
+    $ref: './paths/dictionaries/countries/countries-delete.yaml'
+  /entity/country/batch:
+    $ref: './paths/dictionaries/countries/countries-batch.yaml'
+  #
+  # ProductFolders
+  /entity/productfolder:
+    $ref: './paths/dictionaries/productFolders/productFolders.yaml'
+  /entity/productfolder/{id}:
+    $ref: './paths/dictionaries/productFolders/productFolders-by-id.yaml'
+  /entity/productfolder/delete:
+    $ref: './paths/dictionaries/productFolders/productFolders-delete.yaml'
+  /entity/productfolder/batch:
+    $ref: './paths/dictionaries/productFolders/productFolders-batch.yaml'
+  #
+  # Uoms
+  /entity/uom:
+    $ref: './paths/dictionaries/uoms/uoms.yaml'
+  /entity/uom/{id}:
+    $ref: './paths/dictionaries/uoms/uom-by-id.yaml'
+  /entity/uom/delete:
+    $ref: './paths/dictionaries/uoms/uoms-delete.yaml'
+  /entity/uom/batch:
+    $ref: './paths/dictionaries/uoms/uoms-batch.yaml'
+  #
+  # Currencies
+  /entity/currency:
+    $ref: './paths/dictionaries/currencies/currencies.yaml'
+  /entity/currency/{id}:
+    $ref: './paths/dictionaries/currencies/currency-by-id.yaml'
+  /entity/currency/delete:
+    $ref: './paths/dictionaries/currencies/currencies-delete.yaml'
+  /entity/currency/batch:
+    $ref: './paths/dictionaries/currencies/currencies-batch.yaml'
+  #
+  # Employees
+  /entity/employee:
+    $ref: './paths/dictionaries/employees/employees.yaml'
+  /entity/employee/{id}:
+    $ref: './paths/dictionaries/employees/employee-by-id.yaml'
+  /entity/employee/delete:
+    $ref: './paths/dictionaries/employees/employees-delete.yaml'
+  /entity/employee/batch:
+    $ref: './paths/dictionaries/employees/employees-batch.yaml'
+  #
+  # Counterparties
+  /entity/counterparty:
+    $ref: './paths/dictionaries/counterparties/counterparties.yaml'
+  /entity/counterparty/{id}:
+    $ref: './paths/dictionaries/counterparties/counterparty-by-id.yaml'
+  /entity/counterparty/delete:
+    $ref: './paths/dictionaries/counterparties/counterparties-delete.yaml'
+  /entity/counterparty/batch:
+    $ref: './paths/dictionaries/counterparties/counterparties-batch.yaml'
+  #
+  # Services
+  /entity/service:
+    $ref: './paths/dictionaries/services/services.yaml'
+  /entity/service/{id}:
+    $ref: './paths/dictionaries/services/service-by-id.yaml'
+  /entity/service/delete:
+    $ref: './paths/dictionaries/services/services-delete.yaml'
+  /entity/service/batch:
+    $ref: './paths/dictionaries/services/services-batch.yaml'
+  #
+  # PriceTypes
+  /context/companysettings/pricetype:
+    $ref: './paths/dictionaries/pricetypes/pricetypes.yaml'
+  /context/companysettings/pricetype/{id}:
+    $ref: './paths/dictionaries/pricetypes/pricetype-by-id.yaml'
+  /context/companysettings/pricetype/default:
+    $ref: './paths/dictionaries/pricetypes/pricetype-default.yaml'
+
+components:
+  schemas:
+    Account:
+      $ref: './components/schemas/dictionary/account.yaml'
+    Address:
+      $ref: './components/schemas/dictionary/address.yaml'
+    Application:
+      $ref: './components/schemas/dictionary/application.yaml'
+    AttributeAbstract:
+      $ref: './components/schemas/common/attributeAbstract.yaml'
+    AttributeBool:
+      $ref: './components/schemas/common/attributeBool.yaml'
+    AttributeCustomEntity:
+      $ref: './components/schemas/common/attributeCustomEntity.yaml'
+    AttributeDateTime:
+      $ref: './components/schemas/common/attributeDateTime.yaml'
+    AttributeDouble:
+      $ref: './components/schemas/common/attributeDouble.yaml'
+    AttributeFile:
+      $ref: './components/schemas/common/attributeFile.yaml'
+    AttributeLink:
+      $ref: './components/schemas/common/attributeLink.yaml'
+    AttributeLong:
+      $ref: './components/schemas/common/attributeLong.yaml'
+    AttributeMetaInfo:
+      $ref: './components/schemas/common/attributeMetaInfo.yaml'
+    AttributeMetaInfoList:
+      $ref: './components/schemas/common/attributeMetaInfoList.yaml'
+    AttributeObject:
+      $ref: './components/schemas/common/attributeObject.yaml'
+    AttributeString:
+      $ref: './components/schemas/common/attributeString.yaml'
+    AttributeText:
+      $ref: './components/schemas/common/attributeText.yaml'
+    Barcode:
+      $ref: './components/schemas/dictionary/barcode.yaml'
+    DeleteInfo:
+      $ref: './components/schemas/common/deleteInfo.yaml'
+    BuyPrice:
+      $ref: './components/schemas/dictionary/buyPrice.yaml'
+    Cashier:
+      $ref: './components/schemas/dictionary/cashier.yaml'
+    ContactPerson:
+      $ref: './components/schemas/dictionary/contactPerson.yaml'
+    Counterparty:
+      $ref: './components/schemas/dictionary/counterparty.yaml'
+    Country:
+      $ref: './components/schemas/dictionary/country.yaml'
+    Currency:
+      $ref: './components/schemas/dictionary/currency.yaml'
+    Employee:
+      $ref: './components/schemas/dictionary/employee.yaml'
+    File:
+      $ref: './components/schemas/common/file.yaml'
+    FileList:
+      $ref: './components/schemas/common/fileList.yaml'
+    Group:
+      $ref: './components/schemas/dictionary/group.yaml'
+    Image:
+      $ref: './components/schemas/common/image.yaml'
+    ImageList:
+      $ref: './components/schemas/common/imageList.yaml'
+    MinimumStockAbstract:
+      $ref: './components/schemas/dictionary/minimumStockAbstract.yaml'
+    MinimumStockAllWarehouseSame:
+      $ref: './components/schemas/dictionary/minimumStockAllWarehouseSame.yaml'
+    MinimumStockAllWarehouseSum:
+      $ref: './components/schemas/dictionary/minimumStockAllWarehouseSum.yaml'
+    MinimumStockWarehouseVaried:
+      $ref: './components/schemas/dictionary/minimumStockWarehouseVaried.yaml'
+    MinPrice:
+      $ref: './components/schemas/dictionary/minPrice.yaml'
+    Note:
+      $ref: './components/schemas/dictionary/note.yaml'
+    Pack:
+      $ref: './components/schemas/dictionary/pack.yaml'
+    PriceType:
+      $ref: './components/schemas/dictionary/priceType.yaml'
+    Product:
+      $ref: './components/schemas/dictionary/product.yaml'
+    Service:
+      $ref: './components/schemas/dictionary/service.yaml'
+    ProductFolder:
+      $ref: './components/schemas/dictionary/productFolder.yaml'
+    Region:
+      $ref: './components/schemas/dictionary/region.yaml'
+    RetailStore:
+      $ref: './components/schemas/dictionary/retailStore.yaml'
+    SalePrice:
+      $ref: './components/schemas/dictionary/salePrice.yaml'
+    State:
+      $ref: './components/schemas/dictionary/state.yaml'
+    Store:
+      $ref: './components/schemas/dictionary/store.yaml'
+    StoreBalance:
+      $ref: './components/schemas/dictionary/storeBalance.yaml'
+    StoreBalanceList:
+      $ref: './components/schemas/dictionary/storeBalanceList.yaml'
+    Uom:
+      $ref: './components/schemas/dictionary/uom.yaml'
+
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Basic аутентификация с логином и паролем
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Bearer токен аутентификация
+
+tags:
+  - name: Products
+    description: Операции с товарами
+  - name: Groups
+    description: Операции с группами
+  - name: Countries
+    description: Операции со странами
+  - name: ProductFolders
+    description: Операции с группами товаров
+  - name: Uoms
+    description: Операции с единицами измерений
+  - name: Currencies
+    description: Операции с валютами
+  - name: Employees
+    description: Операции с сотрудниками
+  - name: Counterparties
+    description: Операции с контрагентами
+  - name: Services
+    description: Операции с услугами
+  - name: PriceTypes
+    description: Операции с типами цен

@@ -1,0 +1,64 @@
+get:
+  tags:
+    - Services
+  summary: Получить услугу по ID
+  description: Запрос на получение отдельной услуги с указанным id
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../components/schemas/dictionary/service.yaml'
+    '404':
+      $ref: '../../../components/responses.yaml#/NotFound'
+
+put:
+  tags:
+    - Services
+  summary: Обновить услугу
+  description: Обновление услуги с указанным id
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../components/schemas/dictionary/service.yaml'
+  responses:
+    '200':
+      description: Услуга успешно обновлена
+      content:
+        application/json:
+          schema:
+            $ref: '../../../components/schemas/dictionary/service.yaml'
+    '400':
+      $ref: '../../../components/responses.yaml#/BadRequest'
+    '404':
+      $ref: '../../../components/responses.yaml#/NotFound'
+
+delete:
+  tags:
+    - Services
+  summary: Удалить услугу
+  description: Удаление услуги с указанным id
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Услуга успешно удалена
+    '404':
+      $ref: '../../../components/responses.yaml#/NotFound'
+    '409':
+      $ref: '../../../components/responses.yaml#/Conflict'
