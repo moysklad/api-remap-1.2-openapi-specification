@@ -1,0 +1,22 @@
+type: object
+required:
+  - type
+discriminator:
+  propertyName: type
+  mapping:
+    ALL_WAREHOUSE_SUM: '../../../openapi.yaml#/components/schemas/MinimumStockAllWarehouseSum'
+    ALL_WAREHOUSE_SAME: '../../../openapi.yaml#/components/schemas/MinimumStockAllWarehouseSame'
+    WAREHOUSE_VARIED: '../../../openapi.yaml#/components/schemas/MinimumStockWarehouseVaried'
+oneOf:
+  - $ref: '../../../openapi.yaml#/components/schemas/MinimumStockAllWarehouseSame'
+  - $ref: '../../../openapi.yaml#/components/schemas/MinimumStockAllWarehouseSum'
+  - $ref: '../../../openapi.yaml#/components/schemas/MinimumStockWarehouseVaried'
+properties:
+  type:
+    type: string
+    readOnly: true
+    enum:
+      - ALL_WAREHOUSE_SUM
+      - ALL_WAREHOUSE_SAME
+      - WAREHOUSE_VARIED
+    description: Тип неснижаемого остатка

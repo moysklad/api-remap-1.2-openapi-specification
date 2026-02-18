@@ -1,0 +1,33 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/uom/77777777-7777-7777-7777-777777777777",
+    "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/uom/metadata",
+    "type": "uom",
+    "mediaType": "application/json"
+  },
+  "id": "77777777-7777-7777-7777-777777777777",
+  "accountId": "abcdef12-1234-1234-1234-123456789012",
+  "name": "шт",
+  "description": "Штука",
+  "code": "796",
+  "externalCode": "PCE",
+  "updated": "2024-01-15T10:30:00.000+03:00",
+  "group": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/group/11111111-1111-1111-1111-111111111111",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/group/metadata",
+      "type": "group",
+      "mediaType": "application/json"
+    }
+  },
+  "owner": {
+    "meta": {
+      "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/employee/b2c670fa-01b5-11f1-0a81-072700000055",
+      "metadataHref": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/employee/metadata",
+      "type": "employee",
+      "mediaType": "application/json",
+      "uuidHref": "https://online-api-2.testms-test.lognex.ru/app/#employee/edit?id=b2c670fa-01b5-11f1-0a81-072700000055"
+    }
+  },
+  "shared": false
+}

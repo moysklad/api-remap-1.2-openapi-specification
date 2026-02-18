@@ -1,0 +1,42 @@
+post:
+  operationId: createCurrenciesBatch
+  tags:
+    - Currencies
+  summary: Создать или изменить валюту
+  description: Создание или изменение нескольких валют.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            $ref: '../../../openapi.yaml#/components/schemas/Currency'
+          minItems: 1
+          maxItems: 1000
+  responses:
+    '200':
+      description: Валюты созданы или изменены (элемент — сущность или объект ошибки)
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              oneOf:
+                - $ref: '../../../openapi.yaml#/components/schemas/Currency'
+                - $ref: '../../../components/schemas/common/error.yaml'
+            minItems: 1
+            maxItems: 1000
+    '400':
+      $ref: '../../../components/responses.yaml#/BatchBadRequest'
+    '401':
+      $ref: '../../../components/responses.yaml#/Unauthorized'
+    '403':
+      $ref: '../../../components/responses.yaml#/Forbidden'
+    '412':
+      $ref: '../../../components/responses.yaml#/PreconditionFailed'

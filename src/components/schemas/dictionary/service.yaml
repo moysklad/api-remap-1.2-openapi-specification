@@ -1,0 +1,143 @@
+type: object
+x-entitytype-service: true
+properties:
+  meta:
+    description: Метаданные Услуги
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID услуги
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  archived:
+    type: boolean
+    description: Добавлена ли услуга в архив
+  name:
+    type: string
+    maxLength: 255
+    description: Наименование услуги
+    example: "Услуга 1"
+  code:
+    type: string
+    maxLength: 255
+    description: Код услуги
+  externalCode:
+    type: string
+    maxLength: 255
+    description: Внешний код услуги
+  pathName:
+    type: string
+    description: Наименование группы, в которую входит услуга
+    readOnly: true
+  description:
+    type: string
+    maxLength: 4096
+    nullable: true
+    description: Описание услуги
+  vat:
+    type: integer
+    minimum: 0
+    maximum: 99
+    description: НДС %
+  vatEnabled:
+    type: boolean
+    description: Включен ли НДС для услуги
+  useParentVat:
+    type: boolean
+    description: Используется ли ставка НДС родительской группы
+  effectiveVat:
+    type: integer
+    description: Реальный НДС %
+    readOnly: true
+  effectiveVatEnabled:
+    type: boolean
+    description: Дополнительный признак для определения разграничения реального НДС
+    readOnly: true
+  discountProhibited:
+    type: boolean
+    description: Признак запрета скидок
+  shared:
+    type: boolean
+    description: Общий доступ
+  group:
+    description: Метаданные отдела сотрудника
+    $ref: '../../../openapi.yaml#/components/schemas/Group'
+  owner:
+    description: Метаданные владельца (Сотрудника)
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Employee'
+  updated:
+    type: string
+    format: date-time
+    description: Момент последнего обновления сущности
+    readOnly: true
+  buyPrice:
+    description: Закупочная цена
+    $ref: '../../../openapi.yaml#/components/schemas/BuyPrice'
+  salePrices:
+    type: array
+    description: Цены продажи
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/SalePrice'
+  uom:
+    description: Метаданные единиц измерения
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Uom'
+  productFolder:
+    description: Метаданные группы Услуги
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/ProductFolder'
+  files:
+    description: Метаданные массива Файлов
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/FileList'
+  barcodes:
+    type: array
+    description: Штрихкоды услуги
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/Barcode'
+  paymentItemType:
+    type: string
+    enum:
+      - WORK
+      - SERVICE
+      - COMPOUND_PAYMENT_ITEM
+      - PROVIDING_RID
+      - ANOTHER_PAYMENT_ITEM
+    description: Признак предмета расчета
+  taxSystem:
+    type: string
+    enum:
+      - GENERAL_TAX_SYSTEM
+      - SIMPLIFIED_TAX_SYSTEM_INCOME
+      - SIMPLIFIED_TAX_SYSTEM_INCOME_OUTCOME
+      - UNIFIED_AGRICULTURAL_TAX
+      - PRESUMPTIVE_TAX_SYSTEM
+      - PATENT_BASED
+      - TAX_SYSTEM_SAME_AS_GROUP
+    description: Код системы налогообложения
+  attributes:
+    type: array
+    description: Дополнительные поля
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
+  minPrice:
+    description: Минимальная цена
+    $ref: '../../../openapi.yaml#/components/schemas/MinPrice'
+  syncId:
+    type: string
+    format: uuid
+    description: ID синхронизации

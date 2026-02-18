@@ -1,0 +1,129 @@
+type: object
+description: Сотрудник
+properties:
+  meta:
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID сотрудника
+    readOnly: true
+    example: "12a8b923-692c-11e6-8a84-bae500000054"
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  name:
+    type: string
+    maxLength: 255
+    description: Наименование сотрудника
+    readOnly: true
+    example: "Иванов И. И."
+  externalCode:
+    type: string
+    maxLength: 255
+    description: Внешний код сотрудника
+  archived:
+    type: boolean
+    description: Добавлен ли сотрудник в архив
+    example: false
+  created:
+    type: string
+    format: date-time
+    description: Момент создания
+    readOnly: true
+  updated:
+    type: string
+    format: date-time
+    description: Момент последнего обновления
+    readOnly: true
+  description:
+    type: string
+    maxLength: 4096
+    description: Комментарий к сотруднику
+  email:
+    type: string
+    format: email
+    description: Адрес электронной почты
+    example: "ivan@example.com"
+  phone:
+    type: string
+    description: Номер телефона
+    example: "+7 (999) 123-45-67"
+  firstName:
+    type: string
+    maxLength: 255
+    description: Имя
+    example: "Иван"
+  middleName:
+    type: string
+    maxLength: 255
+    description: Отчество
+    example: "Иванович"
+  lastName:
+    type: string
+    maxLength: 255
+    description: Фамилия
+    example: "Иванов"
+  fullName:
+    type: string
+    description: Полное имя сотрудника
+    readOnly: true
+    example: "Иванов Иван Иванович"
+  shortFio:
+    type: string
+    description: Краткое ФИО сотрудника
+    readOnly: true
+    example: "Иванов И. И."
+  shared:
+    type: boolean
+    description: Общий доступ
+  group:
+    description: Метаданные отдела сотрудника
+    $ref: '../../../openapi.yaml#/components/schemas/Group'
+  owner:
+    description: Метаданные владельца (Сотрудника)
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Employee'
+  inn:
+    type: string
+    maxLength: 255
+    description: ИНН сотрудника (в формате ИНН физического лица)
+  position:
+    type: string
+    maxLength: 255
+    description: Должность сотрудника
+  uid:
+    type: string
+    maxLength: 255
+    description: Логин сотрудника
+    readOnly: true
+  salary:
+    type: object
+    description: Оклад сотрудника
+    properties:
+      value:
+        type: number
+        minimum: 0
+        format: float
+        description: Сумма оклада
+  cashiers:
+    type: array
+    description: Массив кассиров
+    readOnly: true
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/Cashier'
+  image:
+    description: Фотография сотрудника
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Image'
+  attributes:
+    type: array
+    description: Дополнительные поля
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'

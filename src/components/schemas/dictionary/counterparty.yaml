@@ -1,0 +1,229 @@
+type: object
+description: Контрагент
+properties:
+  meta:
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID контрагента
+    readOnly: true
+    example: "12a8b923-692c-11e6-8a84-bae500000056"
+  syncId:
+    type: string
+    format: uuid
+    description: ID синхронизации
+    example: "12a8b923-692c-11e6-8a84-bae500000053"
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  name:
+    type: string
+    maxLength: 255
+    description: Наименование контрагента
+    example: "ООО Поставщик"
+  code:
+    type: string
+    maxLength: 255
+    description: Код контрагента
+  externalCode:
+    type: string
+    maxLength: 255
+    description: Внешний код контрагента
+  archived:
+    type: boolean
+    description: Добавлен ли контрагент в архив
+    example: false
+  created:
+    type: string
+    format: date-time
+    description: Момент создания
+    readOnly: true
+  updated:
+    type: string
+    format: date-time
+    description: Момент последнего обновления
+    readOnly: true
+  description:
+    type: string
+    maxLength: 4096
+    description: Комментарий к контрагенту
+  companyType:
+    type: string
+    enum: [legal, entrepreneur, individual]
+    description: Тип контрагента
+    example: "legal"
+  email:
+    type: string
+    format: email
+    description: Адрес электронной почты
+    example: "supplier@example.com"
+  phone:
+    type: string
+    description: Номер телефона
+    example: "+7 (999) 987-65-43"
+  fax:
+    type: string
+    description: Номер факса
+  actualAddress:
+    type: string
+    maxLength: 255
+    description: Фактический адрес контрагента
+  actualAddressFull:
+    description: Полный адрес
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Address'
+  legalAddress:
+    type: string
+    maxLength: 255
+    description: Юридический адрес контрагента
+  legalAddressFull:
+    description: Полный юридический адрес контрагента
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Address'
+  inn:
+    type: string
+    maxLength: 255
+    description: ИНН
+    example: "1234567890"
+  kpp:
+    type: string
+    maxLength: 255
+    description: КПП
+    example: "123456789"
+  ogrn:
+    type: string
+    maxLength: 255
+    description: ОГРН
+  ogrnip:
+    type: string
+    maxLength: 255
+    description: ОГРНИП
+  okpo:
+    type: string
+    maxLength: 255
+    description: ОКПО
+  certificateNumber:
+    type: string
+    maxLength: 255
+    description: Номер свидетельства
+  certificateDate:
+    type: string
+    format: date-time
+    description: Дата свидетельства
+  legalTitle:
+    type: string
+    maxLength: 4096
+    description: Полное наименование
+  legalFirstName:
+    type: string
+    maxLength: 255
+    description: Имя для ИП и физлица
+  legalLastName:
+    type: string
+    maxLength: 255
+    description: Фамилия для ИП и физлица
+  legalMiddleName:
+    type: string
+    maxLength: 255
+    description: Отчество для ИП и физлица
+  birthDate:
+    type: string
+    format: date-time
+    description: Дата рождения для физлица
+  sex:
+    type: string
+    enum: [MALE, FEMALE]
+    description: Пол контрагента
+  discountCardNumber:
+    type: string
+    maxLength: 255
+    description: Номер дисконтной карты контрагента
+  discounts:
+    type: array
+    description: Массив скидок контрагента
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/AgentDiscount'
+  shared:
+    type: boolean
+    description: Общий доступ
+    example: true
+  group:
+    description: Метаданные отдела сотрудника
+    $ref: '../../../openapi.yaml#/components/schemas/Group'
+  owner:
+    description: Метаданные владельца (Сотрудника)
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Employee'
+  salesAmount:
+    type: integer
+    description: Сумма продаж
+    readOnly: true
+  bonusPoints:
+    type: integer
+    description: Бонусные баллы по активной бонусной программе
+    readOnly: true
+  bonusProgram:
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/BonusProgram'
+  priceType:
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/PriceType'
+  state:
+    description: Статус Контрагента
+    $ref: '../../../openapi.yaml#/components/schemas/State'
+  accounts:
+    type: object
+    description: Массив счетов контрагента
+    properties:
+      meta:
+        $ref: '../common/metaList.yaml'
+      rows:
+        type: array
+        items:
+          $ref: '../../../openapi.yaml#/components/schemas/Account'
+  contactpersons:
+    type: object
+    description: Массив контактных лиц
+    properties:
+      meta:
+        $ref: '../common/metaList.yaml'
+      rows:
+        type: array
+        items:
+          $ref: '../../../openapi.yaml#/components/schemas/ContactPerson'
+  notes:
+    type: object
+    description: Массив контактных лиц
+    properties:
+      meta:
+        $ref: '../common/metaList.yaml'
+      rows:
+        type: array
+        items:
+          $ref: '../../../openapi.yaml#/components/schemas/Note'
+  files:
+    description: Метаданные массива Файлов
+    $ref: '../../../openapi.yaml#/components/schemas/FileList'
+  tags:
+    type: array
+    description: Группы контрагента
+    items:
+      type: string
+  attributes:
+    type: array
+    description: Дополнительные поля
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'

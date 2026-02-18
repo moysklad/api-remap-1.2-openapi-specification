@@ -1,0 +1,63 @@
+BadRequest:
+  description: Ошибка в структуре JSON передаваемого запроса
+  content:
+    application/json:
+      schema:
+        $ref: './schemas/common/error.yaml'
+
+# Для массовых операций: тело 400 может быть объектом или массивом объектов ошибок
+BatchBadRequest:
+  description: Ошибка запроса (тело — объект или массив объектов с полем errors)
+  content:
+    application/json:
+      schema:
+        $ref: './schemas/common/errorOrArray.yaml'
+
+Unauthorized:
+  description: Имя и/или пароль пользователя указаны неверно или заблокированы
+  content:
+    application/json:
+      schema:
+        $ref: './schemas/common/error.yaml'
+
+Forbidden:
+  description: У вас нет прав на просмотр данного объекта
+  content:
+    application/json:
+      schema:
+        $ref: './schemas/common/error.yaml'
+
+NotFound:
+  description: Запрошенный ресурс не существует
+  content:
+    application/json:
+      schema:
+        $ref: './schemas/common/error.yaml'
+
+Conflict:
+  description: Указанный объект используется и не может быть удален
+  content:
+    application/json:
+      schema:
+        $ref: './schemas/common/error.yaml'
+
+PreconditionFailed:
+  description: Ошибка валидации или ограничения (уникальность, бизнес-правила)
+  content:
+    application/json:
+      schema:
+        $ref: './schemas/common/error.yaml'
+
+TooManyRequests:
+  description: Превышен лимит количества запросов
+  content:
+    application/json:
+      schema:
+        $ref: './schemas/common/error.yaml'
+
+PayloadTooLarge:
+  description: Размер запроса или количество элементов превышает лимит
+  content:
+    application/json:
+      schema:
+        $ref: './schemas/common/error.yaml'

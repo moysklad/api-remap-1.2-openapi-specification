@@ -1,0 +1,31 @@
+type: object
+description: Изображение
+properties:
+  meta:
+    $ref: '../common/meta.yaml'
+  title:
+    type: string
+    maxLength: 255
+    description: Название изображения
+    example: "Фото товара"
+  filename:
+    type: string
+    maxLength: 255
+    description: Имя файла
+    example: "product_image.jpg"
+  size:
+    type: integer
+    description: Размер файла в байтах
+    readOnly: true
+    example: 102400
+  updated:
+    type: string
+    format: date-time
+    description: Время последнего изменения
+    readOnly: true
+  tiny:
+    description: Метаданные уменьшенного изображения
+    $ref: '../common/meta.yaml'
+  miniature:
+    description: Миниатюра изображения
+    $ref: '../common/meta.yaml'

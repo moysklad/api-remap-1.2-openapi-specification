@@ -1,0 +1,95 @@
+type: object
+description: Склад
+properties:
+  meta:
+    description: Метаданные Склада
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID Склада
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  owner:
+    description: Владелец (Сотрудник)
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Employee'
+  shared:
+    type: boolean
+    description: Общий доступ
+  group:
+    description: Отдел сотрудника
+    $ref: '../../../openapi.yaml#/components/schemas/Group'
+  updated:
+    type: string
+    format: date-time
+    description: Момент последнего обновления
+    readOnly: true
+  name:
+    type: string
+    maxLength: 255
+    description: Наименование Склада
+  description:
+    type: string
+    maxLength: 4096
+    nullable: true
+    description: Комментарий к Складу
+  code:
+    type: string
+    maxLength: 255
+    description: Код Склада
+  externalCode:
+    type: string
+    maxLength: 255
+    description: Внешний код Склада
+  archived:
+    type: boolean
+    description: Добавлен ли в архив
+  address:
+    type: string
+    maxLength: 255
+    description: Адрес склада
+  addressFull:
+    description: Адрес с детализацией
+    $ref: '../../../openapi.yaml#/components/schemas/Address'
+  pathName:
+    type: string
+    description: Группа Склада
+    readOnly: true
+  parent:
+    description: Метаданные родительского склада (Группы)
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Store'
+  attributes:
+    type: array
+    description: Дополнительные поля
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
+  zones:
+    type: object
+    description: Зоны склада
+    properties:
+      meta:
+        $ref: '../common/metaList.yaml'
+      rows:
+        type: array
+        items:
+          $ref: '../common/meta.yaml'
+  slots:
+    type: object
+    description: Ячейки склада
+    properties:
+      meta:
+        $ref: '../common/metaList.yaml'
+      rows:
+        type: array
+        items:
+          $ref: '../common/meta.yaml'

@@ -1,0 +1,421 @@
+type: object
+description: Точка продаж
+properties:
+  id:
+    type: string
+    format: uuid
+    readOnly: true
+    description: ID Точки продаж
+  accountId:
+    type: string
+    format: uuid
+    readOnly: true
+    description: ID учетной записи владельца Точки продаж
+  name:
+    type: string
+    maxLength: 255
+    description: Наименование Точки продаж
+  description:
+    type: string
+    maxLength: 4096
+    description: Комментарий к Точке продаж
+  active:
+    type: boolean
+    description: Признак активности Точки продаж
+  archived:
+    type: boolean
+    description: Признак архивности Точки продаж
+  shared:
+    type: boolean
+    description: Общий доступ к Точке продаж
+  address:
+    type: string
+    maxLength: 255
+    description: Адрес Точки продаж одной строкой
+  addressFull:
+    description: Адрес Точки продаж отдельными полями
+    $ref: '../../../openapi.yaml#/components/schemas/Address'
+  externalCode:
+    type: string
+    maxLength: 255
+    readOnly: true
+    description: Внешний код Точки продаж
+  updated:
+    type: string
+    format: date-time
+    readOnly: true
+    description: Момент последнего обновления Точки продаж
+  meta:
+    $ref: '../common/meta.yaml'
+    description: Метаданные Точки продаж
+  organization:
+    type: object
+    properties:
+      meta:
+        $ref: '../common/meta.yaml'
+    description: Метаданные юрлица-владельца Точки продаж
+  store:
+    description: Метаданные склада, с которым связана Точка продаж
+    $ref: '../../../openapi.yaml#/components/schemas/Store'
+  group:
+    description: Метаданные отдела сотрудника Точки продаж
+    $ref: '../../../openapi.yaml#/components/schemas/Group'
+  owner:
+    description: Метаданные владельца (сотрудника)
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Employee'
+  priceType:
+    description: Тип цены, используемый в Точке продаж
+    $ref: '../../../openapi.yaml#/components/schemas/PriceType'
+  environment:
+    description: Информация о среде (оборудование, ПО и т.д.)
+    type: object
+    properties:
+      device:
+        type: string
+        maxLength: 255
+        description: Устройство
+      os:
+        type: string
+        maxLength: 255
+        description: Операционная система
+      software:
+        type: object
+        description: Информация о ПО
+        properties:
+          name:
+            type: string
+            maxLength: 255
+            description: Наименование ПО
+          vendor:
+            type: string
+            maxLength: 255
+            description: Производитель ПО
+          version:
+            type: string
+            maxLength: 255
+            description: Версия ПО
+      chequePrinter:
+        type: object
+        description: Информация о чековом принтере
+        properties:
+          driver:
+            type: object
+            description: Информация о драйвере
+            properties:
+              name:
+                type: string
+                maxLength: 255
+                description: Наименование драйвера
+              version:
+                type: string
+                maxLength: 255
+                description: Версия драйвера
+          firmwareVersion:
+            type: string
+            maxLength: 255
+            description: Версия прошивки
+          fiscalDataVersion:
+            type: string
+            maxLength: 255
+            description: Версия фискальных данных
+          fiscalMemory:
+            type: object
+            description: Фискальная память
+            properties:
+              fiscalDataVersion:
+                type: string
+                maxLength: 255
+                description: Версия фискальных данных
+              fiscalValidityDate:
+                type: string
+                format: date-time
+                description: Дата окончания действия фискальной памяти
+          name:
+            type: string
+            maxLength: 255
+            description: Наименование чекового принтера
+          serial:
+            type: string
+            maxLength: 255
+            description: Серийный номер чекового принтера
+          vendor:
+            type: string
+            maxLength: 255
+            description: Производитель чекового принтера
+      paymentTerminal:
+        type: string
+        maxLength: 255
+        description: Терминал оплаты
+  state:
+    type: object
+    description: Статус точки продаж
+    properties:
+      sync:
+        type: object
+        description: Состояние синхронизации
+        properties:
+          message:
+            type: string
+            maxLength: 255
+            description: Сообщение
+          lastAttempMoment:
+            type: string
+            format: date-time
+            description: Момент последней попытки
+      lastCheckMoment:
+        type: string
+        format: date-time
+        description: Момент последней проверки
+      fiscalMemory:
+        type: object
+        description: Статус фискальной памяти
+        properties:
+          error:
+            type: object
+            description: Ошибка фискальной памяти
+            properties:
+              code:
+                type: string
+                maxLength: 255
+                description: Код ошибки
+              message:
+                type: string
+                maxLength: 255
+                description: Сообщение ошибки
+          notSendDocCount:
+            type: integer
+            description: Количество неотправленных документов
+          notSendFirstDocMoment:
+            type: string
+            format: date-time
+            description: Момент первого неотправленного документа
+      paymentTerminal:
+        type: object
+        description: Информация о платежном терминале
+        properties:
+          acquiringType:
+            type: string
+            maxLength: 255
+            description: Тип эквайринга
+  fiscalType:
+    type: string
+    description: Фискальный режим работы Точки продаж
+    enum: [ STANDARD, MASTER, CLOUD ]
+  defaultTaxSystem:
+    type: string
+    description: Система налогообложения по умолчанию
+    enum: [ GENERAL_TAX_SYSTEM, SIMPLIFIED_TAX_SYSTEM_INCOME, SIMPLIFIED_TAX_SYSTEM_INCOME_OUTCOME, UNIFIED_AGRICULTURAL_TAX, PRESUMPTIVE_TAX_SYSTEM, PATENT_BASED ]
+  orderTaxSystem:
+    type: string
+    description: Система налогообложения заказов
+    enum: [ GENERAL_TAX_SYSTEM, SIMPLIFIED_TAX_SYSTEM_INCOME, SIMPLIFIED_TAX_SYSTEM_INCOME_OUTCOME, UNIFIED_AGRICULTURAL_TAX, PRESUMPTIVE_TAX_SYSTEM, PATENT_BASED ]
+  minionToMasterType:
+    type: string
+    description: Ограничение связи касс-слуг с кассами-мастерами
+    enum: [ ANY, SAME_GROUP, CHOSEN ]
+  tobaccoMrcControlType:
+    type: string
+    description: Режим контроля минимальных розничных цен на табак
+    enum: [ USER_PRICE, MRC_PRICE, SAME_PRICE ]
+  markingSellingMode:
+    type: string
+    description: Режим продажи маркированных товаров
+    enum: [ CORRECT_MARKS_ONLY, WITHOUT_ERRORS, ALL ]
+  marksCheckMode:
+    type: string
+    description: Режим проверки кодов маркировки
+    enum: [ CORRECT_MARKS_ONLY, WITHOUT_ERRORS, ALL, ALL_CHECKED ]
+  priorityOfdSend:
+    type: string
+    description: Приоритетный способ отправки чека покупателю
+    enum: [ phone, email, none ]
+  allowCreateProducts:
+    type: boolean
+    description: Признак разрешения создания новых товаров при продаже
+  allowCustomPrice:
+    type: boolean
+    readOnly: true
+    description: Признак разрешения устанавливать произвольные цены
+  allowDeleteReceiptPositions:
+    type: boolean
+    description: Признак разрешения удалять позиции из чека
+  allowSellTobaccoWithoutMRC:
+    type: boolean
+    description: Признак разрешения продажи табачной продукции без проверки МРЦ
+  authTokenAttached:
+    type: boolean
+    readOnly: true
+    description: Признак подключения авторизационного токена
+  controlCashierChoice:
+    type: boolean
+    description: Признак контроля выбора кассира
+  controlShippingStock:
+    type: boolean
+    description: Признак контроля отгрузки только из наличия
+  createCashInOnRetailShiftClosing:
+    type: boolean
+    description: Признак создания операции внесения при закрытии смены
+  createPaymentInOnRetailShiftClosing:
+    type: boolean
+    description: Признак создания операции прихода денег при закрытии смены
+  createAgentsTags:
+    type: array
+    items:
+      type: string
+    description: Теги, создаваемые у агентов
+  createOrderWithState:
+    properties:
+      meta:
+        $ref: '../common/meta.yaml'
+    description: Статус, в котором создаются заказы покупателей
+  customerOrderStates:
+    type: array
+    items:
+      properties:
+        meta:
+          $ref: '../common/meta.yaml'
+    description: Возможные состояния заказов покупателей
+  discountEnable:
+    type: boolean
+    description: Признак включения скидок
+  discountMaxPercent:
+    type: integer
+    description: Максимально допустимый процент скидки
+  enableReturnsWithNoReason:
+    type: boolean
+    description: Признак разрешения возвратов без причины
+  issueOrders:
+    type: boolean
+    description: Признак оформления заказов покупателей
+  lastOperationNames:
+    type: array
+    items:
+      type: object
+      description: Последние операции
+      properties:
+        entity:
+          type: string
+          maxLength: 255
+          description: Ключевое слово, обозначающее тип последней операции
+        name:
+          type: string
+          maxLength: 255
+          description: Наименование (номер) последней операции
+    description: Последние операции
+  masterRetailStores:
+    type: array
+    items: 
+      properties:
+        meta:
+          $ref: '../common/meta.yaml'
+    description: Список касс-мастеров
+  ofdEnabled:
+    type: boolean
+    readOnly: true
+    description: Признак использования ОФД
+  onlyInStock:
+    type: boolean
+    description: Признак продажи только из наличия
+  orderToState:
+    properties:
+      meta:
+        $ref: '../common/meta.yaml'
+    description: Метаданные статуса заказа покупателя
+  printAlways:
+    type: boolean
+    description: Признак обязательной печати чеков
+  productFolders:
+    type: object
+    description: Список групп товаров
+    properties:
+          meta:
+            $ref: '../common/metaList.yaml'
+          rows:
+            type: array
+            items:
+              $ref: '../../../openapi.yaml#/components/schemas/ProductFolder'
+  receiptTemplate:
+    properties:
+      meta:
+        $ref: '../common/meta.yaml'
+    description: Шаблон чека
+  requiredFio:
+    type: boolean
+    description: Признак обязательности ФИО покупателя
+  requiredPhone:
+    type: boolean
+    description: Признак обязательности телефона покупателя
+  requiredEmail:
+    type: boolean
+    description: Признак обязательности email покупателя
+  requiredBirthdate:
+    type: boolean
+    description: Признак обязательности даты рождения покупателя
+  requiredSex:
+    type: boolean
+    description: Признак обязательности пола покупателя
+  requiredDiscountCardNumber:
+    type: boolean
+    description: Признак обязательности номера дисконтной карты покупателя
+  reservePrepaidGoods:
+    type: boolean
+    description: Признак резервирования предоплаченных товаров
+  returnFromClosedShiftEnabled:
+    type: boolean
+    description: Признак разрешения возвратов из закрытой смены
+  sellReserves:
+    type: boolean
+    description: Признак разрешения продажи резервов
+  sendMarksForCheck:
+    type: boolean
+    description: Признак отправки кодов маркировки на проверку
+  sendMarksToChestnyZnakOnCloud:
+    type: boolean
+    description: Признак отправки кодов маркировки в Честный ЗНАК в облаке
+  syncAgents:
+    type: boolean
+    description: Признак синхронизации агентов
+  showBeerOnTap:
+    type: boolean
+    description: Признак отображения разливного пива
+  qrPayEnabled:
+    type: boolean
+    description: Признак включения оплаты через QR
+  bankPercent:
+    type: number
+    format: double
+    description: Банковский процент
+  qrBankPercent:
+    type: number
+    format: double
+    description: Банковский процент при оплате по QR
+  demandPrefix:
+    type: string
+    maxLength: 255
+    description: Префикс номера заказа
+  qrTerminalId:
+    type: string
+    maxLength: 255
+    description: Идентификатор QR-терминала
+  idQR:
+    type: string
+    maxLength: 255
+    description: Идентификатор QR
+  acquire:
+    properties:
+      meta:
+        $ref: '../common/meta.yaml'
+    description: Эквайер
+  cashiers:
+    properties:
+      meta:
+        $ref: '../common/metaList.yaml'
+    description: Кассиры, работающие на точке продаж
+  qrAcquire:
+    properties:
+      meta:
+        $ref: '../common/meta.yaml'
+    description: Эквайер для QR-платежей

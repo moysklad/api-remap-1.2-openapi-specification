@@ -1,0 +1,31 @@
+type: object
+allOf:
+  - $ref: '../../../openapi.yaml#/components/schemas/DiscountBase'
+properties:
+  assortment:
+    type: array
+    description: Товары со скидкой
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/Product'
+  productFolders:
+    type: array
+    description: Группы товаров со скидкой
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/ProductFolder'
+  allProducts:
+    type: boolean
+    description: Для всех ли товаров скидка
+  level:
+    type: array
+    description: Процент скидки при определенной сумме продаж
+    items:
+      type: object
+      properties:
+        amount:
+          type: integer
+          format: int32
+          description: Сумма накоплений в копейках
+        discount:
+          type: number
+          format: float
+          description: Процент скидки, соответствующий данной сумме

@@ -1,0 +1,14 @@
+# Без allOf на MinimumStockAbstract, чтобы не образовывать цикл для Schemathesis/генерации
+type: object
+required:
+  - type
+properties:
+  type:
+    type: string
+    default: WAREHOUSE_VARIED
+    enum: [WAREHOUSE_VARIED]
+    readOnly: true
+  storeBalances:
+    type: object
+    description: Неснижаемые остатки по складам
+    $ref: '../../../openapi.yaml#/components/schemas/StoreBalanceList'

@@ -1,0 +1,20 @@
+get:
+  operationId: getDefaultPriceType
+  tags:
+    - PriceTypes
+  summary: Получить тип цены по умолчанию
+  description: Запрос на получение отдельного типа цен по умолчанию
+  parameters:
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../components/schemas/dictionary/priceType.yaml'
+    '400':
+      $ref: '../../../components/responses.yaml#/BadRequest'
+    '404':
+      $ref: '../../../components/responses.yaml#/NotFound'

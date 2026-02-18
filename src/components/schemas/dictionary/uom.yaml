@@ -1,0 +1,54 @@
+type: object
+description: Единица измерения
+properties:
+  meta:
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID единицы измерения
+    readOnly: true
+    example: "12a8b923-692c-11e6-8a84-bae500000058"
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  name:
+    type: string
+    maxLength: 255
+    description: Наименование единицы измерения
+    example: "шт"
+  description:
+    type: string
+    maxLength: 4096
+    nullable: true
+    description: Описание единицы измерения
+    example: "Штука"
+  code:
+    type: string
+    maxLength: 255
+    description: Код единицы измерения
+    example: "796"
+  group:
+    description: Метаданные отдела сотрудника
+    $ref: '../../../openapi.yaml#/components/schemas/Group'
+  owner:
+    description: Метаданные владельца (Сотрудника)
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Employee'
+  updated:
+    type: string
+    format: date-time
+    description: Момент последнего обновления сущности
+    readOnly: true
+  shared:
+    type: boolean
+    description: Общий доступ
+  externalCode:
+    type: string
+    maxLength: 255
+    description: Внешний код единицы измерения
+    example: "pcs"

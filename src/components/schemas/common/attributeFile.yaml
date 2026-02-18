@@ -1,0 +1,17 @@
+type: object
+allOf:
+  - $ref: '../../../openapi.yaml#/components/schemas/AttributeBase'
+properties:
+  type:
+    type: string
+    enum: [ file ]
+  value:
+    type: string
+  download:
+    type: object
+    properties:
+      href:
+        type: string
+        format: uri
+      mediaType:
+        type: string

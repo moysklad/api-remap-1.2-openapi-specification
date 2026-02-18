@@ -1,0 +1,65 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/12a8b923-692c-11e6-8a84-bae500000057",
+    "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/metadata",
+    "type": "counterparty",
+    "mediaType": "application/json"
+  },
+  "id": "12a8b923-692c-11e6-8a84-bae500000057",
+  "accountId": "abcdef12-1234-1234-1234-123456789012",
+  "name": "ООО Юридическое лицо",
+  "code": "CP-002",
+  "externalCode": "EXT-CP-002",
+  "archived": false,
+  "created": "2024-01-10T09:00:00.000+03:00",
+  "updated": "2024-01-15T10:30:00.000+03:00",
+  "companyType": "legal",
+  "legalTitle": "Общество с ограниченной ответственностью \"Юридическое лицо\"",
+  "legalAddress": "г. Москва, ул. Примерная, д. 1",
+  "actualAddress": "г. Москва, ул. Примерная, д. 1, офис 100",
+  "inn": "7701234567",
+  "kpp": "770101001",
+  "ogrn": "1027700000001",
+  "okpo": "12345678",
+  "email": "legal@example.com",
+  "phone": "+7 (495) 123-45-67",
+  "fax": "+7 (495) 123-45-68",
+  "actualAddressFull": null,
+  "description": null,
+  "discountCardNumber": null,
+  "owner": null,
+  "bonusPoints": 0,
+  "bonusProgram": null,
+  "priceType": null,
+  "state": null,
+  "shared": true,
+  "accounts": {
+    "meta":{  
+      "href":"https://api.moysklad.ru/api/remap/1.2/entity/counterparty/b80ea81b-7058-11e6-8a84-bae500000000/accounts",
+      "type":"account",
+      "mediaType":"application/json",
+      "size":0,
+      "limit":1000,
+      "offset":0
+    },
+    "rows": []
+  },
+  "contactpersons": {
+    "rows": []
+  },
+  "notes": {
+    "rows": []
+  },
+  "files": null,
+  "tags": [],
+  "attributes": [],
+  "salesAmount": 0,
+  "group": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/group/11111111-1111-1111-1111-111111111111",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/group/metadata",
+      "type": "group",
+      "mediaType": "application/json"
+    }
+  }
+}

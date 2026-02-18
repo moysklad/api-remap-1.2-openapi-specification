@@ -1,0 +1,64 @@
+get:
+  operationId: getPriceTypes
+  tags:
+    - PriceTypes
+  summary: Получить список типов цен
+  description: Запрос всех тип цен на данной учетной записи
+  parameters:
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../../../openapi.yaml#/components/schemas/PriceType'
+    '400':
+      $ref: '../../../components/responses.yaml#/BadRequest'
+    '401':
+      $ref: '../../../components/responses.yaml#/Unauthorized'
+    '403':
+      $ref: '../../../components/responses.yaml#/Forbidden'
+    '412':
+      $ref: '../../../components/responses.yaml#/PreconditionFailed'
+
+post:
+  operationId: createPriceTypesBatch
+  tags:
+    - PriceTypes
+  summary: Создать или изменить типы цен
+  description: Создание или изменение нескольких типов цен.
+  parameters:
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            $ref: '../../../openapi.yaml#/components/schemas/PriceType'
+          minItems: 1
+  responses:
+    '200':
+      description: Типы цен созданы или изменены (элемент — сущность или объект ошибки)
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              oneOf:
+                - $ref: '../../../openapi.yaml#/components/schemas/PriceType'
+                - $ref: '../../../components/schemas/common/error.yaml'
+            minItems: 1
+    '400':
+      $ref: '../../../components/responses.yaml#/BadRequest'
+    '401':
+      $ref: '../../../components/responses.yaml#/Unauthorized'
+    '403':
+      $ref: '../../../components/responses.yaml#/Forbidden'

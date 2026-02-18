@@ -1,0 +1,45 @@
+post:
+  operationId: deleteCountriesBatch
+  tags:
+    - Countries
+  summary: Удалить страны
+  description: Массовое удаление стран по их мета-объектам.
+  parameters:
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            $ref: '../../../openapi.yaml#/components/schemas/Country'
+          minItems: 1
+          maxItems: 1000
+  responses:
+    '200':
+      description: Результат по каждому элементу (успех или объект ошибки)
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              oneOf:
+                - $ref: '../../../openapi.yaml#/components/schemas/DeleteInfo'
+                - $ref: '../../../components/schemas/common/error.yaml'
+            minItems: 1
+            maxItems: 1000
+    '400':
+      $ref: '../../../components/responses.yaml#/BatchBadRequest'
+    '401':
+      $ref: '../../../components/responses.yaml#/Unauthorized'
+    '403':
+      $ref: '../../../components/responses.yaml#/Forbidden'
+    '412':
+      $ref: '../../../components/responses.yaml#/PreconditionFailed'
+    '404':
+      $ref: '../../../components/responses.yaml#/NotFound'
+    '409':
+      $ref: '../../../components/responses.yaml#/Conflict'

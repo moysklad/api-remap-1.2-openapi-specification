@@ -1,0 +1,44 @@
+# Node.js / npm
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# nvm
+.nvmrc
+
+# IntelliJ IDEA
+.idea/
+*.iml
+out/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Coverage / test outputs
+coverage/
+.nyc_output/
+# PHP (composer + PHPUnit when running in Docker or locally)
+tests/php/vendor/
+tests/php/.phpunit.cache/
+
+# Build artifacts
+dist/
+build/
+clients/*
+.tmp/
+.cache/
+.openapi-generator/
+
+# Env files
+.env
+.env.local
+.env.*.local
+/.venv-schemathesis/
+/.schemathesis-venv/
+/.hypothesis/
