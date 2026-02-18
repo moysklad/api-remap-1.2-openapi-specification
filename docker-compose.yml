@@ -1,0 +1,54 @@
+# Локальный запуск шагов pipeline: lint, bundle, generate, smoke, golden, schemathesis
+#
+# Использование:
+#   make lint              — проверка OpenAPI спецификации
+#   make bundle            — сборка bundled спецификации
+#   make generate          — генерация SDK (LANGUAGES=php по умолчанию)
+#   make generate-php      — только PHP SDK
+#   make test-smoke        — smoke тесты (LANGUAGES=php)
+#   make test-golden       — golden тесты
+#   make schemathesis      — контрактные тесты (SCHEMATHESIS_*)
+#   make all               — lint + bundle + generate-php + test-golden + test-smoke
+#
+# Языки: make generate LANGUAGES=php,python (когда добавлены скрипты в package.json)
+#
+# Альтернатива (образ из CI, без локальной сборки):
+#   docker run --rm -v $(pwd):/workspace -w /workspace docker.infra.lognex/docker-openapitools:1.0-release make lint
+
+services:
+  sdk:
+    build: .
+    image: api-sdk-builder:local
+    working_dir: /workspace
+    volumes:
+      - .:/workspace
+      - sdk_node_modules:/workspace/node_modules
+      # Кэш Composer — чтобы при повторных запусках (test-golden-php, test-smoke-php) не качать пакеты заново
+      - sdk_composer_cache:/root/.composer
+    environment:
+      - CI=true
+      # В Docker используем публичный registry, чтобы не было UNABLE_TO_VERIFY_LEAF_SIGNATURE к Nexus
+      - USE_PUBLIC_NPM_REGISTRY=true
+      - PRISM_BASE_URL=http://localhost:4010
+      - SDK_PATH=/workspace/clients/php
+      - NPM_CONFIG_PROGRESS=true
+      - NPM_CONFIG_LOGLEVEL=info
+    stdin_open: true
+    tty: true
+    # Образ node по умолчанию передаёт аргументы в node, а не в shell. Запускаем команду через sh,
+    # чтобы выполнялся make (и любой другой бинарник) внутри контейнера с нужным Node.
+    entrypoint: ["/bin/sh", "-c", "exec \"$$@\"", "sh"]
+    command: ["make", "help"]
+    networks:
+      - default
+      - moysklad-all_default
+
+volumes:
+  sdk_node_modules:
+  sdk_composer_cache:
+
+networks:
+  moysklad-all_default:
+    external: true
+
+

@@ -85,6 +85,7 @@ properties:
   owner:
     description: Метаданные владельца (Сотрудника)
     nullable: true
+    type: object
     allOf:
       - $ref: '../../../openapi.yaml#/components/schemas/Employee'
   inn:
@@ -118,6 +119,7 @@ properties:
   image:
     description: Фотография сотрудника
     nullable: true
+    type: object
     allOf:
       - $ref: '../../../openapi.yaml#/components/schemas/Image'
   attributes:

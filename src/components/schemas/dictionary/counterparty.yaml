@@ -74,12 +74,19 @@ properties:
   actualAddressFull:
     description: Полный адрес
     nullable: true
+    type: object
     allOf:
       - $ref: '../../../openapi.yaml#/components/schemas/Address'
   legalAddress:
     type: string
     maxLength: 255
     description: Юридический адрес контрагента
+  legalAddressFull:
+    description: Полный юридический адрес контрагента
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Address'
   inn:
     type: string
     maxLength: 255
@@ -138,6 +145,11 @@ properties:
     type: string
     maxLength: 255
     description: Номер дисконтной карты контрагента
+  discounts:
+    type: array
+    description: Массив скидок контрагента
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/AgentDiscount'
   shared:
     type: boolean
     description: Общий доступ
@@ -148,6 +160,7 @@ properties:
   owner:
     description: Метаданные владельца (Сотрудника)
     nullable: true
+    type: object
     allOf:
       - $ref: '../../../openapi.yaml#/components/schemas/Employee'
   salesAmount:
@@ -159,9 +172,15 @@ properties:
     description: Бонусные баллы по активной бонусной программе
     readOnly: true
   bonusProgram:
-    $ref: '../common/meta.yaml'
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/BonusProgram'
   priceType:
-    $ref: '../common/meta.yaml'
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/PriceType'
   state:
     description: Статус Контрагента
     $ref: '../../../openapi.yaml#/components/schemas/State'

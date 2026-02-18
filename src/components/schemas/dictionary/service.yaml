@@ -70,6 +70,7 @@ properties:
   owner:
     description: Метаданные владельца (Сотрудника)
     nullable: true
+    type: object
     allOf:
       - $ref: '../../../openapi.yaml#/components/schemas/Employee'
   updated:
@@ -88,16 +89,19 @@ properties:
   uom:
     description: Метаданные единиц измерения
     nullable: true
+    type: object
     allOf:
       - $ref: '../../../openapi.yaml#/components/schemas/Uom'
   productFolder:
     description: Метаданные группы Услуги
     nullable: true
+    type: object
     allOf:
       - $ref: '../../../openapi.yaml#/components/schemas/ProductFolder'
   files:
     description: Метаданные массива Файлов
     nullable: true
+    type: object
     allOf:
       - $ref: '../../../openapi.yaml#/components/schemas/FileList'
   barcodes:

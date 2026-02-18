@@ -5,12 +5,12 @@ properties:
     type: string
     format: uuid
     description: ID позиции неснижаемого остатка
-    readonly: true
+    readOnly: true
   accountId:
     type: string
     format: uuid
     description: ID учетной записи
-    readonly: true
+    readOnly: true
   meta:
     $ref: '../common/meta.yaml'
   store:

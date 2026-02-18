@@ -19,6 +19,9 @@ info:
     - Максимум 1000 элементов в массиве
     - Обязательное использование сжатия gzip
   version: "1.0.0"
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org
 
 servers:
   - url: https://api.moysklad.ru/api/remap/1.2
@@ -131,12 +134,18 @@ components:
   schemas:
     Account:
       $ref: './components/schemas/dictionary/account.yaml'
+    AccumulationDiscount:
+      $ref: './components/schemas/dictionary/accumulationDiscount.yaml'
     Address:
       $ref: './components/schemas/dictionary/address.yaml'
+    AgentDiscount:
+      $ref: './components/schemas/dictionary/agentDiscount.yaml'
     Application:
       $ref: './components/schemas/dictionary/application.yaml'
     AttributeAbstract:
       $ref: './components/schemas/common/attributeAbstract.yaml'
+    AttributeBase:
+      $ref: './components/schemas/common/attributeBase.yaml'
     AttributeBool:
       $ref: './components/schemas/common/attributeBool.yaml'
     AttributeCustomEntity:
@@ -163,8 +172,12 @@ components:
       $ref: './components/schemas/common/attributeText.yaml'
     Barcode:
       $ref: './components/schemas/dictionary/barcode.yaml'
+    BonusProgram:
+      $ref: './components/schemas/dictionary/bonusProgram.yaml'
     DeleteInfo:
       $ref: './components/schemas/common/deleteInfo.yaml'
+    DiscountBase:
+      $ref: './components/schemas/dictionary/discountBase.yaml'
     BuyPrice:
       $ref: './components/schemas/dictionary/buyPrice.yaml'
     Cashier:
@@ -203,12 +216,12 @@ components:
       $ref: './components/schemas/dictionary/note.yaml'
     Pack:
       $ref: './components/schemas/dictionary/pack.yaml'
+    PersonalDiscount:
+      $ref: './components/schemas/dictionary/personalDiscount.yaml'
     PriceType:
       $ref: './components/schemas/dictionary/priceType.yaml'
     Product:
       $ref: './components/schemas/dictionary/product.yaml'
-    Service:
-      $ref: './components/schemas/dictionary/service.yaml'
     ProductFolder:
       $ref: './components/schemas/dictionary/productFolder.yaml'
     Region:
@@ -217,6 +230,8 @@ components:
       $ref: './components/schemas/dictionary/retailStore.yaml'
     SalePrice:
       $ref: './components/schemas/dictionary/salePrice.yaml'
+    Service:
+      $ref: './components/schemas/dictionary/service.yaml'
     State:
       $ref: './components/schemas/dictionary/state.yaml'
     Store:

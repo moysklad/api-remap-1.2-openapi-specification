@@ -1,32 +1,41 @@
-generate-php-sdk:
-  image: docker.infra.lognex/docker-openapitools:1.0-release
-  stage: generate-sdk
-  only:
-    changes:
-      - package-lock.json
-      - openapitools.json
-      - src/**/*
-      - customtemplates/**/*
-  cache:
-    key:
-      files:
-        - package-lock.json
-    paths:
-      - /root/.npm/
+# Push SDK to Remote Repositories
+# 
+# Этот файл содержит job'ы для пуша сгенерированных SDK в удалённые репозитории.
+# Job'ы выполняются только если PUSH_TO_REMOTE=true
+#
+# Требуемые переменные:
+# - GIT_PASSWORD: токен для доступа к GitHub
+# - PUSH_TO_REMOTE: должен быть "true" для выполнения пуша
+
+# Базовый шаблон для пуша SDK
+.push-sdk-base:
+  image: docker.infra.lognex/docker-openapitools:1.1-release
+  stage: push-sdk
+  rules:
+    - if: '$PUSH_TO_REMOTE == "true" && $CI_COMMIT_BRANCH != "master" && $CI_COMMIT_BRANCH != "release"'
+      when: on_success
+    - when: never
   before_script:
     - git config --global user.name "sdk-bot"
     - git config --global user.email "sdk-bot@users.noreply.github.com"
+
+# Push PHP SDK to GitHub
+push-sdk-php:
+  extends: .push-sdk-base
+  needs:
+    - job: generate-sdk-php
+      artifacts: true
+    - job: sdk-golden-php
+    - job: sdk-prism-php
+  rules:
+    - if: '$PUSH_TO_REMOTE == "true" && $CI_COMMIT_BRANCH != "master" && $CI_COMMIT_BRANCH != "release" && ($SDK_LANGUAGES == "" || $SDK_LANGUAGES =~ /php/)'
+      when: on_success
+    - when: never
   variables:
     SDK_BRANCH: $CI_COMMIT_REF_NAME
     SDK_REPO_URL: github.com/moysklad/php-remap-1.2-sdk
     SDK_REPO_SLUG: moysklad/php-remap-1.2-sdk
   script:
-    - npm ci
-    - set +e #Валидация не доделана, отключаем
-    - npm run validate
-    - echo "Validation may have failed, but continuing..."
-    - set -e
-    - npm run generate-php
     - |
       if [ ! -d "clients/php" ]; then
         echo "Directory clients/php not found. Nothing to sync."
@@ -50,3 +59,103 @@ generate-php-sdk:
 
     - export GH_TOKEN="${GIT_PASSWORD}"
     - gh pr create --repo "$SDK_REPO_SLUG" --base "master" --head "$SDK_BRANCH" --title "$SDK_BRANCH Auto-generated PHP SDK from OpenAPI specification" --body "This PR updates the auto-generated PHP SDK from the OpenAPI spec." --fill --web=false || true
+
+# Push Python SDK to GitHub (заглушка)
+#push-sdk-python:
+#  extends: .push-sdk-base
+#  needs:
+#    - job: generate-sdk-python
+#      artifacts: true
+#      optional: true
+#    - job: sdk-golden-python
+#      optional: true
+#    - job: sdk-prism-python
+#      optional: true
+#  rules:
+#    - if: '$PUSH_TO_REMOTE == "true" && $CI_COMMIT_BRANCH != "master" && $CI_COMMIT_BRANCH != "release" && $SDK_LANGUAGES =~ /python/'
+#      when: on_success
+#    - when: never
+#  variables:
+#    SDK_BRANCH: $CI_COMMIT_REF_NAME
+#    # TODO: Указать реальный репозиторий для Python SDK
+#    SDK_REPO_URL: github.com/moysklad/python-remap-1.2-sdk
+#    SDK_REPO_SLUG: moysklad/python-remap-1.2-sdk
+#  script:
+#    - |
+#      if [ ! -d "clients/python" ]; then
+#        echo "Directory clients/python not found. Nothing to sync."
+#        exit 0
+#      fi
+#    - echo "Python SDK push not configured yet"
+#    - echo "To enable, configure SDK_REPO_URL and SDK_REPO_SLUG variables"
+    # Uncomment when ready:
+    # - git clone --depth=1 --filter=blob:none --single-branch --branch master "https://$GIT_PASSWORD@${SDK_REPO_URL}.git" sdk-repo
+    # - cd sdk-repo
+    # - git checkout -B "$SDK_BRANCH"
+    # - rsync -a --delete --exclude ".git" ../clients/python/ ./
+    # - git add -A
+    # - |
+    #   if git diff --staged --quiet; then
+    #     echo "No changes to commit in SDK repository. Skipping push."
+    #     exit 0
+    #   fi
+    # - git commit -m "$SDK_BRANCH Auto-generated Python SDK from OpenAPI specification"
+    # - git push -u origin "$SDK_BRANCH" --force
+
+# Push Java SDK to GitHub (заглушка)
+#push-sdk-java:
+#  extends: .push-sdk-base
+#  needs:
+#    - job: generate-sdk-java
+#      artifacts: true
+#      optional: true
+#    - job: sdk-golden-java
+#      optional: true
+#    - job: sdk-prism-java
+#      optional: true
+#  rules:
+#    - if: '$PUSH_TO_REMOTE == "true" && $CI_COMMIT_BRANCH != "master" && $CI_COMMIT_BRANCH != "release" && $SDK_LANGUAGES =~ /java/'
+#      when: on_success
+#    - when: never
+#  variables:
+#    SDK_BRANCH: $CI_COMMIT_REF_NAME
+#    # TODO: Указать реальный репозиторий для Java SDK
+#    SDK_REPO_URL: github.com/moysklad/java-remap-1.2-sdk
+#    SDK_REPO_SLUG: moysklad/java-remap-1.2-sdk
+#  script:
+#    - |
+#      if [ ! -d "clients/java" ]; then
+#        echo "Directory clients/java not found. Nothing to sync."
+#        exit 0
+#      fi
+#    - echo "Java SDK push not configured yet"
+#    - echo "To enable, configure SDK_REPO_URL and SDK_REPO_SLUG variables"
+
+# Push JavaScript SDK to GitHub (заглушка)
+#push-sdk-javascript:
+#  extends: .push-sdk-base
+#  needs:
+#    - job: generate-sdk-javascript
+#      artifacts: true
+#      optional: true
+#    - job: sdk-golden-javascript
+#      optional: true
+#    - job: sdk-prism-javascript
+#      optional: true
+#  rules:
+#    - if: '$PUSH_TO_REMOTE == "true" && $CI_COMMIT_BRANCH != "master" && $CI_COMMIT_BRANCH != "release" && $SDK_LANGUAGES =~ /javascript/'
+#      when: on_success
+#    - when: never
+#  variables:
+#    SDK_BRANCH: $CI_COMMIT_REF_NAME
+#    # TODO: Указать реальный репозиторий для JavaScript SDK
+#    SDK_REPO_URL: github.com/moysklad/javascript-remap-1.2-sdk
+#    SDK_REPO_SLUG: moysklad/javascript-remap-1.2-sdk
+#  script:
+#    - |
+#      if [ ! -d "clients/javascript" ]; then
+#        echo "Directory clients/javascript not found. Nothing to sync."
+#        exit 0
+#      fi
+#    - echo "JavaScript SDK push not configured yet"
+#    - echo "To enable, configure SDK_REPO_URL and SDK_REPO_SLUG variables"

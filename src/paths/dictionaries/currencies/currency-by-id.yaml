@@ -1,4 +1,5 @@
 get:
+  operationId: getCurrencyById
   tags:
     - Currencies
   summary: Получить валюту по ID
@@ -15,10 +16,13 @@ get:
         application/json:
           schema:
             $ref: '../../../components/schemas/dictionary/currency.yaml'
+    '400':
+      $ref: '../../../components/responses.yaml#/BadRequest'
     '404':
       $ref: '../../../components/responses.yaml#/NotFound'
 
 put:
+  operationId: updateCurrency
   tags:
     - Currencies
   summary: Обновить валюту
@@ -28,6 +32,7 @@ put:
     - $ref: '../../../components/parameters.yaml#/expand'
     - $ref: '../../../components/headers.yaml#/AcceptHeader'
     - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
   requestBody:
     required: true
     content:
@@ -47,6 +52,7 @@ put:
       $ref: '../../../components/responses.yaml#/NotFound'
 
 delete:
+  operationId: deleteCurrency
   tags:
     - Currencies
   summary: Удалить валюту
@@ -58,7 +64,11 @@ delete:
   responses:
     '200':
       description: Валюта успешно удалена
+    '400':
+      $ref: '../../../components/responses.yaml#/BadRequest'
     '404':
       $ref: '../../../components/responses.yaml#/NotFound'
     '409':
       $ref: '../../../components/responses.yaml#/Conflict'
+    '412':
+      $ref: '../../../components/responses.yaml#/PreconditionFailed'

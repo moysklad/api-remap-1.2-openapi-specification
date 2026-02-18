@@ -1,4 +1,5 @@
 get:
+  operationId: getMetadata
   tags:
     - Products
   summary: Получить метаданные товаров

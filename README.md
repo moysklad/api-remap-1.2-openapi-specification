@@ -99,6 +99,44 @@ npm run serve-docs
 npm run generate-php
 ```
 
+## Локальный запуск через Make
+
+Все шаги пайплайна (lint, bundle, генерация SDK, golden-, smoke-тесты, а также schemathesis тесты) можно запускать локально через Make — **напрямую** или **в Docker**.
+
+### Через Docker (рекомендуется)
+
+Требуется только Docker и Docker Compose. Остальное уже есть в образе.
+
+```bash
+docker compose run --rm sdk make help          # список целей
+docker compose run --rm sdk make lint         # проверка OpenAPI
+docker compose run --rm sdk make bundle       # сборка dist/openapi.yaml
+docker compose run --rm sdk make generate-php # генерация PHP SDK
+docker compose run --rm sdk make test-golden-php  # golden-тесты
+docker compose run --rm sdk make test-smoke-php  # smoke-тесты (нужен Prism на :4010)
+docker compose run --rm -e SCHEMATHESIS_HOST=host -e SCHEMATHESIS_LOGIN=login -e SCHEMATHESIS_PASSWORD=pass sdk make schemathesis # schemathesis-тесты на реальном окружении
+docker compose run --rm sdk make all          # lint + bundle + generate-php + test-golden + test-smoke
+```
+
+При повторных запусках зависимости npm не перекачиваются (пропуск `npm ci`, если `package-lock.json` не менялся). Принудительная переустановка:  
+`docker compose run --rm -e NPM_CI_FORCE=1 sdk make lint`
+
+### Локально (без Docker)
+
+На машине должны быть установлены: **Node.js**, **npm**, **PHP ≥8.1** с расширениями **dom**, **json**, **mbstring**, **curl**, **Composer**.
+
+```bash
+make help
+make lint
+make bundle
+make generate-php
+make test-golden-php   # из корня репо; в tests/php нужен composer install
+make test-smoke-php    # нужен запущенный Prism (например на http://localhost:4010)
+make schemathesis # в скрипте нужно также задать переменные SCHEMATHESIS_HOST, SCHEMATHESIS_LOGIN, SCHEMATHESIS_PASSWORD
+```
+
+Скрипты в `scripts/` определяют корень репозитория по своему пути, поэтому их можно вызывать из любой директории (и из Docker, и локально).
+
 ## Добавление новых сущностей
 
 ### 1. Создание схем

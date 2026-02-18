@@ -1,0 +1,5 @@
+lint-openapi:
+  stage: verify
+  image: redocly/cli
+  script:
+    - redocly lint src/openapi.yaml

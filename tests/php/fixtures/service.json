@@ -1,0 +1,194 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/service/66666666-6666-6666-6666-666666666666",
+    "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/service/metadata",
+    "type": "service",
+    "mediaType": "application/json"
+  },
+  "id": "66666666-6666-6666-6666-666666666666",
+  "accountId": "abcdef12-1234-1234-1234-123456789012",
+  "name": "Услуга доставки",
+  "code": "SRV-001",
+  "externalCode": "EXT-SRV-001",
+  "archived": false,
+  "description": "Услуга курьерской доставки по городу",
+  "vat": 20,
+  "vatEnabled": true,
+  "useParentVat": false,
+  "effectiveVat": 20,
+  "effectiveVatEnabled": true,
+  "discountProhibited": false,
+  "shared": true,
+  "paymentItemType": "SERVICE",
+  "taxSystem": "GENERAL_TAX_SYSTEM",
+  "pathName": "Услуги",
+  "group": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/group/11111111-1111-1111-1111-111111111111",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/group/metadata",
+      "type": "group",
+      "mediaType": "application/json"
+    }
+  },
+  "owner": {
+    "meta": {
+      "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/employee/b2c670fa-01b5-11f1-0a81-072700000055",
+      "metadataHref": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/employee/metadata",
+      "type": "employee",
+      "mediaType": "application/json",
+      "uuidHref": "https://online-api-2.testms-test.lognex.ru/app/#employee/edit?id=b2c670fa-01b5-11f1-0a81-072700000055"
+    }
+  },
+  "buyPrice": {
+    "value": 50000,
+    "currency": {
+      "meta": {
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/currency/22222222-2222-2222-2222-222222222222",
+        "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/currency/metadata",
+        "type": "currency",
+        "mediaType": "application/json"
+      }
+    }
+  },
+  "salePrices": [
+    {
+      "value": 100000,
+      "currency": {
+        "meta": {
+          "href": "https://api.moysklad.ru/api/remap/1.2/entity/currency/22222222-2222-2222-2222-222222222222",
+          "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/currency/metadata",
+          "type": "currency",
+          "mediaType": "application/json"
+        }
+      },
+      "priceType": {
+        "meta": {
+          "href": "https://api.moysklad.ru/api/remap/1.2/context/companysettings/pricetype/33333333-3333-3333-3333-333333333333",
+          "type": "pricetype",
+          "mediaType": "application/json"
+        },
+        "id": "33333333-3333-3333-3333-333333333333",
+        "name": "Цена продажи",
+        "externalCode": "default"
+      }
+    }
+  ],
+  "uom": {
+    "meta": {
+      "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/uom/89f7fa51-2271-4b87-baf8-c3fc2a3f5119",
+      "metadataHref": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/uom/metadata",
+      "type": "uom",
+      "mediaType": "application/json"
+    }
+  },
+  "productFolder": {
+    "meta": {
+      "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/productfolder/24fda66a-027a-11f1-0a81-07270000019c",
+      "metadataHref": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/productfolder/metadata",
+      "type": "productfolder",
+      "mediaType": "application/json",
+      "uuidHref": "https://online-api-2.testms-test.lognex.ru/app/#good/edit?id=24fda66a-027a-11f1-0a81-07270000019c"
+    }
+  },
+  "files": {
+    "meta": {
+      "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/counterparty/b3922fc3-01b5-11f1-0a81-0727000000bf/files",
+      "type": "files",
+      "mediaType": "application/json",
+      "size": 0,
+      "limit": 1000,
+      "offset": 0
+    },
+    "rows": [
+      {
+        "meta": {
+          "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/counterparty/b3922fc3-01b5-11f1-0a81-0727000000bf/files/678498fb-05ca-40d1-8460-fecb7ff3d29f",
+          "type": "files",
+          "mediaType": "application/json",
+          "downloadHref": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/download/678498fb-05ca-40d1-8460-fecb7ff3d29f"
+        },
+        "title": "cursor_icon",
+        "filename": "cursor_icon.png",
+        "size": 2444,
+        "created": "2026-02-05 15:10:02.306",
+        "createdBy": {
+          "meta": {
+            "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/employee/b2c670fa-01b5-11f1-0a81-072700000055",
+            "metadataHref": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/employee/metadata",
+            "type": "employee",
+            "mediaType": "application/json",
+            "uuidHref": "https://online-api-2.testms-test.lognex.ru/app/#employee/edit?id=b2c670fa-01b5-11f1-0a81-072700000055"
+          }
+        },
+        "miniature": {
+          "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/download/678498fb-05ca-40d1-8460-fecb7ff3d29f?miniature=true",
+          "type": "files",
+          "mediaType": "image/png",
+          "downloadHref": "https://miniature-test-v3.moysklad.ru/miniature-test/miniature/b2040544-01b5-11f1-0a81-181d00000002/documentminiature/6fb0df91-b057-4130-8ab0-8662abfb5d09"
+        },
+        "tiny": {
+          "href": "https://static-test-v3.moysklad.ru/static-test/static/tinyimage/b2040544-01b5-11f1-0a81-181d00000002/tinyimage/336b889d-0546-462c-ab69-9d11a5b6c26b/t.png",
+          "type": "files",
+          "mediaType": "image/png"
+        }
+      }
+    ]
+  },
+  "barcodes": [
+    {
+      "ean13": "4600000000001"
+    },
+    {
+      "code128": "CODE128-001"
+    }
+  ],
+  "attributes":[
+    {
+      "meta":{
+        "href":"https://api.moysklad.ru/api/remap/1.2/entity/counterparty/metadata/attributes/0d129ff5-2c8c-11e6-8a84-bae5000000f3",
+        "type":"attributemetadata",
+        "mediaType":"application/json"
+      },
+      "id":"0d129ff5-2c8c-11e6-8a84-bae5000000f3",
+      "name":"AttributeName1",
+      "type":"double",
+      "value":0.75
+    },
+    {
+      "meta":{
+        "href":"https://api.moysklad.ru/api/remap/1.2/entity/counterparty/metadata/attributes/0d12a9a5-2c8c-11e6-8a84-bae5000000f4",
+        "type":"attributemetadata",
+        "mediaType":"application/json"
+      },
+      "id":"0d12a9a5-2c8c-11e6-8a84-bae5000000f4",
+      "name":"AttributeName2",
+      "type":"time",
+      "value":"2016-06-07 12:52:33"
+    },
+    {
+      "meta":{
+        "href":"https://api.moysklad.ru/api/remap/1.2/entity/counterparty/metadata/attributes/0d12b1e7-2c8c-11e6-8a84-bae5000000f5",
+        "type":"attributemetadata",
+        "mediaType":"application/json"
+      },
+      "id":"0d12b1e7-2c8c-11e6-8a84-bae5000000f5",
+      "name":"AttributeName3",
+      "type":"boolean",
+      "value":false
+    }
+  ],
+  "minPrice": {
+    "value": 1000.0,
+    "currency": {
+      "meta": {
+        "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/currency/b31787dd-01b5-11f1-0a81-0727000000a9",
+        "metadataHref": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/currency/metadata",
+        "type": "currency",
+        "mediaType": "application/json",
+        "uuidHref": "https://online-api-2.testms-test.lognex.ru/app/#currency/edit?id=b31787dd-01b5-11f1-0a81-0727000000a9"
+      }
+    }
+  },
+  "syncId": "66666666-6666-6666-6666-666666666666",
+  "updated": "2024-01-15T10:30:00.000+03:00"
+}
