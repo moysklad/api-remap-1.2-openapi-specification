@@ -73,7 +73,7 @@ include:
   # Старый Java SDK пайплайн (для обратной совместимости)
   - local: 'gitlab/.gitlab-ci-java-sdk.yml'
     rules:
-      - if: '$SPEC_SDK_GENERATION != "true" && $CI_PIPELINE_SOURCE != "push" && $CI_PIPELINE_SOURCE == "web"&& $USE_OLD_SDK = "true'
+      - if: '$SPEC_SDK_GENERATION != "true" && $CI_PIPELINE_SOURCE != "push" && $CI_PIPELINE_SOURCE == "web"&& $USE_OLD_SDK == "true"'
 
   # Старый PHP SDK пайплайн через openapi (для обратной совместимости при SPEC_SDK_GENERATION=true)
   - local: 'gitlab/.gitlab-ci-spec-gen.yml'
