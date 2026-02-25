@@ -111,6 +111,8 @@ paths:
     $ref: './paths/dictionaries/counterparties/counterparties-delete.yaml'
   /entity/counterparty/batch:
     $ref: './paths/dictionaries/counterparties/counterparties-batch.yaml'
+  /entity/counterparty/metadata:
+    $ref: './paths/dictionaries/counterparties/counterparty-metadata.yaml'
   #
   # Services
   /entity/service:
@@ -242,6 +244,8 @@ components:
       $ref: './components/schemas/dictionary/storeBalanceList.yaml'
     Uom:
       $ref: './components/schemas/dictionary/uom.yaml'
+    CounterpartyMetadata:
+      $ref: './components/schemas/dictionary/counterpartyMetadata.yaml'
 
   securitySchemes:
     basicAuth:
