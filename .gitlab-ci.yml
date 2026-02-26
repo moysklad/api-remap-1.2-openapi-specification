@@ -26,7 +26,7 @@
 #    - sdk-prism-*: smoke тесты
 #    - mirror-to-github: зеркалирование в GitHub
 #
-# 4. Старый Java SDK пайплайн (SPEC_SDK_GENERATION != "true"):
+# 4. Старый Java SDK пайплайн ($USE_OLD_SDK == "true"'):
 #    - Сохранён для обратной совместимости
 #
 # ПЕРЕМЕННЫЕ:
