@@ -78,23 +78,23 @@ include:
   # Старый PHP SDK пайплайн через openapi (для обратной совместимости при SPEC_SDK_GENERATION=true)
   - local: 'gitlab/.gitlab-ci-spec-gen.yml'
     rules:
-      - if: '$SPEC_SDK_GENERATION == "true" && $CI_PIPELINE_SOURCE != "push" && $CI_PIPELINE_SOURCE != "web"  && $USE_OLD_SDK != "true"'
+      - if: '$SPEC_SDK_GENERATION == "true" && $CI_PIPELINE_SOURCE != "push" && $CI_PIPELINE_SOURCE != "web"'
 
   # SDK Validation - при push в любую ветку
   - local: 'gitlab/.gitlab-ci-sdk-validate.yml'
     rules:
       - if: '$CI_PIPELINE_SOURCE == "push"'
-      - if: '$CI_PIPELINE_SOURCE == "web" && $CI_COMMIT_BRANCH != "master" && $CI_COMMIT_BRANCH != "release" && $CI_COMMIT_TAG == null  && $USE_OLD_SDK != "true"'
+      - if: '$CI_PIPELINE_SOURCE == "web" && $CI_COMMIT_BRANCH != "master" && $CI_COMMIT_BRANCH != "release" && $CI_COMMIT_TAG == null'
 
   # SDK Push to Remote - при ручном запуске с PUSH_TO_REMOTE=true
   - local: 'gitlab/.gitlab-ci-sdk-php-gen.yml'
     rules:
-      - if: '$CI_PIPELINE_SOURCE == "web" && $PUSH_TO_REMOTE == "true" && $CI_COMMIT_BRANCH != "master" && $CI_COMMIT_BRANCH != "release" && $CI_COMMIT_TAG == null  && $USE_OLD_SDK != "true"'
+      - if: '$CI_PIPELINE_SOURCE == "web" && $PUSH_TO_REMOTE == "true" && $CI_COMMIT_BRANCH != "master" && $CI_COMMIT_BRANCH != "release" && $CI_COMMIT_TAG == null'
 
   # GitHub Mirror - при merge в master
   - local: 'gitlab/.gitlab-ci-github-mirror.yml'
     rules:
-      - if: '$CI_COMMIT_REF_NAME == "master" && $CI_PIPELINE_SOURCE == "push" && $USE_OLD_SDK != "true"'
+      - if: '$CI_COMMIT_REF_NAME == "master" && $CI_PIPELINE_SOURCE == "push"'
 
 stages:
   # Стадии для старого Java SDK пайплайна (сохранены для обратной совместимости)
