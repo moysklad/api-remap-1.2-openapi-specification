@@ -10,7 +10,6 @@ properties:
     description: Наименование дополнительного поля
   type:
     type: string
-    enum: [string, long, time, double, boolean, text, link, file, customentity]
     description: Тип дополнительного поля
   required:
     type: boolean

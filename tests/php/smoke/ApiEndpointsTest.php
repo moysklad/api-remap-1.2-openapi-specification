@@ -187,6 +187,26 @@ class ApiEndpointsTest extends TestCase
         $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
     }
 
+    /**
+     * Проверяет доступность endpoint'а получения метаданных контрагентов.
+     * GET /entity/counterparty/metadata
+     */
+    public function testGetCounterpartyMetadata(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/counterparty/metadata');
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * Проверяет доступность endpoint'а получения метаданных контрагентов с expand.
+     * GET /entity/counterparty/metadata?expand=attributes
+     */
+    public function testGetCounterpartyMetadataWithExpand(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/counterparty/metadata?expand=attributes');
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
     // ==================== CURRENCIES ====================
 
     /**
