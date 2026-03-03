@@ -42,7 +42,7 @@ properties:
     description: Внешний код Точки продаж
   updated:
     type: string
-    format: date-time
+    #    format: date-time  # API использует формат: YYYY-MM-DD HH:MM:SS.mmm
     readOnly: true
     description: Момент последнего обновления Точки продаж
   meta:
@@ -131,7 +131,7 @@ properties:
                 description: Версия фискальных данных
               fiscalValidityDate:
                 type: string
-                format: date-time
+                #    format: date-time  # API использует формат: YYYY-MM-DD HH:MM:SS.mmm
                 description: Дата окончания действия фискальной памяти
           name:
             type: string
@@ -163,11 +163,11 @@ properties:
             description: Сообщение
           lastAttempMoment:
             type: string
-            format: date-time
+            #    format: date-time  # API использует формат: YYYY-MM-DD HH:MM:SS.mmm
             description: Момент последней попытки
       lastCheckMoment:
         type: string
-        format: date-time
+        #    format: date-time  # API использует формат: YYYY-MM-DD HH:MM:SS.mmm
         description: Момент последней проверки
       fiscalMemory:
         type: object
@@ -190,7 +190,7 @@ properties:
             description: Количество неотправленных документов
           notSendFirstDocMoment:
             type: string
-            format: date-time
+            #    format: date-time  # API использует формат: YYYY-MM-DD HH:MM:SS.mmm
             description: Момент первого неотправленного документа
       paymentTerminal:
         type: object

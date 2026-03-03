@@ -39,4 +39,8 @@ post:
     '403':
       $ref: '../../../components/responses.yaml#/Forbidden'
     '412':
-      $ref: '../../../components/responses.yaml#/PreconditionFailed'
+      $ref: '../../../components/responses.yaml#/BatchPreconditionFailed'
+    '413':
+      $ref: '../../../components/responses.yaml#/PayloadTooLarge'
+    '415':
+      $ref: '../../../components/responses.yaml#/UnsupportedMediaType'

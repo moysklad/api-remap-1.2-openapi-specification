@@ -1,5 +1,14 @@
 # Schemathesis contract tests - выполняются только при ручном запуске (web)
 # Требуют переменные: SCHEMATHESIS_HOST, SCHEMATHESIS_LOGIN, SCHEMATHESIS_PASSWORD
+#
+# Режимы тестирования (SCHEMATHESIS_PHASES):
+# - examples: базовые тесты с примерами из спецификации (по умолчанию)
+# - coverage: расширенное покрытие всех комбинаций параметров
+# - fuzzing: генерация случайных данных для поиска уязвимостей
+# - stateful: тесты с изменением состояния
+#
+# По умолчанию: examples,coverage
+
 sdk-contract:
   stage: test
   image: python:3.11
@@ -33,14 +42,25 @@ sdk-contract:
         */api/remap/1.2/) SCHEMATHESIS_BASE_URL="${SCHEMATHESIS_HOST%/}" ;;
         *) SCHEMATHESIS_BASE_URL="${SCHEMATHESIS_HOST%/}/api/remap/1.2" ;;
       esac
-      echo "Using base URL: $SCHEMATHESIS_BASE_URL"
+      
+      # Режимы тестирования (по умолчанию: examples,coverage)
+      SCHEMATHESIS_PHASES="${SCHEMATHESIS_PHASES:-examples,coverage}"
+      SCHEMATHESIS_MAX_EXAMPLES="${SCHEMATHESIS_MAX_EXAMPLES:-50}"
+      
+      echo "==> Running Schemathesis tests"
+      echo "    Base URL: $SCHEMATHESIS_BASE_URL"
+      echo "    Phases: $SCHEMATHESIS_PHASES"
+      echo "    Max examples: $SCHEMATHESIS_MAX_EXAMPLES"
+      
       AUTH_HEADER=$(echo -n "${SCHEMATHESIS_LOGIN}:${SCHEMATHESIS_PASSWORD}" | base64)
+      
       # Исключаем positive_data_acceptance: API может вернуть 400/412 при валидной по схеме дате (бизнес-правила).
-      # Только фаза examples. Fuzzing/stateful генерируют [{}] и т.п., API возвращает 412
-      # и формат ответа (массив ошибок), из-за чего падают Response violates schema и Undocumented HTTP status code.
+      # Коды 400/412 документированы в спецификации
+      
       schemathesis run dist/openapi.yaml \
         --url "$SCHEMATHESIS_BASE_URL" \
         -H "Authorization: Basic $AUTH_HEADER" \
-        --max-examples=50 \
-        --phases examples \
-        --exclude-checks positive_data_acceptance
+        -H 'Accept-Encoding: gzip, deflate, br' \
+        --max-examples "$SCHEMATHESIS_MAX_EXAMPLES" \
+        --phases "$SCHEMATHESIS_PHASES" \
+        --exclude-checks "$EXCLUDE_CHECKS"

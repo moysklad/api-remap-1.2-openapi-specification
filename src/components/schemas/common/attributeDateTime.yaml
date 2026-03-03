@@ -7,4 +7,4 @@ properties:
     enum: [time]
   value:
     type: string
-    format: date-time
+    #    format: date-time  # API использует формат: YYYY-MM-DD HH:MM:SS.mmm
