@@ -47,16 +47,21 @@ sdk-contract:
       SCHEMATHESIS_PHASES="${SCHEMATHESIS_PHASES:-examples,coverage}"
       SCHEMATHESIS_MAX_EXAMPLES="${SCHEMATHESIS_MAX_EXAMPLES:-50}"
       
+      AUTH_HEADER=$(echo -n "${SCHEMATHESIS_LOGIN}:${SCHEMATHESIS_PASSWORD}" | base64)
+      
+      # Исключаемые проверки:
+      # @see https://schemathesis.readthedocs.io/en/stable/reference/checks/
+      # - unsupported_method: nginx возвращает 405 без заголовка Allow (требуется по RFC 9110)
+      # - positive_data_acceptance: API может вернуть 400/412 при валидной по схеме дате (бизнес-правила)
+      # Коды 400/412 документированы в спецификации
+      EXCLUDE_CHECKS="positive_data_acceptance,unsupported_method"
+  
       echo "==> Running Schemathesis tests"
       echo "    Base URL: $SCHEMATHESIS_BASE_URL"
       echo "    Phases: $SCHEMATHESIS_PHASES"
       echo "    Max examples: $SCHEMATHESIS_MAX_EXAMPLES"
-      
-      AUTH_HEADER=$(echo -n "${SCHEMATHESIS_LOGIN}:${SCHEMATHESIS_PASSWORD}" | base64)
-      
-      # Исключаем positive_data_acceptance: API может вернуть 400/412 при валидной по схеме дате (бизнес-правила).
-      # Коды 400/412 документированы в спецификации
-      
+      echo "    Exclude checks: $EXCLUDE_CHECKS"
+  
       schemathesis run dist/openapi.yaml \
         --url "$SCHEMATHESIS_BASE_URL" \
         -H "Authorization: Basic $AUTH_HEADER" \
