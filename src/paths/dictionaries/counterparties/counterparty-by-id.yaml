@@ -18,8 +18,14 @@ get:
             $ref: '../../../components/schemas/dictionary/counterparty.yaml'
     '400':
       $ref: '../../../components/responses.yaml#/BadRequest'
+    '401':
+      $ref: '../../../components/responses.yaml#/Unauthorized'
     '404':
       $ref: '../../../components/responses.yaml#/NotFound'
+    '405':
+      $ref: '../../../components/responses.yaml#/MethodNotAllowed'
+    '415':
+      $ref: '../../../components/responses.yaml#/UnsupportedMediaType'
 
 put:
   operationId: updateCounterparty
@@ -48,8 +54,16 @@ put:
             $ref: '../../../components/schemas/dictionary/counterparty.yaml'
     '400':
       $ref: '../../../components/responses.yaml#/BadRequest'
+    '401':
+      $ref: '../../../components/responses.yaml#/Unauthorized'
     '404':
       $ref: '../../../components/responses.yaml#/NotFound'
+    '405':
+      $ref: '../../../components/responses.yaml#/MethodNotAllowed'
+    '413':
+      $ref: '../../../components/responses.yaml#/PayloadTooLarge'
+    '415':
+      $ref: '../../../components/responses.yaml#/UnsupportedMediaType'
 
 delete:
   operationId: deleteCounterparty
@@ -66,9 +80,15 @@ delete:
       description: Контрагент успешно удален
     '400':
       $ref: '../../../components/responses.yaml#/BadRequest'
+    '401':
+      $ref: '../../../components/responses.yaml#/Unauthorized'
     '404':
       $ref: '../../../components/responses.yaml#/NotFound'
     '409':
       $ref: '../../../components/responses.yaml#/Conflict'
     '412':
       $ref: '../../../components/responses.yaml#/PreconditionFailed'
+    '415':
+      $ref: '../../../components/responses.yaml#/UnsupportedMediaType'
+    '405':
+      $ref: '../../../components/responses.yaml#/MethodNotAllowed'

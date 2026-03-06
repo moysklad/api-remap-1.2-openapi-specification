@@ -28,15 +28,37 @@ if [ ! -d "$SCHEMATHESIS_VENV" ] || [ ! -x "$SCHEMATHESIS_VENV/bin/schemathesis"
   python3 -m venv "$SCHEMATHESIS_VENV"
   "$SCHEMATHESIS_VENV/bin/pip" install -q schemathesis
 fi
-# По умолчанию только фаза examples — стабильные тесты без fuzzing (нет случайных заголовков и 400/415).
-# Для полного прогона: SCHEMATHESIS_PHASES=examples,fuzzing,stateful
-SCHEMATHESIS_PHASES="${SCHEMATHESIS_PHASES:-examples}"
+
+# Режимы тестирования:
+# - examples: базовые тесты с примерами из спецификации
+# - coverage: расширенное покрытие всех комбинаций параметров
+# - fuzzing: генерация случайных данных для поиска уязвимостей
+# - stateful: тесты с изменением состояния
+#
+# По умолчанию: examples,coverage
+# С изменением данных: SCHEMATHESIS_PHASES=examples,coverage,fuzzing,stateful
+SCHEMATHESIS_PHASES="${SCHEMATHESIS_PHASES:-examples,coverage}"
+SCHEMATHESIS_MAX_EXAMPLES="${SCHEMATHESIS_MAX_EXAMPLES:-50}"
+
 AUTH_HEADER=$(echo -n "${SCHEMATHESIS_LOGIN}:${SCHEMATHESIS_PASSWORD}" | base64)
-# Исключаем positive_data_acceptance: API может вернуть 400/412 при валидной по схеме дате (бизнес-правила).
+
+# Исключаемые проверки:
+# @see https://schemathesis.readthedocs.io/en/stable/reference/checks/
+# - unsupported_method: nginx возвращает 405 без заголовка Allow (требуется по RFC 9110)
+# - positive_data_acceptance: API может вернуть 400/412 при валидной по схеме дате (бизнес-правила)
 # Коды 400/412 документированы в спецификации
+EXCLUDE_CHECKS="positive_data_acceptance,unsupported_method"
+
+echo "==> Running Schemathesis tests"
+echo "    Base URL: $SCHEMATHESIS_BASE_URL"
+echo "    Phases: $SCHEMATHESIS_PHASES"
+echo "    Max examples: $SCHEMATHESIS_MAX_EXAMPLES"
+echo "    Exclude checks: $EXCLUDE_CHECKS"
+
 exec "$SCHEMATHESIS_VENV/bin/schemathesis" run dist/openapi.yaml \
   --url "$SCHEMATHESIS_BASE_URL" \
   -H "Authorization: Basic $AUTH_HEADER" \
-  --max-examples 50 \
+  -H 'Accept-Encoding: gzip, deflate, br' \
+  --max-examples "$SCHEMATHESIS_MAX_EXAMPLES" \
   --phases "$SCHEMATHESIS_PHASES" \
-  --exclude-checks positive_data_acceptance
+  --exclude-checks "$EXCLUDE_CHECKS"

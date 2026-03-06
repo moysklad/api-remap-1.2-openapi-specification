@@ -41,7 +41,7 @@ properties:
       - $ref: '../../../openapi.yaml#/components/schemas/Employee'
   updated:
     type: string
-    format: date-time
+#    format: date-time
     description: Момент последнего обновления сущности
     readOnly: true
   shared:

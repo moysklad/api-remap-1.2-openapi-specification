@@ -26,8 +26,12 @@ get:
       $ref: '../../../components/responses.yaml#/Unauthorized'
     '403':
       $ref: '../../../components/responses.yaml#/Forbidden'
+    '405':
+      $ref: '../../../components/responses.yaml#/MethodNotAllowed'
     '412':
       $ref: '../../../components/responses.yaml#/PreconditionFailed'
+    '415':
+      $ref: '../../../components/responses.yaml#/UnsupportedMediaType'
 
 post:
   operationId: createUom
@@ -59,5 +63,11 @@ post:
       $ref: '../../../components/responses.yaml#/Unauthorized'
     '403':
       $ref: '../../../components/responses.yaml#/Forbidden'
+    '405':
+      $ref: '../../../components/responses.yaml#/MethodNotAllowed'
     '412':
       $ref: '../../../components/responses.yaml#/PreconditionFailed'
+    '413':
+      $ref: '../../../components/responses.yaml#/PayloadTooLarge'
+    '415':
+      $ref: '../../../components/responses.yaml#/UnsupportedMediaType'

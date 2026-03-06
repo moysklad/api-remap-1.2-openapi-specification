@@ -22,8 +22,12 @@ get:
       $ref: '../../../components/responses.yaml#/Unauthorized'
     '403':
       $ref: '../../../components/responses.yaml#/Forbidden'
+    '405':
+      $ref: '../../../components/responses.yaml#/MethodNotAllowed'
     '412':
       $ref: '../../../components/responses.yaml#/PreconditionFailed'
+    '415':
+      $ref: '../../../components/responses.yaml#/UnsupportedMediaType'
 
 post:
   operationId: createPriceTypesBatch
@@ -62,3 +66,7 @@ post:
       $ref: '../../../components/responses.yaml#/Unauthorized'
     '403':
       $ref: '../../../components/responses.yaml#/Forbidden'
+    '412':
+      $ref: '../../../components/responses.yaml#/PreconditionFailed'
+    '415':
+      $ref: '../../../components/responses.yaml#/UnsupportedMediaType'
