@@ -1,0 +1,6 @@
+# Ответ ошибки: объект { errors } или массив таких объектов (для массовых операций)
+oneOf:
+  - $ref: './error.yaml'
+  - type: array
+    items:
+      $ref: './error.yaml'

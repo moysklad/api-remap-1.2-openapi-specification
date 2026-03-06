@@ -1,0 +1,35 @@
+type: object
+description: Метаданные списка
+required:
+  - href
+  - type
+  - mediaType
+properties:
+  href:
+    type: string
+    format: uri
+    description: Ссылка на объект
+  type:
+    type: string
+    description: Тип объекта
+  mediaType:
+    type: string
+    description: Тип данных
+    example: "application/json"
+  size:
+    type: integer
+    description: Размер выданного списка
+  limit:
+    type: integer
+    description: Максимальное количество элементов в выданном списке
+  offset:
+    type: integer
+    description: Отступ в выданном списке
+  nextHref:
+    type: string
+    format: uri
+    description: Ссылка на следующую страницу
+  previousHref:
+    type: string
+    format: uri
+    description: Ссылка на предыдущую страницу
