@@ -103,7 +103,7 @@ test-create-user:
       RESPONSE=$(curl --location -X POST $API_HOST/api/remap/1.2/register \
       --header 'Content-Type: application/x-www-form-urlencoded' \
       --header 'Accept-Encoding: gzip' \
-      --data-urlencode 'email=$TEST_MAIL')
+      --data-urlencode "email=$TEST_MAIL")
 
     - echo $RESPONSE
     - API_PASSWORD=$(echo "$RESPONSE" | sed -n 's/.*"password"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p')
