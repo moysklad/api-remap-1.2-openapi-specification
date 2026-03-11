@@ -24,7 +24,7 @@ if [ -z "$NPM_CI_FORCE" ] && [ -d node_modules ] && [ -f node_modules/.package-l
 fi
 cp package-lock.json package-lock.json.bak
 trap 'mv package-lock.json.bak package-lock.json' EXIT
-sed "s|$MC_REPOSITORY_HOST/repository/npm|https://registry.npmjs.org|g" package-lock.json > package-lock.json.tmp
+sed 's|https://nexus.infra.lognex/repository/npm|https://registry.npmjs.org|g' package-lock.json > package-lock.json.tmp
 mv package-lock.json.tmp package-lock.json
 npm ci
 trap - EXIT
