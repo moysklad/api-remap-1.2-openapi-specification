@@ -20,7 +20,7 @@ properties:
     example: 102400
   updated:
     type: string
-    format: date-time
+    #    format: date-time  # API использует формат: YYYY-MM-DD HH:MM:SS.mmm
     description: Время последнего изменения
     readOnly: true
   tiny:

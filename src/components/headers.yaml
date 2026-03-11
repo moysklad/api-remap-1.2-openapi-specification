@@ -16,12 +16,8 @@ AcceptEncoding:
   schema:
     type: string
     default: gzip, deflate, br
-    enum:
-      - gzip, deflate, br
-      - gzip
-      - gzip, deflate
-      - deflate
-      - br
+    # Убран enum - API принимает любые значения, но может вернуть 415 для неподдерживаемых
+    example: gzip, deflate, br
 # Явный Content-Type для запросов с телом (batch и др.) — чтобы генератор и тесты всегда отправляли application/json
 ContentTypeJson:
   name: Content-Type

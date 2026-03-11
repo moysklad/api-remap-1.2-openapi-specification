@@ -4,6 +4,10 @@ BadRequest:
     application/json:
       schema:
         $ref: './schemas/common/error.yaml'
+    text/html;charset=UTF-8:
+      schema:
+        type: string
+        example: '<html><head><title>Error</title></head><body>Bad Request</body></html>'
 
 # Для массовых операций: тело 400 может быть объектом или массивом объектов ошибок
 BatchBadRequest:
@@ -12,6 +16,10 @@ BatchBadRequest:
     application/json:
       schema:
         $ref: './schemas/common/errorOrArray.yaml'
+    text/html;charset=UTF-8:
+      schema:
+        type: string
+        example: '<html><head><title>Error</title></head><body>Bad Request</body></html>'
 
 Unauthorized:
   description: Имя и/или пароль пользователя указаны неверно или заблокированы
@@ -43,6 +51,39 @@ Conflict:
 
 PreconditionFailed:
   description: Ошибка валидации или ограничения (уникальность, бизнес-правила)
+  content:
+    application/json:
+      schema:
+        $ref: './schemas/common/error.yaml'
+
+# Для массовых операций: тело 412 может быть объектом или массивом объектов ошибок
+BatchPreconditionFailed:
+  description: Ошибка валидации или ограничения для массовых операций (тело — объект или массив объектов с полем errors)
+  content:
+    application/json:
+      schema:
+        $ref: './schemas/common/errorOrArray.yaml'
+
+UnsupportedMediaType:
+  description: Неподдерживаемый тип содержимого (Content-Type)
+  content:
+    application/json:
+      schema:
+        $ref: './schemas/common/error.yaml'
+    text/html;charset=UTF-8:
+      schema:
+        type: string
+        example: '<html><head><title>415 Unsupported Media Type</title></head><body><center><h1>415 Unsupported Media Type</h1></center></body></html>'
+
+MethodNotAllowed:
+  description: Метод не поддерживается для данного ресурса
+  headers:
+    Allow:
+      description: Список поддерживаемых HTTP методов (может отсутствовать в ответах от nginx)
+      required: false
+      schema:
+        type: string
+        example: GET, POST, PUT, DELETE
   content:
     application/json:
       schema:

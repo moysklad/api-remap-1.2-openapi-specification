@@ -183,11 +183,23 @@ api-sdk-builder/
 
 Обязательны при ручном запуске (web):
 
-| Переменная              | Описание              | Пример            |
-|-------------------------|-----------------------|-------------------|
-| `SCHEMATHESIS_HOST`     | URL API сервера       | `host`            |
-| `SCHEMATHESIS_LOGIN`    | Логин для Basic auth  | `admin@test_user` |
-| `SCHEMATHESIS_PASSWORD` | Пароль для Basic auth | `password123`     |
+| Переменная                    | Описание                      | Пример               |
+|-------------------------------|-------------------------------|----------------------|
+| `SCHEMATHESIS_HOST`           | URL API сервера               | `host`               |
+| `SCHEMATHESIS_LOGIN`          | Логин для Basic auth          | `admin@test_user`    |
+| `SCHEMATHESIS_PASSWORD`       | Пароль для Basic auth         | `password123`        |
+| `SCHEMATHESIS_PHASES`         | Режимы тестирования           | `examples,coverage`  |
+| `SCHEMATHESIS_MAX_EXAMPLES`   | Максимум примеров на эндпоинт | `50` (по умолчанию)  |
+
+
+**Режимы тестирования (SCHEMATHESIS_PHASES):**
+- `examples` - базовые тесты
+- `coverage` - расширенное покрытие
+- `fuzzing` - случайные данные 
+- `stateful` - изменение данных 
+
+**По умолчанию:** `examples,coverage`
+
 
 ### Переменные для Push/Mirror
 
