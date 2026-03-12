@@ -74,7 +74,7 @@ docker compose run --rm sdk make all
 
 ```bash
 docker run --rm -v "$(pwd):/workspace" -w /workspace \
-  docker.infra.lognex/docker-openapitools:1.0-release make all
+  docker.infra.lognex/docker-openapitools:ATK-99-419641 make all
 ```
 
 **Локальный Docker и Nexus:** если в `package-lock.json` указан корпоративный registry (nexus.infra.lognex), при запуске в Docker задаётся `USE_PUBLIC_NPM_REGISTRY=true`. Скрипт `scripts/npm-ci-public-registry.sh` временно подменяет URL на registry.npmjs.org, чтобы не было ошибки SSL (UNABLE_TO_VERIFY_LEAF_SIGNATURE). Исходный `package-lock.json` после `npm ci` восстанавливается.

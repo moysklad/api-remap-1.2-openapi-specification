@@ -1,12 +1,12 @@
 check-openapi-changes:
   stage: changes-check
-  image: docker.infra.lognex/docker-openapitools:1.1-release
+  image: docker.infra.lognex/docker-openapitools:ATK-99-419641
   rules:
     # Теги берём из текущего репозитория (git describe в клоне пайплайна)
-    # Запускаем при merge/push в master и при ручном запуске (web) на master или ATK-99
+    # Запускаем при merge/push в master и при ручном запуске (web) на master
     - if: '$CI_COMMIT_REF_NAME == "master" && $CI_PIPELINE_SOURCE == "push"'
       when: on_success
-    - if: '$CI_PIPELINE_SOURCE == "web" && ($CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "ATK-99")'
+    - if: '$CI_PIPELINE_SOURCE == "web" && $CI_COMMIT_BRANCH == "master"'
       when: on_success
     - when: never
   script:

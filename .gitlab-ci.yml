@@ -83,29 +83,26 @@ include:
     rules:
       - if: '$SPEC_SDK_GENERATION == "true" && $CI_PIPELINE_SOURCE != "push" && $CI_PIPELINE_SOURCE != "web"'
 
-  # SDK Validation - при push в любую ветку и при web (в т.ч. ATK-99 для debug)
+  # SDK Validation - при push в любую ветку и при web
   - local: 'gitlab/.gitlab-ci-sdk-validate.yml'
     rules:
       - if: '$CI_PIPELINE_SOURCE == "push"'
       - if: '$CI_PIPELINE_SOURCE == "web" && $CI_COMMIT_TAG == null'
-      - if: '$CI_PIPELINE_SOURCE == "web" && $CI_COMMIT_BRANCH == "ATK-99"'
 
   # SDK Push to Remote - при ручном запуске с PUSH_TO_REMOTE=true
   - local: 'gitlab/.gitlab-ci-sdk-php-gen.yml'
     rules:
       - if: '$CI_PIPELINE_SOURCE == "web" && $PUSH_TO_REMOTE == "true" && $CI_COMMIT_BRANCH != "master" && $CI_COMMIT_BRANCH != "release" && $CI_COMMIT_TAG == null'
 
-  # GitHub Mirror - при merge в master и при ручном запуске на ATK-99 (debug)
+  # GitHub Mirror - при merge в master
   - local: 'gitlab/.gitlab-ci-github-mirror.yml'
     rules:
       - if: '$CI_COMMIT_REF_NAME == "master" && $CI_PIPELINE_SOURCE == "push"'
-      - if: '$CI_PIPELINE_SOURCE == "web" && $CI_COMMIT_BRANCH == "ATK-99"'
 
-  # Автоматическое версионирование и выпуск тега - master (push) и ATK-99 (web debug)
+  # Автоматическое версионирование и выпуск тега - master (push)
   - local: 'gitlab/version.gitlab-ci.yml'
     rules:
       - if: '$CI_COMMIT_REF_NAME == "master" && $CI_PIPELINE_SOURCE == "push"'
-      - if: '$CI_PIPELINE_SOURCE == "web" && $CI_COMMIT_BRANCH == "ATK-99"'
 
 stages:
   # Стадии для старого Java SDK пайплайна (сохранены для обратной совместимости)

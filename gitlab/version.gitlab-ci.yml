@@ -21,8 +21,6 @@ version:auto:
   rules:
     - if: '$CI_COMMIT_REF_NAME == "master" && $CI_PIPELINE_SOURCE == "push"'
       when: on_success
-    - if: '$CI_PIPELINE_SOURCE == "web" && $CI_COMMIT_BRANCH == "ATK-99"'
-      when: on_success
     - when: never
   before_script:
     - git config --global user.name "$GIT_USER"

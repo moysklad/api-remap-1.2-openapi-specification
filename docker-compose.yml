@@ -13,7 +13,7 @@
 # Языки: make generate LANGUAGES=php,python (когда добавлены скрипты в package.json)
 #
 # Альтернатива (образ из CI, без локальной сборки):
-#   docker run --rm -v $(pwd):/workspace -w /workspace docker.infra.lognex/docker-openapitools:1.0-release make lint
+#   docker run --rm -v $(pwd):/workspace -w /workspace docker.infra.lognex/docker-openapitools:ATK-99-419641 make lint
 
 services:
   sdk:
