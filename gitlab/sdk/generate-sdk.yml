@@ -1,7 +1,7 @@
 # Сборка bundled OpenAPI спецификации (нужна для prism и schemathesis)
 bundle-openapi:
   stage: verify
-  image: docker.infra.lognex/docker-openapitools:1.1-release
+  image: docker.infra.lognex/docker-openapitools:ATK-99-419641
   needs:
     - job: lint-openapi
       optional: true
@@ -17,7 +17,7 @@ bundle-openapi:
 # Базовый шаблон для генерации SDK
 .generate-sdk-base:
   stage: generate-sdk
-  image: docker.infra.lognex/docker-openapitools:1.1-release
+  image: docker.infra.lognex/docker-openapitools:ATK-99-419641
   needs:
     - job: bundle-openapi
       artifacts: true
@@ -70,28 +70,28 @@ generate-sdk-php:
 #      - clients/python/
 #    expire_in: 2 hours
 
-# Генерация Java SDK (заглушка)
-#generate-sdk-java:
-#  extends: .generate-sdk-base
-#  rules:
-#    - if: '$SDK_LANGUAGES =~ /java/'
-#      when: on_success
-#  script:
-#    - npm ci
-#    - |
-#      if npm run | grep -q "generate-java"; then
-#        npm run generate-java
-#        echo "Java SDK generated successfully"
-#      else
-#        echo "WARNING: generate-java script not found in package.json"
-#        echo "To enable Java SDK generation, add the script to package.json"
-#        mkdir -p clients/java
-#        echo "# Java SDK placeholder" > clients/java/README.md
-#      fi
-#  artifacts:
-#    paths:
-#      - clients/java/
-#    expire_in: 2 hours
+# Генерация Java SDK (заглушка, но активная job)
+generate-sdk-java:
+  extends: .generate-sdk-base
+  rules:
+    - if: '$SDK_LANGUAGES == "" || $SDK_LANGUAGES =~ /java/'
+      when: on_success
+  script:
+    - npm ci
+    - |
+      if npm run | grep -q "generate-java"; then
+        npm run generate-java
+        echo "Java SDK generated successfully"
+      else
+        echo "WARNING: generate-java script not found in package.json"
+        echo "To enable Java SDK generation, add the script to package.json"
+        mkdir -p clients/java
+        echo "# Java SDK placeholder" > clients/java/README.md
+      fi
+  artifacts:
+    paths:
+      - clients/java/
+    expire_in: 2 hours
 
 # Генерация JavaScript SDK (заглушка)
 #generate-sdk-javascript:

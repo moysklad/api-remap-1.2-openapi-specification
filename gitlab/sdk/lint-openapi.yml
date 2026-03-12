@@ -1,5 +1,37 @@
+check-openapi-changes:
+  stage: changes-check
+  image: docker.infra.lognex/docker-openapitools:1.1-release
+  rules:
+    # Теги берём из текущего репозитория (git describe в клоне пайплайна)
+    # Запускаем при merge/push в master и при ручном запуске (web) на master или ATK-99
+    - if: '$CI_COMMIT_REF_NAME == "master" && $CI_PIPELINE_SOURCE == "push"'
+      when: on_success
+    - if: '$CI_PIPELINE_SOURCE == "web" && ($CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "ATK-99")'
+      when: on_success
+    - when: never
+  script:
+    - |
+      set -e
+      echo "Checking OpenAPI changes in src/ relative to last tag (current repo)..."
+      LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+      if [ -z "$LAST_TAG" ]; then
+        echo "No tags found. Skipping check and allowing pipeline to continue."
+        exit 0
+      fi
+
+      if git diff --quiet "$LAST_TAG"...HEAD -- src; then
+        echo "ERROR: No changes in src/ OpenAPI specification relative to tag $LAST_TAG."
+        echo "Please ensure that OpenAPI specification changes are present before running this pipeline."
+        exit 1
+      else
+        echo "OpenAPI changes detected in src/ relative to tag $LAST_TAG. Continuing pipeline."
+      fi
+
 lint-openapi:
   stage: verify
   image: redocly/cli
+  needs:
+    - job: check-openapi-changes
+      optional: true
   script:
     - redocly lint src/openapi.yaml

@@ -3,7 +3,7 @@
 # Этот файл содержит job'у для пуша измененной openapi спецификации в удалённый репозиторий.
 # Job'а выполняется только при merge в master ветку.
 
-# Push OpenApi Specification to GitHub
+# Push OpenApi Specification and tags to GitHub
 mirror-to-github:
   image: docker.infra.lognex/docker-openapitools:1.1-release
   stage: mirror
@@ -11,9 +11,9 @@ mirror-to-github:
     - git config --global user.name "$GIT_USER"
     - git config --global user.email "$GIT_MAIL"
   script:
-    - git clone $CI_REPOSITORY_URL temp_dir && cd temp_dir
+    - git clone "$CI_REPOSITORY_URL" temp_dir && cd temp_dir
     - git remote add github https://$GIT_PASSWORD@github.com/moysklad/api-remap-1.2-openapi-specification.git
-    - git checkout $CI_COMMIT_REF_NAME
+    - git checkout "$CI_COMMIT_REF_NAME"
     - |
       # удаляем ненужные файлы
       if [ -d "gitlab" ]; then
@@ -26,16 +26,75 @@ mirror-to-github:
         rm -rf .gitlab-ci.yml
       fi
 
+      if [ -f "README_GITLAB_CI.md" ]; then
+        echo "Removing README_GITLAB_CI.md..."
+        rm -f README_GITLAB_CI.md
+      fi
+      
+      if [ -f "README_LOCAL.md" ]; then
+        echo "Removing README_LOCAL.md..."
+        rm -f README_LOCAL.md
+      fi      
+      
+      if [ -f "catalog-info.yaml" ]; then
+        echo "Removing catalog-info.yaml..."
+        rm -f catalog-info.yaml
+      fi      
+
       # создаем новый корневой commit
       git checkout --orphan temp-branch
       git add -A
       git commit -m "Mirror to GitHub without GitLab-specific files"
       
       # Удаляем старую ветку и переименовываем новую
-      git branch -D $CI_COMMIT_REF_NAME
-      git branch -m $CI_COMMIT_REF_NAME
+      git branch -D "$CI_COMMIT_REF_NAME"
+      git branch -m "$CI_COMMIT_REF_NAME"
       
-      git push github $CI_COMMIT_REF_NAME --force --no-verify
-      echo "Successfully mirrored to GitHub without GitLab-specific files"
+      git push github "$CI_COMMIT_REF_NAME" --force --no-verify
+      echo "Successfully mirrored branch to GitHub without GitLab-specific files"
+
+      # Пушим теги, созданные job auto-version
+      echo "Pushing tags to GitHub..."
+      git push github --tags --no-verify || echo "No tags to push"
   variables:
     GIT_STRATEGY: clone
+
+create-github-release:
+  image: docker.infra.lognex/docker-openapitools:1.1-release
+  stage: mirror
+  needs:
+    - job: mirror-to-github
+      artifacts: false
+    - job: version:auto
+      optional: true
+  before_script:
+    - export GH_TOKEN="${GIT_PASSWORD}"
+  script:
+    - |
+      # Обновляем ветку и теги из origin, чтобы видеть тег, созданный job'ой version:auto
+      git fetch origin "$CI_COMMIT_REF_NAME" --tags
+      # Жёстко синхронизируем рабочее дерево с удалённой веткой, чтобы не мешали локальные изменения
+      git reset --hard "origin/$CI_COMMIT_REF_NAME"
+
+      TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+      if [ -z "$TAG" ]; then
+        echo "No tag found, skipping GitHub release creation."
+        exit 0
+      fi
+
+      # Скачивание артефактов из предыдущего пайплайна (если есть) или генерация заново
+      if [ ! -f "dist/openapi.yaml" ] || [ ! -f "dist/openapi.json" ]; then
+        npm ci
+        npm run bundle
+        npm run bundle-json
+      fi
+      
+      # Создание GitHub Release
+      gh release create "$TAG" \
+        --repo moysklad/api-remap-1.2-openapi-specification \
+        --title "Release $TAG" \
+        --notes-file CHANGELOG.md \
+        dist/openapi.yaml \
+        dist/openapi.json
+
+      echo "GitHub Release created: https://github.com/moysklad/api-remap-1.2-openapi-specification/releases/tag/$TAG"

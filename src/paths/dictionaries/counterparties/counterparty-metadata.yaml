@@ -90,6 +90,8 @@ get:
                 tags:
                   - "Поставщики"
                 createShared: false
+    '400':
+      $ref: '../../../components/responses.yaml#/BadRequest'
     '401':
       $ref: '../../../components/responses.yaml#/Unauthorized'
     '403':
