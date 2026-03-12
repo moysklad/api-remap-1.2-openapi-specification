@@ -1,0 +1,9 @@
+type: object
+description: Доп.поля
+properties:
+  meta:
+    $ref: '../common/metaList.yaml'
+  rows:
+    type: array
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfo'
