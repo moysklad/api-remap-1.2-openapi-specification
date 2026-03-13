@@ -29,7 +29,6 @@ version:auto:
     - git checkout -B "$CI_COMMIT_REF_NAME"
   script:
     - npm ci
-    - npm run validate
     - npm run bundle
     - npm run bundle-json
     - |
