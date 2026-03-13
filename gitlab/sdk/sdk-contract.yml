@@ -62,7 +62,7 @@ create-contract-user:
       when: on_success
     - when: never
   script:
-    - apk add --no-cache curl jq
+    - apk add --no-cache curl
     - |
       RESPONSE=$(curl --location -X POST "$API_HOST/api/remap/1.2/register" \
         --header 'Content-Type: application/x-www-form-urlencoded' \

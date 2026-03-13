@@ -67,6 +67,8 @@ create-github-release:
       artifacts: false
     - job: version:auto
       optional: true
+  variables:
+    GIT_STRATEGY: clone
   before_script:
     - export GH_TOKEN="${GIT_PASSWORD}"
   script:
