@@ -56,8 +56,6 @@ mirror-to-github:
       # Пушим теги, созданные job auto-version
       echo "Pushing tags to GitHub..."
       git push github --tags --no-verify || echo "No tags to push"
-  variables:
-    GIT_STRATEGY: clone
 
 create-github-release:
   image: docker.infra.lognex/docker-openapitools:ATK-99-419641
