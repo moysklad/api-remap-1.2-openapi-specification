@@ -34,13 +34,13 @@
 * запустить новый пайплайн Remap 1.2 SDK deployer, указав:
     1. ветку пайплайна master - проект нужен только для сборки;
     2. параметр **BRANCH** - имя ветки в репозитории SDK;
-    3. параметр **PARAM_VERSION** - номер сборки окружения, берётся из DMS. (Например stable-402731);
+    3. параметр **PARAM_VERSION** - номер сборки окружения, берётся из DMS. (Например stable-402731, можно получить зайдя в дмс и при подготовке к накату окружения в версии moysklad будет нужное значение);
     4. параметр **USE_OLD_SDK** - "true" для включения java-sdk написанного без использована openapi.
 
 После прохождения пайпа, для удаления создноного окружения нужно запустить джобу "remove-space".
 Окружение, на котором прогоняются тесты, доступно 1 час, после оно очищается.
 
-[Ссылка на предзаполненный пайплайн](https://git.company.lognex/moysklad/misc/api-sdk-builder/-/pipelines/new?ref=master&var[BRANCH]=MC-&var[PARAM_VERSION]=stable-402731)
+[Ссылка на предзаполненный пайплайн](https://git.company.lognex/moysklad/misc/api-sdk-builder/-/pipelines/new?ref=master&var[BRANCH]=MC-&var[PARAM_VERSION]=stable-402731&var[USE_OLD_SDK]=true)
 
 
 ### Релиз в публичный maven репозиторий после ревью
