@@ -1,0 +1,18 @@
+{
+  "header": "# Changelog\n\nВсе значимые изменения OpenAPI спецификации МойСклад.",
+  "types": [
+    { "type": "feat", "section": "Новая функциональность" },
+    { "type": "fix", "section": "Исправления" },
+    { "type": "docs", "section": "Документация" },
+    { "type": "breaking", "section": "⚠ BREAKING CHANGES" }
+  ],
+  "releaseCommitMessageFormat": "chore(release): {{currentTag}}",
+  "skip": {
+    "tag": true,
+    "changelog": true
+  },
+  "scripts": {
+    "postchangelog": "node scripts/generate-diff-changelog.js"
+  }
+}
+

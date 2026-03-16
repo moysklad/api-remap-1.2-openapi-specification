@@ -1,0 +1,41 @@
+type: object
+required:
+  - type
+discriminator:
+  propertyName: type
+  mapping:
+    file: '../../../openapi.yaml#/components/schemas/AttributeFile'
+    string: '../../../openapi.yaml#/components/schemas/AttributeString'
+    text: '../../../openapi.yaml#/components/schemas/AttributeText'
+    link: '../../../openapi.yaml#/components/schemas/AttributeLink'
+    time: '../../../openapi.yaml#/components/schemas/AttributeDateTime'
+    double: '../../../openapi.yaml#/components/schemas/AttributeDouble'
+    long: '../../../openapi.yaml#/components/schemas/AttributeLong'
+    boolean: '../../../openapi.yaml#/components/schemas/AttributeBool'
+    customentity: '../../../openapi.yaml#/components/schemas/AttributeCustomEntity'
+    undefined: '../../../openapi.yaml#/components/schemas/AttributeObject'
+oneOf:
+  - $ref: '../../../openapi.yaml#/components/schemas/AttributeFile'
+  - $ref: '../../../openapi.yaml#/components/schemas/AttributeString'
+  - $ref: '../../../openapi.yaml#/components/schemas/AttributeText'
+  - $ref: '../../../openapi.yaml#/components/schemas/AttributeLink'
+  - $ref: '../../../openapi.yaml#/components/schemas/AttributeDateTime'
+  - $ref: '../../../openapi.yaml#/components/schemas/AttributeDouble'
+  - $ref: '../../../openapi.yaml#/components/schemas/AttributeLong'
+  - $ref: '../../../openapi.yaml#/components/schemas/AttributeBool'
+  - $ref: '../../../openapi.yaml#/components/schemas/AttributeCustomEntity'
+  - $ref: '../../../openapi.yaml#/components/schemas/AttributeObject'
+properties:
+  id:
+    type: string
+    format: uuid
+    description: ID дополнительного поля
+  meta:
+    $ref: '../common/meta.yaml'
+  name:
+    type: string
+    description: Наименование дополнительного поля
+  type:
+    type: string
+  value:
+    type: object
