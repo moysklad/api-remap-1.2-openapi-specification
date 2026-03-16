@@ -1,5 +1,5 @@
 version:auto:
-  image: docker.infra.lognex/docker-openapitools:ATK-99-419641
+  image: docker.infra.lognex/docker-openapitools:1.2-release
   stage: version
   needs:
     - job: bundle-openapi

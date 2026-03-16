@@ -1,6 +1,6 @@
 check-openapi-changes:
   stage: changes-check
-  image: docker.infra.lognex/docker-openapitools:ATK-99-419641
+  image: docker.infra.lognex/docker-openapitools:1.2-release
   rules:
     # Теги берём из текущего репозитория (git describe в клоне пайплайна)
     # Запускаем при merge/push в master и при ручном запуске (web) на master
