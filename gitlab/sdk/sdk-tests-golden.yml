@@ -50,27 +50,19 @@ sdk-golden-php:
 #        exit 1
 #      fi
 
-# Java Golden JSON тесты (заглушка)
-#sdk-golden-java:
-#  stage: test
-#  image: maven:3.9-eclipse-temurin-17
-#  needs:
-#    - job: generate-sdk-java
-#      artifacts: true
-#      optional: true
-#  rules:
-#    - if: '$SDK_LANGUAGES =~ /java/'
-#      when: on_success
-#  script:
-#    - |
-#      if [ -d "tests/java" ] && [ -f "tests/java/pom.xml" ]; then
-#        cd tests/java
-#        mvn test -Dtest=**/golden/**
-#      else
-#        echo "WARNING: tests/java directory not configured, skipping Java golden tests"
-#        echo "Create tests/java directory with Maven project to enable"
-#        exit 1
-#      fi
+sdk-golden-java:
+  stage: test
+  image: maven:3.9-eclipse-temurin-17
+  needs:
+    - job: generate-sdk-java
+      artifacts: true
+      optional: true
+  rules:
+    - if: '$SDK_LANGUAGES == "" || $SDK_LANGUAGES =~ /java/'
+      when: on_success
+  script:
+    - |
+      echo "Java golden tests placeholder. No real Java tests configured yet."
 
 # JavaScript Golden JSON тесты (заглушка)
 #sdk-golden-javascript:
