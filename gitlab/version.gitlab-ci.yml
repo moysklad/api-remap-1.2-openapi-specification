@@ -130,6 +130,7 @@ version:auto:
 
       # Пушим только при push в master (боевой релиз). Для отладки на ветке можно использовать GIT_PASSWORD.
       if [ "$CI_COMMIT_REF_NAME" = "master" ] && [ "$CI_PIPELINE_SOURCE" = "push" ]; then
+        git remote set-url origin "https://gitlab-ci-token:${CICD_PAT}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git"
         git push origin "$NEW_TAG"
         git push origin "$CI_COMMIT_REF_NAME"
       else
