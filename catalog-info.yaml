@@ -1,0 +1,31 @@
+# Backstage catalog info
+# see: https://backstage.io/docs/features/software-catalog/
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: sdk
+spec:
+  owner: group:default/dev-teams
+
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: java-remap-1.2-sdk
+  annotations:
+    backstage.io/source-location: url:https://github.com/moysklad/java-remap-1.2-sdk/tree/master
+  links:
+    - url: https://central.sonatype.com/artifact/ru.moysklad.api/api-remap-1.2-sdk
+      title: Maven central repository
+    - url: https://git.company.lognex/moysklad/misc/api-sdk-builder/-/blob/master/README.md
+      title: Описания сборки SDK Remap 1.2
+  description: |
+    SDK для JSON API 1.2
+spec:
+  type: library
+  system: sdk
+  lifecycle: production
+  owner: group:default/team-api
+
+

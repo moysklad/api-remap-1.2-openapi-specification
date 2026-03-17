@@ -30,12 +30,12 @@ properties:
     example: false
   created:
     type: string
-    format: date-time
+    #    format: date-time  # API использует формат: YYYY-MM-DD HH:MM:SS.mmm
     description: Момент создания
     readOnly: true
   updated:
     type: string
-    format: date-time
+    #    format: date-time  # API использует формат: YYYY-MM-DD HH:MM:SS.mmm
     description: Момент последнего обновления
     readOnly: true
   description:

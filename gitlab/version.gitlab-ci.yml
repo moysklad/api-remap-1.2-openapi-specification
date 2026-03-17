@@ -1,0 +1,145 @@
+version:auto:
+  image: docker.infra.lognex/docker-openapitools:1.2-release
+  stage: version
+  needs:
+    - job: bundle-openapi
+      artifacts: true
+    - job: generate-sdk-php
+      optional: true
+    - job: generate-sdk-java
+      optional: true
+    - job: sdk-golden-php
+      optional: true
+    - job: sdk-prism-php
+      optional: true
+    - job: sdk-golden-java
+      optional: true
+    - job: sdk-prism-java
+      optional: true
+    - job: sdk-contract
+      optional: true
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "master" && $CI_PIPELINE_SOURCE == "push"'
+      when: on_success
+    - when: never
+  before_script:
+    - git config --global user.name "$GIT_USER"
+    - git config --global user.email "$GIT_MAIL"
+    # В CI репозиторий в состоянии detached HEAD — создаём локальную ветку, чтобы push сработал
+    - git checkout -B "$CI_COMMIT_REF_NAME"
+  script:
+    - npm ci
+    - npm run bundle
+    - npm run bundle-json
+    - |
+      # Собираем предыдущую спецификацию из дерева тега (worktree + bundle).
+      LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+      RELEASE_TYPE="minor"
+      OPENAPI_PREV=""
+      if [ -n "$LAST_TAG" ]; then
+        set +e
+        PREV_DIR="/tmp/prev-$CI_PIPELINE_ID-$CI_JOB_ID"
+        git worktree add "$PREV_DIR" "$LAST_TAG" 2>/dev/null
+        if [ $? -eq 0 ]; then
+          ( cd "$PREV_DIR" && npm ci && npm run bundle && npm run bundle-json ) 2>/dev/null
+          if [ -f "$PREV_DIR/dist/openapi.yaml" ]; then
+            cp "$PREV_DIR/dist/openapi.yaml" openapi-prev.yaml
+            OPENAPI_PREV="openapi-prev.yaml"
+          fi
+          git worktree remove "$PREV_DIR" --force 2>/dev/null || true
+        fi
+        set -e
+      fi
+      if [ -n "$OPENAPI_PREV" ] && [ -f "$OPENAPI_PREV" ]; then
+        echo "Comparing with bundled spec from tag $LAST_TAG"
+        oasdiff breaking "$OPENAPI_PREV" dist/openapi.yaml --format json > breaking-changes.json || true
+        oasdiff changelog "$OPENAPI_PREV" dist/openapi.yaml --format markdown > breaking-changes.md || true
+        JQ_BREAKING_LEN=""
+        if [ -s breaking-changes.json ] && command -v jq >/dev/null 2>&1; then
+          JQ_BREAKING_LEN=$(jq '.breaking | length' breaking-changes.json 2>/dev/null || echo "jq_error")
+          if [ "$JQ_BREAKING_LEN" != "jq_error" ] && [ "${JQ_BREAKING_LEN:-0}" -gt 0 ]; then
+            RELEASE_TYPE="major"
+            echo "Breaking changes detected, will bump MAJOR version"
+          else
+            echo "No breaking changes, will bump MINOR version"
+          fi
+        fi
+      else
+        echo "No existing tag or could not build prev spec from tag, starting from 0.y-release (MINOR)."
+      fi
+    - npm install -g standard-version
+    - standard-version --release-as "$RELEASE_TYPE"
+    - |
+      # Формируем новый тег вида MAJOR.MINOR-release на основе версии в package.json
+      NEW_VERSION=$(node -p "require('./package.json').version")
+      MAJOR_MINOR=${NEW_VERSION%.*}
+      NEW_TAG="${MAJOR_MINOR}-release"
+      echo "New version: $NEW_VERSION, tag: $NEW_TAG"
+
+      # Определяем предыдущий тег (если был) для диапазона коммитов
+      LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+      if [ -n "$LAST_TAG" ]; then
+        RANGE="$LAST_TAG..HEAD"
+      else
+        RANGE="HEAD"
+      fi
+
+      echo "Generating CHANGELOG block for $NEW_TAG from range: $RANGE"
+
+      TMP_CHANGELOG=$(mktemp)
+      TAG_MSG_FILE=$(mktemp)
+      CHANGELOG_LINES=$(git log $RANGE --pretty=format:"%s" \
+        | grep -E '^(feat|fix|docs)(:|!)' \
+        | while read -r line; do echo "* $line"; done)
+      if [ -z "$CHANGELOG_LINES" ]; then
+        CHANGELOG_LINES="* технические изменения"
+      fi
+
+      {
+        echo "# Версия $NEW_TAG"
+        echo
+        echo "$CHANGELOG_LINES"
+        echo
+      } > "$TMP_CHANGELOG"
+      cp "$TMP_CHANGELOG" "$TAG_MSG_FILE"
+
+      if [ -f CHANGELOG.md ]; then
+        cp CHANGELOG.md CHANGELOG.old
+        cat "$TMP_CHANGELOG" CHANGELOG.old > CHANGELOG.md
+      else
+        mv "$TMP_CHANGELOG" CHANGELOG.md
+      fi
+
+      rm -f "$TMP_CHANGELOG" CHANGELOG.old 2>/dev/null || true
+
+      # Если CHANGELOG.md изменился, добавляем его к release-коммиту standard-version
+      if ! git diff --quiet -- CHANGELOG.md; then
+        git add CHANGELOG.md
+        git commit --amend --no-edit
+      else
+        echo "CHANGELOG.md not changed; skipping amend commit."
+      fi
+
+      # Чтобы push из version:auto не запускал второй пайплайн проверок — добавляем [skip ci] в сообщение коммита
+      git commit --amend -m "$(git log -1 --pretty=%B) [skip ci]"
+
+      # Создаём аннотированный тег: сообщение тега = блок изменений для этой версии (как в CHANGELOG).
+      # Меняем commentChar, чтобы строки, начинающиеся с `#`, не отбрасывались Git'ом.
+      git -c core.commentChar=';' tag -fa "$NEW_TAG" -F "$TAG_MSG_FILE"
+      rm -f "$TAG_MSG_FILE"
+
+      # Пушим только при push в master (боевой релиз). Для отладки на ветке можно использовать GIT_PASSWORD.
+      if [ "$CI_COMMIT_REF_NAME" = "master" ] && [ "$CI_PIPELINE_SOURCE" = "push" ]; then
+        git remote set-url origin "https://gitlab-ci-token:${CICD_PAT}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git"
+        git push origin "$NEW_TAG"
+        git push origin "$CI_COMMIT_REF_NAME"
+      else
+        echo "Skipping git push (ref=$CI_COMMIT_REF_NAME source=$CI_PIPELINE_SOURCE). Set GIT_PASSWORD in CI variables to test push on branch."
+      fi
+  artifacts:
+    paths:
+      - dist/
+      - CHANGELOG.md
+      - breaking-changes.md
+      - breaking-changes.json
+    expire_in: 1 week

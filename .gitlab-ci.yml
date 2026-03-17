@@ -13,18 +13,21 @@
 #    - sdk-golden-*: golden тесты (сериализация/десериализация)
 #    - sdk-prism-*: smoke тесты с Prism mock сервером
 #
-# 2. Ручной запуск (web) на ветке (кроме master/release/tags):
-#    - Все тесты из п.1
-#    - sdk-contract: schemathesis тесты (требуют SCHEMATHESIS_* переменные)
+# 2. Ручной запуск (web) на ветке (без тэга):
+#    - lint-openapi и bundle-openapi
+#    - generate-sdk-*: генерация SDK
+#    - sdk-golden-*/sdk-prism-*: тесты SDK
+#    - sdk-contract: schemathesis контрактные тесты
+#    - deploy-contract-env/create-contract-user/remove-contract-env: подготовка и очистка окружения для sdk-contract
 #    - push-sdk-*: пуш SDK в удалённые репозитории (если PUSH_TO_REMOTE=true)
 #
-# 3. Merge в master:
-#    - lint-openapi: проверка спецификации
-#    - bundle-openapi: сборка bundled версии  
-#    - generate-sdk-*: генерация SDK
-#    - sdk-golden-*: golden тесты
-#    - sdk-prism-*: smoke тесты
-#    - mirror-to-github: зеркалирование в GitHub
+# 3. Merge/push в master:
+#    - check-openapi-changes: проверка изменений OpenAPI относительно последнего тега
+#    - lint-openapi и bundle-openapi
+#    - deploy-contract-env/create-contract-user/remove-contract-env и sdk-contract
+#    - generate-sdk-*, sdk-golden-*, sdk-prism-*
+#    - version:auto: автоматическое версионирование и CHANGELOG/тег
+#    - mirror-to-github и create-github-release: зеркалирование и GitHub Release
 #
 # 4. Старый Java SDK пайплайн ($USE_OLD_SDK == "true"'):
 #    - Сохранён для обратной совместимости
@@ -80,11 +83,11 @@ include:
     rules:
       - if: '$SPEC_SDK_GENERATION == "true" && $CI_PIPELINE_SOURCE != "push" && $CI_PIPELINE_SOURCE != "web"'
 
-  # SDK Validation - при push в любую ветку
+  # SDK Validation - при push в любую ветку и при web
   - local: 'gitlab/.gitlab-ci-sdk-validate.yml'
     rules:
       - if: '$CI_PIPELINE_SOURCE == "push"'
-      - if: '$CI_PIPELINE_SOURCE == "web" && $CI_COMMIT_BRANCH != "master" && $CI_COMMIT_BRANCH != "release" && $CI_COMMIT_TAG == null  && $USE_OLD_SDK != "true"'
+      - if: '$CI_PIPELINE_SOURCE == "web" && $CI_COMMIT_TAG == null  && $USE_OLD_SDK != "true"'
 
   # SDK Push to Remote - при ручном запуске с PUSH_TO_REMOTE=true
   - local: 'gitlab/.gitlab-ci-sdk-php-gen.yml'
@@ -96,17 +99,24 @@ include:
     rules:
       - if: '$CI_COMMIT_REF_NAME == "master" && $CI_PIPELINE_SOURCE == "push"'
 
+  # Автоматическое версионирование и выпуск тега - master (push)
+  - local: 'gitlab/version.gitlab-ci.yml'
+    rules:
+      - if: '$CI_COMMIT_REF_NAME == "master" && $CI_PIPELINE_SOURCE == "push"'
+
 stages:
-  # Стадии для старого Java SDK пайплайна (сохранены для обратной совместимости)
-  - verify           # Проверка спецификации, окружения
-  - prepare          # Подготовка (старый пайплайн)
-  - deploy-for-space # Деплой тестового окружения (старый пайплайн)
-  - create-user      # Создание пользователя (старый пайплайн)
-  - build            # Сборка (старый пайплайн)
-  - delete-space     # Удаление тестового окружения (старый пайплайн)
-  
-  # Стадии для нового SDK пайплайна
-  - generate-sdk     # Генерация SDK для различных языков
-  - test             # Тестирование: golden, smoke (prism), contract (schemathesis)
-  - push-sdk         # Пуш SDK в удалённые репозитории
-  - mirror           # Зеркалирование в GitHub
+  - changes-check         # Ранний этап: проверка изменений OpenAPI относительно последнего тега
+  - verify                # Проверка спецификации, окружения
+  - prepare               # Подготовка (старый пайплайн)
+  - deploy-for-space      # Деплой тестового окружения (старый пайплайн)
+  - create-user           # Создание пользователя (старый пайплайн)
+  - build                 # Сборка (старый пайплайн)
+  - delete-space          # Удаление тестового окружения (старый пайплайн)
+  - before-contract-test  # Подготовка окружения для contract-тестов
+  - contract-test         # Контрактные тесты (schemathesis) — после verify, до generate-sdk
+  - after-contract-test   # Удаление окружения после contract-тестов
+  - generate-sdk          # Генерация SDK для различных языков
+  - test                  # Тестирование: golden, smoke (prism)
+  - version               # Автоматическое версионирование и подготовка CHANGELOG/тегов
+  - push-sdk              # Пуш SDK в удалённые репозитории
+  - mirror                # Зеркалирование в GitHub

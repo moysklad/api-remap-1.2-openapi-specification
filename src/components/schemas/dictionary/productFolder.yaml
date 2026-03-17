@@ -79,7 +79,7 @@ properties:
       - $ref: '../../../openapi.yaml#/components/schemas/Employee'
   updated:
     type: string
-    format: date-time
+    #    format: date-time  # API использует формат: YYYY-MM-DD HH:MM:SS.mmm
     description: Момент последнего обновления
     readOnly: true
   productFolder:

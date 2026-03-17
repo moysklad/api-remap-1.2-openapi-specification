@@ -1,46 +1,155 @@
-# Schemathesis contract tests - выполняются только при ручном запуске (web)
-# Требуют переменные: SCHEMATHESIS_HOST, SCHEMATHESIS_LOGIN, SCHEMATHESIS_PASSWORD
+# Режимы тестирования (SCHEMATHESIS_PHASES):
+# - examples: базовые тесты с примерами из спецификации (по умолчанию)
+# - coverage: расширенное покрытие всех комбинаций параметров
+# - fuzzing: генерация случайных данных для поиска уязвимостей
+# - stateful: тесты с изменением состояния
+#
+# По умолчанию: examples,coverage
+
+deploy-contract-env:
+  stage: before-contract-test
+  image: $GLOBAL_DOCKER_URL/maven:7.8-release
+  needs:
+    - job: bundle-openapi
+      artifacts: false
+  rules:
+    # Merge/push в master и ручной запуск (web)
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME == "master"'
+      when: on_success
+    - if: '$CI_PIPELINE_SOURCE == "web"'
+      when: on_success
+    - when: never
+  before_script:
+    - rm -f /etc/apt/sources.list.d/*pgdg*.list || true
+    - apt-get update
+    - apt-get install -y --no-install-recommends git
+    # По умолчанию берём последний тег репозитория moysklad без клонирования (только ls-remote)
+    - |
+      if [ -z "$PARAM_VERSION" ]; then      
+        MOYSKLAD_REPO="https://gitlab-ci-token:${CI_JOB_TOKEN}@git.company.lognex/moysklad/moysklad.git"
+        PARAM_VERSION=$(git ls-remote --tags "$MOYSKLAD_REPO" 2>/dev/null | sed -n 's|.*refs/tags/||p' | grep -v '\^{}' | grep '^R[0-9]' | sort -V | tail -1)
+        export PARAM_VERSION="${PARAM_VERSION:-}"
+        if [ -n "$PARAM_VERSION" ]; then
+          echo "Using last tag from moysklad repo as PARAM_VERSION: $PARAM_VERSION"
+        else
+          echo "WARNING: Could not get tags from $MOYSKLAD_REPO, PARAM_VERSION is empty"
+        fi
+      fi
+  script:
+    # Окружение для contract-тестов по умолчанию поднимаем с последнего тэга moysklad, если не задан $PARAM_VERSION
+    - python3 env_prepare.py "stable" "$CI_PIPELINE_ID" "$CI_JOB_ID" "$PARAM_VERSION" "remap12_minimal_ru"
+    - export NAMESPACE=$(cat namespace-export-file)
+    - export HTTP_API='https://api'
+    - export DMS_API_ENDPOINT='testms-test.lognex.ru'
+    - export API_HOST=$HTTP_API-$NAMESPACE.$DMS_API_ENDPOINT
+    - echo "API_HOST=${API_HOST}" >> variable.env
+    - echo "NAMESPACE=${NAMESPACE}" >> variable.env
+  artifacts:
+    reports:
+      dotenv: variable.env
+
+create-contract-user:
+  stage: before-contract-test
+  image: alpine:latest
+  needs:
+    - job: deploy-contract-env
+      artifacts: true
+  rules:
+    # Merge/push в master и ручной запуск (web)
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME == "master"'
+      when: on_success
+    - if: '$CI_PIPELINE_SOURCE == "web"'
+      when: on_success
+    - when: never
+  script:
+    - apk add --no-cache curl
+    - |
+      RESPONSE=$(curl --location -X POST "$API_HOST/api/remap/1.2/register" \
+        --header 'Content-Type: application/x-www-form-urlencoded' \
+        --header 'Accept-Encoding: gzip' \
+        --data-urlencode 'email=schemathesis_user@moysklad-test.ru')
+      echo "$RESPONSE"
+      API_PASSWORD=$(echo "$RESPONSE" | sed -n 's/.*"password"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p')
+      API_LOGIN=$(echo "$RESPONSE" | sed -n 's/.*"uid"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p')
+      echo "API_LOGIN=$API_LOGIN"
+      echo "API_PASSWORD=$API_PASSWORD"
+      echo "SCHEMATHESIS_LOGIN=$API_LOGIN" >> user.env
+      echo "SCHEMATHESIS_PASSWORD=$API_PASSWORD" >> user.env
+      echo "SCHEMATHESIS_HOST=$API_HOST" >> user.env
+  artifacts:
+    reports:
+      dotenv: user.env
+
+remove-contract-env:
+  image: $GLOBAL_DOCKER_URL/maven:7.8-release
+  stage: after-contract-test
+  needs:
+    - job: deploy-contract-env
+      artifacts: true
+  rules:
+    # Merge/push в master и ручной запуск (web)
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME == "master"'
+      when: manual
+      allow_failure: true
+    - if: '$CI_PIPELINE_SOURCE == "web"'
+      when: manual
+      allow_failure: true
+    - when: never
+  script:
+    - python3 env_clean.py $NAMESPACE $CI_PIPELINE_ID $CI_JOB_ID
+
 sdk-contract:
-  stage: test
+  stage: contract-test
   image: python:3.11
   needs:
     - job: bundle-openapi
       artifacts: true
+    - job: create-contract-user
+      artifacts: true
   rules:
+    # Merge/push в master и ручной запуск (web)
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME == "master"'
+      when: on_success
     - if: '$CI_PIPELINE_SOURCE == "web"'
-      when: always
-  before_script:
-    - |
-      # Проверка обязательных переменных
-      if [ -z "$SCHEMATHESIS_HOST" ]; then
-        echo "ERROR: SCHEMATHESIS_HOST is required"
-        exit 1
-      fi
-      if [ -z "$SCHEMATHESIS_LOGIN" ]; then
-        echo "ERROR: SCHEMATHESIS_LOGIN is required"
-        exit 1
-      fi
-      if [ -z "$SCHEMATHESIS_PASSWORD" ]; then
-        echo "ERROR: SCHEMATHESIS_PASSWORD is required"
-        exit 1
-      fi
+      when: on_success
+    - when: never
   script:
     - pip install schemathesis
     - |
+      if [ -z "$SCHEMATHESIS_HOST" ] || [ -z "$SCHEMATHESIS_LOGIN" ] || [ -z "$SCHEMATHESIS_PASSWORD" ]; then
+        echo "ERROR: SCHEMATHESIS_* variables are not set. Environment was not prepared (create-contract-user did not run)."
+        exit 1
+      fi
       # Базовый URL API должен включать путь /api/remap/1.2 (как в servers в спецификации)
       case "$SCHEMATHESIS_HOST" in
         */api/remap/1.2) SCHEMATHESIS_BASE_URL="$SCHEMATHESIS_HOST" ;;
         */api/remap/1.2/) SCHEMATHESIS_BASE_URL="${SCHEMATHESIS_HOST%/}" ;;
         *) SCHEMATHESIS_BASE_URL="${SCHEMATHESIS_HOST%/}/api/remap/1.2" ;;
       esac
-      echo "Using base URL: $SCHEMATHESIS_BASE_URL"
+      
+      # Режимы тестирования (по умолчанию: examples,coverage)
+      SCHEMATHESIS_PHASES="${SCHEMATHESIS_PHASES:-examples,coverage}"
+      SCHEMATHESIS_MAX_EXAMPLES="${SCHEMATHESIS_MAX_EXAMPLES:-50}"
+      
       AUTH_HEADER=$(echo -n "${SCHEMATHESIS_LOGIN}:${SCHEMATHESIS_PASSWORD}" | base64)
-      # Исключаем positive_data_acceptance: API может вернуть 400/412 при валидной по схеме дате (бизнес-правила).
-      # Только фаза examples. Fuzzing/stateful генерируют [{}] и т.п., API возвращает 412
-      # и формат ответа (массив ошибок), из-за чего падают Response violates schema и Undocumented HTTP status code.
+      
+      # Исключаемые проверки:
+      # @see https://schemathesis.readthedocs.io/en/stable/reference/checks/
+      # - unsupported_method: nginx возвращает 405 без заголовка Allow (требуется по RFC 9110)
+      # - positive_data_acceptance: API может вернуть 400/412 при валидной по схеме дате (бизнес-правила)
+      # Коды 400/412 документированы в спецификации
+      EXCLUDE_CHECKS="positive_data_acceptance,unsupported_method"
+  
+      echo "==> Running Schemathesis tests"
+      echo "    Base URL: $SCHEMATHESIS_BASE_URL"
+      echo "    Phases: $SCHEMATHESIS_PHASES"
+      echo "    Max examples: $SCHEMATHESIS_MAX_EXAMPLES"
+      echo "    Exclude checks: $EXCLUDE_CHECKS"
+  
       schemathesis run dist/openapi.yaml \
         --url "$SCHEMATHESIS_BASE_URL" \
         -H "Authorization: Basic $AUTH_HEADER" \
-        --max-examples=50 \
-        --phases examples \
-        --exclude-checks positive_data_acceptance
+        -H 'Accept-Encoding: gzip, deflate, br' \
+        --max-examples "$SCHEMATHESIS_MAX_EXAMPLES" \
+        --phases "$SCHEMATHESIS_PHASES" \
+        --exclude-checks "$EXCLUDE_CHECKS"
