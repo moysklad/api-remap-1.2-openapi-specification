@@ -113,6 +113,22 @@ paths:
     $ref: './paths/dictionaries/counterparties/counterparties-batch.yaml'
   /entity/counterparty/metadata:
     $ref: './paths/dictionaries/counterparties/counterparty-metadata.yaml'
+  /entity/counterparty/{id}/accounts:
+    $ref: './paths/dictionaries/counterparties/counterparty-accounts.yaml'
+  /entity/counterparty/{id}/accounts/{accountId}:
+    $ref: './paths/dictionaries/counterparties/counterparty-account-by-id.yaml'
+  /entity/counterparty/{id}/contactpersons:
+    $ref: './paths/dictionaries/counterparties/counterparty-contactpersons.yaml'
+  /entity/counterparty/{id}/contactpersons/{contactPersonId}:
+    $ref: './paths/dictionaries/counterparties/counterparty-contactperson-by-id.yaml'
+  /entity/counterparty/{id}/notes:
+    $ref: './paths/dictionaries/counterparties/counterparty-notes.yaml'
+  /entity/counterparty/{id}/notes/{noteId}:
+    $ref: './paths/dictionaries/counterparties/counterparty-note-by-id.yaml'
+  /entity/counterparty/{id}/files:
+    $ref: './paths/dictionaries/counterparties/counterparty-files.yaml'
+  /entity/counterparty/{id}/files/{fileId}:
+    $ref: './paths/dictionaries/counterparties/counterparty-file-by-id.yaml'
   #
   # Services
   /entity/service:
@@ -196,6 +212,8 @@ components:
       $ref: './components/schemas/dictionary/employee.yaml'
     File:
       $ref: './components/schemas/common/file.yaml'
+    FileUpload:
+      $ref: './components/schemas/common/fileUpload.yaml'
     FileList:
       $ref: './components/schemas/common/fileList.yaml'
     Group:
