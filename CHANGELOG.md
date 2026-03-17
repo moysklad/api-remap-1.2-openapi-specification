@@ -1,3 +1,7 @@
+# Версия 0.2-release
+
+* feat: добавлен эндпоинт метаданных counterparty
+
 # Версия 0.1-release
 
 * feat: crud для валют (currency)
