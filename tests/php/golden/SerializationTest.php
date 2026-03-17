@@ -29,6 +29,8 @@ class SerializationTest extends TestCase
     private const FIXTURE_MODEL_MAP = [
         'product' => 'Product',
         'product_full' => 'Product',
+        'product_image' => 'Image',
+        'product_storebalance' => 'StoreBalance',
         'counterparty' => 'Counterparty',
         'counterparty_legal' => 'Counterparty',
         'counterparty_metadata' => 'CounterpartyMetadata',

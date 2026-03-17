@@ -139,6 +139,148 @@ class ApiEndpointsTest extends TestCase
         $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
     }
 
+    /**
+     * Проверяет доступность endpoint'а получения изображений товара.
+     * GET /entity/product/{id}/images
+     */
+    public function testGetProductImages(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/product/' . self::TEST_UUID . '/images');
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а добавления изображений к товару.
+     * POST /entity/product/{id}/images
+     */
+    public function testAddProductImages(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/product/' . self::TEST_UUID . '/images', [
+            'json' => ['filename' => 'test.png', 'content' => 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADklEQVQI12P4z8BQDwADhQGAWjR9awAAAABJRU5ErkJggg=='],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а удаления изображения товара.
+     * DELETE /entity/product/{id}/images/{imageId}
+     */
+    public function testDeleteProductImage(): void
+    {
+        $response = $this->client->delete(self::API_BASE_PATH . '/entity/product/' . self::TEST_UUID . '/images/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::DELETE_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а массового удаления изображений товара.
+     * POST /entity/product/{id}/images/delete
+     */
+    public function testBatchDeleteProductImages(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/product/' . self::TEST_UUID . '/images/delete', [
+            'json' => [['meta' => ['href' => 'https://api.moysklad.ru/api/remap/1.2/entity/product/' . self::TEST_UUID . '/images/' . self::TEST_UUID, 'type' => 'image', 'mediaType' => 'application/json']]],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а получения файлов товара.
+     * GET /entity/product/{id}/files
+     */
+    public function testGetProductFiles(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/product/' . self::TEST_UUID . '/files');
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а добавления файлов к товару.
+     * POST /entity/product/{id}/files
+     */
+    public function testAddProductFiles(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/product/' . self::TEST_UUID . '/files', [
+            'json' => [['filename' => 'doc.pdf', 'content' => 'SGVsbG8gV29ybGQ=']],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а удаления файла товара.
+     * DELETE /entity/product/{id}/files/{fileId}
+     */
+    public function testDeleteProductFile(): void
+    {
+        $response = $this->client->delete(self::API_BASE_PATH . '/entity/product/' . self::TEST_UUID . '/files/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::DELETE_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а получения НСО товара по складам.
+     * GET /entity/product/{id}/storebalances
+     */
+    public function testGetProductStoreBalances(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/product/' . self::TEST_UUID . '/storebalances');
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а создания НСО товара для склада.
+     * POST /entity/product/{id}/storebalances
+     */
+    public function testCreateProductStoreBalance(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/product/' . self::TEST_UUID . '/storebalances', [
+            'json' => ['store' => ['meta' => ['href' => 'https://api.moysklad.ru/api/remap/1.2/entity/store/' . self::TEST_UUID, 'type' => 'store', 'mediaType' => 'application/json']], 'quantity' => 5.0],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а получения НСО товара по складу.
+     * GET /entity/product/{id}/storebalances/{storeBalanceId}
+     */
+    public function testGetProductStoreBalanceById(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/product/' . self::TEST_UUID . '/storebalances/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а обновления НСО товара по складу.
+     * PUT /entity/product/{id}/storebalances/{storeBalanceId}
+     */
+    public function testUpdateProductStoreBalance(): void
+    {
+        $response = $this->client->put(self::API_BASE_PATH . '/entity/product/' . self::TEST_UUID . '/storebalances/' . self::TEST_UUID, [
+            'json' => ['quantity' => 10.0],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а удаления НСО товара по складу.
+     * DELETE /entity/product/{id}/storebalances/{storeBalanceId}
+     */
+    public function testDeleteProductStoreBalance(): void
+    {
+        $response = $this->client->delete(self::API_BASE_PATH . '/entity/product/' . self::TEST_UUID . '/storebalances/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::DELETE_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а массового удаления НСО товара.
+     * POST /entity/product/{id}/storebalances/delete
+     */
+    public function testBatchDeleteProductStoreBalances(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/product/' . self::TEST_UUID . '/storebalances/delete', [
+            'json' => [['meta' => ['href' => 'https://api.moysklad.ru/api/remap/1.2/entity/product/' . self::TEST_UUID . '/storebalances/' . self::TEST_UUID, 'type' => 'minimumstock', 'mediaType' => 'application/json']]],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
     // ==================== COUNTERPARTIES ====================
 
     /**

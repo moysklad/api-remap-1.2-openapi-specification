@@ -45,6 +45,22 @@ paths:
     $ref: './paths/dictionaries/products/products-batch.yaml'
   /entity/product/metadata:
     $ref: './paths/common/metadata/metadata.yaml'
+  /entity/product/{id}/images:
+    $ref: './paths/dictionaries/products/product-images.yaml'
+  /entity/product/{id}/images/{imageId}:
+    $ref: './paths/dictionaries/products/product-image-by-id.yaml'
+  /entity/product/{id}/images/delete:
+    $ref: './paths/dictionaries/products/product-images-delete.yaml'
+  /entity/product/{id}/files:
+    $ref: './paths/dictionaries/products/product-files.yaml'
+  /entity/product/{id}/files/{fileId}:
+    $ref: './paths/dictionaries/products/product-file-by-id.yaml'
+  /entity/product/{id}/storebalances:
+    $ref: './paths/dictionaries/products/product-storebalances.yaml'
+  /entity/product/{id}/storebalances/{storeBalanceId}:
+    $ref: './paths/dictionaries/products/product-storebalance-by-id.yaml'
+  /entity/product/{id}/storebalances/delete:
+    $ref: './paths/dictionaries/products/product-storebalances-delete.yaml'
   #
   # Groups
   /entity/group:
