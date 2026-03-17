@@ -461,6 +461,110 @@ class ApiEndpointsTest extends TestCase
         $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
     }
 
+    /**
+     * Проверяет доступность endpoint'а получения прав сотрудника.
+     * GET /entity/employee/{id}/security
+     */
+    public function testGetEmployeeSecurity(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/employee/' . self::TEST_UUID . '/security');
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а изменения прав сотрудника.
+     * PUT /entity/employee/{id}/security
+     */
+    public function testUpdateEmployeeSecurity(): void
+    {
+        $response = $this->client->put(self::API_BASE_PATH . '/entity/employee/' . self::TEST_UUID . '/security', [
+            'json' => ['role' => ['meta' => ['href' => 'https://api.moysklad.ru/api/remap/1.2/entity/role/admin', 'type' => 'systemrole', 'mediaType' => 'application/json']]],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а активации сотрудника.
+     * PUT /entity/employee/{id}/access/activate
+     */
+    public function testActivateEmployee(): void
+    {
+        $response = $this->client->put(self::API_BASE_PATH . '/entity/employee/' . self::TEST_UUID . '/access/activate', [
+            'json' => ['login' => 'newemployee@lognex'],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а деактивации сотрудника.
+     * PUT /entity/employee/{id}/access/deactivate
+     */
+    public function testDeactivateEmployee(): void
+    {
+        $response = $this->client->put(self::API_BASE_PATH . '/entity/employee/' . self::TEST_UUID . '/access/deactivate');
+        $this->assertContains($response->getStatusCode(), array_merge(self::NOT_FOUND_CODES, [204]));
+    }
+
+    /**
+     * Проверяет доступность endpoint'а сброса пароля сотрудника.
+     * PUT /entity/employee/{id}/access/resetpassword
+     */
+    public function testResetEmployeePassword(): void
+    {
+        $response = $this->client->put(self::API_BASE_PATH . '/entity/employee/' . self::TEST_UUID . '/access/resetpassword');
+        $this->assertContains($response->getStatusCode(), array_merge(self::NOT_FOUND_CODES, [204]));
+    }
+
+    /**
+     * Проверяет доступность endpoint'а получения роли владельца аккаунта.
+     * GET /entity/role/owner
+     */
+    public function testGetRoleOwner(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/role/owner');
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * Проверяет доступность endpoint'а получения роли администратора.
+     * GET /entity/role/admin
+     */
+    public function testGetRoleAdmin(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/role/admin');
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * Проверяет доступность endpoint'а получения индивидуальной роли.
+     * GET /entity/role/individual
+     */
+    public function testGetRoleIndividual(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/role/individual');
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * Проверяет доступность endpoint'а получения роли кассира.
+     * GET /entity/role/cashier
+     */
+    public function testGetRoleCashier(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/role/cashier');
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * Проверяет доступность endpoint'а получения роли сотрудника производства.
+     * GET /entity/role/worker
+     */
+    public function testGetRoleWorker(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/role/worker');
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
     // ==================== GROUPS ====================
 
     /**

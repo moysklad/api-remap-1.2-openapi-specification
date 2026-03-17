@@ -101,6 +101,24 @@ paths:
     $ref: './paths/dictionaries/employees/employees-delete.yaml'
   /entity/employee/batch:
     $ref: './paths/dictionaries/employees/employees-batch.yaml'
+  /entity/employee/{id}/security:
+    $ref: './paths/dictionaries/employees/employee-security.yaml'
+  /entity/employee/{id}/access/activate:
+    $ref: './paths/dictionaries/employees/employee-access-activate.yaml'
+  /entity/employee/{id}/access/deactivate:
+    $ref: './paths/dictionaries/employees/employee-access-deactivate.yaml'
+  /entity/employee/{id}/access/resetpassword:
+    $ref: './paths/dictionaries/employees/employee-access-resetpassword.yaml'
+  /entity/role/owner:
+    $ref: './paths/dictionaries/employees/role-owner.yaml'
+  /entity/role/admin:
+    $ref: './paths/dictionaries/employees/role-admin.yaml'
+  /entity/role/individual:
+    $ref: './paths/dictionaries/employees/role-individual.yaml'
+  /entity/role/cashier:
+    $ref: './paths/dictionaries/employees/role-cashier.yaml'
+  /entity/role/worker:
+    $ref: './paths/dictionaries/employees/role-worker.yaml'
   #
   # Counterparties
   /entity/counterparty:
@@ -210,6 +228,10 @@ components:
       $ref: './components/schemas/dictionary/currency.yaml'
     Employee:
       $ref: './components/schemas/dictionary/employee.yaml'
+    EmployeeSecurity:
+      $ref: './components/schemas/dictionary/employeeSecurity.yaml'
+    EmployeeRole:
+      $ref: './components/schemas/dictionary/employeeRole.yaml'
     File:
       $ref: './components/schemas/common/file.yaml'
     FileUpload:

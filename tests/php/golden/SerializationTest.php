@@ -39,6 +39,8 @@ class SerializationTest extends TestCase
         'counterparty_file' => 'File',
         'currency' => 'Currency',
         'employee' => 'Employee',
+        'employee_security' => 'EmployeeSecurity',
+        'employee_role' => 'EmployeeRole',
         'group' => 'Group',
         'country' => 'Country',
         'product_folder' => 'ProductFolder',
