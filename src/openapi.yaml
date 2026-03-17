@@ -173,6 +173,10 @@ paths:
     $ref: './paths/dictionaries/services/services-delete.yaml'
   /entity/service/batch:
     $ref: './paths/dictionaries/services/services-batch.yaml'
+  /entity/service/{id}/files:
+    $ref: './paths/dictionaries/services/service-files.yaml'
+  /entity/service/{id}/files/{fileId}:
+    $ref: './paths/dictionaries/services/service-file-by-id.yaml'
   #
   # PriceTypes
   /context/companysettings/pricetype:

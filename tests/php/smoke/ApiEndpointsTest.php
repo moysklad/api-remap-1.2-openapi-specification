@@ -827,6 +827,38 @@ class ApiEndpointsTest extends TestCase
         $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
     }
 
+    /**
+     * Проверяет доступность endpoint'а получения файлов услуги.
+     * GET /entity/service/{id}/files
+     */
+    public function testGetServiceFiles(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/service/' . self::TEST_UUID . '/files');
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а добавления файлов к услуге.
+     * POST /entity/service/{id}/files
+     */
+    public function testAddServiceFiles(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/service/' . self::TEST_UUID . '/files', [
+            'json' => [['filename' => 'doc.pdf', 'content' => 'SGVsbG8gV29ybGQ=']],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а удаления файла услуги.
+     * DELETE /entity/service/{id}/files/{fileId}
+     */
+    public function testDeleteServiceFile(): void
+    {
+        $response = $this->client->delete(self::API_BASE_PATH . '/entity/service/' . self::TEST_UUID . '/files/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::DELETE_CODES);
+    }
+
     // ==================== UOMS ====================
 
     /**
