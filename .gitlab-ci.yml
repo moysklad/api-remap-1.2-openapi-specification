@@ -29,7 +29,7 @@
 #    - version:auto: автоматическое версионирование и CHANGELOG/тег
 #    - mirror-to-github и create-github-release: зеркалирование и GitHub Release
 #
-# 4. Старый Java SDK пайплайн (SPEC_SDK_GENERATION != "true"):
+# 4. Старый Java SDK пайплайн ($USE_OLD_SDK == "true"'):
 #    - Сохранён для обратной совместимости
 #
 # ПЕРЕМЕННЫЕ:
@@ -76,7 +76,7 @@ include:
   # Старый Java SDK пайплайн (для обратной совместимости)
   - local: 'gitlab/.gitlab-ci-java-sdk.yml'
     rules:
-      - if: '$SPEC_SDK_GENERATION != "true" && $CI_PIPELINE_SOURCE != "push" && $CI_PIPELINE_SOURCE != "web"'
+      - if: '$SPEC_SDK_GENERATION != "true" && $CI_PIPELINE_SOURCE != "push" && $CI_PIPELINE_SOURCE == "web" && $USE_OLD_SDK == "true"'
 
   # Старый PHP SDK пайплайн через openapi (для обратной совместимости при SPEC_SDK_GENERATION=true)
   - local: 'gitlab/.gitlab-ci-spec-gen.yml'
@@ -87,12 +87,12 @@ include:
   - local: 'gitlab/.gitlab-ci-sdk-validate.yml'
     rules:
       - if: '$CI_PIPELINE_SOURCE == "push"'
-      - if: '$CI_PIPELINE_SOURCE == "web" && $CI_COMMIT_TAG == null'
+      - if: '$CI_PIPELINE_SOURCE == "web" && $CI_COMMIT_TAG == null  && $USE_OLD_SDK != "true"'
 
   # SDK Push to Remote - при ручном запуске с PUSH_TO_REMOTE=true
   - local: 'gitlab/.gitlab-ci-sdk-php-gen.yml'
     rules:
-      - if: '$CI_PIPELINE_SOURCE == "web" && $PUSH_TO_REMOTE == "true" && $CI_COMMIT_BRANCH != "master" && $CI_COMMIT_BRANCH != "release" && $CI_COMMIT_TAG == null'
+      - if: '$CI_PIPELINE_SOURCE == "web" && $PUSH_TO_REMOTE == "true" && $CI_COMMIT_BRANCH != "master" && $CI_COMMIT_BRANCH != "release" && $CI_COMMIT_TAG == null  && $USE_OLD_SDK != "true"'
 
   # GitHub Mirror - при merge в master
   - local: 'gitlab/.gitlab-ci-github-mirror.yml'
