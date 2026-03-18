@@ -187,26 +187,6 @@ class ApiEndpointsTest extends TestCase
         $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
     }
 
-    /**
-     * Проверяет доступность endpoint'а получения метаданных контрагентов.
-     * GET /entity/counterparty/metadata
-     */
-    public function testGetCounterpartyMetadata(): void
-    {
-        $response = $this->client->get(self::API_BASE_PATH . '/entity/counterparty/metadata');
-        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
-    }
-
-    /**
-     * Проверяет доступность endpoint'а получения метаданных контрагентов с expand.
-     * GET /entity/counterparty/metadata?expand=attributes
-     */
-    public function testGetCounterpartyMetadataWithExpand(): void
-    {
-        $response = $this->client->get(self::API_BASE_PATH . '/entity/counterparty/metadata?expand=attributes');
-        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
-    }
-
     // ==================== CURRENCIES ====================
 
     /**
@@ -443,5 +423,46 @@ class ApiEndpointsTest extends TestCase
     {
         $response = $this->client->get(self::API_BASE_PATH . '/context/companysettings/pricetype/default');
         $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    // ==================== METADATAS ====================
+
+    /**
+     * Проверяет доступность endpoint'а получения метаданных перечисленных сущностей.
+     * GET /entity/{entityType}/metadata
+     */
+    public function testGetMetadata(): void
+    {
+        $template = '/entity/%s/metadata';
+        $entities = [
+            'counterparty',
+            'employee',
+            'product'
+        ];
+        foreach ($entities as $entity) {
+            $path = str_replace('%s', $entity, $template);
+            $response = $this->client->get(self::API_BASE_PATH . $path);
+            $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+        }
+    }
+
+    /**
+     * Проверяет доступность endpoint'а получения метаданных перечисленных сущностей с expand.
+     * GET /entity/{entityType}/metadata?expand=attributes
+     */
+    public function testGetMetadataWithExpand(): void
+    {
+
+        $template = '/entity/%s/metadata?expand=attributes';
+        $entities = [
+            'counterparty',
+            'employee',
+            'product'
+        ];
+        foreach ($entities as $entity) {
+            $path = str_replace('%s', $entity, $template);
+            $response = $this->client->get(self::API_BASE_PATH . $path);
+            $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+        }
     }
 }
