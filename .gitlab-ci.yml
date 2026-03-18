@@ -12,14 +12,14 @@
 #    - generate-sdk-*: генерация SDK для выбранных языков
 #    - sdk-golden-*: golden тесты (сериализация/десериализация)
 #    - sdk-prism-*: smoke тесты с Prism mock сервером
+#    - prep-branch-and-mr-*: создание/обновление ветки и mr по сгенерированному sdk в репозитории sdk
 #
 # 2. Ручной запуск (web) на ветке (без тэга):
 #    - lint-openapi и bundle-openapi
 #    - generate-sdk-*: генерация SDK
 #    - sdk-golden-*/sdk-prism-*: тесты SDK
-#    - sdk-contract: schemathesis контрактные тесты
 #    - deploy-contract-env/create-contract-user/remove-contract-env: подготовка и очистка окружения для sdk-contract
-#    - push-sdk-*: пуш SDK в удалённые репозитории (если PUSH_TO_REMOTE=true)
+#    - prep-branch-and-mr-*: создание/обновление ветки и mr по сгенерированному sdk в репозитории sdk
 #
 # 3. Merge/push в master:
 #    - check-openapi-changes: проверка изменений OpenAPI относительно последнего тега
@@ -28,6 +28,7 @@
 #    - generate-sdk-*, sdk-golden-*, sdk-prism-*
 #    - version:auto: автоматическое версионирование и CHANGELOG/тег
 #    - mirror-to-github и create-github-release: зеркалирование и GitHub Release
+#    - merge-branch-*: обновление ветки master на удаленном gitlab sdk репозитории по сгенерированному sdk и выпуск тэга
 #
 # 4. Старый Java SDK пайплайн ($USE_OLD_SDK == "true"'):
 #    - Сохранён для обратной совместимости
@@ -38,12 +39,6 @@
 #   Языки для генерации SDK, через запятую без пробелов.
 #   Примеры: "php", "php,python,java", "" (пустая строка = все доступные)
 #   По умолчанию: "" (генерируются все доступные SDK)
-#
-# PUSH_TO_REMOTE:
-#   Пушить изменения в удалённые репозитории SDK.
-#   Значения: "true" или "false"
-#   По умолчанию: "false"
-#   Работает только при ручном запуске (web) на ветках (не master/release)
 #
 # SCHEMATHESIS_HOST:
 #   URL API сервера для schemathesis тестов (например: https://api-api-1.testms-test.lognex.ru)
@@ -89,11 +84,6 @@ include:
       - if: '$CI_PIPELINE_SOURCE == "push"'
       - if: '$CI_PIPELINE_SOURCE == "web" && $CI_COMMIT_TAG == null  && $USE_OLD_SDK != "true"'
 
-  # SDK Push to Remote - при ручном запуске с PUSH_TO_REMOTE=true
-  - local: 'gitlab/.gitlab-ci-sdk-php-gen.yml'
-    rules:
-      - if: '$CI_PIPELINE_SOURCE == "web" && $PUSH_TO_REMOTE == "true" && $CI_COMMIT_BRANCH != "master" && $CI_COMMIT_BRANCH != "release" && $CI_COMMIT_TAG == null  && $USE_OLD_SDK != "true"'
-
   # GitHub Mirror - при merge в master
   - local: 'gitlab/.gitlab-ci-github-mirror.yml'
     rules:
@@ -103,20 +93,27 @@ include:
   - local: 'gitlab/version.gitlab-ci.yml'
     rules:
       - if: '$CI_COMMIT_REF_NAME == "master" && $CI_PIPELINE_SOURCE == "push"'
+  # Подготовка|внесение изменений в репозиторий PHP SDK в GitLab
+  - local: 'gitlab/.gitlab-ci-prepare-sdk-php.yml'
+    rules:
+      # Ветки (push)
+      - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_TAG == null'
+      # Ветки (ручной запуск web, без тега)
+      - if: '$CI_PIPELINE_SOURCE == "web" && $CI_COMMIT_TAG == null'
 
 stages:
-  - changes-check         # Ранний этап: проверка изменений OpenAPI относительно последнего тега
-  - verify                # Проверка спецификации, окружения
-  - prepare               # Подготовка (старый пайплайн)
-  - deploy-for-space      # Деплой тестового окружения (старый пайплайн)
-  - create-user           # Создание пользователя (старый пайплайн)
-  - build                 # Сборка (старый пайплайн)
-  - delete-space          # Удаление тестового окружения (старый пайплайн)
-  - before-contract-test  # Подготовка окружения для contract-тестов
-  - contract-test         # Контрактные тесты (schemathesis) — после verify, до generate-sdk
-  - after-contract-test   # Удаление окружения после contract-тестов
-  - generate-sdk          # Генерация SDK для различных языков
-  - test                  # Тестирование: golden, smoke (prism)
-  - version               # Автоматическое версионирование и подготовка CHANGELOG/тегов
-  - push-sdk              # Пуш SDK в удалённые репозитории
-  - mirror                # Зеркалирование в GitHub
+  - changes-check          # Ранний этап: проверка изменений OpenAPI относительно последнего тега
+  - verify                 # Проверка спецификации, окружения
+  - prepare                # Подготовка (старый пайплайн)
+  - deploy-for-space       # Деплой тестового окружения (старый пайплайн)
+  - create-user            # Создание пользователя (старый пайплайн)
+  - build                  # Сборка (старый пайплайн)
+  - delete-space           # Удаление тестового окружения (старый пайплайн)
+  - before-contract-test   # Подготовка окружения для contract-тестов
+  - contract-test          # Контрактные тесты (schemathesis) — после verify, до generate-sdk
+  - after-contract-test    # Удаление окружения после contract-тестов
+  - generate-sdk           # Генерация SDK для различных языков
+  - test                   # Тестирование: golden, smoke (prism)
+  - version                # Автоматическое версионирование и подготовка CHANGELOG/тегов
+  - mirror                 # Зеркалирование в GitHub
+  - prepare-sdk-repository # Подготовка|внесение изменений в репозиторий PHP SDK в GitLab

@@ -10,51 +10,53 @@
 
 При каждом push в любую ветку (кроме тегов) запускаются проверки SDK:
 
-| Job                | Описание                                           |
-|--------------------|----------------------------------------------------|
-| `lint-openapi`     | Проверка OpenAPI спецификации с помощью Redocly    |
-| `bundle-openapi`   | Сборка bundled версии спецификации                 |
-| `generate-sdk-php` | Генерация PHP SDK                                  |
-| `generate-sdk-java`| Генерация Java SDK (заглушка)                      |
-| `sdk-golden-php`   | Golden тесты для PHP (сериализация/десериализация) |
-| `sdk-prism-php`    | Smoke тесты для PHP с Prism mock сервером          |
-| `sdk-golden-java`  | Golden тесты для Java (заглушка)                   |
-| `sdk-prism-java`   | Smoke тесты для Java (заглушка)                    |
+| Job                      | Описание                                                                 |
+|--------------------------|--------------------------------------------------------------------------|
+| `lint-openapi`           | Проверка OpenAPI спецификации с помощью Redocly                          |
+| `bundle-openapi`         | Сборка bundled версии спецификации                                       |
+| `generate-sdk-php`       | Генерация PHP SDK                                                        |
+| `generate-sdk-java`      | Генерация Java SDK (заглушка)                                            |
+| `sdk-golden-php`         | Golden тесты для PHP (сериализация/десериализация)                       |
+| `sdk-prism-php`          | Smoke тесты для PHP с Prism mock сервером                                |
+| `sdk-golden-java`        | Golden тесты для Java (заглушка)                                         |
+| `sdk-prism-java`         | Smoke тесты для Java (заглушка)                                          |
+| `prep-branch-and-mr-php` | Cоздание/обновление ветки и mr по сгенерированному sdk в репозитории sdk |
 
 #### 2. Ручной запуск (web) на ветке
 
 При ручном запуске пайплайна (`CI_PIPELINE_SOURCE == "web"`, без тэга) выполняются те же SDK‑job'ы, что и при push, плюс контрактные тесты и опциональный пуш SDK:
 
-| Job                      | Описание                                                           |
-|--------------------------|--------------------------------------------------------------------|
-| `lint-openapi` / `bundle-openapi` | Проверка и сборка спецификации                           |
-| `generate-sdk-*`        | Генерация SDK                                                      |
-| `sdk-golden-*` / `sdk-prism-*` | Golden и smoke тесты SDK                                   |
-| `deploy-contract-env`   | Подготовка окружения для schemathesis (ветка **stable** сервиса)   |
-| `create-contract-user`  | Создание пользователя для contract‑тестов, экспорт кредов          |
-| `sdk-contract`          | Schemathesis контрактные тесты (стадия `contract-test`)            |
-| `remove-contract-env`   | Очистка окружения после contract‑тестов (manual, allow_failure)    |
-| `push-sdk-php`          | Push PHP SDK в GitHub репозиторий (если `PUSH_TO_REMOTE=true`)     |
+| Job                               | Описание                                                                 |
+|-----------------------------------|--------------------------------------------------------------------------|
+| `lint-openapi` / `bundle-openapi` | Проверка и сборка спецификации                                           |
+| `generate-sdk-*`                  | Генерация SDK                                                            |
+| `sdk-golden-*` / `sdk-prism-*`    | Golden и smoke тесты SDK                                                 |
+| `deploy-contract-env`             | Подготовка окружения для schemathesis (ветка **stable** сервиса)         |
+| `create-contract-user`            | Создание пользователя для contract‑тестов, экспорт кредов                |
+| `sdk-contract`                    | Schemathesis контрактные тесты (стадия `contract-test`)                  |
+| `remove-contract-env`             | Очистка окружения после contract‑тестов (manual, allow_failure)          |
+| `prep-branch-and-mr-php`          | Cоздание/обновление ветки и mr по сгенерированному sdk в репозитории sdk |
 
 #### 3. Merge/push в master
 
 При push/merge в `master` запускается полный релизный flow: проверки, контрактные тесты, версионирование и зеркалирование:
 
-| Job                     | Описание                                    |
-|-------------------------|---------------------------------------------|
-| `check-openapi-changes` | Проверка изменений OpenAPI относительно последнего тега в текущем репо |
-| `lint-openapi`          | Проверка спецификации                       |
-| `bundle-openapi`        | Сборка bundled версии                       |
-| `deploy-contract-env`   | Подготовка окружения для schemathesis       |
-| `create-contract-user`  | Создание пользователя и экспорт SCHEMATHESIS_* переменных |
-| `sdk-contract`          | Контрактные тесты Schemathesis              |
-| `remove-contract-env`   | Очистка окружения (manual, allow_failure)   |
-| `generate-sdk-*`        | Генерация SDK                               |
-| `sdk-golden-*`          | Golden тесты                                |
-| `sdk-prism-*`           | Smoke тесты                                 |
-| `version:auto`          | Автоматическое версионирование и выпуск тега|
-| `mirror-to-github`      | Зеркалирование в GitHub (без GitLab‑файлов и CI README) |
-| `create-github-release` | Создание GitHub Release на основе CHANGELOG |
+| Job                     | Описание                                                                                          |
+|-------------------------|---------------------------------------------------------------------------------------------------|
+| `check-openapi-changes` | Проверка изменений OpenAPI относительно последнего тега в текущем репо                            |
+| `lint-openapi`          | Проверка спецификации                                                                             |
+| `bundle-openapi`        | Сборка bundled версии                                                                             |
+| `deploy-contract-env`   | Подготовка окружения для schemathesis                                                             |
+| `create-contract-user`  | Создание пользователя и экспорт SCHEMATHESIS_* переменных                                         |
+| `sdk-contract`          | Контрактные тесты Schemathesis                                                                    |
+| `remove-contract-env`   | Очистка окружения (manual, allow_failure)                                                         |
+| `generate-sdk-*`        | Генерация SDK                                                                                     |
+| `sdk-golden-*`          | Golden тесты                                                                                      |
+| `sdk-prism-*`           | Smoke тесты                                                                                       |
+| `version:auto`          | Автоматическое версионирование и выпуск тега                                                      |
+| `mirror-to-github`      | Зеркалирование в GitHub (без GitLab‑файлов и CI README)                                           |
+| `create-github-release` | Создание GitHub Release на основе CHANGELOG                                                       |
+| `merge-branch-php`      | Обновление ветки master на удаленном gitlab sdk репозитории по сгенерированному sdk и выпуск тэга |
 
 ---
 
@@ -77,7 +79,6 @@
 | Переменная       | Описание                                             | Значение по умолчанию |
 |------------------|------------------------------------------------------|-----------------------|
 | `SDK_LANGUAGES`  | Языки для генерации SDK (через запятую без пробелов) | `""` (все доступные)  |
-| `PUSH_TO_REMOTE` | Пушить SDK в удалённые репозитории                   | `"false"`             |
 
 **Примеры SDK_LANGUAGES:**
 - `""` или не задана — генерируются все доступные SDK (сейчас только PHP)
@@ -109,11 +110,13 @@
 
 ### Переменные для Push/Mirror
 
-| Переменная     | Описание                         |
-|----------------|----------------------------------|
-| `GIT_PASSWORD` | Токен для доступа к GitHub       |
-| `GIT_USER`     | Имя пользователя для git commits |
-| `GIT_MAIL`     | Email для git commits            |
+| Переменная     | Описание                                                                                                                                |
+|----------------|-----------------------------------------------------------------------------------------------------------------------------------------|
+| `GIT_PASSWORD` | Токен для доступа к GitHub                                                                                                              |
+| `GIT_USER`     | Имя пользователя для git commits                                                                                                        |
+| `GIT_MAIL`     | Email для git commits                                                                                                                   |
+| `CICD_PAT`     | GitLab token для доступа к внутреннему репозиторию Remap Api Specification (`git.company.lognex/moysklad/misc/remap-api-specification`) |
+| `CICD_PAT_PHP` | GitLab token для доступа к внутреннему репозиторию PHP SDK (`git.company.lognex/moysklad/misc/php-remap-1.2-sdk`)                       |
 
 ### Переменные для обратной совместимости
 
@@ -129,16 +132,17 @@
 
 ### Текущие стадии
 
-| Стадия          | Описание                                           |
-|-----------------|----------------------------------------------------|
-| `changes-check` | Проверка изменений OpenAPI в `src/` относительно последнего тега (теги из текущего репо) |
-| `verify`        | Проверка спецификации, bundling; подготовка окружения для contract (deploy-contract-env на ветке **stable**, create-contract-user) |
-| `contract-test` | Контрактные тесты Schemathesis (`sdk-contract`) — после verify, до generate-sdk |
-| `generate-sdk`  | Генерация SDK                                     |
-| `test`          | Тестирование (golden, smoke)                      |
-| `version`       | Автоматическое версионирование и подготовка CHANGELOG/тегов |
-| `push-sdk`      | Push SDK в удалённые репозитории                  |
-| `mirror`        | Зеркалирование в GitHub и GitHub Release          |
+| Стадия                   | Описание                                                                                                                           |
+|--------------------------|------------------------------------------------------------------------------------------------------------------------------------|
+| `changes-check`          | Проверка изменений OpenAPI в `src/` относительно последнего тега (теги из текущего репо)                                           |
+| `verify`                 | Проверка спецификации, bundling; подготовка окружения для contract (deploy-contract-env на ветке **stable**, create-contract-user) |
+| `contract-test`          | Контрактные тесты Schemathesis (`sdk-contract`) — после verify, до generate-sdk                                                    |
+| `generate-sdk`           | Генерация SDK                                                                                                                      |
+| `test`                   | Тестирование (golden, smoke)                                                                                                       |
+| `version`                | Автоматическое версионирование и подготовка CHANGELOG/тегов                                                                        |
+| `push-sdk`               | Push SDK в удалённые репозитории                                                                                                   |
+| `mirror`                 | Зеркалирование в GitHub и GitHub Release                                                                                           |
+| `prepare-sdk-repository` | Подготовка внутреннего репозитория PHP SDK (ветки и релиз мастер‑ветки по текущим изменениям)                                      |
 
 ### Стадии для обратной совместимости (старый Java SDK)
 
