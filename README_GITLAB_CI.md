@@ -140,7 +140,6 @@
 | `generate-sdk`           | Генерация SDK                                                                                                                      |
 | `test`                   | Тестирование (golden, smoke)                                                                                                       |
 | `version`                | Автоматическое версионирование и подготовка CHANGELOG/тегов                                                                        |
-| `push-sdk`               | Push SDK в удалённые репозитории                                                                                                   |
 | `mirror`                 | Зеркалирование в GitHub и GitHub Release                                                                                           |
 | `prepare-sdk-repository` | Подготовка внутреннего репозитория PHP SDK (ветки и релиз мастер‑ветки по текущим изменениям)                                      |
 

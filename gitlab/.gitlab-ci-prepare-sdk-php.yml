@@ -145,7 +145,7 @@ merge-branch-php:
       
       git checkout master
 
-      rsync -a --delete --exclude ".git" ../clients/php ./
+      rsync -a --delete --exclude ".git" ../clients/php/ ./
       if [ -f "../CHANGELOG.md" ]; then
         cp ../CHANGELOG.md ./CHANGELOG.md
       else
