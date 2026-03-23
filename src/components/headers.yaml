@@ -1,0 +1,30 @@
+# Допустимые значения заданы через enum, чтобы SDK и Schemathesis не подставляли произвольные/фазовые значения
+AcceptHeader:
+  name: accept
+  in: header
+  required: false
+  schema:
+    type: string
+    default: application/json;charset=utf-8
+    enum:
+      - application/json
+      - application/json;charset=utf-8
+AcceptEncoding:
+  name: Accept-Encoding
+  in: header
+  required: false
+  schema:
+    type: string
+    default: gzip, deflate, br
+    # Убран enum - API принимает любые значения, но может вернуть 415 для неподдерживаемых
+    example: gzip, deflate, br
+# Явный Content-Type для запросов с телом (batch и др.) — чтобы генератор и тесты всегда отправляли application/json
+ContentTypeJson:
+  name: Content-Type
+  in: header
+  required: false
+  schema:
+    type: string
+    default: application/json
+    enum:
+      - application/json

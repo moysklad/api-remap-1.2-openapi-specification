@@ -1,0 +1,34 @@
+type: object
+description: Бонусная программа
+allOf:
+  - $ref: '../../../openapi.yaml#/components/schemas/DiscountBase'
+properties:
+  earnRateRoublesToPoint:
+    type: integer
+    format: int32
+    description: Курс начисления
+  earnWhileRedeeming:
+    type: boolean
+    description: Разрешить одновременное начисление и списание бонусов
+  postponedBonusesDelayDays:
+    type: integer
+    format: int32
+    description: Баллы начисляются через N дней
+  spendRatePointsToRouble:
+    type: integer
+    format: int32
+    description: Курс списания
+  welcomeBonusesEnabled:
+    type: boolean
+    description: Возможность начисления приветственных баллов
+  welcomeBonusesValue:
+    type: integer
+    format: int32
+    description: Количество приветственных баллов, начисляемых участникам бонусной программы
+  welcomeBonusesMode:
+    type: string
+    enum: [REGISTRATION, FIRST_PURCHASE]
+    description: Условие начисления приветственных баллов
+  allProducts:
+    type: boolean
+    description: Для всех ли товаров скидка

@@ -1,0 +1,15 @@
+# Без allOf на MinimumStockAbstract, чтобы не образовывать цикл для Schemathesis/генерации
+type: object
+required:
+  - type
+properties:
+  type:
+    type: string
+    default: ALL_WAREHOUSE_SUM
+    enum: [ALL_WAREHOUSE_SUM]
+    readOnly: true
+  quantity:
+    type: number
+    format: float
+    minimum: 0
+    description: Количество неснижаемого остатка

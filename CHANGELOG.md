@@ -1,0 +1,23 @@
+# Версия 0.3-release
+
+* feat: добавлены вложенные эндпоинты service - files
+* feat: добавлены вложенные эндпоинты product - images, files, storebalances
+* feat: добавлены вложенные эндпоинты employee - security, access/activate, access/deactivate, access/resetpassword, role
+* feat: добавлены вложенные эндпоинты counterparty - accounts, contactpersons, notes, files
+
+# Версия 0.2-release
+
+* feat: добавлен эндпоинт метаданных counterparty
+
+# Версия 0.1-release
+
+* feat: crud для валют (currency)
+* feat: crud для групп товаров (productFolder)
+* feat: crud для единиц измерения (uom)
+* feat: crud для контрагентов (counterparty)
+* feat: crud для отделов (group)
+* feat: crud для сотрудников (employee)
+* feat: crud для стран (country)
+* feat: crud для тип цен (priceType)
+* feat: crud для товаров (product)
+* feat: crud для услуг (service)
