@@ -1,0 +1,99 @@
+get:
+  operationId: getProductStoreBalanceById
+  tags:
+    - Products
+  summary: Получить НСО товара по складу
+  description: Запрос на получение отдельного Неснижаемого остатка Товара по складу.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - name: storeBalanceId
+      in: path
+      required: true
+      description: ID неснижаемого остатка
+      schema:
+        type: string
+        format: uuid
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/StoreBalance'
+    '400':
+      $ref: '../../../components/responses.yaml#/BadRequest'
+    '401':
+      $ref: '../../../components/responses.yaml#/Unauthorized'
+    '404':
+      $ref: '../../../components/responses.yaml#/NotFound'
+
+put:
+  operationId: updateProductStoreBalance
+  tags:
+    - Products
+  summary: Изменить НСО товара по складу
+  description: Обновление Неснижаемого остатка Товара для склада.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - name: storeBalanceId
+      in: path
+      required: true
+      description: ID неснижаемого остатка
+      schema:
+        type: string
+        format: uuid
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../openapi.yaml#/components/schemas/StoreBalance'
+  responses:
+    '200':
+      description: НСО успешно обновлён
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/StoreBalance'
+    '400':
+      $ref: '../../../components/responses.yaml#/BadRequest'
+    '401':
+      $ref: '../../../components/responses.yaml#/Unauthorized'
+    '404':
+      $ref: '../../../components/responses.yaml#/NotFound'
+    '413':
+      $ref: '../../../components/responses.yaml#/PayloadTooLarge'
+    '415':
+      $ref: '../../../components/responses.yaml#/UnsupportedMediaType'
+
+delete:
+  operationId: deleteProductStoreBalance
+  tags:
+    - Products
+  summary: Удалить НСО товара по складу
+  description: Удаление Неснижаемого остатка Товара для склада.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - name: storeBalanceId
+      in: path
+      required: true
+      description: ID неснижаемого остатка
+      schema:
+        type: string
+        format: uuid
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: НСО успешно удалён
+    '400':
+      $ref: '../../../components/responses.yaml#/BadRequest'
+    '401':
+      $ref: '../../../components/responses.yaml#/Unauthorized'
+    '404':
+      $ref: '../../../components/responses.yaml#/NotFound'

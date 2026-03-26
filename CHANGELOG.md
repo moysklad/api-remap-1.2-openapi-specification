@@ -1,3 +1,10 @@
+# Версия 0.3-release
+
+* feat: добавлены вложенные эндпоинты service - files
+* feat: добавлены вложенные эндпоинты product - images, files, storebalances
+* feat: добавлены вложенные эндпоинты employee - security, access/activate, access/deactivate, access/resetpassword, role
+* feat: добавлены вложенные эндпоинты counterparty - accounts, contactpersons, notes, files
+
 # Версия 0.2-release
 
 * feat: добавлен эндпоинт метаданных counterparty

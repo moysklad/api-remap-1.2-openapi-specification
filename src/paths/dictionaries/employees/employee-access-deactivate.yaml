@@ -1,0 +1,21 @@
+put:
+  operationId: deactivateEmployee
+  tags:
+    - Employees
+  summary: Деактивировать сотрудника
+  description: Запрос на деактивацию Сотрудника в сервисе МойСклад.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '204':
+      description: Сотрудник успешно деактивирован
+    '400':
+      $ref: '../../../components/responses.yaml#/BadRequest'
+    '401':
+      $ref: '../../../components/responses.yaml#/Unauthorized'
+    '403':
+      $ref: '../../../components/responses.yaml#/Forbidden'
+    '404':
+      $ref: '../../../components/responses.yaml#/NotFound'

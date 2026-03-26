@@ -45,6 +45,22 @@ paths:
     $ref: './paths/dictionaries/products/products-batch.yaml'
   /entity/product/metadata:
     $ref: './paths/common/metadata/metadata.yaml'
+  /entity/product/{id}/images:
+    $ref: './paths/dictionaries/products/product-images.yaml'
+  /entity/product/{id}/images/{imageId}:
+    $ref: './paths/dictionaries/products/product-image-by-id.yaml'
+  /entity/product/{id}/images/delete:
+    $ref: './paths/dictionaries/products/product-images-delete.yaml'
+  /entity/product/{id}/files:
+    $ref: './paths/dictionaries/products/product-files.yaml'
+  /entity/product/{id}/files/{fileId}:
+    $ref: './paths/dictionaries/products/product-file-by-id.yaml'
+  /entity/product/{id}/storebalances:
+    $ref: './paths/dictionaries/products/product-storebalances.yaml'
+  /entity/product/{id}/storebalances/{storeBalanceId}:
+    $ref: './paths/dictionaries/products/product-storebalance-by-id.yaml'
+  /entity/product/{id}/storebalances/delete:
+    $ref: './paths/dictionaries/products/product-storebalances-delete.yaml'
   #
   # Groups
   /entity/group:
@@ -101,6 +117,24 @@ paths:
     $ref: './paths/dictionaries/employees/employees-delete.yaml'
   /entity/employee/batch:
     $ref: './paths/dictionaries/employees/employees-batch.yaml'
+  /entity/employee/{id}/security:
+    $ref: './paths/dictionaries/employees/employee-security.yaml'
+  /entity/employee/{id}/access/activate:
+    $ref: './paths/dictionaries/employees/employee-access-activate.yaml'
+  /entity/employee/{id}/access/deactivate:
+    $ref: './paths/dictionaries/employees/employee-access-deactivate.yaml'
+  /entity/employee/{id}/access/resetpassword:
+    $ref: './paths/dictionaries/employees/employee-access-resetpassword.yaml'
+  /entity/role/owner:
+    $ref: './paths/dictionaries/employees/role-owner.yaml'
+  /entity/role/admin:
+    $ref: './paths/dictionaries/employees/role-admin.yaml'
+  /entity/role/individual:
+    $ref: './paths/dictionaries/employees/role-individual.yaml'
+  /entity/role/cashier:
+    $ref: './paths/dictionaries/employees/role-cashier.yaml'
+  /entity/role/worker:
+    $ref: './paths/dictionaries/employees/role-worker.yaml'
   #
   # Counterparties
   /entity/counterparty:
@@ -113,6 +147,22 @@ paths:
     $ref: './paths/dictionaries/counterparties/counterparties-batch.yaml'
   /entity/counterparty/metadata:
     $ref: './paths/dictionaries/counterparties/counterparty-metadata.yaml'
+  /entity/counterparty/{id}/accounts:
+    $ref: './paths/dictionaries/counterparties/counterparty-accounts.yaml'
+  /entity/counterparty/{id}/accounts/{accountId}:
+    $ref: './paths/dictionaries/counterparties/counterparty-account-by-id.yaml'
+  /entity/counterparty/{id}/contactpersons:
+    $ref: './paths/dictionaries/counterparties/counterparty-contactpersons.yaml'
+  /entity/counterparty/{id}/contactpersons/{contactPersonId}:
+    $ref: './paths/dictionaries/counterparties/counterparty-contactperson-by-id.yaml'
+  /entity/counterparty/{id}/notes:
+    $ref: './paths/dictionaries/counterparties/counterparty-notes.yaml'
+  /entity/counterparty/{id}/notes/{noteId}:
+    $ref: './paths/dictionaries/counterparties/counterparty-note-by-id.yaml'
+  /entity/counterparty/{id}/files:
+    $ref: './paths/dictionaries/counterparties/counterparty-files.yaml'
+  /entity/counterparty/{id}/files/{fileId}:
+    $ref: './paths/dictionaries/counterparties/counterparty-file-by-id.yaml'
   #
   # Services
   /entity/service:
@@ -123,6 +173,10 @@ paths:
     $ref: './paths/dictionaries/services/services-delete.yaml'
   /entity/service/batch:
     $ref: './paths/dictionaries/services/services-batch.yaml'
+  /entity/service/{id}/files:
+    $ref: './paths/dictionaries/services/service-files.yaml'
+  /entity/service/{id}/files/{fileId}:
+    $ref: './paths/dictionaries/services/service-file-by-id.yaml'
   #
   # PriceTypes
   /context/companysettings/pricetype:
@@ -194,8 +248,14 @@ components:
       $ref: './components/schemas/dictionary/currency.yaml'
     Employee:
       $ref: './components/schemas/dictionary/employee.yaml'
+    EmployeeSecurity:
+      $ref: './components/schemas/dictionary/employeeSecurity.yaml'
+    EmployeeRole:
+      $ref: './components/schemas/dictionary/employeeRole.yaml'
     File:
       $ref: './components/schemas/common/file.yaml'
+    FileUpload:
+      $ref: './components/schemas/common/fileUpload.yaml'
     FileList:
       $ref: './components/schemas/common/fileList.yaml'
     Group:
