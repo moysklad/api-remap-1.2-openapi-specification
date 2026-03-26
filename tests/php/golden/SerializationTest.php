@@ -39,8 +39,6 @@ class SerializationTest extends TestCase
         'counterparty_contactperson' => 'ContactPerson',
         'counterparty_note' => 'Note',
         'counterparty_file' => 'File',
-        'product_metadata' => 'Metadata',
-        'product_metadata_expanded' => 'Metadata',
         'currency' => 'Currency',
         'employee' => 'Employee',
         'employee_security' => 'EmployeeSecurity',

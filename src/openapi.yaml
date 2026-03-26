@@ -117,8 +117,6 @@ paths:
     $ref: './paths/dictionaries/employees/employees-delete.yaml'
   /entity/employee/batch:
     $ref: './paths/dictionaries/employees/employees-batch.yaml'
-  /entity/employee/metadata:
-    $ref: './paths/common/metadata/metadata-employee.yaml'
   /entity/employee/{id}/security:
     $ref: './paths/dictionaries/employees/employee-security.yaml'
   /entity/employee/{id}/access/activate:
