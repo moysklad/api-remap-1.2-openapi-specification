@@ -1,0 +1,99 @@
+get:
+  operationId: getCounterpartyNoteById
+  tags:
+    - Counterparties
+  summary: Получить событие контрагента по ID
+  description: Запрос на получение отдельного события Контрагента с указанным id.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - name: noteId
+      in: path
+      required: true
+      description: ID события контрагента
+      schema:
+        type: string
+        format: uuid
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/Note'
+    '400':
+      $ref: '../../../components/responses.yaml#/BadRequest'
+    '401':
+      $ref: '../../../components/responses.yaml#/Unauthorized'
+    '404':
+      $ref: '../../../components/responses.yaml#/NotFound'
+
+put:
+  operationId: updateCounterpartyNote
+  tags:
+    - Counterparties
+  summary: Обновить событие контрагента
+  description: Обновление события Контрагента с указанным id.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - name: noteId
+      in: path
+      required: true
+      description: ID события контрагента
+      schema:
+        type: string
+        format: uuid
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../openapi.yaml#/components/schemas/Note'
+  responses:
+    '200':
+      description: Событие успешно обновлено
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/Note'
+    '400':
+      $ref: '../../../components/responses.yaml#/BadRequest'
+    '401':
+      $ref: '../../../components/responses.yaml#/Unauthorized'
+    '404':
+      $ref: '../../../components/responses.yaml#/NotFound'
+    '413':
+      $ref: '../../../components/responses.yaml#/PayloadTooLarge'
+    '415':
+      $ref: '../../../components/responses.yaml#/UnsupportedMediaType'
+
+delete:
+  operationId: deleteCounterpartyNote
+  tags:
+    - Counterparties
+  summary: Удалить событие контрагента
+  description: Удаление события Контрагента с указанным id.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - name: noteId
+      in: path
+      required: true
+      description: ID события контрагента
+      schema:
+        type: string
+        format: uuid
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Событие успешно удалено
+    '400':
+      $ref: '../../../components/responses.yaml#/BadRequest'
+    '401':
+      $ref: '../../../components/responses.yaml#/Unauthorized'
+    '404':
+      $ref: '../../../components/responses.yaml#/NotFound'

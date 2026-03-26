@@ -1,0 +1,28 @@
+delete:
+  operationId: deleteServiceFile
+  tags:
+    - Services
+  summary: Удалить файл услуги
+  description: Удаление Файла Услуги.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - name: fileId
+      in: path
+      required: true
+      description: ID файла
+      schema:
+        type: string
+        format: uuid
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Файл успешно удалён
+    '400':
+      $ref: '../../../components/responses.yaml#/BadRequest'
+    '401':
+      $ref: '../../../components/responses.yaml#/Unauthorized'
+    '403':
+      $ref: '../../../components/responses.yaml#/Forbidden'
+    '404':
+      $ref: '../../../components/responses.yaml#/NotFound'

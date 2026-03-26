@@ -1,0 +1,99 @@
+get:
+  operationId: getServiceFiles
+  tags:
+    - Services
+  summary: Получить файлы услуги
+  description: Запрос на получение списка всех Файлов данной Услуги.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/parameters.yaml#/limit'
+    - $ref: '../../../components/parameters.yaml#/offset'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              meta:
+                $ref: '../../../components/schemas/common/metaList.yaml'
+              rows:
+                type: array
+                items:
+                  $ref: '../../../openapi.yaml#/components/schemas/File'
+          example:
+            meta:
+              href: "https://api.moysklad.ru/api/remap/1.2/entity/service/7944ef04-f831-11e5-7a69-971500188b19/files"
+              type: "files"
+              mediaType: "application/json"
+              size: 1
+              limit: 1000
+              offset: 0
+            rows:
+              - meta:
+                  href: "https://api.moysklad.ru/api/remap/1.2/entity/service/7944ef04-f831-11e5-7a69-971500188b19/files/f2728180-6afd-4d37-8a13-f3b48069bbb6"
+                  type: "files"
+                  mediaType: "application/json"
+                  downloadHref: "https://api.moysklad.ru/api/remap/1.2/download/f2728180-6afd-4d37-8a13-f3b48069bbb6"
+                title: "doc"
+                filename: "doc.pdf"
+                size: 25000
+                created: "2019-01-25 17:30:25.021"
+    '400':
+      $ref: '../../../components/responses.yaml#/BadRequest'
+    '401':
+      $ref: '../../../components/responses.yaml#/Unauthorized'
+    '403':
+      $ref: '../../../components/responses.yaml#/Forbidden'
+    '404':
+      $ref: '../../../components/responses.yaml#/NotFound'
+
+post:
+  operationId: addServiceFiles
+  tags:
+    - Services
+  summary: Добавить файлы к услуге
+  description: |
+    Добавить новые Файлы к Услуге. В одном запросе можно добавить максимум 10 Файлов.
+    В поле `content` нужно указать файл, закодированный в Base64, в поле `filename` — имя файла с расширением.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: array
+          maxItems: 10
+          items:
+            $ref: '../../../openapi.yaml#/components/schemas/FileUpload'
+        example:
+          - filename: "doc.pdf"
+            content: "SGVsbG8gV29ybGQ="
+  responses:
+    '200':
+      description: Файлы успешно добавлены. Результат — массив всех Файлов Услуги.
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../../../openapi.yaml#/components/schemas/File'
+    '400':
+      $ref: '../../../components/responses.yaml#/BadRequest'
+    '401':
+      $ref: '../../../components/responses.yaml#/Unauthorized'
+    '403':
+      $ref: '../../../components/responses.yaml#/Forbidden'
+    '404':
+      $ref: '../../../components/responses.yaml#/NotFound'
+    '413':
+      $ref: '../../../components/responses.yaml#/PayloadTooLarge'
+    '415':
+      $ref: '../../../components/responses.yaml#/UnsupportedMediaType'
