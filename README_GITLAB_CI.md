@@ -163,7 +163,7 @@ Job `version:auto`:
   - генерирует `breaking-changes.json` и `breaking-changes.md`;
   - если есть breaking changes, поднимает MAJOR версию, иначе MINOR;
 - использует `standard-version` с конфигурацией из `.versionrc.json`:
-  - формат версии `MAJOR.MINOR` с суффиксом `-release` (пример: `1.2-release`);
+  - формат версии semver `MAJOR.MINOR.PATCH` (пример: `1.2.0`);
   - читает Conventional Commits (`feat`, `fix`, `docs`, `feat!`);
 - формирует блок изменений для новой версии из сообщений коммитов (`feat`, `fix`, `docs`) и дописывает его в начало `CHANGELOG.md`;
   - если подходящих коммитов нет, в блок версии добавляется строка по умолчанию: **\* технические изменения**;
@@ -171,6 +171,6 @@ Job `version:auto`:
 - в сообщение release-коммита добавляется **`[skip ci]`**, чтобы push из `version:auto` не запускал второй пайплайн проверок;
 - пушит новый тег и текущую ветку.
 
-При отсутствии тегов versioning стартует с `0.y-release` (MINOR).
+При отсутствии тегов versioning стартует с `0.y.0` (MINOR).
 
 

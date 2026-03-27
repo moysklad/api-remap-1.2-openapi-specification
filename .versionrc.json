@@ -1,5 +1,6 @@
 {
   "header": "# Changelog\n\nВсе значимые изменения OpenAPI спецификации МойСклад.",
+  "tagPrefix": "",
   "types": [
     { "type": "feat", "section": "Новая функциональность" },
     { "type": "fix", "section": "Исправления" },
