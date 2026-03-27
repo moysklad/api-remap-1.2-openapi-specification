@@ -1,0 +1,27 @@
+get:
+  operationId: getRoleCashier
+  tags:
+    - Employees
+  summary: Получить роль кассира
+  description: Запрос на получение роли кассира.
+  parameters:
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/EmployeeRole'
+          example:
+            meta:
+              href: "https://api.moysklad.ru/api/remap/1.2/entity/role/cashier"
+              type: "systemrole"
+              mediaType: "application/json"
+    '400':
+      $ref: '../../../components/responses.yaml#/BadRequest'
+    '401':
+      $ref: '../../../components/responses.yaml#/Unauthorized'
+    '403':
+      $ref: '../../../components/responses.yaml#/Forbidden'

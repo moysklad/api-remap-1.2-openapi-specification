@@ -1,0 +1,87 @@
+get:
+  operationId: getProductStoreBalances
+  tags:
+    - Products
+  summary: Получить НСО товара по складам
+  description: Запрос на получение списка Неснижаемых остатков Товара по складам.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/parameters.yaml#/limit'
+    - $ref: '../../../components/parameters.yaml#/offset'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/StoreBalanceList'
+          example:
+            meta:
+              href: "https://api.moysklad.ru/api/remap/1.2/entity/product/88df2fc1-1065-11f0-ac15-000700000012/storebalances"
+              type: "minimumstock"
+              mediaType: "application/json"
+              size: 1
+              limit: 1000
+              offset: 0
+            rows:
+              - meta:
+                  href: "https://api.moysklad.ru/api/remap/1.2/entity/product/88df2fc1-1065-11f0-ac15-000700000012/storebalances/de922f92-113b-11f0-ac15-001000000009"
+                  type: "minimumstock"
+                  mediaType: "application/json"
+                id: "de922f92-113b-11f0-ac15-001000000009"
+                accountId: "762af84a-0ec6-11f0-ac15-001000000001"
+                quantity: 2.5
+    '400':
+      $ref: '../../../components/responses.yaml#/BadRequest'
+    '401':
+      $ref: '../../../components/responses.yaml#/Unauthorized'
+    '403':
+      $ref: '../../../components/responses.yaml#/Forbidden'
+    '404':
+      $ref: '../../../components/responses.yaml#/NotFound'
+
+post:
+  operationId: createProductStoreBalance
+  tags:
+    - Products
+  summary: Создать НСО товара для склада
+  description: Создание нового Неснижаемого остатка Товара для склада.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../openapi.yaml#/components/schemas/StoreBalance'
+        example:
+          store:
+            meta:
+              href: "https://api.moysklad.ru/api/remap/1.2/entity/store/da1c5548-0ecf-11f0-ac15-001200000125"
+              type: "store"
+              mediaType: "application/json"
+          quantity: 5.0
+  responses:
+    '200':
+      description: НСО успешно создан
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/StoreBalance'
+    '400':
+      $ref: '../../../components/responses.yaml#/BadRequest'
+    '401':
+      $ref: '../../../components/responses.yaml#/Unauthorized'
+    '403':
+      $ref: '../../../components/responses.yaml#/Forbidden'
+    '404':
+      $ref: '../../../components/responses.yaml#/NotFound'
+    '413':
+      $ref: '../../../components/responses.yaml#/PayloadTooLarge'
+    '415':
+      $ref: '../../../components/responses.yaml#/UnsupportedMediaType'

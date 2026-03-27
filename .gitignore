@@ -43,3 +43,4 @@ clients/*
 /.schemathesis-venv/
 /.hypothesis/
 /tasks/
+/.cursor/

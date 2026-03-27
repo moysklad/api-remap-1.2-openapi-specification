@@ -139,6 +139,148 @@ class ApiEndpointsTest extends TestCase
         $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
     }
 
+    /**
+     * Проверяет доступность endpoint'а получения изображений товара.
+     * GET /entity/product/{id}/images
+     */
+    public function testGetProductImages(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/product/' . self::TEST_UUID . '/images');
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а добавления изображений к товару.
+     * POST /entity/product/{id}/images
+     */
+    public function testAddProductImages(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/product/' . self::TEST_UUID . '/images', [
+            'json' => ['filename' => 'test.png', 'content' => 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADklEQVQI12P4z8BQDwADhQGAWjR9awAAAABJRU5ErkJggg=='],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а удаления изображения товара.
+     * DELETE /entity/product/{id}/images/{imageId}
+     */
+    public function testDeleteProductImage(): void
+    {
+        $response = $this->client->delete(self::API_BASE_PATH . '/entity/product/' . self::TEST_UUID . '/images/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::DELETE_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а массового удаления изображений товара.
+     * POST /entity/product/{id}/images/delete
+     */
+    public function testBatchDeleteProductImages(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/product/' . self::TEST_UUID . '/images/delete', [
+            'json' => [['meta' => ['href' => 'https://api.moysklad.ru/api/remap/1.2/entity/product/' . self::TEST_UUID . '/images/' . self::TEST_UUID, 'type' => 'image', 'mediaType' => 'application/json']]],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а получения файлов товара.
+     * GET /entity/product/{id}/files
+     */
+    public function testGetProductFiles(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/product/' . self::TEST_UUID . '/files');
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а добавления файлов к товару.
+     * POST /entity/product/{id}/files
+     */
+    public function testAddProductFiles(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/product/' . self::TEST_UUID . '/files', [
+            'json' => [['filename' => 'doc.pdf', 'content' => 'SGVsbG8gV29ybGQ=']],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а удаления файла товара.
+     * DELETE /entity/product/{id}/files/{fileId}
+     */
+    public function testDeleteProductFile(): void
+    {
+        $response = $this->client->delete(self::API_BASE_PATH . '/entity/product/' . self::TEST_UUID . '/files/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::DELETE_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а получения НСО товара по складам.
+     * GET /entity/product/{id}/storebalances
+     */
+    public function testGetProductStoreBalances(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/product/' . self::TEST_UUID . '/storebalances');
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а создания НСО товара для склада.
+     * POST /entity/product/{id}/storebalances
+     */
+    public function testCreateProductStoreBalance(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/product/' . self::TEST_UUID . '/storebalances', [
+            'json' => ['store' => ['meta' => ['href' => 'https://api.moysklad.ru/api/remap/1.2/entity/store/' . self::TEST_UUID, 'type' => 'store', 'mediaType' => 'application/json']], 'quantity' => 5.0],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а получения НСО товара по складу.
+     * GET /entity/product/{id}/storebalances/{storeBalanceId}
+     */
+    public function testGetProductStoreBalanceById(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/product/' . self::TEST_UUID . '/storebalances/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а обновления НСО товара по складу.
+     * PUT /entity/product/{id}/storebalances/{storeBalanceId}
+     */
+    public function testUpdateProductStoreBalance(): void
+    {
+        $response = $this->client->put(self::API_BASE_PATH . '/entity/product/' . self::TEST_UUID . '/storebalances/' . self::TEST_UUID, [
+            'json' => ['quantity' => 10.0],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а удаления НСО товара по складу.
+     * DELETE /entity/product/{id}/storebalances/{storeBalanceId}
+     */
+    public function testDeleteProductStoreBalance(): void
+    {
+        $response = $this->client->delete(self::API_BASE_PATH . '/entity/product/' . self::TEST_UUID . '/storebalances/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::DELETE_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а массового удаления НСО товара.
+     * POST /entity/product/{id}/storebalances/delete
+     */
+    public function testBatchDeleteProductStoreBalances(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/product/' . self::TEST_UUID . '/storebalances/delete', [
+            'json' => [['meta' => ['href' => 'https://api.moysklad.ru/api/remap/1.2/entity/product/' . self::TEST_UUID . '/storebalances/' . self::TEST_UUID, 'type' => 'minimumstock', 'mediaType' => 'application/json']]],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
     // ==================== COUNTERPARTIES ====================
 
     /**
@@ -185,6 +327,200 @@ class ApiEndpointsTest extends TestCase
             'json' => ['name' => 'Updated Counterparty'],
         ]);
         $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а получения счетов контрагента.
+     * GET /entity/counterparty/{id}/accounts
+     */
+    public function testGetCounterpartyAccounts(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/counterparty/' . self::TEST_UUID . '/accounts');
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а создания счёта контрагента.
+     * POST /entity/counterparty/{id}/accounts
+     */
+    public function testCreateCounterpartyAccount(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/counterparty/' . self::TEST_UUID . '/accounts', [
+            'json' => ['accountNumber' => '40702810123456789012', 'bankName' => 'ПАО Сбербанк', 'bic' => '044525225'],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а получения счёта контрагента по ID.
+     * GET /entity/counterparty/{id}/accounts/{accountId}
+     */
+    public function testGetCounterpartyAccountById(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/counterparty/' . self::TEST_UUID . '/accounts/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а обновления счёта контрагента.
+     * PUT /entity/counterparty/{id}/accounts/{accountId}
+     */
+    public function testUpdateCounterpartyAccount(): void
+    {
+        $response = $this->client->put(self::API_BASE_PATH . '/entity/counterparty/' . self::TEST_UUID . '/accounts/' . self::TEST_UUID, [
+            'json' => ['bankName' => 'ПАО ВТБ'],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а удаления счёта контрагента.
+     * DELETE /entity/counterparty/{id}/accounts/{accountId}
+     */
+    public function testDeleteCounterpartyAccount(): void
+    {
+        $response = $this->client->delete(self::API_BASE_PATH . '/entity/counterparty/' . self::TEST_UUID . '/accounts/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::DELETE_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а получения контактных лиц контрагента.
+     * GET /entity/counterparty/{id}/contactpersons
+     */
+    public function testGetCounterpartyContactPersons(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/counterparty/' . self::TEST_UUID . '/contactpersons');
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а создания контактного лица контрагента.
+     * POST /entity/counterparty/{id}/contactpersons
+     */
+    public function testCreateCounterpartyContactPerson(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/counterparty/' . self::TEST_UUID . '/contactpersons', [
+            'json' => ['name' => 'Иванов Иван Иванович', 'position' => 'Директор'],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а получения контактного лица контрагента по ID.
+     * GET /entity/counterparty/{id}/contactpersons/{contactPersonId}
+     */
+    public function testGetCounterpartyContactPersonById(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/counterparty/' . self::TEST_UUID . '/contactpersons/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а обновления контактного лица контрагента.
+     * PUT /entity/counterparty/{id}/contactpersons/{contactPersonId}
+     */
+    public function testUpdateCounterpartyContactPerson(): void
+    {
+        $response = $this->client->put(self::API_BASE_PATH . '/entity/counterparty/' . self::TEST_UUID . '/contactpersons/' . self::TEST_UUID, [
+            'json' => ['position' => 'Менеджер'],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а удаления контактного лица контрагента.
+     * DELETE /entity/counterparty/{id}/contactpersons/{contactPersonId}
+     */
+    public function testDeleteCounterpartyContactPerson(): void
+    {
+        $response = $this->client->delete(self::API_BASE_PATH . '/entity/counterparty/' . self::TEST_UUID . '/contactpersons/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::DELETE_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а получения событий контрагента.
+     * GET /entity/counterparty/{id}/notes
+     */
+    public function testGetCounterpartyNotes(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/counterparty/' . self::TEST_UUID . '/notes');
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а создания события контрагента.
+     * POST /entity/counterparty/{id}/notes
+     */
+    public function testCreateCounterpartyNote(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/counterparty/' . self::TEST_UUID . '/notes', [
+            'json' => ['description' => 'Важный клиент'],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а получения события контрагента по ID.
+     * GET /entity/counterparty/{id}/notes/{noteId}
+     */
+    public function testGetCounterpartyNoteById(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/counterparty/' . self::TEST_UUID . '/notes/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а обновления события контрагента.
+     * PUT /entity/counterparty/{id}/notes/{noteId}
+     */
+    public function testUpdateCounterpartyNote(): void
+    {
+        $response = $this->client->put(self::API_BASE_PATH . '/entity/counterparty/' . self::TEST_UUID . '/notes/' . self::TEST_UUID, [
+            'json' => ['description' => 'Обновлённое событие'],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а удаления события контрагента.
+     * DELETE /entity/counterparty/{id}/notes/{noteId}
+     */
+    public function testDeleteCounterpartyNote(): void
+    {
+        $response = $this->client->delete(self::API_BASE_PATH . '/entity/counterparty/' . self::TEST_UUID . '/notes/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::DELETE_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а получения файлов контрагента.
+     * GET /entity/counterparty/{id}/files
+     */
+    public function testGetCounterpartyFiles(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/counterparty/' . self::TEST_UUID . '/files');
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а добавления файлов к контрагенту.
+     * POST /entity/counterparty/{id}/files
+     */
+    public function testAddCounterpartyFiles(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/counterparty/' . self::TEST_UUID . '/files', [
+            'json' => [['filename' => 'doc.pdf', 'content' => 'SGVsbG8gV29ybGQ=']],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а удаления файла контрагента.
+     * DELETE /entity/counterparty/{id}/files/{fileId}
+     */
+    public function testDeleteCounterpartyFile(): void
+    {
+        $response = $this->client->delete(self::API_BASE_PATH . '/entity/counterparty/' . self::TEST_UUID . '/files/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::DELETE_CODES);
     }
 
     // ==================== CURRENCIES ====================
@@ -245,6 +581,110 @@ class ApiEndpointsTest extends TestCase
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/employee/' . self::TEST_UUID);
         $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а получения прав сотрудника.
+     * GET /entity/employee/{id}/security
+     */
+    public function testGetEmployeeSecurity(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/employee/' . self::TEST_UUID . '/security');
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а изменения прав сотрудника.
+     * PUT /entity/employee/{id}/security
+     */
+    public function testUpdateEmployeeSecurity(): void
+    {
+        $response = $this->client->put(self::API_BASE_PATH . '/entity/employee/' . self::TEST_UUID . '/security', [
+            'json' => ['role' => ['meta' => ['href' => 'https://api.moysklad.ru/api/remap/1.2/entity/role/admin', 'type' => 'systemrole', 'mediaType' => 'application/json']]],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а активации сотрудника.
+     * PUT /entity/employee/{id}/access/activate
+     */
+    public function testActivateEmployee(): void
+    {
+        $response = $this->client->put(self::API_BASE_PATH . '/entity/employee/' . self::TEST_UUID . '/access/activate', [
+            'json' => ['login' => 'newemployee@lognex'],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а деактивации сотрудника.
+     * PUT /entity/employee/{id}/access/deactivate
+     */
+    public function testDeactivateEmployee(): void
+    {
+        $response = $this->client->put(self::API_BASE_PATH . '/entity/employee/' . self::TEST_UUID . '/access/deactivate');
+        $this->assertContains($response->getStatusCode(), array_merge(self::NOT_FOUND_CODES, [204]));
+    }
+
+    /**
+     * Проверяет доступность endpoint'а сброса пароля сотрудника.
+     * PUT /entity/employee/{id}/access/resetpassword
+     */
+    public function testResetEmployeePassword(): void
+    {
+        $response = $this->client->put(self::API_BASE_PATH . '/entity/employee/' . self::TEST_UUID . '/access/resetpassword');
+        $this->assertContains($response->getStatusCode(), array_merge(self::NOT_FOUND_CODES, [204]));
+    }
+
+    /**
+     * Проверяет доступность endpoint'а получения роли владельца аккаунта.
+     * GET /entity/role/owner
+     */
+    public function testGetRoleOwner(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/role/owner');
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * Проверяет доступность endpoint'а получения роли администратора.
+     * GET /entity/role/admin
+     */
+    public function testGetRoleAdmin(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/role/admin');
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * Проверяет доступность endpoint'а получения индивидуальной роли.
+     * GET /entity/role/individual
+     */
+    public function testGetRoleIndividual(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/role/individual');
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * Проверяет доступность endpoint'а получения роли кассира.
+     * GET /entity/role/cashier
+     */
+    public function testGetRoleCashier(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/role/cashier');
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * Проверяет доступность endpoint'а получения роли сотрудника производства.
+     * GET /entity/role/worker
+     */
+    public function testGetRoleWorker(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/role/worker');
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
     }
 
     // ==================== GROUPS ====================
@@ -365,6 +805,38 @@ class ApiEndpointsTest extends TestCase
             'json' => ['name' => 'Test Service'],
         ]);
         $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * Проверяет доступность endpoint'а получения файлов услуги.
+     * GET /entity/service/{id}/files
+     */
+    public function testGetServiceFiles(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/service/' . self::TEST_UUID . '/files');
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а добавления файлов к услуге.
+     * POST /entity/service/{id}/files
+     */
+    public function testAddServiceFiles(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/service/' . self::TEST_UUID . '/files', [
+            'json' => [['filename' => 'doc.pdf', 'content' => 'SGVsbG8gV29ybGQ=']],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а удаления файла услуги.
+     * DELETE /entity/service/{id}/files/{fileId}
+     */
+    public function testDeleteServiceFile(): void
+    {
+        $response = $this->client->delete(self::API_BASE_PATH . '/entity/service/' . self::TEST_UUID . '/files/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::DELETE_CODES);
     }
 
     // ==================== UOMS ====================
