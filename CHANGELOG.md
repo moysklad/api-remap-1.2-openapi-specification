@@ -1,3 +1,7 @@
+# Версия 0.4-release
+
+* feat: добавлены вложенные эндпоинты employee - metadata
+
 # Версия 0.3-release
 
 * feat: добавлены вложенные эндпоинты service - files
