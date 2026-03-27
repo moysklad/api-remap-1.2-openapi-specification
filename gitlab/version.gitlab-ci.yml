@@ -66,15 +66,14 @@ version:auto:
           fi
         fi
       else
-        echo "No existing tag or could not build prev spec from tag, starting from 0.y-release (MINOR)."
+        echo "No existing tag or could not build prev spec from tag, starting from 0.y.0 (MINOR)."
       fi
     - npm install -g standard-version
     - standard-version --release-as "$RELEASE_TYPE"
     - |
-      # Формируем новый тег вида MAJOR.MINOR-release на основе версии в package.json
+      # Формируем новый тег в формате semver (X.Y.Z) на основе версии в package.json
       NEW_VERSION=$(node -p "require('./package.json').version")
-      MAJOR_MINOR=${NEW_VERSION%.*}
-      NEW_TAG="${MAJOR_MINOR}-release"
+      NEW_TAG="$NEW_VERSION"
       echo "New version: $NEW_VERSION, tag: $NEW_TAG"
     - |
       # Определяем предыдущий тег (если был) для диапазона коммитов
