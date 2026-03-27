@@ -1,0 +1,88 @@
+get:
+  operationId: getCounterpartyNotes
+  tags:
+    - Counterparties
+  summary: Получить события контрагента
+  description: Запрос на получение списка всех событий данного Контрагента.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/parameters.yaml#/limit'
+    - $ref: '../../../components/parameters.yaml#/offset'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              meta:
+                $ref: '../../../components/schemas/common/metaList.yaml'
+              rows:
+                type: array
+                items:
+                  $ref: '../../../openapi.yaml#/components/schemas/Note'
+          example:
+            meta:
+              href: "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/12a8b923-692c-11e6-8a84-bae500000056/notes"
+              type: "note"
+              mediaType: "application/json"
+              size: 1
+              limit: 1000
+              offset: 0
+            rows:
+              - meta:
+                  href: "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/12a8b923-692c-11e6-8a84-bae500000056/notes/3665cc2b-028c-11f1-0a81-0727000001af"
+                  type: "note"
+                  mediaType: "application/json"
+                id: "3665cc2b-028c-11f1-0a81-0727000001af"
+                accountId: "f976ed28-2e58-11e6-8a84-bae500000001"
+                created: "2026-02-05 15:14:25.634"
+                description: "Важный клиент, скидка 10%"
+    '400':
+      $ref: '../../../components/responses.yaml#/BadRequest'
+    '401':
+      $ref: '../../../components/responses.yaml#/Unauthorized'
+    '403':
+      $ref: '../../../components/responses.yaml#/Forbidden'
+    '404':
+      $ref: '../../../components/responses.yaml#/NotFound'
+
+post:
+  operationId: createCounterpartyNote
+  tags:
+    - Counterparties
+  summary: Создать событие контрагента
+  description: Создание нового события у данного Контрагента.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../openapi.yaml#/components/schemas/Note'
+  responses:
+    '200':
+      description: Событие успешно создано
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/Note'
+    '400':
+      $ref: '../../../components/responses.yaml#/BadRequest'
+    '401':
+      $ref: '../../../components/responses.yaml#/Unauthorized'
+    '403':
+      $ref: '../../../components/responses.yaml#/Forbidden'
+    '404':
+      $ref: '../../../components/responses.yaml#/NotFound'
+    '413':
+      $ref: '../../../components/responses.yaml#/PayloadTooLarge'
+    '415':
+      $ref: '../../../components/responses.yaml#/UnsupportedMediaType'

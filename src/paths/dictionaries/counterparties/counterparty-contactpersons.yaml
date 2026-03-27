@@ -1,0 +1,90 @@
+get:
+  operationId: getCounterpartyContactPersons
+  tags:
+    - Counterparties
+  summary: Получить контактные лица контрагента
+  description: Запрос на получение списка всех контактных лиц данного Контрагента.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/parameters.yaml#/limit'
+    - $ref: '../../../components/parameters.yaml#/offset'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              meta:
+                $ref: '../../../components/schemas/common/metaList.yaml'
+              rows:
+                type: array
+                items:
+                  $ref: '../../../openapi.yaml#/components/schemas/ContactPerson'
+          example:
+            meta:
+              href: "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/12a8b923-692c-11e6-8a84-bae500000056/contactpersons"
+              type: "contactperson"
+              mediaType: "application/json"
+              size: 1
+              limit: 1000
+              offset: 0
+            rows:
+              - meta:
+                  href: "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/12a8b923-692c-11e6-8a84-bae500000056/contactpersons/097ed025-025c-11f1-0a81-072700000158"
+                  type: "contactperson"
+                  mediaType: "application/json"
+                id: "097ed025-025c-11f1-0a81-072700000158"
+                accountId: "f976ed28-2e58-11e6-8a84-bae500000001"
+                name: "Иванов Иван Иванович"
+                email: "ivanov@example.com"
+                phone: "+7 (999) 123-45-67"
+                position: "Директор"
+    '400':
+      $ref: '../../../components/responses.yaml#/BadRequest'
+    '401':
+      $ref: '../../../components/responses.yaml#/Unauthorized'
+    '403':
+      $ref: '../../../components/responses.yaml#/Forbidden'
+    '404':
+      $ref: '../../../components/responses.yaml#/NotFound'
+
+post:
+  operationId: createCounterpartyContactPerson
+  tags:
+    - Counterparties
+  summary: Создать контактное лицо контрагента
+  description: Создание нового контактного лица у данного Контрагента.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../openapi.yaml#/components/schemas/ContactPerson'
+  responses:
+    '200':
+      description: Контактное лицо успешно создано
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/ContactPerson'
+    '400':
+      $ref: '../../../components/responses.yaml#/BadRequest'
+    '401':
+      $ref: '../../../components/responses.yaml#/Unauthorized'
+    '403':
+      $ref: '../../../components/responses.yaml#/Forbidden'
+    '404':
+      $ref: '../../../components/responses.yaml#/NotFound'
+    '413':
+      $ref: '../../../components/responses.yaml#/PayloadTooLarge'
+    '415':
+      $ref: '../../../components/responses.yaml#/UnsupportedMediaType'
