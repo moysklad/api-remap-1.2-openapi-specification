@@ -1,0 +1,99 @@
+get:
+  operationId: getCounterpartyAccountById
+  tags:
+    - Counterparties
+  summary: Получить счёт контрагента по ID
+  description: Запрос на получение отдельного счёта Контрагента с указанным id.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - name: accountId
+      in: path
+      required: true
+      description: ID счёта контрагента
+      schema:
+        type: string
+        format: uuid
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/Account'
+    '400':
+      $ref: '../../../components/responses.yaml#/BadRequest'
+    '401':
+      $ref: '../../../components/responses.yaml#/Unauthorized'
+    '404':
+      $ref: '../../../components/responses.yaml#/NotFound'
+
+put:
+  operationId: updateCounterpartyAccount
+  tags:
+    - Counterparties
+  summary: Обновить счёт контрагента
+  description: Обновление счёта Контрагента с указанным id.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - name: accountId
+      in: path
+      required: true
+      description: ID счёта контрагента
+      schema:
+        type: string
+        format: uuid
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../openapi.yaml#/components/schemas/Account'
+  responses:
+    '200':
+      description: Счёт успешно обновлён
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/Account'
+    '400':
+      $ref: '../../../components/responses.yaml#/BadRequest'
+    '401':
+      $ref: '../../../components/responses.yaml#/Unauthorized'
+    '404':
+      $ref: '../../../components/responses.yaml#/NotFound'
+    '413':
+      $ref: '../../../components/responses.yaml#/PayloadTooLarge'
+    '415':
+      $ref: '../../../components/responses.yaml#/UnsupportedMediaType'
+
+delete:
+  operationId: deleteCounterpartyAccount
+  tags:
+    - Counterparties
+  summary: Удалить счёт контрагента
+  description: Удаление счёта Контрагента с указанным id.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - name: accountId
+      in: path
+      required: true
+      description: ID счёта контрагента
+      schema:
+        type: string
+        format: uuid
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Счёт успешно удалён
+    '400':
+      $ref: '../../../components/responses.yaml#/BadRequest'
+    '401':
+      $ref: '../../../components/responses.yaml#/Unauthorized'
+    '404':
+      $ref: '../../../components/responses.yaml#/NotFound'

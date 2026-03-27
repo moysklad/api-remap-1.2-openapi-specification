@@ -1,0 +1,28 @@
+delete:
+  operationId: deleteProductImage
+  tags:
+    - Products
+  summary: Удалить изображение товара
+  description: Удаление Изображения Товара
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - name: imageId
+      in: path
+      required: true
+      description: ID изображения
+      schema:
+        type: string
+        format: uuid
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Изображение успешно удалено
+    '400':
+      $ref: '../../../components/responses.yaml#/BadRequest'
+    '401':
+      $ref: '../../../components/responses.yaml#/Unauthorized'
+    '403':
+      $ref: '../../../components/responses.yaml#/Forbidden'
+    '404':
+      $ref: '../../../components/responses.yaml#/NotFound'
