@@ -1,0 +1,18 @@
+# Базовая схема для всех типов дополнительных полей (attributes).
+# Используется конкретными типами (AttributeFile, AttributeString и т.д.) через allOf
+type: object
+properties:
+  id:
+    type: string
+    format: uuid
+    description: ID дополнительного поля
+  meta:
+    $ref: './meta.yaml'
+  name:
+    type: string
+    description: Наименование дополнительного поля
+  type:
+    type: string
+    description: Тип дополнительного поля (дискриминатор)
+  value:
+    type: object
