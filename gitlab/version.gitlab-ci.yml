@@ -85,7 +85,7 @@ version:auto:
         RANGE="HEAD"
       fi
 
-    - echo "Generating CHANGELOG block for $NEW_TAG from range $RANGE""
+    - echo "Generating CHANGELOG block for $NEW_TAG from range $RANGE"
     - |
       TMP_CHANGELOG=$(mktemp)
       TAG_MSG_FILE=$(mktemp)
