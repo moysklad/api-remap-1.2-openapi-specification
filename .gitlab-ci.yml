@@ -122,7 +122,7 @@ stages:
   - contract-test          # Контрактные тесты (schemathesis) — после verify, до generate-sdk
   - after-contract-test    # Удаление окружения после contract-тестов
   - generate-sdk           # Генерация SDK для различных языков
-  - test                   # Тестирование: golden, smoke (prism)
+  - test                   # Тестирование: golden, smoke
   - version                # Автоматическое версионирование и подготовка CHANGELOG/тегов
   - mirror                 # Зеркалирование в GitHub
   - prepare-sdk-repository # Подготовка|внесение изменений в репозиторий PHP SDK в GitLab
