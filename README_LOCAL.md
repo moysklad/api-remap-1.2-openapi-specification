@@ -198,7 +198,7 @@ $this->assertContains($response->getStatusCode(), [200, 401, 500]);
 
 #### Contract тесты (Schemathesis)
 
-Автоматическое тестирование API на соответствие OpenAPI спецификации :
+Автоматическое тестирование API на соответствие OpenAPI спецификации:
 
 ```bash
 schemathesis run dist/openapi.yaml \
