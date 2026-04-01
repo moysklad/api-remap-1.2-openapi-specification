@@ -9,32 +9,7 @@ properties:
     type: array
     description: Массив статусов контрагентов
     items:
-      type: object
-      properties:
-        meta:
-          $ref: '../common/meta.yaml'
-        id:
-          type: string
-          format: uuid
-          description: ID статуса
-        accountId:
-          type: string
-          format: uuid
-          description: ID учетной записи
-        name:
-          type: string
-          description: Наименование статуса
-        color:
-          type: integer
-          description: Цвет статуса
-        stateType:
-          type: string
-          enum: [Regular, Successful, Unsuccessful]
-          description: Тип статуса
-        entityType:
-          type: string
-          description: Тип сущности
-          example: counterparty
+      $ref: '../../../components/schemas/dictionary/state.yaml'
   tags:
     type: array
     description: Тэги контрагентов

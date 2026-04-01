@@ -1,0 +1,89 @@
+get:
+  operationId: getStoreZoneById
+  tags:
+  - Stores
+  summary: Получить зону склада
+  parameters:
+  - name: storeId
+    in: path
+    required: true
+    schema:
+      type: string
+      format: uuid
+  - name: id
+    in: path
+    required: true
+    schema:
+      type: string
+      format: uuid
+  - $ref: ../../../components/headers.yaml#/AcceptHeader
+  - $ref: ../../../components/headers.yaml#/AcceptEncoding
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/StoreZone'
+    default:
+      $ref: '../../../components/responses.yaml#/Base'
+put:
+  operationId: updateStoreZone
+  tags:
+  - Stores
+  summary: Изменить зону склада
+  parameters:
+  - name: storeId
+    in: path
+    required: true
+    schema:
+      type: string
+      format: uuid
+  - name: id
+    in: path
+    required: true
+    schema:
+      type: string
+      format: uuid
+  - $ref: ../../../components/headers.yaml#/AcceptHeader
+  - $ref: ../../../components/headers.yaml#/AcceptEncoding
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../openapi.yaml#/components/schemas/StoreZone'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/StoreZone'
+    default:
+      $ref: '../../../components/responses.yaml#/Base'
+delete:
+  operationId: deleteStoreZone
+  tags:
+  - Stores
+  summary: Удалить зону склада
+  parameters:
+  - name: storeId
+    in: path
+    required: true
+    schema:
+      type: string
+      format: uuid
+  - name: id
+    in: path
+    required: true
+    schema:
+      type: string
+      format: uuid
+  - $ref: ../../../components/headers.yaml#/AcceptHeader
+  - $ref: ../../../components/headers.yaml#/AcceptEncoding
+  responses:
+    '200':
+      description: Успешный запрос
+    default:
+      $ref: '../../../components/responses.yaml#/Base'

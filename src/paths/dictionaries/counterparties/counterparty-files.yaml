@@ -48,14 +48,11 @@ get:
                     metadataHref: "https://api.moysklad.ru/api/remap/1.2/entity/employee/metadata"
                     type: "employee"
                     mediaType: "application/json"
-    '400':
-      $ref: '../../../components/responses.yaml#/BadRequest'
-    '401':
-      $ref: '../../../components/responses.yaml#/Unauthorized'
-    '403':
-      $ref: '../../../components/responses.yaml#/Forbidden'
-    '404':
-      $ref: '../../../components/responses.yaml#/NotFound'
+    default:
+      $ref: '../../../components/responses.yaml#/Base'
+    
+    
+    
 
 post:
   operationId: addCounterpartyFiles
@@ -91,15 +88,10 @@ post:
             type: array
             items:
               $ref: '../../../openapi.yaml#/components/schemas/File'
-    '400':
-      $ref: '../../../components/responses.yaml#/BadRequest'
-    '401':
-      $ref: '../../../components/responses.yaml#/Unauthorized'
-    '403':
-      $ref: '../../../components/responses.yaml#/Forbidden'
-    '404':
-      $ref: '../../../components/responses.yaml#/NotFound'
-    '413':
-      $ref: '../../../components/responses.yaml#/PayloadTooLarge'
-    '415':
-      $ref: '../../../components/responses.yaml#/UnsupportedMediaType'
+    default:
+      $ref: '../../../components/responses.yaml#/Base'
+    
+    
+    
+    
+    

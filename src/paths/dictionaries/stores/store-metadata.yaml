@@ -1,0 +1,18 @@
+get:
+  operationId: getStoreMetadata
+  tags:
+  - Stores
+  summary: Метаданные Складов
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/StoreMetadata'
+    default:
+      $ref: '../../../components/responses.yaml#/Base'
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'

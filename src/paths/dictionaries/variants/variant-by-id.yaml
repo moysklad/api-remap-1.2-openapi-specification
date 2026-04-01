@@ -1,0 +1,59 @@
+get:
+  operationId: getVariantById
+  tags:
+  - Variants
+  summary: Получить Модификацию
+  parameters:
+  - $ref: ../../../components/parameters.yaml#/entityId
+  - $ref: ../../../components/parameters.yaml#/expand
+  - $ref: ../../../components/headers.yaml#/AcceptHeader
+  - $ref: ../../../components/headers.yaml#/AcceptEncoding
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../components/schemas/dictionary/variant.yaml'
+    default:
+      $ref: '../../../components/responses.yaml#/Base'
+put:
+  operationId: updateVariant
+  tags:
+  - Variants
+  summary: Изменить Модификацию
+  parameters:
+  - $ref: ../../../components/parameters.yaml#/entityId
+  - $ref: ../../../components/parameters.yaml#/expand
+  - $ref: ../../../components/headers.yaml#/AcceptHeader
+  - $ref: ../../../components/headers.yaml#/AcceptEncoding
+  - $ref: ../../../components/headers.yaml#/ContentTypeJson
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../components/schemas/dictionary/variant.yaml'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../components/schemas/dictionary/variant.yaml'
+    default:
+      $ref: '../../../components/responses.yaml#/Base'
+delete:
+  operationId: deleteVariant
+  tags:
+  - Variants
+  summary: Удалить Модификацию
+  parameters:
+  - $ref: ../../../components/parameters.yaml#/entityId
+  - $ref: ../../../components/headers.yaml#/AcceptHeader
+  - $ref: ../../../components/headers.yaml#/AcceptEncoding
+  responses:
+    '200':
+      description: Успешный запрос
+    default:
+      $ref: '../../../components/responses.yaml#/Base'

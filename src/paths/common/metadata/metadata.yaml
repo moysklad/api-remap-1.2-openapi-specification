@@ -14,13 +14,5 @@ get:
         application/json:
           schema:
             $ref: '../../../components/schemas/common/metadata.yaml'
-    '400':
-      $ref: '../../../components/responses.yaml#/BadRequest'
-    '401':
-      $ref: '../../../components/responses.yaml#/Unauthorized'
-    '403':
-      $ref: '../../../components/responses.yaml#/Forbidden'
-    '405':
-      $ref: '../../../components/responses.yaml#/MethodNotAllowed'
-    '415':
-      $ref: '../../../components/responses.yaml#/UnsupportedMediaType'
+    default:
+      $ref: '../../../components/responses.yaml#/Base'

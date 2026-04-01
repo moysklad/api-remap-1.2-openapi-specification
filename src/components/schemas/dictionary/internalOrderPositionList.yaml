@@ -1,0 +1,7 @@
+type: object
+properties:
+  context: { $ref: '../common/context.yaml' }
+  meta: { $ref: '../common/metaList.yaml' }
+  rows:
+    type: array
+    items: { $ref: '../../../openapi.yaml#/components/schemas/InternalOrderPosition' }

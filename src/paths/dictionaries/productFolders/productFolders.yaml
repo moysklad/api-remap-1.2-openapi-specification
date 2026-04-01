@@ -20,18 +20,13 @@ get:
         application/json:
           schema:
             $ref: '../../../components/schemas/dictionary/productFolderList.yaml'
-    '400':
-      $ref: '../../../components/responses.yaml#/BadRequest'
-    '401':
-      $ref: '../../../components/responses.yaml#/Unauthorized'
-    '403':
-      $ref: '../../../components/responses.yaml#/Forbidden'
-    '405':
-      $ref: '../../../components/responses.yaml#/MethodNotAllowed'
-    '412':
-      $ref: '../../../components/responses.yaml#/PreconditionFailed'
-    '415':
-      $ref: '../../../components/responses.yaml#/UnsupportedMediaType'
+    default:
+      $ref: '../../../components/responses.yaml#/Base'
+    
+    
+    
+    
+    
 
 post:
   operationId: createProductFolder
@@ -57,17 +52,11 @@ post:
         application/json:
           schema:
             $ref: '../../../components/schemas/dictionary/productFolder.yaml'
-    '400':
-      $ref: '../../../components/responses.yaml#/BadRequest'
-    '401':
-      $ref: '../../../components/responses.yaml#/Unauthorized'
-    '403':
-      $ref: '../../../components/responses.yaml#/Forbidden'
-    '405':
-      $ref: '../../../components/responses.yaml#/MethodNotAllowed'
-    '412':
-      $ref: '../../../components/responses.yaml#/PreconditionFailed'
-    '413':
-      $ref: '../../../components/responses.yaml#/PayloadTooLarge'
-    '415':
-      $ref: '../../../components/responses.yaml#/UnsupportedMediaType'
+    default:
+      $ref: '../../../components/responses.yaml#/Base'
+    
+    
+    
+    
+    
+    

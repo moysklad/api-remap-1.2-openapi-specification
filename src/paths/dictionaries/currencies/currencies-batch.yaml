@@ -32,15 +32,5 @@ post:
                 - $ref: '../../../components/schemas/common/error.yaml'
             minItems: 1
             maxItems: 1000
-    '400':
-      $ref: '../../../components/responses.yaml#/BatchBadRequest'
-    '401':
-      $ref: '../../../components/responses.yaml#/Unauthorized'
-    '403':
-      $ref: '../../../components/responses.yaml#/Forbidden'
-    '412':
-      $ref: '../../../components/responses.yaml#/BatchPreconditionFailed'
-    '413':
-      $ref: '../../../components/responses.yaml#/PayloadTooLarge'
-    '415':
-      $ref: '../../../components/responses.yaml#/UnsupportedMediaType'
+    default:
+      $ref: '../../../components/responses.yaml#/Base'

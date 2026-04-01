@@ -1,0 +1,25 @@
+get:
+  operationId: getCashierById
+  tags:
+  - Cashiers
+  summary: Получить Кассира
+  parameters:
+  - name: retailStoreId
+    in: path
+    required: true
+    schema:
+      type: string
+      format: uuid
+  - $ref: ../../../components/parameters.yaml#/entityId
+  - $ref: ../../../components/parameters.yaml#/expand
+  - $ref: ../../../components/headers.yaml#/AcceptHeader
+  - $ref: ../../../components/headers.yaml#/AcceptEncoding
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../components/schemas/dictionary/cashier.yaml'
+    default:
+      $ref: '../../../components/responses.yaml#/Base'

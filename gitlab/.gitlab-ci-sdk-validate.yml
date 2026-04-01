@@ -5,7 +5,7 @@
 # - bundle-openapi: сборка bundled версии спецификации
 # - generate-sdk-*: генерация SDK для различных языков
 # - sdk-golden-*: golden тесты (сериализация/десериализация)
-# - sdk-prism-*: smoke тесты с Prism mock сервером
+# - sdk-smoke-*: smoke тесты с openapi-mock mock сервером
 # - sdk-contract: schemathesis тесты (только при ручном запуске)
 #
 # Переменные:
@@ -20,5 +20,5 @@ include:
   - local: 'gitlab/sdk/lint-openapi.yml'
   - local: 'gitlab/sdk/generate-sdk.yml'
   - local: 'gitlab/sdk/sdk-tests-golden.yml'
-  - local: 'gitlab/sdk/sdk-tests-prism.yml'
+  - local: 'gitlab/sdk/sdk-tests-smoke.yml'
   - local: 'gitlab/sdk/sdk-contract.yml'

@@ -30,11 +30,29 @@ DEPLOY_CHECK_DELAY_SECONDS = 10
 DEPLOY_CHECK_ATTEMPTS = round(DEPLOY_TIMEOUT_SECONDS / DEPLOY_CHECK_DELAY_SECONDS)
 RETRY_DELAY_SECONDS = 5
 ENV_TYPE = "TEST"
-ENV_TTL_MINUTES = round(DEPLOY_TIMEOUT_SECONDS / 60) + 10
+
+# DMS `auto-clean-delay-minutes` when ENV_TTL_MINUTES is not set (~ deploy poll budget + buffer).
+# OpenAPI contract tests (Schemathesis) use a longer TTL via ENV_TTL_MINUTES in deploy-contract-env only.
+DEFAULT_ENV_TTL_MINUTES = round(DEPLOY_TIMEOUT_SECONDS / 60) + 10  # 600s → 10 min + 10 = 20
+
+
+def env_ttl_minutes() -> int:
+    """Minutes until DMS auto-cleans the environment (auto-clean-delay-minutes). Override with ENV_TTL_MINUTES."""
+    raw = os.environ.get("ENV_TTL_MINUTES")
+    if raw is None or str(raw).strip() == "":
+        return DEFAULT_ENV_TTL_MINUTES
+    try:
+        value = int(raw)
+    except ValueError as e:
+        raise ValueError("ENV_TTL_MINUTES must be an integer number of minutes") from e
+    if value < 1:
+        raise ValueError("ENV_TTL_MINUTES must be >= 1")
+    return value
 
 
 def setup_namespace(ref: str, pipeline_id: str, job_id: str, version: str, profile: str) -> str:
     _print_t("start of creating namespace")
+    _print_t("DMS auto-clean delay: {} minutes".format(env_ttl_minutes()))
 
     user = require_env("GITLAB_USER_LOGIN")
 
@@ -52,7 +70,7 @@ def __setup_namespace_init(ref: str, pipeline_id: str, job_id: str, version: str
     url = "{}/integrations/auto-deployment".format(DMS_API_ENDPOINT)
     headers = {"idempotency-key": job_id} | DEFAULT_HEADERS
     payload = {
-        "auto-clean-delay-minutes": ENV_TTL_MINUTES,
+        "auto-clean-delay-minutes": env_ttl_minutes(),
         "type": ENV_TYPE,
         "user": user,
         "purpose": "http-tests of pipeline {}".format(pipeline_id),

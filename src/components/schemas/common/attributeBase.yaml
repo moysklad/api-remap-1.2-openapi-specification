@@ -14,5 +14,3 @@ properties:
   type:
     type: string
     description: Тип дополнительного поля (дискриминатор)
-  value:
-    type: object

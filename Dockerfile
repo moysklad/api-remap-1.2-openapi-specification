@@ -17,14 +17,13 @@ RUN apk add --no-cache python3 py3-pip
 RUN apk add --no-cache openjdk21-jre-headless
 ENV JAVA_HOME=/usr/lib/jvm/java-21-openjdk
 
-# Утилиты (make для запуска целей из Makefile)
-RUN apk add --no-cache git rsync make && \
+# Утилиты (make для Makefile, curl для healthcheck mock-сервера)
+RUN apk add --no-cache git rsync make curl && \
   git config --global --add safe.directory /workspace
 
-# Node: redocly, openapi-generator, prism
+# Node: redocly, openapi-generator (mock-сервер запускается как sidecar через docker-compose)
 RUN npm install -g npm@10 && \
   npm i -g @redocly/cli && \
-  npm i -g @openapitools/openapi-generator-cli@2.12.1 && \
-  npm i -g @stoplight/prism-cli
+  npm i -g @openapitools/openapi-generator-cli@2.12.1
 
 WORKDIR /workspace

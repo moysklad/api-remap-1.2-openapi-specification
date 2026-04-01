@@ -1,0 +1,44 @@
+get:
+  operationId: getCustomerOrderMetadataAttribute
+  tags:
+  - CustomerOrders
+  summary: Доп. поля CustomerOrder
+  parameters:
+  - $ref: ../../../components/parameters.yaml#/offset
+  - $ref: ../../../components/parameters.yaml#/limit
+  - $ref: ../../../components/headers.yaml#/AcceptHeader
+  - $ref: ../../../components/headers.yaml#/AcceptEncoding
+  - $ref: ../../../components/headers.yaml#/ContentTypeJson
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfoList'#/components/schemas/AttributeMetaInfoList
+    default:
+      $ref: '../../../components/responses.yaml#/Base'
+post:
+  operationId: createCustomerOrderMetadataAttribute
+  tags:
+    - CustomerOrders
+  summary: Создать Доп. поле CustomerOrder
+  parameters:
+    - $ref: ../../../components/headers.yaml#/AcceptHeader
+    - $ref: ../../../components/headers.yaml#/AcceptEncoding
+    - $ref: ../../../components/headers.yaml#/ContentTypeJson
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfo'#/components/schemas/AttributeMetaInfo
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfo'#/components/schemas/AttributeMetaInfo
+    default:
+      $ref: '../../../components/responses.yaml#/Base'

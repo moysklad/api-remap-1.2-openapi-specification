@@ -43,14 +43,8 @@ get:
                 email: "ivanov@example.com"
                 phone: "+7 (999) 123-45-67"
                 position: "Директор"
-    '400':
-      $ref: '../../../components/responses.yaml#/BadRequest'
-    '401':
-      $ref: '../../../components/responses.yaml#/Unauthorized'
-    '403':
-      $ref: '../../../components/responses.yaml#/Forbidden'
-    '404':
-      $ref: '../../../components/responses.yaml#/NotFound'
+    default:
+      $ref: '../../../components/responses.yaml#/Base'
 
 post:
   operationId: createCounterpartyContactPerson
@@ -76,15 +70,10 @@ post:
         application/json:
           schema:
             $ref: '../../../openapi.yaml#/components/schemas/ContactPerson'
-    '400':
-      $ref: '../../../components/responses.yaml#/BadRequest'
-    '401':
-      $ref: '../../../components/responses.yaml#/Unauthorized'
-    '403':
-      $ref: '../../../components/responses.yaml#/Forbidden'
-    '404':
-      $ref: '../../../components/responses.yaml#/NotFound'
-    '413':
-      $ref: '../../../components/responses.yaml#/PayloadTooLarge'
-    '415':
-      $ref: '../../../components/responses.yaml#/UnsupportedMediaType'
+    default:
+      $ref: '../../../components/responses.yaml#/Base'
+    
+    
+    
+    
+    

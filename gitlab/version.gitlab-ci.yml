@@ -10,11 +10,11 @@ version:auto:
       optional: true
     - job: sdk-golden-php
       optional: true
-    - job: sdk-prism-php
+    - job: sdk-smoke-php
       optional: true
     - job: sdk-golden-java
       optional: true
-    - job: sdk-prism-java
+    - job: sdk-smoke-java
       optional: true
     - job: sdk-contract
       optional: true

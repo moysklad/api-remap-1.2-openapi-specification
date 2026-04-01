@@ -1,0 +1,33 @@
+post:
+  operationId: createStoresBatch
+  tags:
+  - Stores
+  summary: Массовое создание и обновление Складов
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            $ref: '../../../openapi.yaml#/components/schemas/Store'#/components/schemas/Store
+          minItems: 1
+          maxItems: 1000
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              oneOf:
+                - $ref: ../../../openapi.yaml#/components/schemas/Store
+                - $ref: ../../../components/schemas/common/error.yaml
+    default:
+      $ref: '../../../components/responses.yaml#/Base'
+  parameters:
+  - $ref: ../../../components/headers.yaml#/AcceptHeader
+  - $ref: ../../../components/headers.yaml#/AcceptEncoding
+  - $ref: ../../../components/parameters.yaml#/expand
+  - $ref: ../../../components/headers.yaml#/ContentTypeJson

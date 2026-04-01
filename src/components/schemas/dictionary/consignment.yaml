@@ -1,0 +1,16 @@
+type: object
+x-entitytype-product: true
+properties:
+  meta:
+    description: Метаданные Партии
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID партии
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true

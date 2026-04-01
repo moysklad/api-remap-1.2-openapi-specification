@@ -1,0 +1,25 @@
+type: object
+description: Серийный номер
+properties:
+  meta:
+    description: Метаданные Серийного номера
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID Серийного номера
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  name:
+    type: string
+    maxLength: 255
+    description: Значение серийного номера
+  description:
+    type: string
+    maxLength: 4096
+    nullable: true
+    description: Комментарий к серийному номеру

@@ -1,0 +1,38 @@
+type: object
+description: Ячейка склада
+properties:
+  meta:
+    description: Метаданные Ячейки склада
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID Ячейки склада
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  updated:
+    type: string
+    #    format: date-time  # API использует формат: YYYY-MM-DD HH:MM:SS.mmm
+    description: Момент последнего обновления
+    readOnly: true
+  name:
+    type: string
+    maxLength: 255
+    description: Наименование Ячейки склада
+  externalCode:
+    type: string
+    maxLength: 255
+    description: Внешний код Ячейки склада
+  barcode:
+    description: Штрихкод ячейки
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Barcode'
+  zone:
+    description: Зона ячейки
+    $ref: '../../../openapi.yaml#/components/schemas/StoreZone'

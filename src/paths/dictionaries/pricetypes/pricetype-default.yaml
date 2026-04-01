@@ -14,13 +14,9 @@ get:
         application/json:
           schema:
             $ref: '../../../components/schemas/dictionary/priceType.yaml'
-    '400':
-      $ref: '../../../components/responses.yaml#/BadRequest'
-    '401':
-      $ref: '../../../components/responses.yaml#/Unauthorized'
-    '404':
-      $ref: '../../../components/responses.yaml#/NotFound'
-    '405':
-      $ref: '../../../components/responses.yaml#/MethodNotAllowed'
-    '415':
-      $ref: '../../../components/responses.yaml#/UnsupportedMediaType'
+    default:
+      $ref: '../../../components/responses.yaml#/Base'
+    
+    
+    
+    

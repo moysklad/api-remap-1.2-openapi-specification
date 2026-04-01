@@ -56,7 +56,7 @@ docker compose run --rm sdk make generate-php
 docker compose run --rm sdk make test-golden
 docker compose run --rm sdk make test-golden-php
 
-# Smoke тесты (Prism + тесты по языкам)
+# Smoke тесты (openapi-mock + тесты по языкам)
 docker compose run --rm sdk make test-smoke
 docker compose run --rm sdk make test-smoke-php
 
@@ -109,7 +109,7 @@ api-sdk-builder/
 │       ├── lint-openapi.yml          # Job для lint спецификации
 │       ├── generate-sdk.yml          # Job'ы для генерации SDK
 │       ├── sdk-tests-golden.yml      # Golden тесты
-│       ├── sdk-tests-prism.yml       # Smoke тесты с Prism
+│       ├── sdk-tests-smoke.yml       # Smoke тесты с openapi-mock
 │       └── sdk-contract.yml          # Schemathesis контрактные тесты
 ├── src/
 │   └── openapi.yaml                  # Главный файл OpenAPI спецификации
@@ -153,7 +153,7 @@ tests/<language>/
 Job'ы для новых языков уже созданы как заглушки в:
 - `gitlab/sdk/generate-sdk.yml` — генерация
 - `gitlab/sdk/sdk-tests-golden.yml` — golden тесты
-- `gitlab/sdk/sdk-tests-prism.yml` — smoke тесты
+- `gitlab/sdk/sdk-tests-smoke.yml` — smoke тесты
 
 ### 4. Добавить кастомные шаблоны (опционально)
 
@@ -184,15 +184,17 @@ $this->assertEquals($jsonData['id'], $product->getId());
 $this->assertEquals($jsonData['name'], $product->getName());
 ```
 
-#### Smoke тесты (Prism)
+#### Smoke тесты (openapi-mock)
 
-Проверяют доступность эндпоинтов через Prism mock сервер:
+Проверяют доступность эндпоинтов через openapi-mock сервер ([muonsoft/openapi-mock](https://github.com/muonsoft/openapi-mock)):
 
 ```php
 // Пример PHP smoke теста
 $response = $client->get('/api/remap/1.2/entity/product');
-$this->assertContains($response->getStatusCode(), [200, 401]);
+$this->assertContains($response->getStatusCode(), [200, 401, 500]);
 ```
+
+> **Примечание:** openapi-mock может возвращать HTTP 500 для эндпоинтов с рекурсивными/глубоко вложенными схемами — это ожидаемое поведение mock-сервера, а не ошибка спецификации.
 
 #### Contract тесты (Schemathesis)
 
@@ -214,4 +216,4 @@ schemathesis run dist/openapi.yaml \
 - [OpenAPI Generator](https://openapi-generator.tech/)
 - [Redocly CLI](https://redocly.com/docs/cli/)
 - [Schemathesis](https://schemathesis.readthedocs.io/)
-- [Prism Mock Server](https://stoplight.io/open-source/prism)
+- [openapi-mock](https://github.com/muonsoft/openapi-mock)

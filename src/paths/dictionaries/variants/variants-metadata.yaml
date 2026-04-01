@@ -1,0 +1,17 @@
+get:
+  operationId: getVariantMetadata
+  tags:
+  - Variants
+  summary: Метаданные Модификаций
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/VariantMetadata'
+    default:
+      $ref: '../../../components/responses.yaml#/Base'
+  parameters:
+  - $ref: ../../../components/headers.yaml#/AcceptHeader
+  - $ref: ../../../components/headers.yaml#/AcceptEncoding

@@ -1,0 +1,55 @@
+get:
+  operationId: getInternalOrderMetadataStateById
+  tags:
+  - InternalOrders
+  summary: Отдельный статус InternalOrder
+  parameters:
+  - $ref: ../../../components/parameters.yaml#/entityId
+  - $ref: ../../../components/headers.yaml#/AcceptHeader
+  - $ref: ../../../components/headers.yaml#/AcceptEncoding
+  - $ref: ../../../components/headers.yaml#/ContentTypeJson
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../components/schemas/dictionary/state.yaml'
+    default:
+      $ref: '../../../components/responses.yaml#/Base'
+put:
+  operationId: updateInternalOrderMetadataStateById
+  tags:
+    - InternalOrders
+  summary: Обновить отдельный статус InternalOrder
+  parameters:
+    - $ref: ../../../components/parameters.yaml#/entityId
+    - $ref: ../../../components/headers.yaml#/AcceptHeader
+    - $ref: ../../../components/headers.yaml#/AcceptEncoding
+    - $ref: ../../../components/headers.yaml#/ContentTypeJson
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../components/schemas/dictionary/state.yaml'
+    default:
+      $ref: '../../../components/responses.yaml#/Base'
+delete:
+  operationId: deleteInternalOrderMetadataStateById
+  tags:
+    - InternalOrders
+  summary: Удалить отдельный статус InternalOrder
+  parameters:
+    - $ref: ../../../components/parameters.yaml#/entityId
+    - $ref: ../../../components/headers.yaml#/AcceptHeader
+    - $ref: ../../../components/headers.yaml#/AcceptEncoding
+    - $ref: ../../../components/headers.yaml#/ContentTypeJson
+  responses:
+    '200':
+      description: Успешный запрос
+    '404':
+      $ref: '../../../components/responses.yaml#/NotFoundEmpty'
+    default:
+      $ref: '../../../components/responses.yaml#/Base'

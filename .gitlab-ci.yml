@@ -11,21 +11,22 @@
 #    - bundle-openapi: сборка bundled версии
 #    - generate-sdk-*: генерация SDK для выбранных языков
 #    - sdk-golden-*: golden тесты (сериализация/десериализация)
-#    - sdk-prism-*: smoke тесты с Prism mock сервером
+#    - sdk-smoke-*: smoke тесты с openapi-mock сервером
 #    - prep-branch-and-mr-*: создание/обновление ветки и mr по сгенерированному sdk в репозитории sdk
 #
 # 2. Ручной запуск (web) на ветке (без тэга):
 #    - lint-openapi и bundle-openapi
 #    - generate-sdk-*: генерация SDK
-#    - sdk-golden-*/sdk-prism-*: тесты SDK
+#    - sdk-golden-*/sdk-smoke-*: тесты SDK
+#    - sdk-contract: schemathesis контрактные тесты
 #    - deploy-contract-env/create-contract-user/remove-contract-env: подготовка и очистка окружения для sdk-contract
-#    - prep-branch-and-mr-*: создание/обновление ветки и mr по сгенерированному sdk в репозитории sdk
+#    - push-sdk-*: пуш SDK в удалённые репозитории (если PUSH_TO_REMOTE=true)
 #
 # 3. Merge/push в master:
 #    - check-openapi-changes: проверка изменений OpenAPI относительно последнего тега
 #    - lint-openapi и bundle-openapi
 #    - deploy-contract-env/create-contract-user/remove-contract-env и sdk-contract
-#    - generate-sdk-*, sdk-golden-*, sdk-prism-*
+#    - generate-sdk-*, sdk-golden-*, sdk-smoke-*
 #    - version:auto: автоматическое версионирование и CHANGELOG/тег
 #    - mirror-to-github и create-github-release: зеркалирование и GitHub Release
 #    - merge-branch-*: обновление ветки master на удаленном gitlab sdk репозитории по сгенерированному sdk и выпуск тэга
@@ -60,6 +61,14 @@
 #   Значения: "true" - новый пайплайн, иначе - старый Java SDK
 #
 # =============================================================================
+
+# Запускать пайплайн только для push и web; merge request pipelines отключены,
+# чтобы не создавался второй пустой пайплайн при наличии открытого MR.
+workflow:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      when: never
+    - when: always
 
 # Переменные по умолчанию
 variables:

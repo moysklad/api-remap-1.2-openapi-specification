@@ -1,0 +1,18 @@
+get:
+  operationId: getStoreMetadataAttributeById
+  tags:
+  - Stores
+  summary: Отдельное доп. поле Склада
+  parameters:
+  - $ref: '../../../components/parameters.yaml#/entityId'
+  - $ref: '../../../components/headers.yaml#/AcceptHeader'
+  - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfoList'#/components/schemas/AttributeMetaInfoList
+    default:
+      $ref: '../../../components/responses.yaml#/Base'

@@ -1,0 +1,19 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/bundle/1545463f-26af-11f1-0a83-1f2500000181/components/1545552d-26af-11f1-0a83-1f2500000185",
+    "type": "bundlecomponent",
+    "mediaType": "application/json"
+  },
+  "id": "1545552d-26af-11f1-0a83-1f2500000185",
+  "accountId": "c229f794-26ae-11f1-0a83-1f2100000002",
+  "assortment": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/product/d8260993-26ae-11f1-0a83-1f250000016d",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/product/metadata",
+      "type": "product",
+      "mediaType": "application/json",
+      "uuidHref": "https://api.moysklad.ru/app/#good/edit?id=d825f169-26ae-11f1-0a83-1f250000016b"
+    }
+  },
+  "quantity": 1.0
+}

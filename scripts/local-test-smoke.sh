@@ -1,7 +1,7 @@
 #!/bin/sh
-# Smoke тесты: Prism в фоне + тесты для указанного языка
+# Smoke тесты: ожидание mock-сервера + тесты для указанного языка
 # Использование: ./scripts/local-test-smoke.sh <php|python|java|javascript>
-# Работает в Docker (working_dir=/workspace) и локально (корень репо по пути скрипта).
+# Mock-сервер (openapi-mock) запускается как sidecar через docker-compose.
 set -e
 LANG="${1:-php}"
 SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
@@ -55,33 +55,22 @@ run_javascript() {
   npm run test:smoke 2>/dev/null || echo "Skipping: no test:smoke script"
 }
 
-# Start Prism in this shell (not in a subshell) so it is not killed by SIGHUP
-echo "Starting Prism..." >&2
-prism mock dist/openapi.yaml -h 0.0.0.0 -p 4010 &
-PRISM_PID=$!
-# Prism needs ~10s to load spec and bind port; "Prism is listening" appears after route list
-sleep 25
-if ! kill -0 $PRISM_PID 2>/dev/null; then
-  echo "ERROR: Prism failed to start" >&2
-  exit 1
-fi
-echo "Prism started (PID $PRISM_PID), waiting for port 4010..." >&2
-max=60
+PRISM_URL="${PRISM_BASE_URL:-http://mock:8080}"
+echo "Waiting for mock server at ${PRISM_URL}..." >&2
+max=90
 while [ $max -gt 0 ]; do
-  if php "$ROOT_DIR/scripts/check-port.php" 2>/dev/null; then
-    echo "Prism listening, waiting 5s for spec load..." >&2
-    sleep 5
-    echo "Prism ready." >&2
+  code=$(curl -s -o /dev/null -w "%{http_code}" --connect-timeout 2 --max-time 5 "${PRISM_URL}/" 2>/dev/null || true)
+  if [ -n "$code" ] && [ "$code" != "000" ]; then
+    echo "Mock server is ready (HTTP $code)." >&2
     break
+  fi
+  if [ $max -eq 1 ]; then
+    echo "ERROR: Mock server did not become ready in time" >&2
+    exit 1
   fi
   sleep 1
   max=$((max - 1))
 done
-if [ $max -eq 0 ]; then
-  echo "ERROR: Prism did not open port 4010 in time" >&2
-  kill $PRISM_PID 2>/dev/null || true
-  exit 1
-fi
 
 EXIT=0
 case "$LANG" in
@@ -91,5 +80,4 @@ case "$LANG" in
   javascript) run_javascript || EXIT=$? ;;
   *) echo "Unknown language: $LANG" >&2; EXIT=1 ;;
 esac
-kill $PRISM_PID 2>/dev/null || true
 exit $EXIT

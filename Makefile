@@ -21,7 +21,7 @@ help:
 	@echo "  generate-python   - generate Python SDK only (if script in package.json)"
 	@echo "  generate-java     - generate Java SDK only (if script in package.json)"
 	@echo "  generate-javascript - generate JavaScript SDK only (if script in package.json)"
-	@echo "  test-smoke        - smoke tests for LANGUAGES (Prism + tests). Default: php"
+	@echo "  test-smoke        - smoke tests for LANGUAGES (openapi-mock + tests). Default: php"
 	@echo "  test-golden       - golden tests for LANGUAGES. Default: php"
 	@echo "  test-smoke-php, test-golden-php - only PHP"
 	@echo "  schemathesis      - contract tests (SCHEMATHESIS_HOST, _LOGIN, _PASSWORD)"

@@ -1,0 +1,52 @@
+type: object
+description: Счет покупателя
+properties:
+  meta:
+    description: Метаданные Счета покупателя
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID Счета покупателя
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  name:
+    type: string
+    maxLength: 255
+    description: Наименование Счета покупателя
+  code:
+    type: string
+    maxLength: 255
+    description: Код Счета покупателя
+  externalCode:
+    type: string
+    maxLength: 255
+    description: Внешний код Счета покупателя
+  syncId:
+    type: string
+    format: uuid
+    description: ID синхронизации
+  description:
+    type: string
+    maxLength: 4096
+    nullable: true
+    description: Комментарий Счета покупателя
+  created:
+    type: string
+    description: Дата создания
+    readOnly: true
+  deleted:
+    type: string
+    description: Момент последнего удаления Счета покупателя
+    readOnly: true
+  updated:
+    type: string
+    description: Момент последнего обновления Счета покупателя
+    readOnly: true
+  moment:
+    type: string
+    description: Дата документа

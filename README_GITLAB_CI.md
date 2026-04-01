@@ -17,9 +17,9 @@
 | `generate-sdk-php`       | Генерация PHP SDK                                                        |
 | `generate-sdk-java`      | Генерация Java SDK (заглушка)                                            |
 | `sdk-golden-php`         | Golden тесты для PHP (сериализация/десериализация)                       |
-| `sdk-prism-php`          | Smoke тесты для PHP с Prism mock сервером                                |
+| `sdk-smoke-php`          | Smoke тесты для PHP с openapi-mock сервером                              |
 | `sdk-golden-java`        | Golden тесты для Java (заглушка)                                         |
-| `sdk-prism-java`         | Smoke тесты для Java (заглушка)                                          |
+| `sdk-smoke-java`         | Smoke тесты для Java (заглушка)                                          |
 | `prep-branch-and-mr-php` | Cоздание/обновление ветки и mr по сгенерированному sdk в репозитории sdk |
 
 #### 2. Ручной запуск (web) на ветке
@@ -30,7 +30,7 @@
 |-----------------------------------|--------------------------------------------------------------------------|
 | `lint-openapi` / `bundle-openapi` | Проверка и сборка спецификации                                           |
 | `generate-sdk-*`                  | Генерация SDK                                                            |
-| `sdk-golden-*` / `sdk-prism-*`    | Golden и smoke тесты SDK                                                 |
+| `sdk-golden-*` / `sdk-smoke-*`    | Golden и smoke тесты SDK                                                 |
 | `deploy-contract-env`             | Подготовка окружения для schemathesis (ветка **stable** сервиса)         |
 | `create-contract-user`            | Создание пользователя для contract‑тестов, экспорт кредов                |
 | `sdk-contract`                    | Schemathesis контрактные тесты (стадия `contract-test`)                  |
@@ -52,7 +52,7 @@
 | `remove-contract-env`   | Очистка окружения (manual, allow_failure)                                                         |
 | `generate-sdk-*`        | Генерация SDK                                                                                     |
 | `sdk-golden-*`          | Golden тесты                                                                                      |
-| `sdk-prism-*`           | Smoke тесты                                                                                       |
+| `sdk-smoke-*`           | Smoke тесты                                                                                       |
 | `version:auto`          | Автоматическое версионирование и выпуск тега                                                      |
 | `mirror-to-github`      | Зеркалирование в GitHub (без GitLab‑файлов и CI README)                                           |
 | `create-github-release` | Создание GitHub Release на основе CHANGELOG                                                       |
@@ -67,8 +67,8 @@
   3. параметр **PARAM_VERSION** - номер сборки окружения, берётся из DMS. (Например stable-402731, можно получить зайдя в дмс и при подготовке к накату окружения в версии moysklad будет нужное значение);
   4. параметр **USE_OLD_SDK** - "true" для включения java-sdk написанного без использована openapi.
 
-После прохождения пайпа, для удаления создноного окружения нужно запустить джобу "remove-space".
-Окружение, на котором прогоняются тесты, доступно 1 час, после оно очищается.
+После прохождения пайпа, для удаления созданного окружения нужно запустить джобу "remove-space".
+Окружение для java-sdk flow очищается в DMS через **ENV_TTL_MINUTES** минут (если не задана — **20** по умолчанию в `utils_python/client.py`). Для контрактных тестов по OpenAPI (Schemathesis) джоба `deploy-contract-env` выставляет **60** минут, пока не переопределить `ENV_TTL_MINUTES` в GitLab.
 
 [Ссылка на предзаполненный пайплайн](https://git.company.lognex/moysklad/misc/api-sdk-builder/-/pipelines/new?ref=master&var[BRANCH]=MC-&var[PARAM_VERSION]=stable-402731&var[USE_OLD_SDK]=true)
 
@@ -85,6 +85,12 @@
 - `"php"` — только PHP
 - `"php,python"` — PHP и Python
 - `"php,python,java,javascript"` — все языки
+
+### Переменные подготовки тестового окружения (DMS)
+
+| Переменная         | Описание                                                                 | Значение по умолчанию |
+|--------------------|---------------------------------------------------------------------------|------------------------|
+| `ENV_TTL_MINUTES`  | Через сколько минут DMS удалит окружение после `env_prepare` (`auto-clean-delay-minutes`) | В `utils_python/client.py` по умолчанию **20** (`DEFAULT_ENV_TTL_MINUTES`). Джоба `deploy-contract-env` (Schemathesis) экспортирует **60**, если переменная не задана в GitLab. |
 
 ### Переменные для Schemathesis тестов
 
