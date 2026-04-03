@@ -21,7 +21,7 @@ get:
           schema:
             $ref: '../../../components/schemas/dictionary/countryList.yaml'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 
 post:
   operationId: createCountry
@@ -48,7 +48,7 @@ post:
           schema:
             $ref: '../../../components/schemas/dictionary/country.yaml'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
     
     
     

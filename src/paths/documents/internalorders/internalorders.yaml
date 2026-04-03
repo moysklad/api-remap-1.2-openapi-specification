@@ -19,7 +19,7 @@ get:
           schema:
             $ref: '../../../components/schemas/dictionary/internalOrderList.yaml'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 post:
   operationId: createInternalOrder
   tags:
@@ -39,7 +39,7 @@ post:
           schema:
             $ref: '../../../components/schemas/dictionary/internalOrder.yaml'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
   parameters:
   - $ref: ../../../components/parameters.yaml#/expand
   - $ref: ../../../components/headers.yaml#/AcceptHeader

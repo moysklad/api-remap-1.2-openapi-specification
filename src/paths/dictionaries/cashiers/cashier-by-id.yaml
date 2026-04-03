@@ -22,4 +22,4 @@ get:
           schema:
             $ref: '../../../components/schemas/dictionary/cashier.yaml'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'

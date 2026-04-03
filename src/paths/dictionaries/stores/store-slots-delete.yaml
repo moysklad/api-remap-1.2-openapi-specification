@@ -20,9 +20,9 @@ post:
         schema:
           type: array
           items:
-            $ref: '../../../openapi.yaml#/components/schemas/StoreSlot'#/components/schemas/StoreSlot
+            $ref: '../../../openapi.yaml#/components/schemas/StoreSlot'
   responses:
     '200':
       description: Успешный запрос
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'

@@ -26,7 +26,7 @@ get:
           schema:
             $ref: '../../../components/schemas/dictionary/retailStoreList.yaml'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 post:
   operationId: addMasterRetailStore
   tags:
@@ -46,7 +46,7 @@ post:
           schema:
             $ref: '../../../components/schemas/dictionary/retailStore.yaml'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
   parameters:
   - name: retailStoreId
     in: path

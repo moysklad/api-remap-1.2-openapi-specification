@@ -32,7 +32,7 @@
 
     <php>
         <!-- URL mock сервера (openapi-mock) для smoke тестов -->
-        <env name="PRISM_BASE_URL" value="http://mock:8080" force="false"/>
+        <env name="SMOKE_BASE_URL" value="http://mock:8080" force="false"/>
         <!-- Путь к сгенерированному SDK -->
         <env name="SDK_PATH" value="../../clients/php"/>
     </php>

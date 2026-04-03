@@ -17,7 +17,7 @@ put:
           schema:
             $ref: '../../../components/schemas/dictionary/customerOrder.yaml'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
   parameters:
   - $ref: ../../../components/headers.yaml#/AcceptHeader
   - $ref: ../../../components/headers.yaml#/AcceptEncoding

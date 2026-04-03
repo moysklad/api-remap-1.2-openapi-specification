@@ -16,7 +16,7 @@ get:
           schema:
             $ref: '../../../components/schemas/dictionary/state.yaml'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 put:
   operationId: updateInternalOrderMetadataStateById
   tags:
@@ -35,7 +35,7 @@ put:
           schema:
             $ref: '../../../components/schemas/dictionary/state.yaml'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 delete:
   operationId: deleteInternalOrderMetadataStateById
   tags:
@@ -52,4 +52,4 @@ delete:
     '404':
       $ref: '../../../components/responses.yaml#/NotFoundEmpty'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'

@@ -21,7 +21,7 @@ get:
           schema:
             $ref: '../../../components/schemas/dictionary/contractList.yaml'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 
 post:
   operationId: createContract
@@ -48,4 +48,4 @@ post:
           schema:
             $ref: '../../../components/schemas/dictionary/contract.yaml'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'

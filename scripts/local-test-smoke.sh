@@ -55,11 +55,11 @@ run_javascript() {
   npm run test:smoke 2>/dev/null || echo "Skipping: no test:smoke script"
 }
 
-PRISM_URL="${PRISM_BASE_URL:-http://mock:8080}"
-echo "Waiting for mock server at ${PRISM_URL}..." >&2
+SMOKE_URL="${SMOKE_BASE_URL:-http://mock:8080}"
+echo "Waiting for mock server at ${SMOKE_URL}..." >&2
 max=90
 while [ $max -gt 0 ]; do
-  code=$(curl -s -o /dev/null -w "%{http_code}" --connect-timeout 2 --max-time 5 "${PRISM_URL}/" 2>/dev/null || true)
+  code=$(curl -s -o /dev/null -w "%{http_code}" --connect-timeout 2 --max-time 5 "${SMOKE_URL}/" 2>/dev/null || true)
   if [ -n "$code" ] && [ "$code" != "000" ]; then
     echo "Mock server is ready (HTTP $code)." >&2
     break

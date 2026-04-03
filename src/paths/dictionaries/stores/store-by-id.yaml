@@ -16,7 +16,7 @@ get:
           schema:
             $ref: '../../../components/schemas/dictionary/store.yaml'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 put:
   operationId: updateStore
   tags:
@@ -42,7 +42,7 @@ put:
           schema:
             $ref: '../../../components/schemas/dictionary/store.yaml'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 delete:
   operationId: deleteStore
   tags:
@@ -56,4 +56,4 @@ delete:
     '200':
       description: Склад удален
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'

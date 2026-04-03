@@ -14,7 +14,7 @@ post:
         schema:
           type: array
           items:
-            $ref: '../../../openapi.yaml#/components/schemas/PurchaseOrder'#/components/schemas/PurchaseOrder
+            $ref: '../../../openapi.yaml#/components/schemas/PurchaseOrder'
           minItems: 1
           maxItems: 1000
   responses:
@@ -29,4 +29,4 @@ post:
                 - $ref: ../../../openapi.yaml#/components/schemas/DeleteInfo
                 - $ref: ../../../components/schemas/common/error.yaml
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'

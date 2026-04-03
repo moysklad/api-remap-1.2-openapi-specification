@@ -17,7 +17,7 @@ get:
             items:
               $ref: '../../../openapi.yaml#/components/schemas/PriceType'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
     
     
     
@@ -56,7 +56,7 @@ post:
                 - $ref: '../../../components/schemas/common/error.yaml'
             minItems: 1
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
     
     
     

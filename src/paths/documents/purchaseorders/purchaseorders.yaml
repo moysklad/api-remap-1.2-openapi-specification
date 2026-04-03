@@ -19,7 +19,7 @@ get:
           schema:
             $ref: '../../../components/schemas/dictionary/purchaseOrderList.yaml'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 post:
   operationId: createPurchaseOrder
   tags:
@@ -44,4 +44,4 @@ post:
           schema:
             $ref: '../../../components/schemas/dictionary/purchaseOrder.yaml'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'

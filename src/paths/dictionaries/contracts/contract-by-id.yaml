@@ -17,7 +17,7 @@ get:
           schema:
             $ref: '../../../components/schemas/dictionary/contract.yaml'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 
 put:
   operationId: updateContract
@@ -45,7 +45,7 @@ put:
           schema:
             $ref: '../../../components/schemas/dictionary/contract.yaml'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 
 delete:
   operationId: deleteContract
@@ -61,4 +61,4 @@ delete:
     '200':
       description: Договор успешно удален
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'

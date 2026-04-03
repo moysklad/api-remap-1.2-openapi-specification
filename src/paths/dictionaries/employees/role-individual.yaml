@@ -20,6 +20,6 @@ get:
               type: "individualrole"
               mediaType: "application/json"
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
     
     

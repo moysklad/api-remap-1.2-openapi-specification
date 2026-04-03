@@ -14,9 +14,9 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfo'#/components/schemas/AttributeMetaInfo
+            $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfo'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 put:
   operationId: updateCustomerOrderMetadataAttributeById
   tags:
@@ -33,9 +33,9 @@ put:
       content:
         application/json:
           schema:
-            $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfo'#/components/schemas/AttributeMetaInfo
+            $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfo'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 delete:
   operationId: deleteCustomerOrderMetadataAttributeById
   tags:
@@ -50,4 +50,4 @@ delete:
     '200':
       description: Успешный запрос
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'

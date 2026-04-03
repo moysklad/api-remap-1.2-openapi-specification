@@ -44,7 +44,7 @@ get:
                 phone: "+7 (999) 123-45-67"
                 position: "Директор"
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 
 post:
   operationId: createCounterpartyContactPerson
@@ -71,7 +71,7 @@ post:
           schema:
             $ref: '../../../openapi.yaml#/components/schemas/ContactPerson'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
     
     
     

@@ -15,4 +15,4 @@ get:
           schema:
             $ref: '../../../components/schemas/dictionary/thing.yaml'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'

@@ -21,7 +21,7 @@ get:
           schema:
             $ref: '../../../components/schemas/dictionary/currencyList.yaml'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 
 post:
   operationId: createCurrency
@@ -48,7 +48,7 @@ post:
           schema:
             $ref: '../../../components/schemas/dictionary/currency.yaml'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
     
     
     

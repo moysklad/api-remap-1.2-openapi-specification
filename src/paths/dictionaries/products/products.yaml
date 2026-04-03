@@ -21,7 +21,7 @@ get:
           schema:
             $ref: '../../../components/schemas/dictionary/productList.yaml'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
     
     
     
@@ -54,7 +54,7 @@ post:
           schema:
             $ref: '../../../components/schemas/dictionary/product.yaml'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
     
     
     

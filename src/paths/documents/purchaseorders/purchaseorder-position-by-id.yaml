@@ -18,7 +18,7 @@ get:
           schema:
             $ref: '../../../components/schemas/dictionary/purchaseOrderPosition.yaml'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 put:
   operationId: updatePurchaseOrderPosition
   tags:
@@ -43,9 +43,9 @@ put:
       content:
         application/json:
           schema:
-            $ref: '../../../openapi.yaml#/components/schemas/PurchaseOrder'#/components/schemas/PurchaseOrder
+            $ref: '../../../openapi.yaml#/components/schemas/PurchaseOrder'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 delete:
   operationId: deletePurchaseOrderPosition
   tags:
@@ -62,4 +62,4 @@ delete:
     '200':
       description: Успешный запрос
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'

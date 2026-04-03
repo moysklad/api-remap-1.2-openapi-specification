@@ -34,7 +34,7 @@ get:
                 accountId: "762af84a-0ec6-11f0-ac15-001000000001"
                 quantity: 2.5
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
     
     
     
@@ -71,7 +71,7 @@ post:
           schema:
             $ref: '../../../openapi.yaml#/components/schemas/StoreBalance'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
     
     
     

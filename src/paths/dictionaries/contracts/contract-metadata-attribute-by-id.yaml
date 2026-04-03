@@ -16,7 +16,7 @@ get:
           schema:
             $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfo'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 
 put:
   operationId: updateContractMetadataAttribute
@@ -43,7 +43,7 @@ put:
           schema:
             $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfo'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 
 delete:
   operationId: deleteContractMetadataAttribute
@@ -59,4 +59,4 @@ delete:
     '200':
       description: Доп. поле успешно удалено
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'

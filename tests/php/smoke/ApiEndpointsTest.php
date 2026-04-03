@@ -58,7 +58,7 @@ class ApiEndpointsTest extends TestCase
         parent::setUp();
         
         $this->client = new Client([
-            'base_uri' => $this->getPrismBaseUrl(),
+            'base_uri' => $this->getSmokeBaseUrl(),
             'http_errors' => false,
             'headers' => [
                 'Content-Type' => 'application/json',

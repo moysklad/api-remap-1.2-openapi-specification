@@ -21,7 +21,7 @@ get:
           schema:
             $ref: '../../../components/schemas/dictionary/groupList.yaml'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
     
     
     
@@ -53,7 +53,7 @@ post:
           schema:
             $ref: '../../../components/schemas/dictionary/group.yaml'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
     
     
     
