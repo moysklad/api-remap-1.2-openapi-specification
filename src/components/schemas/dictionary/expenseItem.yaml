@@ -1,0 +1,11 @@
+type: object
+description: Статья расхода
+properties:
+  meta:
+    description: Метаданные статьи расхода
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID статьи расхода
+    readOnly: true

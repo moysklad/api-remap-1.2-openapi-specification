@@ -65,6 +65,20 @@ class SerializationTest extends TestCase
         'purchase_order' => 'PurchaseOrder',
         'variantcharacteristic' => 'VariantCharacteristic',
         'contract' => 'Contract',
+        'cash_in' => 'CashIn',
+        'cash_out' => 'CashOut',
+        'company_settings' => 'CompanySettings',
+        'company_settings_metadata' => 'CompanySettingsMetadata',
+        'assortment' => 'Assortment',
+        'discount' => 'Discount',
+        'accumulation_discount' => 'AccumulationDiscount',
+        'personal_discount' => 'PersonalDiscount',
+        'special_price_discount' => 'SpecialPriceDiscount',
+        'bonus_program' => 'BonusProgram',
+        'bonus_transaction' => 'BonusTransaction',
+        'custom_entity' => 'CustomEntity',
+        'custom_entity_element' => 'CustomEntityElement',
+        'commission_report_in' => 'CommissionReportIn',
     ];
 
     /**

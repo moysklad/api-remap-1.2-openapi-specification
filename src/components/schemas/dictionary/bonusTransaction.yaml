@@ -1,0 +1,95 @@
+type: object
+description: Бонусная операция (bonustransaction)
+properties:
+  meta:
+    description: Метаданные бонусной операции
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID бонусной операции
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  owner:
+    description: Владелец (Сотрудник)
+    $ref: '../../../openapi.yaml#/components/schemas/Employee'
+  agent:
+    description: Метаданные контрагента, связанного с бонусной операцией
+    $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
+  group:
+    description: Отдел сотрудника
+    $ref: '../../../openapi.yaml#/components/schemas/Group'
+  organization:
+    description: Метаданные юрлица
+    $ref: '../../../openapi.yaml#/components/schemas/Organization'
+  parentDocument:
+    description: Метаданные связанного документа бонусной операции
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../common/meta.yaml'
+  applicable:
+    type: boolean
+    description: Отметка о проведении
+  bonusProgram:
+    description: Метаданные бонусной программы
+    $ref: '../../../openapi.yaml#/components/schemas/BonusProgram'
+  bonusValue:
+    type: integer
+    format: int32
+    description: Количество бонусных баллов
+  transactionType:
+    type: string
+    enum: [EARNING, SPENDING]
+    description: Тип бонусной операции
+  transactionStatus:
+    type: string
+    enum: [WAIT_PROCESSING, COMPLETED, CANCELED]
+    description: Статус бонусной операции
+    readOnly: true
+  categoryType:
+    type: string
+    enum: [REGULAR, WELCOME]
+    description: Категория бонусной операции
+    readOnly: true
+  code:
+    type: string
+    maxLength: 255
+    description: Код бонусной операции
+  name:
+    type: string
+    maxLength: 255
+    description: Наименование бонусной операции
+  externalCode:
+    type: string
+    maxLength: 255
+    description: Внешний код бонусной операции
+  description:
+    type: string
+    maxLength: 4096
+    description: Комментарий к бонусной операции
+  moment:
+    type: string
+    description: Время проведения бонусной операции
+  created:
+    type: string
+    description: Момент создания бонусной операции
+    readOnly: true
+  updated:
+    type: string
+    description: Момент последнего обновления бонусной операции
+    readOnly: true
+  executionDate:
+    type: string
+    description: Дата начисления бонусной операции
+  shared:
+    type: boolean
+    description: Общий доступ
+  updatedBy:
+    type: string
+    description: Автор последнего обновления (uid, используется для фильтрации)
+

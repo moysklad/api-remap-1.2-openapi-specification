@@ -1,0 +1,45 @@
+type: object
+description: Настройки компании (companysettings)
+properties:
+  meta:
+    description: Метаданные Настроек компании
+    $ref: '../common/meta.yaml'
+  currency:
+    description: Метаданные стандартной валюты
+    $ref: '../../../openapi.yaml#/components/schemas/Currency'
+  priceTypes:
+    type: array
+    description: Коллекция всех существующих типов цен
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/PriceType'
+  discountStrategy:
+    type: string
+    enum:
+      - bySum
+      - byPriority
+    description: Совместное применение скидок
+  globalOperationNumbering:
+    type: boolean
+    description: Использовать сквозную нумерацию документов
+  checkShippingStock:
+    type: boolean
+    description: Запретить отгрузку отсутствующих товаров
+  checkMinPrice:
+    type: boolean
+    description: Автоматически устанавливать минимальную цену
+  useRecycleBin:
+    type: boolean
+    description: Использовать корзину
+  useCompanyAddress:
+    type: boolean
+    description: Использовать адрес компании для электронных писем
+  companyAddress:
+    type: string
+    maxLength: 255
+    description: Адрес компании для электронных писем
+  accountCountry:
+    type: string
+    maxLength: 255
+    description: Страновая конфигурация аккаунта
+    readOnly: true
+

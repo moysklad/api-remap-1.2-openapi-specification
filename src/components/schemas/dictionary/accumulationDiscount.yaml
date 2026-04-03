@@ -15,9 +15,9 @@ properties:
   allProducts:
     type: boolean
     description: Для всех ли товаров скидка
-  level:
+  levels:
     type: array
-    description: Процент скидки при определенной сумме продаж
+    description: Проценты скидок при определенной сумме продаж
     items:
       type: object
       properties:

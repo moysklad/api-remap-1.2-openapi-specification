@@ -1,0 +1,37 @@
+type: object
+description: Метаданные Настроек компании (companysettings/metadata)
+properties:
+  meta:
+    description: Метаданные Настроек компании
+    $ref: '../common/meta.yaml'
+  customEntities:
+    type: array
+    description: Список пользовательских справочников
+    items:
+      type: object
+      properties:
+        meta:
+          description: Метаданные пользовательского справочника
+          $ref: '../common/meta.yaml'
+        entityMeta:
+          description: Ссылка на список сущностей пользовательского справочника
+          $ref: '../common/meta.yaml'
+        id:
+          type: string
+          format: uuid
+          description: ID пользовательского справочника
+          readOnly: true
+        attributes:
+          description: Метаданные атрибутов пользовательского справочника
+          type: object
+          properties:
+            meta:
+              $ref: '../common/metaList.yaml'
+        name:
+          type: string
+          maxLength: 255
+          description: Наименование справочника
+        createShared:
+          type: boolean
+          description: Создавать новые элементы с меткой "Общий"
+
