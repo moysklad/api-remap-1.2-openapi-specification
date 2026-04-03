@@ -1,5 +1,4 @@
 type: object
-x-entitytype-product: true
 properties:
   meta:
     description: Метаданные Партии

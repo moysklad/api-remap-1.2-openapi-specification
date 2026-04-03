@@ -105,7 +105,7 @@ properties:
     readOnly: true
   organization:
     description: Метаданные юрлица
-    $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
+    $ref: '../../../openapi.yaml#/components/schemas/Organization'
   organizationAccount:
     description: Метаданные счета юрлица
     nullable: true
