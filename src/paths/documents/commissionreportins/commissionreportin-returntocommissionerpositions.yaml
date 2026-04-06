@@ -21,7 +21,7 @@ get:
             items:
               $ref: '../../../openapi.yaml#/components/schemas/CommissionReportInReturnedPosition'#/components/schemas/CommissionReportInReturnedPosition
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 post:
   operationId: createCommissionReportInReturnedPositions
   tags:
@@ -57,5 +57,5 @@ post:
                 - $ref: ../../../openapi.yaml#/components/schemas/CommissionReportInReturnedPosition
                 - $ref: ../../../components/schemas/common/error.yaml
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 

@@ -27,7 +27,7 @@ get:
           schema:
             $ref: '../../../components/schemas/dictionary/customEntityElement.yaml'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 
 put:
   operationId: updateCustomEntityElement
@@ -65,7 +65,7 @@ put:
           schema:
             $ref: '../../../components/schemas/dictionary/customEntityElement.yaml'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 
 delete:
   operationId: deleteCustomEntityElement
@@ -92,5 +92,5 @@ delete:
     '200':
       description: Элемент пользовательского справочника успешно удален
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 

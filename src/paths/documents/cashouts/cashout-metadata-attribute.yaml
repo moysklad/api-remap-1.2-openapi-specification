@@ -17,7 +17,7 @@ get:
           schema:
             $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfoList'#/components/schemas/AttributeMetaInfoList
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 post:
   operationId: createCashOutMetadataAttribute
   tags:
@@ -41,5 +41,5 @@ post:
           schema:
             $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfo'#/components/schemas/AttributeMetaInfo
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 

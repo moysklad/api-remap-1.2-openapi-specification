@@ -17,7 +17,7 @@ get:
           schema:
             $ref: '../../../components/schemas/dictionary/bonusTransaction.yaml'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 
 put:
   operationId: updateBonusTransaction
@@ -45,7 +45,7 @@ put:
           schema:
             $ref: '../../../components/schemas/dictionary/bonusTransaction.yaml'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 
 delete:
   operationId: deleteBonusTransaction
@@ -61,5 +61,5 @@ delete:
     '200':
       description: Бонусная операция успешно удалена
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 

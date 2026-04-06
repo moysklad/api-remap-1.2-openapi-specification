@@ -22,5 +22,5 @@ post:
           schema:
             $ref: '../../../components/schemas/dictionary/personalDiscount.yaml'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 

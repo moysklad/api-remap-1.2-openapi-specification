@@ -30,5 +30,5 @@ post:
                 - $ref: ../../../openapi.yaml#/components/schemas/DeleteInfo
                 - $ref: ../../../components/schemas/common/error.yaml
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 

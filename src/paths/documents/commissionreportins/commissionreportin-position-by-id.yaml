@@ -18,7 +18,7 @@ get:
           schema:
             $ref: '../../../components/schemas/dictionary/commissionReportInPosition.yaml'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 put:
   operationId: updateCommissionReportInPosition
   tags:
@@ -45,7 +45,7 @@ put:
           schema:
             $ref: '../../../openapi.yaml#/components/schemas/CommissionReportIn'#/components/schemas/CommissionReportIn
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 delete:
   operationId: deleteCommissionReportInPosition
   tags:
@@ -62,5 +62,5 @@ delete:
     '200':
       description: Успешный запрос
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 

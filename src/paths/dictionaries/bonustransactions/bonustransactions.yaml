@@ -17,7 +17,7 @@ get:
           schema:
             $ref: '../../../components/schemas/dictionary/bonusTransactionList.yaml'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 
 post:
   operationId: createBonusTransaction
@@ -53,5 +53,5 @@ post:
                 items:
                   $ref: '../../../components/schemas/dictionary/bonusTransaction.yaml'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 

@@ -27,5 +27,5 @@ get:
           schema:
             $ref: '../../../components/schemas/dictionary/assortmentList.yaml'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 

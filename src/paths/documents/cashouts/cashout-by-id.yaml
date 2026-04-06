@@ -17,7 +17,7 @@ get:
           schema:
             $ref: '../../../components/schemas/dictionary/cashOut.yaml'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 put:
   operationId: updateCashOut
   tags:
@@ -43,7 +43,7 @@ put:
           schema:
             $ref: '../../../components/schemas/dictionary/cashOut.yaml'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 delete:
   operationId: deleteCashOut
   tags:
@@ -58,5 +58,5 @@ delete:
     '200':
       description: Успешный запрос
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 

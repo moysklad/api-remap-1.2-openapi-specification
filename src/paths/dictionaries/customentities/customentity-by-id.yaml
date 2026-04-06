@@ -16,7 +16,7 @@ get:
           schema:
             $ref: '../../../components/schemas/dictionary/customEntityElementList.yaml'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 
 post:
   operationId: createCustomEntityElement
@@ -43,7 +43,7 @@ post:
           schema:
             $ref: '../../../components/schemas/dictionary/customEntityElement.yaml'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 
 put:
   operationId: updateCustomEntity
@@ -70,7 +70,7 @@ put:
           schema:
             $ref: '../../../components/schemas/dictionary/customEntity.yaml'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 
 delete:
   operationId: deleteCustomEntity
@@ -86,5 +86,5 @@ delete:
     '200':
       description: Пользовательский справочник успешно удален
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 

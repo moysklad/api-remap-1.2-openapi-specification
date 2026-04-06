@@ -23,5 +23,5 @@ put:
           schema:
             $ref: '../../../components/schemas/dictionary/discount.yaml'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 
