@@ -23,7 +23,7 @@ get:
           schema:
             $ref: '../../../openapi.yaml#/components/schemas/Note'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 
 put:
   operationId: updateCounterpartyNote
@@ -57,7 +57,7 @@ put:
           schema:
             $ref: '../../../openapi.yaml#/components/schemas/Note'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
     
     
     
@@ -84,4 +84,4 @@ delete:
     '200':
       description: Событие успешно удалено
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'

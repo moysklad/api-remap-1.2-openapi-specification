@@ -20,7 +20,7 @@ get:
           schema:
             $ref: '../../../components/schemas/dictionary/bundleList.yaml'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 post:
   operationId: createBundle
   tags:
@@ -40,7 +40,7 @@ post:
           schema:
             $ref: '../../../components/schemas/dictionary/bundle.yaml'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
   parameters:
   - $ref: ../../../components/headers.yaml#/AcceptHeader
   - $ref: ../../../components/headers.yaml#/AcceptEncoding

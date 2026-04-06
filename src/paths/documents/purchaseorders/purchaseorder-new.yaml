@@ -21,4 +21,4 @@ put:
           schema:
             $ref: '../../../components/schemas/dictionary/purchaseOrder.yaml'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'

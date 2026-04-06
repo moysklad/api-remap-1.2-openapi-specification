@@ -22,7 +22,7 @@ get:
           schema:
             $ref: '../../../components/schemas/dictionary/bundleComponent.yaml'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 put:
   operationId: updateBundleComponent
   tags:
@@ -54,7 +54,7 @@ put:
           schema:
             $ref: '../../../components/schemas/dictionary/bundleComponent.yaml'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 delete:
   operationId: deleteBundleComponent
   tags:
@@ -74,4 +74,4 @@ delete:
     '200':
       description: Успешный запрос
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'

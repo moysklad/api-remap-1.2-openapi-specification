@@ -69,13 +69,13 @@ abstract class TestCase extends BaseTestCase
 
     /**
      * Возвращает базовый URL mock сервера (openapi-mock).
-     * Значение берётся из переменной окружения PRISM_BASE_URL (имя сохранено для обратной совместимости).
+     * Значение берётся из переменной окружения SMOKE_BASE_URL .
      * 
      * @return string URL сервера (например, 'http://mock:8080')
      */
-    protected function getPrismBaseUrl(): string
+    protected function getSmokeBaseUrl(): string
     {
-        return $_ENV['PRISM_BASE_URL'] ?? getenv('PRISM_BASE_URL') ?: 'http://mock:8080';
+        return $_ENV['SMOKE_BASE_URL'] ?? getenv('SMOKE_BASE_URL') ?: 'http://mock:8080';
     }
 
     /**

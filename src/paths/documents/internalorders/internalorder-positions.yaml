@@ -19,9 +19,9 @@ get:
           schema:
             type: array
             items:
-              $ref: '../../../openapi.yaml#/components/schemas/InternalOrderPosition'#/components/schemas/InternalOrderPosition
+              $ref: '../../../openapi.yaml#/components/schemas/InternalOrderPosition'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 post:
   operationId: createInternalOrderPositions
   tags:
@@ -57,4 +57,4 @@ post:
                 - $ref: ../../../openapi.yaml#/components/schemas/InternalOrderPosition
                 - $ref: ../../../components/schemas/common/error.yaml
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'

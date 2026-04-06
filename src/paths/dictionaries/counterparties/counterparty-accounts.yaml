@@ -45,7 +45,7 @@ get:
                 bic: "044525225"
                 correspondentAccount: "30101810400000000225"
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
     
     
     
@@ -75,7 +75,7 @@ post:
           schema:
             $ref: '../../../openapi.yaml#/components/schemas/Account'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
     
     
     

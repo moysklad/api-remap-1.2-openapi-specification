@@ -29,7 +29,7 @@ post:
     '200':
       description: НСО успешно удалены
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
     
     
     

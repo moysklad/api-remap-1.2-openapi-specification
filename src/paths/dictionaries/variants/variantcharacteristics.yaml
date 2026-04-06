@@ -19,9 +19,9 @@ get:
               rows:
                 type: array
                 items:
-                  $ref: '../../../openapi.yaml#/components/schemas/VariantCharacteristic'#/components/schemas/VariantCharacteristic
+                  $ref: '../../../openapi.yaml#/components/schemas/VariantCharacteristic'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 post:
   operationId: createVariantCharacteristic
   tags:
@@ -41,7 +41,7 @@ post:
           schema:
             $ref: '../../../components/schemas/dictionary/variantCharacteristic.yaml'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
   parameters:
   - $ref: ../../../components/headers.yaml#/AcceptHeader
   - $ref: ../../../components/headers.yaml#/AcceptEncoding

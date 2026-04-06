@@ -16,7 +16,7 @@ get:
           schema:
             $ref: '../../../components/schemas/dictionary/customerOrder.yaml'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 put:
   operationId: updateCustomerOrder
   tags:
@@ -42,7 +42,7 @@ put:
           schema:
             $ref: '../../../components/schemas/dictionary/customerOrder.yaml'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 delete:
   operationId: deleteCustomerOrder
   tags:
@@ -57,4 +57,4 @@ delete:
     '200':
       description: Успешный запрос
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'

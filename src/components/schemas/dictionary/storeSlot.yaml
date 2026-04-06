@@ -28,11 +28,9 @@ properties:
     maxLength: 255
     description: Внешний код Ячейки склада
   barcode:
-    description: Штрихкод ячейки
-    nullable: true
-    type: object
-    allOf:
-      - $ref: '../../../openapi.yaml#/components/schemas/Barcode'
+    type: string
+    maxLength: 255
+    description:  Штрихкод ячейки
   zone:
     description: Зона ячейки
     $ref: '../../../openapi.yaml#/components/schemas/StoreZone'

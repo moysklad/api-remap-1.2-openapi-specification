@@ -15,4 +15,4 @@ get:
           schema:
             $ref: '../../../components/schemas/common/documentMetadata.yaml'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'

@@ -9,7 +9,7 @@ BadRequest:
         type: string
         example: '<html><head><title>Error</title></head><body>Bad Request</body></html>'
 
-Base:
+CommonError:
   description: Ошибка запроса (тело — объект или массив объектов с полем errors)
   content:
     application/json:

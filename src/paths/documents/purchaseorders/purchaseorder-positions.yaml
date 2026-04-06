@@ -19,9 +19,9 @@ get:
           schema:
             type: array
             items:
-              $ref: '../../../openapi.yaml#/components/schemas/PurchaseOrderPosition'#/components/schemas/PurchaseOrderPosition
+              $ref: '../../../openapi.yaml#/components/schemas/PurchaseOrderPosition'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 post:
   operationId: createPurchaseOrderPositions
   tags:
@@ -57,4 +57,4 @@ post:
                 - $ref: ../../../openapi.yaml#/components/schemas/PurchaseOrderPosition
                 - $ref: ../../../components/schemas/common/error.yaml
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'

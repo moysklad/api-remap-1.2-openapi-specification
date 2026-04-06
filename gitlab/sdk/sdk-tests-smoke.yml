@@ -7,7 +7,7 @@
       variables:
         OPENAPI_MOCK_SPECIFICATION_URL: /builds/$CI_PROJECT_PATH/dist/openapi.yaml
   variables:
-    PRISM_BASE_URL: http://mock:8080
+    SMOKE_BASE_URL: http://mock:8080
 
 # PHP Smoke тесты: openapi-mock запускается в том же контейнере
 # (GitLab CI service не имеет доступа к артефакту dist/openapi.yaml)
@@ -23,7 +23,7 @@ sdk-smoke-php:
     - if: '$SDK_LANGUAGES == "" || $SDK_LANGUAGES =~ /php/'
       when: on_success
   variables:
-    PRISM_BASE_URL: http://localhost:8080
+    SMOKE_BASE_URL: http://localhost:8080
   before_script:
     - apt-get update && apt-get install -y git unzip curl
     - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer

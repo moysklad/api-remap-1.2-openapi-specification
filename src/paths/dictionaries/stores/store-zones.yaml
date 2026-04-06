@@ -20,7 +20,7 @@ get:
           schema:
             $ref: '../../../components/schemas/dictionary/storeZoneList.yaml'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 post:
   operationId: createStoreZones
   tags:
@@ -44,7 +44,7 @@ post:
             - $ref: ../../../openapi.yaml#/components/schemas/StoreZone
             - type: array
               items:
-                $ref: '../../../openapi.yaml#/components/schemas/StoreZone'#/components/schemas/StoreZone
+                $ref: '../../../openapi.yaml#/components/schemas/StoreZone'
   responses:
     '200':
       description: Успешный запрос
@@ -53,6 +53,6 @@ post:
           schema:
             type: array
             items:
-              $ref: '../../../openapi.yaml#/components/schemas/StoreZone'#/components/schemas/StoreZone
+              $ref: '../../../openapi.yaml#/components/schemas/StoreZone'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'

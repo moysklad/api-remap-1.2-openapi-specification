@@ -49,7 +49,7 @@ get:
                     type: "employee"
                     mediaType: "application/json"
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
     
     
     
@@ -89,7 +89,7 @@ post:
             items:
               $ref: '../../../openapi.yaml#/components/schemas/File'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
     
     
     

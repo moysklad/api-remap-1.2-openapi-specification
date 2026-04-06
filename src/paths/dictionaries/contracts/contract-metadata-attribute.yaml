@@ -15,7 +15,7 @@ get:
           schema:
             $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfoList'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 
 post:
   operationId: createContractMetadataAttribute
@@ -41,4 +41,4 @@ post:
           schema:
             $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfo'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'

@@ -18,7 +18,7 @@ get:
           schema:
             $ref: '../../../components/schemas/dictionary/customerOrderPosition.yaml'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 put:
   operationId: updateCustomerOrderPosition
   tags:
@@ -43,9 +43,9 @@ put:
       content:
         application/json:
           schema:
-            $ref: '../../../openapi.yaml#/components/schemas/CustomerOrder'#/components/schemas/CustomerOrder
+            $ref: '../../../openapi.yaml#/components/schemas/CustomerOrder'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 delete:
   operationId: deleteCustomerOrderPosition
   tags:
@@ -62,4 +62,4 @@ delete:
     '200':
       description: Успешный запрос
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'

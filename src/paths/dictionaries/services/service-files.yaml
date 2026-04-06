@@ -43,7 +43,7 @@ get:
                 size: 25000
                 created: "2019-01-25 17:30:25.021"
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
     
     
     
@@ -83,7 +83,7 @@ post:
             items:
               $ref: '../../../openapi.yaml#/components/schemas/File'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
     
     
     

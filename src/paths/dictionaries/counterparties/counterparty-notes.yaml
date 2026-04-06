@@ -42,7 +42,7 @@ get:
                 created: "2026-02-05 15:14:25.634"
                 description: "Важный клиент, скидка 10%"
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 
 post:
   operationId: createCounterpartyNote
@@ -69,7 +69,7 @@ post:
           schema:
             $ref: '../../../openapi.yaml#/components/schemas/Note'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
     
     
     

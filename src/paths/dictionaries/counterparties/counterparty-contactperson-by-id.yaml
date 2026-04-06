@@ -23,7 +23,7 @@ get:
           schema:
             $ref: '../../../openapi.yaml#/components/schemas/ContactPerson'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 
 put:
   operationId: updateCounterpartyContactPerson
@@ -57,7 +57,7 @@ put:
           schema:
             $ref: '../../../openapi.yaml#/components/schemas/ContactPerson'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
     
     
     
@@ -84,6 +84,6 @@ delete:
     '200':
       description: Контактное лицо успешно удалено
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
     
     

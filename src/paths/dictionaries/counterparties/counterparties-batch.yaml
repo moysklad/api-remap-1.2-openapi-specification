@@ -33,4 +33,4 @@ post:
             minItems: 1
             maxItems: 1000
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'

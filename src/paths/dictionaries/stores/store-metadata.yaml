@@ -11,7 +11,7 @@ get:
           schema:
             $ref: '../../../openapi.yaml#/components/schemas/StoreMetadata'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
   parameters:
     - $ref: '../../../components/parameters.yaml#/expand'
     - $ref: '../../../components/headers.yaml#/AcceptHeader'

@@ -19,9 +19,9 @@ get:
           schema:
             type: array
             items:
-              $ref: '../../../openapi.yaml#/components/schemas/CustomerOrderPosition'#/components/schemas/CustomerOrderPosition
+              $ref: '../../../openapi.yaml#/components/schemas/CustomerOrderPosition'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 post:
   operationId: createCustomerOrderPositions
   tags:
@@ -57,4 +57,4 @@ post:
                 - $ref: ../../../openapi.yaml#/components/schemas/CustomerOrderPosition
                 - $ref: ../../../components/schemas/common/error.yaml
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'

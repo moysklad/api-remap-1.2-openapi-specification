@@ -17,7 +17,7 @@
 
 services:
   mock:
-    image: muonsoft/openapi-mock:latest
+    image: muonsoft/openapi-mock:0.3.9
     volumes:
       - .:/workspace:ro
     environment:
@@ -40,8 +40,7 @@ services:
       - CI=true
       # В Docker используем публичный registry, чтобы не было UNABLE_TO_VERIFY_LEAF_SIGNATURE к Nexus
       - USE_PUBLIC_NPM_REGISTRY=true
-      # Имя переменной PRISM_BASE_URL сохранено для обратной совместимости с тестами
-      - PRISM_BASE_URL=http://mock:8080
+      - SMOKE_BASE_URL=http://mock:8080
       - SDK_PATH=/workspace/clients/php
       - NPM_CONFIG_PROGRESS=true
       - NPM_CONFIG_LOGLEVEL=info

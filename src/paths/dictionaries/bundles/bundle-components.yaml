@@ -21,7 +21,7 @@ get:
           schema:
             $ref: '../../../components/schemas/dictionary/bundleComponentList.yaml'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
 post:
   operationId: createBundleComponents
   tags:
@@ -42,7 +42,7 @@ post:
           - $ref: ../../../openapi.yaml#/components/schemas/BundleComponent
           - type: array
             items:
-              $ref: '../../../openapi.yaml#/components/schemas/BundleComponent'#/components/schemas/BundleComponent
+              $ref: '../../../openapi.yaml#/components/schemas/BundleComponent'
   responses:
     '200':
       description: Успешный запрос
@@ -51,6 +51,6 @@ post:
           schema:
             type: array
             items:
-              $ref: '../../../openapi.yaml#/components/schemas/BundleComponent'#/components/schemas/BundleComponent
+              $ref: '../../../openapi.yaml#/components/schemas/BundleComponent'
     default:
-      $ref: '../../../components/responses.yaml#/Base'
+      $ref: '../../../components/responses.yaml#/CommonError'
