@@ -1,0 +1,80 @@
+get:
+  operationId: getProductById
+  tags:
+    - Products
+  summary: Получить товар по ID
+  description: Запрос на получение отдельного товара с указанным id
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../components/schemas/dictionary/product.yaml'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+    
+    
+    
+    
+
+put:
+  operationId: updateProduct
+  tags:
+    - Products
+  summary: Обновить товар
+  description: Обновление товара с указанным id
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../components/schemas/dictionary/product.yaml'
+  responses:
+    '200':
+      description: Товар успешно обновлен
+      content:
+        application/json:
+          schema:
+            $ref: '../../../components/schemas/dictionary/product.yaml'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+    
+    
+    
+    
+    
+    
+
+delete:
+  operationId: deleteProduct
+  tags:
+    - Products
+  summary: Удалить товар
+  description: Удаление товара с указанным id
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Товар успешно удален
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+    
+    
+    
+    
+    
+    

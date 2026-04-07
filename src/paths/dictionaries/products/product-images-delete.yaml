@@ -1,0 +1,37 @@
+post:
+  operationId: deleteProductImages
+  tags:
+    - Products
+  summary: Массовое удаление изображений товара
+  description: Массовое удаление Изображений Товара
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            type: object
+            properties:
+              meta:
+                $ref: '../../../components/schemas/common/meta.yaml'
+        example:
+          - meta:
+              href: "https://api.moysklad.ru/api/remap/1.2/entity/product/7944ef04-f831-11e5-7a69-971500188b19/images/f2728180-6afd-4d37-8a13-f3b48069bbb6"
+              type: "image"
+              mediaType: "application/json"
+  responses:
+    '200':
+      description: Изображения успешно удалены
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+    
+    
+    
+    
+    

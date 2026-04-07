@@ -1,0 +1,17 @@
+type: object
+allOf:
+  - $ref: '../../../openapi.yaml#/components/schemas/DiscountBase'
+properties:
+  assortment:
+    type: array
+    description: Товары со скидкой
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/Product'
+  productFolders:
+    type: array
+    description: Группы товаров со скидкой
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/ProductFolder'
+  allProducts:
+    type: boolean
+    description: Для всех ли товаров скидка

@@ -1,0 +1,48 @@
+get:
+  operationId: getRetailStores
+  tags:
+  - RetailStores
+  summary: Получить точки продаж
+  parameters:
+  - $ref: ../../../components/parameters.yaml#/limit
+  - $ref: ../../../components/parameters.yaml#/offset
+  - $ref: ../../../components/parameters.yaml#/search
+  - $ref: ../../../components/parameters.yaml#/filter
+  - $ref: ../../../components/parameters.yaml#/expand
+  - $ref: ../../../components/parameters.yaml#/order
+  - $ref: ../../../components/headers.yaml#/AcceptHeader
+  - $ref: ../../../components/headers.yaml#/AcceptEncoding
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../components/schemas/dictionary/retailStoreList.yaml'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+post:
+  operationId: createRetailStore
+  tags:
+  - RetailStores
+  summary: Создать точку продаж
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../components/schemas/dictionary/retailStore.yaml'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../components/schemas/dictionary/retailStore.yaml'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+  parameters:
+  - $ref: ../../../components/headers.yaml#/AcceptHeader
+  - $ref: ../../../components/headers.yaml#/AcceptEncoding
+  - $ref: ../../../components/parameters.yaml#/expand
+  - $ref: ../../../components/headers.yaml#/ContentTypeJson

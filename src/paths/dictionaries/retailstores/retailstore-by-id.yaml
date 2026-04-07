@@ -1,0 +1,59 @@
+get:
+  operationId: getRetailStoreById
+  tags:
+  - RetailStores
+  summary: Получить точку продаж
+  parameters:
+  - $ref: ../../../components/parameters.yaml#/entityId
+  - $ref: ../../../components/parameters.yaml#/expand
+  - $ref: ../../../components/headers.yaml#/AcceptHeader
+  - $ref: ../../../components/headers.yaml#/AcceptEncoding
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../components/schemas/dictionary/retailStore.yaml'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+put:
+  operationId: updateRetailStore
+  tags:
+  - RetailStores
+  summary: Изменить точку продаж
+  parameters:
+  - $ref: ../../../components/parameters.yaml#/entityId
+  - $ref: ../../../components/parameters.yaml#/expand
+  - $ref: ../../../components/headers.yaml#/AcceptHeader
+  - $ref: ../../../components/headers.yaml#/AcceptEncoding
+  - $ref: ../../../components/headers.yaml#/ContentTypeJson
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../components/schemas/dictionary/retailStore.yaml'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../components/schemas/dictionary/retailStore.yaml'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+delete:
+  operationId: deleteRetailStore
+  tags:
+  - RetailStores
+  summary: Удалить точку продаж
+  parameters:
+  - $ref: ../../../components/parameters.yaml#/entityId
+  - $ref: ../../../components/headers.yaml#/AcceptHeader
+  - $ref: ../../../components/headers.yaml#/AcceptEncoding
+  responses:
+    '200':
+      description: Успешный запрос
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

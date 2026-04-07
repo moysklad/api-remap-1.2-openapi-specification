@@ -1,0 +1,33 @@
+post:
+  operationId: deleteInternalOrderPositionsBatch
+  tags:
+  - InternalOrders
+  summary: Массовое удаление позиций InternalOrder
+  parameters:
+  - $ref: ../../../components/parameters.yaml#/entityId
+  - $ref: ../../../components/headers.yaml#/AcceptHeader
+  - $ref: ../../../components/headers.yaml#/AcceptEncoding
+  - $ref: ../../../components/headers.yaml#/ContentTypeJson
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            $ref: '../../../openapi.yaml#/components/schemas/InternalOrderPosition'
+          minItems: 1
+          maxItems: 1000
+  responses:
+    '200':
+      description: Результат по каждому элементу (успех или объект ошибки)
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              oneOf:
+                - $ref: ../../../openapi.yaml#/components/schemas/DeleteInfo
+                - $ref: ../../../components/schemas/common/error.yaml
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

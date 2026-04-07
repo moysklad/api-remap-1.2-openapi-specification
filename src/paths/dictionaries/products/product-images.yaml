@@ -1,0 +1,93 @@
+get:
+  operationId: getProductImages
+  tags:
+    - Products
+  summary: Получить изображения товара
+  description: Запрос на получение всех Изображений Товара.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/parameters.yaml#/limit'
+    - $ref: '../../../components/parameters.yaml#/offset'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              meta:
+                $ref: '../../../components/schemas/common/metaList.yaml'
+              rows:
+                type: array
+                items:
+                  $ref: '../../../openapi.yaml#/components/schemas/Image'
+          example:
+            meta:
+              href: "https://api.moysklad.ru/api/remap/1.2/entity/product/7944ef04-f831-11e5-7a69-971500188b19/images"
+              type: "image"
+              mediaType: "application/json"
+              size: 1
+              limit: 1000
+              offset: 0
+            rows:
+              - meta:
+                  href: "https://api.moysklad.ru/api/remap/1.2/entity/product/7944ef04-f831-11e5-7a69-971500188b19/images/f2728180-6afd-4d37-8a13-f3b48069bbb6"
+                  type: "image"
+                  mediaType: "application/json"
+                  downloadHref: "https://api.moysklad.ru/api/remap/1.2/download/f2728180-6afd-4d37-8a13-f3b48069bbb6"
+                title: "birdimage"
+                filename: "birdimage.png"
+                size: 14052
+                updated: "2019-01-24 16:55:24.567"
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+    
+    
+    
+
+post:
+  operationId: addProductImages
+  tags:
+    - Products
+  summary: Добавить изображения к товару
+  description: |
+    Добавить новые Изображения к Товару или изменить список Изображений.
+    В поле `content` нужно указать изображение, закодированное в Base64, в поле `filename` — имя файла с расширением.
+    У Товара может быть не более 10 Изображений.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          oneOf:
+            - $ref: '../../../openapi.yaml#/components/schemas/FileUpload'
+            - type: array
+              items:
+                $ref: '../../../openapi.yaml#/components/schemas/FileUpload'
+        example:
+          filename: "birdimage.png"
+          content: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAA3NCSVQICAjb4U/gAAAAEHRFWHRTb2Z0d2FyZQBTaHV0dGVyY4LQCQAAAAxJREFUCNdj+PePAQAE+gH90KA5ZAAAAABJRU5ErkJggg=="
+  responses:
+    '200':
+      description: Изображения успешно добавлены. Результат — массив всех Изображений Товара.
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../../../openapi.yaml#/components/schemas/Image'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+    
+    
+    
+    
+    

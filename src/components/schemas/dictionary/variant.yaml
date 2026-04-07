@@ -1,0 +1,92 @@
+type: object
+description: Модификация
+properties:
+  meta:
+    description: Метаданные Модификации
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID Модификации
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  updated:
+    type: string
+    description: Момент последнего обновления сущности
+    readOnly: true
+  name:
+    type: string
+    maxLength: 255
+    description: Наименование Модификации
+  code:
+    type: string
+    maxLength: 255
+    description: Код Модификации
+  externalCode:
+    type: string
+    maxLength: 255
+    description: Внешний код Модификации
+  archived:
+    type: boolean
+    description: Добавлена ли Модификация в архив
+  description:
+    type: string
+    maxLength: 4096
+    nullable: true
+    description: Описание Модификации
+  discountProhibited:
+    type: boolean
+    description: Признак запрета скидок
+  product:
+    description: Метаданные товара, которому принадлежит Модификация
+    $ref: '../../../openapi.yaml#/components/schemas/Product'
+  characteristics:
+    type: array
+    description: Характеристики Модификации
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/VariantCharacteristicValue'
+  salePrices:
+    type: array
+    description: Цены продажи
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/SalePrice'
+  buyPrice:
+    type: object
+    description: Закупочная цена
+    nullable: true
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/BuyPrice'
+  minPrice:
+    description: Минимальная цена
+    $ref: '../../../openapi.yaml#/components/schemas/MinPrice'
+  barcodes:
+    type: array
+    description: Штрихкоды Модификации
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/Barcode'
+  packs:
+    type: array
+    description: Упаковки Модификации
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/VariantPack'
+  images:
+    description: Массив метаданных Изображений
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/ImageList'
+  minimumStock:
+    description: Неснижаемый остаток
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/MinimumStockAbstract'
+  things:
+    type: array
+    description: Серийные номера
+    items:
+      type: string

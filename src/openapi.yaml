@@ -1,0 +1,643 @@
+openapi: 3.0.3
+info:
+  title: МойСклад JSON API
+  description: |
+    API для манипуляции с сущностями и создания отчетов в онлайн-сервисе МойСклад.
+    
+    ## Аутентификация
+    
+    МойСклад поддерживает аутентификацию по протоколу Basic Auth и с использованием токена доступа:
+    - Basic Auth: заголовок `Authorization` со значением пары `логин:пароль`, закодированным в Base64
+    - Bearer Token: заголовок `Authorization` со значением `Bearer <Access-Token>`
+    
+    ## Ограничения
+    
+    - Не более 45 запросов за 3 секундный период от аккаунта
+    - Не более 5 параллельных запросов от одного пользователя  
+    - Не более 20 параллельных запросов от аккаунта
+    - Не более 20 Мб данных в одном запросе
+    - Максимум 1000 элементов в массиве
+    - Обязательное использование сжатия gzip
+  version: "1.0.0"
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org
+
+servers:
+  - url: https://api.moysklad.ru/api/remap/1.2
+    description: Production server
+
+security:
+  - basicAuth: []
+  - bearerAuth: []
+
+paths:
+  # Dictionaries
+  #
+  # Contracts
+  /entity/contract:
+    $ref: './paths/dictionaries/contracts/contracts.yaml'
+  /entity/contract/{id}:
+    $ref: './paths/dictionaries/contracts/contract-by-id.yaml'
+  /entity/contract/delete:
+    $ref: './paths/dictionaries/contracts/contracts-delete.yaml'
+  /entity/contract/batch:
+    $ref: './paths/dictionaries/contracts/contracts-batch.yaml'
+  /entity/contract/metadata:
+    $ref: './paths/dictionaries/contracts/contract-metadata.yaml'
+  /entity/contract/metadata/attributes:
+    $ref: './paths/dictionaries/contracts/contract-metadata-attribute.yaml'
+  /entity/contract/metadata/attributes/{id}:
+    $ref: './paths/dictionaries/contracts/contract-metadata-attribute-by-id.yaml'
+
+  # Products
+  /entity/product:
+    $ref: './paths/dictionaries/products/products.yaml'
+  /entity/product/{id}:
+    $ref: './paths/dictionaries/products/product-by-id.yaml'
+  /entity/product/delete:
+    $ref: './paths/dictionaries/products/products-delete.yaml'
+  /entity/product/batch:
+    $ref: './paths/dictionaries/products/products-batch.yaml'
+  /entity/product/metadata:
+    $ref: './paths/common/metadata/metadata.yaml'
+  /entity/product/{id}/images:
+    $ref: './paths/dictionaries/products/product-images.yaml'
+  /entity/product/{id}/images/{imageId}:
+    $ref: './paths/dictionaries/products/product-image-by-id.yaml'
+  /entity/product/{id}/images/delete:
+    $ref: './paths/dictionaries/products/product-images-delete.yaml'
+  /entity/product/{id}/files:
+    $ref: './paths/dictionaries/products/product-files.yaml'
+  /entity/product/{id}/files/{fileId}:
+    $ref: './paths/dictionaries/products/product-file-by-id.yaml'
+  /entity/product/{id}/storebalances:
+    $ref: './paths/dictionaries/products/product-storebalances.yaml'
+  /entity/product/{id}/storebalances/{storeBalanceId}:
+    $ref: './paths/dictionaries/products/product-storebalance-by-id.yaml'
+  /entity/product/{id}/storebalances/delete:
+    $ref: './paths/dictionaries/products/product-storebalances-delete.yaml'
+  #
+  # Groups
+  /entity/group:
+    $ref: './paths/dictionaries/groups/groups.yaml'
+  /entity/group/{id}:
+    $ref: './paths/dictionaries/groups/group-by-id.yaml'
+  #
+  # Countries
+  /entity/country:
+    $ref: './paths/dictionaries/countries/countries.yaml'
+  /entity/country/{id}:
+    $ref: './paths/dictionaries/countries/country-by-id.yaml'
+  /entity/country/delete:
+    $ref: './paths/dictionaries/countries/countries-delete.yaml'
+  /entity/country/batch:
+    $ref: './paths/dictionaries/countries/countries-batch.yaml'
+  #
+  # ProductFolders
+  /entity/productfolder:
+    $ref: './paths/dictionaries/productFolders/productFolders.yaml'
+  /entity/productfolder/{id}:
+    $ref: './paths/dictionaries/productFolders/productFolders-by-id.yaml'
+  /entity/productfolder/delete:
+    $ref: './paths/dictionaries/productFolders/productFolders-delete.yaml'
+  /entity/productfolder/batch:
+    $ref: './paths/dictionaries/productFolders/productFolders-batch.yaml'
+  #
+  # Uoms
+  /entity/uom:
+    $ref: './paths/dictionaries/uoms/uoms.yaml'
+  /entity/uom/{id}:
+    $ref: './paths/dictionaries/uoms/uom-by-id.yaml'
+  /entity/uom/delete:
+    $ref: './paths/dictionaries/uoms/uoms-delete.yaml'
+  /entity/uom/batch:
+    $ref: './paths/dictionaries/uoms/uoms-batch.yaml'
+  #
+  # Currencies
+  /entity/currency:
+    $ref: './paths/dictionaries/currencies/currencies.yaml'
+  /entity/currency/{id}:
+    $ref: './paths/dictionaries/currencies/currency-by-id.yaml'
+  /entity/currency/delete:
+    $ref: './paths/dictionaries/currencies/currencies-delete.yaml'
+  /entity/currency/batch:
+    $ref: './paths/dictionaries/currencies/currencies-batch.yaml'
+  #
+  # Employees
+  /entity/employee:
+    $ref: './paths/dictionaries/employees/employees.yaml'
+  /entity/employee/{id}:
+    $ref: './paths/dictionaries/employees/employee-by-id.yaml'
+  /entity/employee/delete:
+    $ref: './paths/dictionaries/employees/employees-delete.yaml'
+  /entity/employee/batch:
+    $ref: './paths/dictionaries/employees/employees-batch.yaml'
+  /entity/employee/metadata:
+    $ref: './paths/common/metadata/metadata-employee.yaml'
+  /entity/employee/{id}/security:
+    $ref: './paths/dictionaries/employees/employee-security.yaml'
+  /entity/employee/{id}/access/activate:
+    $ref: './paths/dictionaries/employees/employee-access-activate.yaml'
+  /entity/employee/{id}/access/deactivate:
+    $ref: './paths/dictionaries/employees/employee-access-deactivate.yaml'
+  /entity/employee/{id}/access/resetpassword:
+    $ref: './paths/dictionaries/employees/employee-access-resetpassword.yaml'
+  /entity/role/owner:
+    $ref: './paths/dictionaries/employees/role-owner.yaml'
+  /entity/role/admin:
+    $ref: './paths/dictionaries/employees/role-admin.yaml'
+  /entity/role/individual:
+    $ref: './paths/dictionaries/employees/role-individual.yaml'
+  /entity/role/cashier:
+    $ref: './paths/dictionaries/employees/role-cashier.yaml'
+  /entity/role/worker:
+    $ref: './paths/dictionaries/employees/role-worker.yaml'
+  #
+  # Counterparties
+  /entity/counterparty:
+    $ref: './paths/dictionaries/counterparties/counterparties.yaml'
+  /entity/counterparty/{id}:
+    $ref: './paths/dictionaries/counterparties/counterparty-by-id.yaml'
+  /entity/counterparty/delete:
+    $ref: './paths/dictionaries/counterparties/counterparties-delete.yaml'
+  /entity/counterparty/batch:
+    $ref: './paths/dictionaries/counterparties/counterparties-batch.yaml'
+  /entity/counterparty/metadata:
+    $ref: './paths/dictionaries/counterparties/counterparty-metadata.yaml'
+  /entity/counterparty/{id}/accounts:
+    $ref: './paths/dictionaries/counterparties/counterparty-accounts.yaml'
+  /entity/counterparty/{id}/accounts/{accountId}:
+    $ref: './paths/dictionaries/counterparties/counterparty-account-by-id.yaml'
+  /entity/counterparty/{id}/contactpersons:
+    $ref: './paths/dictionaries/counterparties/counterparty-contactpersons.yaml'
+  /entity/counterparty/{id}/contactpersons/{contactPersonId}:
+    $ref: './paths/dictionaries/counterparties/counterparty-contactperson-by-id.yaml'
+  /entity/counterparty/{id}/notes:
+    $ref: './paths/dictionaries/counterparties/counterparty-notes.yaml'
+  /entity/counterparty/{id}/notes/{noteId}:
+    $ref: './paths/dictionaries/counterparties/counterparty-note-by-id.yaml'
+  /entity/counterparty/{id}/files:
+    $ref: './paths/dictionaries/counterparties/counterparty-files.yaml'
+  /entity/counterparty/{id}/files/{fileId}:
+    $ref: './paths/dictionaries/counterparties/counterparty-file-by-id.yaml'
+  #
+  # Services
+  /entity/service:
+    $ref: './paths/dictionaries/services/services.yaml'
+  /entity/service/{id}:
+    $ref: './paths/dictionaries/services/service-by-id.yaml'
+  /entity/service/delete:
+    $ref: './paths/dictionaries/services/services-delete.yaml'
+  /entity/service/batch:
+    $ref: './paths/dictionaries/services/services-batch.yaml'
+  /entity/service/{id}/files:
+    $ref: './paths/dictionaries/services/service-files.yaml'
+  /entity/service/{id}/files/{fileId}:
+    $ref: './paths/dictionaries/services/service-file-by-id.yaml'
+  #
+  # PriceTypes
+  /context/companysettings/pricetype:
+    $ref: './paths/dictionaries/pricetypes/pricetypes.yaml'
+  /context/companysettings/pricetype/{id}:
+    $ref: './paths/dictionaries/pricetypes/pricetype-by-id.yaml'
+  /context/companysettings/pricetype/default:
+    $ref: './paths/dictionaries/pricetypes/pricetype-default.yaml'
+
+  # Stores
+  /entity/store:
+    $ref: './paths/dictionaries/stores/stores.yaml'
+  /entity/store/{id}:
+    $ref: './paths/dictionaries/stores/store-by-id.yaml'
+  /entity/store/delete:
+    $ref: './paths/dictionaries/stores/stores-delete.yaml'
+  /entity/store/batch:
+    $ref: './paths/dictionaries/stores/stores-batch.yaml'
+  /entity/store/metadata:
+    $ref: './paths/dictionaries/stores/store-metadata.yaml'
+  /entity/store/metadata/attributes:
+    $ref: './paths/dictionaries/stores/store-metadata-attribute.yaml'
+  /entity/store/metadata/attributes/{id}:
+    $ref: './paths/dictionaries/stores/store-metadata-attribute-by-id.yaml'
+  /entity/store/{storeId}/zones:
+    $ref: './paths/dictionaries/stores/store-zones.yaml'
+  /entity/store/{storeId}/zones/{id}:
+    $ref: './paths/dictionaries/stores/store-zone-by-id.yaml'
+  /entity/store/{storeId}/zones/delete:
+    $ref: './paths/dictionaries/stores/store-zones-delete.yaml'
+  /entity/store/{storeId}/slots:
+    $ref: './paths/dictionaries/stores/store-slots.yaml'
+  /entity/store/{storeId}/slots/{id}:
+    $ref: './paths/dictionaries/stores/store-slot-by-id.yaml'
+  /entity/store/{storeId}/slots/delete:
+    $ref: './paths/dictionaries/stores/store-slots-delete.yaml'
+  # Retail stores and cashiers
+  /entity/retailstore:
+    $ref: './paths/dictionaries/retailstores/retailstores.yaml'
+  /entity/retailstore/{id}:
+    $ref: './paths/dictionaries/retailstores/retailstore-by-id.yaml'
+  /entity/retailstore/delete:
+    $ref: './paths/dictionaries/retailstores/retailstores-delete.yaml'
+  /entity/retailstore/batch:
+    $ref: './paths/dictionaries/retailstores/retailstores-batch.yaml'
+  /entity/retailstore/{retailStoreId}/masterRetailStores:
+    $ref: './paths/dictionaries/retailstores/retailstore-master.yaml'
+  /entity/retailstore/{retailStoreId}/cashiers:
+    $ref: './paths/dictionaries/cashiers/cashiers.yaml'
+  /entity/retailstore/{retailStoreId}/cashiers/{id}:
+    $ref: './paths/dictionaries/cashiers/cashier-by-id.yaml'
+  # Bundles
+  /entity/bundle:
+    $ref: './paths/dictionaries/bundles/bundles.yaml'
+  /entity/bundle/{id}:
+    $ref: './paths/dictionaries/bundles/bundle-by-id.yaml'
+  /entity/bundle/delete:
+    $ref: './paths/dictionaries/bundles/bundles-delete.yaml'
+  /entity/bundle/batch:
+    $ref: './paths/dictionaries/bundles/bundles-batch.yaml'
+  /entity/bundle/{id}/components:
+    $ref: './paths/dictionaries/bundles/bundle-components.yaml'
+  /entity/bundle/{id}/components/{componentId}:
+    $ref: './paths/dictionaries/bundles/bundle-component-by-id.yaml'
+  /entity/bundle/{id}/components/delete:
+    $ref: './paths/dictionaries/bundles/bundle-components-delete.yaml'
+  # Variants
+  /entity/variant:
+    $ref: './paths/dictionaries/variants/variants.yaml'
+  /entity/variant/{id}:
+    $ref: './paths/dictionaries/variants/variant-by-id.yaml'
+  /entity/variant/delete:
+    $ref: './paths/dictionaries/variants/variants-delete.yaml'
+  /entity/variant/batch:
+    $ref: './paths/dictionaries/variants/variants-batch.yaml'
+  /entity/variant/metadata:
+    $ref: './paths/dictionaries/variants/variants-metadata.yaml'
+  # Variant Characteristics
+  /entity/variant/metadata/characteristics:
+    $ref: './paths/dictionaries/variants/variantcharacteristics.yaml'
+  /entity/variant/metadata/characteristics/{id}:
+    $ref: './paths/dictionaries/variants/variantcharacteristics-by-id.yaml'
+  # Things
+  /entity/thing:
+    $ref: './paths/dictionaries/things/things.yaml'
+  /entity/thing/{id}:
+    $ref: './paths/dictionaries/things/thing-by-id.yaml'
+
+  # Documents - Internal Orders
+  /entity/internalorder:
+    $ref: './paths/documents/internalorders/internalorders.yaml'
+  /entity/internalorder/{id}:
+    $ref: './paths/documents/internalorders/internalorder-by-id.yaml'
+  /entity/internalorder/delete:
+    $ref: './paths/documents/internalorders/internalorders-delete.yaml'
+  /entity/internalorder/batch:
+    $ref: './paths/documents/internalorders/internalorders-batch.yaml'
+  /entity/internalorder/metadata:
+    $ref: './paths/documents/internalorders/internalorder-metadata.yaml'
+  /entity/internalorder/metadata/attributes:
+    $ref: './paths/documents/internalorders/internalorder-metadata-attribute.yaml'
+  /entity/internalorder/metadata/attributes/{id}:
+    $ref: './paths/documents/internalorders/internalorder-metadata-attribute-by-id.yaml'
+  /entity/internalorder/metadata/states/{id}:
+    $ref: './paths/documents/internalorders/internalorder-metadata-state-by-id.yaml'
+  /entity/internalorder/new:
+    $ref: './paths/documents/internalorders/internalorder-new.yaml'
+  /entity/internalorder/{id}/positions:
+    $ref: './paths/documents/internalorders/internalorder-positions.yaml'
+  /entity/internalorder/{id}/positions/{positionId}:
+    $ref: './paths/documents/internalorders/internalorder-position-by-id.yaml'
+  /entity/internalorder/{id}/positions/delete:
+    $ref: './paths/documents/internalorders/internalorder-positions-delete.yaml'
+  # Documents - Customer Orders
+  /entity/customerorder:
+    $ref: './paths/documents/customerorders/customerorders.yaml'
+  /entity/customerorder/{id}:
+    $ref: './paths/documents/customerorders/customerorder-by-id.yaml'
+  /entity/customerorder/delete:
+    $ref: './paths/documents/customerorders/customerorders-delete.yaml'
+  /entity/customerorder/batch:
+    $ref: './paths/documents/customerorders/customerorders-batch.yaml'
+  /entity/customerorder/metadata:
+    $ref: './paths/documents/customerorders/customerorder-metadata.yaml'
+  /entity/customerorder/metadata/attributes:
+    $ref: './paths/documents/customerorders/customerorder-metadata-attribute.yaml'
+  /entity/customerorder/metadata/attributes/{id}:
+    $ref: './paths/documents/customerorders/customerorder-metadata-attribute-by-id.yaml'
+  /entity/customerorder/metadata/states/{id}:
+    $ref: './paths/documents/customerorders/customerorder-metadata-state-by-id.yaml'
+  /entity/customerorder/new:
+    $ref: './paths/documents/customerorders/customerorder-new.yaml'
+  /entity/customerorder/{id}/positions:
+    $ref: './paths/documents/customerorders/customerorder-positions.yaml'
+  /entity/customerorder/{id}/positions/{positionId}:
+    $ref: './paths/documents/customerorders/customerorder-position-by-id.yaml'
+  /entity/customerorder/{id}/positions/delete:
+    $ref: './paths/documents/customerorders/customerorder-positions-delete.yaml'
+  # Documents - Purchase Orders
+  /entity/purchaseorder:
+    $ref: './paths/documents/purchaseorders/purchaseorders.yaml'
+  /entity/purchaseorder/{id}:
+    $ref: './paths/documents/purchaseorders/purchaseorder-by-id.yaml'
+  /entity/purchaseorder/delete:
+    $ref: './paths/documents/purchaseorders/purchaseorders-delete.yaml'
+  /entity/purchaseorder/batch:
+    $ref: './paths/documents/purchaseorders/purchaseorders-batch.yaml'
+  /entity/purchaseorder/metadata:
+    $ref: './paths/documents/purchaseorders/purchaseorder-metadata.yaml'
+  /entity/purchaseorder/metadata/attributes:
+    $ref: './paths/documents/purchaseorders/purchaseorder-metadata-attribute.yaml'
+  /entity/purchaseorder/metadata/attributes/{id}:
+    $ref: './paths/documents/purchaseorders/purchaseorder-metadata-attribute-by-id.yaml'
+  /entity/purchaseorder/metadata/states/{id}:
+    $ref: './paths/documents/purchaseorders/purchaseorder-metadata-state-by-id.yaml'
+  /entity/purchaseorder/new:
+    $ref: './paths/documents/purchaseorders/purchaseorder-new.yaml'
+  /entity/purchaseorder/{id}/positions:
+    $ref: './paths/documents/purchaseorders/purchaseorder-positions.yaml'
+  /entity/purchaseorder/{id}/positions/{positionId}:
+    $ref: './paths/documents/purchaseorders/purchaseorder-position-by-id.yaml'
+  /entity/purchaseorder/{id}/positions/delete:
+    $ref: './paths/documents/purchaseorders/purchaseorder-positions-delete.yaml'
+
+components:
+  schemas:
+    Account:
+      $ref: './components/schemas/dictionary/account.yaml'
+    AccumulationDiscount:
+      $ref: './components/schemas/dictionary/accumulationDiscount.yaml'
+    Address:
+      $ref: './components/schemas/dictionary/address.yaml'
+    AgentDiscount:
+      $ref: './components/schemas/dictionary/agentDiscount.yaml'
+    Application:
+      $ref: './components/schemas/dictionary/application.yaml'
+    Assortment:
+      $ref: './components/schemas/common/assortment.yaml'
+    AssortmentWithoutBundle:
+      $ref: './components/schemas/common/assortmentWithoutBundle.yaml'
+    AttributeAbstract:
+      $ref: './components/schemas/common/attributeAbstract.yaml'
+    AttributeBase:
+      $ref: './components/schemas/common/attributeBase.yaml'
+    AttributeBool:
+      $ref: './components/schemas/common/attributeBool.yaml'
+    AttributeCustomEntity:
+      $ref: './components/schemas/common/attributeCustomEntity.yaml'
+    AttributeDateTime:
+      $ref: './components/schemas/common/attributeDateTime.yaml'
+    AttributeDouble:
+      $ref: './components/schemas/common/attributeDouble.yaml'
+    AttributeFile:
+      $ref: './components/schemas/common/attributeFile.yaml'
+    AttributeLink:
+      $ref: './components/schemas/common/attributeLink.yaml'
+    AttributeLong:
+      $ref: './components/schemas/common/attributeLong.yaml'
+    AttributeMetaInfo:
+      $ref: './components/schemas/common/attributeMetaInfo.yaml'
+    AttributeMetaInfoList:
+      $ref: './components/schemas/common/attributeMetaInfoList.yaml'
+    AttributeObject:
+      $ref: './components/schemas/common/attributeObject.yaml'
+    AttributeString:
+      $ref: './components/schemas/common/attributeString.yaml'
+    AttributeText:
+      $ref: './components/schemas/common/attributeText.yaml'
+    Barcode:
+      $ref: './components/schemas/dictionary/barcode.yaml'
+    BonusProgram:
+      $ref: './components/schemas/dictionary/bonusProgram.yaml'
+    DeleteInfo:
+      $ref: './components/schemas/common/deleteInfo.yaml'
+    DiscountBase:
+      $ref: './components/schemas/dictionary/discountBase.yaml'
+    BuyPrice:
+      $ref: './components/schemas/dictionary/buyPrice.yaml'
+    Cashier:
+      $ref: './components/schemas/dictionary/cashier.yaml'
+    ContactPerson:
+      $ref: './components/schemas/dictionary/contactPerson.yaml'
+    Counterparty:
+      $ref: './components/schemas/dictionary/counterparty.yaml'
+    Country:
+      $ref: './components/schemas/dictionary/country.yaml'
+    Currency:
+      $ref: './components/schemas/dictionary/currency.yaml'
+    Employee:
+      $ref: './components/schemas/dictionary/employee.yaml'
+    EmployeeSecurity:
+      $ref: './components/schemas/dictionary/employeeSecurity.yaml'
+    EmployeeRole:
+      $ref: './components/schemas/dictionary/employeeRole.yaml'
+    File:
+      $ref: './components/schemas/common/file.yaml'
+    FileUpload:
+      $ref: './components/schemas/common/fileUpload.yaml'
+    FileList:
+      $ref: './components/schemas/common/fileList.yaml'
+    Group:
+      $ref: './components/schemas/dictionary/group.yaml'
+    Image:
+      $ref: './components/schemas/common/image.yaml'
+    ImageList:
+      $ref: './components/schemas/common/imageList.yaml'
+    MinimumStockAbstract:
+      $ref: './components/schemas/dictionary/minimumStockAbstract.yaml'
+    MinimumStockAllWarehouseSame:
+      $ref: './components/schemas/dictionary/minimumStockAllWarehouseSame.yaml'
+    MinimumStockAllWarehouseSum:
+      $ref: './components/schemas/dictionary/minimumStockAllWarehouseSum.yaml'
+    MinimumStockWarehouseVaried:
+      $ref: './components/schemas/dictionary/minimumStockWarehouseVaried.yaml'
+    MinPrice:
+      $ref: './components/schemas/dictionary/minPrice.yaml'
+    Note:
+      $ref: './components/schemas/dictionary/note.yaml'
+    Pack:
+      $ref: './components/schemas/dictionary/pack.yaml'
+    PersonalDiscount:
+      $ref: './components/schemas/dictionary/personalDiscount.yaml'
+    PriceType:
+      $ref: './components/schemas/dictionary/priceType.yaml'
+    Product:
+      $ref: './components/schemas/dictionary/product.yaml'
+    ProductFolder:
+      $ref: './components/schemas/dictionary/productFolder.yaml'
+    ProductFolderList:
+      $ref: './components/schemas/dictionary/productFolderList.yaml'
+    Region:
+      $ref: './components/schemas/dictionary/region.yaml'
+    RetailStore:
+      $ref: './components/schemas/dictionary/retailStore.yaml'
+    SalePrice:
+      $ref: './components/schemas/dictionary/salePrice.yaml'
+    Service:
+      $ref: './components/schemas/dictionary/service.yaml'
+    State:
+      $ref: './components/schemas/dictionary/state.yaml'
+    Store:
+      $ref: './components/schemas/dictionary/store.yaml'
+    StoreMetadata:
+      $ref: './components/schemas/dictionary/storeMetadata.yaml'
+    StoreZone:
+      $ref: './components/schemas/dictionary/storeZone.yaml'
+    StoreZoneList:
+      $ref: './components/schemas/dictionary/storeZoneList.yaml'
+    StoreSlot:
+      $ref: './components/schemas/dictionary/storeSlot.yaml'
+    StoreSlotList:
+      $ref: './components/schemas/dictionary/storeSlotList.yaml'
+    StoreBalance:
+      $ref: './components/schemas/dictionary/storeBalance.yaml'
+    StoreBalanceList:
+      $ref: './components/schemas/dictionary/storeBalanceList.yaml'
+    Uom:
+      $ref: './components/schemas/dictionary/uom.yaml'
+    CounterpartyMetadata:
+      $ref: './components/schemas/dictionary/counterpartyMetadata.yaml'
+    DocumentMetadata:
+      $ref: './components/schemas/common/documentMetadata.yaml'
+    Organization:
+      $ref: './components/schemas/dictionary/organization.yaml'
+
+    Bundle:
+      $ref: './components/schemas/dictionary/bundle.yaml'
+    BundleComponent:
+      $ref: './components/schemas/dictionary/bundleComponent.yaml'
+    BundleList:
+      $ref: './components/schemas/dictionary/bundleList.yaml'
+    BundleComponentList:
+      $ref: './components/schemas/dictionary/bundleComponentList.yaml'
+    Consignment:
+      $ref: './components/schemas/dictionary/consignment.yaml'
+    Variant:
+      $ref: './components/schemas/dictionary/variant.yaml'
+    VariantList:
+      $ref: './components/schemas/dictionary/variantList.yaml'
+    VariantCharacteristic:
+      $ref: './components/schemas/dictionary/variantCharacteristic.yaml'
+    VariantCharacteristicValue:
+      $ref: './components/schemas/dictionary/variantCharacteristicValue.yaml'
+    VariantPack:
+      $ref: './components/schemas/dictionary/variantPack.yaml'
+    VariantMetadata:
+      $ref: './components/schemas/dictionary/variantMetadata.yaml'
+    Thing:
+      $ref: './components/schemas/dictionary/thing.yaml'
+    ThingList:
+      $ref: './components/schemas/dictionary/thingList.yaml'
+    StoreList:
+      $ref: './components/schemas/dictionary/storeList.yaml'
+    RetailStoreList:
+      $ref: './components/schemas/dictionary/retailStoreList.yaml'
+    CashierList:
+      $ref: './components/schemas/dictionary/cashierList.yaml'
+
+    InternalOrder:
+      $ref: './components/schemas/dictionary/internalOrder.yaml'
+    InternalOrderPosition:
+      $ref: './components/schemas/dictionary/internalOrderPosition.yaml'
+    InternalOrderPositionList:
+      $ref: './components/schemas/dictionary/internalOrderPositionList.yaml'
+    InternalOrderList:
+      $ref: './components/schemas/dictionary/internalOrderList.yaml'
+    Contract:
+      $ref: './components/schemas/dictionary/contract.yaml'
+    ContractList:
+      $ref: './components/schemas/dictionary/contractList.yaml'
+    Project:
+      $ref: './components/schemas/dictionary/project.yaml'
+    SalesChannel:
+      $ref: './components/schemas/dictionary/salesChannel.yaml'
+    CustomerOrder:
+      $ref: './components/schemas/dictionary/customerOrder.yaml'
+    CustomerOrderPosition:
+      $ref: './components/schemas/dictionary/customerOrderPosition.yaml'
+    CustomerOrderPositionList:
+      $ref: './components/schemas/dictionary/customerOrderPositionList.yaml'
+    CustomerOrderList:
+      $ref: './components/schemas/dictionary/customerOrderList.yaml'
+    PurchaseOrder:
+      $ref: './components/schemas/dictionary/purchaseOrder.yaml'
+    PurchaseOrderPosition:
+      $ref: './components/schemas/dictionary/purchaseOrderPosition.yaml'
+    PurchaseOrderList:
+      $ref: './components/schemas/dictionary/purchaseOrderList.yaml'
+    PurchaseOrderPositionList:
+      $ref: './components/schemas/dictionary/purchaseOrderPositionList.yaml'
+    InvoiceIn:
+      $ref: './components/schemas/dictionary/invoiceIn.yaml'
+    InvoiceOut:
+      $ref: './components/schemas/dictionary/invoiceOut.yaml'
+    Supply:
+      $ref: './components/schemas/dictionary/supply.yaml'
+    PaymentOut:
+      $ref: './components/schemas/dictionary/paymentOut.yaml'
+    PaymentIn:
+      $ref: './components/schemas/dictionary/paymentIn.yaml'
+    Prepayment:
+      $ref: './components/schemas/dictionary/prepayment.yaml'
+    CashOut:
+      $ref: './components/schemas/dictionary/cashOut.yaml'
+    CashIn:
+      $ref: './components/schemas/dictionary/cashIn.yaml'
+    ProductionTask:
+      $ref: './components/schemas/dictionary/productionTask.yaml'
+    Move:
+      $ref: './components/schemas/dictionary/move.yaml'
+    ProcessingOrder:
+      $ref: './components/schemas/dictionary/processingOrder.yaml'
+    Demand:
+      $ref: './components/schemas/dictionary/demand.yaml'
+
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Basic аутентификация с логином и паролем
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Bearer токен аутентификация
+
+tags:
+  - name: Products
+    description: Операции с товарами
+  - name: Groups
+    description: Операции с группами
+  - name: Countries
+    description: Операции со странами
+  - name: ProductFolders
+    description: Операции с группами товаров
+  - name: Uoms
+    description: Операции с единицами измерений
+  - name: Currencies
+    description: Операции с валютами
+  - name: Employees
+    description: Операции с сотрудниками
+  - name: Contracts
+    description: Операции с договорами
+  - name: Counterparties
+    description: Операции с контрагентами
+  - name: Services
+    description: Операции с услугами
+  - name: PriceTypes
+    description: Операции с типами цен
+  - name: RetailStores
+    description: Операции с точками продаж
+  - name: Cashiers
+    description: Операции с кассирами
+  - name: InternalOrders
+    description: Операции c Внутренними заказами
+  - name: Bundles
+    description: Операции с комплектами
+  - name: Variants
+    description: Операции с модификациями
+  - name: Things
+    description: Операции с серийными номерами
+  - name: Stores
+    description: Операции со складами
+  - name: CustomerOrders
+    description: Операции с заказами покупателя
+  - name: PurchaseOrders
+    description: Операции с заказами поставщика
