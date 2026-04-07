@@ -20,3 +20,7 @@ properties:
       - ALL_WAREHOUSE_SAME
       - WAREHOUSE_VARIED
     description: Тип неснижаемого остатка
+  inherited:
+    type: boolean
+    nullable: true
+    description: Признак наследуемости

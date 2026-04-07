@@ -1,0 +1,47 @@
+get:
+  operationId: getCustomerOrderList
+  tags:
+  - CustomerOrders
+  summary: Получить список CustomerOrders
+  parameters:
+  - $ref: ../../../components/parameters.yaml#/limit
+  - $ref: ../../../components/parameters.yaml#/offset
+  - $ref: ../../../components/parameters.yaml#/search
+  - $ref: ../../../components/parameters.yaml#/expand
+  - $ref: ../../../components/headers.yaml#/AcceptHeader
+  - $ref: ../../../components/headers.yaml#/AcceptEncoding
+  - $ref: ../../../components/headers.yaml#/ContentTypeJson
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../components/schemas/dictionary/customerOrderList.yaml'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+post:
+  operationId: createCustomerOrder
+  tags:
+  - CustomerOrders
+  summary: Создать CustomerOrders
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../components/schemas/dictionary/customerOrder.yaml'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../components/schemas/dictionary/customerOrder.yaml'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+  parameters:
+  - $ref: ../../../components/parameters.yaml#/expand
+  - $ref: ../../../components/headers.yaml#/AcceptHeader
+  - $ref: ../../../components/headers.yaml#/AcceptEncoding
+  - $ref: ../../../components/headers.yaml#/ContentTypeJson

@@ -1,4 +1,4 @@
-# Сборка bundled OpenAPI спецификации (нужна для prism и schemathesis)
+# Сборка bundled OpenAPI спецификации (нужна для smoke тестов и schemathesis)
 bundle-openapi:
   stage: verify
   image: docker.infra.lognex/docker-openapitools:1.2-release

@@ -42,14 +42,11 @@ get:
                 filename: "birdimage.png"
                 size: 14052
                 updated: "2019-01-24 16:55:24.567"
-    '400':
-      $ref: '../../../components/responses.yaml#/BadRequest'
-    '401':
-      $ref: '../../../components/responses.yaml#/Unauthorized'
-    '403':
-      $ref: '../../../components/responses.yaml#/Forbidden'
-    '404':
-      $ref: '../../../components/responses.yaml#/NotFound'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+    
+    
+    
 
 post:
   operationId: addProductImages
@@ -87,15 +84,10 @@ post:
             type: array
             items:
               $ref: '../../../openapi.yaml#/components/schemas/Image'
-    '400':
-      $ref: '../../../components/responses.yaml#/BadRequest'
-    '401':
-      $ref: '../../../components/responses.yaml#/Unauthorized'
-    '403':
-      $ref: '../../../components/responses.yaml#/Forbidden'
-    '404':
-      $ref: '../../../components/responses.yaml#/NotFound'
-    '413':
-      $ref: '../../../components/responses.yaml#/PayloadTooLarge'
-    '415':
-      $ref: '../../../components/responses.yaml#/UnsupportedMediaType'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+    
+    
+    
+    
+    

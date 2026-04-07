@@ -1,15 +1,17 @@
-# Базовый шаблон для Prism smoke тестов (для языков с отдельным Prism-сервисом)
-.sdk-prism-base:
+# Базовый шаблон для smoke тестов (для языков с отдельным mock-сервисом openapi-mock)
+.sdk-smoke-base:
   stage: test
   services:
-    - name: stoplight/prism:4
-      alias: prism
-      command: ["mock", "-h", "0.0.0.0", "/builds/$CI_PROJECT_PATH/dist/openapi.yaml"]
+    - name: muonsoft/openapi-mock:latest
+      alias: mock
+      variables:
+        OPENAPI_MOCK_SPECIFICATION_URL: /builds/$CI_PROJECT_PATH/dist/openapi.yaml
   variables:
-    PRISM_BASE_URL: http://prism:4010
+    SMOKE_BASE_URL: http://mock:8080
 
-# PHP Smoke тесты: Prism запускается в том же контейнере (сервис не имеет доступа к артефакту dist/openapi.yaml)
-sdk-prism-php:
+# PHP Smoke тесты: openapi-mock запускается в том же контейнере
+# (GitLab CI service не имеет доступа к артефакту dist/openapi.yaml)
+sdk-smoke-php:
   stage: test
   image: php:8.2-cli
   needs:
@@ -21,12 +23,10 @@ sdk-prism-php:
     - if: '$SDK_LANGUAGES == "" || $SDK_LANGUAGES =~ /php/'
       when: on_success
   variables:
-    PRISM_BASE_URL: http://localhost:4010
+    SMOKE_BASE_URL: http://localhost:8080
   before_script:
     - apt-get update && apt-get install -y git unzip curl
     - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-    - curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
-    - apt-get install -y nodejs
   script:
     - |
       set -e
@@ -34,50 +34,69 @@ sdk-prism-php:
         echo "ERROR: dist/openapi.yaml not found (bundle-openapi artifact?)"
         exit 1
       fi
-      echo "Starting Prism mock server on port 4010..."
-      PRISM_LOG=$(mktemp)
-      # nohup + disown чтобы процесс не получал SIGHUP при cd/composer и не завершался
-      nohup npx -y @stoplight/prism-cli mock -h 0.0.0.0 -p 4010 dist/openapi.yaml >"$PRISM_LOG" 2>&1 &
-      PRISM_PID=$!
-      disown $PRISM_PID 2>/dev/null || true
-      # Ждём до 90 сек: npx при первом запуске долго ставит зависимости. HTTP 000 = curl не получил ответ (порт закрыт/таймаут) — не считать готовым
-      for i in $(seq 1 90); do
-        code=$(curl -s -o /dev/null -w "%{http_code}" --connect-timeout 2 --max-time 5 http://localhost:4010/ 2>/dev/null || true)
+
+      # Install openapi-mock (Go binary, no Node required)
+      MOCK_VERSION="0.3.9"
+      ARCH=$(uname -m)
+      case "$ARCH" in
+        x86_64)  MOCK_ARCH="amd64" ;;
+        aarch64) MOCK_ARCH="arm64" ;;
+        *)       MOCK_ARCH="$ARCH" ;;
+      esac
+      MOCK_URL="https://github.com/muonsoft/openapi-mock/releases/download/v${MOCK_VERSION}/openapi-mock-v${MOCK_VERSION}-linux-${MOCK_ARCH}.tar.gz"
+      echo "Downloading openapi-mock from ${MOCK_URL}..."
+      curl -fsSL "$MOCK_URL" | tar -xz -C /usr/local/bin openapi-mock || {
+        echo "ERROR: Failed to download openapi-mock binary from ${MOCK_URL}"
+        exit 1
+      }
+      chmod +x /usr/local/bin/openapi-mock
+
+      echo "Starting openapi-mock server on port 8080..."
+      MOCK_LOG=$(mktemp)
+      OPENAPI_MOCK_SPECIFICATION_URL=dist/openapi.yaml \
+        nohup openapi-mock serve >"$MOCK_LOG" 2>&1 &
+      MOCK_PID=$!
+      disown $MOCK_PID 2>/dev/null || true
+
+      # Wait for mock server (typically starts in <2 seconds)
+      for i in $(seq 1 30); do
+        code=$(curl -s -o /dev/null -w "%{http_code}" --connect-timeout 2 --max-time 5 http://localhost:8080/api/remap/1.2/entity/product 2>/dev/null || true)
         if [ -n "$code" ] && [ "$code" != "000" ]; then
-          echo "Prism is ready (HTTP $code)."
+          echo "openapi-mock is ready (HTTP $code)."
           break
         fi
-        if [ "$i" -eq 90 ]; then
-          echo "ERROR: Prism did not become ready in time. Prism log:"
-          cat "$PRISM_LOG" || true
-          kill $PRISM_PID 2>/dev/null || true
+        if [ "$i" -eq 30 ]; then
+          echo "ERROR: openapi-mock did not become ready in time. Log:"
+          cat "$MOCK_LOG" || true
+          kill $MOCK_PID 2>/dev/null || true
           exit 1
         fi
         sleep 1
       done
+
       if [ -d "tests/php" ]; then
         cd tests/php
         if [ ! -f "bootstrap.php" ]; then
           printf '%s\n' '<?php' '$b=dirname(__DIR__,2); require __DIR__."/vendor/autoload.php"; if(file_exists($b."/clients/php/autoload.php")) require $b."/clients/php/autoload.php";' > bootstrap.php
         fi
         composer install --no-interaction
-        # Проверяем, что Prism всё ещё слушает (мог завершиться после disown). 000 = нет ответа
-        code=$(curl -s -o /dev/null -w "%{http_code}" --connect-timeout 2 --max-time 5 http://localhost:4010/ 2>/dev/null || true)
+        # Verify mock server is still responding
+        code=$(curl -s -o /dev/null -w "%{http_code}" --connect-timeout 2 --max-time 5 http://localhost:8080/api/remap/1.2/entity/product 2>/dev/null || true)
         if [ -z "$code" ] || [ "$code" = "000" ]; then
-          echo "ERROR: Prism no longer responding before PHPUnit. Prism log:"
-          cat "$PRISM_LOG" 2>/dev/null || true
+          echo "ERROR: openapi-mock no longer responding before PHPUnit. Log:"
+          cat "$MOCK_LOG" 2>/dev/null || true
           exit 1
         fi
-        echo "=== Smoke tests (PHP) vs Prism ==="
+        echo "=== Smoke tests (PHP) vs openapi-mock ==="
         vendor/bin/phpunit --testsuite smoke --testdox
       else
         echo "WARNING: tests/php directory not found"
         exit 1
       fi
 
-# Python Smoke тесты с Prism mock сервером (заглушка)
-#sdk-prism-python:
-#  extends: .sdk-prism-base
+# Python Smoke тесты с openapi-mock (заглушка)
+#sdk-smoke-python:
+#  extends: .sdk-smoke-base
 #  image: python:3.11
 #  needs:
 #    - job: bundle-openapi
@@ -100,8 +119,8 @@ sdk-prism-php:
 #        exit 1
 #      fi
 
-sdk-prism-java:
-  extends: .sdk-prism-base
+sdk-smoke-java:
+  extends: .sdk-smoke-base
   image: maven:3.9-eclipse-temurin-17
   needs:
     - job: bundle-openapi
@@ -114,11 +133,11 @@ sdk-prism-java:
       when: on_success
   script:
     - |
-      echo "Java Prism smoke tests placeholder. No real Java tests configured yet."
+      echo "Java smoke tests placeholder. No real Java tests configured yet."
 
-# JavaScript Smoke тесты с Prism mock сервером (заглушка)
-#sdk-prism-javascript:
-#  extends: .sdk-prism-base
+# JavaScript Smoke тесты с openapi-mock (заглушка)
+#sdk-smoke-javascript:
+#  extends: .sdk-smoke-base
 #  image: node:20
 #  needs:
 #    - job: bundle-openapi

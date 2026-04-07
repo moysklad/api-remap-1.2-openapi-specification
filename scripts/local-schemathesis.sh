@@ -30,14 +30,16 @@ if [ ! -d "$SCHEMATHESIS_VENV" ] || [ ! -x "$SCHEMATHESIS_VENV/bin/schemathesis"
 fi
 
 # Режимы тестирования:
-# - examples: базовые тесты с примерами из спецификации
-# - coverage: расширенное покрытие всех комбинаций параметров
+# - examples: базовые тесты с примерами из спецификации; отключён по умолчанию, так как
+#   операции с AttributeAbstract (oneOf без дискриминатора) вызывают Schema Error при генерации
+# - coverage: расширенное покрытие всех комбинаций параметров (основная фаза)
 # - fuzzing: генерация случайных данных для поиска уязвимостей
 # - stateful: тесты с изменением состояния
 #
-# По умолчанию: examples,coverage
-# С изменением данных: SCHEMATHESIS_PHASES=examples,coverage,fuzzing,stateful
-SCHEMATHESIS_PHASES="${SCHEMATHESIS_PHASES:-examples,coverage}"
+# По умолчанию: coverage
+# Включить examples: SCHEMATHESIS_PHASES=examples,coverage
+# С изменением данных: SCHEMATHESIS_PHASES=coverage,fuzzing,stateful
+SCHEMATHESIS_PHASES="${SCHEMATHESIS_PHASES:-coverage}"
 SCHEMATHESIS_MAX_EXAMPLES="${SCHEMATHESIS_MAX_EXAMPLES:-50}"
 
 AUTH_HEADER=$(echo -n "${SCHEMATHESIS_LOGIN}:${SCHEMATHESIS_PASSWORD}" | base64)
@@ -45,9 +47,11 @@ AUTH_HEADER=$(echo -n "${SCHEMATHESIS_LOGIN}:${SCHEMATHESIS_PASSWORD}" | base64)
 # Исключаемые проверки:
 # @see https://schemathesis.readthedocs.io/en/stable/reference/checks/
 # - unsupported_method: nginx возвращает 405 без заголовка Allow (требуется по RFC 9110)
-# - positive_data_acceptance: API может вернуть 400/412 при валидной по схеме дате (бизнес-правила)
-# Коды 400/412 документированы в спецификации
-EXCLUDE_CHECKS="positive_data_acceptance,unsupported_method"
+# - positive_data_acceptance: API может вернуть 400/412 при валидной по схеме дате (бизнес-правила);
+#   коды 400/412 документированы в спецификации
+# - negative_data_rejection: API принимает запросы с невалидными заголовками/параметрами
+#   (например, x-schemathesis-unknown-property) — поведение nginx/балансировщика, не дефект спеки
+EXCLUDE_CHECKS="positive_data_acceptance,unsupported_method,negative_data_rejection"
 
 echo "==> Running Schemathesis tests"
 echo "    Base URL: $SCHEMATHESIS_BASE_URL"

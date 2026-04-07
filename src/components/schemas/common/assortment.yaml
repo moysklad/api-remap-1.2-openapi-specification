@@ -1,0 +1,7 @@
+description: Товар/услуга/модификация/комплект
+oneOf:
+  - $ref: '../../../openapi.yaml#/components/schemas/Product'
+  - $ref: '../../../openapi.yaml#/components/schemas/Service'
+  - $ref: '../../../openapi.yaml#/components/schemas/Variant'
+  - $ref: '../../../openapi.yaml#/components/schemas/Bundle'
+  - $ref: '../../../openapi.yaml#/components/schemas/Consignment'

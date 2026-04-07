@@ -16,16 +16,8 @@ get:
         application/json:
           schema:
             $ref: '../../../components/schemas/dictionary/currency.yaml'
-    '400':
-      $ref: '../../../components/responses.yaml#/BadRequest'
-    '401':
-      $ref: '../../../components/responses.yaml#/Unauthorized'
-    '404':
-      $ref: '../../../components/responses.yaml#/NotFound'
-    '405':
-      $ref: '../../../components/responses.yaml#/MethodNotAllowed'
-    '415':
-      $ref: '../../../components/responses.yaml#/UnsupportedMediaType'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
 
 put:
   operationId: updateCurrency
@@ -52,18 +44,13 @@ put:
         application/json:
           schema:
             $ref: '../../../components/schemas/dictionary/currency.yaml'
-    '400':
-      $ref: '../../../components/responses.yaml#/BadRequest'
-    '401':
-      $ref: '../../../components/responses.yaml#/Unauthorized'
-    '404':
-      $ref: '../../../components/responses.yaml#/NotFound'
-    '405':
-      $ref: '../../../components/responses.yaml#/MethodNotAllowed'
-    '413':
-      $ref: '../../../components/responses.yaml#/PayloadTooLarge'
-    '415':
-      $ref: '../../../components/responses.yaml#/UnsupportedMediaType'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+    
+    
+    
+    
+    
 
 delete:
   operationId: deleteCurrency
@@ -78,17 +65,5 @@ delete:
   responses:
     '200':
       description: Валюта успешно удалена
-    '400':
-      $ref: '../../../components/responses.yaml#/BadRequest'
-    '401':
-      $ref: '../../../components/responses.yaml#/Unauthorized'
-    '404':
-      $ref: '../../../components/responses.yaml#/NotFound'
-    '405':
-      $ref: '../../../components/responses.yaml#/MethodNotAllowed'
-    '409':
-      $ref: '../../../components/responses.yaml#/Conflict'
-    '412':
-      $ref: '../../../components/responses.yaml#/PreconditionFailed'
-    '415':
-      $ref: '../../../components/responses.yaml#/UnsupportedMediaType'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

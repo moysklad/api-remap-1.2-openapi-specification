@@ -1,0 +1,60 @@
+get:
+  operationId: getCustomerOrderById
+  tags:
+  - CustomerOrders
+  summary: Получить CustomerOrders
+  parameters:
+  - $ref: ../../../components/parameters.yaml#/entityId
+  - $ref: ../../../components/parameters.yaml#/expand
+  - $ref: ../../../components/headers.yaml#/AcceptHeader
+  - $ref: ../../../components/headers.yaml#/AcceptEncoding
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../components/schemas/dictionary/customerOrder.yaml'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+put:
+  operationId: updateCustomerOrder
+  tags:
+  - CustomerOrders
+  summary: Изменить CustomerOrders
+  parameters:
+  - $ref: ../../../components/parameters.yaml#/entityId
+  - $ref: ../../../components/parameters.yaml#/expand
+  - $ref: ../../../components/headers.yaml#/AcceptHeader
+  - $ref: ../../../components/headers.yaml#/AcceptEncoding
+  - $ref: ../../../components/headers.yaml#/ContentTypeJson
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../components/schemas/dictionary/customerOrder.yaml'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../components/schemas/dictionary/customerOrder.yaml'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+delete:
+  operationId: deleteCustomerOrder
+  tags:
+  - CustomerOrders
+  summary: Удалить CustomerOrders
+  parameters:
+  - $ref: ../../../components/parameters.yaml#/entityId
+  - $ref: ../../../components/headers.yaml#/AcceptHeader
+  - $ref: ../../../components/headers.yaml#/AcceptEncoding
+  - $ref: ../../../components/headers.yaml#/ContentTypeJson
+  responses:
+    '200':
+      description: Успешный запрос
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

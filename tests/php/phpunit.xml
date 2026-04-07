@@ -4,7 +4,7 @@
   
   Тест-сьюты:
   - golden: тесты сериализации/десериализации (roundtrip)
-  - smoke: тесты доступности API endpoint'ов через Prism
+  - smoke: тесты доступности API endpoint'ов через openapi-mock
   
   Запуск:
     composer test              - все тесты
@@ -31,8 +31,8 @@
     </testsuites>
 
     <php>
-        <!-- URL Prism mock сервера для smoke тестов -->
-        <env name="PRISM_BASE_URL" value="http://localhost:4010"/>
+        <!-- URL mock сервера (openapi-mock) для smoke тестов -->
+        <env name="SMOKE_BASE_URL" value="http://mock:8080" force="false"/>
         <!-- Путь к сгенерированному SDK -->
         <env name="SDK_PATH" value="../../clients/php"/>
     </php>

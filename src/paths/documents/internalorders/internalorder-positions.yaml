@@ -1,0 +1,60 @@
+get:
+  operationId: getInternalOrderPositions
+  tags:
+  - InternalOrders
+  summary: Получить позиции InternalOrder
+  parameters:
+  - $ref: ../../../components/parameters.yaml#/entityId
+  - $ref: ../../../components/parameters.yaml#/limit
+  - $ref: ../../../components/parameters.yaml#/offset
+  - $ref: ../../../components/parameters.yaml#/expand
+  - $ref: ../../../components/headers.yaml#/AcceptHeader
+  - $ref: ../../../components/headers.yaml#/AcceptEncoding
+  - $ref: ../../../components/headers.yaml#/ContentTypeJson
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../../../openapi.yaml#/components/schemas/InternalOrderPosition'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+post:
+  operationId: createInternalOrderPositions
+  tags:
+  - InternalOrders
+  summary: Создать позиции InternalOrder
+  parameters:
+  - $ref: ../../../components/parameters.yaml#/entityId
+  - $ref: ../../../components/parameters.yaml#/expand
+  - $ref: ../../../components/headers.yaml#/AcceptHeader
+  - $ref: ../../../components/headers.yaml#/AcceptEncoding
+  - $ref: ../../../components/headers.yaml#/ContentTypeJson
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          oneOf:
+          - $ref: ../../../components/schemas/dictionary/internalOrderPosition.yaml
+          - type: array
+            items:
+              $ref: '../../../components/schemas/dictionary/internalOrderPosition.yaml'
+          minItems: 1
+          maxItems: 1000
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              oneOf:
+                - $ref: ../../../openapi.yaml#/components/schemas/InternalOrderPosition
+                - $ref: ../../../components/schemas/common/error.yaml
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

@@ -16,16 +16,12 @@ get:
         application/json:
           schema:
             $ref: '../../../components/schemas/dictionary/product.yaml'
-    '400':
-      $ref: '../../../components/responses.yaml#/BadRequest'
-    '401':
-      $ref: '../../../components/responses.yaml#/Unauthorized'
-    '404':
-      $ref: '../../../components/responses.yaml#/NotFound'
-    '405':
-      $ref: '../../../components/responses.yaml#/MethodNotAllowed'
-    '415':
-      $ref: '../../../components/responses.yaml#/UnsupportedMediaType'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+    
+    
+    
+    
 
 put:
   operationId: updateProduct
@@ -52,20 +48,14 @@ put:
         application/json:
           schema:
             $ref: '../../../components/schemas/dictionary/product.yaml'
-    '400':
-      $ref: '../../../components/responses.yaml#/BadRequest'
-    '401':
-      $ref: '../../../components/responses.yaml#/Unauthorized'
-    '404':
-      $ref: '../../../components/responses.yaml#/NotFound'
-    '405':
-      $ref: '../../../components/responses.yaml#/MethodNotAllowed'
-    '412':
-      $ref: '../../../components/responses.yaml#/PreconditionFailed'
-    '413':
-      $ref: '../../../components/responses.yaml#/PayloadTooLarge'
-    '415':
-      $ref: '../../../components/responses.yaml#/UnsupportedMediaType'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+    
+    
+    
+    
+    
+    
 
 delete:
   operationId: deleteProduct
@@ -80,17 +70,11 @@ delete:
   responses:
     '200':
       description: Товар успешно удален
-    '400':
-      $ref: '../../../components/responses.yaml#/BadRequest'
-    '401':
-      $ref: '../../../components/responses.yaml#/Unauthorized'
-    '404':
-      $ref: '../../../components/responses.yaml#/NotFound'
-    '405':
-      $ref: '../../../components/responses.yaml#/MethodNotAllowed'
-    '409':
-      $ref: '../../../components/responses.yaml#/Conflict'
-    '412':
-      $ref: '../../../components/responses.yaml#/PreconditionFailed'
-    '415':
-      $ref: '../../../components/responses.yaml#/UnsupportedMediaType'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+    
+    
+    
+    
+    
+    

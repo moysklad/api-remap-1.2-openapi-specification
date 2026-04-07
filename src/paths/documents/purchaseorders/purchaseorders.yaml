@@ -1,0 +1,47 @@
+get:
+  operationId: getPurchaseOrderList
+  tags:
+  - PurchaseOrders
+  summary: Получить список PurchaseOrder
+  parameters:
+  - $ref: ../../../components/parameters.yaml#/limit
+  - $ref: ../../../components/parameters.yaml#/offset
+  - $ref: ../../../components/parameters.yaml#/search
+  - $ref: ../../../components/parameters.yaml#/expand
+  - $ref: ../../../components/headers.yaml#/AcceptHeader
+  - $ref: ../../../components/headers.yaml#/AcceptEncoding
+  - $ref: ../../../components/headers.yaml#/ContentTypeJson
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../components/schemas/dictionary/purchaseOrderList.yaml'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+post:
+  operationId: createPurchaseOrder
+  tags:
+  - PurchaseOrders
+  summary: Создать PurchaseOrder
+  parameters:
+  - $ref: ../../../components/parameters.yaml#/expand
+  - $ref: ../../../components/headers.yaml#/AcceptHeader
+  - $ref: ../../../components/headers.yaml#/AcceptEncoding
+  - $ref: ../../../components/headers.yaml#/ContentTypeJson
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../components/schemas/dictionary/purchaseOrder.yaml'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../components/schemas/dictionary/purchaseOrder.yaml'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

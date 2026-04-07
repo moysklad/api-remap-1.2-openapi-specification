@@ -19,9 +19,7 @@ get:
               href: "https://api.moysklad.ru/api/remap/1.2/entity/role/owner"
               type: "systemrole"
               mediaType: "application/json"
-    '400':
-      $ref: '../../../components/responses.yaml#/BadRequest'
-    '401':
-      $ref: '../../../components/responses.yaml#/Unauthorized'
-    '403':
-      $ref: '../../../components/responses.yaml#/Forbidden'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+    
+    

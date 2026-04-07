@@ -9,6 +9,17 @@ BadRequest:
         type: string
         example: '<html><head><title>Error</title></head><body>Bad Request</body></html>'
 
+CommonError:
+  description: Ошибка запроса (тело — объект или массив объектов с полем errors)
+  content:
+    application/json:
+      schema:
+        $ref: './schemas/common/errorOrArray.yaml'
+    text/html;charset=UTF-8:
+      schema:
+        type: string
+        example: '<html><head><title>Error</title></head><body>Bad Request</body></html>'
+
 # Для массовых операций: тело 400 может быть объектом или массивом объектов ошибок
 BatchBadRequest:
   description: Ошибка запроса (тело — объект или массив объектов с полем errors)
@@ -41,6 +52,10 @@ NotFound:
     application/json:
       schema:
         $ref: './schemas/common/error.yaml'
+
+# Используется для DELETE-операций, где 404 возвращается с пустым телом без Content-Type
+NotFoundEmpty:
+  description: Запрошенный ресурс не существует (тело ответа отсутствует)
 
 Conflict:
   description: Указанный объект используется и не может быть удален

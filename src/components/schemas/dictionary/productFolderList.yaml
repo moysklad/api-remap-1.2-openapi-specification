@@ -1,8 +1,4 @@
 type: object
-required:
-  - context
-  - meta
-  - rows
 properties:
   context:
     description: Метаданные о сотруднике, выполнившем запрос

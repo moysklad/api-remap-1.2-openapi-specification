@@ -1,0 +1,53 @@
+get:
+  operationId: getInternalOrderMetadataAttributeById
+  tags:
+  - InternalOrders
+  summary: Отдельное доп. поле InternalOrder
+  parameters:
+  - $ref: ../../../components/parameters.yaml#/entityId
+  - $ref: ../../../components/headers.yaml#/AcceptHeader
+  - $ref: ../../../components/headers.yaml#/AcceptEncoding
+  - $ref: ../../../components/headers.yaml#/ContentTypeJson
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfo'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+put:
+  operationId: updateInternalOrderMetadataAttributeById
+  tags:
+    - InternalOrders
+  summary: Обновить отдельное доп. поле InternalOrder
+  parameters:
+    - $ref: ../../../components/parameters.yaml#/entityId
+    - $ref: ../../../components/headers.yaml#/AcceptHeader
+    - $ref: ../../../components/headers.yaml#/AcceptEncoding
+    - $ref: ../../../components/headers.yaml#/ContentTypeJson
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfo'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+delete:
+  operationId: deleteInternalOrderMetadataAttributeById
+  tags:
+    - InternalOrders
+  summary: Удалить отдельное доп. поле InternalOrder
+  parameters:
+    - $ref: ../../../components/parameters.yaml#/entityId
+    - $ref: ../../../components/headers.yaml#/AcceptHeader
+    - $ref: ../../../components/headers.yaml#/AcceptEncoding
+    - $ref: ../../../components/headers.yaml#/ContentTypeJson
+  responses:
+    '200':
+      description: Успешный запрос
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

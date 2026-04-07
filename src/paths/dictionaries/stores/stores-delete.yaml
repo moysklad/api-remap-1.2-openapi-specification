@@ -1,0 +1,32 @@
+post:
+  operationId: deleteStoresBatch
+  tags:
+  - Stores
+  summary: Массовое удаление Складов
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            $ref: '../../../openapi.yaml#/components/schemas/Store'
+          minItems: 1
+          maxItems: 1000
+  responses:
+    '200':
+      description: Результат удаления
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              oneOf:
+                - $ref: ../../../openapi.yaml#/components/schemas/DeleteInfo
+                - $ref: ../../../components/schemas/common/error.yaml
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+  parameters:
+  - $ref: ../../../components/headers.yaml#/AcceptHeader
+  - $ref: ../../../components/headers.yaml#/AcceptEncoding
+  - $ref: ../../../components/headers.yaml#/ContentTypeJson

@@ -41,14 +41,8 @@ get:
                 accountId: "f976ed28-2e58-11e6-8a84-bae500000001"
                 created: "2026-02-05 15:14:25.634"
                 description: "Важный клиент, скидка 10%"
-    '400':
-      $ref: '../../../components/responses.yaml#/BadRequest'
-    '401':
-      $ref: '../../../components/responses.yaml#/Unauthorized'
-    '403':
-      $ref: '../../../components/responses.yaml#/Forbidden'
-    '404':
-      $ref: '../../../components/responses.yaml#/NotFound'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
 
 post:
   operationId: createCounterpartyNote
@@ -74,15 +68,10 @@ post:
         application/json:
           schema:
             $ref: '../../../openapi.yaml#/components/schemas/Note'
-    '400':
-      $ref: '../../../components/responses.yaml#/BadRequest'
-    '401':
-      $ref: '../../../components/responses.yaml#/Unauthorized'
-    '403':
-      $ref: '../../../components/responses.yaml#/Forbidden'
-    '404':
-      $ref: '../../../components/responses.yaml#/NotFound'
-    '413':
-      $ref: '../../../components/responses.yaml#/PayloadTooLarge'
-    '415':
-      $ref: '../../../components/responses.yaml#/UnsupportedMediaType'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+    
+    
+    
+    
+    

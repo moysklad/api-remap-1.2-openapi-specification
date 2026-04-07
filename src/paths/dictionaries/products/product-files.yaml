@@ -42,14 +42,11 @@ get:
                 filename: "doc.pdf"
                 size: 25000
                 created: "2019-01-25 17:30:25.021"
-    '400':
-      $ref: '../../../components/responses.yaml#/BadRequest'
-    '401':
-      $ref: '../../../components/responses.yaml#/Unauthorized'
-    '403':
-      $ref: '../../../components/responses.yaml#/Forbidden'
-    '404':
-      $ref: '../../../components/responses.yaml#/NotFound'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+    
+    
+    
 
 post:
   operationId: addProductFiles
@@ -85,15 +82,10 @@ post:
             type: array
             items:
               $ref: '../../../openapi.yaml#/components/schemas/File'
-    '400':
-      $ref: '../../../components/responses.yaml#/BadRequest'
-    '401':
-      $ref: '../../../components/responses.yaml#/Unauthorized'
-    '403':
-      $ref: '../../../components/responses.yaml#/Forbidden'
-    '404':
-      $ref: '../../../components/responses.yaml#/NotFound'
-    '413':
-      $ref: '../../../components/responses.yaml#/PayloadTooLarge'
-    '415':
-      $ref: '../../../components/responses.yaml#/UnsupportedMediaType'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+    
+    
+    
+    
+    

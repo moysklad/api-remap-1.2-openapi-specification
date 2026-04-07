@@ -50,9 +50,7 @@ properties:
     description: Метаданные Точки продаж
   organization:
     type: object
-    properties:
-      meta:
-        $ref: '../common/meta.yaml'
+    $ref: '../../../openapi.yaml#/components/schemas/Organization'
     description: Метаданные юрлица-владельца Точки продаж
   store:
     description: Метаданные склада, с которым связана Точка продаж
@@ -266,17 +264,21 @@ properties:
     items:
       type: string
     description: Теги, создаваемые у агентов
+  filterAgentsTags:
+    type: array
+    items:
+      type: string
+    description: Группы, по которым фильтруются агенты
   createOrderWithState:
-    properties:
-      meta:
-        $ref: '../common/meta.yaml'
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/State'
     description: Статус, в котором создаются заказы покупателей
   customerOrderStates:
     type: array
     items:
-      properties:
-        meta:
-          $ref: '../common/meta.yaml'
+      $ref: '../../../openapi.yaml#/components/schemas/State'
     description: Возможные состояния заказов покупателей
   discountEnable:
     type: boolean
@@ -306,12 +308,11 @@ properties:
           description: Наименование (номер) последней операции
     description: Последние операции
   masterRetailStores:
-    type: array
-    items: 
-      properties:
-        meta:
-          $ref: '../common/meta.yaml'
     description: Список касс-мастеров
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/RetailStoreList'
   ofdEnabled:
     type: boolean
     readOnly: true
@@ -320,27 +321,28 @@ properties:
     type: boolean
     description: Признак продажи только из наличия
   orderToState:
-    properties:
-      meta:
-        $ref: '../common/meta.yaml'
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/State'
     description: Метаданные статуса заказа покупателя
   printAlways:
     type: boolean
     description: Признак обязательной печати чеков
   productFolders:
-    type: object
     description: Список групп товаров
-    properties:
-          meta:
-            $ref: '../common/metaList.yaml'
-          rows:
-            type: array
-            items:
-              $ref: '../../../openapi.yaml#/components/schemas/ProductFolder'
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/ProductFolderList'
   receiptTemplate:
     properties:
       meta:
         $ref: '../common/meta.yaml'
+      header:
+        type: string
+      footer:
+        type: string
     description: Шаблон чека
   requiredFio:
     type: boolean
@@ -405,17 +407,18 @@ properties:
     maxLength: 255
     description: Идентификатор QR
   acquire:
-    properties:
-      meta:
-        $ref: '../common/meta.yaml'
+    type: object
+    $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
     description: Эквайер
   cashiers:
-    properties:
-      meta:
-        $ref: '../common/metaList.yaml'
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/CashierList'
     description: Кассиры, работающие на точке продаж
   qrAcquire:
-    properties:
-      meta:
-        $ref: '../common/meta.yaml'
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
     description: Эквайер для QR-платежей

@@ -1,0 +1,44 @@
+get:
+  operationId: getStoreMetadataAttribute
+  tags:
+  - Stores
+  summary: Доп. поля Store
+  parameters:
+  - $ref: ../../../components/parameters.yaml#/offset
+  - $ref: ../../../components/parameters.yaml#/limit
+  - $ref: ../../../components/headers.yaml#/AcceptHeader
+  - $ref: ../../../components/headers.yaml#/AcceptEncoding
+  - $ref: ../../../components/headers.yaml#/ContentTypeJson
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfoList'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+post:
+  operationId: createStoreMetadataAttribute
+  tags:
+    - Stores
+  summary: Создать Доп. поле Store
+  parameters:
+    - $ref: ../../../components/headers.yaml#/AcceptHeader
+    - $ref: ../../../components/headers.yaml#/AcceptEncoding
+    - $ref: ../../../components/headers.yaml#/ContentTypeJson
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfo'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfo'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

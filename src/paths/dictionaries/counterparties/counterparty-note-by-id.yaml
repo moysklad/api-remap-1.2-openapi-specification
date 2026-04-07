@@ -22,12 +22,8 @@ get:
         application/json:
           schema:
             $ref: '../../../openapi.yaml#/components/schemas/Note'
-    '400':
-      $ref: '../../../components/responses.yaml#/BadRequest'
-    '401':
-      $ref: '../../../components/responses.yaml#/Unauthorized'
-    '404':
-      $ref: '../../../components/responses.yaml#/NotFound'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
 
 put:
   operationId: updateCounterpartyNote
@@ -60,16 +56,12 @@ put:
         application/json:
           schema:
             $ref: '../../../openapi.yaml#/components/schemas/Note'
-    '400':
-      $ref: '../../../components/responses.yaml#/BadRequest'
-    '401':
-      $ref: '../../../components/responses.yaml#/Unauthorized'
-    '404':
-      $ref: '../../../components/responses.yaml#/NotFound'
-    '413':
-      $ref: '../../../components/responses.yaml#/PayloadTooLarge'
-    '415':
-      $ref: '../../../components/responses.yaml#/UnsupportedMediaType'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+    
+    
+    
+    
 
 delete:
   operationId: deleteCounterpartyNote
@@ -91,9 +83,5 @@ delete:
   responses:
     '200':
       description: Событие успешно удалено
-    '400':
-      $ref: '../../../components/responses.yaml#/BadRequest'
-    '401':
-      $ref: '../../../components/responses.yaml#/Unauthorized'
-    '404':
-      $ref: '../../../components/responses.yaml#/NotFound'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

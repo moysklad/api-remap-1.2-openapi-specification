@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase as BaseTestCase;
  * 
  * Предоставляет общие методы для:
  * - Загрузки fixture файлов (эталонные JSON данные)
- * - Получения URL Prism mock сервера
+ * - Получения URL mock сервера (openapi-mock)
  * - Работы с путями к сгенерированному SDK
  * 
  * @package MoySklad\Tests
@@ -68,14 +68,14 @@ abstract class TestCase extends BaseTestCase
     }
 
     /**
-     * Возвращает базовый URL Prism mock сервера.
-     * Значение берётся из переменной окружения PRISM_BASE_URL.
+     * Возвращает базовый URL mock сервера (openapi-mock).
+     * Значение берётся из переменной окружения SMOKE_BASE_URL .
      * 
-     * @return string URL сервера (например, 'http://localhost:4010')
+     * @return string URL сервера (например, 'http://mock:8080')
      */
-    protected function getPrismBaseUrl(): string
+    protected function getSmokeBaseUrl(): string
     {
-        return $_ENV['PRISM_BASE_URL'] ?? getenv('PRISM_BASE_URL') ?: 'http://localhost:4010';
+        return $_ENV['SMOKE_BASE_URL'] ?? getenv('SMOKE_BASE_URL') ?: 'http://mock:8080';
     }
 
     /**

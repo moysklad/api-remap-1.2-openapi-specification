@@ -57,7 +57,10 @@ properties:
     description: Адрес склада
   addressFull:
     description: Адрес с детализацией
-    $ref: '../../../openapi.yaml#/components/schemas/Address'
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Address'
   pathName:
     type: string
     description: Группа Склада
@@ -74,22 +77,14 @@ properties:
     items:
       $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
   zones:
-    type: object
     description: Зоны склада
-    properties:
-      meta:
-        $ref: '../common/metaList.yaml'
-      rows:
-        type: array
-        items:
-          $ref: '../common/meta.yaml'
-  slots:
+    nullable: true
     type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/StoreZoneList'
+  slots:
     description: Ячейки склада
-    properties:
-      meta:
-        $ref: '../common/metaList.yaml'
-      rows:
-        type: array
-        items:
-          $ref: '../common/meta.yaml'
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/StoreSlotList'

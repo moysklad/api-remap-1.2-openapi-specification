@@ -35,6 +35,8 @@ class SerializationTest extends TestCase
         'counterparty_legal' => 'Counterparty',
         'counterparty_metadata' => 'CounterpartyMetadata',
         'counterparty_metadata_expanded' => 'CounterpartyMetadata',
+        'document_metadata' => 'DocumentMetadata',
+        'document_metadata_expanded' => 'DocumentMetadata',
         'product_metadata' => 'Metadata',
         'product_metadata_expanded' => 'Metadata',
         'counterparty_account' => 'Account',
@@ -51,6 +53,18 @@ class SerializationTest extends TestCase
         'service' => 'Service',
         'uom' => 'Uom',
         'price_type' => 'PriceType',
+        'store' => 'Store',
+        'retail_store' => 'RetailStore',
+        'cashier' => 'Cashier',
+        'bundle' => 'Bundle',
+        'bundle_component' => 'BundleComponent',
+        'variant' => 'Variant',
+        'thing' => 'Thing',
+        'internal_order' => 'InternalOrder',
+        'customer_order' => 'CustomerOrder',
+        'purchase_order' => 'PurchaseOrder',
+        'variantcharacteristic' => 'VariantCharacteristic',
+        'contract' => 'Contract',
     ];
 
     /**

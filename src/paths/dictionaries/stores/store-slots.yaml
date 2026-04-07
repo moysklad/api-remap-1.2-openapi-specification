@@ -1,0 +1,58 @@
+get:
+  operationId: getStoreSlots
+  tags:
+  - Stores
+  summary: Получить ячейки склада
+  parameters:
+  - name: storeId
+    in: path
+    required: true
+    schema:
+      type: string
+      format: uuid
+  - $ref: ../../../components/headers.yaml#/AcceptHeader
+  - $ref: ../../../components/headers.yaml#/AcceptEncoding
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../components/schemas/dictionary/storeSlotList.yaml'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+post:
+  operationId: createStoreSlots
+  tags:
+  - Stores
+  summary: Создать ячейку склада
+  parameters:
+  - name: storeId
+    in: path
+    required: true
+    schema:
+      type: string
+      format: uuid
+  - $ref: ../../../components/headers.yaml#/AcceptHeader
+  - $ref: ../../../components/headers.yaml#/AcceptEncoding
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          oneOf:
+            - $ref: ../../../openapi.yaml#/components/schemas/StoreSlot
+            - type: array
+              items:
+                $ref: '../../../openapi.yaml#/components/schemas/StoreSlot'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../../../openapi.yaml#/components/schemas/StoreSlot'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

@@ -37,5 +37,3 @@ properties:
     description: Наименование дополнительного поля
   type:
     type: string
-  value:
-    type: object

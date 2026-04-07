@@ -1,0 +1,78 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/contract/3bba8d2a-2cb6-11e6-8a84-bae50000002c",
+    "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/contract/metadata",
+    "type": "contract",
+    "mediaType": "application/json"
+  },
+  "id": "3bba8d2a-2cb6-11e6-8a84-bae50000002c",
+  "accountId": "da7d9bbe-2c97-11e6-8a84-bae500000001",
+  "owner": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/employee/faba7f37-2e58-11e6-8a84-bae500000028",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/employee/metadata",
+      "type": "employee",
+      "mediaType": "application/json"
+    }
+  },
+  "shared": true,
+  "group": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/group/f97aa1fb-2e58-11e6-8a84-bae500000002",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/group/metadata",
+      "type": "group",
+      "mediaType": "application/json"
+    }
+  },
+  "updated": "2016-06-07 16:46:27",
+  "name": "00000011111",
+  "description": "Договор с партнерской организацией ООО Солнышко",
+  "code": "contractWithPartner",
+  "externalCode": "extC12fd12a",
+  "archived": false,
+  "moment": "2016-07-06 12:53:22",
+  "sum": 200000,
+  "contractType": "Sales",
+  "ownAgent": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/organization/db141159-2c97-11e6-8a84-bae50000004e",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/organization/metadata",
+      "type": "organization",
+      "mediaType": "application/json"
+    }
+  },
+  "agent": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/2e6aa620-2c98-11e6-8a84-bae500000004",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/metadata",
+      "type": "counterparty",
+      "mediaType": "application/json"
+    }
+  },
+  "state": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/contract/metadata/states/fb56c504-2e58-11e6-8a84-bae500000069",
+      "type": "state",
+      "mediaType": "application/json"
+    }
+  },
+  "agentAccount": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/2e6aa620-2c98-11e6-8a84-bae500000004/accounts/2e6ab6ca-2c98-11e6-8a84-bae500000005",
+      "type": "account",
+      "mediaType": "application/json"
+    }
+  },
+  "rate": {
+    "currency": {
+      "meta": {
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/currency/baac25f0-50ac-11e5-300d-c79b00000055",
+        "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/currency/metadata",
+        "type": "currency",
+        "mediaType": "application/json"
+      }
+    }
+  },
+  "printed": false,
+  "published": false
+}
