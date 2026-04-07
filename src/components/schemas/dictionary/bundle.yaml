@@ -152,16 +152,19 @@ properties:
   barcodes:
     type: array
     description: Штрихкоды Комплекта
+    nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/Barcode'
   packs:
     type: array
     description: Упаковки Комплекта
+    nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/Pack'
   salePrices:
     type: array
     description: Цены продажи
+    nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/SalePrice'
   buyPrice:
@@ -184,6 +187,7 @@ properties:
   attributes:
     type: array
     description: Коллекция метаданных доп. полей
+    nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
   components:

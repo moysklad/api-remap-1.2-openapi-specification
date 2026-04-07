@@ -157,6 +157,7 @@ properties:
   attributes:
     type: array
     description: Коллекция метаданных доп. полей
+    nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
   files:
@@ -210,16 +211,19 @@ properties:
   invoicesOut:
     type: array
     description: Массив ссылок на связанные счета покупателям
+    nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/InvoiceOut'
   demands:
     type: array
     description: Массив ссылок на связанные отгрузки
+    nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/Demand'
   payments:
     type: array
     description: Массив ссылок на связанные платежи
+    nullable: true
     items:
       anyOf:
         - $ref: '../../../openapi.yaml#/components/schemas/PaymentIn'
@@ -227,20 +231,24 @@ properties:
   prepayments:
     type: array
     description: Массив ссылок на связанные предоплаты
+    nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/Prepayment'
   purchaseOrders:
     type: array
     description: Массив ссылок на связанные заказы поставщикам
+    nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/PurchaseOrder'
   moves:
     type: array
     description: Массив ссылок на связанные перемещения
+    nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/Move'
   productionTasks:
     type: array
     description: Массив ссылок на связанные производственные задания
+    nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/ProductionTask'

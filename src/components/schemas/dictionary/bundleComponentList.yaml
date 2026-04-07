@@ -6,5 +6,6 @@ properties:
     $ref: '../common/metaList.yaml'
   rows:
     type: array
+    nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/BundleComponent'

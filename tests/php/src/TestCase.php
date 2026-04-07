@@ -26,7 +26,7 @@ abstract class TestCase extends BaseTestCase
      */
     protected function getFixturesPath(): string
     {
-        return __DIR__ . '/../fixtures';
+        return __DIR__ . '/../../fixtures';
     }
 
     /**
@@ -55,19 +55,6 @@ abstract class TestCase extends BaseTestCase
     }
 
     /**
-     * Возвращает список всех fixture файлов в директории.
-     * 
-     * @return array<string> Массив имён файлов
-     */
-    protected function getFixtureFiles(): array
-    {
-        $path = $this->getFixturesPath();
-        $files = glob($path . '/*.json');
-        
-        return array_map('basename', $files ?: []);
-    }
-
-    /**
      * Возвращает базовый URL mock сервера (openapi-mock).
      * Значение берётся из переменной окружения SMOKE_BASE_URL .
      * 
@@ -76,15 +63,5 @@ abstract class TestCase extends BaseTestCase
     protected function getSmokeBaseUrl(): string
     {
         return $_ENV['SMOKE_BASE_URL'] ?? getenv('SMOKE_BASE_URL') ?: 'http://mock:8080';
-    }
-
-    /**
-     * Возвращает путь к сгенерированному SDK.
-     * 
-     * @return string Относительный путь к директории SDK
-     */
-    protected function getSdkPath(): string
-    {
-        return $_ENV['SDK_PATH'] ?? getenv('SDK_PATH') ?: '../../clients/php';
     }
 }

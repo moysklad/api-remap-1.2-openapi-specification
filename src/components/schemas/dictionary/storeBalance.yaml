@@ -17,6 +17,7 @@ properties:
     $ref: '../../../openapi.yaml#/components/schemas/Store'
   quantity:
     type: number
-    format: float
+    format: double
+#    check src
     minimum: 0
     description: Количество неснижаемого остатка для склада

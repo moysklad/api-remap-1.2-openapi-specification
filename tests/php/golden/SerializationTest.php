@@ -48,6 +48,7 @@ class SerializationTest extends TestCase
         'employee_security' => 'EmployeeSecurity',
         'employee_role' => 'EmployeeRole',
         'group' => 'Group',
+        'entity_with_extra_field' => 'Group',
         'country' => 'Country',
         'product_folder' => 'ProductFolder',
         'service' => 'Service',
@@ -84,7 +85,27 @@ class SerializationTest extends TestCase
         'tobacco',
         'salesAmount',
         'bonusPoints',
+        'extra_field'
     ];
+
+    /**
+     * Тест на конситентность существующих fixture-файлов и маппинга FIXTURE_MODEL_MAP .
+     */
+    public function testMappingAndFixtureConsistency(): void
+    {
+        $fixturesPath = $this->getFixturesPath();
+        $this->assertDirectoryExists($fixturesPath);
+
+        $files = glob($fixturesPath . DIRECTORY_SEPARATOR . '*.json') ?: [];
+        foreach ($files as $file) {
+            $base = basename($file, '.json');
+            $this->assertArrayHasKey(
+                $base,
+                self::FIXTURE_MODEL_MAP,
+                'Model mapping not found for ' . basename($file)
+            );
+        }
+    }
 
     /**
      * @dataProvider fixtureProvider

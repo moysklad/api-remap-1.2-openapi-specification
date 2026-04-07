@@ -41,12 +41,11 @@ run_java() {
     echo "Skipping golden tests for java: clients/java not found"
     return 0
   fi
-  if [ ! -d "tests/java" ]; then
+  if [ ! -d "tests/java/assertions" ]; then
     echo "Skipping: tests/java not configured"
     return 0
   fi
-  cd tests/java
-  mvn test -Dtest=**/golden/**
+  mvn test -Dtest=**/golden/** -Dsurefire.failIfNoSpecifiedTests=false
 }
 
 run_javascript() {

@@ -17,9 +17,8 @@
 | `generate-sdk-php`       | Генерация PHP SDK                                                        |
 | `generate-sdk-java`      | Генерация Java SDK (заглушка)                                            |
 | `sdk-golden-php`         | Golden тесты для PHP (сериализация/десериализация)                       |
-| `sdk-smoke-php`          | Smoke тесты для PHP с openapi-mock сервером                              |
-| `sdk-golden-java`        | Golden тесты для Java (заглушка)                                         |
-| `sdk-smoke-java`         | Smoke тесты для Java (заглушка)                                          |
+| `sdk-smoke`              | Smoke тесты для PHP с openapi-mock сервером                              |
+| `sdk-golden-java`        | Golden тесты для Java                                                    |
 | `prep-branch-and-mr-php` | Cоздание/обновление ветки и mr по сгенерированному sdk в репозитории sdk |
 
 #### 2. Ручной запуск (web) на ветке
@@ -30,7 +29,8 @@
 |-----------------------------------|--------------------------------------------------------------------------|
 | `lint-openapi` / `bundle-openapi` | Проверка и сборка спецификации                                           |
 | `generate-sdk-*`                  | Генерация SDK                                                            |
-| `sdk-golden-*` / `sdk-smoke-*`    | Golden и smoke тесты SDK                                                 |
+| `sdk-golden-*`                    | Golden тесты SDK                                                         |
+| `sdk-smoke`                       | Smoke тесты SDK                                                          |
 | `deploy-contract-env`             | Подготовка окружения для schemathesis (ветка **stable** сервиса)         |
 | `create-contract-user`            | Создание пользователя для contract‑тестов, экспорт кредов                |
 | `sdk-contract`                    | Schemathesis контрактные тесты (стадия `contract-test`)                  |
@@ -52,7 +52,7 @@
 | `remove-contract-env`   | Очистка окружения (manual, allow_failure)                                                         |
 | `generate-sdk-*`        | Генерация SDK                                                                                     |
 | `sdk-golden-*`          | Golden тесты                                                                                      |
-| `sdk-smoke-*`           | Smoke тесты                                                                                       |
+| `sdk-smoke`             | Smoke тесты                                                                                       |
 | `version:auto`          | Автоматическое версионирование и выпуск тега                                                      |
 | `mirror-to-github`      | Зеркалирование в GitHub (без GitLab‑файлов и CI README)                                           |
 | `create-github-release` | Создание GitHub Release на основе CHANGELOG                                                       |

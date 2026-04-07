@@ -1,5 +1,5 @@
 # Локальная среда для проверки SDK pipeline (lint, bundle, generate, smoke, golden)
-# Поддерживаемые языки: php, python, java, javascript
+# Поддерживаемые языки: php, python, javascript
 # В CI используется образ docker.infra.lognex/docker-openapitools
 FROM node:22-alpine
 

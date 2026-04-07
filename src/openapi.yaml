@@ -377,6 +377,7 @@ components:
       $ref: './components/schemas/common/assortmentWithoutBundle.yaml'
     AttributeAbstract:
       $ref: './components/schemas/common/attributeAbstract.yaml'
+#
     AttributeBase:
       $ref: './components/schemas/common/attributeBase.yaml'
     AttributeBool:

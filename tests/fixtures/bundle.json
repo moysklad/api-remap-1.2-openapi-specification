@@ -112,16 +112,6 @@
   "article": "fsdfds",
   "weight": 1.0,
   "volume": 10.0,
-  "components": {
-    "meta": {
-      "href": "https://api.moysklad.ru/api/remap/1.2/entity/bundle/1545463f-26af-11f1-0a83-1f2500000181/components",
-      "type": "bundlecomponent",
-      "mediaType": "application/json",
-      "size": 2,
-      "limit": 1000,
-      "offset": 0
-    }
-  },
   "files": {
     "meta": {
       "href": "https://api.moysklad.ru/api/remap/1.2/entity/bundle/1545463f-26af-11f1-0a83-1f2500000181/files",

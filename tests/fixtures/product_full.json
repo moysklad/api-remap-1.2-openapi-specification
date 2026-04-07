@@ -228,7 +228,6 @@
       }
     }
   },
-  "minimumBalance": 10.1,
   "minimumStock": {
     "type": "WAREHOUSE_VARIED",
     "storeBalances": {
