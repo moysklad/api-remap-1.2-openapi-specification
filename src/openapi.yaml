@@ -49,6 +49,8 @@ paths:
     $ref: './paths/dictionaries/contracts/contract-metadata-attribute.yaml'
   /entity/contract/metadata/attributes/{id}:
     $ref: './paths/dictionaries/contracts/contract-metadata-attribute-by-id.yaml'
+  /entity/contract/metadata/states/{id}:
+    $ref: './paths/dictionaries/contracts/contract-metadata-state-by-id.yaml'
 
   # Products
   /entity/product:
@@ -753,6 +755,8 @@ components:
       $ref: './components/schemas/dictionary/companySettingsMetadata.yaml'
     Discount:
       $ref: './components/schemas/dictionary/discount.yaml'
+    DiscountAssortmentItem:
+      $ref: './components/schemas/common/discountAssortmentItem.yaml'
     DiscountList:
       $ref: './components/schemas/dictionary/discountList.yaml'
     SpecialPriceDiscount:

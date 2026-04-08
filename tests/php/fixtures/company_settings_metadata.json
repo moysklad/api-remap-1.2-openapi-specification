@@ -20,6 +20,12 @@
           "offset": 0
         }
       },
+      "entityMeta": {
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/customentity/be8eaa07-31c8-11f1-0a80-1ea70000051e",
+        "type": "customentity",
+        "mediaType": "application/json",
+        "uuidHref": "https://api.moysklad.ru/app/#custom_be8eaa07-31c8-11f1-0a80-1ea70000051e"
+      },
       "id": "eaacabaf-2655-11e6-8a84-bae500000045",
       "name": "Партнеры",
       "createShared": true
@@ -39,6 +45,12 @@
           "limit": 1000,
           "offset": 0
         }
+      },
+      "entityMeta": {
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/customentity/be8eaa07-31c8-11f1-0a80-1ea70000051e",
+        "type": "customentity",
+        "mediaType": "application/json",
+        "uuidHref": "https://api.moysklad.ru/app/#custom_be8eaa07-31c8-11f1-0a80-1ea70000051e"
       },
       "id": "f3aff189-2655-11e6-8a84-bae500000046",
       "name": "Рекламные агенства",

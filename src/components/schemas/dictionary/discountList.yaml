@@ -12,7 +12,14 @@ properties:
     $ref: '../common/metaList.yaml'
   rows:
     type: array
-    description: Массив скидок
+    description: |
+      Массив скидок всех типов для учётной записи (см. `meta.type`: discount, personaldiscount,
+      specialpricediscount, accumulationdiscount, bonusprogram).
     items:
-      $ref: '../../../openapi.yaml#/components/schemas/Discount'
+      oneOf:
+        - $ref: '../../../openapi.yaml#/components/schemas/Discount'
+        - $ref: '../../../openapi.yaml#/components/schemas/PersonalDiscount'
+        - $ref: '../../../openapi.yaml#/components/schemas/SpecialPriceDiscount'
+        - $ref: '../../../openapi.yaml#/components/schemas/AccumulationDiscount'
+        - $ref: '../../../openapi.yaml#/components/schemas/BonusProgram'
 

@@ -56,6 +56,13 @@
       "mediaType": "application/json"
     }
   },
+  "organizationAccount": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/organization/342dc6f5-0bbb-11e6-d219-b9d90000004e/accounts/342e096d-0bbb-11e6-d219-b9d90000004f",
+      "type": "account",
+      "mediaType": "application/json"
+    }
+  },
   "agentAccount": {
     "meta": {
       "href": "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/2e6aa620-2c98-11e6-8a84-bae500000004/accounts/2e6ab6ca-2c98-11e6-8a84-bae500000005",
@@ -63,6 +70,8 @@
       "mediaType": "application/json"
     }
   },
+  "rewardType": "PercentOfSales",
+  "rewardPercent": 10,
   "rate": {
     "currency": {
       "meta": {

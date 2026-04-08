@@ -4,9 +4,9 @@ allOf:
 properties:
   assortment:
     type: array
-    description: Товары со скидкой
+    description: Товары, услуги и модификации со скидкой
     items:
-      $ref: '../../../openapi.yaml#/components/schemas/Product'
+      $ref: '../../../openapi.yaml#/components/schemas/DiscountAssortmentItem'
   productFolders:
     type: array
     description: Группы товаров со скидкой

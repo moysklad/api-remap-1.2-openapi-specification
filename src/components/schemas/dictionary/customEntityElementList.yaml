@@ -1,8 +1,4 @@
 type: object
-required:
-  - context
-  - meta
-  - rows
 description: Список элементов пользовательского справочника
 properties:
   context:
