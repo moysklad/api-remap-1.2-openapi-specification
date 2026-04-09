@@ -51,3 +51,9 @@ properties:
     type: object
     allOf:
       - $ref: '../../../openapi.yaml#/components/schemas/Pack'
+  stock:
+    description: |
+      Остатки и себестоимость позиции. Не выводится по умолчанию.
+      Для получения передайте параметр `?fields=stock`.
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/PositionStock'

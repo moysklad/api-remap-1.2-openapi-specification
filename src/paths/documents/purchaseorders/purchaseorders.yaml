@@ -8,6 +8,7 @@ get:
   - $ref: ../../../components/parameters.yaml#/offset
   - $ref: ../../../components/parameters.yaml#/search
   - $ref: ../../../components/parameters.yaml#/expand
+  - $ref: ../../../components/parameters.yaml#/fields
   - $ref: ../../../components/headers.yaml#/AcceptHeader
   - $ref: ../../../components/headers.yaml#/AcceptEncoding
   - $ref: ../../../components/headers.yaml#/ContentTypeJson

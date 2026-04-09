@@ -1,0 +1,24 @@
+type: object
+nullable: true
+readOnly: true
+properties:
+  cost:
+    type: number
+    format: double
+    description: Себестоимость в копейках
+  quantity:
+    type: number
+    format: double
+    description: Остаток
+  reserve:
+    type: number
+    format: double
+    description: Резерв
+  intransit:
+    type: number
+    format: double
+    description: Ожидание
+  available:
+    type: number
+    format: double
+    description: Доступно
