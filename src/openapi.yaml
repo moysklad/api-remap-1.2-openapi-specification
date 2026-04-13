@@ -457,6 +457,8 @@ components:
       $ref: './components/schemas/dictionary/pack.yaml'
     PersonalDiscount:
       $ref: './components/schemas/dictionary/personalDiscount.yaml'
+    PositionStock:
+      $ref: './components/schemas/common/positionStock.yaml'
     PriceType:
       $ref: './components/schemas/dictionary/priceType.yaml'
     Product:

@@ -6,6 +6,7 @@ get:
   parameters:
   - $ref: ../../../components/parameters.yaml#/entityId
   - $ref: ../../../components/parameters.yaml#/expand
+  - $ref: ../../../components/parameters.yaml#/fields
   - $ref: ../../../components/headers.yaml#/AcceptHeader
   - $ref: ../../../components/headers.yaml#/AcceptEncoding
   responses:
@@ -25,6 +26,7 @@ put:
   parameters:
   - $ref: ../../../components/parameters.yaml#/entityId
   - $ref: ../../../components/parameters.yaml#/expand
+  - $ref: ../../../components/parameters.yaml#/fields
   - $ref: ../../../components/headers.yaml#/AcceptHeader
   - $ref: ../../../components/headers.yaml#/AcceptEncoding
   - $ref: ../../../components/headers.yaml#/ContentTypeJson

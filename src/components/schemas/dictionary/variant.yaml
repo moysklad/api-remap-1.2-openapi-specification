@@ -80,7 +80,9 @@ properties:
     allOf:
       - $ref: '../../../openapi.yaml#/components/schemas/ImageList'
   minimumStock:
-    description: Неснижаемый остаток
+    description: |
+      Неснижаемый остаток. Не выводится по умолчанию.
+      Для получения передайте параметр `?fields=minimumStock`.
     nullable: true
     type: object
     allOf:
