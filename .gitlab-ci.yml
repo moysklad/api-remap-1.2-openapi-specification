@@ -70,6 +70,17 @@ workflow:
       when: never
     - when: always
 
+# GitLab проверяет, что в конфиге есть ≥1 видимый job, до применения workflow: rules.
+# Для merge_request_event ни один include ниже не подключается — без этого job валидация
+# падает с «jobs config should contain at least one visible job», хотя MR-пайплайн
+# всё равно отключён правилами workflow выше.
+merge-request-ci-placeholder:
+  stage: .pre
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+  script:
+    - echo "Merge request pipelines are disabled via workflow rules."
+
 # Переменные по умолчанию
 variables:
   SDK_LANGUAGES: ""
