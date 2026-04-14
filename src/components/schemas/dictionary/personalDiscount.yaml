@@ -1,6 +1,14 @@
 type: object
 allOf:
   - $ref: '../../../openapi.yaml#/components/schemas/DiscountBase'
+  - type: object
+    properties:
+      meta:
+        type: object
+        properties:
+          type:
+            enum:
+              - personaldiscount
 properties:
   assortment:
     type: array
