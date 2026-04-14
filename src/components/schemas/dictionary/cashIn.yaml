@@ -141,21 +141,16 @@ properties:
     format: double
     description: Сумма НДС
     readOnly: true
-  factureIn:
-    description: Ссылка на Счет-фактуру полученный
+  factureOut:
+    description: Счет-фактура выданный, с которым связан этот платеж
     nullable: true
     type: object
     allOf:
-      - $ref: '../common/meta.yaml'
+      - $ref: '../../../openapi.yaml#/components/schemas/FactureOut'
   operations:
     type: array
-    description: Массив ссылок на связанные операции
+    description: |
+      Связанные операции. Допустимые типы по `meta.type`: customerorder, purchasereturn, demand,
+      invoiceout, commissionreportin, retailshift.
     items:
-      type: object
-      properties:
-        meta:
-          $ref: '../common/meta.yaml'
-        linkedSum:
-          type: number
-          format: double
-          description: Сумма, оплаченную по данному документу
+      $ref: '../../../openapi.yaml#/components/schemas/CashInOperation'

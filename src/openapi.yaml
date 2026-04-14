@@ -575,6 +575,8 @@ components:
       $ref: './components/schemas/common/fileUpload.yaml'
     FileList:
       $ref: './components/schemas/common/fileList.yaml'
+    FactureOut:
+      $ref: './components/schemas/dictionary/factureOut.yaml'
     Group:
       $ref: './components/schemas/dictionary/group.yaml'
     Image:
@@ -672,6 +674,8 @@ components:
       $ref: './components/schemas/dictionary/storeList.yaml'
     RetailStoreList:
       $ref: './components/schemas/dictionary/retailStoreList.yaml'
+    RetailShift:
+      $ref: './components/schemas/dictionary/retailShift.yaml'
     CashierList:
       $ref: './components/schemas/dictionary/cashierList.yaml'
 
@@ -707,6 +711,8 @@ components:
       $ref: './components/schemas/dictionary/purchaseOrderList.yaml'
     PurchaseOrderPositionList:
       $ref: './components/schemas/dictionary/purchaseOrderPositionList.yaml'
+    PurchaseReturn:
+      $ref: './components/schemas/dictionary/purchaseReturn.yaml'
     InvoiceIn:
       $ref: './components/schemas/dictionary/invoiceIn.yaml'
     InvoiceOut:
@@ -723,6 +729,10 @@ components:
       $ref: './components/schemas/dictionary/cashOut.yaml'
     CashIn:
       $ref: './components/schemas/dictionary/cashIn.yaml'
+    CashInOperation:
+      $ref: './components/schemas/dictionary/cashInOperation.yaml'
+    CashInOperationLinkedSum:
+      $ref: './components/schemas/dictionary/cashInOperationLinkedSum.yaml'
     CashOutList:
       $ref: './components/schemas/dictionary/cashOutList.yaml'
     CashInList:
