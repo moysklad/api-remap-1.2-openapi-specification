@@ -1,0 +1,98 @@
+type: object
+description: Счет-фактура полученный (facturein)
+properties:
+  meta:
+    description: Метаданные Счета-фактуры полученного
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID Счета-фактуры полученного
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  agent:
+    description: Метаданные контрагента
+    $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
+  applicable:
+    type: boolean
+    description: Отметка о проведении
+  attributes:
+    type: array
+    description: Коллекция метаданных доп. полей
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
+  code:
+    type: string
+    maxLength: 255
+    description: Код Счета-фактуры полученного
+  created:
+    type: string
+    description: Дата создания
+    readOnly: true
+  deleted:
+    type: string
+    description: Момент последнего удаления Счета-фактуры полученного
+    readOnly: true
+  description:
+    type: string
+    maxLength: 4096
+    nullable: true
+    description: Комментарий Счета-фактуры полученного
+  externalCode:
+    type: string
+    maxLength: 255
+    description: Внешний код Счета-фактуры полученного
+  files:
+    description: Метаданные массива файлов
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/FileList'
+  group:
+    description: Отдел сотрудника
+    $ref: '../../../openapi.yaml#/components/schemas/Group'
+  moment:
+    type: string
+    description: Дата документа
+  name:
+    type: string
+    maxLength: 255
+    description: Наименование Счета-фактуры полученного
+  owner:
+    description: Владелец (Сотрудник)
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Employee'
+  printed:
+    type: boolean
+    description: Напечатан ли документ
+    readOnly: true
+  published:
+    type: boolean
+    description: Опубликован ли документ
+    readOnly: true
+  rate:
+    type: object
+    description: Валюта
+    properties:
+      currency:
+        description: Валюта
+        $ref: '../../../openapi.yaml#/components/schemas/Currency'
+      value:
+        type: number
+        format: double
+        description: Курс валюты
+  shared:
+    type: boolean
+    description: Общий доступ
+  state:
+    description: Метаданные статуса Счета-фактуры полученного
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/State'

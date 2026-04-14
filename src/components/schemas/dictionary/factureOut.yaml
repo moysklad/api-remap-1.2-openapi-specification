@@ -1,5 +1,5 @@
 type: object
-description: Счет-фактура выданный (factureout). См. `documents/_factureout.md`.
+description: Счет-фактура выданный (factureout)
 properties:
   meta:
     description: Метаданные Счета-фактуры выданного

@@ -1,0 +1,18 @@
+type: object
+description: |
+  Возврат покупателя (salesreturn). Заглушка: полное описание сущности в спецификации отсутствует;
+  в ответе API возможны дополнительные поля.
+properties:
+  meta:
+    description: Метаданные возврата покупателя
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID возврата покупателя
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true

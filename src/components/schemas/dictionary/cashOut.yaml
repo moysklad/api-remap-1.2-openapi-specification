@@ -150,20 +150,15 @@ properties:
     description: Сумма НДС
     readOnly: true
   factureIn:
-    description: Ссылка на Счет-фактуру полученный
+    description: Счет-фактура полученный, с которым связан этот платеж
     nullable: true
     type: object
     allOf:
-      - $ref: '../common/meta.yaml'
+      - $ref: '../../../openapi.yaml#/components/schemas/FactureIn'
   operations:
     type: array
-    description: Массив ссылок на связанные операции
+    description: |
+      Связанные операции: полное тело документа плюс `linkedSum`. Допустимые типы по `meta.type`:
+      salesreturn, supply, invoicein, purchaseorder, commissionreportout. См. `CashOutOperation`.
     items:
-      type: object
-      properties:
-        meta:
-          $ref: '../common/meta.yaml'
-        linkedSum:
-          type: number
-          format: double
-          description: Сумма, оплаченную по данному документу
+      $ref: '../../../openapi.yaml#/components/schemas/CashOutOperation'

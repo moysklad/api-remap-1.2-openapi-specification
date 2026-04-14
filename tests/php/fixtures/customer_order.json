@@ -191,10 +191,10 @@
           "href": "https://api.moysklad.ru/api/remap/1.2/download/c3616f62-c858-4f17-96fd-1a2e4dcb2fb6?miniature=true",
           "type": "files",
           "mediaType": "image/png",
-          "downloadHref": "https://miniature-test-v3.moysklad.ru/miniature-test/miniature/c229f794-26ae-11f1-0a83-1f2100000002/documentminiature/fa1fe61c-dfb7-473d-b9df-ee640f2ce577"
+          "downloadHref": "https://miniature.moysklad.ru/miniature-test/miniature/c229f794-26ae-11f1-0a83-1f2100000002/documentminiature/fa1fe61c-dfb7-473d-b9df-ee640f2ce577"
         },
         "tiny": {
-          "href": "https://static-test-v3.moysklad.ru/static-test/static/tinyimage/c229f794-26ae-11f1-0a83-1f2100000002/tinyimage/73c13b2f-2b6b-4d00-adda-b289182dabac/t.png",
+          "href": "https://static.moysklad.ru/static-test/static/tinyimage/c229f794-26ae-11f1-0a83-1f2100000002/tinyimage/73c13b2f-2b6b-4d00-adda-b289182dabac/t.png",
           "type": "files",
           "mediaType": "image/png"
         }

@@ -577,6 +577,8 @@ components:
       $ref: './components/schemas/common/fileList.yaml'
     FactureOut:
       $ref: './components/schemas/dictionary/factureOut.yaml'
+    FactureIn:
+      $ref: './components/schemas/dictionary/factureIn.yaml'
     Group:
       $ref: './components/schemas/dictionary/group.yaml'
     Image:
@@ -615,6 +617,8 @@ components:
       $ref: './components/schemas/dictionary/retailStore.yaml'
     SalePrice:
       $ref: './components/schemas/dictionary/salePrice.yaml'
+    SalesReturn:
+      $ref: './components/schemas/dictionary/salesReturn.yaml'
     Service:
       $ref: './components/schemas/dictionary/service.yaml'
     State:
@@ -727,6 +731,10 @@ components:
       $ref: './components/schemas/dictionary/prepayment.yaml'
     CashOut:
       $ref: './components/schemas/dictionary/cashOut.yaml'
+    CashOutOperation:
+      $ref: './components/schemas/dictionary/cashOutOperation.yaml'
+    CashOutOperationLinkedSum:
+      $ref: './components/schemas/dictionary/cashOutOperationLinkedSum.yaml'
     CashIn:
       $ref: './components/schemas/dictionary/cashIn.yaml'
     CashInOperation:
@@ -760,6 +768,8 @@ components:
       $ref: './components/schemas/dictionary/commissionReportInReturnedPosition.yaml'
     CommissionReportInReturnedPositionList:
       $ref: './components/schemas/dictionary/commissionReportInReturnedPositionList.yaml'
+    CommissionReportOut:
+      $ref: './components/schemas/dictionary/commissionReportOut.yaml'
 
     CompanySettings:
       $ref: './components/schemas/dictionary/companySettings.yaml'
