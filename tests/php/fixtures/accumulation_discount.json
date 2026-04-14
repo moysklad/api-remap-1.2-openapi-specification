@@ -6,6 +6,7 @@
     "mediaType": "application/json"
   },
   "id": "dce08f7f-9a09-11e6-8af5-581e0000007e",
+  "accountId": "dce08f7f-9a09-11e6-8af5-581e0000007e",
   "name": "Скидки на сапоги",
   "active": true,
   "allAgents": true,

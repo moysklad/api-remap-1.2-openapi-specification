@@ -6,6 +6,7 @@
     "mediaType": "application/json"
   },
   "id": "0623d6b4-9ceb-11e6-8af5-581e00000003",
+  "accountId": "0623d6b4-9ceb-11e6-8af5-581e00000003",
   "name": "Персональная скидка",
   "active": true,
   "allAgents": true,

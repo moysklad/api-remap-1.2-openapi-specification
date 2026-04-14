@@ -6,6 +6,7 @@
     "mediaType": "application/json"
   },
   "id": "96673f4d-9f4d-11e6-8af5-581e0000007b",
+  "accountId": "96673f4d-9f4d-11e6-8af5-581e0000007b",
   "name": "Специальная процентная скидка",
   "active": false,
   "allAgents": false,
