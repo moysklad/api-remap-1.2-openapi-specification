@@ -15,6 +15,14 @@
       "mediaType": "application/json"
     }
   },
+  "organization": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/organization/4a980e02-b685-11e8-727d-30730000002b",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/organization/metadata",
+      "type": "organization",
+      "mediaType": "application/json"
+    }
+  },
   "shared": false,
   "group": {
     "meta": {
@@ -25,7 +33,10 @@
     }
   },
   "updated": "2018-09-13 12:36:26",
+  "updatedBy": "admin@admin",
   "name": "d00001",
+  "description": "d00001",
+  "code": "htdrUVpciRX4kldKIN7VL0",
   "externalCode": "htdrUVpciRX4kldKIN7VL0",
   "moment": "2018-09-13 12:36:26",
   "applicable": true,
@@ -35,6 +46,15 @@
       "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/metadata",
       "type": "counterparty",
       "mediaType": "application/json"
+    }
+  },
+  "parentDocument":  {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/customerorder/22591b08-2859-11f1-0a83-1f2500000247",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/customerorder/metadata",
+      "type": "customerorder",
+      "mediaType": "application/json",
+      "uuidHref": "https://api.moysklad.ru/app/#customerorder/edit?id=22591b08-2859-11f1-0a83-1f2500000247"
     }
   },
   "created": "2018-09-13 12:36:26",
