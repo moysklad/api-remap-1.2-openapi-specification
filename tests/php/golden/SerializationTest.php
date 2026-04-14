@@ -69,6 +69,7 @@ class SerializationTest extends TestCase
         'cash_out' => 'CashOut',
         'company_settings' => 'CompanySettings',
         'company_settings_metadata' => 'CompanySettingsMetadata',
+        'assortment_settings' => 'AssortmentSettings',
         'assortment' => 'Assortment',
         'discount' => 'Discount',
         'accumulation_discount' => 'AccumulationDiscount',

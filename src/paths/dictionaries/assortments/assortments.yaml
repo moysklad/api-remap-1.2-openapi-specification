@@ -17,6 +17,36 @@ get:
       description: Параметр группировки (product, variant, consignment)
       schema:
         type: string
+        enum:
+          - product
+          - variant
+          - consignment
+    - name: stockMode
+      in: query
+      required: false
+      description: Фильтрация по значению остатка
+      schema:
+        type: string
+        enum:
+          - all
+          - positiveOnly
+          - negativeOnly
+          - empty
+          - nonEmpty
+          - underMinimum
+    - name: quantityMode
+      in: query
+      required: false
+      description: Фильтрация по значению доступно
+      schema:
+        type: string
+        enum:
+          - all
+          - positiveOnly
+          - negativeOnly
+          - empty
+          - nonEmpty
+          - underMinimum
     - $ref: '../../../components/headers.yaml#/AcceptHeader'
     - $ref: '../../../components/headers.yaml#/AcceptEncoding'
   responses:

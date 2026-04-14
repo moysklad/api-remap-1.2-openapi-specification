@@ -32,8 +32,7 @@
   "pathName": "",
   "useParentVat": false,
   "vat": 18,
-  "vatEnabled": true
-  ,
+  "vatEnabled": true,
   "stock": 0,
   "reserve": 0,
   "inTransit": 0,
