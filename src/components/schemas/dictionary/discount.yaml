@@ -2,14 +2,6 @@ type: object
 description: Скидка (discount)
 allOf:
   - $ref: '../../../openapi.yaml#/components/schemas/DiscountBase'
-  - type: object
-    properties:
-      meta:
-        type: object
-        properties:
-          type:
-            enum:
-              - discount
 properties:
   allProducts:
     type: boolean
