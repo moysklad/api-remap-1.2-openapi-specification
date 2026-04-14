@@ -17,6 +17,8 @@
   "spendRatePointsToRouble": 1,
   "maxPaidRatePercents": 100,
   "welcomeBonusesEnabled": false,
+  "welcomeBonusesMode": "REGISTRATION",
+  "welcomeBonusesValue": 10,
   "postponedBonusesDelayDays": 14,
   "earnWhileRedeeming": true,
   "allProducts": true
