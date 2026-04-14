@@ -68,3 +68,22 @@ order:
   schema:
     type: string
   example: "name"
+
+fields:
+  name: fields
+  in: query
+  description: |
+    Включить в ответ скрытые поля, не выводимые по умолчанию.
+    В одном запросе можно передать только одно значение.
+    - `minimumStock` — неснижаемый остаток (товар, модификация)
+    - `downloadPermanentHref` — постоянная ссылка на изображение (платный тариф)
+    - `stock` — остатки и себестоимость в позициях документов
+    - `declaration` — прослеживаемость импортных товаров в позициях документов
+  schema:
+    type: string
+    enum:
+      - minimumStock
+      - downloadPermanentHref
+      - stock
+      - declaration
+  example: "minimumStock"

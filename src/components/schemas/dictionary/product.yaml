@@ -219,7 +219,9 @@ properties:
     description: Неснижаемый остаток (устаревшее)
     deprecated: true
   minimumStock:
-    description: Неснижаемый остаток
+    description: |
+      Неснижаемый остаток. Не выводится по умолчанию.
+      Для получения передайте параметр `?fields=minimumStock`.
     nullable: true
     type: object
     allOf:
