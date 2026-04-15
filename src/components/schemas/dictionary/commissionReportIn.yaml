@@ -104,7 +104,10 @@ properties:
       - $ref: '../../../openapi.yaml#/components/schemas/Account'
   owner:
     description: Владелец (Сотрудник)
-    $ref: '../../../openapi.yaml#/components/schemas/Employee'
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Employee'
   payedSum:
     type: number
     format: double
@@ -192,5 +195,7 @@ properties:
     type: array
     description: Массив ссылок на связанные платежи
     items:
-      $ref: '../common/meta.yaml'
+      anyOf:
+        - $ref: '../../../openapi.yaml#/components/schemas/PaymentIn'
+        - $ref: '../../../openapi.yaml#/components/schemas/CashIn'
 
