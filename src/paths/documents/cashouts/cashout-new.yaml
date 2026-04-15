@@ -1,0 +1,25 @@
+put:
+  operationId: getCashOutTemplate
+  tags:
+    - CashOuts
+  summary: Шаблон CashOut
+  requestBody:
+    required: false
+    content:
+      application/json:
+        schema:
+          type: object
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../components/schemas/dictionary/cashOut.yaml'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+  parameters:
+    - $ref: ../../../components/headers.yaml#/AcceptHeader
+    - $ref: ../../../components/headers.yaml#/AcceptEncoding
+    - $ref: ../../../components/headers.yaml#/ContentTypeJson
+

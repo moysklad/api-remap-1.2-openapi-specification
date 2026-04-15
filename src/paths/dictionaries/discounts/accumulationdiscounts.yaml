@@ -1,0 +1,26 @@
+post:
+  operationId: createAccumulationDiscount
+  tags:
+    - Discounts
+  summary: Создать накопительную скидку
+  description: Запрос на создание накопительной скидки
+  parameters:
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../components/schemas/dictionary/accumulationDiscount.yaml'
+  responses:
+    '200':
+      description: Накопительная скидка успешно создана
+      content:
+        application/json:
+          schema:
+            $ref: '../../../components/schemas/dictionary/accumulationDiscount.yaml'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+

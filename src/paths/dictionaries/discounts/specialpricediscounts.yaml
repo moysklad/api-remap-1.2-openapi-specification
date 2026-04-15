@@ -1,0 +1,26 @@
+post:
+  operationId: createSpecialPriceDiscount
+  tags:
+    - Discounts
+  summary: Создать специальную цену (specialpricediscount)
+  description: Запрос на создание специальной цены
+  parameters:
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../components/schemas/dictionary/specialPriceDiscount.yaml'
+  responses:
+    '200':
+      description: Специальная цена успешно создана
+      content:
+        application/json:
+          schema:
+            $ref: '../../../components/schemas/dictionary/specialPriceDiscount.yaml'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+

@@ -1,0 +1,14 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/demand/7944ef04-047e-11e9-ac12-000a00000002",
+    "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/demand/metadata",
+    "type": "demand",
+    "mediaType": "application/json"
+  },
+  "id": "7944ef04-047e-11e9-ac12-000a00000002",
+  "accountId": "f976ed28-2e58-11e6-8a84-bae500000001",
+  "name": "00001",
+  "moment": "2019-01-15 12:00:00",
+  "applicable": true,
+  "linkedSum": 150000
+}

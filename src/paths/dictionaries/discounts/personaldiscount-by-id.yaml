@@ -1,0 +1,63 @@
+get:
+  operationId: getPersonalDiscountById
+  tags:
+    - Discounts
+  summary: Получить персональную скидку по ID
+  description: Запрос персональной скидки с указанным id
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../components/schemas/dictionary/personalDiscount.yaml'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+put:
+  operationId: updatePersonalDiscount
+  tags:
+    - Discounts
+  summary: Изменить персональную скидку
+  description: Запрос на изменение персональной скидки
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../components/schemas/dictionary/personalDiscount.yaml'
+  responses:
+    '200':
+      description: Персональная скидка успешно обновлена
+      content:
+        application/json:
+          schema:
+            $ref: '../../../components/schemas/dictionary/personalDiscount.yaml'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+delete:
+  operationId: deletePersonalDiscount
+  tags:
+    - Discounts
+  summary: Удалить персональную скидку
+  description: Удаление персональной скидки с указанным id
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Персональная скидка успешно удалена
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+

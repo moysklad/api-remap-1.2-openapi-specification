@@ -1,0 +1,75 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/bonustransaction/7c6ecd51-b738-11e8-727d-307300000028",
+    "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/bonustransaction/metadata",
+    "type": "bonustransaction",
+    "mediaType": "application/json"
+  },
+  "id": "7c6ecd51-b738-11e8-727d-307300000028",
+  "accountId": "ba5d8717-d6e7-4741-9f2e-4e343a447fb9",
+  "owner": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/employee/4a980e02-b685-11e8-727d-30730000002b",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/employee/metadata",
+      "type": "employee",
+      "mediaType": "application/json"
+    }
+  },
+  "organization": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/organization/4a980e02-b685-11e8-727d-30730000002b",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/organization/metadata",
+      "type": "organization",
+      "mediaType": "application/json"
+    }
+  },
+  "shared": false,
+  "group": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/group/4427b6f1-b685-11e8-727d-307300000002",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/group/metadata",
+      "type": "group",
+      "mediaType": "application/json"
+    }
+  },
+  "updated": "2018-09-13 12:36:26",
+  "updatedBy": "admin@admin",
+  "name": "d00001",
+  "description": "d00001",
+  "code": "htdrUVpciRX4kldKIN7VL0",
+  "externalCode": "htdrUVpciRX4kldKIN7VL0",
+  "moment": "2018-09-13 12:36:26",
+  "applicable": true,
+  "agent": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/9fea1d90-d488-4271-97bc-a9ad1b9fbcc0",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/metadata",
+      "type": "counterparty",
+      "mediaType": "application/json"
+    }
+  },
+  "parentDocument":  {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/customerorder/22591b08-2859-11f1-0a83-1f2500000247",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/customerorder/metadata",
+      "type": "customerorder",
+      "mediaType": "application/json",
+      "uuidHref": "https://api.moysklad.ru/app/#customerorder/edit?id=22591b08-2859-11f1-0a83-1f2500000247"
+    }
+  },
+  "created": "2018-09-13 12:36:26",
+  "bonusProgram": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/bonusprogram/956f6ff7-718f-4849-be47-7509fdd18db9",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/bonusprogram/metadata",
+      "type": "bonusprogram",
+      "mediaType": "application/json"
+    }
+  },
+  "bonusValue": 15,
+  "transactionType": "EARNING",
+  "transactionStatus": "COMPLETED",
+  "executionDate": "2021-05-03 12:20:32",
+  "categoryType": "REGULAR"
+}
+

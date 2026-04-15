@@ -1,0 +1,45 @@
+get:
+  operationId: getAssortmentSettings
+  tags:
+    - Assortment
+  summary: Получить настройки ассортимента
+  description: Запрос на получение настроек справочника товаров
+  parameters:
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../components/schemas/dictionary/assortmentSettings.yaml'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+put:
+  operationId: updateAssortmentSettings
+  tags:
+    - Assortment
+  summary: Изменить настройки ассортимента
+  description: Запрос на изменение настроек справочника товаров
+  parameters:
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../components/schemas/dictionary/assortmentSettings.yaml'
+  responses:
+    '200':
+      description: Настройки ассортимента успешно обновлены
+      content:
+        application/json:
+          schema:
+            $ref: '../../../components/schemas/dictionary/assortmentSettings.yaml'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+

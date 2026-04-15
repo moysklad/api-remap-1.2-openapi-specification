@@ -1,0 +1,26 @@
+post:
+  operationId: createPersonalDiscount
+  tags:
+    - Discounts
+  summary: Создать персональную скидку
+  description: Запрос на создание персональной скидки
+  parameters:
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../components/schemas/dictionary/personalDiscount.yaml'
+  responses:
+    '200':
+      description: Персональная скидка успешно создана
+      content:
+        application/json:
+          schema:
+            $ref: '../../../components/schemas/dictionary/personalDiscount.yaml'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+

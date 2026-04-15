@@ -1,0 +1,56 @@
+get:
+  operationId: getCommissionReportInMetadataStateById
+  tags:
+    - CommissionReportIns
+  summary: Отдельный статус CommissionReportIn
+  parameters:
+    - $ref: ../../../components/parameters.yaml#/entityId
+    - $ref: ../../../components/headers.yaml#/AcceptHeader
+    - $ref: ../../../components/headers.yaml#/AcceptEncoding
+    - $ref: ../../../components/headers.yaml#/ContentTypeJson
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../components/schemas/dictionary/state.yaml'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+put:
+  operationId: updateCommissionReportInMetadataStateById
+  tags:
+    - CommissionReportIns
+  summary: Обновить отдельный статус CommissionReportIn
+  parameters:
+    - $ref: ../../../components/parameters.yaml#/entityId
+    - $ref: ../../../components/headers.yaml#/AcceptHeader
+    - $ref: ../../../components/headers.yaml#/AcceptEncoding
+    - $ref: ../../../components/headers.yaml#/ContentTypeJson
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../components/schemas/dictionary/state.yaml'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+delete:
+  operationId: deleteCommissionReportInMetadataStateById
+  tags:
+    - CommissionReportIns
+  summary: Удалить отдельный статус CommissionReportIn
+  parameters:
+    - $ref: ../../../components/parameters.yaml#/entityId
+    - $ref: ../../../components/headers.yaml#/AcceptHeader
+    - $ref: ../../../components/headers.yaml#/AcceptEncoding
+    - $ref: ../../../components/headers.yaml#/ContentTypeJson
+  responses:
+    '200':
+      description: Успешный запрос
+    '404':
+      $ref: '../../../components/responses.yaml#/NotFoundEmpty'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+

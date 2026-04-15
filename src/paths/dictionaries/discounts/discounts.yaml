@@ -1,0 +1,21 @@
+get:
+  operationId: getDiscounts
+  tags:
+    - Discounts
+  summary: Получить список скидок
+  description: Запрос на получение всех скидок учетной записи
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/limit'
+    - $ref: '../../../components/parameters.yaml#/offset'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../components/schemas/dictionary/discountList.yaml'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+

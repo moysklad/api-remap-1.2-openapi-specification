@@ -49,6 +49,8 @@ paths:
     $ref: './paths/dictionaries/contracts/contract-metadata-attribute.yaml'
   /entity/contract/metadata/attributes/{id}:
     $ref: './paths/dictionaries/contracts/contract-metadata-attribute-by-id.yaml'
+  /entity/contract/metadata/states/{id}:
+    $ref: './paths/dictionaries/contracts/contract-metadata-state-by-id.yaml'
 
   # Products
   /entity/product:
@@ -203,6 +205,64 @@ paths:
     $ref: './paths/dictionaries/pricetypes/pricetype-by-id.yaml'
   /context/companysettings/pricetype/default:
     $ref: './paths/dictionaries/pricetypes/pricetype-default.yaml'
+
+  # CompanySettings
+  /context/companysettings:
+    $ref: './paths/dictionaries/companysettings/companysettings.yaml'
+  /context/companysettings/metadata:
+    $ref: './paths/dictionaries/companysettings/companysettings-metadata.yaml'
+
+  # Discounts
+  /entity/discount:
+    $ref: './paths/dictionaries/discounts/discounts.yaml'
+  /entity/discount/{id}:
+    $ref: './paths/dictionaries/discounts/discount-by-id.yaml'
+  /entity/accumulationdiscount:
+    $ref: './paths/dictionaries/discounts/accumulationdiscounts.yaml'
+  /entity/accumulationdiscount/{id}:
+    $ref: './paths/dictionaries/discounts/accumulationdiscount-by-id.yaml'
+  /entity/personaldiscount:
+    $ref: './paths/dictionaries/discounts/personaldiscounts.yaml'
+  /entity/personaldiscount/{id}:
+    $ref: './paths/dictionaries/discounts/personaldiscount-by-id.yaml'
+  /entity/specialpricediscount:
+    $ref: './paths/dictionaries/discounts/specialpricediscounts.yaml'
+  /entity/specialpricediscount/{id}:
+    $ref: './paths/dictionaries/discounts/specialpricediscount-by-id.yaml'
+
+  # Assortments
+  /entity/assortment:
+    $ref: './paths/dictionaries/assortments/assortments.yaml'
+  /entity/assortment/delete:
+    $ref: './paths/dictionaries/assortments/assortments-delete.yaml'
+  /entity/assortment/settings:
+    $ref: './paths/dictionaries/assortments/assortments-settings.yaml'
+
+  # BonusPrograms
+  /entity/bonusprogram:
+    $ref: './paths/dictionaries/bonusprograms/bonusprograms.yaml'
+  /entity/bonusprogram/{id}:
+    $ref: './paths/dictionaries/bonusprograms/bonusprogram-by-id.yaml'
+  /entity/bonusprogram/delete:
+    $ref: './paths/dictionaries/bonusprograms/bonusprograms-delete.yaml'
+
+  # BonusTransactions
+  /entity/bonustransaction:
+    $ref: './paths/dictionaries/bonustransactions/bonustransactions.yaml'
+  /entity/bonustransaction/{id}:
+    $ref: './paths/dictionaries/bonustransactions/bonustransaction-by-id.yaml'
+  /entity/bonustransaction/delete:
+    $ref: './paths/dictionaries/bonustransactions/bonustransactions-delete.yaml'
+
+  # CustomEntities
+  /entity/customentity:
+    $ref: './paths/dictionaries/customentities/customentity.yaml'
+  /entity/customentity/{id}:
+    $ref: './paths/dictionaries/customentities/customentity-by-id.yaml'
+  /entity/customentity/{id}/metadata:
+    $ref: './paths/dictionaries/customentities/customentity-metadata.yaml'
+  /entity/customentity/{metadataId}/{id}:
+    $ref: './paths/dictionaries/customentities/customentity-element-by-id.yaml'
 
   # Stores
   /entity/store:
@@ -359,6 +419,76 @@ paths:
   /entity/purchaseorder/{id}/positions/delete:
     $ref: './paths/documents/purchaseorders/purchaseorder-positions-delete.yaml'
 
+  # Documents - CommissionReportIns
+  /entity/commissionreportin:
+    $ref: './paths/documents/commissionreportins/commissionreportins.yaml'
+  /entity/commissionreportin/{id}:
+    $ref: './paths/documents/commissionreportins/commissionreportin-by-id.yaml'
+  /entity/commissionreportin/delete:
+    $ref: './paths/documents/commissionreportins/commissionreportins-delete.yaml'
+  /entity/commissionreportin/batch:
+    $ref: './paths/documents/commissionreportins/commissionreportins-batch.yaml'
+  /entity/commissionreportin/metadata:
+    $ref: './paths/documents/commissionreportins/commissionreportin-metadata.yaml'
+  /entity/commissionreportin/metadata/attributes:
+    $ref: './paths/documents/commissionreportins/commissionreportin-metadata-attribute.yaml'
+  /entity/commissionreportin/metadata/attributes/{id}:
+    $ref: './paths/documents/commissionreportins/commissionreportin-metadata-attribute-by-id.yaml'
+  /entity/commissionreportin/metadata/states/{id}:
+    $ref: './paths/documents/commissionreportins/commissionreportin-metadata-state-by-id.yaml'
+  /entity/commissionreportin/{id}/positions:
+    $ref: './paths/documents/commissionreportins/commissionreportin-positions.yaml'
+  /entity/commissionreportin/{id}/positions/{positionId}:
+    $ref: './paths/documents/commissionreportins/commissionreportin-position-by-id.yaml'
+  /entity/commissionreportin/{id}/positions/delete:
+    $ref: './paths/documents/commissionreportins/commissionreportin-positions-delete.yaml'
+  /entity/commissionreportin/{id}/returntocommissionerpositions:
+    $ref: './paths/documents/commissionreportins/commissionreportin-returntocommissionerpositions.yaml'
+  /entity/commissionreportin/{id}/returntocommissionerpositions/{positionId}:
+    $ref: './paths/documents/commissionreportins/commissionreportin-returntocommissionerposition-by-id.yaml'
+  /entity/commissionreportin/{id}/returntocommissionerpositions/delete:
+    $ref: './paths/documents/commissionreportins/commissionreportin-returntocommissionerpositions-delete.yaml'
+
+  # Documents - Cash In Orders
+  /entity/cashin:
+    $ref: './paths/documents/cashins/cashins.yaml'
+  /entity/cashin/{id}:
+    $ref: './paths/documents/cashins/cashin-by-id.yaml'
+  /entity/cashin/delete:
+    $ref: './paths/documents/cashins/cashins-delete.yaml'
+  /entity/cashin/batch:
+    $ref: './paths/documents/cashins/cashins-batch.yaml'
+  /entity/cashin/metadata:
+    $ref: './paths/documents/cashins/cashin-metadata.yaml'
+  /entity/cashin/metadata/attributes:
+    $ref: './paths/documents/cashins/cashin-metadata-attribute.yaml'
+  /entity/cashin/metadata/attributes/{id}:
+    $ref: './paths/documents/cashins/cashin-metadata-attribute-by-id.yaml'
+  /entity/cashin/metadata/states/{id}:
+    $ref: './paths/documents/cashins/cashin-metadata-state-by-id.yaml'
+  /entity/cashin/new:
+    $ref: './paths/documents/cashins/cashin-new.yaml'
+
+  # Documents - Cash Out Orders
+  /entity/cashout:
+    $ref: './paths/documents/cashouts/cashouts.yaml'
+  /entity/cashout/{id}:
+    $ref: './paths/documents/cashouts/cashout-by-id.yaml'
+  /entity/cashout/delete:
+    $ref: './paths/documents/cashouts/cashouts-delete.yaml'
+  /entity/cashout/batch:
+    $ref: './paths/documents/cashouts/cashouts-batch.yaml'
+  /entity/cashout/metadata:
+    $ref: './paths/documents/cashouts/cashout-metadata.yaml'
+  /entity/cashout/metadata/attributes:
+    $ref: './paths/documents/cashouts/cashout-metadata-attribute.yaml'
+  /entity/cashout/metadata/attributes/{id}:
+    $ref: './paths/documents/cashouts/cashout-metadata-attribute-by-id.yaml'
+  /entity/cashout/metadata/states/{id}:
+    $ref: './paths/documents/cashouts/cashout-metadata-state-by-id.yaml'
+  /entity/cashout/new:
+    $ref: './paths/documents/cashouts/cashout-new.yaml'
+
 components:
   schemas:
     Account:
@@ -373,8 +503,12 @@ components:
       $ref: './components/schemas/dictionary/application.yaml'
     Assortment:
       $ref: './components/schemas/common/assortment.yaml'
+    AssortmentList:
+      $ref: './components/schemas/dictionary/assortmentList.yaml'
     AssortmentWithoutBundle:
       $ref: './components/schemas/common/assortmentWithoutBundle.yaml'
+    AssortmentSettings:
+      $ref: './components/schemas/dictionary/assortmentSettings.yaml'
     AttributeAbstract:
       $ref: './components/schemas/common/attributeAbstract.yaml'
     AttributeBase:
@@ -407,6 +541,12 @@ components:
       $ref: './components/schemas/dictionary/barcode.yaml'
     BonusProgram:
       $ref: './components/schemas/dictionary/bonusProgram.yaml'
+    BonusProgramList:
+      $ref: './components/schemas/dictionary/bonusProgramList.yaml'
+    BonusTransaction:
+      $ref: './components/schemas/dictionary/bonusTransaction.yaml'
+    BonusTransactionList:
+      $ref: './components/schemas/dictionary/bonusTransactionList.yaml'
     DeleteInfo:
       $ref: './components/schemas/common/deleteInfo.yaml'
     DiscountBase:
@@ -435,6 +575,10 @@ components:
       $ref: './components/schemas/common/fileUpload.yaml'
     FileList:
       $ref: './components/schemas/common/fileList.yaml'
+    FactureOut:
+      $ref: './components/schemas/dictionary/factureOut.yaml'
+    FactureIn:
+      $ref: './components/schemas/dictionary/factureIn.yaml'
     Group:
       $ref: './components/schemas/dictionary/group.yaml'
     Image:
@@ -473,6 +617,8 @@ components:
       $ref: './components/schemas/dictionary/retailStore.yaml'
     SalePrice:
       $ref: './components/schemas/dictionary/salePrice.yaml'
+    SalesReturn:
+      $ref: './components/schemas/dictionary/salesReturn.yaml'
     Service:
       $ref: './components/schemas/dictionary/service.yaml'
     State:
@@ -532,6 +678,8 @@ components:
       $ref: './components/schemas/dictionary/storeList.yaml'
     RetailStoreList:
       $ref: './components/schemas/dictionary/retailStoreList.yaml'
+    RetailShift:
+      $ref: './components/schemas/dictionary/retailShift.yaml'
     CashierList:
       $ref: './components/schemas/dictionary/cashierList.yaml'
 
@@ -567,6 +715,8 @@ components:
       $ref: './components/schemas/dictionary/purchaseOrderList.yaml'
     PurchaseOrderPositionList:
       $ref: './components/schemas/dictionary/purchaseOrderPositionList.yaml'
+    PurchaseReturn:
+      $ref: './components/schemas/dictionary/purchaseReturn.yaml'
     InvoiceIn:
       $ref: './components/schemas/dictionary/invoiceIn.yaml'
     InvoiceOut:
@@ -581,8 +731,22 @@ components:
       $ref: './components/schemas/dictionary/prepayment.yaml'
     CashOut:
       $ref: './components/schemas/dictionary/cashOut.yaml'
+    CashOutOperation:
+      $ref: './components/schemas/dictionary/cashOutOperation.yaml'
+    CashOutOperationLinkedSum:
+      $ref: './components/schemas/dictionary/cashOutOperationLinkedSum.yaml'
     CashIn:
       $ref: './components/schemas/dictionary/cashIn.yaml'
+    CashInOperation:
+      $ref: './components/schemas/dictionary/cashInOperation.yaml'
+    CashInOperationLinkedSum:
+      $ref: './components/schemas/dictionary/cashInOperationLinkedSum.yaml'
+    CashOutList:
+      $ref: './components/schemas/dictionary/cashOutList.yaml'
+    CashInList:
+      $ref: './components/schemas/dictionary/cashInList.yaml'
+    ExpenseItem:
+      $ref: './components/schemas/dictionary/expenseItem.yaml'
     ProductionTask:
       $ref: './components/schemas/dictionary/productionTask.yaml'
     Move:
@@ -591,6 +755,43 @@ components:
       $ref: './components/schemas/dictionary/processingOrder.yaml'
     Demand:
       $ref: './components/schemas/dictionary/demand.yaml'
+
+    CommissionReportIn:
+      $ref: './components/schemas/dictionary/commissionReportIn.yaml'
+    CommissionReportInList:
+      $ref: './components/schemas/dictionary/commissionReportInList.yaml'
+    CommissionReportInPosition:
+      $ref: './components/schemas/dictionary/commissionReportInPosition.yaml'
+    CommissionReportInPositionList:
+      $ref: './components/schemas/dictionary/commissionReportInPositionList.yaml'
+    CommissionReportInReturnedPosition:
+      $ref: './components/schemas/dictionary/commissionReportInReturnedPosition.yaml'
+    CommissionReportInReturnedPositionList:
+      $ref: './components/schemas/dictionary/commissionReportInReturnedPositionList.yaml'
+    CommissionReportOut:
+      $ref: './components/schemas/dictionary/commissionReportOut.yaml'
+
+    CompanySettings:
+      $ref: './components/schemas/dictionary/companySettings.yaml'
+    CompanySettingsMetadata:
+      $ref: './components/schemas/dictionary/companySettingsMetadata.yaml'
+    Discount:
+      $ref: './components/schemas/dictionary/discount.yaml'
+    DiscountAssortmentItem:
+      $ref: './components/schemas/common/discountAssortmentItem.yaml'
+    DiscountList:
+      $ref: './components/schemas/dictionary/discountList.yaml'
+    SpecialPriceDiscount:
+      $ref: './components/schemas/dictionary/specialPriceDiscount.yaml'
+
+    CustomEntity:
+      $ref: './components/schemas/dictionary/customEntity.yaml'
+    CustomEntityMetadata:
+      $ref: './components/schemas/dictionary/customEntityMetadata.yaml'
+    CustomEntityElement:
+      $ref: './components/schemas/dictionary/customEntityElement.yaml'
+    CustomEntityElementList:
+      $ref: './components/schemas/dictionary/customEntityElementList.yaml'
 
   securitySchemes:
     basicAuth:
@@ -643,3 +844,21 @@ tags:
     description: Операции с заказами покупателя
   - name: PurchaseOrders
     description: Операции с заказами поставщика
+  - name: CashIns
+    description: Операции с приходными ордерами
+  - name: CashOuts
+    description: Операции с расходными ордерами
+  - name: CommissionReportIns
+    description: Операции с полученными отчетами комиссионера
+  - name: CompanySettings
+    description: Операции с настройками компании
+  - name: Discounts
+    description: Операции со скидками
+  - name: Assortment
+    description: Операции с ассортиментом
+  - name: BonusPrograms
+    description: Операции с бонусными программами
+  - name: BonusTransactions
+    description: Операции с бонусными операциями
+  - name: CustomEntities
+    description: Операции с пользовательскими справочниками

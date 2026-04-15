@@ -1,0 +1,66 @@
+get:
+  operationId: getCommissionReportInReturnedPositionById
+  tags:
+    - CommissionReportIns
+  summary: Получить позицию возврата на склад комиссионера
+  parameters:
+    - $ref: ../../../components/parameters.yaml#/entityId
+    - $ref: ../../../components/parameters.yaml#/expand
+    - $ref: ../../../components/parameters.yaml#/positionId
+    - $ref: ../../../components/headers.yaml#/AcceptHeader
+    - $ref: ../../../components/headers.yaml#/AcceptEncoding
+    - $ref: ../../../components/headers.yaml#/ContentTypeJson
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../components/schemas/dictionary/commissionReportInReturnedPosition.yaml'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+put:
+  operationId: updateCommissionReportInReturnedPosition
+  tags:
+    - CommissionReportIns
+  summary: Изменить позицию возврата на склад комиссионера
+  parameters:
+    - $ref: ../../../components/parameters.yaml#/entityId
+    - $ref: ../../../components/parameters.yaml#/expand
+    - $ref: ../../../components/parameters.yaml#/positionId
+    - $ref: ../../../components/headers.yaml#/AcceptHeader
+    - $ref: ../../../components/headers.yaml#/AcceptEncoding
+    - $ref: ../../../components/headers.yaml#/ContentTypeJson
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../components/schemas/dictionary/commissionReportInReturnedPosition.yaml'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/CommissionReportIn'#/components/schemas/CommissionReportIn
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+delete:
+  operationId: deleteCommissionReportInReturnedPosition
+  tags:
+    - CommissionReportIns
+  summary: Удалить позицию возврата на склад комиссионера
+  parameters:
+    - $ref: ../../../components/parameters.yaml#/entityId
+    - $ref: ../../../components/parameters.yaml#/expand
+    - $ref: ../../../components/parameters.yaml#/positionId
+    - $ref: ../../../components/headers.yaml#/AcceptHeader
+    - $ref: ../../../components/headers.yaml#/AcceptEncoding
+    - $ref: ../../../components/headers.yaml#/ContentTypeJson
+  responses:
+    '200':
+      description: Успешный запрос
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+

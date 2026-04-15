@@ -1,0 +1,90 @@
+get:
+  operationId: getCustomEntityElements
+  tags:
+    - CustomEntities
+  summary: Получить элементы пользовательского справочника
+  description: Получить все элементы пользовательского справочника
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../components/schemas/dictionary/customEntityElementList.yaml'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+post:
+  operationId: createCustomEntityElement
+  tags:
+    - CustomEntities
+  summary: Создать элемент пользовательского справочника
+  description: Создание нового элемента пользовательского справочника
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../components/schemas/dictionary/customEntityElement.yaml'
+  responses:
+    '200':
+      description: Элемент пользовательского справочника успешно создан
+      content:
+        application/json:
+          schema:
+            $ref: '../../../components/schemas/dictionary/customEntityElement.yaml'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+put:
+  operationId: updateCustomEntity
+  tags:
+    - CustomEntities
+  summary: Изменить пользовательский справочник
+  description: Обновление пользовательского справочника с указанным id
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../components/schemas/dictionary/customEntity.yaml'
+  responses:
+    '200':
+      description: Пользовательский справочник успешно обновлен
+      content:
+        application/json:
+          schema:
+            $ref: '../../../components/schemas/dictionary/customEntity.yaml'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+delete:
+  operationId: deleteCustomEntity
+  tags:
+    - CustomEntities
+  summary: Удалить пользовательский справочник
+  description: Удаление пользовательского справочника с указанным id
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Пользовательский справочник успешно удален
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+

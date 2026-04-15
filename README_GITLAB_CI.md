@@ -4,6 +4,8 @@
 
 ## GitLab CI/CD Pipeline
 
+Автоматические пайплайны по событию merge request отключены в `.gitlab-ci.yml` (`workflow: rules`). Все рабочие job’ы подключаются через `include` только для `push` и `web`; без отдельного технического job’а `merge-request-ci-placeholder` GitLab при проверке конфигурации для MR выдавал бы ошибку «jobs config should contain at least one visible job» (валидация выполняется до применения `workflow: rules`).
+
 ### Сценарии запуска
 
 #### 1. Push в ветку (автоматический)
