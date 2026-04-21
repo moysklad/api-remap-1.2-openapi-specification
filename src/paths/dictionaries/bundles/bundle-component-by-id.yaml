@@ -20,9 +20,10 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/bundleComponent.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/BundleComponent'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
+
 put:
   operationId: updateBundleComponent
   tags:
@@ -45,16 +46,17 @@ put:
     content:
       application/json:
         schema:
-          $ref: '../../../components/schemas/dictionary/bundleComponent.yaml'
+          $ref: '../../../openapi.yaml#/components/schemas/BundleComponent'
   responses:
     '200':
       description: Успешный запрос
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/bundleComponent.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/BundleComponent'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
+
 delete:
   operationId: deleteBundleComponent
   tags:

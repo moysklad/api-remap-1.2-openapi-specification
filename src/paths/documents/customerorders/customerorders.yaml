@@ -18,9 +18,10 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/customerOrderList.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/CustomerOrderList'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
+
 post:
   operationId: createCustomerOrder
   tags:
@@ -31,14 +32,14 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../../../components/schemas/dictionary/customerOrder.yaml'
+          $ref: '../../../openapi.yaml#/components/schemas/CustomerOrder'
   responses:
     '200':
       description: Успешный запрос
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/customerOrder.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/CustomerOrder'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
   parameters:

@@ -13,7 +13,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/assortmentSettings.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/AssortmentSettings'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
 
@@ -32,14 +32,14 @@ put:
     content:
       application/json:
         schema:
-          $ref: '../../../components/schemas/dictionary/assortmentSettings.yaml'
+          $ref: '../../../openapi.yaml#/components/schemas/AssortmentSettings'
   responses:
     '200':
       description: Настройки ассортимента успешно обновлены
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/assortmentSettings.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/AssortmentSettings'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
 

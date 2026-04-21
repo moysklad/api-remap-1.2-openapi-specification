@@ -15,7 +15,7 @@ put:
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/customerOrder.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/CustomerOrder'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
   parameters:

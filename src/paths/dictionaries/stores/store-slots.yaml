@@ -21,6 +21,7 @@ get:
             $ref: '../../../components/schemas/dictionary/storeSlotList.yaml'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
+
 post:
   operationId: createStoreSlots
   tags:

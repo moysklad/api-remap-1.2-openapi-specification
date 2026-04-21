@@ -17,6 +17,7 @@ get:
             $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfo'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
+
 put:
   operationId: updateInternalOrderMetadataAttributeById
   tags:
@@ -36,6 +37,7 @@ put:
             $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfo'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
+
 delete:
   operationId: deleteInternalOrderMetadataAttributeById
   tags:

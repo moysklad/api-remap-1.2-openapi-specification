@@ -17,6 +17,7 @@ get:
             $ref: '../../../components/schemas/dictionary/state.yaml'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
+
 put:
   operationId: updateInternalOrderMetadataStateById
   tags:
@@ -27,6 +28,12 @@ put:
     - $ref: ../../../components/headers.yaml#/AcceptHeader
     - $ref: ../../../components/headers.yaml#/AcceptEncoding
     - $ref: ../../../components/headers.yaml#/ContentTypeJson
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../openapi.yaml#/components/schemas/State'
   responses:
     '200':
       description: Успешный запрос
@@ -36,6 +43,7 @@ put:
             $ref: '../../../components/schemas/dictionary/state.yaml'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
+
 delete:
   operationId: deleteInternalOrderMetadataStateById
   tags:

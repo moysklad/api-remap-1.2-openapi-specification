@@ -23,6 +23,7 @@ get:
               $ref: '../../../openapi.yaml#/components/schemas/PurchaseOrderPosition'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
+
 post:
   operationId: createPurchaseOrderPositions
   tags:

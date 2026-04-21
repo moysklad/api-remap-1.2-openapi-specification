@@ -27,6 +27,7 @@ get:
             $ref: '../../../openapi.yaml#/components/schemas/StoreZone'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
+
 put:
   operationId: updateStoreZone
   tags:
@@ -62,6 +63,7 @@ put:
             $ref: '../../../openapi.yaml#/components/schemas/StoreZone'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
+
 delete:
   operationId: deleteStoreZone
   tags:

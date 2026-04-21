@@ -14,9 +14,10 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfo'#/components/schemas/AttributeMetaInfo
+            $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfo'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
+
 put:
   operationId: updateCommissionReportInMetadataAttributeById
   tags:
@@ -27,15 +28,22 @@ put:
     - $ref: ../../../components/headers.yaml#/AcceptHeader
     - $ref: ../../../components/headers.yaml#/AcceptEncoding
     - $ref: ../../../components/headers.yaml#/ContentTypeJson
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfo'
   responses:
     '200':
       description: Успешный запрос
       content:
         application/json:
           schema:
-            $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfo'#/components/schemas/AttributeMetaInfo
+            $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfo'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
+
 delete:
   operationId: deleteCommissionReportInMetadataAttributeById
   tags:

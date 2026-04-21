@@ -19,6 +19,7 @@ get:
             $ref: '../../../components/schemas/dictionary/internalOrderPosition.yaml'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
+
 put:
   operationId: updateInternalOrderPosition
   tags:
@@ -46,6 +47,7 @@ put:
             $ref: '../../../openapi.yaml#/components/schemas/InternalOrder'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
+
 delete:
   operationId: deleteInternalOrderPosition
   tags:

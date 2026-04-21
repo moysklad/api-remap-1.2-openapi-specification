@@ -19,6 +19,7 @@ get:
             $ref: '../../../components/schemas/dictionary/purchaseOrder.yaml'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
+
 put:
   operationId: updatePurchaseOrder
   tags:
@@ -46,6 +47,7 @@ put:
             $ref: '../../../components/schemas/dictionary/purchaseOrder.yaml'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
+
 delete:
   operationId: deletePurchaseOrder
   tags:

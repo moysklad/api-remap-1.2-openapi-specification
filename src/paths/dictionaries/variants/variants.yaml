@@ -22,6 +22,7 @@ get:
             $ref: '../../../components/schemas/dictionary/variantList.yaml'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
+
 post:
   operationId: createVariant
   tags:

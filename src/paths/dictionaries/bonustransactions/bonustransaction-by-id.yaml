@@ -15,7 +15,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/bonusTransaction.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/BonusTransaction'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
 
@@ -36,14 +36,14 @@ put:
     content:
       application/json:
         schema:
-          $ref: '../../../components/schemas/dictionary/bonusTransaction.yaml'
+          $ref: '../../../openapi.yaml#/components/schemas/BonusTransaction'
   responses:
     '200':
       description: Бонусная операция успешно обновлена
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/bonusTransaction.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/BonusTransaction'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
 

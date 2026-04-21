@@ -18,6 +18,7 @@ get:
             $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfoList'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
+
 post:
   operationId: createCustomerOrderMetadataAttribute
   tags:

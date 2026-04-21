@@ -20,6 +20,7 @@ get:
             $ref: '../../../components/schemas/dictionary/purchaseOrderPosition.yaml'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
+
 put:
   operationId: updatePurchaseOrderPosition
   tags:
@@ -48,6 +49,7 @@ put:
             $ref: '../../../openapi.yaml#/components/schemas/PurchaseOrder'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
+
 delete:
   operationId: deletePurchaseOrderPosition
   tags:

@@ -15,7 +15,7 @@ put:
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/cashIn.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/CashIn'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
   parameters:

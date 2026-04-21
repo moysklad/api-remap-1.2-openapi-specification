@@ -21,6 +21,7 @@ get:
             $ref: '../../../components/schemas/dictionary/purchaseOrderList.yaml'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
+
 post:
   operationId: createPurchaseOrder
   tags:

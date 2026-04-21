@@ -55,7 +55,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/assortmentList.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/AssortmentList'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
 

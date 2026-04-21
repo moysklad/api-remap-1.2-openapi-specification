@@ -19,9 +19,10 @@ get:
           schema:
             type: array
             items:
-              $ref: '../../../openapi.yaml#/components/schemas/CommissionReportInPosition'#/components/schemas/CommissionReportInPosition
+              $ref: '../../../openapi.yaml#/components/schemas/CommissionReportInPosition'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
+
 post:
   operationId: createCommissionReportInPositions
   tags:
@@ -42,7 +43,7 @@ post:
             - $ref: ../../../components/schemas/dictionary/commissionReportInPosition.yaml
             - type: array
               items:
-                $ref: '../../../components/schemas/dictionary/commissionReportInPosition.yaml'
+                $ref: '../../../openapi.yaml#/components/schemas/CommissionReportInPosition'
           minItems: 1
           maxItems: 1000
   responses:

@@ -17,9 +17,10 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/cashOutList.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/CashOutList'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
+
 post:
   operationId: createCashOut
   tags:
@@ -30,14 +31,14 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../../../components/schemas/dictionary/cashOut.yaml'
+          $ref: '../../../openapi.yaml#/components/schemas/CashOut'
   responses:
     '200':
       description: Успешный запрос
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/cashOut.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/CashOut'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
   parameters:

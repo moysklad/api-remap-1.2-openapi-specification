@@ -15,7 +15,7 @@ put:
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/cashOut.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/CashOut'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
   parameters:

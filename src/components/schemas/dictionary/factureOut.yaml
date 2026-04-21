@@ -86,16 +86,7 @@ properties:
     description: Опубликован ли документ
     readOnly: true
   rate:
-    type: object
-    description: Валюта
-    properties:
-      currency:
-        description: Валюта
-        $ref: '../../../openapi.yaml#/components/schemas/Currency'
-      value:
-        type: number
-        format: double
-        description: Курс валюты
+    $ref: '../common/currencyRate.yaml'
   shared:
     type: boolean
     description: Общий доступ
@@ -118,7 +109,6 @@ properties:
     type: string
     format: uuid
     description: ID синхронизации
-    readOnly: true
   updated:
     type: string
     description: Момент последнего обновления Счета-фактуры выданного

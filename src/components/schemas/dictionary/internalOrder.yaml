@@ -126,16 +126,7 @@ properties:
     allOf:
       - $ref: '../../../openapi.yaml#/components/schemas/FileList'
   rate:
-    type: object
-    description: Валюта
-    properties:
-      currency:
-        description: Валюта
-        $ref: '../../../openapi.yaml#/components/schemas/Currency'
-      value:
-        type: number
-        format: double
-        description: Курс валюты
+    $ref: '../common/currencyRate.yaml'
   positions:
     type: object
     description: Позиций Внутреннего заказа

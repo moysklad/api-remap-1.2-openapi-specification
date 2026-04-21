@@ -19,7 +19,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/contractList.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/ContractList'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
 
@@ -39,13 +39,13 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../../../components/schemas/dictionary/contract.yaml'
+          $ref: '../../../openapi.yaml#/components/schemas/Contract'
   responses:
     '200':
       description: Договор успешно создан
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/contract.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/Contract'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'

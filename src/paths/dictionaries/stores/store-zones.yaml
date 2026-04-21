@@ -21,6 +21,7 @@ get:
             $ref: '../../../components/schemas/dictionary/storeZoneList.yaml'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
+
 post:
   operationId: createStoreZones
   tags:

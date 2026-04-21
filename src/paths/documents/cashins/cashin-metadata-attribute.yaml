@@ -15,9 +15,10 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfoList'#/components/schemas/AttributeMetaInfoList
+            $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfoList'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
+
 post:
   operationId: createCashInMetadataAttribute
   tags:
@@ -32,14 +33,14 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfo'#/components/schemas/AttributeMetaInfo
+          $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfo'
   responses:
     '200':
       description: Успешный запрос
       content:
         application/json:
           schema:
-            $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfo'#/components/schemas/AttributeMetaInfo
+            $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfo'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
 

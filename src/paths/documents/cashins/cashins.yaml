@@ -17,9 +17,10 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/cashInList.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/CashInList'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
+
 post:
   operationId: createCashIn
   tags:
@@ -30,14 +31,14 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../../../components/schemas/dictionary/cashIn.yaml'
+          $ref: '../../../openapi.yaml#/components/schemas/CashIn'
   responses:
     '200':
       description: Успешный запрос
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/cashIn.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/CashIn'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
   parameters:

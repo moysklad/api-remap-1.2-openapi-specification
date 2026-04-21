@@ -20,6 +20,7 @@ get:
             $ref: '../../../components/schemas/dictionary/internalOrderList.yaml'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
+
 post:
   operationId: createInternalOrder
   tags:

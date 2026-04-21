@@ -24,6 +24,6 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/cashierList.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/CashierList'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'

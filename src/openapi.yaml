@@ -559,10 +559,14 @@ components:
       $ref: './components/schemas/dictionary/contactPerson.yaml'
     Counterparty:
       $ref: './components/schemas/dictionary/counterparty.yaml'
+    CounterpartyList:
+      $ref: './components/schemas/dictionary/counterpartyList.yaml'
     Country:
       $ref: './components/schemas/dictionary/country.yaml'
     Currency:
       $ref: './components/schemas/dictionary/currency.yaml'
+    CurrencyRate:
+      $ref: './components/schemas/common/currencyRate.yaml'
     Employee:
       $ref: './components/schemas/dictionary/employee.yaml'
     EmployeeSecurity:

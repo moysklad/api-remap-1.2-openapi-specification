@@ -33,7 +33,6 @@ properties:
     type: string
     format: uuid
     description: ID синхронизации
-    readOnly: true
   description:
     type: string
     maxLength: 4096
@@ -115,16 +114,7 @@ properties:
     allOf:
       - $ref: '../../../openapi.yaml#/components/schemas/State'
   rate:
-    type: object
-    description: Валюта
-    properties:
-      currency:
-        description: Валюта
-        $ref: '../../../openapi.yaml#/components/schemas/Currency'
-      value:
-        type: number
-        format: double
-        description: Курс валюты
+    $ref: '../common/currencyRate.yaml'
   organization:
     description: Метаданные юрлица
     $ref: '../../../openapi.yaml#/components/schemas/Organization'

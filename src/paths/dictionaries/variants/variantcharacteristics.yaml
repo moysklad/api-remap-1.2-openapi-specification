@@ -22,6 +22,7 @@ get:
                   $ref: '../../../openapi.yaml#/components/schemas/VariantCharacteristic'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
+
 post:
   operationId: createVariantCharacteristic
   tags:

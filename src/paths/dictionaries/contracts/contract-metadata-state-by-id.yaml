@@ -14,9 +14,10 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/state.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/State'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
+
 put:
   operationId: updateContractMetadataStateById
   tags:
@@ -33,9 +34,10 @@ put:
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/state.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/State'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
+
 delete:
   operationId: deleteContractMetadataStateById
   tags:

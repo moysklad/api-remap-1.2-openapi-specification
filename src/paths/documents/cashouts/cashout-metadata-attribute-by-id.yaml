@@ -14,9 +14,10 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfo'#/components/schemas/AttributeMetaInfo
+            $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfo'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
+
 put:
   operationId: updateCashOutMetadataAttributeById
   tags:
@@ -32,16 +33,17 @@ put:
     content:
       application/json:
         schema:
-          $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfo'#/components/schemas/AttributeMetaInfo
+          $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfo'
   responses:
     '200':
       description: Успешный запрос
       content:
         application/json:
           schema:
-            $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfo'#/components/schemas/AttributeMetaInfo
+            $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfo'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
+
 delete:
   operationId: deleteCashOutMetadataAttributeById
   tags:

@@ -17,6 +17,7 @@ get:
             $ref: '../../../components/schemas/dictionary/retailStore.yaml'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
+
 put:
   operationId: updateRetailStore
   tags:
@@ -43,6 +44,7 @@ put:
             $ref: '../../../components/schemas/dictionary/retailStore.yaml'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
+
 delete:
   operationId: deleteRetailStore
   tags:

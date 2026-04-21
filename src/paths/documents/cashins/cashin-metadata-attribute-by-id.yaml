@@ -14,9 +14,10 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfo'#/components/schemas/AttributeMetaInfo
+            $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfo'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
+
 put:
   operationId: updateCashInMetadataAttributeById
   tags:
@@ -33,7 +34,7 @@ put:
       content:
         application/json:
           schema:
-            $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfo'#/components/schemas/AttributeMetaInfo
+            $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfo'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
   requestBody:
@@ -41,7 +42,8 @@ put:
     content:
       application/json:
         schema:
-          $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfo'#/components/schemas/AttributeMetaInfo
+          $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfo'
+
 delete:
   operationId: deleteCashInMetadataAttributeById
   tags:

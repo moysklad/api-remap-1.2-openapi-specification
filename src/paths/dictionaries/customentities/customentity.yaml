@@ -13,14 +13,14 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../../../components/schemas/dictionary/customEntity.yaml'
+          $ref: '../../../openapi.yaml#/components/schemas/CustomEntity'
   responses:
     '200':
       description: Пользовательский справочник успешно создан
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/customEntity.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/CustomEntity'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
 

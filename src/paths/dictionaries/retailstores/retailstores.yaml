@@ -21,6 +21,7 @@ get:
             $ref: '../../../components/schemas/dictionary/retailStoreList.yaml'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
+
 post:
   operationId: createRetailStore
   tags:
