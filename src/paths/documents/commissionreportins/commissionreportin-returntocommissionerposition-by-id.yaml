@@ -44,7 +44,7 @@ put:
       content:
         application/json:
           schema:
-            $ref: '../../../openapi.yaml#/components/schemas/CommissionReportIn'
+            $ref: '../../../openapi.yaml#/components/schemas/CommissionReportInPosition'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
 
