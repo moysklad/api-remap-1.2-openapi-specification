@@ -9,6 +9,7 @@ get:
     - $ref: '../../../components/parameters.yaml#/offset'
     - $ref: '../../../components/headers.yaml#/AcceptHeader'
     - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/parameters.yaml#/expand'
   responses:
     '200':
       description: Успешный запрос

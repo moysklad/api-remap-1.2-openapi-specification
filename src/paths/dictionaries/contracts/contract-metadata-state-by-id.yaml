@@ -8,6 +8,12 @@ get:
     - $ref: ../../../components/headers.yaml#/AcceptHeader
     - $ref: ../../../components/headers.yaml#/AcceptEncoding
     - $ref: ../../../components/headers.yaml#/ContentTypeJson
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../openapi.yaml#/components/schemas/State'
   responses:
     '200':
       description: Успешный запрос
