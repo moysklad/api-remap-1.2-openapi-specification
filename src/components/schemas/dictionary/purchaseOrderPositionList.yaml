@@ -1,4 +1,5 @@
 type: object
+description: Список позиций Заказа поставщику
 properties:
   context:
     description: Метаданные о сотруднике, выполнившем запрос

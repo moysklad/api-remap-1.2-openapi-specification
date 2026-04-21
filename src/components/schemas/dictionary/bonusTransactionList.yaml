@@ -1,8 +1,4 @@
 type: object
-required:
-  - context
-  - meta
-  - rows
 description: Список бонусных операций
 properties:
   context:
@@ -16,4 +12,3 @@ properties:
     description: Массив бонусных операций
     items:
       $ref: '../../../openapi.yaml#/components/schemas/BonusTransaction'
-

@@ -1,8 +1,14 @@
 type: object
+description: Список позиций возврата на склад комиссионера Полученного отчета комиссионера
 properties:
-  context: { $ref: '../common/context.yaml' }
-  meta: { $ref: '../common/metaList.yaml' }
+  context:
+    description: Метаданные о сотруднике, выполнившем запрос
+    $ref: '../common/context.yaml'
+  meta:
+    description: Метаданные о выдаче
+    $ref: '../common/metaList.yaml'
   rows:
     type: array
-    items: { $ref: '../../../openapi.yaml#/components/schemas/CommissionReportInReturnedPosition' }
-
+    description: Массив позиций возврата на склад комиссионера Полученного отчета комиссионера
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/CommissionReportInReturnedPosition'
