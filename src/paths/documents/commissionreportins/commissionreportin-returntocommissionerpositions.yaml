@@ -56,7 +56,7 @@ post:
             items:
               oneOf:
                 - $ref: ../../../openapi.yaml#/components/schemas/CommissionReportInReturnedPosition
-                - $ref: ../../../components/schemas/common/error.yaml
+                - $ref: ../../../openapi.yaml#/components/schemas/Error
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
 

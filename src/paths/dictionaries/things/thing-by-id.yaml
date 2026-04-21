@@ -13,6 +13,6 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/thing.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/Thing'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'

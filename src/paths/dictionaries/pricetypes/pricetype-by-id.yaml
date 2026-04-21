@@ -14,7 +14,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/priceType.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/PriceType'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
     

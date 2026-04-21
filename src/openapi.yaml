@@ -549,6 +549,8 @@ components:
       $ref: './components/schemas/dictionary/bonusTransactionList.yaml'
     DeleteInfo:
       $ref: './components/schemas/common/deleteInfo.yaml'
+    Error:
+      $ref: './components/schemas/common/error.yaml'
     DiscountBase:
       $ref: './components/schemas/dictionary/discountBase.yaml'
     BuyPrice:
@@ -561,14 +563,20 @@ components:
       $ref: './components/schemas/dictionary/counterparty.yaml'
     CounterpartyList:
       $ref: './components/schemas/dictionary/counterpartyList.yaml'
+    CountryList:
+      $ref: './components/schemas/dictionary/countryList.yaml'
     Country:
       $ref: './components/schemas/dictionary/country.yaml'
     Currency:
       $ref: './components/schemas/dictionary/currency.yaml'
+    CurrencyList:
+      $ref: './components/schemas/dictionary/currencyList.yaml'
     CurrencyRate:
       $ref: './components/schemas/common/currencyRate.yaml'
     Employee:
       $ref: './components/schemas/dictionary/employee.yaml'
+    EmployeeList:
+      $ref: './components/schemas/dictionary/employeeList.yaml'
     EmployeeSecurity:
       $ref: './components/schemas/dictionary/employeeSecurity.yaml'
     EmployeeRole:
@@ -585,10 +593,18 @@ components:
       $ref: './components/schemas/dictionary/factureIn.yaml'
     Group:
       $ref: './components/schemas/dictionary/group.yaml'
+    GroupList:
+      $ref: './components/schemas/dictionary/groupList.yaml'
     Image:
       $ref: './components/schemas/common/image.yaml'
     ImageList:
       $ref: './components/schemas/common/imageList.yaml'
+    Meta:
+      $ref: './components/schemas/common/meta.yaml'
+    MetaList:
+      $ref: './components/schemas/common/metaList.yaml'
+    Metadata:
+      $ref: './components/schemas/common/metadata.yaml'
     MinimumStockAbstract:
       $ref: './components/schemas/dictionary/minimumStockAbstract.yaml'
     MinimumStockAllWarehouseSame:
@@ -611,6 +627,8 @@ components:
       $ref: './components/schemas/dictionary/priceType.yaml'
     Product:
       $ref: './components/schemas/dictionary/product.yaml'
+    ProductList:
+      $ref: './components/schemas/dictionary/productList.yaml'
     ProductFolder:
       $ref: './components/schemas/dictionary/productFolder.yaml'
     ProductFolderList:
@@ -625,6 +643,8 @@ components:
       $ref: './components/schemas/dictionary/salesReturn.yaml'
     Service:
       $ref: './components/schemas/dictionary/service.yaml'
+    ServiceList:
+      $ref: './components/schemas/dictionary/serviceList.yaml'
     State:
       $ref: './components/schemas/dictionary/state.yaml'
     Store:
@@ -645,6 +665,8 @@ components:
       $ref: './components/schemas/dictionary/storeBalanceList.yaml'
     Uom:
       $ref: './components/schemas/dictionary/uom.yaml'
+    UomList:
+      $ref: './components/schemas/dictionary/uomList.yaml'
     CounterpartyMetadata:
       $ref: './components/schemas/dictionary/counterpartyMetadata.yaml'
     DocumentMetadata:

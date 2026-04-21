@@ -18,7 +18,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/storeZoneList.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/StoreZoneList'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
 

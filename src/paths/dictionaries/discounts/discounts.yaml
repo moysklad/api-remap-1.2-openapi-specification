@@ -16,7 +16,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/discountList.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/DiscountList'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
 

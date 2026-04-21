@@ -20,7 +20,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/productList.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/ProductList'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
     
@@ -46,14 +46,14 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../../../components/schemas/dictionary/product.yaml'
+          $ref: '../../../openapi.yaml#/components/schemas/Product'
   responses:
     '200':
       description: Товар успешно создан
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/product.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/Product'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
     

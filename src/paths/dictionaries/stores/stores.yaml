@@ -18,7 +18,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/storeList.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/StoreList'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
 
@@ -32,14 +32,14 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../../../components/schemas/dictionary/store.yaml'
+          $ref: '../../../openapi.yaml#/components/schemas/Store'
   responses:
     '200':
       description: Склад успешно создан
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/store.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/Store'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
   parameters:

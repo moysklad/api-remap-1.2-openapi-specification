@@ -19,7 +19,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/groupList.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/GroupList'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
     
@@ -44,14 +44,14 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../../../components/schemas/dictionary/group.yaml'
+          $ref: '../../../openapi.yaml#/components/schemas/Group'
   responses:
     '200':
       description: Группа успешно создана
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/group.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/Group'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
     

@@ -19,7 +19,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/employeeList.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/EmployeeList'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
     
@@ -44,14 +44,14 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../../../components/schemas/dictionary/employee.yaml'
+          $ref: '../../../openapi.yaml#/components/schemas/Employee'
   responses:
     '200':
       description: Сотрудник успешно создан
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/employee.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/Employee'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
     

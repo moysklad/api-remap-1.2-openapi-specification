@@ -13,14 +13,14 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../../../components/schemas/dictionary/specialPriceDiscount.yaml'
+          $ref: '../../../openapi.yaml#/components/schemas/SpecialPriceDiscount'
   responses:
     '200':
       description: Специальная цена успешно создана
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/specialPriceDiscount.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/SpecialPriceDiscount'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
 

@@ -13,6 +13,6 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/variantCharacteristic.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/VariantCharacteristic'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'

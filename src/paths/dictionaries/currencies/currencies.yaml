@@ -19,7 +19,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/currencyList.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/CurrencyList'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
 
@@ -39,14 +39,14 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../../../components/schemas/dictionary/currency.yaml'
+          $ref: '../../../openapi.yaml#/components/schemas/Currency'
   responses:
     '200':
       description: Валюта успешно создана
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/currency.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/Currency'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
     

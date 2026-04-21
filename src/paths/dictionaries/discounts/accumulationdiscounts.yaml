@@ -13,14 +13,14 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../../../components/schemas/dictionary/accumulationDiscount.yaml'
+          $ref: '../../../openapi.yaml#/components/schemas/AccumulationDiscount'
   responses:
     '200':
       description: Накопительная скидка успешно создана
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/accumulationDiscount.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/AccumulationDiscount'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
 

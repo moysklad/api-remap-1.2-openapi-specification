@@ -53,7 +53,7 @@ post:
             items:
               oneOf:
                 - $ref: '../../../openapi.yaml#/components/schemas/PriceType'
-                - $ref: '../../../components/schemas/common/error.yaml'
+                - $ref: '../../../openapi.yaml#/components/schemas/Error'
             minItems: 1
     default:
       $ref: '../../../components/responses.yaml#/CommonError'

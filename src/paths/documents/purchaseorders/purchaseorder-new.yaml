@@ -19,6 +19,6 @@ put:
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/purchaseOrder.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/PurchaseOrder'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'

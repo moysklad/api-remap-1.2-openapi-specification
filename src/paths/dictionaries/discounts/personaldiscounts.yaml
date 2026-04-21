@@ -13,14 +13,14 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../../../components/schemas/dictionary/personalDiscount.yaml'
+          $ref: '../../../openapi.yaml#/components/schemas/PersonalDiscount'
   responses:
     '200':
       description: Персональная скидка успешно создана
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/personalDiscount.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/PersonalDiscount'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
 

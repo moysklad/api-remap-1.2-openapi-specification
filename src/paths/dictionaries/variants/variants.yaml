@@ -19,7 +19,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/variantList.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/VariantList'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
 
@@ -33,14 +33,14 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../../../components/schemas/dictionary/variant.yaml'
+          $ref: '../../../openapi.yaml#/components/schemas/Variant'
   responses:
     '200':
       description: Успешный запрос
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/variant.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/Variant'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
   parameters:
