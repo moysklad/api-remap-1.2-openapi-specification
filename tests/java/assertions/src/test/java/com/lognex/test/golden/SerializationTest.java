@@ -32,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 class SerializationTest extends BaseTestCase {
 
-    private static final ObjectMapper MAPPER =  new ApiClient().getObjectMapper();
+    private static final ObjectMapper MAPPER = new ApiClient().getObjectMapper();
 
     private static final Map<String, String> FIXTURE_MODEL_MAP = new HashMap<>();
 
@@ -130,7 +130,7 @@ class SerializationTest extends BaseTestCase {
      * Проверяет, что данные не теряются и не искажаются при преобразованиях.
      *
      * @param fixtureName Имя fixture файла (без расширения)
-     * @param modelName Имя класса модели
+     * @param modelName   Имя класса модели
      */
     @ParameterizedTest(name = "{0}")
     @MethodSource("fixtureProvider")
@@ -259,7 +259,7 @@ class SerializationTest extends BaseTestCase {
         }
         if (value instanceof List) {
             List<Object> out = new ArrayList<>();
-            for (Object item : ((List)value)) {
+            for (Object item : ((List) value)) {
                 out.add(normalizeValue(item));
             }
             return out;
@@ -344,7 +344,7 @@ class SerializationTest extends BaseTestCase {
                 sorted.put(e.getKey(), sortKeysRecursive(castMap((Map<?, ?>) value)));
             } else if (value instanceof List) {
                 List<Object> mapped = new ArrayList<>();
-                for (Object item : ((List)value)) {
+                for (Object item : ((List) value)) {
                     if (item instanceof Map) {
                         mapped.add(sortKeysRecursive(castMap((Map<?, ?>) item)));
                     } else {

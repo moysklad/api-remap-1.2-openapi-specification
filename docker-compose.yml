@@ -58,13 +58,11 @@ services:
     build:
       dockerfile: java.Dockerfile
     image: api-sdk-builder-java:local
-#    image: "docker.infra.lognex/maven-jdk11:7.8-release"
     working_dir: /workspace
     depends_on:
       - mock
     volumes:
       - .:/workspace
-#      - ~/.m2/settings.xml:/root/.m2/settings.xml
       - ~/.m2/repository:/root/.m2/repository
     environment:
       - CI=true

@@ -19,8 +19,8 @@
 | `generate-sdk-php`       | Генерация PHP SDK                                                        |
 | `generate-sdk-java`      | Генерация Java SDK (заглушка)                                            |
 | `sdk-golden-php`         | Golden тесты для PHP (сериализация/десериализация)                       |
-| `sdk-smoke`              | Smoke тесты для PHP с openapi-mock сервером                              |
 | `sdk-golden-java`        | Golden тесты для Java                                                    |
+| `sdk-smoke`              | Smoke тесты для PHP с openapi-mock сервером                              |
 | `prep-branch-and-mr-php` | Cоздание/обновление ветки и mr по сгенерированному sdk в репозитории sdk |
 
 #### 2. Ручной запуск (web) на ветке
@@ -59,6 +59,9 @@
 | `mirror-to-github`      | Зеркалирование в GitHub (без GitLab‑файлов и CI README)                                           |
 | `create-github-release` | Создание GitHub Release на основе CHANGELOG                                                       |
 | `merge-branch-php`      | Обновление ветки master на удаленном gitlab sdk репозитории по сгенерированному sdk и выпуск тэга |
+| `merge-branch-java`     | Обновление master во внутреннем Java SDK репозитории и сохранение релизного semver-тега           |
+| `deploy-to-maven`       | Публикация Java SDK в Maven Central                                                               |
+| `deploy-to-artifactory` | Публикация Java SDK в Artyfactory                                                                 |
 
 ---
 

@@ -130,8 +130,8 @@ sdk-contract:
       esac
       
       # Режимы тестирования (по умолчанию: coverage).
-      # examples отключён: операции с AttributeAbstract (oneOf без дискриминатора)
-      # вызывают Schema Error при генерации примеров — это не дефект API.
+      # examples отключён: операции с AttributeAbstract (полиморфная oneOf-схема)
+      # могут вызывать Schema Error при генерации примеров — это не дефект API.
       SCHEMATHESIS_PHASES="${SCHEMATHESIS_PHASES:-coverage}"
       SCHEMATHESIS_MAX_EXAMPLES="${SCHEMATHESIS_MAX_EXAMPLES:-50}"
       

@@ -120,6 +120,13 @@ include:
       - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_TAG == null'
       # Ветки (ручной запуск web, без тега)
       - if: '$CI_PIPELINE_SOURCE == "web" && $CI_COMMIT_TAG == null'
+  # Подготовка|внесение изменений в репозиторий Java SDK в GitLab
+  - local: 'gitlab/.gitlab-ci-prepare-sdk-java.yml'
+    rules:
+      # Ветки (push)
+      - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_TAG == null'
+      # Ветки (ручной запуск web, без тега)
+      - if: '$CI_PIPELINE_SOURCE == "web" && $CI_COMMIT_TAG == null'
 
 stages:
   - changes-check          # Ранний этап: проверка изменений OpenAPI относительно последнего тега
@@ -136,4 +143,4 @@ stages:
   - test                   # Тестирование: golden, smoke
   - version                # Автоматическое версионирование и подготовка CHANGELOG/тегов
   - mirror                 # Зеркалирование в GitHub
-  - prepare-sdk-repository # Подготовка|внесение изменений в репозиторий PHP SDK в GitLab
+  - prepare-sdk-repository # Подготовка|внесение изменений в репозиторий SDK в GitLab

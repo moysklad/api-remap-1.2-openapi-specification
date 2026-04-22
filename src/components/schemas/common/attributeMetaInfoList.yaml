@@ -6,5 +6,5 @@ properties:
   rows:
     type: array
     items:
-      $ref: './attributeMetaInfo.yaml'
+      $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfo'
     nullable: true

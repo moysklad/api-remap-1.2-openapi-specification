@@ -1,4 +1,4 @@
-# Локальная среда для проверки java SDK pipeline (lint, bundle, generate, smoke, golden)
+# Локальная среда для проверки java SDK pipeline (golden)
 # В CI используется образ docker.infra.lognex/docker-openapitools
 FROM maven:3.9-eclipse-temurin-11-alpine
 

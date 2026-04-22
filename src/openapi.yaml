@@ -527,7 +527,7 @@ components:
           customentity: '#/components/schemas/AttributeCustomEntity'
           undefined: '#/components/schemas/AttributeObject'
       allOf:
-        - $ref: '#/components/schemas/AttributeBase'
+        - $ref: '#/components/schemas/AttributeMetaField'
       properties:
         id:
           type: string
@@ -538,11 +538,8 @@ components:
           description: Наименование дополнительного поля
         type:
           type: string
-    AttributeBase:
-      type: object
-      properties:
-        meta:
-          $ref: './components/schemas/common/meta.yaml'
+    AttributeMetaField:
+      $ref: './components/schemas/common/attributeMetaField.yaml'
 
     AttributeBool:
       $ref: './components/schemas/common/attributeBool.yaml'
