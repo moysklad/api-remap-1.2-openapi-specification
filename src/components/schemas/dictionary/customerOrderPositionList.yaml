@@ -1,11 +1,11 @@
 type: object
 properties:
   context:
-    description: Метаданные о сотруднике, выполнившем запрос
-    $ref: '../common/context.yaml'
+    $ref: '../../../openapi.yaml#/components/schemas/Context'
   meta:
+    allOf:
+      - $ref: '../common/metaList.yaml'
     description: Метаданные о выдаче
-    $ref: '../common/metaList.yaml'
   rows:
     type: array
     description: Массив позиций Заказа покупателя

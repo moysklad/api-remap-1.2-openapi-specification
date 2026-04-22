@@ -7,4 +7,4 @@ properties:
     type: array
     nullable: true
     items:
-      $ref: '../../../openapi.yaml#/components/schemas/File'
+      $ref: './file.yaml'

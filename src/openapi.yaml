@@ -807,6 +807,8 @@ components:
       $ref: './components/schemas/dictionary/processingOrder.yaml'
     Demand:
       $ref: './components/schemas/dictionary/demand.yaml'
+    Context:
+      $ref: './components/schemas/common/context.yaml'
 
     CommissionReportIn:
       $ref: './components/schemas/dictionary/commissionReportIn.yaml'
