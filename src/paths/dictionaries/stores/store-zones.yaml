@@ -10,8 +10,8 @@ get:
     schema:
       type: string
       format: uuid
-  - $ref: ../../../components/headers.yaml#/AcceptHeader
-  - $ref: ../../../components/headers.yaml#/AcceptEncoding
+  - $ref: '../../../components/headers.yaml#/AcceptHeader'
+  - $ref: '../../../components/headers.yaml#/AcceptEncoding'
   responses:
     '200':
       description: Успешный запрос
@@ -34,15 +34,15 @@ post:
     schema:
       type: string
       format: uuid
-  - $ref: ../../../components/headers.yaml#/AcceptHeader
-  - $ref: ../../../components/headers.yaml#/AcceptEncoding
+  - $ref: '../../../components/headers.yaml#/AcceptHeader'
+  - $ref: '../../../components/headers.yaml#/AcceptEncoding'
   requestBody:
     required: true
     content:
       application/json:
         schema:
           oneOf:
-            - $ref: ../../../openapi.yaml#/components/schemas/StoreZone
+            - $ref: '../../../openapi.yaml#/components/schemas/StoreZone'
             - type: array
               items:
                 $ref: '../../../openapi.yaml#/components/schemas/StoreZone'

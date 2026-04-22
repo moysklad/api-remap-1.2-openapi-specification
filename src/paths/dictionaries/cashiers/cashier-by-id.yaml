@@ -10,10 +10,10 @@ get:
     schema:
       type: string
       format: uuid
-  - $ref: ../../../components/parameters.yaml#/entityId
-  - $ref: ../../../components/parameters.yaml#/expand
-  - $ref: ../../../components/headers.yaml#/AcceptHeader
-  - $ref: ../../../components/headers.yaml#/AcceptEncoding
+  - $ref: '../../../components/parameters.yaml#/entityId'
+  - $ref: '../../../components/parameters.yaml#/expand'
+  - $ref: '../../../components/headers.yaml#/AcceptHeader'
+  - $ref: '../../../components/headers.yaml#/AcceptEncoding'
   responses:
     '200':
       description: Успешный запрос

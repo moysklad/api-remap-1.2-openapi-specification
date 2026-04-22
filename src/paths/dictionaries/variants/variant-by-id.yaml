@@ -4,11 +4,11 @@ get:
   - Variants
   summary: Получить Модификацию
   parameters:
-  - $ref: ../../../components/parameters.yaml#/entityId
-  - $ref: ../../../components/parameters.yaml#/expand
-  - $ref: ../../../components/parameters.yaml#/fields
-  - $ref: ../../../components/headers.yaml#/AcceptHeader
-  - $ref: ../../../components/headers.yaml#/AcceptEncoding
+  - $ref: '../../../components/parameters.yaml#/entityId'
+  - $ref: '../../../components/parameters.yaml#/expand'
+  - $ref: '../../../components/parameters.yaml#/fields'
+  - $ref: '../../../components/headers.yaml#/AcceptHeader'
+  - $ref: '../../../components/headers.yaml#/AcceptEncoding'
   responses:
     '200':
       description: Успешный запрос
@@ -25,11 +25,11 @@ put:
   - Variants
   summary: Изменить Модификацию
   parameters:
-  - $ref: ../../../components/parameters.yaml#/entityId
-  - $ref: ../../../components/parameters.yaml#/expand
-  - $ref: ../../../components/headers.yaml#/AcceptHeader
-  - $ref: ../../../components/headers.yaml#/AcceptEncoding
-  - $ref: ../../../components/headers.yaml#/ContentTypeJson
+  - $ref: '../../../components/parameters.yaml#/entityId'
+  - $ref: '../../../components/parameters.yaml#/expand'
+  - $ref: '../../../components/headers.yaml#/AcceptHeader'
+  - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  - $ref: '../../../components/headers.yaml#/ContentTypeJson'
   requestBody:
     required: true
     content:
@@ -52,9 +52,9 @@ delete:
   - Variants
   summary: Удалить Модификацию
   parameters:
-  - $ref: ../../../components/parameters.yaml#/entityId
-  - $ref: ../../../components/headers.yaml#/AcceptHeader
-  - $ref: ../../../components/headers.yaml#/AcceptEncoding
+  - $ref: '../../../components/parameters.yaml#/entityId'
+  - $ref: '../../../components/headers.yaml#/AcceptHeader'
+  - $ref: '../../../components/headers.yaml#/AcceptEncoding'
   responses:
     '200':
       description: Успешный запрос

@@ -4,13 +4,13 @@ get:
   - CustomerOrders
   summary: Получить позицию CustomerOrders
   parameters:
-  - $ref: ../../../components/parameters.yaml#/entityId
-  - $ref: ../../../components/parameters.yaml#/expand
-  - $ref: ../../../components/parameters.yaml#/fields
-  - $ref: ../../../components/parameters.yaml#/positionId
-  - $ref: ../../../components/headers.yaml#/AcceptHeader
-  - $ref: ../../../components/headers.yaml#/AcceptEncoding
-  - $ref: ../../../components/headers.yaml#/ContentTypeJson
+  - $ref: '../../../components/parameters.yaml#/entityId'
+  - $ref: '../../../components/parameters.yaml#/expand'
+  - $ref: '../../../components/parameters.yaml#/fields'
+  - $ref: '../../../components/parameters.yaml#/positionId'
+  - $ref: '../../../components/headers.yaml#/AcceptHeader'
+  - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  - $ref: '../../../components/headers.yaml#/ContentTypeJson'
   responses:
     '200':
       description: Успешный запрос
@@ -27,13 +27,13 @@ put:
   - CustomerOrders
   summary: Изменить позицию CustomerOrders
   parameters:
-  - $ref: ../../../components/parameters.yaml#/entityId
-  - $ref: ../../../components/parameters.yaml#/expand
-  - $ref: ../../../components/parameters.yaml#/fields
-  - $ref: ../../../components/parameters.yaml#/positionId
-  - $ref: ../../../components/headers.yaml#/AcceptHeader
-  - $ref: ../../../components/headers.yaml#/AcceptEncoding
-  - $ref: ../../../components/headers.yaml#/ContentTypeJson
+  - $ref: '../../../components/parameters.yaml#/entityId'
+  - $ref: '../../../components/parameters.yaml#/expand'
+  - $ref: '../../../components/parameters.yaml#/fields'
+  - $ref: '../../../components/parameters.yaml#/positionId'
+  - $ref: '../../../components/headers.yaml#/AcceptHeader'
+  - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  - $ref: '../../../components/headers.yaml#/ContentTypeJson'
   requestBody:
     required: true
     content:
@@ -56,12 +56,12 @@ delete:
   - CustomerOrders
   summary: Удалить позицию CustomerOrders
   parameters:
-  - $ref: ../../../components/parameters.yaml#/entityId
-  - $ref: ../../../components/parameters.yaml#/expand
-  - $ref: ../../../components/parameters.yaml#/positionId
-  - $ref: ../../../components/headers.yaml#/AcceptHeader
-  - $ref: ../../../components/headers.yaml#/AcceptEncoding
-  - $ref: ../../../components/headers.yaml#/ContentTypeJson
+  - $ref: '../../../components/parameters.yaml#/entityId'
+  - $ref: '../../../components/parameters.yaml#/expand'
+  - $ref: '../../../components/parameters.yaml#/positionId'
+  - $ref: '../../../components/headers.yaml#/AcceptHeader'
+  - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  - $ref: '../../../components/headers.yaml#/ContentTypeJson'
   responses:
     '200':
       description: Успешный запрос

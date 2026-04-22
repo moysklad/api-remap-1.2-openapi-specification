@@ -4,11 +4,11 @@ get:
     - CommissionReportIns
   summary: Получить CommissionReportIn по ID
   parameters:
-    - $ref: ../../../components/parameters.yaml#/entityId
-    - $ref: ../../../components/parameters.yaml#/expand
-    - $ref: ../../../components/headers.yaml#/AcceptHeader
-    - $ref: ../../../components/headers.yaml#/AcceptEncoding
-    - $ref: ../../../components/headers.yaml#/ContentTypeJson
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
   responses:
     '200':
       description: Успешный запрос
@@ -25,11 +25,11 @@ put:
     - CommissionReportIns
   summary: Изменить CommissionReportIn
   parameters:
-    - $ref: ../../../components/parameters.yaml#/entityId
-    - $ref: ../../../components/parameters.yaml#/expand
-    - $ref: ../../../components/headers.yaml#/AcceptHeader
-    - $ref: ../../../components/headers.yaml#/AcceptEncoding
-    - $ref: ../../../components/headers.yaml#/ContentTypeJson
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
   requestBody:
     required: true
     content:
@@ -52,13 +52,12 @@ delete:
     - CommissionReportIns
   summary: Удалить CommissionReportIn
   parameters:
-    - $ref: ../../../components/parameters.yaml#/entityId
-    - $ref: ../../../components/headers.yaml#/AcceptHeader
-    - $ref: ../../../components/headers.yaml#/AcceptEncoding
-    - $ref: ../../../components/headers.yaml#/ContentTypeJson
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
   responses:
     '200':
       description: Успешный запрос
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
-

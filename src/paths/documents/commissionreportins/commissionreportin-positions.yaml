@@ -4,13 +4,13 @@ get:
     - CommissionReportIns
   summary: Получить позиции CommissionReportIn
   parameters:
-    - $ref: ../../../components/parameters.yaml#/entityId
-    - $ref: ../../../components/parameters.yaml#/limit
-    - $ref: ../../../components/parameters.yaml#/offset
-    - $ref: ../../../components/parameters.yaml#/expand
-    - $ref: ../../../components/headers.yaml#/AcceptHeader
-    - $ref: ../../../components/headers.yaml#/AcceptEncoding
-    - $ref: ../../../components/headers.yaml#/ContentTypeJson
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/parameters.yaml#/limit'
+    - $ref: '../../../components/parameters.yaml#/offset'
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
   responses:
     '200':
       description: Успешный запрос
@@ -29,11 +29,11 @@ post:
     - CommissionReportIns
   summary: Создать позиции CommissionReportIn
   parameters:
-    - $ref: ../../../components/parameters.yaml#/entityId
-    - $ref: ../../../components/parameters.yaml#/expand
-    - $ref: ../../../components/headers.yaml#/AcceptHeader
-    - $ref: ../../../components/headers.yaml#/AcceptEncoding
-    - $ref: ../../../components/headers.yaml#/ContentTypeJson
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
   requestBody:
     required: true
     content:
@@ -55,8 +55,7 @@ post:
             type: array
             items:
               oneOf:
-                - $ref: ../../../openapi.yaml#/components/schemas/CommissionReportInPosition
-                - $ref: ../../../openapi.yaml#/components/schemas/Error
+                - $ref: '../../../openapi.yaml#/components/schemas/CommissionReportInPosition'
+                - $ref: '../../../openapi.yaml#/components/schemas/Error'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
-

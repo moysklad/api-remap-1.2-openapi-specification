@@ -4,11 +4,11 @@ get:
   - InternalOrders
   summary: Доп. поля InternalOrder
   parameters:
-  - $ref: ../../../components/parameters.yaml#/offset
-  - $ref: ../../../components/parameters.yaml#/limit
-  - $ref: ../../../components/headers.yaml#/AcceptHeader
-  - $ref: ../../../components/headers.yaml#/AcceptEncoding
-  - $ref: ../../../components/headers.yaml#/ContentTypeJson
+  - $ref: '../../../components/parameters.yaml#/offset'
+  - $ref: '../../../components/parameters.yaml#/limit'
+  - $ref: '../../../components/headers.yaml#/AcceptHeader'
+  - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  - $ref: '../../../components/headers.yaml#/ContentTypeJson'
   responses:
     '200':
       description: Успешный запрос
@@ -25,9 +25,9 @@ post:
     - InternalOrders
   summary: Создать Доп. поле InternalOrder
   parameters:
-    - $ref: ../../../components/headers.yaml#/AcceptHeader
-    - $ref: ../../../components/headers.yaml#/AcceptEncoding
-    - $ref: ../../../components/headers.yaml#/ContentTypeJson
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
   requestBody:
     required: true
     content:

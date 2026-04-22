@@ -4,14 +4,14 @@ get:
   - PurchaseOrders
   summary: Получить список PurchaseOrder
   parameters:
-  - $ref: ../../../components/parameters.yaml#/limit
-  - $ref: ../../../components/parameters.yaml#/offset
-  - $ref: ../../../components/parameters.yaml#/search
-  - $ref: ../../../components/parameters.yaml#/expand
-  - $ref: ../../../components/parameters.yaml#/fields
-  - $ref: ../../../components/headers.yaml#/AcceptHeader
-  - $ref: ../../../components/headers.yaml#/AcceptEncoding
-  - $ref: ../../../components/headers.yaml#/ContentTypeJson
+  - $ref: '../../../components/parameters.yaml#/limit'
+  - $ref: '../../../components/parameters.yaml#/offset'
+  - $ref: '../../../components/parameters.yaml#/search'
+  - $ref: '../../../components/parameters.yaml#/expand'
+  - $ref: '../../../components/parameters.yaml#/fields'
+  - $ref: '../../../components/headers.yaml#/AcceptHeader'
+  - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  - $ref: '../../../components/headers.yaml#/ContentTypeJson'
   responses:
     '200':
       description: Успешный запрос
@@ -28,10 +28,10 @@ post:
   - PurchaseOrders
   summary: Создать PurchaseOrder
   parameters:
-  - $ref: ../../../components/parameters.yaml#/expand
-  - $ref: ../../../components/headers.yaml#/AcceptHeader
-  - $ref: ../../../components/headers.yaml#/AcceptEncoding
-  - $ref: ../../../components/headers.yaml#/ContentTypeJson
+  - $ref: '../../../components/parameters.yaml#/expand'
+  - $ref: '../../../components/headers.yaml#/AcceptHeader'
+  - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  - $ref: '../../../components/headers.yaml#/ContentTypeJson'
   requestBody:
     required: true
     content:

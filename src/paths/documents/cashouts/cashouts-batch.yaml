@@ -22,13 +22,12 @@ post:
             type: array
             items:
               oneOf:
-                - $ref: ../../../openapi.yaml#/components/schemas/CashOut
-                - $ref: ../../../openapi.yaml#/components/schemas/Error
+                - $ref: '../../../openapi.yaml#/components/schemas/CashOut'
+                - $ref: '../../../openapi.yaml#/components/schemas/Error'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
   parameters:
-    - $ref: ../../../components/parameters.yaml#/expand
-    - $ref: ../../../components/headers.yaml#/AcceptHeader
-    - $ref: ../../../components/headers.yaml#/AcceptEncoding
-    - $ref: ../../../components/headers.yaml#/ContentTypeJson
-
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'

@@ -4,16 +4,16 @@ get:
   - Bundles
   summary: Получить компонент
   parameters:
-  - $ref: ../../../components/parameters.yaml#/entityId
-  - $ref: ../../../components/parameters.yaml#/expand
+  - $ref: '../../../components/parameters.yaml#/entityId'
+  - $ref: '../../../components/parameters.yaml#/expand'
   - name: componentId
     in: path
     required: true
     schema:
       type: string
       format: uuid
-  - $ref: ../../../components/headers.yaml#/AcceptHeader
-  - $ref: ../../../components/headers.yaml#/AcceptEncoding
+  - $ref: '../../../components/headers.yaml#/AcceptHeader'
+  - $ref: '../../../components/headers.yaml#/AcceptEncoding'
   responses:
     '200':
       description: Успешный запрос
@@ -30,17 +30,17 @@ put:
   - Bundles
   summary: Изменить компонент
   parameters:
-  - $ref: ../../../components/parameters.yaml#/entityId
-  - $ref: ../../../components/parameters.yaml#/expand
+  - $ref: '../../../components/parameters.yaml#/entityId'
+  - $ref: '../../../components/parameters.yaml#/expand'
   - name: componentId
     in: path
     required: true
     schema:
       type: string
       format: uuid
-  - $ref: ../../../components/headers.yaml#/AcceptHeader
-  - $ref: ../../../components/headers.yaml#/AcceptEncoding
-  - $ref: ../../../components/headers.yaml#/ContentTypeJson
+  - $ref: '../../../components/headers.yaml#/AcceptHeader'
+  - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  - $ref: '../../../components/headers.yaml#/ContentTypeJson'
   requestBody:
     required: true
     content:
@@ -63,15 +63,15 @@ delete:
   - Bundles
   summary: Удалить компонент
   parameters:
-  - $ref: ../../../components/parameters.yaml#/entityId
+  - $ref: '../../../components/parameters.yaml#/entityId'
   - name: componentId
     in: path
     required: true
     schema:
       type: string
       format: uuid
-  - $ref: ../../../components/headers.yaml#/AcceptHeader
-  - $ref: ../../../components/headers.yaml#/AcceptEncoding
+  - $ref: '../../../components/headers.yaml#/AcceptHeader'
+  - $ref: '../../../components/headers.yaml#/AcceptEncoding'
   responses:
     '200':
       description: Успешный запрос

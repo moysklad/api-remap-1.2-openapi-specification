@@ -4,8 +4,8 @@ get:
   - VariantCharacteristics
   summary: Получить список Характеристики модификаций
   parameters:
-  - $ref: ../../../components/headers.yaml#/AcceptHeader
-  - $ref: ../../../components/headers.yaml#/AcceptEncoding
+  - $ref: '../../../components/headers.yaml#/AcceptHeader'
+  - $ref: '../../../components/headers.yaml#/AcceptEncoding'
   responses:
     '200':
       description: Успешный запрос
@@ -44,5 +44,5 @@ post:
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
   parameters:
-  - $ref: ../../../components/headers.yaml#/AcceptHeader
-  - $ref: ../../../components/headers.yaml#/AcceptEncoding
+  - $ref: '../../../components/headers.yaml#/AcceptHeader'
+  - $ref: '../../../components/headers.yaml#/AcceptEncoding'

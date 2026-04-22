@@ -4,14 +4,14 @@ get:
   - Bundles
   summary: Получить список комплектов
   parameters:
-  - $ref: ../../../components/parameters.yaml#/limit
-  - $ref: ../../../components/parameters.yaml#/offset
-  - $ref: ../../../components/parameters.yaml#/search
-  - $ref: ../../../components/parameters.yaml#/filter
-  - $ref: ../../../components/parameters.yaml#/expand
-  - $ref: ../../../components/parameters.yaml#/order
-  - $ref: ../../../components/headers.yaml#/AcceptHeader
-  - $ref: ../../../components/headers.yaml#/AcceptEncoding
+  - $ref: '../../../components/parameters.yaml#/limit'
+  - $ref: '../../../components/parameters.yaml#/offset'
+  - $ref: '../../../components/parameters.yaml#/search'
+  - $ref: '../../../components/parameters.yaml#/filter'
+  - $ref: '../../../components/parameters.yaml#/expand'
+  - $ref: '../../../components/parameters.yaml#/order'
+  - $ref: '../../../components/headers.yaml#/AcceptHeader'
+  - $ref: '../../../components/headers.yaml#/AcceptEncoding'
   responses:
     '200':
       description: Успешный запрос
@@ -43,7 +43,7 @@ post:
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
   parameters:
-  - $ref: ../../../components/headers.yaml#/AcceptHeader
-  - $ref: ../../../components/headers.yaml#/AcceptEncoding
-  - $ref: ../../../components/parameters.yaml#/expand
-  - $ref: ../../../components/headers.yaml#/ContentTypeJson
+  - $ref: '../../../components/headers.yaml#/AcceptHeader'
+  - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  - $ref: '../../../components/parameters.yaml#/expand'
+  - $ref: '../../../components/headers.yaml#/ContentTypeJson'
