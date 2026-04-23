@@ -510,8 +510,40 @@ components:
     AssortmentSettings:
       $ref: './components/schemas/dictionary/assortmentSettings.yaml'
     AttributeAbstract:
-      $ref: './components/schemas/common/attributeAbstract.yaml'
-#
+      type: object
+      required:
+        - type
+      discriminator:
+        propertyName: type
+        mapping:
+          file: '#/components/schemas/AttributeFile'
+          string: '#/components/schemas/AttributeString'
+          text: '#/components/schemas/AttributeText'
+          link: '#/components/schemas/AttributeLink'
+          time: '#/components/schemas/AttributeDateTime'
+          double: '#/components/schemas/AttributeDouble'
+          long: '#/components/schemas/AttributeLong'
+          boolean: '#/components/schemas/AttributeBool'
+          customentity: '#/components/schemas/AttributeCustomEntity'
+          undefined: '#/components/schemas/AttributeObject'
+      allOf:
+        - $ref: '#/components/schemas/AttributeBase'
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: ID дополнительного поля
+        name:
+          type: string
+          description: Наименование дополнительного поля
+        type:
+          type: string
+    AttributeBase:
+      type: object
+      properties:
+        meta:
+          $ref: './components/schemas/common/meta.yaml'
+
     AttributeBool:
       $ref: './components/schemas/common/attributeBool.yaml'
     AttributeCustomEntity:
