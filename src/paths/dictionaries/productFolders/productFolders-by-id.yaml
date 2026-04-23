@@ -15,7 +15,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/productFolder.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/ProductFolder'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
     
@@ -40,14 +40,14 @@ put:
     content:
       application/json:
         schema:
-          $ref: '../../../components/schemas/dictionary/productFolder.yaml'
+          $ref: '../../../openapi.yaml#/components/schemas/ProductFolder'
   responses:
     '200':
       description: Группа товаров успешно обновлена
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/productFolder.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/ProductFolder'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
     

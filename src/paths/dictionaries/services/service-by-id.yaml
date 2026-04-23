@@ -15,7 +15,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/service.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/Service'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
     
@@ -40,14 +40,14 @@ put:
     content:
       application/json:
         schema:
-          $ref: '../../../components/schemas/dictionary/service.yaml'
+          $ref: '../../../openapi.yaml#/components/schemas/Service'
   responses:
     '200':
       description: Услуга успешно обновлена
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/service.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/Service'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
     

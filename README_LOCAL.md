@@ -56,7 +56,7 @@ docker compose run --rm sdk make generate-php
 docker compose run --rm sdk make test-golden
 docker compose run --rm sdk make test-golden-php
 
-# Smoke тесты (openapi-mock + тесты)
+# Smoke тесты (openapi-mock + тесты по языкам)
 # ВАЖНО: после make bundle перезапустите mock — он кэширует спецификацию при старте
 docker compose restart mock
 docker compose run --rm sdk make test-smoke

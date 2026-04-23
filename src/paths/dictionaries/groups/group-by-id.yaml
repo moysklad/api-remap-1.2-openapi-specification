@@ -15,7 +15,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/group.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/Group'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
     
@@ -40,14 +40,14 @@ put:
     content:
       application/json:
         schema:
-          $ref: '../../../components/schemas/dictionary/group.yaml'
+          $ref: '../../../openapi.yaml#/components/schemas/Group'
   responses:
     '200':
       description: Группа успешно обновлена
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/group.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/Group'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
     

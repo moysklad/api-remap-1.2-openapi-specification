@@ -132,16 +132,7 @@ properties:
     description: Опубликован ли документ
     readOnly: true
   rate:
-    type: object
-    description: Валюта
-    properties:
-      currency:
-        description: Валюта
-        $ref: '../../../openapi.yaml#/components/schemas/Currency'
-      value:
-        type: number
-        format: double
-        description: Курс валюты
+    $ref: '../common/currencyRate.yaml'
   returnToCommissionerPositions:
     type: object
     description: Метаданные позиций возврата на склад комиссионера Полученного отчета комиссионера
@@ -176,7 +167,6 @@ properties:
     type: string
     format: uuid
     description: ID синхронизации
-    readOnly: true
   updated:
     type: string
     description: Момент последнего обновления Полученного отчета комиссионера

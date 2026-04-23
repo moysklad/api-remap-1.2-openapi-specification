@@ -13,5 +13,5 @@ get:
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
   parameters:
-  - $ref: ../../../components/headers.yaml#/AcceptHeader
-  - $ref: ../../../components/headers.yaml#/AcceptEncoding
+  - $ref: '../../../components/headers.yaml#/AcceptHeader'
+  - $ref: '../../../components/headers.yaml#/AcceptEncoding'

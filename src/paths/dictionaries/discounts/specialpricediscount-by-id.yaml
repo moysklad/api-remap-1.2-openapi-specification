@@ -14,7 +14,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/specialPriceDiscount.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/SpecialPriceDiscount'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
 
@@ -34,14 +34,14 @@ put:
     content:
       application/json:
         schema:
-          $ref: '../../../components/schemas/dictionary/specialPriceDiscount.yaml'
+          $ref: '../../../openapi.yaml#/components/schemas/SpecialPriceDiscount'
   responses:
     '200':
       description: Специальная цена успешно обновлена
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/specialPriceDiscount.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/SpecialPriceDiscount'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
 

@@ -4,22 +4,23 @@ get:
     - CashIns
   summary: Получить список CashIn
   parameters:
-    - $ref: ../../../components/parameters.yaml#/limit
-    - $ref: ../../../components/parameters.yaml#/offset
-    - $ref: ../../../components/parameters.yaml#/search
-    - $ref: ../../../components/parameters.yaml#/expand
-    - $ref: ../../../components/headers.yaml#/AcceptHeader
-    - $ref: ../../../components/headers.yaml#/AcceptEncoding
-    - $ref: ../../../components/headers.yaml#/ContentTypeJson
+    - $ref: '../../../components/parameters.yaml#/limit'
+    - $ref: '../../../components/parameters.yaml#/offset'
+    - $ref: '../../../components/parameters.yaml#/search'
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
   responses:
     '200':
       description: Успешный запрос
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/cashInList.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/CashInList'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
+
 post:
   operationId: createCashIn
   tags:
@@ -30,19 +31,18 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../../../components/schemas/dictionary/cashIn.yaml'
+          $ref: '../../../openapi.yaml#/components/schemas/CashIn'
   responses:
     '200':
       description: Успешный запрос
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/cashIn.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/CashIn'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
   parameters:
-    - $ref: ../../../components/parameters.yaml#/expand
-    - $ref: ../../../components/headers.yaml#/AcceptHeader
-    - $ref: ../../../components/headers.yaml#/AcceptEncoding
-    - $ref: ../../../components/headers.yaml#/ContentTypeJson
-
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'

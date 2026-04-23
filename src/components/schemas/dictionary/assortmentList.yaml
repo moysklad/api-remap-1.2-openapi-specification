@@ -1,8 +1,4 @@
 type: object
-required:
-  - context
-  - meta
-  - rows
 description: Список ассортимента
 properties:
   context:
@@ -16,4 +12,3 @@ properties:
     description: Массив элементов ассортимента
     items:
       $ref: '../../../openapi.yaml#/components/schemas/Assortment'
-

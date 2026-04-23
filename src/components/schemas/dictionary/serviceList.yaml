@@ -1,8 +1,5 @@
 type: object
-required:
-  - context
-  - meta
-  - rows
+description: Список услуг
 properties:
   context:
     description: Метаданные о сотруднике, выполнившем запрос

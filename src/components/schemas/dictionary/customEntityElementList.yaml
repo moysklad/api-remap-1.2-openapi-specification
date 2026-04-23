@@ -12,4 +12,3 @@ properties:
     description: Массив элементов пользовательского справочника
     items:
       $ref: '../../../openapi.yaml#/components/schemas/CustomEntityElement'
-

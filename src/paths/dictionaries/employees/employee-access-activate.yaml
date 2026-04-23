@@ -29,7 +29,7 @@ put:
               description: Метаданные группы
               properties:
                 meta:
-                  $ref: '../../../components/schemas/common/meta.yaml'
+                  $ref: '../../../openapi.yaml#/components/schemas/Meta'
             role:
               $ref: '../../../openapi.yaml#/components/schemas/EmployeeRole'
         example:

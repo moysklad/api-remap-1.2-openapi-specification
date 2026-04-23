@@ -1,5 +1,6 @@
 type: object
-description: Товар/услуга/модификация/комплект
+deprecated: true
+description: Товар/услуга/модификация/комплект, данная модель уже не поддерживается
 allOf:
   - oneOf:
       - $ref: '../../../openapi.yaml#/components/schemas/Product'

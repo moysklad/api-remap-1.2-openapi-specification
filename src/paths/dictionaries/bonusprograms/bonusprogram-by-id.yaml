@@ -15,7 +15,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/bonusProgram.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/BonusProgram'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
 
@@ -36,14 +36,14 @@ put:
     content:
       application/json:
         schema:
-          $ref: '../../../components/schemas/dictionary/bonusProgram.yaml'
+          $ref: '../../../openapi.yaml#/components/schemas/BonusProgram'
   responses:
     '200':
       description: Бонусная программа успешно обновлена
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/bonusProgram.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/BonusProgram'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
 

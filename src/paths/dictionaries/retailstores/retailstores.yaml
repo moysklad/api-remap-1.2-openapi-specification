@@ -4,23 +4,24 @@ get:
   - RetailStores
   summary: Получить точки продаж
   parameters:
-  - $ref: ../../../components/parameters.yaml#/limit
-  - $ref: ../../../components/parameters.yaml#/offset
-  - $ref: ../../../components/parameters.yaml#/search
-  - $ref: ../../../components/parameters.yaml#/filter
-  - $ref: ../../../components/parameters.yaml#/expand
-  - $ref: ../../../components/parameters.yaml#/order
-  - $ref: ../../../components/headers.yaml#/AcceptHeader
-  - $ref: ../../../components/headers.yaml#/AcceptEncoding
+  - $ref: '../../../components/parameters.yaml#/limit'
+  - $ref: '../../../components/parameters.yaml#/offset'
+  - $ref: '../../../components/parameters.yaml#/search'
+  - $ref: '../../../components/parameters.yaml#/filter'
+  - $ref: '../../../components/parameters.yaml#/expand'
+  - $ref: '../../../components/parameters.yaml#/order'
+  - $ref: '../../../components/headers.yaml#/AcceptHeader'
+  - $ref: '../../../components/headers.yaml#/AcceptEncoding'
   responses:
     '200':
       description: Успешный запрос
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/retailStoreList.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/RetailStoreList'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
+
 post:
   operationId: createRetailStore
   tags:
@@ -31,18 +32,18 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../../../components/schemas/dictionary/retailStore.yaml'
+          $ref: '../../../openapi.yaml#/components/schemas/RetailStore'
   responses:
     '200':
       description: Успешный запрос
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/retailStore.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/RetailStore'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
   parameters:
-  - $ref: ../../../components/headers.yaml#/AcceptHeader
-  - $ref: ../../../components/headers.yaml#/AcceptEncoding
-  - $ref: ../../../components/parameters.yaml#/expand
-  - $ref: ../../../components/headers.yaml#/ContentTypeJson
+  - $ref: '../../../components/headers.yaml#/AcceptHeader'
+  - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  - $ref: '../../../components/parameters.yaml#/expand'
+  - $ref: '../../../components/headers.yaml#/ContentTypeJson'

@@ -19,7 +19,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/serviceList.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/ServiceList'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
     
@@ -44,14 +44,14 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../../../components/schemas/dictionary/service.yaml'
+          $ref: '../../../openapi.yaml#/components/schemas/Service'
   responses:
     '200':
       description: Услуга успешно создана
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/service.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/Service'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
     

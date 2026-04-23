@@ -4,10 +4,10 @@ post:
   - CustomerOrders
   summary: Массовое удаление позиций CustomerOrders
   parameters:
-  - $ref: ../../../components/parameters.yaml#/entityId
-  - $ref: ../../../components/headers.yaml#/AcceptHeader
-  - $ref: ../../../components/headers.yaml#/AcceptEncoding
-  - $ref: ../../../components/headers.yaml#/ContentTypeJson
+  - $ref: '../../../components/parameters.yaml#/entityId'
+  - $ref: '../../../components/headers.yaml#/AcceptHeader'
+  - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  - $ref: '../../../components/headers.yaml#/ContentTypeJson'
   requestBody:
     required: true
     content:
@@ -27,7 +27,7 @@ post:
             type: array
             items:
               oneOf:
-                - $ref: ../../../openapi.yaml#/components/schemas/DeleteInfo
-                - $ref: ../../../components/schemas/common/error.yaml
+                - $ref: '../../../openapi.yaml#/components/schemas/DeleteInfo'
+                - $ref: '../../../openapi.yaml#/components/schemas/Error'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'

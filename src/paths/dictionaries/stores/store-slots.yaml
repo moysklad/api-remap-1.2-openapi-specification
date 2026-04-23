@@ -10,17 +10,18 @@ get:
     schema:
       type: string
       format: uuid
-  - $ref: ../../../components/headers.yaml#/AcceptHeader
-  - $ref: ../../../components/headers.yaml#/AcceptEncoding
+  - $ref: '../../../components/headers.yaml#/AcceptHeader'
+  - $ref: '../../../components/headers.yaml#/AcceptEncoding'
   responses:
     '200':
       description: Успешный запрос
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/storeSlotList.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/StoreSlotList'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
+
 post:
   operationId: createStoreSlots
   tags:
@@ -33,15 +34,15 @@ post:
     schema:
       type: string
       format: uuid
-  - $ref: ../../../components/headers.yaml#/AcceptHeader
-  - $ref: ../../../components/headers.yaml#/AcceptEncoding
+  - $ref: '../../../components/headers.yaml#/AcceptHeader'
+  - $ref: '../../../components/headers.yaml#/AcceptEncoding'
   requestBody:
     required: true
     content:
       application/json:
         schema:
           oneOf:
-            - $ref: ../../../openapi.yaml#/components/schemas/StoreSlot
+            - $ref: '../../../openapi.yaml#/components/schemas/StoreSlot'
             - type: array
               items:
                 $ref: '../../../openapi.yaml#/components/schemas/StoreSlot'

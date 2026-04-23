@@ -29,7 +29,7 @@ post:
             items:
               oneOf:
                 - $ref: '../../../openapi.yaml#/components/schemas/Service'
-                - $ref: '../../../components/schemas/common/error.yaml'
+                - $ref: '../../../openapi.yaml#/components/schemas/Error'
             minItems: 1
             maxItems: 1000
     default:

@@ -1,8 +1,5 @@
 type: object
-required:
-  - context
-  - meta
-  - rows
+description: Список Скидок
 properties:
   context:
     description: Метаданные о сотруднике, выполнившем запрос
@@ -33,4 +30,3 @@ properties:
         - $ref: '../../../openapi.yaml#/components/schemas/SpecialPriceDiscount'
         - $ref: '../../../openapi.yaml#/components/schemas/AccumulationDiscount'
         - $ref: '../../../openapi.yaml#/components/schemas/BonusProgram'
-

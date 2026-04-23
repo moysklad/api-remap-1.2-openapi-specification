@@ -19,7 +19,7 @@ post:
             type: object
             properties:
               meta:
-                $ref: '../../../components/schemas/common/meta.yaml'
+                $ref: '../../../openapi.yaml#/components/schemas/Meta'
         example:
           - meta:
               href: "https://api.moysklad.ru/api/remap/1.2/entity/product/3e1c03bb-684f-11ee-ac12-000c000000b0/storebalances/7fce2da5-684d-11ee-ac12-000c000000a2"

@@ -19,7 +19,7 @@ get:
             type: object
             properties:
               meta:
-                $ref: '../../../components/schemas/common/metaList.yaml'
+                $ref: '../../../openapi.yaml#/components/schemas/MetaList'
               rows:
                 type: array
                 items:

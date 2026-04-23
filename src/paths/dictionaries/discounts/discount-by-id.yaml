@@ -14,14 +14,14 @@ put:
     content:
       application/json:
         schema:
-          $ref: '../../../components/schemas/dictionary/discount.yaml'
+          $ref: '../../../openapi.yaml#/components/schemas/Discount'
   responses:
     '200':
       description: Успешный запрос
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/discount.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/Discount'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
 

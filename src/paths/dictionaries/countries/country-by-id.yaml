@@ -15,7 +15,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/country.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/Country'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
 
@@ -36,14 +36,14 @@ put:
     content:
       application/json:
         schema:
-          $ref: '../../../components/schemas/dictionary/country.yaml'
+          $ref: '../../../openapi.yaml#/components/schemas/Country'
   responses:
     '200':
       description: Страна успешно обновлена
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/country.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/Country'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
     

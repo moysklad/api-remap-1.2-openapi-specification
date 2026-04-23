@@ -5,6 +5,7 @@ get:
   summary: Получить элементы пользовательского справочника
   description: Получить все элементы пользовательского справочника
   parameters:
+    - $ref: '../../../components/parameters.yaml#/expand'
     - $ref: '../../../components/parameters.yaml#/entityId'
     - $ref: '../../../components/headers.yaml#/AcceptHeader'
     - $ref: '../../../components/headers.yaml#/AcceptEncoding'
@@ -14,7 +15,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/customEntityElementList.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/CustomEntityElementList'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
 
@@ -25,6 +26,7 @@ post:
   summary: Создать элемент пользовательского справочника
   description: Создание нового элемента пользовательского справочника
   parameters:
+    - $ref: '../../../components/parameters.yaml#/expand'
     - $ref: '../../../components/parameters.yaml#/entityId'
     - $ref: '../../../components/headers.yaml#/AcceptHeader'
     - $ref: '../../../components/headers.yaml#/AcceptEncoding'
@@ -34,14 +36,14 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../../../components/schemas/dictionary/customEntityElement.yaml'
+          $ref: '../../../openapi.yaml#/components/schemas/CustomEntityElement'
   responses:
     '200':
       description: Элемент пользовательского справочника успешно создан
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/customEntityElement.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/CustomEntityElement'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
 
@@ -52,6 +54,7 @@ put:
   summary: Изменить пользовательский справочник
   description: Обновление пользовательского справочника с указанным id
   parameters:
+    - $ref: '../../../components/parameters.yaml#/expand'
     - $ref: '../../../components/parameters.yaml#/entityId'
     - $ref: '../../../components/headers.yaml#/AcceptHeader'
     - $ref: '../../../components/headers.yaml#/AcceptEncoding'
@@ -61,14 +64,14 @@ put:
     content:
       application/json:
         schema:
-          $ref: '../../../components/schemas/dictionary/customEntity.yaml'
+          $ref: '../../../openapi.yaml#/components/schemas/CustomEntity'
   responses:
     '200':
       description: Пользовательский справочник успешно обновлен
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/customEntity.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/CustomEntity'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
 

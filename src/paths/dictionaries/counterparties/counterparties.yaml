@@ -19,7 +19,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/counterpartyList.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/CounterpartyList'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
 
@@ -39,14 +39,14 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../../../components/schemas/dictionary/counterparty.yaml'
+          $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
   responses:
     '200':
       description: Контрагент успешно создан
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/counterparty.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
     

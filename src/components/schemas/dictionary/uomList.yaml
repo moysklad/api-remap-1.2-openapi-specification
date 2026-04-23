@@ -1,8 +1,5 @@
 type: object
-required:
-  - context
-  - meta
-  - rows
+description: Список единиц измерения
 properties:
   context:
     description: Метаданные о сотруднике, выполнившем запрос

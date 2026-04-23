@@ -32,6 +32,8 @@ properties:
   maxPaidRatePercents:
     type: integer
     format: int32
+    minimum: 0
+    maximum: 100
     description: Максимальный процент оплаты баллами
   allProducts:
     type: boolean
