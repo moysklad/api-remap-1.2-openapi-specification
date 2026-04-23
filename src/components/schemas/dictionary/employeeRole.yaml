@@ -6,4 +6,5 @@ properties:
   permissions:
     type: object
     description: Список пермиссий (только для индивидуальной роли)
+    nullable: true
     additionalProperties: true

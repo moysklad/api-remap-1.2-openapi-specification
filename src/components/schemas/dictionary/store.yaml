@@ -74,6 +74,7 @@ properties:
   attributes:
     type: array
     description: Дополнительные поля
+    nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
   zones:

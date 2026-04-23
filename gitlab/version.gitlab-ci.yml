@@ -10,7 +10,7 @@ version:auto:
       optional: true
     - job: sdk-golden-php
       optional: true
-    - job: sdk-smoke-php
+    - job: sdk-smoke
       optional: true
     - job: sdk-golden-java
       optional: true

@@ -147,6 +147,7 @@ properties:
     description: Номер дисконтной карты контрагента
   discounts:
     type: array
+    nullable: true
     description: Массив скидок контрагента
     items:
       $ref: '../../../openapi.yaml#/components/schemas/AgentDiscount'
@@ -192,6 +193,7 @@ properties:
       meta:
         $ref: '../common/metaList.yaml'
       rows:
+        nullable: true
         type: array
         items:
           $ref: '../../../openapi.yaml#/components/schemas/Account'
@@ -221,10 +223,13 @@ properties:
   tags:
     type: array
     description: Группы контрагента
+    nullable: true
     items:
       type: string
   attributes:
     type: array
     description: Дополнительные поля
+#    todo check
+    nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'

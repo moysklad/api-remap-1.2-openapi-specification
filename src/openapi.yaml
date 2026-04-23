@@ -511,8 +511,7 @@ components:
       $ref: './components/schemas/dictionary/assortmentSettings.yaml'
     AttributeAbstract:
       $ref: './components/schemas/common/attributeAbstract.yaml'
-    AttributeBase:
-      $ref: './components/schemas/common/attributeBase.yaml'
+#
     AttributeBool:
       $ref: './components/schemas/common/attributeBool.yaml'
     AttributeCustomEntity:

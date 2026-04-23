@@ -34,7 +34,7 @@ services:
     volumes:
       - .:/workspace
       - sdk_node_modules:/workspace/node_modules
-      # Кэш Composer — чтобы при повторных запусках (test-golden-php, test-smoke-php) не качать пакеты заново
+      # Кэш Composer — чтобы при повторных запусках (test-golden-php, test-smoke) не качать пакеты заново
       - sdk_composer_cache:/root/.composer
     environment:
       - CI=true
@@ -47,6 +47,31 @@ services:
     stdin_open: true
     tty: true
     # Образ node по умолчанию передаёт аргументы в node, а не в shell. Запускаем команду через sh,
+    # чтобы выполнялся make (и любой другой бинарник) внутри контейнера с нужным Node.
+    entrypoint: ["/bin/sh", "-c", "exec \"$$@\"", "sh"]
+    command: ["make", "help"]
+    networks:
+      - default
+      - moysklad-all_default
+
+  java-sdk:
+    build:
+      dockerfile: java.Dockerfile
+    image: api-sdk-builder-java:local
+#    image: "docker.infra.lognex/maven-jdk11:7.8-release"
+    working_dir: /workspace
+    depends_on:
+      - mock
+    volumes:
+      - .:/workspace
+#      - ~/.m2/settings.xml:/root/.m2/settings.xml
+      - ~/.m2/repository:/root/.m2/repository
+    environment:
+      - CI=true
+      - SMOKE_BASE_URL=http://mock:8080
+    stdin_open: true
+    tty: true
+    # Образ node по умолчанию передаёт аргументы в Maven, а не в shell. Запускаем команду через sh,
     # чтобы выполнялся make (и любой другой бинарник) внутри контейнера с нужным Node.
     entrypoint: ["/bin/sh", "-c", "exec \"$$@\"", "sh"]
     command: ["make", "help"]

@@ -9,7 +9,7 @@ LANGUAGES_LIST := $(subst $(comma), ,$(LANGUAGES))
 comma := ,
 
 .PHONY: help lint bundle generate generate-php generate-python generate-java generate-javascript \
-	test-smoke test-golden test-smoke-php test-golden-php test-smoke-python test-golden-python \
+	test-smoke test-golden test-smoke test-golden-php test-smoke-python test-golden-python \
 	schemathesis all
 
 help:
@@ -21,9 +21,8 @@ help:
 	@echo "  generate-python   - generate Python SDK only (if script in package.json)"
 	@echo "  generate-java     - generate Java SDK only (if script in package.json)"
 	@echo "  generate-javascript - generate JavaScript SDK only (if script in package.json)"
-	@echo "  test-smoke        - smoke tests for LANGUAGES (openapi-mock + tests). Default: php"
+	@echo "  test-smoke        - smoke tests (openapi-mock + tests)."
 	@echo "  test-golden       - golden tests for LANGUAGES. Default: php"
-	@echo "  test-smoke-php, test-golden-php - only PHP"
 	@echo "  schemathesis      - contract tests (SCHEMATHESIS_HOST, _LOGIN, _PASSWORD)"
 	@echo "  all               - lint + bundle + generate (php) + test-golden + test-smoke"
 
@@ -67,7 +66,7 @@ test-golden:
 	@for lang in $(LANGUAGES_LIST); do $(MAKE) test-golden-$$lang || true; done
 
 # Требует dist/openapi.yaml (сделайте make bundle перед первым запуском)
-test-smoke-php:
+test-smoke:
 	sh scripts/local-test-smoke.sh php
 
 test-golden-php:
@@ -107,6 +106,6 @@ all:
 	npm run generate-php
 	@echo "==> [5/6] test-golden-php..."
 	$(MAKE) test-golden-php
-	@echo "==> [6/6] test-smoke-php..."
-	$(MAKE) test-smoke-php
-	@echo "Done: lint, bundle, generate-php, test-golden-php, test-smoke-php"
+	@echo "==> [6/6] test-smoke..."
+	$(MAKE) test-smoke
+	@echo "Done: lint, bundle, generate-php, test-golden-php, test-smoke"

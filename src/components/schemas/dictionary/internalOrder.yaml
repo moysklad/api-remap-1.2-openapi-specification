@@ -117,6 +117,7 @@ properties:
   attributes:
     type: array
     description: Коллекция метаданных доп. полей
+    nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
   files:
@@ -143,16 +144,19 @@ properties:
   purchaseOrders:
     type: array
     description: Коллекция метаданных на связанные заказы поставщику
+    nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/PurchaseOrder'
   productionTasks:
     type: array
     description: Массив ссылок на связанные производственные задания
+    nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/ProductionTask'
   moves:
     type: array
     description: Коллекция метаданных на связанные заказы перемещения
+    nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/Move'
   processingOrder:

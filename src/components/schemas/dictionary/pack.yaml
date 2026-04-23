@@ -17,5 +17,6 @@ properties:
   barcodes:
     type: array
     description: Штрихкоды упаковки
+    nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/Barcode'

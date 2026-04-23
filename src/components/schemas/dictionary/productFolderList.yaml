@@ -9,5 +9,6 @@ properties:
   rows:
     type: array
     description: Массив группы товаров
+    nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/ProductFolder'
