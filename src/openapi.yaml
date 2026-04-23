@@ -873,43 +873,6 @@ components:
     CustomEntityElementList:
       $ref: './components/schemas/dictionary/customEntityElementList.yaml'
 
-    CommissionReportIn:
-      $ref: './components/schemas/dictionary/commissionReportIn.yaml'
-    CommissionReportInList:
-      $ref: './components/schemas/dictionary/commissionReportInList.yaml'
-    CommissionReportInPosition:
-      $ref: './components/schemas/dictionary/commissionReportInPosition.yaml'
-    CommissionReportInPositionList:
-      $ref: './components/schemas/dictionary/commissionReportInPositionList.yaml'
-    CommissionReportInReturnedPosition:
-      $ref: './components/schemas/dictionary/commissionReportInReturnedPosition.yaml'
-    CommissionReportInReturnedPositionList:
-      $ref: './components/schemas/dictionary/commissionReportInReturnedPositionList.yaml'
-    CommissionReportOut:
-      $ref: './components/schemas/dictionary/commissionReportOut.yaml'
-
-    CompanySettings:
-      $ref: './components/schemas/dictionary/companySettings.yaml'
-    CompanySettingsMetadata:
-      $ref: './components/schemas/dictionary/companySettingsMetadata.yaml'
-    Discount:
-      $ref: './components/schemas/dictionary/discount.yaml'
-    DiscountAssortmentItem:
-      $ref: './components/schemas/common/discountAssortmentItem.yaml'
-    DiscountList:
-      $ref: './components/schemas/dictionary/discountList.yaml'
-    SpecialPriceDiscount:
-      $ref: './components/schemas/dictionary/specialPriceDiscount.yaml'
-
-    CustomEntity:
-      $ref: './components/schemas/dictionary/customEntity.yaml'
-    CustomEntityMetadata:
-      $ref: './components/schemas/dictionary/customEntityMetadata.yaml'
-    CustomEntityElement:
-      $ref: './components/schemas/dictionary/customEntityElement.yaml'
-    CustomEntityElementList:
-      $ref: './components/schemas/dictionary/customEntityElementList.yaml'
-
   securitySchemes:
     basicAuth:
       type: http

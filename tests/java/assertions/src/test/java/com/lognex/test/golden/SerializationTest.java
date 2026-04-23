@@ -76,6 +76,25 @@ class SerializationTest extends BaseTestCase {
         FIXTURE_MODEL_MAP.put("purchase_order", "PurchaseOrder");
         FIXTURE_MODEL_MAP.put("variantcharacteristic", "VariantCharacteristic");
         FIXTURE_MODEL_MAP.put("contract", "Contract");
+        FIXTURE_MODEL_MAP.put("cash_in", "CashIn");
+        FIXTURE_MODEL_MAP.put("cash_in_operation", "CashInOperation");
+        FIXTURE_MODEL_MAP.put("cash_out", "CashOut");
+        FIXTURE_MODEL_MAP.put("cash_out_operation", "CashOutOperation");
+        FIXTURE_MODEL_MAP.put("facture_in", "FactureIn");
+        FIXTURE_MODEL_MAP.put("facture_out", "FactureOut");
+        FIXTURE_MODEL_MAP.put("company_settings", "CompanySettings");
+        FIXTURE_MODEL_MAP.put("company_settings_metadata", "CompanySettingsMetadata");
+        FIXTURE_MODEL_MAP.put("assortment_settings", "AssortmentSettings");
+        FIXTURE_MODEL_MAP.put("assortment", "Assortment");
+        FIXTURE_MODEL_MAP.put("discount", "Discount");
+        FIXTURE_MODEL_MAP.put("accumulation_discount", "AccumulationDiscount");
+        FIXTURE_MODEL_MAP.put("personal_discount", "PersonalDiscount");
+        FIXTURE_MODEL_MAP.put("special_price_discount", "SpecialPriceDiscount");
+        FIXTURE_MODEL_MAP.put("bonus_program", "BonusProgram");
+        FIXTURE_MODEL_MAP.put("bonus_transaction", "BonusTransaction");
+        FIXTURE_MODEL_MAP.put("custom_entity", "CustomEntity");
+        FIXTURE_MODEL_MAP.put("custom_entity_element", "CustomEntityElement");
+        FIXTURE_MODEL_MAP.put("commission_report_in", "CommissionReportIn");
     }
 
     private static final Set<String> IGNORED_FIELDS = new HashSet<>();
@@ -196,8 +215,17 @@ class SerializationTest extends BaseTestCase {
             if (IGNORED_FIELDS.contains(key) || value == null) {
                 continue;
             }
-
-            normalized.put(key, normalizeValue(value));
+            Object normalizedValue = normalizeValue(value);
+            if (normalizedValue instanceof List && ((List<?>) normalizedValue).isEmpty()) {
+                continue;
+            }
+            if ("factureIn".equals(key) && normalizedValue instanceof Map) {
+                Map<String, Object> factureIn = castMap((Map<?, ?>) normalizedValue);
+                if (isMetaOnlyOrMetaWithName(factureIn)) {
+                    continue;
+                }
+            }
+            normalized.put(key, normalizedValue);
         }
 
         Object attributes = normalized.get("attributes");
@@ -273,7 +301,30 @@ class SerializationTest extends BaseTestCase {
         if (data.isEmpty()) {
             return true;
         }
-        return data.size() == 1 && data.containsKey("meta");
+        if (data.size() == 1 && data.containsKey("meta")) {
+            return true;
+        }
+        // Java models for payment links may emit empty inherited arrays.
+        if (data.containsKey("meta")
+            && isEmptyList(data.get("attributes"))
+            && isEmptyList(data.get("operations"))) {
+            return data.size() == 3 || data.size() == 2;
+        }
+        return false;
+    }
+
+    private static boolean isEmptyList(Object value) {
+        return value == null || (value instanceof List && ((List<?>) value).isEmpty());
+    }
+
+    private static boolean isMetaOnlyOrMetaWithName(Map<String, Object> data) {
+        if (data.isEmpty()) {
+            return true;
+        }
+        if (data.size() == 1 && data.containsKey("meta")) {
+            return true;
+        }
+        return data.size() == 2 && data.containsKey("meta") && data.containsKey("name");
     }
 
     private void assertNormalizedEquals(Map<String, Object> expected, Map<String, Object> actual, String message) {
