@@ -617,7 +617,28 @@ components:
     ImageList:
       $ref: './components/schemas/common/imageList.yaml'
     MinimumStockAbstract:
-      $ref: './components/schemas/dictionary/minimumStockAbstract.yaml'
+      type: object
+      required:
+        - type
+      discriminator:
+        propertyName: type
+        mapping:
+          ALL_WAREHOUSE_SUM: '#/components/schemas/MinimumStockAllWarehouseSum'
+          ALL_WAREHOUSE_SAME: '#/components/schemas/MinimumStockAllWarehouseSame'
+          WAREHOUSE_VARIED: '#/components/schemas/MinimumStockWarehouseVaried'
+      properties:
+        type:
+          type: string
+          readOnly: true
+          enum:
+            - ALL_WAREHOUSE_SUM
+            - ALL_WAREHOUSE_SAME
+            - WAREHOUSE_VARIED
+          description: Тип неснижаемого остатка
+        inherited:
+          type: boolean
+          nullable: true
+          description: Признак наследуемости
     MinimumStockAllWarehouseSame:
       $ref: './components/schemas/dictionary/minimumStockAllWarehouseSame.yaml'
     MinimumStockAllWarehouseSum:

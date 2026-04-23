@@ -1,4 +1,3 @@
-# Без allOf на MinimumStockAbstract, чтобы не образовывать цикл для Schemathesis/генерации
 type: object
 allOf:
   - $ref: '../../../openapi.yaml#/components/schemas/MinimumStockAbstract'
