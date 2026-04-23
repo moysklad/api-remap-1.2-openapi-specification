@@ -113,7 +113,7 @@
 - `fuzzing` - случайные данные
 - `stateful` - изменение данных
 
-**По умолчанию:** `examples,coverage`
+**По умолчанию:** `coverage`
 
 
 ### Переменные для Push/Mirror

@@ -62,7 +62,7 @@ docker compose restart mock
 docker compose run --rm sdk make test-smoke
 
 # Контрактные тесты Schemathesis (один для всех языков)
-docker compose run --rm -e SCHEMATHESIS_HOST=host -e SCHEMATHESIS_LOGIN=login -e SCHEMATHESIS_PASSWORD=pass sdk make schemathes
+docker compose run --rm -e SCHEMATHESIS_HOST=host -e SCHEMATHESIS_LOGIN=login -e SCHEMATHESIS_PASSWORD=pass sdk make schemathesis
 
 # Полный прогон (lint, bundle, generate-php, test-golden, test-smoke, schemathesis)
 docker compose run --rm sdk make all
