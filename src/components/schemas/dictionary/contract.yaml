@@ -1,0 +1,114 @@
+type: object
+description: Договор
+properties:
+  meta:
+    description: Метаданные Договора
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID Договора
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  name:
+    type: string
+    maxLength: 255
+    description: Номер договора
+  description:
+    type: string
+    maxLength: 4096
+    nullable: true
+    description: Описание Договора
+  code:
+    type: string
+    maxLength: 255
+    description: Код Договора
+  externalCode:
+    type: string
+    maxLength: 255
+    description: Внешний код Договора
+  archived:
+    type: boolean
+    description: Добавлен ли Договор в архив
+  moment:
+    type: string
+    description: Дата Договора
+  sum:
+    type: integer
+    description: Сумма Договора
+  contractType:
+    type: string
+    enum:
+      - Commission
+      - Sales
+    description: Тип Договора
+  rewardType:
+    type: string
+    enum:
+      - PercentOfSales
+      - None
+    description: Тип Вознаграждения
+  rewardPercent:
+    type: integer
+    minimum: 0
+    maximum: 100
+    description: Вознаграждение в процентах (от 0 до 100)
+  shared:
+    type: boolean
+    description: Общий доступ
+  printed:
+    type: boolean
+    description: Напечатан ли документ
+    readOnly: true
+  published:
+    type: boolean
+    description: Опубликован ли документ
+    readOnly: true
+  updated:
+    type: string
+    description: Момент последнего обновления сущности
+    readOnly: true
+  owner:
+    description: Метаданные владельца (Сотрудника)
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Employee'
+  group:
+    description: Метаданные отдела сотрудника
+    $ref: '../../../openapi.yaml#/components/schemas/Group'
+  ownAgent:
+    description: Метаданные вашего юрлица
+    $ref: '../../../openapi.yaml#/components/schemas/Organization'
+  agent:
+    description: Метаданные Контрагента
+    $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
+  state:
+    description: Метаданные статуса договора
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/State'
+  organizationAccount:
+    description: Метаданные счета вашего юрлица
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Account'
+  agentAccount:
+    description: Метаданные счета контрагента
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Account'
+  rate:
+    $ref: '../common/currencyRate.yaml'
+  attributes:
+    type: array
+    description: Коллекция доп. полей
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'

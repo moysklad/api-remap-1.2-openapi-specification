@@ -1,0 +1,38 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/personaldiscount/0623d6b4-9ceb-11e6-8af5-581e00000003",
+    "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/personaldiscount/metadata",
+    "type": "personaldiscount",
+    "mediaType": "application/json"
+  },
+  "id": "0623d6b4-9ceb-11e6-8af5-581e00000003",
+  "accountId": "0623d6b4-9ceb-11e6-8af5-581e00000003",
+  "name": "Персональная скидка",
+  "active": true,
+  "allAgents": true,
+  "agentTags": [
+    "группа агентов"
+  ],
+  "allProducts": true,
+  "assortment": [
+    {
+      "meta": {
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/variant/9881531b-9a09-11e6-8a84-bae500000078",
+        "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/variant/metadata",
+        "type": "variant",
+        "mediaType": "application/json"
+      }
+    }
+  ],
+  "productFolders": [
+    {
+      "meta": {
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/productfolder/a7a589e5-9c60-11e6-8a84-bae50000006",
+        "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/productfolder/metadata",
+        "type": "productfolder",
+        "mediaType": "application/json"
+      }
+    }
+  ]
+}
+

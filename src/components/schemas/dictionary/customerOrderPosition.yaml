@@ -1,0 +1,68 @@
+type: object
+description: Позиция Заказа покупателя
+properties:
+  meta:
+    description: Метаданные позиции
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID позиции
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  quantity:
+    type: number
+    format: double
+    description: Количество товаров данного вида в позиции
+  price:
+    type: number
+    format: double
+    description: Цена товара/услуги в копейках
+  discount:
+    type: number
+    format: double
+    description: Процент скидки или наценки
+  reserve:
+    type: number
+    format: double
+    description: Резерв данной позиции
+  shipped:
+    type: number
+    format: double
+    description: Доставлено
+    readOnly: true
+  vat:
+    type: integer
+    description: НДС, которым облагается текущая позиция
+  vatEnabled:
+    type: boolean
+    description: Включен ли НДС для позиции
+  taxSystem:
+    type: string
+    description: Код системы налогообложения
+    enum:
+      - GENERAL_TAX_SYSTEM
+      - SIMPLIFIED_TAX_SYSTEM_INCOME
+      - SIMPLIFIED_TAX_SYSTEM_INCOME_OUTCOME
+      - UNIFIED_AGRICULTURAL_TAX
+      - PRESUMPTIVE_TAX_SYSTEM
+      - PATENT_BASED
+  assortment:
+    description: Метаданные товара/услуги/модификации/комплекта, которую представляет собой позиция
+    $ref: '../../../openapi.yaml#/components/schemas/Assortment'
+  pack:
+    description: Упаковка Товара
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Pack'
+  stock:
+    description: |
+      Остатки и себестоимость позиции. Не выводится по умолчанию.
+      Для получения передайте параметр `?fields=stock`.
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/PositionStock'

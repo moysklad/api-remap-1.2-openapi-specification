@@ -1,0 +1,23 @@
+delete:
+  operationId: deleteCounterpartyFile
+  tags:
+    - Counterparties
+  summary: Удалить файл контрагента
+  description: |
+    Удаление Файла Контрагента. При удалении удаляется первый найденный с данным идентификатором Файл у Контрагента.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - name: fileId
+      in: path
+      required: true
+      description: ID файла
+      schema:
+        type: string
+        format: uuid
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Файл успешно удалён
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

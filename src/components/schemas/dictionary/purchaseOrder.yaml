@@ -1,0 +1,215 @@
+type: object
+description: Заказ поставщику
+properties:
+  meta:
+    description: Метаданные Заказа поставщику
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID Заказа поставщику
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  name:
+    type: string
+    maxLength: 255
+    description: Наименование Заказа поставщику
+  code:
+    type: string
+    maxLength: 255
+    description: Код Заказа поставщику
+  externalCode:
+    type: string
+    maxLength: 255
+    description: Внешний код Заказа поставщику
+  syncId:
+    type: string
+    format: uuid
+    description: ID синхронизации
+  description:
+    type: string
+    maxLength: 4096
+    nullable: true
+    description: Комментарий Заказа поставщику
+  created:
+    type: string
+    description: Дата создания
+    readOnly: true
+  deleted:
+    type: string
+    description: Момент последнего удаления Заказа поставщику
+    readOnly: true
+  updated:
+    type: string
+    description: Момент последнего обновления Заказа поставщику
+    readOnly: true
+  moment:
+    type: string
+    description: Дата документа
+  deliveryPlannedMoment:
+    type: string
+    description: Планируемая дата отгрузки
+  applicable:
+    type: boolean
+    description: Отметка о проведении
+  printed:
+    type: boolean
+    description: Напечатан ли документ
+    readOnly: true
+  published:
+    type: boolean
+    description: Опубликован ли документ
+    readOnly: true
+  shared:
+    type: boolean
+    description: Общий доступ
+  vatEnabled:
+    type: boolean
+    description: Учитывается ли НДС
+  vatIncluded:
+    type: boolean
+    description: Включен ли НДС в цену
+  vatSum:
+    type: number
+    format: double
+    description: Сумма НДС
+    readOnly: true
+  sum:
+    type: number
+    format: double
+    description: Сумма Заказа поставщику в установленной валюте
+    readOnly: true
+  payedSum:
+    type: number
+    format: double
+    description: Сумма входящих платежей по Заказу
+    readOnly: true
+  shippedSum:
+    type: number
+    format: double
+    description: Сумма принятого
+    readOnly: true
+  invoicedSum:
+    type: number
+    format: double
+    description: Сумма счетов поставщику
+    readOnly: true
+  waitSum:
+    type: number
+    format: double
+    description: Сумма товаров в пути
+    readOnly: true
+  organization:
+    description: Метаданные юрлица
+    $ref: '../../../openapi.yaml#/components/schemas/Organization'
+  organizationAccount:
+    description: Метаданные счета юрлица
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Account'
+  agent:
+    description: Метаданные контрагента
+    $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
+  agentAccount:
+    description: Метаданные счета контрагента
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Account'
+  store:
+    description: Метаданные склада
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Store'
+  state:
+    description: Метаданные статуса заказа
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/State'
+  contract:
+    description: Метаданные договора
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Contract'
+  project:
+    description: Метаданные проекта
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Project'
+  owner:
+    description: Владелец (Сотрудник)
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Employee'
+  group:
+    description: Отдел сотрудника
+    $ref: '../../../openapi.yaml#/components/schemas/Group'
+  attributes:
+    type: array
+    description: Коллекция метаданных доп. полей
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
+  files:
+    description: Метаданные массива Файлов
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/FileList'
+  rate:
+    type: object
+    description: Валюта
+    properties:
+      currency:
+        description: Валюта
+        $ref: '../../../openapi.yaml#/components/schemas/Currency'
+      value:
+        type: number
+        format: double
+        description: Курс валюты
+  positions:
+    type: object
+    description: Позиции Заказа поставщику
+    $ref: '../../../openapi.yaml#/components/schemas/PurchaseOrderPositionList'
+  internalOrder:
+    description: Внутренний заказ, связанный с заказом поставщику
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/InternalOrder'
+  customerOrders:
+    type: array
+    description: Массив ссылок на связанные заказы покупателей
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/CustomerOrder'
+  invoicesIn:
+    type: array
+    description: Массив ссылок на связанные счета поставщиков
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/InvoiceIn'
+  supplies:
+    type: array
+    description: Массив ссылок на связанные приемки
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/Supply'
+  payments:
+    type: array
+    description: Массив ссылок на связанные платежи
+    items:
+      anyOf:
+        - $ref: '../../../openapi.yaml#/components/schemas/PaymentOut'
+        - $ref: '../../../openapi.yaml#/components/schemas/CashOut'
+  productionTasks:
+    type: array
+    description: Массив ссылок на связанные производственные задания
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/ProductionTask'

@@ -1,0 +1,16 @@
+type: object
+description: Пользовательский справочник (customentity)
+properties:
+  meta:
+    description: Метаданные пользовательского справочника
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID пользовательского справочника
+    readOnly: true
+  name:
+    type: string
+    maxLength: 255
+    description: Наименование пользовательского справочника
+

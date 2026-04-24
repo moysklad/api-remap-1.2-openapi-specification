@@ -1,0 +1,154 @@
+type: object
+description: Внутренний заказ
+properties:
+  meta:
+    description: Метаданные Внутреннего заказа
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID Внутреннего заказа
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  name:
+    type: string
+    maxLength: 255
+    description: Наименование Внутреннего заказа
+  code:
+    type: string
+    maxLength: 255
+    description: Код Внутреннего заказа
+  externalCode:
+    type: string
+    maxLength: 255
+    description: Внешний код Внутреннего заказа
+  syncId:
+    type: string
+    format: uuid
+    description: ID синхронизации
+  description:
+    type: string
+    maxLength: 4096
+    nullable: true
+    description: Комментарий Внутреннего заказа
+  created:
+    type: string
+    description: Дата создания
+    readOnly: true
+  deleted:
+    type: string
+    description: Момент последнего удаления Внутреннего заказа
+    readOnly: true
+  updated:
+    type: string
+    description: Момент последнего обновления Внутреннего заказа
+    readOnly: true
+  moment:
+    type: string
+    description: Дата документа
+  deliveryPlannedMoment:
+    type: string
+    description: Планируемая дата приемки
+  applicable:
+    type: boolean
+    description: Отметка о проведении
+  printed:
+    type: boolean
+    description: Напечатан ли документ
+    readOnly: true
+  published:
+    type: boolean
+    description: Опубликован ли документ
+    readOnly: true
+  shared:
+    type: boolean
+    description: Общий доступ
+    readOnly: true
+  vatEnabled:
+    type: boolean
+    description: Учитывается ли НДС
+  vatIncluded:
+    type: boolean
+    description: Включен ли НДС в цену
+  vatSum:
+    type: number
+    format: double
+    description: Сумма НДС
+    readOnly: true
+  sum:
+    type: number
+    format: double
+    description: Сумма Внутреннего заказа в копейках
+    readOnly: true
+  organization:
+    description: Метаданные юрлица
+    $ref: '../../../openapi.yaml#/components/schemas/Organization'
+  store:
+    description: Метаданные склада
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Store'
+  state:
+    description: Метаданные статуса Внутреннего заказа
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/State'
+  project:
+    description: Метаданные проекта
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Project'
+  owner:
+    description: Владелец (Сотрудник)
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Employee'
+  group:
+    description: Отдел сотрудника
+    $ref: '../../../openapi.yaml#/components/schemas/Group'
+  attributes:
+    type: array
+    description: Коллекция метаданных доп. полей
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
+  files:
+    description: Метаданные массива Файлов
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/FileList'
+  rate:
+    $ref: '../common/currencyRate.yaml'
+  positions:
+    type: object
+    description: Позиций Внутреннего заказа
+    $ref: '../../../openapi.yaml#/components/schemas/InternalOrderPositionList'
+  purchaseOrders:
+    type: array
+    description: Коллекция метаданных на связанные заказы поставщику
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/PurchaseOrder'
+  productionTasks:
+    type: array
+    description: Массив ссылок на связанные производственные задания
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/ProductionTask'
+  moves:
+    type: array
+    description: Коллекция метаданных на связанные заказы перемещения
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/Move'
+  processingOrder:
+    description: Метаданные Заказа на производство
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/ProcessingOrder'

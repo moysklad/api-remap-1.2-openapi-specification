@@ -1,0 +1,14 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/supply/90ba347d-6b8b-11e6-8a84-bae5000000bd",
+    "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/supply/metadata",
+    "type": "supply",
+    "mediaType": "application/json"
+  },
+  "id": "90ba347d-6b8b-11e6-8a84-bae5000000bd",
+  "accountId": "f976ed28-2e58-11e6-8a84-bae500000001",
+  "name": "00002",
+  "moment": "2016-07-04 08:54:00",
+  "applicable": true,
+  "linkedSum": 80000
+}

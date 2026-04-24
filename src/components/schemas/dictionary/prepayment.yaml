@@ -1,0 +1,52 @@
+type: object
+description: Предоплата
+properties:
+  meta:
+    description: Метаданные Предоплаты
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID Предоплаты
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  name:
+    type: string
+    maxLength: 255
+    description: Наименование Предоплаты
+  code:
+    type: string
+    maxLength: 255
+    description: Код Предоплаты
+  externalCode:
+    type: string
+    maxLength: 255
+    description: Внешний код Предоплаты
+  syncId:
+    type: string
+    format: uuid
+    description: ID синхронизации
+  description:
+    type: string
+    maxLength: 4096
+    nullable: true
+    description: Комментарий Предоплаты
+  created:
+    type: string
+    description: Дата создания
+    readOnly: true
+  deleted:
+    type: string
+    description: Момент последнего удаления Предоплаты
+    readOnly: true
+  updated:
+    type: string
+    description: Момент последнего обновления Предоплаты
+    readOnly: true
+  moment:
+    type: string
+    description: Дата документа

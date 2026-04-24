@@ -1,0 +1,16 @@
+type: object
+description: Проект
+properties:
+  meta:
+    description: Метаданные Проекта
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID проекта
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true

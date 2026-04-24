@@ -1,0 +1,20 @@
+type: object
+description: Метаданные контрагентов
+properties:
+  meta:
+    $ref: '../common/meta.yaml'
+  attributes:
+    $ref: '../common/attributeMetaInfoList.yaml'
+  states:
+    type: array
+    description: Массив статусов контрагентов
+    items:
+      $ref: '../../../components/schemas/dictionary/state.yaml'
+  tags:
+    type: array
+    description: Тэги контрагентов
+    items:
+      type: string
+  createShared:
+    type: boolean
+    description: Создавать новых контрагентов с меткой "Общий"

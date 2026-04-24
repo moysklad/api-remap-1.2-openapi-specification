@@ -1,0 +1,19 @@
+type: object
+description: Скидка (discount)
+allOf:
+  - $ref: '../../../openapi.yaml#/components/schemas/DiscountBase'
+properties:
+  allProducts:
+    type: boolean
+    description: Действует ли скидка на все товары
+  assortment:
+    type: array
+    description: Массив метаданных товаров, услуг и модификаций
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/DiscountAssortmentItem'
+  productFolders:
+    type: array
+    description: Массив метаданных Групп товаров
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/ProductFolder'
+
