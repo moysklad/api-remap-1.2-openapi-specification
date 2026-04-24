@@ -4,62 +4,64 @@ get:
   - PurchaseOrders
   summary: Получить позицию PurchaseOrder
   parameters:
-  - $ref: ../../../components/parameters.yaml#/entityId
-  - $ref: ../../../components/parameters.yaml#/expand
-  - $ref: ../../../components/parameters.yaml#/fields
-  - $ref: ../../../components/parameters.yaml#/positionId
-  - $ref: ../../../components/headers.yaml#/AcceptHeader
-  - $ref: ../../../components/headers.yaml#/AcceptEncoding
-  - $ref: ../../../components/headers.yaml#/ContentTypeJson
+  - $ref: '../../../components/parameters.yaml#/entityId'
+  - $ref: '../../../components/parameters.yaml#/expand'
+  - $ref: '../../../components/parameters.yaml#/fields'
+  - $ref: '../../../components/parameters.yaml#/positionId'
+  - $ref: '../../../components/headers.yaml#/AcceptHeader'
+  - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  - $ref: '../../../components/headers.yaml#/ContentTypeJson'
   responses:
     '200':
       description: Успешный запрос
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/purchaseOrderPosition.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/PurchaseOrderPosition'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
+
 put:
   operationId: updatePurchaseOrderPosition
   tags:
   - PurchaseOrders
   summary: Изменить позицию PurchaseOrder
   parameters:
-  - $ref: ../../../components/parameters.yaml#/entityId
-  - $ref: ../../../components/parameters.yaml#/expand
-  - $ref: ../../../components/parameters.yaml#/fields
-  - $ref: ../../../components/parameters.yaml#/positionId
-  - $ref: ../../../components/headers.yaml#/AcceptHeader
-  - $ref: ../../../components/headers.yaml#/AcceptEncoding
-  - $ref: ../../../components/headers.yaml#/ContentTypeJson
+  - $ref: '../../../components/parameters.yaml#/entityId'
+  - $ref: '../../../components/parameters.yaml#/expand'
+  - $ref: '../../../components/parameters.yaml#/fields'
+  - $ref: '../../../components/parameters.yaml#/positionId'
+  - $ref: '../../../components/headers.yaml#/AcceptHeader'
+  - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  - $ref: '../../../components/headers.yaml#/ContentTypeJson'
   requestBody:
     required: true
     content:
       application/json:
         schema:
-          $ref: '../../../components/schemas/dictionary/purchaseOrderPosition.yaml'
+          $ref: '../../../openapi.yaml#/components/schemas/PurchaseOrderPosition'
   responses:
     '200':
       description: Успешный запрос
       content:
         application/json:
           schema:
-            $ref: '../../../openapi.yaml#/components/schemas/PurchaseOrder'
+            $ref: '../../../openapi.yaml#/components/schemas/PurchaseOrderPosition'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
+
 delete:
   operationId: deletePurchaseOrderPosition
   tags:
   - PurchaseOrders
   summary: Удалить позицию PurchaseOrder
   parameters:
-  - $ref: ../../../components/parameters.yaml#/entityId
-  - $ref: ../../../components/parameters.yaml#/expand
-  - $ref: ../../../components/parameters.yaml#/positionId
-  - $ref: ../../../components/headers.yaml#/AcceptHeader
-  - $ref: ../../../components/headers.yaml#/AcceptEncoding
-  - $ref: ../../../components/headers.yaml#/ContentTypeJson
+  - $ref: '../../../components/parameters.yaml#/entityId'
+  - $ref: '../../../components/parameters.yaml#/expand'
+  - $ref: '../../../components/parameters.yaml#/positionId'
+  - $ref: '../../../components/headers.yaml#/AcceptHeader'
+  - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  - $ref: '../../../components/headers.yaml#/ContentTypeJson'
   responses:
     '200':
       description: Успешный запрос

@@ -50,3 +50,106 @@ properties:
   moment:
     type: string
     description: Дата документа
+  owner:
+    description: Владелец (Сотрудник)
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Employee'
+  group:
+    description: Отдел сотрудника
+    $ref: '../../../openapi.yaml#/components/schemas/Group'
+  applicable:
+    type: boolean
+    description: Отметка о проведении
+  printed:
+    type: boolean
+    description: Напечатан ли документ
+    readOnly: true
+  published:
+    type: boolean
+    description: Опубликован ли документ
+    readOnly: true
+  rate:
+    $ref: '../common/currencyRate.yaml'
+  organization:
+    description: Метаданные юрлица
+    $ref: '../../../openapi.yaml#/components/schemas/Organization'
+  agent:
+    description: Метаданные контрагента
+    $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
+  expenseItem:
+    description: Метаданные статьи расхода
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/ExpenseItem'
+  attributes:
+    type: array
+    description: Коллекция метаданных доп. полей
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
+  contract:
+    description: Метаданные договора
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Contract'
+  files:
+    description: Метаданные массива файлов
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/FileList'
+  noClosingDocs:
+    type: boolean
+    description: Признак "Без закрывающих документов"
+  paymentPurpose:
+    type: string
+    maxLength: 255
+    description: Основание
+  project:
+    description: Метаданные проекта
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Project'
+  salesChannel:
+    description: Метаданные канала продаж
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/SalesChannel'
+  shared:
+    type: boolean
+    description: Общий доступ
+    readOnly: true
+  state:
+    description: Метаданные статуса Расходного ордера
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/State'
+  sum:
+    type: number
+    format: double
+    description: Сумма расходного ордера в установленной валюте
+    readOnly: true
+  vatSum:
+    type: number
+    format: double
+    description: Сумма НДС
+    readOnly: true
+  factureIn:
+    description: Счет-фактура полученный, с которым связан этот платеж
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/FactureIn'
+  operations:
+    type: array
+    description: |
+      Связанные операции: полное тело документа плюс `linkedSum`. Допустимые типы по `meta.type`:
+      salesreturn, supply, invoicein, purchaseorder, commissionreportout. См. `CashOutOperation`.
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/CashOutOperation'

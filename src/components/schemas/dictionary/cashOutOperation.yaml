@@ -1,0 +1,27 @@
+description: |
+  Элемент массива `operations` расходного ордера: **полноценный документ** одного из допустимых типов
+  плюс обязательное поле `linkedSum`.
+
+  Допустимые `meta.type`: salesreturn, supply, invoicein, purchaseorder, commissionreportout
+type: object
+anyOf:
+  - description: Возврат покупателя + linkedSum
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/SalesReturn'
+      - $ref: '../../../openapi.yaml#/components/schemas/CashOutOperationLinkedSum'
+  - description: Приемка + linkedSum
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Supply'
+      - $ref: '../../../openapi.yaml#/components/schemas/CashOutOperationLinkedSum'
+  - description: Счет поставщика + linkedSum
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/InvoiceIn'
+      - $ref: '../../../openapi.yaml#/components/schemas/CashOutOperationLinkedSum'
+  - description: Заказ поставщику + linkedSum
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/PurchaseOrder'
+      - $ref: '../../../openapi.yaml#/components/schemas/CashOutOperationLinkedSum'
+  - description: Выданный отчет комиссионера + linkedSum
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/CommissionReportOut'
+      - $ref: '../../../openapi.yaml#/components/schemas/CashOutOperationLinkedSum'

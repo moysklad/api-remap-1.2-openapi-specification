@@ -1,4 +1,5 @@
 type: object
+description: Список группы товаров
 properties:
   context:
     description: Метаданные о сотруднике, выполнившем запрос

@@ -1,14 +1,14 @@
 type: object
-required:
-  - context
-  - meta
-  - rows
+description: Список Модификаций
 properties:
   context:
+    description: Метаданные о сотруднике, выполнившем запрос
     $ref: '../common/context.yaml'
   meta:
+    description: Метаданные о выдаче
     $ref: '../common/metaList.yaml'
   rows:
     type: array
+    description: Массив Модификаций
     items:
       $ref: '../../../openapi.yaml#/components/schemas/Variant'

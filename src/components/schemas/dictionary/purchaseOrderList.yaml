@@ -1,7 +1,14 @@
 type: object
+description: Список Заказов поставщику
 properties:
-  context: { $ref: '../common/context.yaml' }
-  meta: { $ref: '../common/metaList.yaml' }
+  context:
+    description: Метаданные о сотруднике, выполнившем запрос
+    $ref: '../common/context.yaml'
+  meta:
+    description: Метаданные о выдаче
+    $ref: '../common/metaList.yaml'
   rows:
     type: array
-    items: { $ref: '../../../openapi.yaml#/components/schemas/PurchaseOrder' }
+    description: Массив Заказов поставщику
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/PurchaseOrder'

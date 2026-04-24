@@ -1,12 +1,11 @@
 type: object
 description: Неснижаемые остатки по складам
-required:
-  - meta
-  - rows
 properties:
   meta:
+    description: Метаданные о выдаче
     $ref: '../common/metaList.yaml'
   rows:
     type: array
+    description: Массив элементов списка
     items:
       $ref: '../../../openapi.yaml#/components/schemas/StoreBalance'

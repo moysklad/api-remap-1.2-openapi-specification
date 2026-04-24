@@ -4,48 +4,56 @@ get:
   - CustomerOrders
   summary: Отдельный статус CustomerOrder
   parameters:
-  - $ref: ../../../components/parameters.yaml#/entityId
-  - $ref: ../../../components/headers.yaml#/AcceptHeader
-  - $ref: ../../../components/headers.yaml#/AcceptEncoding
-  - $ref: ../../../components/headers.yaml#/ContentTypeJson
+  - $ref: '../../../components/parameters.yaml#/entityId'
+  - $ref: '../../../components/headers.yaml#/AcceptHeader'
+  - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  - $ref: '../../../components/headers.yaml#/ContentTypeJson'
   responses:
     '200':
       description: Успешный запрос
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/state.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/State'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
+
 put:
   operationId: updateCustomerOrderMetadataStateById
   tags:
     - CustomerOrders
   summary: Обновить отдельный статус CustomerOrder
   parameters:
-    - $ref: ../../../components/parameters.yaml#/entityId
-    - $ref: ../../../components/headers.yaml#/AcceptHeader
-    - $ref: ../../../components/headers.yaml#/AcceptEncoding
-    - $ref: ../../../components/headers.yaml#/ContentTypeJson
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../openapi.yaml#/components/schemas/State'
   responses:
     '200':
       description: Успешный запрос
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/state.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/State'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
+
 delete:
   operationId: deleteCustomerOrderMetadataStateById
   tags:
     - CustomerOrders
   summary: Удалить отдельный статус CustomerOrder
   parameters:
-    - $ref: ../../../components/parameters.yaml#/entityId
-    - $ref: ../../../components/headers.yaml#/AcceptHeader
-    - $ref: ../../../components/headers.yaml#/AcceptEncoding
-    - $ref: ../../../components/headers.yaml#/ContentTypeJson
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
   responses:
     '200':
       description: Успешный запрос

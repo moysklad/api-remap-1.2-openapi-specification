@@ -4,13 +4,13 @@ get:
   - InternalOrders
   summary: Получить позиции InternalOrder
   parameters:
-  - $ref: ../../../components/parameters.yaml#/entityId
-  - $ref: ../../../components/parameters.yaml#/limit
-  - $ref: ../../../components/parameters.yaml#/offset
-  - $ref: ../../../components/parameters.yaml#/expand
-  - $ref: ../../../components/headers.yaml#/AcceptHeader
-  - $ref: ../../../components/headers.yaml#/AcceptEncoding
-  - $ref: ../../../components/headers.yaml#/ContentTypeJson
+  - $ref: '../../../components/parameters.yaml#/entityId'
+  - $ref: '../../../components/parameters.yaml#/limit'
+  - $ref: '../../../components/parameters.yaml#/offset'
+  - $ref: '../../../components/parameters.yaml#/expand'
+  - $ref: '../../../components/headers.yaml#/AcceptHeader'
+  - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  - $ref: '../../../components/headers.yaml#/ContentTypeJson'
   responses:
     '200':
       description: Успешный запрос
@@ -22,27 +22,28 @@ get:
               $ref: '../../../openapi.yaml#/components/schemas/InternalOrderPosition'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
+
 post:
   operationId: createInternalOrderPositions
   tags:
   - InternalOrders
   summary: Создать позиции InternalOrder
   parameters:
-  - $ref: ../../../components/parameters.yaml#/entityId
-  - $ref: ../../../components/parameters.yaml#/expand
-  - $ref: ../../../components/headers.yaml#/AcceptHeader
-  - $ref: ../../../components/headers.yaml#/AcceptEncoding
-  - $ref: ../../../components/headers.yaml#/ContentTypeJson
+  - $ref: '../../../components/parameters.yaml#/entityId'
+  - $ref: '../../../components/parameters.yaml#/expand'
+  - $ref: '../../../components/headers.yaml#/AcceptHeader'
+  - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  - $ref: '../../../components/headers.yaml#/ContentTypeJson'
   requestBody:
     required: true
     content:
       application/json:
         schema:
           oneOf:
-          - $ref: ../../../components/schemas/dictionary/internalOrderPosition.yaml
+          - $ref: '../../../openapi.yaml#/components/schemas/InternalOrderPosition'
           - type: array
             items:
-              $ref: '../../../components/schemas/dictionary/internalOrderPosition.yaml'
+              $ref: '../../../openapi.yaml#/components/schemas/InternalOrderPosition'
           minItems: 1
           maxItems: 1000
   responses:
@@ -54,7 +55,7 @@ post:
             type: array
             items:
               oneOf:
-                - $ref: ../../../openapi.yaml#/components/schemas/InternalOrderPosition
-                - $ref: ../../../components/schemas/common/error.yaml
+                - $ref: '../../../openapi.yaml#/components/schemas/InternalOrderPosition'
+                - $ref: '../../../openapi.yaml#/components/schemas/Error'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'

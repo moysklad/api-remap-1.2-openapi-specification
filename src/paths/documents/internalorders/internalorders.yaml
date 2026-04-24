@@ -4,22 +4,23 @@ get:
   - InternalOrders
   summary: Получить список InternalOrder
   parameters:
-  - $ref: ../../../components/parameters.yaml#/limit
-  - $ref: ../../../components/parameters.yaml#/offset
-  - $ref: ../../../components/parameters.yaml#/search
-  - $ref: ../../../components/parameters.yaml#/expand
-  - $ref: ../../../components/headers.yaml#/AcceptHeader
-  - $ref: ../../../components/headers.yaml#/AcceptEncoding
-  - $ref: ../../../components/headers.yaml#/ContentTypeJson
+  - $ref: '../../../components/parameters.yaml#/limit'
+  - $ref: '../../../components/parameters.yaml#/offset'
+  - $ref: '../../../components/parameters.yaml#/search'
+  - $ref: '../../../components/parameters.yaml#/expand'
+  - $ref: '../../../components/headers.yaml#/AcceptHeader'
+  - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  - $ref: '../../../components/headers.yaml#/ContentTypeJson'
   responses:
     '200':
       description: Успешный запрос
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/internalOrderList.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/InternalOrderList'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
+
 post:
   operationId: createInternalOrder
   tags:
@@ -30,18 +31,18 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../../../components/schemas/dictionary/internalOrder.yaml'
+          $ref: '../../../openapi.yaml#/components/schemas/InternalOrder'
   responses:
     '200':
       description: Успешный запрос
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/internalOrder.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/InternalOrder'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
   parameters:
-  - $ref: ../../../components/parameters.yaml#/expand
-  - $ref: ../../../components/headers.yaml#/AcceptHeader
-  - $ref: ../../../components/headers.yaml#/AcceptEncoding
-  - $ref: ../../../components/headers.yaml#/ContentTypeJson
+  - $ref: '../../../components/parameters.yaml#/expand'
+  - $ref: '../../../components/headers.yaml#/AcceptHeader'
+  - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  - $ref: '../../../components/headers.yaml#/ContentTypeJson'

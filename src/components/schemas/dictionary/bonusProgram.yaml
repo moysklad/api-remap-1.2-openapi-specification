@@ -29,6 +29,12 @@ properties:
     type: string
     enum: [REGISTRATION, FIRST_PURCHASE]
     description: Условие начисления приветственных баллов
+  maxPaidRatePercents:
+    type: integer
+    format: int32
+    minimum: 0
+    maximum: 100
+    description: Максимальный процент оплаты баллами
   allProducts:
     type: boolean
     description: Для всех ли товаров скидка

@@ -1,0 +1,53 @@
+type: object
+description: Элемент пользовательского справочника (customentity)
+properties:
+  meta:
+    description: Метаданные элемента пользовательского справочника
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID элемента пользовательского справочника
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  updated:
+    type: string
+    description: Момент последнего обновления элемента
+    readOnly: true
+  name:
+    type: string
+    maxLength: 255
+    description: Наименование элемента пользовательского справочника
+  code:
+    type: string
+    maxLength: 255
+    description: Код элемента пользовательского справочника
+  description:
+    type: string
+    maxLength: 4096
+    nullable: true
+    description: Описание элемента пользовательского справочника
+  externalCode:
+    type: string
+    maxLength: 255
+    nullable: true
+    description: Внешний код элемента пользовательского справочника
+  attributes:
+    type: array
+    description: Коллекция метаданных доп. полей
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
+  owner:
+    description: Владелец (Сотрудник)
+    $ref: '../../../openapi.yaml#/components/schemas/Employee'
+  shared:
+    type: boolean
+    description: Общий доступ
+  group:
+    description: Отдел сотрудника
+    $ref: '../../../openapi.yaml#/components/schemas/Group'
+

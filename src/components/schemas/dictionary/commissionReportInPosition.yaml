@@ -1,0 +1,46 @@
+type: object
+description: Позиция реализовано комиссионером Полученного отчета комиссионера
+properties:
+  meta:
+    description: Метаданные позиции
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID позиции
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  quantity:
+    type: number
+    format: double
+    description: Количество товаров/услуг в позиции
+    minimum: 0
+    exclusiveMinimum: true
+  price:
+    type: number
+    format: double
+    description: Цена товара в копейках
+  reward:
+    type: number
+    format: double
+    description: Вознаграждение
+  vat:
+    type: integer
+    description: НДС для позиции
+  vatEnabled:
+    type: boolean
+    description: Включен ли НДС для позиции
+  assortment:
+    description: Метаданные товара/партии/модификации/комплекта, которую представляет позиция
+    $ref: '../../../openapi.yaml#/components/schemas/Assortment'
+  pack:
+    description: Упаковка Товара
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Pack'
+

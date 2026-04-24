@@ -1,4 +1,5 @@
 type: object
+description: Список точек продаж
 properties:
   context:
     description: Метаданные о сотруднике, выполнившем запрос

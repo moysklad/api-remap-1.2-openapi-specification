@@ -57,6 +57,8 @@ docker compose run --rm sdk make test-golden
 docker compose run --rm sdk make test-golden-php
 
 # Smoke тесты (openapi-mock + тесты по языкам)
+# ВАЖНО: после make bundle перезапустите mock — он кэширует спецификацию при старте
+docker compose restart mock
 docker compose run --rm sdk make test-smoke
 docker compose run --rm sdk make test-smoke-php
 
@@ -195,6 +197,8 @@ $this->assertContains($response->getStatusCode(), [200, 401, 500]);
 ```
 
 > **Примечание:** openapi-mock может возвращать HTTP 500 для эндпоинтов с рекурсивными/глубоко вложенными схемами — это ожидаемое поведение mock-сервера, а не ошибка спецификации.
+
+> **Важно:** openapi-mock загружает `dist/openapi.yaml` **один раз при старте** и кэширует в памяти. После `make bundle` необходимо перезапустить mock-сервер: `docker compose restart mock`. Без перезапуска новые эндпоинты будут возвращать 404. Если `restart` не помогает, пересоздайте контейнер: `docker compose rm -sf mock && docker compose up -d mock`.
 
 #### Contract тесты (Schemathesis)
 

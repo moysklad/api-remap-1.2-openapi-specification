@@ -1,0 +1,14 @@
+type: object
+description: Список элементов пользовательского справочника
+properties:
+  context:
+    description: Метаданные о сотруднике, выполнившем запрос
+    $ref: '../common/context.yaml'
+  meta:
+    description: Метаданные о выдаче
+    $ref: '../common/metaList.yaml'
+  rows:
+    type: array
+    description: Массив элементов пользовательского справочника
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/CustomEntityElement'

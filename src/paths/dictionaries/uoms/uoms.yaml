@@ -19,7 +19,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/uomList.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/UomList'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
     
@@ -44,14 +44,14 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../../../components/schemas/dictionary/uom.yaml'
+          $ref: '../../../openapi.yaml#/components/schemas/Uom'
   responses:
     '200':
       description: Единица измерения успешно создана
       content:
         application/json:
           schema:
-            $ref: '../../../components/schemas/dictionary/uom.yaml'
+            $ref: '../../../openapi.yaml#/components/schemas/Uom'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
     

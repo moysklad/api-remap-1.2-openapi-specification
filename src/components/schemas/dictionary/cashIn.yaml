@@ -14,6 +14,9 @@ properties:
     format: uuid
     description: ID учетной записи
     readOnly: true
+  applicable:
+    type: boolean
+    description: Отметка о проведении
   name:
     type: string
     maxLength: 255
@@ -50,3 +53,94 @@ properties:
   moment:
     type: string
     description: Дата документа
+  attributes:
+    type: array
+    description: Коллекция метаданных доп. полей
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
+  contract:
+    description: Метаданные договора
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Contract'
+  files:
+    description: Метаданные массива файлов
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/FileList'
+  paymentPurpose:
+    type: string
+    maxLength: 255
+    description: Основание
+  printed:
+    type: boolean
+    description: Напечатан ли документ
+    readOnly: true
+  project:
+    description: Метаданные проекта
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Project'
+  published:
+    type: boolean
+    description: Опубликован ли документ
+    readOnly: true
+  owner:
+    description: Владелец (Сотрудник)
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Employee'
+  group:
+    description: Отдел сотрудника
+    $ref: '../../../openapi.yaml#/components/schemas/Group'
+  salesChannel:
+    description: Метаданные канала продаж
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/SalesChannel'
+  shared:
+    type: boolean
+    description: Общий доступ
+    readOnly: true
+  state:
+    description: Метаданные статуса Приходного ордера
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/State'
+  rate:
+    $ref: '../common/currencyRate.yaml'
+  organization:
+    description: Метаданные юрлица
+    $ref: '../../../openapi.yaml#/components/schemas/Organization'
+  agent:
+    description: Метаданные контрагента
+    $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
+  sum:
+    type: number
+    format: double
+    description: Сумма Приходного ордера в установленной валюте
+    readOnly: true
+  vatSum:
+    type: number
+    format: double
+    description: Сумма НДС
+    readOnly: true
+  factureOut:
+    description: Счет-фактура выданный, с которым связан этот платеж
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/FactureOut'
+  operations:
+    type: array
+    description: |
+      Связанные операции. Допустимые типы по `meta.type`: customerorder, purchasereturn, demand,
+      invoiceout, commissionreportin, retailshift.
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/CashInOperation'
