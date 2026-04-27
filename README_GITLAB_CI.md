@@ -63,6 +63,8 @@
 | `deploy-to-maven`       | Публикация Java SDK в Maven Central                                                               |
 | `deploy-to-artifactory` | Публикация Java SDK в Artyfactory                                                                 |
 
+Java release jobs (`deploy-to-artifactory`, `deploy-to-maven`) описаны в `gitlab/.gitlab-ci-deploy-sdk-java.yml` и выполняются на стадии `deploy-sdk`.
+
 ---
 
 #### 4. Сборка ветки на облегчённом окружении для тестирования java-remap-1.2-sdk
@@ -152,7 +154,8 @@
 | `test`                   | Тестирование (golden, smoke)                                                                                                       |
 | `version`                | Автоматическое версионирование и подготовка CHANGELOG/тегов                                                                        |
 | `mirror`                 | Зеркалирование в GitHub и GitHub Release                                                                                           |
-| `prepare-sdk-repository` | Подготовка внутреннего репозитория PHP SDK (ветки и релиз мастер‑ветки по текущим изменениям)                                      |
+| `prepare-sdk-repository` | Подготовка внутренних репозиториев SDK (PHP/Java: ветки и релиз master по текущим изменениям)                                      |
+| `deploy-sdk`             | Публикация Java SDK артефактов (`deploy-to-artifactory`, `deploy-to-maven`)                                                        |
 
 ### Стадии для обратной совместимости (старый Java SDK)
 

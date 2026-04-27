@@ -144,3 +144,4 @@ stages:
   - version                # Автоматическое версионирование и подготовка CHANGELOG/тегов
   - mirror                 # Зеркалирование в GitHub
   - prepare-sdk-repository # Подготовка|внесение изменений в репозиторий SDK в GitLab
+  - deploy-sdk             # Публикация артефакта в репозиторий (Maven, Artifactory)

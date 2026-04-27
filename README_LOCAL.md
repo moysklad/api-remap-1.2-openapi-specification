@@ -103,6 +103,8 @@ api-sdk-builder/
 │   ├── .gitlab-ci-sdk-validate.yml   # Валидация SDK (lint, tests)
 │   ├── .gitlab-ci-github-mirror.yml  # Зеркалирование в GitHub
 │   ├── .gitlab-ci-prepare-sdk-php.yml# Подготовка внутреннего репозитория PHP SDK (ветки и релиз мастер‑ветки)
+│   ├── .gitlab-ci-prepare-sdk-java.yml# Подготовка внутреннего репозитория Java SDK (ветки и релиз мастер‑ветки)
+│   ├── .gitlab-ci-deploy-sdk-java.yml# Публикация Java SDK в Artifactory/Maven
 │   ├── .gitlab-ci-java-sdk.yml       # Старый Java SDK (обратная совместимость)
 │   ├── .gitlab-ci-spec-gen.yml       # Старый PHP через OpenAPI (обратная совместимость)
 │   ├── version.gitlab-ci.yml         # Версионирование спецификации
