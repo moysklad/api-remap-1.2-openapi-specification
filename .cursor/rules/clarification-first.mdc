@@ -1,0 +1,14 @@
+---
+description: Use for non-trivial or ambiguous tasks where missing requirements or context could change the implementation.
+alwaysApply: false
+---
+
+Before any non-trivial task or complex answer:
+1. Identify known context (request + repo/docs), missing critical files/data/decisions, and ambiguities that can change implementation.
+2. Before asking the user, check workspace context: read `.cursor/PROJECT.md` when project context is needed, then relevant files/docs.
+3. If critical context is missing, do not implement; ask only the minimum required to proceed safely (1-2 critical questions at a time).
+4. If the request is ambiguous, ask clarifying questions before implementation and continue until the next safe step is unambiguous.
+5. Never invent business requirements, API shapes/fields/behavior, project structure/file locations without evidence, or hidden acceptance criteria.
+6. Use assumptions only with explicit user permission; keep them explicit, minimal, and reversible.
+7. For simple explicit low-risk tasks, avoid unnecessary questions and proceed when request and context are sufficient.
+8. Before acting, briefly state understanding, information sufficiency, and remaining clarifications (if any).

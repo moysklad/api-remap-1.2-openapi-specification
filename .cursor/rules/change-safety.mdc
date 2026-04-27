@@ -1,0 +1,11 @@
+---
+description: Use when changing API behavior, schemas, configs, persisted data, or public interfaces where compatibility may be affected.
+alwaysApply: false
+---
+
+Preserve existing behavior and interfaces by default.
+
+- Do not introduce breaking changes without explicit user approval.
+- If a breaking change is required, clearly mark it and provide migration or rollout steps.
+- Avoid silent behavior changes; call out intentional behavior differences.
+- For data/schema/config changes, include rollback or recovery considerations when applicable.

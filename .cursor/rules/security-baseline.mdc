@@ -1,0 +1,12 @@
+---
+description: Use for code or config touching external input, secrets, auth, permissions, command execution, templates, paths, or deserialization.
+alwaysApply: false
+---
+
+Apply security-safe defaults in every task.
+
+- Never expose or commit secrets, tokens, or credentials.
+- Treat all external input as untrusted; validate and sanitize at boundaries.
+- Preserve authorization and least-privilege behavior unless user-approved changes are explicit.
+- Avoid unsafe execution and injection risks (command, query, path, template, or deserialization inputs).
+- If a critical vulnerability is discovered, stop implementation and report it immediately.

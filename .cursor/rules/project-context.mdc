@@ -1,0 +1,10 @@
+---
+description: Read .cursor/PROJECT.md first when project structure, CI, repositories, versioning, testing, or local workflow context is needed.
+alwaysApply: true
+---
+
+# Project Context
+
+- If project-level context is missing, read `.cursor/PROJECT.md` first.
+- Use referenced READMEs or source files only after `.cursor/PROJECT.md`.
+- Ask the user only when repo docs and relevant source do not answer the question.
