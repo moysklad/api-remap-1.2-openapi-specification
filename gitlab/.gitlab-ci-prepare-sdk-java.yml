@@ -78,7 +78,8 @@ prep-branch-and-mr-java:
     - PROJECT_ENCODED="moysklad%2Fmisc%2Fjava-remap-1.2-sdk"
 
     - echo "Checking existing OPEN merge requests for branch $BRANCH_NAME -> master"
-    - EXISTING_MR=$(curl -k -sS --header "PRIVATE-TOKEN: ${CICD_PAT_JAVA}" "${API_BASE}/projects/${PROJECT_ENCODED}/merge_requests?source_branch=${BRANCH_NAME}&target_branch=master&state=opened&per_page=1")
+    - |
+      EXISTING_MR=$(curl -k -sS --header "PRIVATE-TOKEN: ${CICD_PAT_JAVA}" "${API_BASE}/projects/${PROJECT_ENCODED}/merge_requests?source_branch=${BRANCH_NAME}&target_branch=master&state=opened&per_page=1")
 
     - |
       if [ "$EXISTING_MR" != "[]" ]; then
