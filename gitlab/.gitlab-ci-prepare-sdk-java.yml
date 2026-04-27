@@ -151,13 +151,13 @@ merge-branch-java:
         exit 1
       fi
 
-    - # Используем отдельный клон репозитория спецификации,
-    - # чтобы видеть состояние после job version:auto (новый коммит и тег)
+    # Используем отдельный клон репозитория спецификации,
+    # чтобы видеть состояние после job version:auto (новый коммит и тег)
     - SPEC_REPO_URL="${CI_REPOSITORY_URL}"
     - git clone "$SPEC_REPO_URL" spec-repo
     - cd spec-repo
 
-    - # Обновляем ветку и теги — сюда уже подтянуты изменения, сделанные в version:auto
+    # Обновляем ветку и теги — сюда уже подтянуты изменения, сделанные в version:auto
     - git fetch origin "$CI_COMMIT_REF_NAME" --tags
     - git checkout "$CI_COMMIT_REF_NAME"
 
