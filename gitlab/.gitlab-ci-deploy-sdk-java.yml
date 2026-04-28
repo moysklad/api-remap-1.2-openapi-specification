@@ -54,6 +54,7 @@ deploy-to-maven:
         git fetch origin "$CI_COMMIT_REF_NAME" --tags
         git checkout "$CI_COMMIT_REF_NAME"
         TAG="$(git describe --tags --abbrev=0 2>/dev/null || echo "")"
+        cd ..
       else
         TAG="$(tr -d '\r\n' < java-release-tag.txt)"
       fi
