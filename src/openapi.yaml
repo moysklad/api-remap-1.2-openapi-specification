@@ -573,6 +573,8 @@ components:
       $ref: './components/schemas/dictionary/currencyList.yaml'
     CurrencyRate:
       $ref: './components/schemas/common/currencyRate.yaml'
+    RateUpdateType:
+      $ref: './components/schemas/dictionary/rateUpdateType.yaml'
     Employee:
       $ref: './components/schemas/dictionary/employee.yaml'
     EmployeeList:

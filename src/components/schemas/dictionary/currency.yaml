@@ -51,8 +51,7 @@ properties:
     example: false
   rateUpdateType:
     type: string
-    description: Способ обновления курса валюты
-    enum: [manual, auto]
+    description: Способ обновления курса валюты. Известные значения описаны в RateUpdateType
     example: "manual"
   archived:
     type: boolean
