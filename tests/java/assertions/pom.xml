@@ -35,8 +35,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.openapitools</groupId>
-            <artifactId>openapi-java-client</artifactId>
+            <groupId>ru.moysklad.api</groupId>
+            <artifactId>remap-1.2-sdk</artifactId>
             <version>1.0.0</version>
             <scope>test</scope>
         </dependency>
