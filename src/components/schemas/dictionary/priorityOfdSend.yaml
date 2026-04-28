@@ -1,0 +1,4 @@
+type: string
+description: Известные значения приоритетного способа отправки чека покупателю
+enum: [phone, email, none]
+example: "phone"

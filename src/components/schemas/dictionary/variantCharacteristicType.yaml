@@ -1,0 +1,4 @@
+type: string
+description: Известные значения типа значения характеристики модификации
+enum: [string]
+example: "string"

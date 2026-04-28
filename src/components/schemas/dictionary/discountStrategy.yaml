@@ -1,0 +1,4 @@
+type: string
+description: Известные значения стратегии совместного применения скидок
+enum: [bySum, byPriority]
+example: "bySum"
