@@ -23,7 +23,7 @@ Before creating path files, build an endpoint matrix from the MD. This is the ma
 Use heading search on the source MD:
 
 ```bash
-rg '^### ' /home/reyzor/repos/api-remap-1.2-doc/md/<folder>/_<entity>.md
+rg '^### ' ~/repos/api-remap-1.2-doc/md/<folder>/_<entity>.md
 ```
 
 Keep only API operation sections. Ignore narrative sections that do not describe a request/response flow, but keep `### Метаданные`, `### Позиции`, `### Массовое ...`, and subtype-specific endpoint groups.
