@@ -26,6 +26,8 @@ coverage/
 # PHP (composer + PHPUnit when running in Docker or locally)
 tests/php/vendor/
 tests/php/.phpunit.cache/
+# Java
+tests/java/assertions/target/
 
 # Build artifacts
 dist/
