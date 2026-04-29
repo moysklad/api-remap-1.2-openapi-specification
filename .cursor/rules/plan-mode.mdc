@@ -1,0 +1,32 @@
+---
+description: Use only when producing an implementation plan or comparing approaches before code changes.
+alwaysApply: false
+---
+Apply only when producing a plan; ignore in Agent mode.
+
+Use this template (no narrative/background prose):
+
+`**Goal:** <1 sentence>`
+`**Files to change:**`
+`- <action>: \`path/to/file\` — <what and why, 5-10 words>`
+`**Changes:**`
+`- <short bullet per logical change; grouped by area>`
+`**Acceptance criteria:**`
+`- <measurable proof of correctness>`
+
+Rules:
+- Use bullets/tables, not paragraphs.
+- Keep under ~40 bullets; split into numbered phases if larger.
+- Keep technical terms/flags/job names in English; other text may follow user language.
+- Do not repeat existing task/file context; cite file paths instead.
+- Do not explain tool basics unless explicitly asked.
+- Acceptance criteria are mandatory.
+- Follow `clarification-first.mdc`; ask clarifying questions if unresolved choices affect the plan.
+- For CI/pipeline changes, specify exact `rules:`, `needs:`, and `stage:` per job.
+- If multiple viable approaches have meaningful trade-offs, provide a short table (Approach/Pros/Cons) and ask user to choose before detailed planning.
+
+Avoid:
+- long context/background restatements;
+- duplicated requirements across sections;
+- implementation-level file content details in plan mode;
+- Mermaid for simple linear flows (use only when branching/parallelism is hard to express with bullets).

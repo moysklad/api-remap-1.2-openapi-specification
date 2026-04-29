@@ -1,0 +1,17 @@
+---
+description: Use when creating or editing .cursor/rules/*.mdc to review overlap, scope rules narrowly, and avoid redundant always-apply guidance.
+globs: .cursor/rules/*.mdc
+alwaysApply: false
+---
+
+Before creating/updating a rule:
+1. Review all files in `.cursor/rules/` to find existing matches, best fit for the change, and overlap risks.
+2. Prefer updating an existing rule when responsibility is the same; create a new rule only for clearly separate responsibility.
+3. Keep one concern per rule file.
+4. Resolve overlap twice: before edits (structure) and after edits (dedupe/conflicts).
+5. If overlap exists, explicitly merge, split responsibilities, or narrow scope so each rule has a distinct purpose.
+6. Avoid duplicated guidance unless it is intentional, minimal, and justified.
+7. Minimize `alwaysApply: true`; reserve it for core behavior and prefer file-scoped rules for narrow topics.
+8. Keep rules short and operational; remove background text and repeated explanations.
+9. Prefer referencing `.cursor/PROJECT.md` over copying project details across rules.
+10. After changes, verify no conflicts, no newly redundant rules, and clear boundaries between rule files.

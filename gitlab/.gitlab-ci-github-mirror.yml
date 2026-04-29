@@ -26,6 +26,16 @@ mirror-to-github:
         rm -rf .gitlab-ci.yml
       fi
 
+      if [ -d ".cursor" ]; then
+        echo "Removing .cursor directory..."
+        rm -rf .cursor
+      fi
+
+      if [ -f ".cursorignore" ]; then
+        echo "Removing .cursorignore..."
+        rm -f .cursorignore
+      fi
+
       if [ -f "README_GITLAB_CI.md" ]; then
         echo "Removing README_GITLAB_CI.md..."
         rm -f README_GITLAB_CI.md
@@ -44,14 +54,14 @@ mirror-to-github:
       # создаем новый корневой commit
       git checkout --orphan temp-branch
       git add -A
-      git commit -m "Mirror to GitHub without GitLab-specific files"
+      git commit -m "Mirror to GitHub without internal tooling files"
       
       # Удаляем старую ветку и переименовываем новую
       git branch -D "$CI_COMMIT_REF_NAME"
       git branch -m "$CI_COMMIT_REF_NAME"
       
       git push github "$CI_COMMIT_REF_NAME" --force --no-verify
-      echo "Successfully mirrored branch to GitHub without GitLab-specific files"
+      echo "Successfully mirrored branch to GitHub without internal tooling files"
 
       # Пушим теги, созданные job auto-version
       echo "Pushing tags to GitHub..."
