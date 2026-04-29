@@ -1,0 +1,13 @@
+---
+description: Use when editing dependency manifests or lockfiles to justify package changes and keep dependency scope minimal.
+globs: "**/{package.json,package-lock.json,pnpm-lock.yaml,yarn.lock,requirements.txt,requirements-dev.txt,pyproject.toml,Pipfile,Pipfile.lock,poetry.lock,pom.xml,build.gradle,build.gradle.kts,Cargo.toml,Cargo.lock,go.mod,go.sum,Gemfile,Gemfile.lock,composer.json,composer.lock,*.csproj,packages.config}"
+alwaysApply: false
+---
+
+Manage dependencies conservatively.
+
+- Prefer existing project dependencies and native capabilities before adding new packages.
+- Add a dependency only with clear task value and active maintenance.
+- Keep dependency scope minimal; avoid speculative installs.
+- Update dependency manifests and lockfiles consistently.
+- In the final summary, state added/updated/removed dependencies and why.

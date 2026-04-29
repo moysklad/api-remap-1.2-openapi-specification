@@ -44,5 +44,3 @@ clients/*
 /.venv-schemathesis/
 /.schemathesis-venv/
 /.hypothesis/
-/.cursorignore
-/.cursor/

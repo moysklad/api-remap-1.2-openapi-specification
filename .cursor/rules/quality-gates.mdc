@@ -1,0 +1,10 @@
+---
+description: Use before finalizing code, config, spec, doc, or CI changes to choose and report minimal verification checks.
+alwaysApply: false
+---
+
+Before marking work complete:
+- Run the smallest relevant verification set (tests, lint, typecheck, build, or project-specific checks).
+- If checks fail, fix issues or report blocker with failing command and key error.
+- Do not claim completion without verification unless user explicitly skips it.
+- In final summary, report checks run, pass/fail status, and skipped checks with reason.
