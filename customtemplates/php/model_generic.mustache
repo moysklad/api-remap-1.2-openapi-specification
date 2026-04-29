@@ -2,6 +2,7 @@ class {{classname}} {{#parentSchema}}extends {{{parent}}}{{/parentSchema}}{{^par
 {
     public const DISCRIMINATOR = {{#discriminator}}'{{discriminatorName}}'{{/discriminator}}{{^discriminator}}null{{/discriminator}};
 {{>model_constant}}
+{{>model_entity_static_builder}}
     /**
       * The original name of the model.
       *

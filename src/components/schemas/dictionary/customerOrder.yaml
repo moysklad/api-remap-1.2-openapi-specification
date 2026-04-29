@@ -1,5 +1,13 @@
 type: object
 description: Заказ покупателя
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "customerorder"
+    - param: "id"
+  type: "customerorder"
 properties:
   meta:
     description: Метаданные Заказа покупателя
