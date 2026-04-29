@@ -68,7 +68,7 @@ deploy-to-maven:
         echo "Using sdk-repo from upstream artifacts."
       else
         echo "sdk-repo artifact not found. Cloning SDK repository."
-        SDK_REPO_URL="https://oauth2:${CICD_PAT_JAVA}@git.company.lognex/moysklad/misc/java-remap-1.2-sdk.git"
+        SDK_REPO_URL="https://oauth2:${CICD_PAT_JAVA}@git.company.lognex/moysklad/misc/remap-1.2-java-sdk.git"
         git clone --depth=1 --filter=blob:none --single-branch --branch master "$SDK_REPO_URL" sdk-repo
       fi
     - cd sdk-repo

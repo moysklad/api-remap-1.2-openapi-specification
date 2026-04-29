@@ -34,7 +34,7 @@ prep-branch-and-mr-java:
         exit 1
       fi
 
-    - SDK_REPO_URL="https://oauth2:${CICD_PAT_JAVA}@git.company.lognex/moysklad/misc/java-remap-1.2-sdk.git"
+    - SDK_REPO_URL="https://oauth2:${CICD_PAT_JAVA}@git.company.lognex/moysklad/misc/remap-1.2-java-sdk.git"
     - BRANCH_NAME="${CI_COMMIT_REF_NAME}"
 
     - echo "Cloning internal SDK repo ${SDK_REPO_URL}"
@@ -68,11 +68,11 @@ prep-branch-and-mr-java:
     - git commit -m "$BRANCH_NAME Auto-generated Java SDK from OpenAPI specification"
     - git push -u origin "$BRANCH_NAME"
 
-    - echo "https://git.company.lognex/moysklad/misc/java-remap-1.2-sdk/-/compare/master...$BRANCH_NAME"
+    - echo "https://git.company.lognex/moysklad/misc/remap-1.2-java-sdk/-/compare/master...$BRANCH_NAME"
 
       # Создаём предварительный MR, если его ещё нет
     - API_BASE="https://git.company.lognex/api/v4"
-    - PROJECT_ENCODED="moysklad%2Fmisc%2Fjava-remap-1.2-sdk"
+    - PROJECT_ENCODED="moysklad%2Fmisc%2Fremap-1.2-java-sdk"
 
     - echo "Checking existing OPEN merge requests for branch $BRANCH_NAME -> master"
     - |
@@ -146,7 +146,7 @@ merge-branch-java:
 
     - cd ..
 
-    - SDK_REPO_URL="https://oauth2:${CICD_PAT_JAVA}@git.company.lognex/moysklad/misc/java-remap-1.2-sdk.git"
+    - SDK_REPO_URL="https://oauth2:${CICD_PAT_JAVA}@git.company.lognex/moysklad/misc/remap-1.2-java-sdk.git"
 
     - echo "Cloning internal SDK repo ${SDK_REPO_URL}"
     - git clone --depth=1 --filter=blob:none --single-branch --branch master "$SDK_REPO_URL" sdk-repo
