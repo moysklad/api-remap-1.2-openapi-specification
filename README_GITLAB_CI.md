@@ -56,7 +56,7 @@
 | `sdk-golden-*`          | Golden тесты                                                                                      |
 | `sdk-smoke-*`           | Smoke тесты                                                                                       |
 | `version:auto`          | Автоматическое версионирование и выпуск тега                                                      |
-| `mirror-to-github`      | Зеркалирование в GitHub (без GitLab‑файлов и CI README)                                           |
+| `mirror-to-github`      | Зеркалирование в GitHub без internal CI/release tooling (`gitlab`, `.gitlab-ci.yml`, CI README, `.versionrc.json`, `scripts/generate-diff-changelog.js` и др.) |
 | `create-github-release` | Создание GitHub Release на основе CHANGELOG                                                       |
 | `merge-branch-php`      | Обновление ветки master на удаленном gitlab sdk репозитории по сгенерированному sdk и выпуск тэга |
 
@@ -103,8 +103,10 @@
 | `SCHEMATHESIS_HOST`           | URL API сервера               | `host`               |
 | `SCHEMATHESIS_LOGIN`          | Логин для Basic auth          | `admin@test_user`    |
 | `SCHEMATHESIS_PASSWORD`       | Пароль для Basic auth         | `password123`        |
-| `SCHEMATHESIS_PHASES`         | Режимы тестирования           | `examples,coverage`  |
+| `SCHEMATHESIS_PHASES`         | Режимы тестирования           | `coverage` (по умолчанию) |
 | `SCHEMATHESIS_MAX_EXAMPLES`   | Максимум примеров на эндпоинт | `50` (по умолчанию)  |
+| `SCHEMATHESIS_WORKERS`        | Количество parallel workers внутри каждого shard | `1` (по умолчанию) |
+| `SCHEMATHESIS_INCLUDE_PATH_REGEX` | Переопределение path-фильтра для shard | Автоматически задаётся по `CONTRACT_SHARD` |
 
 
 **Режимы тестирования (SCHEMATHESIS_PHASES):**
@@ -113,7 +115,15 @@
 - `fuzzing` - случайные данные
 - `stateful` - изменение данных
 
-**По умолчанию:** `examples,coverage`
+**По умолчанию:** `coverage`
+
+`sdk-contract` запускается как `parallel:matrix` из 4 shards:
+- `dictionaries-1` — `commissionreportin`, `employee`, `cashin`, `bundle`, `companysettings`, `bonusprogram`, `group`, `personaldiscount`.
+- `dictionaries-2` — `product`, `internalorder`, `cashout`, `role`, `country`, `currency`, `discount`, `specialpricediscount`.
+- `dictionaries-3` — `counterparty`, `customerorder`, `contract`, `service`, `productfolder`, `customentity`, `accumulationdiscount`, `thing`.
+- `dictionaries-4` — `store`, `purchaseorder`, `retailstore`, `variant`, `uom`, `assortment`, `bonustransaction`.
+
+По умолчанию каждый shard использует `SCHEMATHESIS_WORKERS=1`, чтобы 4 параллельные job не превышали лимит API на 5 параллельных запросов от одного пользователя.
 
 
 ### Переменные для Push/Mirror
@@ -144,7 +154,7 @@
 |--------------------------|------------------------------------------------------------------------------------------------------------------------------------|
 | `changes-check`          | Проверка изменений OpenAPI в `src/` относительно последнего тега (теги из текущего репо)                                           |
 | `verify`                 | Проверка спецификации, bundling; подготовка окружения для contract (deploy-contract-env на ветке **stable**, create-contract-user) |
-| `contract-test`          | Контрактные тесты Schemathesis (`sdk-contract`) — после verify, до generate-sdk                                                    |
+| `contract-test`          | Контрактные тесты Schemathesis (`sdk-contract` в 4 parallel path-shards) — после verify, до generate-sdk                           |
 | `generate-sdk`           | Генерация SDK                                                                                                                      |
 | `test`                   | Тестирование (golden, smoke)                                                                                                       |
 | `version`                | Автоматическое версионирование и подготовка CHANGELOG/тегов                                                                        |

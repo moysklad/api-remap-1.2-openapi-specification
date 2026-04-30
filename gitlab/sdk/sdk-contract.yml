@@ -4,7 +4,7 @@
 # - fuzzing: генерация случайных данных для поиска уязвимостей
 # - stateful: тесты с изменением состояния
 #
-# По умолчанию: examples,coverage
+# По умолчанию: coverage. Job разбита на 4 path-shards через parallel:matrix.
 
 deploy-contract-env:
   stage: before-contract-test
@@ -103,6 +103,12 @@ remove-contract-env:
 sdk-contract:
   stage: contract-test
   image: python:3.11
+  parallel:
+    matrix:
+      - CONTRACT_SHARD: dictionaries-1
+      - CONTRACT_SHARD: dictionaries-2
+      - CONTRACT_SHARD: dictionaries-3
+      - CONTRACT_SHARD: dictionaries-4
   needs:
     - job: bundle-openapi
       artifacts: true
@@ -134,6 +140,25 @@ sdk-contract:
       # вызывают Schema Error при генерации примеров — это не дефект API.
       SCHEMATHESIS_PHASES="${SCHEMATHESIS_PHASES:-coverage}"
       SCHEMATHESIS_MAX_EXAMPLES="${SCHEMATHESIS_MAX_EXAMPLES:-50}"
+      SCHEMATHESIS_WORKERS="${SCHEMATHESIS_WORKERS:-1}"
+      SCHEMATHESIS_INCLUDE_PATH_REGEX="${SCHEMATHESIS_INCLUDE_PATH_REGEX:-}"
+
+      if [ -z "$SCHEMATHESIS_INCLUDE_PATH_REGEX" ]; then
+        case "${CONTRACT_SHARD:-}" in
+          dictionaries-1)
+            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/(entity/(commissionreportin|employee|cashin|bundle|bonusprogram|group|personaldiscount)(/|$)|context/companysettings(/|$))'
+            ;;
+          dictionaries-2)
+            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/(product|internalorder|cashout|role|country|currency|discount|specialpricediscount)(/|$)'
+            ;;
+          dictionaries-3)
+            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/(counterparty|customerorder|contract|service|productfolder|customentity|accumulationdiscount|thing)(/|$)'
+            ;;
+          dictionaries-4)
+            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/(store|purchaseorder|retailstore|variant|uom|assortment|bonustransaction)(/|$)'
+            ;;
+        esac
+      fi
       
       AUTH_HEADER=$(echo -n "${SCHEMATHESIS_LOGIN}:${SCHEMATHESIS_PASSWORD}" | base64)
       
@@ -150,12 +175,22 @@ sdk-contract:
       echo "    Base URL: $SCHEMATHESIS_BASE_URL"
       echo "    Phases: $SCHEMATHESIS_PHASES"
       echo "    Max examples: $SCHEMATHESIS_MAX_EXAMPLES"
+      echo "    Workers: $SCHEMATHESIS_WORKERS"
+      echo "    Shard: ${CONTRACT_SHARD:-all}"
+      echo "    Include path regex: ${SCHEMATHESIS_INCLUDE_PATH_REGEX:-<none>}"
       echo "    Exclude checks: $EXCLUDE_CHECKS"
-  
-      schemathesis run dist/openapi.yaml \
+
+      set -- schemathesis run dist/openapi.yaml \
         --url "$SCHEMATHESIS_BASE_URL" \
         -H "Authorization: Basic $AUTH_HEADER" \
         -H 'Accept-Encoding: gzip, deflate, br' \
         --max-examples "$SCHEMATHESIS_MAX_EXAMPLES" \
         --phases "$SCHEMATHESIS_PHASES" \
+        --workers "$SCHEMATHESIS_WORKERS" \
         --exclude-checks "$EXCLUDE_CHECKS"
+
+      if [ -n "$SCHEMATHESIS_INCLUDE_PATH_REGEX" ]; then
+        set -- "$@" --include-path-regex "$SCHEMATHESIS_INCLUDE_PATH_REGEX"
+      fi
+
+      "$@"

@@ -76,7 +76,7 @@ CHANGELOG.md                           # Auto-generated changelog (prepended by 
 |-------|----------|------|
 | `changes-check` | `check-openapi-changes` | master push |
 | `verify` | `lint-openapi`, `bundle-openapi`, `deploy-contract-env`, `create-contract-user` | push / web / master |
-| `contract-test` | `sdk-contract` | web / master |
+| `contract-test` | `sdk-contract` (4 parallel path-shards) | web / master |
 | `generate-sdk` | `generate-sdk-php`, `generate-sdk-java` (python/js remain stubs) | push / web / master |
 | `test` | `sdk-golden-php`, `sdk-golden-java`, `sdk-smoke` (php) | push / web / master |
 | `version` | `version:auto` | master push |
@@ -104,6 +104,7 @@ Legacy stages (`prepare`, `deploy-for-space`, `create-user`, `build`, `delete-sp
 | `CICD_PAT_PHP` | GitLab token for internal PHP SDK repo (`git.company.lognex/.../php-remap-1.2-sdk`) |
 | `GIT_USER` / `GIT_MAIL` | Git identity for CI commits |
 | `SCHEMATHESIS_HOST` / `_LOGIN` / `_PASSWORD` | Credentials for contract tests (required on web trigger) |
+| `SCHEMATHESIS_WORKERS` | Schemathesis parallel workers per contract shard; default **1** to stay below API parallel request limits |
 | `ENV_TTL_MINUTES` | DMS auto-clean delay after `env_prepare` (minutes); default **20** in `utils_python/client.py`; `deploy-contract-env` sets **60** for OpenAPI contract tests unless overridden — see `README_GITLAB_CI.md` |
 
 ## Versioning
