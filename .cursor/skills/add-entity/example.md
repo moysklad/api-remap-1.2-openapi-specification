@@ -77,7 +77,7 @@ tests/php/smoke/ApiEndpointsTest.php           # 10 new test methods
 
 1. **Schema had a stub** — `Contract` was already registered in `components.schemas` with only `meta`/`id`/`accountId`. We expanded it with all fields from the MD, keeping the same file path.
 2. **`ContractList` was new** — added both the file and the registration in `openapi.yaml`.
-3. **Enum values** — `contractType` uses JSON values (`Commission`, `Sales`) not Russian labels, as documented in the MD mapping table.
+3. **Enum values** — use JSON values (`Commission`, `Sales`) not Russian labels, as documented in the MD mapping table. In entity fields, keep the property as an open string and expose known values through a separate PascalCase enum component.
 4. **`rate` is an inline object** — not a `$ref` because it has a custom shape (`currency` + `value`), same pattern as in `customerOrder.yaml`.
 5. **Metadata endpoints** reuse `DocumentMetadata`, `AttributeMetaInfo`, `AttributeMetaInfoList` — shared schemas from `common/`.
 6. **States endpoint** — MD metadata section has `states` field → created `contract-metadata-state-by-id.yaml` with GET/PUT/DELETE (DELETE has `404: NotFoundEmpty`). Discovered by comparing with `customerorder` which has the same pattern.

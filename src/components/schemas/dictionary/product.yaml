@@ -1,5 +1,4 @@
 type: object
-x-entitytype-product: true
 properties:
   meta:
     description: Метаданные Товара
@@ -184,30 +183,20 @@ properties:
       $ref: '../../../openapi.yaml#/components/schemas/Pack'
   trackingType:
     type: string
-    description: Тип маркируемой продукции. Допустимые значения перечислены в константах класса
+    description: Тип маркируемой продукции. Известные значения описаны в TrackingType
+    example: "MILK"
   tnved:
     type: string
     maxLength: 255
     description: Код ТН ВЭД
   paymentItemType:
     type: string
-    enum:
-      - GOOD
-      - EXCISABLE_GOOD
-      - COMPOUND_PAYMENT_ITEM
-      - ANOTHER_PAYMENT_ITEM
-    description: Признак предмета расчета
+    description: Признак предмета расчета. Известные значения описаны в PaymentItemType
+    example: "GOOD"
   taxSystem:
     type: string
-    enum:
-      - GENERAL_TAX_SYSTEM
-      - SIMPLIFIED_TAX_SYSTEM_INCOME
-      - SIMPLIFIED_TAX_SYSTEM_INCOME_OUTCOME
-      - UNIFIED_AGRICULTURAL_TAX
-      - PRESUMPTIVE_TAX_SYSTEM
-      - PATENT_BASED
-      - TAX_SYSTEM_SAME_AS_GROUP
-    description: Код системы налогообложения
+    description: Код системы налогообложения. Известные значения описаны в TaxSystem
+    example: "GENERAL_TAX_SYSTEM"
   attributes:
     type: array
     description: Дополнительные поля
@@ -249,4 +238,5 @@ properties:
     description: ID синхронизации
   ppeType:
     type: string
-    description: Код вида номенклатурной классификации медицинских средств индивидуальной защиты. Допустимые значения перечислены в константах класса
+    description: Код вида номенклатурной классификации медицинских средств индивидуальной защиты. Известные значения описаны в PpeType
+    example: "2400001226405"

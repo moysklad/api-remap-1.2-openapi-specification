@@ -1,0 +1,4 @@
+type: string
+description: Известные значения типа бонусной операции
+enum: [EARNING, SPENDING]
+example: "EARNING"

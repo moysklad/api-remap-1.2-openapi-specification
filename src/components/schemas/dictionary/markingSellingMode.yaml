@@ -1,0 +1,4 @@
+type: string
+description: Известные значения режима продажи маркированных товаров
+enum: [CORRECT_MARKS_ONLY, WITHOUT_ERRORS, ALL]
+example: "CORRECT_MARKS_ONLY"

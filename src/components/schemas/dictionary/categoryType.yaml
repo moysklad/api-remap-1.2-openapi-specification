@@ -1,0 +1,4 @@
+type: string
+description: Известные значения категории бонусной операции
+enum: [REGULAR, WELCOME]
+example: "REGULAR"

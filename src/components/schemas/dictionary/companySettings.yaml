@@ -14,10 +14,8 @@ properties:
       $ref: '../../../openapi.yaml#/components/schemas/PriceType'
   discountStrategy:
     type: string
-    enum:
-      - bySum
-      - byPriority
-    description: Совместное применение скидок
+    description: Совместное применение скидок. Известные значения описаны в DiscountStrategy
+    example: "bySum"
   globalOperationNumbering:
     type: boolean
     description: Использовать сквозную нумерацию документов

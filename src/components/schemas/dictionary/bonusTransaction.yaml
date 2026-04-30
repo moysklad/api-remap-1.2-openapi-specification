@@ -44,17 +44,17 @@ properties:
     description: Количество бонусных баллов
   transactionType:
     type: string
-    enum: [EARNING, SPENDING]
-    description: Тип бонусной операции
+    description: Тип бонусной операции. Известные значения описаны в TransactionType
+    example: "EARNING"
   transactionStatus:
     type: string
-    enum: [WAIT_PROCESSING, COMPLETED, CANCELED]
-    description: Статус бонусной операции
+    description: Статус бонусной операции. Известные значения описаны в TransactionStatus
+    example: "WAIT_PROCESSING"
     readOnly: true
   categoryType:
     type: string
-    enum: [REGULAR, WELCOME]
-    description: Категория бонусной операции
+    description: Категория бонусной операции. Известные значения описаны в CategoryType
+    example: "REGULAR"
     readOnly: true
   code:
     type: string
