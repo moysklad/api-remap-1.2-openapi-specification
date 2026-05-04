@@ -123,9 +123,6 @@
 - `dictionaries-3` — `counterparty`, `customerorder`, `contract`, `service`, `productfolder`, `customentity`, `accumulationdiscount`, `thing`.
 - `dictionaries-4` — `store`, `purchaseorder`, `retailstore`, `variant`, `uom`, `assortment`, `bonustransaction`.
 
-По умолчанию каждый shard использует `SCHEMATHESIS_WORKERS=1`, чтобы 4 параллельные job не превышали лимит API на 5 параллельных запросов от одного пользователя.
-
-
 ### Переменные для Push/Mirror
 
 | Переменная     | Описание                                                                                                                                |
