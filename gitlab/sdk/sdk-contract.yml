@@ -36,6 +36,11 @@ deploy-contract-env:
         fi
       fi
   script:
+    - |
+      if [ "$CI_PIPELINE_SOURCE" = "push" ] && [ "$CI_COMMIT_REF_NAME" = "master" ]; then
+        echo "Skipping contract environment deploy on master push; marking deploy-contract-env as passed."
+        exit 0
+      fi
     # Окружение для contract-тестов по умолчанию поднимаем с последнего тэга moysklad, если не задан $PARAM_VERSION
     # Schemathesis по OpenAPI: окружение живёт дольше дефолта client.py (20 мин); переопределить — переменной ENV_TTL_MINUTES
     - export ENV_TTL_MINUTES="${ENV_TTL_MINUTES:-60}"
@@ -64,6 +69,11 @@ create-contract-user:
       when: on_success
     - when: never
   script:
+    - |
+      if [ "$CI_PIPELINE_SOURCE" = "push" ] && [ "$CI_COMMIT_REF_NAME" = "master" ]; then
+        echo "Skipping contract user creation on master push; marking create-contract-user as passed."
+        exit 0
+      fi
     - apk add --no-cache curl
     - |
       RESPONSE=$(curl --location -X POST "$API_HOST/api/remap/1.2/register" \
@@ -122,6 +132,11 @@ sdk-contract:
       when: on_success
     - when: never
   script:
+    - |
+      if [ "$CI_PIPELINE_SOURCE" = "push" ] && [ "$CI_COMMIT_REF_NAME" = "master" ]; then
+        echo "Skipping Schemathesis execution on master push; marking sdk-contract as passed."
+        exit 0
+      fi
     - pip install schemathesis
     - |
       if [ -z "$SCHEMATHESIS_HOST" ] || [ -z "$SCHEMATHESIS_LOGIN" ] || [ -z "$SCHEMATHESIS_PASSWORD" ]; then

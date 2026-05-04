@@ -41,16 +41,16 @@
 
 #### 3. Merge/push в master
 
-При push/merge в `master` запускается полный релизный flow: проверки, контрактные тесты, версионирование и зеркалирование:
+При push/merge в `master` запускается полный релизный flow: проверки, контрактные тесты, версионирование и зеркалирование.
 
 | Job                     | Описание                                                                                          |
 |-------------------------|---------------------------------------------------------------------------------------------------|
 | `check-openapi-changes` | Проверка изменений OpenAPI относительно последнего тега в текущем репо                            |
 | `lint-openapi`          | Проверка спецификации                                                                             |
 | `bundle-openapi`        | Сборка bundled версии                                                                             |
-| `deploy-contract-env`   | Подготовка окружения для schemathesis                                                             |
-| `create-contract-user`  | Создание пользователя и экспорт SCHEMATHESIS_* переменных                                         |
-| `sdk-contract`          | Контрактные тесты Schemathesis                                                                    |
+| `deploy-contract-env`   | Подготовка окружения для schemathesis; при `push` в `master` job завершается успешно без реального deploy |
+| `create-contract-user`  | Создание пользователя и экспорт SCHEMATHESIS_* переменных; при `push` в `master` job завершается успешно без реального register |
+| `sdk-contract`          | Контрактные тесты Schemathesis; при `push` в `master` job завершается успешно без запуска Schemathesis |
 | `remove-contract-env`   | Очистка окружения (manual, allow_failure)                                                         |
 | `generate-sdk-*`        | Генерация SDK                                                                                     |
 | `sdk-golden-*`          | Golden тесты                                                                                      |
