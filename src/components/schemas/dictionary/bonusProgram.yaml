@@ -27,8 +27,8 @@ properties:
     description: Количество приветственных баллов, начисляемых участникам бонусной программы
   welcomeBonusesMode:
     type: string
-    enum: [REGISTRATION, FIRST_PURCHASE]
-    description: Условие начисления приветственных баллов
+    description: Условие начисления приветственных баллов. Известные значения описаны в WelcomeBonusesMode
+    example: "REGISTRATION"
   maxPaidRatePercents:
     type: integer
     format: int32

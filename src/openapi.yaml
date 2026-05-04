@@ -575,12 +575,20 @@ components:
       $ref: './components/schemas/dictionary/bonusTransaction.yaml'
     BonusTransactionList:
       $ref: './components/schemas/dictionary/bonusTransactionList.yaml'
+    CategoryType:
+      $ref: './components/schemas/dictionary/categoryType.yaml'
     DeleteInfo:
       $ref: './components/schemas/common/deleteInfo.yaml'
+    CompanyType:
+      $ref: './components/schemas/dictionary/companyType.yaml'
+    ContractType:
+      $ref: './components/schemas/dictionary/contractType.yaml'
     Error:
       $ref: './components/schemas/common/error.yaml'
     DiscountBase:
       $ref: './components/schemas/dictionary/discountBase.yaml'
+    DiscountStrategy:
+      $ref: './components/schemas/dictionary/discountStrategy.yaml'
     BuyPrice:
       $ref: './components/schemas/dictionary/buyPrice.yaml'
     Cashier:
@@ -601,6 +609,8 @@ components:
       $ref: './components/schemas/dictionary/currencyList.yaml'
     CurrencyRate:
       $ref: './components/schemas/common/currencyRate.yaml'
+    RateUpdateType:
+      $ref: './components/schemas/dictionary/rateUpdateType.yaml'
     Employee:
       $ref: './components/schemas/dictionary/employee.yaml'
     EmployeeList:
@@ -619,6 +629,10 @@ components:
       $ref: './components/schemas/dictionary/factureOut.yaml'
     FactureIn:
       $ref: './components/schemas/dictionary/factureIn.yaml'
+    FiscalType:
+      $ref: './components/schemas/dictionary/fiscalType.yaml'
+    Gender:
+      $ref: './components/schemas/dictionary/gender.yaml'
     Group:
       $ref: './components/schemas/dictionary/group.yaml'
     GroupList:
@@ -668,8 +682,12 @@ components:
       $ref: './components/schemas/dictionary/note.yaml'
     Pack:
       $ref: './components/schemas/dictionary/pack.yaml'
+    PaymentItemType:
+      $ref: './components/schemas/dictionary/paymentItemType.yaml'
     PersonalDiscount:
       $ref: './components/schemas/dictionary/personalDiscount.yaml'
+    PpeType:
+      $ref: './components/schemas/dictionary/ppeType.yaml'
     PositionStock:
       $ref: './components/schemas/common/positionStock.yaml'
     PriceType:
@@ -684,6 +702,8 @@ components:
       $ref: './components/schemas/dictionary/productFolderList.yaml'
     Region:
       $ref: './components/schemas/dictionary/region.yaml'
+    RewardType:
+      $ref: './components/schemas/dictionary/rewardType.yaml'
     RetailStore:
       $ref: './components/schemas/dictionary/retailStore.yaml'
     SalePrice:
@@ -696,6 +716,8 @@ components:
       $ref: './components/schemas/dictionary/serviceList.yaml'
     State:
       $ref: './components/schemas/dictionary/state.yaml'
+    StateType:
+      $ref: './components/schemas/dictionary/stateType.yaml'
     Store:
       $ref: './components/schemas/dictionary/store.yaml'
     StoreMetadata:
@@ -712,6 +734,14 @@ components:
       $ref: './components/schemas/dictionary/storeBalance.yaml'
     StoreBalanceList:
       $ref: './components/schemas/dictionary/storeBalanceList.yaml'
+    TaxSystem:
+      $ref: './components/schemas/dictionary/taxSystem.yaml'
+    TrackingType:
+      $ref: './components/schemas/dictionary/trackingType.yaml'
+    TransactionStatus:
+      $ref: './components/schemas/dictionary/transactionStatus.yaml'
+    TransactionType:
+      $ref: './components/schemas/dictionary/transactionType.yaml'
     Uom:
       $ref: './components/schemas/dictionary/uom.yaml'
     UomList:
@@ -739,6 +769,8 @@ components:
       $ref: './components/schemas/dictionary/variantList.yaml'
     VariantCharacteristic:
       $ref: './components/schemas/dictionary/variantCharacteristic.yaml'
+    VariantCharacteristicType:
+      $ref: './components/schemas/dictionary/variantCharacteristicType.yaml'
     VariantCharacteristicValue:
       $ref: './components/schemas/dictionary/variantCharacteristicValue.yaml'
     VariantPack:
@@ -852,14 +884,28 @@ components:
       $ref: './components/schemas/dictionary/companySettings.yaml'
     CompanySettingsMetadata:
       $ref: './components/schemas/dictionary/companySettingsMetadata.yaml'
+    MarkingSellingMode:
+      $ref: './components/schemas/dictionary/markingSellingMode.yaml'
+    MarksCheckMode:
+      $ref: './components/schemas/dictionary/marksCheckMode.yaml'
+    MinionToMasterType:
+      $ref: './components/schemas/dictionary/minionToMasterType.yaml'
     Discount:
       $ref: './components/schemas/dictionary/discount.yaml'
     DiscountAssortmentItem:
       $ref: './components/schemas/common/discountAssortmentItem.yaml'
     DiscountList:
       $ref: './components/schemas/dictionary/discountList.yaml'
+    PriorityOfdSend:
+      $ref: './components/schemas/dictionary/priorityOfdSend.yaml'
+    Sex:
+      $ref: './components/schemas/dictionary/sex.yaml'
     SpecialPriceDiscount:
       $ref: './components/schemas/dictionary/specialPriceDiscount.yaml'
+    TobaccoMrcControlType:
+      $ref: './components/schemas/dictionary/tobaccoMrcControlType.yaml'
+    WelcomeBonusesMode:
+      $ref: './components/schemas/dictionary/welcomeBonusesMode.yaml'
 
     CustomEntity:
       $ref: './components/schemas/dictionary/customEntity.yaml'

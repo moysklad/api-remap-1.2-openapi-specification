@@ -78,26 +78,16 @@ properties:
     readOnly: true
   paymentItemType:
     type: string
-    description: Признак предмета расчета
-    enum:
-      - GOOD
-      - EXCISABLE_GOOD
-      - COMPOUND_PAYMENT_ITEM
-      - ANOTHER_PAYMENT_ITEM
+    description: Признак предмета расчета. Известные значения описаны в PaymentItemType
+    example: "GOOD"
   taxSystem:
     type: string
-    description: Код системы налогообложения
-    enum:
-      - GENERAL_TAX_SYSTEM
-      - SIMPLIFIED_TAX_SYSTEM_INCOME
-      - SIMPLIFIED_TAX_SYSTEM_INCOME_OUTCOME
-      - UNIFIED_AGRICULTURAL_TAX
-      - PRESUMPTIVE_TAX_SYSTEM
-      - PATENT_BASED
-      - TAX_SYSTEM_SAME_AS_GROUP
+    description: Код системы налогообложения. Известные значения описаны в TaxSystem
+    example: "GENERAL_TAX_SYSTEM"
   trackingType:
     type: string
-    description: Тип маркируемой продукции
+    description: Тип маркируемой продукции. Известные значения описаны в TrackingType
+    example: "TOBACCO"
   tnved:
     type: string
     maxLength: 255

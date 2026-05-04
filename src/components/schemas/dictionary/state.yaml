@@ -30,6 +30,5 @@ properties:
     example: "counterparty"
   stateType:
     type: string
-    enum: [Regular, Successful, Unsuccessful]
-    description: Тип Статуса
+    description: Тип Статуса. Известные значения описаны в StateType
     example: "Regular"

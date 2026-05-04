@@ -200,36 +200,36 @@ properties:
             description: Тип эквайринга
   fiscalType:
     type: string
-    description: Фискальный режим работы Точки продаж
-    enum: [ STANDARD, MASTER, CLOUD ]
+    description: Фискальный режим работы Точки продаж. Известные значения описаны в FiscalType
+    example: "STANDARD"
   defaultTaxSystem:
     type: string
-    description: Система налогообложения по умолчанию
-    enum: [ GENERAL_TAX_SYSTEM, SIMPLIFIED_TAX_SYSTEM_INCOME, SIMPLIFIED_TAX_SYSTEM_INCOME_OUTCOME, UNIFIED_AGRICULTURAL_TAX, PRESUMPTIVE_TAX_SYSTEM, PATENT_BASED ]
+    description: Система налогообложения по умолчанию. Известные значения описаны в TaxSystem
+    example: "GENERAL_TAX_SYSTEM"
   orderTaxSystem:
     type: string
-    description: Система налогообложения заказов
-    enum: [ GENERAL_TAX_SYSTEM, SIMPLIFIED_TAX_SYSTEM_INCOME, SIMPLIFIED_TAX_SYSTEM_INCOME_OUTCOME, UNIFIED_AGRICULTURAL_TAX, PRESUMPTIVE_TAX_SYSTEM, PATENT_BASED ]
+    description: Система налогообложения заказов. Известные значения описаны в TaxSystem
+    example: "GENERAL_TAX_SYSTEM"
   minionToMasterType:
     type: string
-    description: Ограничение связи касс-слуг с кассами-мастерами
-    enum: [ ANY, SAME_GROUP, CHOSEN ]
+    description: Ограничение связи касс-слуг с кассами-мастерами. Известные значения описаны в MinionToMasterType
+    example: "ANY"
   tobaccoMrcControlType:
     type: string
-    description: Режим контроля минимальных розничных цен на табак
-    enum: [ USER_PRICE, MRC_PRICE, SAME_PRICE ]
+    description: Режим контроля минимальных розничных цен на табак. Известные значения описаны в TobaccoMrcControlType
+    example: "USER_PRICE"
   markingSellingMode:
     type: string
-    description: Режим продажи маркированных товаров
-    enum: [ CORRECT_MARKS_ONLY, WITHOUT_ERRORS, ALL ]
+    description: Режим продажи маркированных товаров. Известные значения описаны в MarkingSellingMode
+    example: "CORRECT_MARKS_ONLY"
   marksCheckMode:
     type: string
-    description: Режим проверки кодов маркировки
-    enum: [ CORRECT_MARKS_ONLY, WITHOUT_ERRORS, ALL, ALL_CHECKED ]
+    description: Режим проверки кодов маркировки. Известные значения описаны в MarksCheckMode
+    example: "CORRECT_MARKS_ONLY"
   priorityOfdSend:
     type: string
-    description: Приоритетный способ отправки чека покупателю
-    enum: [ phone, email, none ]
+    description: Приоритетный способ отправки чека покупателю. Известные значения описаны в PriorityOfdSend
+    example: "phone"
   allowCreateProducts:
     type: boolean
     description: Признак разрешения создания новых товаров при продаже

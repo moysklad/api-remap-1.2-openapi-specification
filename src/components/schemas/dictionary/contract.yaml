@@ -42,16 +42,12 @@ properties:
     description: Сумма Договора
   contractType:
     type: string
-    enum:
-      - Commission
-      - Sales
-    description: Тип Договора
+    description: Тип Договора. Известные значения описаны в ContractType
+    example: "Commission"
   rewardType:
     type: string
-    enum:
-      - PercentOfSales
-      - None
-    description: Тип Вознаграждения
+    description: Тип Вознаграждения. Известные значения описаны в RewardType
+    example: "PercentOfSales"
   rewardPercent:
     type: integer
     minimum: 0

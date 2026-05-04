@@ -1,0 +1,4 @@
+type: string
+description: Известные значения режима контроля минимальных розничных цен на табак
+enum: [USER_PRICE, MRC_PRICE, SAME_PRICE]
+example: "USER_PRICE"

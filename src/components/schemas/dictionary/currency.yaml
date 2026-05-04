@@ -51,8 +51,7 @@ properties:
     example: false
   rateUpdateType:
     type: string
-    description: Способ обновления курса валюты
-    enum: [manual, auto]
+    description: Способ обновления курса валюты. Известные значения описаны в RateUpdateType
     example: "manual"
   archived:
     type: boolean
@@ -68,8 +67,7 @@ properties:
     properties:
       gender:
         type: string
-        description: Пол
-        enum: [masculine, feminine]
+        description: Пол. Известные значения описаны в Gender
         example: "masculine"
       s1:
         type: string
@@ -89,7 +87,7 @@ properties:
     properties:
       gender:
         type: string
-        description: Пол
+        description: Пол. Известные значения описаны в Gender
         example: "feminine"
       s1:
         type: string

@@ -52,8 +52,7 @@ properties:
     description: Комментарий к контрагенту
   companyType:
     type: string
-    enum: [legal, entrepreneur, individual]
-    description: Тип контрагента
+    description: Тип контрагента. Известные значения описаны в CompanyType
     example: "legal"
   email:
     type: string
@@ -139,8 +138,8 @@ properties:
     description: Дата рождения для физлица
   sex:
     type: string
-    enum: [MALE, FEMALE]
-    description: Пол контрагента
+    description: Пол контрагента. Известные значения описаны в Sex
+    example: "MALE"
   discountCardNumber:
     type: string
     maxLength: 255
