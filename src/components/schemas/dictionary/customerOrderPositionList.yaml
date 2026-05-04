@@ -2,6 +2,7 @@ type: object
 description: Список позиций Заказа покупателя
 properties:
   context:
+    description: Метаданные о сотруднике, выполнившем запрос
     $ref: '../../../openapi.yaml#/components/schemas/Context'
   meta:
     allOf:

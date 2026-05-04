@@ -1,0 +1,16 @@
+type: object
+description: Объект-заглушка для неописанных сущностей
+properties:
+  meta:
+    description: Метаданные объекта
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID объекта
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true

@@ -68,8 +68,6 @@ prep-branch-and-mr-java:
     - git commit -m "$BRANCH_NAME Auto-generated Java SDK from OpenAPI specification"
     - git push -u origin "$BRANCH_NAME"
 
-    - echo "https://git.company.lognex/moysklad/misc/remap-1.2-java-sdk/-/compare/master...$BRANCH_NAME"
-
       # Создаём предварительный MR, если его ещё нет
     - API_BASE="https://git.company.lognex/api/v4"
     - PROJECT_ENCODED="moysklad%2Fmisc%2Fremap-1.2-java-sdk"

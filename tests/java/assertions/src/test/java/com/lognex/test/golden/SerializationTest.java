@@ -45,6 +45,7 @@ class SerializationTest extends BaseTestCase {
         FIXTURE_MODEL_MAP.put("counterparty_legal", "Counterparty");
         FIXTURE_MODEL_MAP.put("counterparty_metadata", "CounterpartyMetadata");
         FIXTURE_MODEL_MAP.put("counterparty_metadata_expanded", "CounterpartyMetadata");
+        FIXTURE_MODEL_MAP.put("counterparty_metadata_minimum", "CounterpartyMetadata");
         FIXTURE_MODEL_MAP.put("document_metadata", "DocumentMetadata");
         FIXTURE_MODEL_MAP.put("document_metadata_expanded", "DocumentMetadata");
         FIXTURE_MODEL_MAP.put("product_metadata", "Metadata");
@@ -212,20 +213,10 @@ class SerializationTest extends BaseTestCase {
             String key = entry.getKey();
             Object value = entry.getValue();
 
-            if (IGNORED_FIELDS.contains(key) || value == null) {
+            if (IGNORED_FIELDS.contains(key) /*|| value == null*/) {
                 continue;
             }
-            Object normalizedValue = normalizeValue(value);
-            if (normalizedValue instanceof List && ((List<?>) normalizedValue).isEmpty()) {
-                continue;
-            }
-            if ("factureIn".equals(key) && normalizedValue instanceof Map) {
-                Map<String, Object> factureIn = castMap((Map<?, ?>) normalizedValue);
-                if (isMetaOnlyOrMetaWithName(factureIn)) {
-                    continue;
-                }
-            }
-            normalized.put(key, normalizedValue);
+            normalized.put(key, normalizeValue(value));
         }
 
         Object attributes = normalized.get("attributes");
@@ -298,33 +289,7 @@ class SerializationTest extends BaseTestCase {
     }
 
     private static boolean isEmptyOrMetaOnly(Map<String, Object> data) {
-        if (data.isEmpty()) {
-            return true;
-        }
-        if (data.size() == 1 && data.containsKey("meta")) {
-            return true;
-        }
-        // Java models for payment links may emit empty inherited arrays.
-        if (data.containsKey("meta")
-            && isEmptyList(data.get("attributes"))
-            && isEmptyList(data.get("operations"))) {
-            return data.size() == 3 || data.size() == 2;
-        }
-        return false;
-    }
-
-    private static boolean isEmptyList(Object value) {
-        return value == null || (value instanceof List && ((List<?>) value).isEmpty());
-    }
-
-    private static boolean isMetaOnlyOrMetaWithName(Map<String, Object> data) {
-        if (data.isEmpty()) {
-            return true;
-        }
-        if (data.size() == 1 && data.containsKey("meta")) {
-            return true;
-        }
-        return data.size() == 2 && data.containsKey("meta") && data.containsKey("name");
+        return data.isEmpty();
     }
 
     private void assertNormalizedEquals(Map<String, Object> expected, Map<String, Object> actual, String message) {
@@ -367,7 +332,7 @@ class SerializationTest extends BaseTestCase {
 
             List<Map<String, Object>> diffs = new ArrayList<>();
             for (String key : allKeys) {
-                Object e = castMap((Map<?, ?>) expected).getOrDefault(key, null);
+                Object e = castMap((Map<?, ?>) expected).getOrDefault(key, "заглушка для ключа, несуществующего в fixture");
                 Object a = castMap((Map<?, ?>) actual).getOrDefault(key, null);
                 if (e == null && a == null) {
                     continue;

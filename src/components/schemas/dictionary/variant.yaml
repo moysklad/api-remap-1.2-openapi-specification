@@ -79,6 +79,7 @@ properties:
       $ref: '../../../openapi.yaml#/components/schemas/VariantPack'
   images:
     description: Массив метаданных Изображений
+    nullable: true
     type: object
     allOf:
       - $ref: '../../../openapi.yaml#/components/schemas/ImageList'

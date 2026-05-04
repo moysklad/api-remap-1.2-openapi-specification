@@ -56,6 +56,7 @@ properties:
   attributes:
     type: array
     description: Коллекция метаданных доп. полей
+    nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
   contract:
@@ -142,5 +143,6 @@ properties:
     description: |
       Связанные операции. Допустимые типы по `meta.type`: customerorder, purchasereturn, demand,
       invoiceout, commissionreportin, retailshift.
+    nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/CashInOperation'

@@ -14,8 +14,6 @@ version:auto:
       optional: true
     - job: sdk-golden-java
       optional: true
-    - job: sdk-smoke-java
-      optional: true
     - job: sdk-contract
       optional: true
   rules:

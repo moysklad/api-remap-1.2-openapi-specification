@@ -18,6 +18,5 @@ properties:
   quantity:
     type: number
     format: double
-#    check src
     minimum: 0
     description: Количество неснижаемого остатка для склада

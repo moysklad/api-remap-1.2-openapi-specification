@@ -143,6 +143,7 @@ properties:
   discountCardNumber:
     type: string
     maxLength: 255
+    nullable: true
     description: Номер дисконтной карты контрагента
   discounts:
     type: array
@@ -228,7 +229,6 @@ properties:
   attributes:
     type: array
     description: Дополнительные поля
-#    todo check
     nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'

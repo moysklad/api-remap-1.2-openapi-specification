@@ -23,6 +23,7 @@ properties:
   attributes:
     type: array
     description: Коллекция метаданных доп. полей
+    nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
   code:
@@ -129,24 +130,25 @@ properties:
   demands:
     type: array
     description: Связанные отгрузки (метаданные)
+    nullable: true
     items:
-      $ref: '../common/meta.yaml'
+      $ref: '../common/stabEntity.yaml'
   payments:
     type: array
+    nullable: true
     description: Связанные входящие платежи (метаданные)
     items:
-      $ref: '../common/meta.yaml'
+      $ref: '../common/stabEntity.yaml'
   returns:
     type: array
     description: Связанные возвраты поставщикам (метаданные)
+    nullable: true
     items:
-      $ref: '../common/meta.yaml'
+      $ref: '../common/stabEntity.yaml'
   consignee:
     description: Грузополучатель (контрагент или юрлицо)
     nullable: true
-    type: object
-    allOf:
-      - $ref: '../common/meta.yaml'
+    $ref: '../common/stabEntity.yaml'
   paymentNumber:
     type: string
     maxLength: 255

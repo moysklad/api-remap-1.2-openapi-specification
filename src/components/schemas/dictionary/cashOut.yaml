@@ -87,6 +87,7 @@ properties:
   attributes:
     type: array
     description: Коллекция метаданных доп. полей
+    nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
   contract:
@@ -148,6 +149,7 @@ properties:
       - $ref: '../../../openapi.yaml#/components/schemas/FactureIn'
   operations:
     type: array
+    nullable: true
     description: |
       Связанные операции: полное тело документа плюс `linkedSum`. Допустимые типы по `meta.type`:
       salesreturn, supply, invoicein, purchaseorder, commissionreportout. См. `CashOutOperation`.

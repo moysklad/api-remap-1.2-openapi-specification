@@ -26,7 +26,6 @@ run_php() {
   }
 }
 
-
 SMOKE_URL="${SMOKE_BASE_URL:-http://mock:8080}"
 echo "Waiting for mock server at ${SMOKE_URL}..." >&2
 max=90

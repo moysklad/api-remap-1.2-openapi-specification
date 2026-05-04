@@ -1,6 +1,9 @@
 type: object
 description: Упаковка
 properties:
+  meta:
+    description: Метаданные Упаковки
+    $ref: '../common/meta.yaml'
   id:
     type: string
     format: uuid

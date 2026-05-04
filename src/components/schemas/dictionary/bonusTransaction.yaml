@@ -29,9 +29,7 @@ properties:
   parentDocument:
     description: Метаданные связанного документа бонусной операции
     nullable: true
-    type: object
-    allOf:
-      - $ref: '../common/meta.yaml'
+    $ref: '../common/stabEntity.yaml'
   applicable:
     type: boolean
     description: Отметка о проведении
