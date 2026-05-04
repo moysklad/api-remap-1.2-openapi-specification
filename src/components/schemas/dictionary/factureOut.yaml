@@ -132,23 +132,23 @@ properties:
     description: Связанные отгрузки (метаданные)
     nullable: true
     items:
-      $ref: '../common/stabEntity.yaml'
+      $ref: '../../../openapi.yaml#/components/schemas/StabEntity'
   payments:
     type: array
     nullable: true
     description: Связанные входящие платежи (метаданные)
     items:
-      $ref: '../common/stabEntity.yaml'
+      $ref: '../../../openapi.yaml#/components/schemas/StabEntity'
   returns:
     type: array
     description: Связанные возвраты поставщикам (метаданные)
     nullable: true
     items:
-      $ref: '../common/stabEntity.yaml'
+      $ref: '../../../openapi.yaml#/components/schemas/StabEntity'
   consignee:
     description: Грузополучатель (контрагент или юрлицо)
     nullable: true
-    $ref: '../common/stabEntity.yaml'
+    $ref: '../../../openapi.yaml#/components/schemas/StabEntity'
   paymentNumber:
     type: string
     maxLength: 255

@@ -29,7 +29,7 @@ properties:
   parentDocument:
     description: Метаданные связанного документа бонусной операции
     nullable: true
-    $ref: '../common/stabEntity.yaml'
+    $ref: '../../../openapi.yaml#/components/schemas/StabEntity'
   applicable:
     type: boolean
     description: Отметка о проведении
