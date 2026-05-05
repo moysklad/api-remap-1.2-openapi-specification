@@ -1,0 +1,4 @@
+type: string
+description: Известные значения типа контрагента
+enum: [legal, entrepreneur, individual]
+example: "legal"

@@ -90,12 +90,5 @@ properties:
       - $ref: '../../../openapi.yaml#/components/schemas/ProductFolder'
   taxSystem:
     type: string
-    enum:
-      - GENERAL_TAX_SYSTEM
-      - SIMPLIFIED_TAX_SYSTEM_INCOME
-      - SIMPLIFIED_TAX_SYSTEM_INCOME_OUTCOME
-      - UNIFIED_AGRICULTURAL_TAX
-      - PRESUMPTIVE_TAX_SYSTEM
-      - PATENT_BASED
-      - TAX_SYSTEM_SAME_AS_GROUP
-    description: Код системы налогообложения
+    description: Код системы налогообложения. Известные значения описаны в TaxSystem
+    example: "GENERAL_TAX_SYSTEM"

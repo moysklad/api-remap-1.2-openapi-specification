@@ -54,14 +54,8 @@ properties:
     description: Включен ли НДС для позиции
   taxSystem:
     type: string
-    description: Код системы налогообложения
-    enum:
-      - GENERAL_TAX_SYSTEM
-      - SIMPLIFIED_TAX_SYSTEM_INCOME
-      - SIMPLIFIED_TAX_SYSTEM_INCOME_OUTCOME
-      - UNIFIED_AGRICULTURAL_TAX
-      - PRESUMPTIVE_TAX_SYSTEM
-      - PATENT_BASED
+    description: Код системы налогообложения. Известные значения описаны в TaxSystem
+    example: "GENERAL_TAX_SYSTEM"
   assortment:
     description: Метаданные товара/услуги/модификации/комплекта, которую представляет собой позиция
     $ref: '../../../openapi.yaml#/components/schemas/Assortment'

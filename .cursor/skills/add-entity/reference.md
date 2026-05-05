@@ -93,7 +93,7 @@ Before verification, every matrix row must have:
 | `Object` | `type: object` with inline `properties` | Or `$ref` if it matches a known schema |
 | `Array(Object)` | `type: array` with `items` | |
 | `Array(String)` | `type: array`, `items: { type: string }` | |
-| `Enum` | `type: string`, `enum: [...]` | Values from the enum table in MD |
+| `Enum` | Open `type: string` field + separate enum component | See "Enum fields and SDK compatibility" below |
 | `[Meta]` | Reference to another entity | See `$ref` patterns below |
 | `MetaArray` | Embedded list with meta | Use `allOf` + `$ref` to `*List` schema |
 
@@ -108,6 +108,38 @@ Before verification, every matrix row must have:
 ### Nullable fields
 
 If a field can be `null` (explicit in MD or from JSON examples), add `nullable: true`.
+
+### Enum fields and SDK compatibility
+
+For enum-like API values in entity fields, model the entity property as an open string and create a separate component with known values:
+
+```yaml
+rateUpdateType:
+  type: string
+  description: Способ обновления курса валюты. Известные значения описаны в RateUpdateType
+  example: "manual"
+```
+
+```yaml
+RateUpdateType:
+  $ref: './components/schemas/dictionary/rateUpdateType.yaml'
+```
+
+```yaml
+type: string
+description: Известные значения способа обновления курса валюты
+enum: [manual, auto]
+example: "manual"
+```
+
+Rules:
+
+1. Name the separate component like the field in PascalCase (`rateUpdateType` → `RateUpdateType`).
+2. Keep the component as a standalone `components.schemas` entry so SDKs can generate constants or enum helpers.
+3. Do **not** reference the component from the entity field with `$ref`; that can reintroduce strict enum validation for the property.
+4. Do **not** put `enum` inline on the entity field.
+5. Use JSON values from the MD enum mapping table, not Russian labels.
+6. Mention the separate component in the field `description` so API docs still point users to known values.
 
 ## 3. `$ref` patterns
 
@@ -687,7 +719,7 @@ Re-read the source `_<entity>.md` file and verify completeness:
 3. Verify:
    - `+Только для чтения` → `readOnly: true`
    - `[Meta]` type → correct `$ref` pattern (`allOf` for nullable, direct for non-nullable)
-   - `Enum` → all values present (use **JSON values** from the mapping table, not Russian labels)
+   - `Enum` → open string field + separate PascalCase enum component; use **JSON values** from the mapping table, not Russian labels
    - `String(N)` → `maxLength: N`
    - `Float` used for money → `format: double`; for weight/volume → `format: float`
 4. Note any intentionally skipped fields (region-specific like `mod__*`, deprecated) — these are OK to omit

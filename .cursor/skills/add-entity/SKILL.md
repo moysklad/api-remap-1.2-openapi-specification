@@ -82,11 +82,15 @@ For detailed stub template, see [reference.md](reference.md).
 Before verification, re-read the MD and confirm:
 
 - Every `#### Атрибуты сущности` row has a schema property, unless explicitly skipped and reported.
-- `+Только для чтения`, nullable values, enum JSON values, `String(N)`, and money/weight numeric formats are represented correctly.
+- `+Только для чтения`, nullable values, enum/open string choices, `String(N)`, and money/weight numeric formats are represented correctly.
 - Nested object structures match MD JSON examples exactly.
 - Every API operation section maps to a path + method and a smoke test.
 - Metadata attributes and `metadata/states/{id}` exist when the MD metadata section requires them.
 - The fixture uses the richest single-entity GET response, not a minimal create request.
+
+## Enum fields and SDK compatibility
+
+For enum-like values in entity fields, keep the entity field as unrestricted `type: string` and add a separate PascalCase component with the known enum values for SDK constants. Do **not** put `enum` inline on the entity field and do **not** `$ref` the enum component from that field, or SDKs may generate strict enum validation again. Detailed rules and templates are in [reference.md](reference.md).
 
 ## Polymorphic list rows (mixed `items`)
 

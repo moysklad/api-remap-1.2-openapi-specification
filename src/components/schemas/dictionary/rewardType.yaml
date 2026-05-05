@@ -1,0 +1,4 @@
+type: string
+description: Известные значения типа вознаграждения
+enum: [PercentOfSales, None]
+example: "PercentOfSales"
