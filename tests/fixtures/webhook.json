@@ -1,0 +1,15 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/webhook/aec51463-bbd2-11e6-8a84-bae500000003",
+    "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/webhook/metadata",
+    "type": "webhook",
+    "mediaType": "application/json"
+  },
+  "id": "aec51463-bbd2-11e6-8a84-bae500000003",
+  "accountId": "b8b74698-9128-11e6-8a84-bae500000001",
+  "entityType": "demand",
+  "url": "http://www.example.com",
+  "method": "POST",
+  "enabled": true,
+  "action": "CREATE"
+}

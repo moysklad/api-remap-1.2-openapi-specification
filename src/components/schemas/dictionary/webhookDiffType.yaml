@@ -1,0 +1,6 @@
+type: string
+description: Режим отображения изменения сущности при UPDATE. Известные значения для поля diffType сущности Webhook
+enum:
+  - NONE
+  - FIELDS
+example: "NONE"

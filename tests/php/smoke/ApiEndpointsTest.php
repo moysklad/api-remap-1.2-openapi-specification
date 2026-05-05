@@ -862,6 +862,101 @@ class ApiEndpointsTest extends TestCase
         $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
     }
 
+    // ==================== WEBHOOKS ====================
+
+    /**
+     * GET /entity/webhook
+     */
+    public function testListWebhooks(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/webhook');
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * POST /entity/webhook
+     */
+    public function testCreateWebhook(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/webhook', [
+            'json' => [
+                'url' => 'http://www.example.com',
+                'action' => 'CREATE',
+                'entityType' => 'supply',
+            ],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * GET /entity/webhook/{id}
+     */
+    public function testGetWebhookById(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/webhook/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * PUT /entity/webhook/{id}
+     */
+    public function testUpdateWebhook(): void
+    {
+        $response = $this->client->put(self::API_BASE_PATH . '/entity/webhook/' . self::TEST_UUID, [
+            'json' => [
+                'url' => 'http://www.example.com',
+                'action' => 'DELETE',
+            ],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * POST /entity/webhook/batch — массовое создание и обновление
+     */
+    public function testCreateOrUpdateWebhooksBatch(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/webhook/batch', [
+            'json' => [
+                [
+                    'url' => 'http://www.example.com',
+                    'action' => 'CREATE',
+                    'entityType' => 'supply',
+                ],
+            ],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * DELETE /entity/webhook/{id}
+     */
+    public function testDeleteWebhook(): void
+    {
+        $response = $this->client->delete(self::API_BASE_PATH . '/entity/webhook/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::DELETE_CODES);
+    }
+
+    /**
+     * POST /entity/webhook/delete
+     */
+    public function testBatchDeleteWebhooks(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/webhook/delete', [
+            'json' => [
+                [
+                    'meta' => [
+                        'href' => 'https://api.moysklad.ru/api/remap/1.2/entity/webhook/' . self::TEST_UUID,
+                        'metadataHref' => 'https://api.moysklad.ru/api/remap/1.2/entity/webhook/metadata',
+                        'type' => 'webhook',
+                        'mediaType' => 'application/json',
+                    ],
+                ],
+            ],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
     // ==================== PRICE TYPES ====================
 
     /**

@@ -337,6 +337,15 @@ paths:
     $ref: './paths/dictionaries/variants/variantcharacteristics.yaml'
   /entity/variant/metadata/characteristics/{id}:
     $ref: './paths/dictionaries/variants/variantcharacteristics-by-id.yaml'
+  # Webhooks
+  /entity/webhook:
+    $ref: './paths/dictionaries/webhooks/webhooks.yaml'
+  /entity/webhook/batch:
+    $ref: './paths/dictionaries/webhooks/webhooks-batch.yaml'
+  /entity/webhook/{id}:
+    $ref: './paths/dictionaries/webhooks/webhook-by-id.yaml'
+  /entity/webhook/delete:
+    $ref: './paths/dictionaries/webhooks/webhooks-delete.yaml'
   # Things
   /entity/thing:
     $ref: './paths/dictionaries/things/things.yaml'
@@ -784,6 +793,22 @@ components:
       $ref: './components/schemas/dictionary/thing.yaml'
     ThingList:
       $ref: './components/schemas/dictionary/thingList.yaml'
+    Webhook:
+      $ref: './components/schemas/dictionary/webhook.yaml'
+    WebhookAction:
+      $ref: './components/schemas/dictionary/webhookAction.yaml'
+    WebhookAuditContext:
+      $ref: './components/schemas/dictionary/webhookAuditContext.yaml'
+    WebhookDiffType:
+      $ref: './components/schemas/dictionary/webhookDiffType.yaml'
+    WebhookEvent:
+      $ref: './components/schemas/dictionary/webhookEvent.yaml'
+    WebhookList:
+      $ref: './components/schemas/dictionary/webhookList.yaml'
+    WebhookMethod:
+      $ref: './components/schemas/dictionary/webhookMethod.yaml'
+    WebhookNotificationPayload:
+      $ref: './components/schemas/dictionary/webhookNotificationPayload.yaml'
     StoreList:
       $ref: './components/schemas/dictionary/storeList.yaml'
     RetailStoreList:
@@ -960,6 +985,8 @@ tags:
     description: Операции с комплектами
   - name: Variants
     description: Операции с модификациями
+  - name: Webhooks
+    description: Операции с вебхуками
   - name: Things
     description: Операции с серийными номерами
   - name: Stores

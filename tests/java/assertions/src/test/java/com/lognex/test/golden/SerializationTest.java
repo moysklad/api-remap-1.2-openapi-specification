@@ -71,6 +71,7 @@ class SerializationTest extends BaseTestCase {
         FIXTURE_MODEL_MAP.put("bundle", "Bundle");
         FIXTURE_MODEL_MAP.put("bundle_component", "BundleComponent");
         FIXTURE_MODEL_MAP.put("variant", "Variant");
+        FIXTURE_MODEL_MAP.put("webhook", "Webhook");
         FIXTURE_MODEL_MAP.put("thing", "Thing");
         FIXTURE_MODEL_MAP.put("internal_order", "InternalOrder");
         FIXTURE_MODEL_MAP.put("customer_order", "CustomerOrder");

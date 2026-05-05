@@ -61,6 +61,7 @@ class SerializationTest extends TestCase
         'bundle' => 'Bundle',
         'bundle_component' => 'BundleComponent',
         'variant' => 'Variant',
+        'webhook' => 'Webhook',
         'thing' => 'Thing',
         'internal_order' => 'InternalOrder',
         'customer_order' => 'CustomerOrder',
