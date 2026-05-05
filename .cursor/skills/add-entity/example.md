@@ -81,6 +81,7 @@ tests/php/smoke/ApiEndpointsTest.php           # 10 new test methods
 4. **`rate` is an inline object** — not a `$ref` because it has a custom shape (`currency` + `value`), same pattern as in `customerOrder.yaml`.
 5. **Metadata endpoints** reuse `DocumentMetadata`, `AttributeMetaInfo`, `AttributeMetaInfoList` — shared schemas from `common/`.
 6. **States endpoint** — MD metadata section has `states` field → created `contract-metadata-state-by-id.yaml` with GET/PUT/DELETE (DELETE has `404: NotFoundEmpty`). Discovered by comparing with `customerorder` which has the same pattern.
+7. **Static builder** — `Contract` has `meta`, so `contract.yaml` carries `x-entity-static-builder` with the dictionary convention (`methodParams: ["id"]`, `href: entity / contract / $id`, `type: "contract"`). The list schema `contractList.yaml` does **not** get the block — only schemas with their own `meta`. After regeneration, `Contract::createWithMeta($id)` is available in the PHP SDK.
 
 ## Verification results
 
@@ -153,3 +154,4 @@ tests/php/fixtures/<snake_case>.json
 2. **Fixture must include `positions` as a MetaArray object** — include `meta.size`, `meta.limit`, and `meta.offset`, not an inline array unless the MD example really returns one.
 3. **Position smoke tests are endpoint-level** — cover list, get by ID, create/update if supported by MD, and batch delete where documented.
 4. **Compare against document peers first** — documents often have extra refs (`agent`, `organization`, `contract`, `state`, `rate.currency`) and operation arrays that generic dictionary templates do not show.
+5. **Static builder on both schemas with `meta`** — `<entity>.yaml` gets the entity convention (`methodParams: ["id"]`, `type: "<keyword>"`); `<entity>Position.yaml` gets the position convention (`methodParams: ["parentId", "id"]`, `type: "<keyword>position"`). `<entity>List.yaml` and `<entity>PositionList.yaml` do not get the block. Reference peers: `customerOrder.yaml`, `customerOrderPosition.yaml`.

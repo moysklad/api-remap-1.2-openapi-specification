@@ -1,5 +1,16 @@
 type: object
 description: Позиция возврата на склад комиссионера Полученного отчета комиссионера
+x-entity-static-builder:
+  methodParams:
+    - "parentId"
+    - "id"
+  href:
+    - path: "entity"
+    - path: "commissionreportin"
+    - param: "parentId"
+    - path: "returntocommissionerpositions"
+    - param: "id"
+  type: "commissionreportinreturnedposition"
 properties:
   meta:
     description: Метаданные позиции
