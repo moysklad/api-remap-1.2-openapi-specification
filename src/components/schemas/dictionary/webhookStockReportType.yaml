@@ -1,0 +1,6 @@
+type: string
+description: Тип отчёта остатков для вебхука на изменение остатков. Известные значения поля reportType
+enum:
+  - all
+  - bystore
+example: "all"

@@ -346,6 +346,15 @@ paths:
     $ref: './paths/dictionaries/webhooks/webhook-by-id.yaml'
   /entity/webhook/delete:
     $ref: './paths/dictionaries/webhooks/webhooks-delete.yaml'
+  # WebhookStock
+  /entity/webhookstock:
+    $ref: './paths/dictionaries/webhookstocks/webhookstocks.yaml'
+  /entity/webhookstock/batch:
+    $ref: './paths/dictionaries/webhookstocks/webhookstocks-batch.yaml'
+  /entity/webhookstock/{id}:
+    $ref: './paths/dictionaries/webhookstocks/webhookstock-by-id.yaml'
+  /entity/webhookstock/delete:
+    $ref: './paths/dictionaries/webhookstocks/webhookstocks-delete.yaml'
   # Things
   /entity/thing:
     $ref: './paths/dictionaries/things/things.yaml'
@@ -809,6 +818,16 @@ components:
       $ref: './components/schemas/dictionary/webhookMethod.yaml'
     WebhookNotificationPayload:
       $ref: './components/schemas/dictionary/webhookNotificationPayload.yaml'
+    WebhookStock:
+      $ref: './components/schemas/dictionary/webhookStock.yaml'
+    WebhookStockList:
+      $ref: './components/schemas/dictionary/webhookStockList.yaml'
+    WebhookStockNotificationPayload:
+      $ref: './components/schemas/dictionary/webhookStockNotificationPayload.yaml'
+    WebhookStockReportType:
+      $ref: './components/schemas/dictionary/webhookStockReportType.yaml'
+    WebhookStockStockType:
+      $ref: './components/schemas/dictionary/webhookStockStockType.yaml'
     StoreList:
       $ref: './components/schemas/dictionary/storeList.yaml'
     RetailStoreList:
@@ -987,6 +1006,8 @@ tags:
     description: Операции с модификациями
   - name: Webhooks
     description: Операции с вебхуками
+  - name: WebhookStocks
+    description: Операции с вебхуками на изменение остатков
   - name: Things
     description: Операции с серийными номерами
   - name: Stores
