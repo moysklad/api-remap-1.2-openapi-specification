@@ -450,6 +450,21 @@ paths:
     $ref: './paths/documents/purchaseorders/purchaseorder-position-by-id.yaml'
   /entity/purchaseorder/{id}/positions/delete:
     $ref: './paths/documents/purchaseorders/purchaseorder-positions-delete.yaml'
+  # Documents - Emission Orders
+  /entity/emissionorder:
+    $ref: './paths/documents/emissionorders/emissionorders.yaml'
+  /entity/emissionorder/{id}:
+    $ref: './paths/documents/emissionorders/emissionorder-by-id.yaml'
+  /entity/emissionorder/batch:
+    $ref: './paths/documents/emissionorders/emissionorders-batch.yaml'
+  /entity/emissionorder/metadata:
+    $ref: './paths/documents/emissionorders/emissionorder-metadata.yaml'
+  /entity/emissionorder/metadata/states/{id}:
+    $ref: './paths/documents/emissionorders/emissionorder-metadata-state-by-id.yaml'
+  /entity/emissionorder/{id}/positions:
+    $ref: './paths/documents/emissionorders/emissionorder-positions.yaml'
+  /entity/emissionorder/{id}/positions/{positionId}:
+    $ref: './paths/documents/emissionorders/emissionorder-position-by-id.yaml'
 
   # Documents - CommissionReportIns
   /entity/commissionreportin:
@@ -861,6 +876,20 @@ components:
       $ref: './components/schemas/dictionary/customerOrderPositionList.yaml'
     CustomerOrderList:
       $ref: './components/schemas/dictionary/customerOrderList.yaml'
+    EmissionOrder:
+      $ref: './components/schemas/dictionary/emissionOrder.yaml'
+    EmissionOrderPosition:
+      $ref: './components/schemas/dictionary/emissionOrderPosition.yaml'
+    EmissionOrderPositionList:
+      $ref: './components/schemas/dictionary/emissionOrderPositionList.yaml'
+    EmissionOrderList:
+      $ref: './components/schemas/dictionary/emissionOrderList.yaml'
+    EmissionOrderEmissionType:
+      $ref: './components/schemas/dictionary/emissionOrderEmissionType.yaml'
+    EmissionOrderDocumentState:
+      $ref: './components/schemas/dictionary/emissionOrderDocumentState.yaml'
+    EmissionOrderPositionStatus:
+      $ref: './components/schemas/dictionary/emissionOrderPositionStatus.yaml'
     PurchaseOrder:
       $ref: './components/schemas/dictionary/purchaseOrder.yaml'
     PurchaseOrderPosition:
@@ -1016,6 +1045,8 @@ tags:
     description: Операции с заказами покупателя
   - name: PurchaseOrders
     description: Операции с заказами поставщика
+  - name: EmissionOrders
+    description: Операции с заказами кодов маркировки
   - name: CashIns
     description: Операции с приходными ордерами
   - name: CashOuts

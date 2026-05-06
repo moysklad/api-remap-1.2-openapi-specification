@@ -1135,6 +1135,48 @@ class ApiEndpointsTest extends TestCase
         $this->assertDocumentEndpoints('/entity/purchaseorder');
     }
 
+    public function testEmissionOrderEndpoints(): void
+    {
+        $base = '/entity/emissionorder';
+
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . $base, [
+            'json' => [
+                'organization' => ['meta' => ['href' => 'https://api.moysklad.ru/api/remap/1.2/entity/organization/' . self::TEST_UUID, 'type' => 'organization', 'mediaType' => 'application/json']],
+                'trackingType' => 'MILK',
+                'emissionType' => 'LOCAL',
+            ],
+        ]));
+        $this->assertReachable($this->client->get(self::API_BASE_PATH . $base . '/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put(self::API_BASE_PATH . $base . '/' . self::TEST_UUID, [
+            'json' => ['name' => 'Updated emission order'],
+        ]));
+
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . $base . '/batch', [
+            'json' => [[
+                'organization' => ['meta' => ['href' => 'https://api.moysklad.ru/api/remap/1.2/entity/organization/' . self::TEST_UUID, 'type' => 'organization', 'mediaType' => 'application/json']],
+                'trackingType' => 'MILK',
+                'emissionType' => 'LOCAL',
+            ]],
+        ]));
+
+        $this->assertReachable($this->client->get(self::API_BASE_PATH . $base . '/metadata'));
+        $this->assertReachable($this->client->get(self::API_BASE_PATH . $base . '/metadata/states/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put(self::API_BASE_PATH . $base . '/metadata/states/' . self::TEST_UUID, ['json' => ['name' => 'state1']]));
+        $this->assertReachable($this->client->delete(self::API_BASE_PATH . $base . '/metadata/states/' . self::TEST_UUID));
+
+        $this->assertReachable($this->client->get(self::API_BASE_PATH . $base . '/' . self::TEST_UUID . '/positions'));
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . $base . '/' . self::TEST_UUID . '/positions', [
+            'json' => [
+                'quantity' => 1,
+                'assortment' => ['meta' => ['href' => 'https://api.moysklad.ru/api/remap/1.2/entity/product/' . self::TEST_UUID, 'type' => 'product', 'mediaType' => 'application/json']],
+            ],
+        ]));
+        $this->assertReachable($this->client->get(self::API_BASE_PATH . $base . '/' . self::TEST_UUID . '/positions/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put(self::API_BASE_PATH . $base . '/' . self::TEST_UUID . '/positions/' . self::TEST_UUID, [
+            'json' => ['quantity' => 2],
+        ]));
+    }
+
     private function assertDocumentEndpoints(string $base): void
     {
         $this->assertReachable($this->client->post(self::API_BASE_PATH . $base, ['json' => ['name' => 'X']]));
