@@ -425,6 +425,10 @@ paths:
     $ref: './paths/documents/customerorders/customerorder-position-by-id.yaml'
   /entity/customerorder/{id}/positions/delete:
     $ref: './paths/documents/customerorders/customerorder-positions-delete.yaml'
+  /entity/customerorder/{id}/notes:
+    $ref: './paths/documents/customerorders/customerorder-notes.yaml'
+  /entity/customerorder/{id}/notes/{noteId}:
+    $ref: './paths/documents/customerorders/customerorder-note-by-id.yaml'
   # Documents - Purchase Orders
   /entity/purchaseorder:
     $ref: './paths/documents/purchaseorders/purchaseorders.yaml'
@@ -450,6 +454,10 @@ paths:
     $ref: './paths/documents/purchaseorders/purchaseorder-position-by-id.yaml'
   /entity/purchaseorder/{id}/positions/delete:
     $ref: './paths/documents/purchaseorders/purchaseorder-positions-delete.yaml'
+  /entity/purchaseorder/{id}/notes:
+    $ref: './paths/documents/purchaseorders/purchaseorder-notes.yaml'
+  /entity/purchaseorder/{id}/notes/{noteId}:
+    $ref: './paths/documents/purchaseorders/purchaseorder-note-by-id.yaml'
   # Documents - Emission Orders
   /entity/emissionorder:
     $ref: './paths/documents/emissionorders/emissionorders.yaml'
@@ -732,6 +740,10 @@ components:
       $ref: './components/schemas/dictionary/minPrice.yaml'
     Note:
       $ref: './components/schemas/dictionary/note.yaml'
+    EventNote:
+      $ref: './components/schemas/dictionary/eventNote.yaml'
+    EventNoteList:
+      $ref: './components/schemas/dictionary/eventNoteList.yaml'
     Pack:
       $ref: './components/schemas/dictionary/pack.yaml'
     PaymentItemType:

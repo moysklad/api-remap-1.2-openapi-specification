@@ -1135,6 +1135,104 @@ class ApiEndpointsTest extends TestCase
         $this->assertDocumentEndpoints('/entity/purchaseorder');
     }
 
+    /**
+     * GET /entity/customerorder/{id}/notes
+     */
+    public function testGetCustomerOrderNotes(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/customerorder/' . self::TEST_UUID . '/notes');
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * POST /entity/customerorder/{id}/notes
+     */
+    public function testCreateCustomerOrderNote(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/customerorder/' . self::TEST_UUID . '/notes', [
+            'json' => ['description' => 'Привет, {{employee;730c1b3d-00ba-11ef-ac12-00120000000d}}!'],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * GET /entity/customerorder/{id}/notes/{noteId}
+     */
+    public function testGetCustomerOrderNoteById(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/customerorder/' . self::TEST_UUID . '/notes/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * PUT /entity/customerorder/{id}/notes/{noteId}
+     */
+    public function testUpdateCustomerOrderNote(): void
+    {
+        $response = $this->client->put(self::API_BASE_PATH . '/entity/customerorder/' . self::TEST_UUID . '/notes/' . self::TEST_UUID, [
+            'json' => ['description' => 'Обновленное событие'],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * DELETE /entity/customerorder/{id}/notes/{noteId}
+     */
+    public function testDeleteCustomerOrderNote(): void
+    {
+        $response = $this->client->delete(self::API_BASE_PATH . '/entity/customerorder/' . self::TEST_UUID . '/notes/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::DELETE_CODES);
+    }
+
+    /**
+     * GET /entity/purchaseorder/{id}/notes
+     */
+    public function testGetPurchaseOrderNotes(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/purchaseorder/' . self::TEST_UUID . '/notes');
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * POST /entity/purchaseorder/{id}/notes
+     */
+    public function testCreatePurchaseOrderNote(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/purchaseorder/' . self::TEST_UUID . '/notes', [
+            'json' => ['description' => 'Привет, {{employee;730c1b3d-00ba-11ef-ac12-00120000000d}}!'],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * GET /entity/purchaseorder/{id}/notes/{noteId}
+     */
+    public function testGetPurchaseOrderNoteById(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/purchaseorder/' . self::TEST_UUID . '/notes/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * PUT /entity/purchaseorder/{id}/notes/{noteId}
+     */
+    public function testUpdatePurchaseOrderNote(): void
+    {
+        $response = $this->client->put(self::API_BASE_PATH . '/entity/purchaseorder/' . self::TEST_UUID . '/notes/' . self::TEST_UUID, [
+            'json' => ['description' => 'Обновленное событие'],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * DELETE /entity/purchaseorder/{id}/notes/{noteId}
+     */
+    public function testDeletePurchaseOrderNote(): void
+    {
+        $response = $this->client->delete(self::API_BASE_PATH . '/entity/purchaseorder/' . self::TEST_UUID . '/notes/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::DELETE_CODES);
+    }
+
     public function testEmissionOrderEndpoints(): void
     {
         $base = '/entity/emissionorder';

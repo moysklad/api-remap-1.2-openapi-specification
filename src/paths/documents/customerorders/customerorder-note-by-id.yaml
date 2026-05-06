@@ -1,0 +1,90 @@
+get:
+  operationId: getCustomerOrderNoteById
+  tags:
+    - CustomerOrders
+  summary: Получить Событие Заказа покупателя по ID
+  description: Запрос на получение одного События Заказа покупателя
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - name: noteId
+      in: path
+      required: true
+      description: ID События
+      schema:
+        type: string
+        format: uuid
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/EventNote'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+put:
+  operationId: updateCustomerOrderNote
+  tags:
+    - CustomerOrders
+  summary: Обновить Событие Заказа покупателя
+  description: Запрос на обновление одного События Заказа покупателя
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - name: noteId
+      in: path
+      required: true
+      description: ID События
+      schema:
+        type: string
+        format: uuid
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            description:
+              type: string
+              maxLength: 4096
+              description: Текст События
+          required:
+            - description
+  responses:
+    '200':
+      description: Событие успешно обновлено
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/EventNote'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+delete:
+  operationId: deleteCustomerOrderNote
+  tags:
+    - CustomerOrders
+  summary: Удалить Событие Заказа покупателя
+  description: Запрос на удаление одного События Заказа покупателя
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - name: noteId
+      in: path
+      required: true
+      description: ID События
+      schema:
+        type: string
+        format: uuid
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '204':
+      description: Событие успешно удалено
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
