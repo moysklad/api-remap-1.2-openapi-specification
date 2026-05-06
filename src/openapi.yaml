@@ -952,6 +952,8 @@ components:
       $ref: './components/schemas/dictionary/demand.yaml'
     DemandList:
       $ref: './components/schemas/dictionary/demandList.yaml'
+    DemandOverheadDistribution:
+      $ref: './components/schemas/dictionary/demandOverheadDistribution.yaml'
     DemandPosition:
       $ref: './components/schemas/dictionary/demandPosition.yaml'
     DemandPositionList:

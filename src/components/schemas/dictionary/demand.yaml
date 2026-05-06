@@ -196,7 +196,8 @@ properties:
         type: string
         description: |
           Распределение накладных расходов между позициями.
-          Известные значения: `weight` (по весу), `volume` (по объёму), `price` (по цене).
+          Известные значения описаны в DemandOverheadDistribution
+        example: "weight"
   customerOrder:
     description: Заказ покупателя, с которым связана Отгрузка
     nullable: true
