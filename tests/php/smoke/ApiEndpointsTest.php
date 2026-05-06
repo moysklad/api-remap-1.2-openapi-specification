@@ -770,6 +770,26 @@ class ApiEndpointsTest extends TestCase
         $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
     }
 
+    // ==================== PROCESSING PLAN FOLDERS ====================
+
+    /**
+     * Группы техкарт: список, одиночное создание, массовое создание/обновление, CRUD по id, массовое удаление, метаданные.
+     *
+     * @see https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-gruppa-tehkart
+     */
+    public function testProcessingPlanFolderEndpoints(): void
+    {
+        $base = self::API_BASE_PATH . '/entity/processingplanfolder';
+        $this->assertReachable($this->client->get($base));
+        $this->assertReachable($this->client->post($base, ['json' => ['name' => 'PPF test']]));
+        $this->assertReachable($this->client->post($base . '/batch', ['json' => [['name' => 'PPF batch']]]));
+        $this->assertReachable($this->client->get($base . '/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put($base . '/' . self::TEST_UUID, ['json' => ['name' => 'PPF updated']]));
+        $this->assertReachable($this->client->delete($base . '/' . self::TEST_UUID));
+        $this->assertReachable($this->client->post($base . '/delete', ['json' => [['meta' => ['href' => 'x']]]]));
+        $this->assertReachable($this->client->get($base . '/metadata'));
+    }
+
     // ==================== SERVICES ====================
 
     /**

@@ -96,6 +96,18 @@ paths:
   /entity/country/batch:
     $ref: './paths/dictionaries/countries/countries-batch.yaml'
   #
+  # ProcessingPlanFolders
+  /entity/processingplanfolder:
+    $ref: './paths/dictionaries/processingPlanFolders/processingplanfolders.yaml'
+  /entity/processingplanfolder/{id}:
+    $ref: './paths/dictionaries/processingPlanFolders/processingplanfolders-by-id.yaml'
+  /entity/processingplanfolder/delete:
+    $ref: './paths/dictionaries/processingPlanFolders/processingplanfolders-delete.yaml'
+  /entity/processingplanfolder/batch:
+    $ref: './paths/dictionaries/processingPlanFolders/processingplanfolders-batch.yaml'
+  /entity/processingplanfolder/metadata:
+    $ref: './paths/dictionaries/processingPlanFolders/processingplanfolder-metadata.yaml'
+  #
   # ProductFolders
   /entity/productfolder:
     $ref: './paths/dictionaries/productFolders/productFolders.yaml'
@@ -930,6 +942,10 @@ components:
       $ref: './components/schemas/dictionary/productionTask.yaml'
     Move:
       $ref: './components/schemas/dictionary/move.yaml'
+    ProcessingPlanFolder:
+      $ref: './components/schemas/dictionary/processingPlanFolder.yaml'
+    ProcessingPlanFolderList:
+      $ref: './components/schemas/dictionary/processingPlanFolderList.yaml'
     ProcessingOrder:
       $ref: './components/schemas/dictionary/processingOrder.yaml'
     Demand:
@@ -1015,6 +1031,8 @@ tags:
     description: Операции с группами
   - name: Countries
     description: Операции со странами
+  - name: ProcessingPlanFolders
+    description: Операции с группами техкарт
   - name: ProductFolders
     description: Операции с группами товаров
   - name: Uoms
