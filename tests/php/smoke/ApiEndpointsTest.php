@@ -1773,6 +1773,62 @@ class ApiEndpointsTest extends TestCase
         $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
     }
 
+    // ==================== USER SETTINGS ====================
+
+    /**
+     * Проверяет доступность endpoint'а получения настроек пользователя.
+     * GET /context/usersettings
+     */
+    public function testGetUserSettings(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/context/usersettings');
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * Проверяет доступность endpoint'а обновления настроек пользователя.
+     * PUT /context/usersettings
+     */
+    public function testUpdateUserSettings(): void
+    {
+        $response = $this->client->put(self::API_BASE_PATH . '/context/usersettings', [
+            'json' => [
+                'defaultCompany' => [
+                    'metadataHref' => self::API_BASE_PATH . '/entity/organization/metadata',
+                    'type' => 'organization',
+                    'mediaType' => 'application/json',
+                ],
+                'defaultCustomerCounterparty' => [
+                    'href' => self::API_BASE_PATH . '/entity/counterparty/' . self::TEST_UUID,
+                    'type' => 'counterparty',
+                    'mediaType' => 'application/json',
+                ],
+                'defaultPurchaseCounterparty' => [
+                    'href' => self::API_BASE_PATH . '/entity/counterparty/' . self::TEST_UUID,
+                    'type' => 'counterparty',
+                    'mediaType' => 'application/json',
+                ],
+                'defaultProject' => [
+                    'href' => self::API_BASE_PATH . '/entity/project/' . self::TEST_UUID,
+                    'type' => 'project',
+                    'mediaType' => 'application/json',
+                ],
+                'defaultPlace' => [
+                    'href' => self::API_BASE_PATH . '/entity/store/' . self::TEST_UUID,
+                    'type' => 'store',
+                    'mediaType' => 'application/json',
+                ],
+                'locale' => 'ru_RU',
+                'mailFooter' => 'подпись в письме',
+                'fieldsPerRow' => 3,
+                'defaultScreen' => 'importcustom',
+                'printFormat' => 'pdf',
+                'autoShowReports' => false,
+            ],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
     // ==================== DISCOUNTS ====================
 
     /**

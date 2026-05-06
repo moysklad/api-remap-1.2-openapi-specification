@@ -244,6 +244,10 @@ paths:
   /context/companysettings/metadata:
     $ref: './paths/dictionaries/companysettings/companysettings-metadata.yaml'
 
+  # UserSettings
+  /context/usersettings:
+    $ref: './paths/dictionaries/usersettings/usersettings.yaml'
+
   # Discounts
   /entity/discount:
     $ref: './paths/dictionaries/discounts/discounts.yaml'
@@ -970,6 +974,14 @@ components:
       $ref: './components/schemas/dictionary/companySettings.yaml'
     CompanySettingsMetadata:
       $ref: './components/schemas/dictionary/companySettingsMetadata.yaml'
+    UserSettings:
+      $ref: './components/schemas/dictionary/userSettings.yaml'
+    DefaultScreen:
+      $ref: './components/schemas/dictionary/defaultScreen.yaml'
+    Locale:
+      $ref: './components/schemas/dictionary/locale.yaml'
+    PrintFormat:
+      $ref: './components/schemas/dictionary/printFormat.yaml'
     MarkingSellingMode:
       $ref: './components/schemas/dictionary/markingSellingMode.yaml'
     MarksCheckMode:
@@ -1067,6 +1079,8 @@ tags:
     description: Операции с полученными отчетами комиссионера
   - name: CompanySettings
     description: Операции с настройками компании
+  - name: UserSettings
+    description: Операции с настройками пользователя
   - name: Discounts
     description: Операции со скидками
   - name: Assortment
