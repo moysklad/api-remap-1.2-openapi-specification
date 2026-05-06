@@ -1,5 +1,13 @@
 type: object
 description: Вебхук JSON API 1.2
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "webhook"
+    - param: "id"
+  type: "webhook"
 properties:
   meta:
     $ref: '../common/meta.yaml'

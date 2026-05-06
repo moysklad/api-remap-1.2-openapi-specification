@@ -1,5 +1,13 @@
 type: object
 description: Вебхук на изменение остатков
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "webhookstock"
+    - param: "id"
+  type: "webhookstock"
 properties:
   meta:
     $ref: '../common/meta.yaml'
