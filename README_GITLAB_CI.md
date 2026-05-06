@@ -188,4 +188,3 @@ Job `version:auto`:
 
 При отсутствии тегов versioning стартует с `0.y.0` (MINOR).
 
-
