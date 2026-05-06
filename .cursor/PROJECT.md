@@ -75,8 +75,8 @@ CHANGELOG.md                           # Auto-generated changelog (prepended by 
 | Stage | Key jobs | When |
 |-------|----------|------|
 | `changes-check` | `check-openapi-changes` | master push |
-| `verify` | `lint-openapi`, `bundle-openapi`, `deploy-contract-env`, `create-contract-user` | push / web / master |
-| `contract-test` | `sdk-contract` | web / master |
+| `verify` | `lint-openapi`, `bundle-openapi`, `deploy-contract-env`, `create-contract-user` (contract prep jobs short-circuit green on `master`) | push / web / master |
+| `contract-test` | `sdk-contract` (4 parallel path-shards; on `master` exits successfully without running Schemathesis) | web / master |
 | `generate-sdk` | `generate-sdk-php`, `generate-sdk-java` (python/js remain stubs) | push / web / master |
 | `test` | `sdk-golden-php`, `sdk-golden-java`, `sdk-smoke` (php) | push / web / master |
 | `version` | `version:auto` | master push |
@@ -92,7 +92,7 @@ Legacy stages (`prepare`, `deploy-for-space`, `create-user`, `build`, `delete-sp
 
 1. **Push to branch** — lint, bundle, generate PHP+Java SDK, run golden (PHP+Java) and smoke (PHP), prep-branch-and-mr-php (internal GitLab SDK repo).
 2. **Manual (web) on branch** — same as push + schemathesis contract tests + optional `push-sdk-php` (PUSH_TO_REMOTE=true) + prep-branch-and-mr-php.
-3. **Master merge/push** — full flow: checks, contract tests, SDK generation + tests, `version:auto` (CHANGELOG + tag), `mirror-to-github` + `create-github-release`, `merge-branch-php` (manual, pushes SDK + tag to internal GitLab repo).
+3. **Master merge/push** — full flow: checks, green short-circuit for `deploy-contract-env` / `create-contract-user` / `sdk-contract` (no real contract environment setup or Schemathesis execution), SDK generation + tests, `version:auto` (CHANGELOG + tag), `mirror-to-github` + `create-github-release`, `merge-branch-php` (manual, pushes SDK + tag to internal GitLab repo).
 
 ## Key CI Variables
 
@@ -104,6 +104,7 @@ Legacy stages (`prepare`, `deploy-for-space`, `create-user`, `build`, `delete-sp
 | `CICD_PAT_PHP` | GitLab token for internal PHP SDK repo (`git.company.lognex/.../php-remap-1.2-sdk`) |
 | `GIT_USER` / `GIT_MAIL` | Git identity for CI commits |
 | `SCHEMATHESIS_HOST` / `_LOGIN` / `_PASSWORD` | Credentials for contract tests (required on web trigger) |
+| `SCHEMATHESIS_WORKERS` | Schemathesis parallel workers per contract shard; default **1** to stay below API parallel request limits |
 | `ENV_TTL_MINUTES` | DMS auto-clean delay after `env_prepare` (minutes); default **20** in `utils_python/client.py`; `deploy-contract-env` sets **60** for OpenAPI contract tests unless overridden — see `README_GITLAB_CI.md` |
 
 ## Versioning
