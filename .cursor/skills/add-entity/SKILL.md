@@ -35,12 +35,12 @@ Follow this order. Read [reference.md](reference.md) for templates and edge-case
 2. **Choose peers** — compare with 1-2 existing entities of the same class before creating files. Prefer peers with the same special features: metadata states, positions, files/images, accounts, notes, store balances.
 3. **Build an endpoint matrix** — map every MD operation to a path file + HTTP method using the template below. Missing path files usually mean a missed MD section.
 4. **Check dependencies** — for each `[Meta]` field, verify the target exists in `src/openapi.yaml` `components.schemas`; expand stubs or create minimal stubs only when safe.
-5. **Create schemas** — entity + list schemas; for documents with positions also position + position list schemas.
+5. **Create schemas** — entity + list schemas; for documents with positions also position + position list schemas. For every schema that has a top-level `meta`, add `x-entity-static-builder` (see "Static builder extension" below).
 6. **Create paths** — one YAML per endpoint group. Reference schemas through `../../../openapi.yaml#/components/schemas/<SchemaName>` from request/response bodies.
 7. **Register in `src/openapi.yaml`** — paths, `components.schemas`, and tags in the local style used nearby.
 8. **Add test data** — create a rich `tests/php/fixtures/<snake_case>.json`, add `FIXTURE_MODEL_MAP`, and update `IGNORED_FIELDS` only when required.
 9. **Add smoke coverage** — one test method per endpoint+method from the endpoint matrix.
-10. **Cross-check** — re-read the MD and verify fields, endpoints, refs, nullable values, enums, fixtures, and smoke tests.
+10. **Cross-check** — re-read the MD and verify fields, endpoints, refs, nullable values, enums, fixtures, smoke tests, and `x-entity-static-builder` presence on every schema with `meta`.
 11. **Verify** — run the Docker make sequence below.
 12. **Report** — mention any stubs created or left unexpanded, intentionally skipped MD fields, and checks run.
 
@@ -86,7 +86,21 @@ Before verification, re-read the MD and confirm:
 - Nested object structures match MD JSON examples exactly.
 - Every API operation section maps to a path + method and a smoke test.
 - Metadata attributes and `metadata/states/{id}` exist when the MD metadata section requires them.
+- Every schema with a top-level `meta` field carries `x-entity-static-builder` (entity → keyword + `id`; position → `parentId` + `id` + `<keyword>position` type).
 - The fixture uses the richest single-entity GET response, not a minimal create request.
+
+## Static builder extension (`x-entity-static-builder`)
+
+Custom OpenAPI vendor extension consumed by `customtemplates/php/model_entity_static_builder.mustache` to generate a static `createWithMeta(...)` helper on PHP SDK models. Required on **every** schema that has a top-level `meta`, including stubs.
+
+Conventions for this project:
+
+| Schema kind | `methodParams` | `href` sequence | `type` |
+|-------------|----------------|-----------------|--------|
+| Entity (dictionary or document) | `["id"]` | `path: "entity"` → `path: "<keyword>"` → `param: "id"` | `"<keyword>"` |
+| Position (document) | `["parentId", "id"]` | `path: "entity"` → `path: "<keyword>"` → `param: "parentId"` → `path: "positions"` → `param: "id"` | `"<keyword>position"` |
+
+`<keyword>` is the lowercase URL keyword from MD (matches `meta.type` returned by the API). Place the block at the top of the schema, between `description` and `properties`. Detailed template and rules are in [reference.md](reference.md); peer references: `src/components/schemas/dictionary/customerOrder.yaml`, `src/components/schemas/dictionary/customerOrderPosition.yaml`. Background documentation lives in `src/custom-extension-readme.md` and `customtemplates/php/readme.md`.
 
 ## Enum fields and SDK compatibility
 
