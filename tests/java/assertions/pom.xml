@@ -36,7 +36,7 @@
     <dependencies>
         <dependency>
             <groupId>ru.moysklad.api</groupId>
-            <artifactId>remap-1.2-sdk</artifactId>
+            <artifactId>remap-1.2-java-sdk</artifactId>
             <version>1.0.0</version>
             <scope>test</scope>
         </dependency>
