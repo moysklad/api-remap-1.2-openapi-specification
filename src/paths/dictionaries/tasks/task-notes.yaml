@@ -1,0 +1,76 @@
+get:
+  operationId: getTaskNotes
+  tags:
+    - Tasks
+  summary: Получить комментарии Задачи
+  description: Запрос на получение списка всех комментариев данной Задачи
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/parameters.yaml#/limit'
+    - $ref: '../../../components/parameters.yaml#/offset'
+    - name: updatedBy
+      in: query
+      required: false
+      description: Автор последнего обновления (uid, используется для фильтрации)
+      schema:
+        type: string
+    - name: updatedFrom
+      in: query
+      required: false
+      description: Нижняя граница даты обновления в формате YYYY-MM-DD HH:MM:SS[.mmm]
+      schema:
+        type: string
+    - name: updatedTo
+      in: query
+      required: false
+      description: Верхняя граница даты обновления в формате YYYY-MM-DD HH:MM:SS[.mmm]
+      schema:
+        type: string
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/TaskNoteList'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+post:
+  operationId: createTaskNote
+  tags:
+    - Tasks
+  summary: Создать комментарий Задачи
+  description: Создание одного или нескольких комментариев к Задаче
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          oneOf:
+            - $ref: '../../../openapi.yaml#/components/schemas/TaskNote'
+            - type: array
+              items:
+                $ref: '../../../openapi.yaml#/components/schemas/TaskNote'
+              minItems: 1
+              maxItems: 1000
+  responses:
+    '200':
+      description: Комментарии успешно созданы
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              oneOf:
+                - $ref: '../../../openapi.yaml#/components/schemas/TaskNote'
+                - $ref: '../../../openapi.yaml#/components/schemas/Error'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

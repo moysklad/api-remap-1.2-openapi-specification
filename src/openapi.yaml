@@ -52,6 +52,28 @@ paths:
   /entity/contract/metadata/states/{id}:
     $ref: './paths/dictionaries/contracts/contract-metadata-state-by-id.yaml'
 
+  # Tasks
+  /entity/task:
+    $ref: './paths/dictionaries/tasks/tasks.yaml'
+  /entity/task/{id}:
+    $ref: './paths/dictionaries/tasks/task-by-id.yaml'
+  /entity/task/delete:
+    $ref: './paths/dictionaries/tasks/tasks-delete.yaml'
+  /entity/task/batch:
+    $ref: './paths/dictionaries/tasks/tasks-batch.yaml'
+  /entity/task/{id}/notes:
+    $ref: './paths/dictionaries/tasks/task-notes.yaml'
+  /entity/task/{id}/notes/{noteId}:
+    $ref: './paths/dictionaries/tasks/task-note-by-id.yaml'
+  /entity/task/{id}/notes/delete:
+    $ref: './paths/dictionaries/tasks/task-notes-delete.yaml'
+  /entity/task/metadata:
+    $ref: './paths/dictionaries/tasks/task-metadata.yaml'
+  /entity/task/metadata/states:
+    $ref: './paths/dictionaries/tasks/task-metadata-states.yaml'
+  /entity/task/metadata/states/{id}:
+    $ref: './paths/dictionaries/tasks/task-metadata-state-by-id.yaml'
+
   # Products
   /entity/product:
     $ref: './paths/dictionaries/products/products.yaml'
@@ -805,6 +827,14 @@ components:
       $ref: './components/schemas/dictionary/contract.yaml'
     ContractList:
       $ref: './components/schemas/dictionary/contractList.yaml'
+    Task:
+      $ref: './components/schemas/dictionary/task.yaml'
+    TaskList:
+      $ref: './components/schemas/dictionary/taskList.yaml'
+    TaskNote:
+      $ref: './components/schemas/dictionary/taskNote.yaml'
+    TaskNoteList:
+      $ref: './components/schemas/dictionary/taskNoteList.yaml'
     Project:
       $ref: './components/schemas/dictionary/project.yaml'
     SalesChannel:
@@ -944,6 +974,8 @@ tags:
     description: Операции с сотрудниками
   - name: Contracts
     description: Операции с договорами
+  - name: Tasks
+    description: Операции с задачами
   - name: Counterparties
     description: Операции с контрагентами
   - name: Services
