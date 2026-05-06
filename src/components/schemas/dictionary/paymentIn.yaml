@@ -1,0 +1,52 @@
+type: object
+description: Входящий платеж
+properties:
+  meta:
+    description: Метаданные Входящего платежа
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID Входящего платежа
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  name:
+    type: string
+    maxLength: 255
+    description: Наименование Входящего платежа
+  code:
+    type: string
+    maxLength: 255
+    description: Код Входящего платежа
+  externalCode:
+    type: string
+    maxLength: 255
+    description: Внешний код Входящего платежа
+  syncId:
+    type: string
+    format: uuid
+    description: ID синхронизации
+  description:
+    type: string
+    maxLength: 4096
+    nullable: true
+    description: Комментарий Входящего платежа
+  created:
+    type: string
+    description: Дата создания
+    readOnly: true
+  deleted:
+    type: string
+    description: Момент последнего удаления Входящего платежа
+    readOnly: true
+  updated:
+    type: string
+    description: Момент последнего обновления Входящего платежа
+    readOnly: true
+  moment:
+    type: string
+    description: Дата документа

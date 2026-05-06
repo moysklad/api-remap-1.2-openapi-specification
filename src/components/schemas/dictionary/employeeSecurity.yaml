@@ -1,0 +1,46 @@
+type: object
+description: Права сотрудника
+properties:
+  isActive:
+    type: boolean
+    description: Доступ к сервису МойСклад
+    example: true
+  login:
+    type: string
+    maxLength: 255
+    description: Логин сотрудника для входа в МойСклад
+    example: "example@lognex"
+  email:
+    type: string
+    format: email
+    description: Почта сотрудника
+    example: "example@example.ru"
+  group:
+    type: object
+    description: Метаданные Группы, а также ее идентификатор и имя
+    properties:
+      meta:
+        $ref: '../common/meta.yaml'
+      id:
+        type: string
+        format: uuid
+        description: ID группы
+      name:
+        type: string
+        description: Название группы
+  authorizedHosts:
+    type: array
+    description: Список ipv4 адресов, с которых разрешен доступ на аккаунт
+    items:
+      type: string
+    example: ["1.15.15.5"]
+  authorizedIpNetwork:
+    type: string
+    description: Ipv4 адрес, идентифицирующий соответствующую подсеть, с правом доступа на аккаунт
+    example: "80.8.8.8"
+  authorizedIpNetmask:
+    type: string
+    description: Маска подсети с правом доступа на аккаунт
+    example: "1.8.8.8"
+  role:
+    $ref: '../../../openapi.yaml#/components/schemas/EmployeeRole'

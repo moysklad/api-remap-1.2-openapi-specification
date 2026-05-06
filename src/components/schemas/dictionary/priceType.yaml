@@ -1,0 +1,21 @@
+type: object
+description: Тип цены
+properties:
+  meta:
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID типа цены
+    readOnly: true
+    example: "12a8b923-692c-11e6-8a84-bae50000005d"
+  name:
+    type: string
+    maxLength: 255
+    description: Наименование типа цены
+    example: "Цена продажи"
+  externalCode:
+    type: string
+    maxLength: 255
+    description: Внешний код типа цены
+    example: "sale_price"

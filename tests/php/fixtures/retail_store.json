@@ -1,0 +1,267 @@
+{
+  "meta": {
+    "href": "https://api-api-3.testms-test.lognex.ru/api/remap/1.2/entity/retailstore/bc9a4c67-2424-11f1-0a82-04ce00000865?expand=receiptTemplate",
+    "metadataHref": "https://api-api-3.testms-test.lognex.ru/api/remap/1.2/entity/retailstore/metadata",
+    "type": "retailstore",
+    "mediaType": "application/json",
+    "uuidHref": "https://online-api-3.testms-test.lognex.ru/app/#retailstore/edit?id=bc9a4c67-2424-11f1-0a82-04ce00000865"
+  },
+  "id": "bc9a4c67-2424-11f1-0a82-04ce00000865",
+  "accountId": "bc3f88e4-2424-11f1-0a81-12870000004a",
+  "owner": {
+    "meta": {
+      "href": "https://api-api-3.testms-test.lognex.ru/api/remap/1.2/entity/employee/bc6639f6-2424-11f1-0a82-04ce000007f9",
+      "metadataHref": "https://api-api-3.testms-test.lognex.ru/api/remap/1.2/entity/employee/metadata",
+      "type": "employee",
+      "mediaType": "application/json",
+      "uuidHref": "https://online-api-3.testms-test.lognex.ru/app/#employee/edit?id=bc6639f6-2424-11f1-0a82-04ce000007f9"
+    }
+  },
+  "shared": false,
+  "group": {
+    "meta": {
+      "href": "https://api-api-3.testms-test.lognex.ru/api/remap/1.2/entity/group/bc3fe99a-2424-11f1-0a81-12870000004b",
+      "metadataHref": "https://api-api-3.testms-test.lognex.ru/api/remap/1.2/entity/group/metadata",
+      "type": "group",
+      "mediaType": "application/json"
+    }
+  },
+  "updated": "2026-03-20 16:20:25.391",
+  "name": "Точка продаж",
+  "description": "fdgfd",
+  "externalCode": "pFJ22xc1iRIcF22ggrNk81",
+  "archived": false,
+  "address": "141075, Россия, Московская обл, г Королев, ул Кооперативная, 8",
+  "addressFull": {
+    "postalCode": "141075",
+    "country": {
+      "meta": {
+        "href": "https://api-api-3.testms-test.lognex.ru/api/remap/1.2/entity/country/9df7c2c3-7782-4c5c-a8ed-1102af611608",
+        "metadataHref": "https://api-api-3.testms-test.lognex.ru/api/remap/1.2/entity/country/metadata",
+        "type": "country",
+        "mediaType": "application/json",
+        "uuidHref": "https://online-api-3.testms-test.lognex.ru/app/#country/edit?id=9df7c2c3-7782-4c5c-a8ed-1102af611608"
+      }
+    },
+    "region": {
+      "meta": {
+        "href": "https://api-api-3.testms-test.lognex.ru/api/remap/1.2/entity/region/00000000-0000-0000-0000-000000000050",
+        "metadataHref": "https://api-api-3.testms-test.lognex.ru/api/remap/1.2/entity/region/metadata",
+        "type": "region",
+        "mediaType": "application/json"
+      }
+    },
+    "city": "г Королев",
+    "street": "ул Кооперативная",
+    "house": "8",
+    "comment": "gfdgfdgfd"
+  },
+  "controlShippingStock": false,
+  "active": true,
+  "controlCashierChoice": true,
+  "discountEnable": true,
+  "discountMaxPercent": 100.0,
+  "priceType": {
+    "meta": {
+      "href": "https://api-api-3.testms-test.lognex.ru/api/remap/1.2/context/companysettings/pricetype/bc8213a6-2424-11f1-0a82-04ce0000084e",
+      "type": "pricetype",
+      "mediaType": "application/json"
+    },
+    "id": "bc8213a6-2424-11f1-0a82-04ce0000084e",
+    "name": "Цена продажи",
+    "externalCode": "cbcf493b-55bc-11d9-848a-00112f43529a"
+  },
+  "authTokenAttached": false,
+  "cashiers": {
+    "meta": {
+      "href": "https://api-api-3.testms-test.lognex.ru/api/remap/1.2/entity/retailstore/bc9a4c67-2424-11f1-0a82-04ce00000865/cashiers",
+      "type": "cashier",
+      "mediaType": "application/json",
+      "size": 1,
+      "limit": 1000,
+      "offset": 0
+    }
+  },
+  "organization": {
+    "meta": {
+      "href": "https://api-api-3.testms-test.lognex.ru/api/remap/1.2/entity/organization/bc7ca9ce-2424-11f1-0a82-04ce00000845",
+      "metadataHref": "https://api-api-3.testms-test.lognex.ru/api/remap/1.2/entity/organization/metadata",
+      "type": "organization",
+      "mediaType": "application/json",
+      "uuidHref": "https://online-api-3.testms-test.lognex.ru/app/#mycompany/edit?id=bc7ca9ce-2424-11f1-0a82-04ce00000845"
+    }
+  },
+  "store": {
+    "meta": {
+      "href": "https://api-api-3.testms-test.lognex.ru/api/remap/1.2/entity/store/bc808eb7-2424-11f1-0a82-04ce00000848",
+      "metadataHref": "https://api-api-3.testms-test.lognex.ru/api/remap/1.2/entity/store/metadata",
+      "type": "store",
+      "mediaType": "application/json",
+      "uuidHref": "https://online-api-3.testms-test.lognex.ru/app/#warehouse/edit?id=bc808eb7-2424-11f1-0a82-04ce00000848"
+    }
+  },
+  "acquire": {
+    "meta": {
+      "href": "https://api-api-3.testms-test.lognex.ru/api/remap/1.2/entity/counterparty/c521df96-2424-11f1-0a82-04ce000008fb",
+      "metadataHref": "https://api-api-3.testms-test.lognex.ru/api/remap/1.2/entity/counterparty/metadata",
+      "type": "counterparty",
+      "mediaType": "application/json",
+      "uuidHref": "https://online-api-3.testms-test.lognex.ru/app/#company/edit?id=c521df96-2424-11f1-0a82-04ce000008fb"
+    }
+  },
+  "qrAcquire": {
+    "meta": {
+      "href": "https://api-api-3.testms-test.lognex.ru/api/remap/1.2/entity/organization/bc7ca9ce-2424-11f1-0a82-04ce00000845",
+      "metadataHref": "https://api-api-3.testms-test.lognex.ru/api/remap/1.2/entity/organization/metadata",
+      "type": "organization",
+      "mediaType": "application/json",
+      "uuidHref": "https://online-api-3.testms-test.lognex.ru/app/#mycompany/edit?id=bc7ca9ce-2424-11f1-0a82-04ce00000845"
+    }
+  },
+  "bankPercent": 10.0,
+  "orderToState": {
+    "meta": {
+      "href": "https://api-api-3.testms-test.lognex.ru/api/remap/1.2/entity/customerorder/metadata/states/bcab30bb-2424-11f1-0a82-04ce0000087c",
+      "metadataHref": "https://api-api-3.testms-test.lognex.ru/api/remap/1.2/entity/retailstore/metadata",
+      "type": "state",
+      "mediaType": "application/json"
+    }
+  },
+  "customerOrderStates": [
+    {
+      "meta": {
+        "href": "https://api-api-3.testms-test.lognex.ru/api/remap/1.2/entity/customerorder/metadata/states/bcab2e60-2424-11f1-0a82-04ce0000087b",
+        "metadataHref": "https://api-api-3.testms-test.lognex.ru/api/remap/1.2/entity/retailstore/metadata",
+        "type": "state",
+        "mediaType": "application/json"
+      }
+    }
+  ],
+  "issueOrders": true,
+  "sellReserves": false,
+  "lastOperationNames": [
+    {
+      "entity": "retaildemand",
+      "name": "00001"
+    },
+    {
+      "entity": "retaildrawercashin",
+      "name": "00001"
+    },
+    {
+      "entity": "retaildrawercashout",
+      "name": "00001"
+    },
+    {
+      "entity": "retailsalesreturn",
+      "name": "00001"
+    },
+    {
+      "entity": "retailshift",
+      "name": "00001"
+    }
+  ],
+  "ofdEnabled": true,
+  "priorityOfdSend": "none",
+  "allowCustomPrice": true,
+  "demandPrefix": "hgjhg",
+  "tobaccoMrcControlType": "SAME_PRICE",
+  "allowSellTobaccoWithoutMRC": false,
+  "markingSellingMode": "CORRECT_MARKS_ONLY",
+  "marksCheckMode": "CORRECT_MARKS_ONLY",
+  "allowCreateProducts": true,
+  "productFolders": {
+    "meta": {
+      "href": "https://api-api-3.testms-test.lognex.ru/api/remap/1.2/entity/retailstore/bc9a4c67-2424-11f1-0a82-04ce00000865/productFolders",
+      "mediaType": "application/json",
+      "size": 0,
+      "limit": 1000,
+      "offset": 0
+    }
+  },
+  "filterAgentsTags": [
+    "павпав"
+  ],
+  "printAlways": false,
+  "receiptTemplate": {
+    "meta": {
+      "href": "https://api-api-3.testms-test.lognex.ru/api/remap/1.2/entity/receipttemplate/f7dd9f1e-245a-11f1-0a82-04ce0000092f",
+      "metadataHref": "https://api-api-3.testms-test.lognex.ru/api/remap/1.2/entity/receipttemplate/metadata",
+      "type": "receipttemplate",
+      "mediaType": "application/json",
+      "uuidHref": "https://online-api-3.testms-test.lognex.ru/app/#receipttemplate/edit?id=f7dd9f1e-245a-11f1-0a82-04ce0000092f"
+    },
+    "header": "ав",
+    "footer": "ав"
+  },
+  "createPaymentInOnRetailShiftClosing": true,
+  "createCashInOnRetailShiftClosing": true,
+  "returnFromClosedShiftEnabled": true,
+  "enableReturnsWithNoReason": true,
+  "requiredFio": false,
+  "requiredPhone": true,
+  "requiredEmail": false,
+  "requiredBirthdate": false,
+  "requiredSex": false,
+  "requiredDiscountCardNumber": false,
+  "syncAgents": true,
+  "allowDeleteReceiptPositions": true,
+  "showBeerOnTap": false,
+  "sendMarksToChestnyZnakOnCloud": false,
+  "createOrderWithState": {
+    "meta": {
+      "href": "https://api-api-3.testms-test.lognex.ru/api/remap/1.2/entity/customerorder/metadata/states/bcab3185-2424-11f1-0a82-04ce0000087d",
+      "metadataHref": "https://api-api-3.testms-test.lognex.ru/api/remap/1.2/entity/retailstore/metadata",
+      "type": "state",
+      "mediaType": "application/json"
+    }
+  },
+  "reservePrepaidGoods": true,
+  "defaultTaxSystem": "GENERAL_TAX_SYSTEM",
+  "orderTaxSystem": "SIMPLIFIED_TAX_SYSTEM_INCOME",
+  "fiscalType": "STANDARD",
+  "minionToMasterType": "CHOSEN",
+  "masterRetailStores": {
+    "meta": {
+      "href": "https://api-api-3.testms-test.lognex.ru/api/remap/1.2/entity/retailstore/bc9a4c67-2424-11f1-0a82-04ce00000865/masterRetailStores",
+      "type": "retailstore",
+      "mediaType": "application/json",
+      "size": 1,
+      "limit": 1000,
+      "offset": 0
+    }
+  },
+  "sendMarksForCheck": false,
+  "qrPayEnabled": false,
+  "qrBankPercent": 10.0,
+  "createAgentsTags": [
+    "test"
+  ],
+  "environment": {
+    "device": "test",
+    "os": "test",
+    "software": {
+      "name": "test",
+      "vendor": "test",
+      "version": "test"
+    },
+    "paymentTerminal": "test"
+  },
+  "idQR": "test",
+  "onlyInStock": true,
+  "qrTerminalId": "test",
+  "state": {
+    "sync": {
+      "message": "test",
+      "lastAttempMoment": "2016-11-25 13:52:01"
+    },
+    "lastCheckMoment": "2016-11-25 13:52:01",
+    "fiscalMemory": {
+      "notSendDocCount": 1,
+      "notSendFirstDocMoment": "2016-11-25 13:50:00"
+    },
+    "paymentTerminal": {
+      "acquiringType": "test"
+    }
+  }
+}

@@ -1,0 +1,4 @@
+type: string
+description: Известные значения пола контрагента
+enum: [MALE, FEMALE]
+example: "MALE"

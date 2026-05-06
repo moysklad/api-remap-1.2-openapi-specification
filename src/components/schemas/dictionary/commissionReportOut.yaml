@@ -1,0 +1,18 @@
+type: object
+description: |
+  Выданный отчет комиссионера (commissionreportout). Заглушка: полное описание сущности в спецификации отсутствует;
+  в ответе API возможны дополнительные поля.
+properties:
+  meta:
+    description: Метаданные выданного отчета комиссионера
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID выданного отчета комиссионера
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true

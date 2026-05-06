@@ -1,0 +1,156 @@
+type: object
+description: Счет-фактура выданный (factureout)
+properties:
+  meta:
+    description: Метаданные Счета-фактуры выданного
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID Счета-фактуры выданного
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  agent:
+    description: Метаданные контрагента
+    $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
+  applicable:
+    type: boolean
+    description: Отметка о проведении
+  attributes:
+    type: array
+    description: Коллекция метаданных доп. полей
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
+  code:
+    type: string
+    maxLength: 255
+    description: Код Счета-фактуры выданного
+  contract:
+    description: Метаданные договора
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Contract'
+  created:
+    type: string
+    description: Дата создания
+    readOnly: true
+  deleted:
+    type: string
+    description: Момент последнего удаления Счета-фактуры выданного
+    readOnly: true
+  description:
+    type: string
+    maxLength: 4096
+    nullable: true
+    description: Комментарий Счета-фактуры выданного
+  externalCode:
+    type: string
+    maxLength: 255
+    description: Внешний код Счета-фактуры выданного
+  files:
+    description: Метаданные массива файлов
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/FileList'
+  group:
+    description: Отдел сотрудника
+    $ref: '../../../openapi.yaml#/components/schemas/Group'
+  moment:
+    type: string
+    description: Дата документа
+  name:
+    type: string
+    maxLength: 255
+    description: Наименование Счета-фактуры выданного
+  organization:
+    description: Метаданные юрлица
+    $ref: '../../../openapi.yaml#/components/schemas/Organization'
+  owner:
+    description: Владелец (Сотрудник)
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Employee'
+  printed:
+    type: boolean
+    description: Напечатан ли документ
+    readOnly: true
+  published:
+    type: boolean
+    description: Опубликован ли документ
+    readOnly: true
+  rate:
+    $ref: '../common/currencyRate.yaml'
+  shared:
+    type: boolean
+    description: Общий доступ
+  state:
+    description: Метаданные статуса Счета-фактуры выданного
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/State'
+  stateContractId:
+    type: string
+    maxLength: 255
+    description: Идентификатор государственного контракта, договора (соглашения)
+  sum:
+    type: number
+    format: double
+    description: Сумма Счета-фактуры выданного в копейках
+    readOnly: true
+  syncId:
+    type: string
+    format: uuid
+    description: ID синхронизации
+  updated:
+    type: string
+    description: Момент последнего обновления Счета-фактуры выданного
+    readOnly: true
+  advancePaymentVat:
+    type: integer
+    format: int32
+    description: Ставка НДС для авансового платежа (в процентах)
+  paymentPurpose:
+    type: string
+    maxLength: 255
+    description: Назначение платежа
+  vatSum:
+    type: number
+    format: double
+    description: Сумма включая НДС
+    readOnly: true
+  demands:
+    type: array
+    description: Связанные отгрузки (метаданные)
+    items:
+      $ref: '../common/meta.yaml'
+  payments:
+    type: array
+    description: Связанные входящие платежи (метаданные)
+    items:
+      $ref: '../common/meta.yaml'
+  returns:
+    type: array
+    description: Связанные возвраты поставщикам (метаданные)
+    items:
+      $ref: '../common/meta.yaml'
+  consignee:
+    description: Грузополучатель (контрагент или юрлицо)
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../common/meta.yaml'
+  paymentNumber:
+    type: string
+    maxLength: 255
+    description: Название платежного документа
+  paymentDate:
+    type: string
+    description: Дата платежного документа

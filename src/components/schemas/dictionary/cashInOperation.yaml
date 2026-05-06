@@ -1,0 +1,31 @@
+description: |
+  Элемент массива `operations` приходного ордера.
+
+  Допустимые `meta.type`: customerorder, purchasereturn, demand, invoiceout, commissionreportin,
+  retailshift.
+type: object
+anyOf:
+  - description: Заказ покупателя + linkedSum
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/CustomerOrder'
+      - $ref: '../../../openapi.yaml#/components/schemas/CashInOperationLinkedSum'
+  - description: Возврат поставщику + linkedSum
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/PurchaseReturn'
+      - $ref: '../../../openapi.yaml#/components/schemas/CashInOperationLinkedSum'
+  - description: Отгрузка + linkedSum
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Demand'
+      - $ref: '../../../openapi.yaml#/components/schemas/CashInOperationLinkedSum'
+  - description: Счет покупателю + linkedSum
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/InvoiceOut'
+      - $ref: '../../../openapi.yaml#/components/schemas/CashInOperationLinkedSum'
+  - description: Полученный отчет комиссионера + linkedSum
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/CommissionReportIn'
+      - $ref: '../../../openapi.yaml#/components/schemas/CashInOperationLinkedSum'
+  - description: Смена + linkedSum
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/RetailShift'
+      - $ref: '../../../openapi.yaml#/components/schemas/CashInOperationLinkedSum'

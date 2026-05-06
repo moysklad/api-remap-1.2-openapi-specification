@@ -1,0 +1,9 @@
+type: object
+allOf:
+  - $ref: '../../../openapi.yaml#/components/schemas/AttributeBase'
+properties:
+  type:
+    type: string
+    enum: [string]
+  value:
+    type: string

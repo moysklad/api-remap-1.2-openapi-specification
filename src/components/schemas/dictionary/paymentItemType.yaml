@@ -1,0 +1,11 @@
+type: string
+description: Известные значения признака предмета расчета
+enum:
+  - GOOD
+  - EXCISABLE_GOOD
+  - WORK
+  - SERVICE
+  - COMPOUND_PAYMENT_ITEM
+  - PROVIDING_RID
+  - ANOTHER_PAYMENT_ITEM
+example: "GOOD"

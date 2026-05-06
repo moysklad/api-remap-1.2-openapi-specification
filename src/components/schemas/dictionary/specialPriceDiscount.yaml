@@ -1,0 +1,38 @@
+type: object
+description: Специальная цена (specialpricediscount)
+allOf:
+  - $ref: '../../../openapi.yaml#/components/schemas/DiscountBase'
+properties:
+  assortment:
+    type: array
+    description: Товары, услуги и модификации со скидкой
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/DiscountAssortmentItem'
+  productFolders:
+    type: array
+    description: Группы товаров со скидкой
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/ProductFolder'
+  allProducts:
+    type: boolean
+    description: Для всех ли товаров скидка
+  usePriceType:
+    type: boolean
+    description: Использовать ли специальную цену
+  discount:
+    type: number
+    format: float
+    nullable: true
+    description: Процент скидки (используется при usePriceType=false)
+  specialPrice:
+    type: object
+    nullable: true
+    description: Спец. цена (используется при usePriceType=true)
+    properties:
+      value:
+        type: integer
+        format: int32
+        description: Значение цены
+      priceType:
+        $ref: '../../../openapi.yaml#/components/schemas/PriceType'
+

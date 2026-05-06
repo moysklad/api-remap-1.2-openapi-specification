@@ -1,0 +1,29 @@
+type: object
+description: Зона склада
+properties:
+  meta:
+    description: Метаданные Зоны склада
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID Зоны склада
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  updated:
+    type: string
+    #    format: date-time  # API использует формат: YYYY-MM-DD HH:MM:SS.mmm
+    description: Момент последнего обновления
+    readOnly: true
+  name:
+    type: string
+    maxLength: 255
+    description: Наименование Зоны склада
+  externalCode:
+    type: string
+    maxLength: 255
+    description: Внешний код Зоны склада

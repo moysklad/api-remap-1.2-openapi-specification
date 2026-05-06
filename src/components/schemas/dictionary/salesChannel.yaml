@@ -1,0 +1,16 @@
+type: object
+description: Канал продаж
+properties:
+  meta:
+    description: Метаданные Канала продаж
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID Канала продаж
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
