@@ -41,5 +41,5 @@ properties:
     description: Вебхук включён или отключён
   authorApplication:
     description: Метаданные решения, создавшего вебхук на изменение остатков
-    $ref: '../../../openapi.yaml#/components/schemas/Application'
     readOnly: true
+    $ref: '../../../openapi.yaml#/components/schemas/Application'
