@@ -68,6 +68,7 @@ class SerializationTest extends TestCase
         'variantcharacteristic' => 'VariantCharacteristic',
         'contract' => 'Contract',
         'task' => 'Task',
+        'sales_channel' => 'SalesChannel',
         'cash_in' => 'CashIn',
         'cash_in_operation' => 'CashInOperation',
         'cash_out' => 'CashOut',

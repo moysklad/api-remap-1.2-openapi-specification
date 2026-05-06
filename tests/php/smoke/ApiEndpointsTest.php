@@ -1283,6 +1283,90 @@ class ApiEndpointsTest extends TestCase
         $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
     }
 
+    // ==================== SALES CHANNELS ====================
+
+    /**
+     * GET /entity/saleschannel
+     */
+    public function testListSalesChannels(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/saleschannel');
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * GET /entity/saleschannel/{id}
+     */
+    public function testGetSalesChannelById(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/saleschannel/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * POST /entity/saleschannel
+     */
+    public function testCreateSalesChannel(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/saleschannel', [
+            'json' => [
+                'name' => 'Test Sales Channel',
+                'type' => 'OTHER',
+                'description' => 'Test description',
+            ],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * POST /entity/saleschannel/batch
+     */
+    public function testCreateSalesChannelsBatch(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/saleschannel/batch', [
+            'json' => [
+                [
+                    'name' => 'Batch Sales Channel',
+                    'type' => 'OTHER',
+                ],
+            ],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * PUT /entity/saleschannel/{id}
+     */
+    public function testUpdateSalesChannel(): void
+    {
+        $response = $this->client->put(self::API_BASE_PATH . '/entity/saleschannel/' . self::TEST_UUID, [
+            'json' => ['name' => 'Updated Sales Channel'],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * DELETE /entity/saleschannel/{id}
+     */
+    public function testDeleteSalesChannel(): void
+    {
+        $response = $this->client->delete(self::API_BASE_PATH . '/entity/saleschannel/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::DELETE_CODES);
+    }
+
+    /**
+     * POST /entity/saleschannel/delete
+     */
+    public function testDeleteSalesChannelsBatch(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/saleschannel/delete', [
+            'json' => [
+                ['meta' => ['href' => 'https://api.moysklad.ru/api/remap/1.2/entity/saleschannel/' . self::TEST_UUID, 'type' => 'saleschannel', 'mediaType' => 'application/json']],
+            ],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
     // ==================== TASKS ====================
 
     /**

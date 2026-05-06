@@ -74,6 +74,16 @@ paths:
   /entity/task/metadata/states/{id}:
     $ref: './paths/dictionaries/tasks/task-metadata-state-by-id.yaml'
 
+  # SalesChannels
+  /entity/saleschannel:
+    $ref: './paths/dictionaries/saleschannels/saleschannels.yaml'
+  /entity/saleschannel/{id}:
+    $ref: './paths/dictionaries/saleschannels/saleschannel-by-id.yaml'
+  /entity/saleschannel/delete:
+    $ref: './paths/dictionaries/saleschannels/saleschannels-delete.yaml'
+  /entity/saleschannel/batch:
+    $ref: './paths/dictionaries/saleschannels/saleschannels-batch.yaml'
+
   # Products
   /entity/product:
     $ref: './paths/dictionaries/products/products.yaml'
@@ -604,6 +614,8 @@ components:
       $ref: './components/schemas/dictionary/companyType.yaml'
     ContractType:
       $ref: './components/schemas/dictionary/contractType.yaml'
+    SalesChannelType:
+      $ref: './components/schemas/dictionary/salesChannelType.yaml'
     Error:
       $ref: './components/schemas/common/error.yaml'
     DiscountBase:
@@ -839,6 +851,8 @@ components:
       $ref: './components/schemas/dictionary/project.yaml'
     SalesChannel:
       $ref: './components/schemas/dictionary/salesChannel.yaml'
+    SalesChannelList:
+      $ref: './components/schemas/dictionary/salesChannelList.yaml'
     CustomerOrder:
       $ref: './components/schemas/dictionary/customerOrder.yaml'
     CustomerOrderPosition:
@@ -976,6 +990,8 @@ tags:
     description: Операции с договорами
   - name: Tasks
     description: Операции с задачами
+  - name: SalesChannels
+    description: Операции с каналами продаж
   - name: Counterparties
     description: Операции с контрагентами
   - name: Services
