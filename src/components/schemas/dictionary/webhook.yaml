@@ -1,5 +1,5 @@
 type: object
-description: Вебхук JSON API 1.2
+description: Вебхук
 x-entity-static-builder:
   methodParams:
     - "id"
