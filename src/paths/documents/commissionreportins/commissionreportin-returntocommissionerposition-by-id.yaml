@@ -16,7 +16,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../../../openapi.yaml#/components/schemas/CommissionReportInPosition'
+            $ref: '../../../openapi.yaml#/components/schemas/CommissionReportInReturnedPosition'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
 
@@ -37,14 +37,14 @@ put:
     content:
       application/json:
         schema:
-          $ref: '../../../openapi.yaml#/components/schemas/CommissionReportInPosition'
+          $ref: '../../../openapi.yaml#/components/schemas/CommissionReportInReturnedPosition'
   responses:
     '200':
       description: Успешный запрос
       content:
         application/json:
           schema:
-            $ref: '../../../openapi.yaml#/components/schemas/CommissionReportInPosition'
+            $ref: '../../../openapi.yaml#/components/schemas/CommissionReportInReturnedPosition'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
 
