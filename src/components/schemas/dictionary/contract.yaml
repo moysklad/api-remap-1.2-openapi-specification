@@ -1,5 +1,13 @@
 type: object
 description: Договор
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "contract"
+    - param: "id"
+  type: "contract"
 properties:
   meta:
     description: Метаданные Договора

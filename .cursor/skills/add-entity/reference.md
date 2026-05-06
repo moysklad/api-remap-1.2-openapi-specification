@@ -207,6 +207,14 @@ If a dependency is completely missing, create a minimal stub file and register i
 ```yaml
 type: object
 description: <Название сущности>
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "<keyword>"
+    - param: "id"
+  type: "<keyword>"
 properties:
   meta:
     description: Метаданные <сущности>
@@ -222,6 +230,8 @@ properties:
     description: ID учетной записи
     readOnly: true
 ```
+
+Stubs still expose `meta`, so they must carry `x-entity-static-builder` from the start. Reuse the entity convention (`methodParams: ["id"]`, `type: "<keyword>"`).
 
 **Register in `openapi.yaml`:**
 ```yaml
@@ -244,6 +254,15 @@ A schema is a stub if it has only `meta`, `id`, `accountId` properties (≤3 pro
 
 ```yaml
 type: object
+description: <Название сущности>
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "<keyword>"
+    - param: "id"
+  type: "<keyword>"
 properties:
   meta:
     description: Метаданные <Сущности>
@@ -264,6 +283,8 @@ properties:
     description: Момент последнего обновления сущности
     readOnly: true
 ```
+
+`<keyword>` is the lowercase URL keyword from MD (e.g. `contract`, `customerorder`). It must match the value the real API returns in `meta.type` for this resource. See "Static builder extension" below for full rules.
 
 ### List schema (`<entity>List.yaml`)
 
@@ -288,7 +309,22 @@ properties:
 
 ```yaml
 type: object
+description: Позиция <Сущности>
+x-entity-static-builder:
+  methodParams:
+    - "parentId"
+    - "id"
+  href:
+    - path: "entity"
+    - path: "<keyword>"
+    - param: "parentId"
+    - path: "positions"
+    - param: "id"
+  type: "<keyword>position"
 properties:
+  meta:
+    description: Метаданные позиции
+    $ref: '../common/meta.yaml'
   id:
     type: string
     format: uuid
@@ -304,6 +340,117 @@ properties:
     description: Метаданные товара/услуги
     $ref: '../../../openapi.yaml#/components/schemas/Assortment'
 ```
+
+The position `meta.type` returned by the API uses the suffix `position` glued to the entity keyword (e.g. `customerorderposition`, `demandposition`). Confirm the exact value from the MD position JSON example before filling `type`.
+
+## 5a. Static builder extension — `x-entity-static-builder`
+
+The custom OpenAPI vendor extension `x-entity-static-builder` drives the PHP custom template `customtemplates/php/model_entity_static_builder.mustache`, which generates a `public static function createWithMeta(...)` helper that returns a model with `meta.href`, `meta.type`, and `id` already populated. This removes the boilerplate of manually constructing `Meta` and stitching it into a model when callers only need a reference object.
+
+Background: `src/custom-extension-readme.md` and `customtemplates/php/readme.md`.
+
+### When to add
+
+- Add it to **every schema that has a top-level `meta` property** — full entity schemas, full position schemas, and stubs.
+- Do **not** add it to:
+  - List schemas (`<entity>List.yaml`) — they wrap collections, not single referenceable entities.
+  - Common helpers like `meta.yaml`, `metaList.yaml`, `context.yaml`.
+  - Sub-objects without their own `meta` (e.g. `rate`, embedded settings blocks).
+- Place the block at the top of the schema, between `description` and `properties`. Lint passes either way, but keeping the order consistent with peers (see `customerOrder.yaml`, `customerOrderPosition.yaml`) makes diffs cleaner.
+
+### Structure
+
+```yaml
+x-entity-static-builder:
+  methodParams:               # ordered list of generated PHP method parameter names (strings)
+    - "id"
+  href:                       # ordered list of href segments concatenated with "/"
+    - path: "entity"          # path: literal segment in the URL
+    - path: "<keyword>"
+    - param: "id"             # param: name from methodParams; emitted as $variable in PHP
+  type: "<keyword>"           # value written into Meta.type
+```
+
+The mustache template joins `href` segments with `' . '/' . '`, prepends `Configuration::getDefaultConfiguration()->getHost()`, calls `setMeta`/`setId` on the model, and returns it.
+
+Hard requirements (template will break or produce wrong output otherwise):
+
+- `methodParams` **must include `"id"`** literally — the generated body ends with `$o->setId($id);`, which references the PHP `$id` variable. A different name will cause a generation/compile error.
+- Every `param` value in `href` **must exist in `methodParams`** — the template emits `$<param>` without checking; an unknown name produces an undefined-variable PHP file.
+
+Project convention (not enforced by the template, follow for consistency with peers):
+
+- Place `"id"` **last** in `methodParams` (entities have only `"id"`; positions use `["parentId", "id"]`). This keeps the generated method signature reading naturally as `(parent first, own id last)`.
+- Every `methodParams` entry should be referenced as a `param` in `href`. Unused parameters compile but signal a copy-paste mistake.
+
+### Conventions for this project
+
+| Schema kind | `methodParams` | `href` segments (in order) | `type` |
+|-------------|----------------|----------------------------|--------|
+| Dictionary entity | `["id"]` | `entity` / `<keyword>` / `$id` | `<keyword>` |
+| Document entity | `["id"]` | `entity` / `<keyword>` / `$id` | `<keyword>` |
+| Document position | `["parentId", "id"]` | `entity` / `<keyword>` / `$parentId` / `positions` / `$id` | `<keyword>position` |
+| Stub schema | `["id"]` | `entity` / `<keyword>` / `$id` | `<keyword>` |
+
+Use the **same `<keyword>`** that appears in the URL (`/entity/<keyword>`) and in the API's `meta.type`. Confirm with the MD JSON example, not just by guessing from the entity name (e.g. `customerorder`, not `customer-order`; `internalorder`, not `internal_order`).
+
+### Worked examples (reference peers)
+
+Dictionary entity — `src/components/schemas/dictionary/customerOrder.yaml`:
+
+```yaml
+type: object
+description: Заказ покупателя
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "customerorder"
+    - param: "id"
+  type: "customerorder"
+```
+
+Position — `src/components/schemas/dictionary/customerOrderPosition.yaml`:
+
+```yaml
+type: object
+description: Позиция Заказа покупателя
+x-entity-static-builder:
+  methodParams:
+    - "parentId"
+    - "id"
+  href:
+    - path: "entity"
+    - path: "customerorder"
+    - param: "parentId"
+    - path: "positions"
+    - param: "id"
+  type: "customerorderposition"
+```
+
+### Generated PHP (illustrative)
+
+```php
+public static function createWithMeta(string $parentId, string $id): CustomerOrderPosition {
+    $o = new CustomerOrderPosition();
+    $config = \OpenAPI\Client\Configuration::getDefaultConfiguration();
+    $meta = new Meta();
+    $meta->setType('customerorderposition');
+    $href = $config->getHost() . '/' . 'entity' . '/' . 'customerorder' . '/' . $parentId . '/' . 'positions' . '/' . $id;
+    $meta->setHref($href);
+    $o->setMeta($meta);
+    $o->setId($id);
+    return $o;
+}
+```
+
+### Validation rules
+
+1. Keep `methodParams` and `href` values as quoted strings (`"id"`, not `id`) to match peers and avoid YAML boolean/null coercion surprises.
+2. `type` must match the exact `meta.type` from the MD JSON example — Redocly lint will not catch a typo here, but golden tests and SDK consumers will surface a mismatch.
+3. Re-generate PHP after adding/changing the block: `docker compose run --rm sdk make generate-php`. The new method appears at the top of the model class, right after the `DISCRIMINATOR` constant (see `customtemplates/php/model_generic.mustache`).
+4. If the schema is a stub today and you expand it later, keep the existing `x-entity-static-builder` block — it does not need to change when properties are added.
 
 ## 6. Path file templates
 

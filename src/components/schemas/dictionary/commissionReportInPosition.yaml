@@ -1,5 +1,16 @@
 type: object
 description: Позиция реализовано комиссионером Полученного отчета комиссионера
+x-entity-static-builder:
+  methodParams:
+    - "parentId"
+    - "id"
+  href:
+    - path: "entity"
+    - path: "commissionreportin"
+    - param: "parentId"
+    - path: "positions"
+    - param: "id"
+  type: "commissionreportinposition"
 properties:
   meta:
     description: Метаданные позиции
