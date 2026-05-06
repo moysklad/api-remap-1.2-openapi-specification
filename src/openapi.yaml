@@ -411,6 +411,31 @@ paths:
     $ref: './paths/documents/customerorders/customerorder-position-by-id.yaml'
   /entity/customerorder/{id}/positions/delete:
     $ref: './paths/documents/customerorders/customerorder-positions-delete.yaml'
+  # Documents - Demands
+  /entity/demand:
+    $ref: './paths/documents/demands/demands.yaml'
+  /entity/demand/{id}:
+    $ref: './paths/documents/demands/demand-by-id.yaml'
+  /entity/demand/delete:
+    $ref: './paths/documents/demands/demands-delete.yaml'
+  /entity/demand/batch:
+    $ref: './paths/documents/demands/demands-batch.yaml'
+  /entity/demand/metadata:
+    $ref: './paths/documents/demands/demand-metadata.yaml'
+  /entity/demand/metadata/attributes:
+    $ref: './paths/documents/demands/demand-metadata-attribute.yaml'
+  /entity/demand/metadata/attributes/{id}:
+    $ref: './paths/documents/demands/demand-metadata-attribute-by-id.yaml'
+  /entity/demand/metadata/states/{id}:
+    $ref: './paths/documents/demands/demand-metadata-state-by-id.yaml'
+  /entity/demand/new:
+    $ref: './paths/documents/demands/demand-new.yaml'
+  /entity/demand/{id}/positions:
+    $ref: './paths/documents/demands/demand-positions.yaml'
+  /entity/demand/{id}/positions/{positionId}:
+    $ref: './paths/documents/demands/demand-position-by-id.yaml'
+  /entity/demand/{id}/positions/delete:
+    $ref: './paths/documents/demands/demand-positions-delete.yaml'
   # Documents - Purchase Orders
   /entity/purchaseorder:
     $ref: './paths/documents/purchaseorders/purchaseorders.yaml'
@@ -909,6 +934,18 @@ components:
       $ref: './components/schemas/dictionary/processingOrder.yaml'
     Demand:
       $ref: './components/schemas/dictionary/demand.yaml'
+    DemandList:
+      $ref: './components/schemas/dictionary/demandList.yaml'
+    DemandPosition:
+      $ref: './components/schemas/dictionary/demandPosition.yaml'
+    DemandPositionList:
+      $ref: './components/schemas/dictionary/demandPositionList.yaml'
+    DemandPositionTrackingCode:
+      $ref: './components/schemas/dictionary/demandPositionTrackingCode.yaml'
+    DemandPositionTrackingCode1162:
+      $ref: './components/schemas/dictionary/demandPositionTrackingCode1162.yaml'
+    DemandPositionTrackingCodeType:
+      $ref: './components/schemas/dictionary/demandPositionTrackingCodeType.yaml'
 
     CommissionReportIn:
       $ref: './components/schemas/dictionary/commissionReportIn.yaml'
@@ -1014,6 +1051,8 @@ tags:
     description: Операции со складами
   - name: CustomerOrders
     description: Операции с заказами покупателя
+  - name: Demands
+    description: Операции с отгрузками
   - name: PurchaseOrders
     description: Операции с заказами поставщика
   - name: CashIns
