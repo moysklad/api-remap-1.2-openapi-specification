@@ -151,7 +151,7 @@ properties:
     items:
       $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
   files:
-    description: Метаданные массива файлов (не более 100 файлов)
+    description: Метаданные массива файлов
     nullable: true
     type: object
     allOf:
