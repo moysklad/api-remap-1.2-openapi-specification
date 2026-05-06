@@ -1,5 +1,13 @@
 type: object
 description: Полученный отчет комиссионера (commissionreportin)
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "commissionreportin"
+    - param: "id"
+  type: "commissionreportin"
 properties:
   meta:
     description: Метаданные Полученного отчета комиссионера
