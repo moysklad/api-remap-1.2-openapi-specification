@@ -38,7 +38,7 @@ Follow this order. Read [reference.md](reference.md) for templates and edge-case
 5. **Create schemas** — entity + list schemas; for documents with positions also position + position list schemas. For every schema that has a top-level `meta`, add `x-entity-static-builder` (see "Static builder extension" below).
 6. **Create paths** — one YAML per endpoint group. Reference schemas through `../../../openapi.yaml#/components/schemas/<SchemaName>` from request/response bodies.
 7. **Register in `src/openapi.yaml`** — paths, `components.schemas`, and tags in the local style used nearby.
-8. **Add test data** — create a rich `tests/php/fixtures/<snake_case>.json`, add `FIXTURE_MODEL_MAP`, and update `IGNORED_FIELDS` only when required.
+8. **Add test data** — create a rich shared fixture in `tests/fixtures/<snake_case>.json`, register it in both PHP and Java `FIXTURE_MODEL_MAP`, and update `IGNORED_FIELDS` only when required.
 9. **Add smoke coverage** — one test method per endpoint+method from the endpoint matrix.
 10. **Cross-check** — re-read the MD and verify fields, endpoints, refs, nullable values, enums, fixtures, smoke tests, and `x-entity-static-builder` presence on every schema with `meta`.
 11. **Verify** — run the Docker make sequence below.
@@ -134,12 +134,14 @@ Use Docker make targets for verification. Do not use `npm run` directly for the 
 docker compose run --rm sdk make lint           # Redocly lint
 docker compose run --rm sdk make bundle         # produces dist/openapi.yaml + dist/openapi.json
 docker compose run --rm sdk make generate-php   # generates PHP SDK in clients/php/
+docker compose run --rm sdk make generate-java  # generates Java SDK in clients/java/
 docker compose restart mock                     # CRITICAL: reload bundled spec in mock server
 docker compose run --rm sdk make test-golden-php
+docker compose run --rm java-sdk make test-golden-java
 docker compose run --rm sdk make test-smoke
 ```
 
-`test-smoke` is the canonical local smoke target. `test-smoke-php` exists as a PHP-only shortcut, but prefer the generic target unless the user asks for a narrower check.
+`test-smoke` is the canonical local smoke target.
 
 ## Naming conventions
 
