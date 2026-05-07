@@ -237,7 +237,7 @@ class SerializationTest extends BaseTestCase {
             normalized.put("attributes", fixed);
         }
 
-        if (isEmptyOrMetaOnly(normalized)) {
+        if (normalized.isEmpty()) {
             return new LinkedHashMap<>();
         }
 
@@ -286,10 +286,6 @@ class SerializationTest extends BaseTestCase {
                || value instanceof Number
                || value instanceof Boolean
                || value instanceof Character;
-    }
-
-    private static boolean isEmptyOrMetaOnly(Map<String, Object> data) {
-        return data.isEmpty();
     }
 
     private void assertNormalizedEquals(Map<String, Object> expected, Map<String, Object> actual, String message) {
