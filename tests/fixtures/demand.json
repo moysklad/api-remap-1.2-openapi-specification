@@ -178,7 +178,10 @@
             "mediaType": "application/json",
             "uuidHref": "https://api.moysklad.ru/app/#good/edit?id=d686c1fc-26ae-11f1-0a83-1f2500000147"
           }
-        }
+        },
+        "things": [],
+        "trackingCodes": [],
+        "trackingCodes_1162": []
       }
     ]
   },
