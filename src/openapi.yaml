@@ -701,8 +701,6 @@ components:
       $ref: './components/schemas/common/metaList.yaml'
     Metadata:
       $ref: './components/schemas/common/metadata.yaml'
-    StabEntity:
-      $ref: './components/schemas/common/stabEntity.yaml'
     Context:
       $ref: './components/schemas/common/context.yaml'
     MinimumStockAbstract:
