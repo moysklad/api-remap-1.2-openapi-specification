@@ -171,13 +171,11 @@ properties:
   shipmentAddress:
     type: string
     maxLength: 255
-    nullable: true
     description: |
       Адрес доставки Отгрузки (строка).
       Для удаления адреса передайте пустую строку. Не поддерживается значение `null` для сброса — см. документацию по адресу доставки.
   shipmentAddressFull:
     description: Адрес доставки Отгрузки с детализацией по отдельным полям
-    nullable: true
     type: object
     allOf:
       - $ref: '../../../openapi.yaml#/components/schemas/Address'
