@@ -1,8 +1,27 @@
 type: object
-description: Файл
+description: Файл комментария к Задаче
+x-entity-static-builder:
+  methodParams:
+    - "parentId"
+    - "noteId"
+    - "id"
+  href:
+    - path: "entity"
+    - path: "task"
+    - param: "parentId"
+    - path: "notes"
+    - param: "noteId"
+    - path: "files"
+    - param: "id"
+  type: "files"
 properties:
   meta:
     $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID файла
+    readOnly: true
   title:
     type: string
     maxLength: 255

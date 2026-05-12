@@ -24,8 +24,11 @@ properties:
     readOnly: true
   agent:
     description: Метаданные Контрагента или юрлица, связанного с задачей
+    type: object
     nullable: true
-    $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
+    oneOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
+      - $ref: '../../../openapi.yaml#/components/schemas/Organization'
   assignee:
     description: Метаданные ответственного за выполнение задачи
     $ref: '../../../openapi.yaml#/components/schemas/Employee'
@@ -35,7 +38,6 @@ properties:
     readOnly: true
   authorApplication:
     description: Метаданные Решения, создавшего задачу
-    nullable: true
     $ref: '../../../openapi.yaml#/components/schemas/Application'
     readOnly: true
   completed:
@@ -74,6 +76,11 @@ properties:
     properties:
       meta:
         $ref: '../common/metaList.yaml'
+      rows:
+        type: array
+        description: Массив комментариев к задаче
+        items:
+          $ref: '../../../openapi.yaml#/components/schemas/TaskNote'
   operation:
     description: Метаданные документа, связанного с задачей
     nullable: true

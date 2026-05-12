@@ -40,7 +40,6 @@ properties:
     readOnly: true
   authorApplication:
     description: Метаданные Решения - создателя События
-    nullable: true
     type: object
     allOf:
       - $ref: '../../../openapi.yaml#/components/schemas/Application'

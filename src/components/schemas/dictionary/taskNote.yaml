@@ -31,7 +31,6 @@ properties:
     readOnly: true
   authorApplication:
     description: Метаданные Решения, создавшего комментарий
-    nullable: true
     $ref: '../../../openapi.yaml#/components/schemas/Application'
     readOnly: true
   moment:
@@ -47,4 +46,4 @@ properties:
     nullable: true
     type: object
     allOf:
-      - $ref: '../../../openapi.yaml#/components/schemas/FileList'
+      - $ref: '../../../openapi.yaml#/components/schemas/TaskNoteFileList'
