@@ -790,7 +790,7 @@ Add to `tags:` array:
 
 ## 8. Fixture file
 
-Create `tests/php/fixtures/<snake_case>.json` using a JSON example from the MD file.
+Create `tests/fixtures/<snake_case>.json` using a JSON example from the MD file.
 
 ### Choosing the right JSON example
 
@@ -810,21 +810,25 @@ Pick the **richest** single-entity JSON response from the MD — typically from 
 
 ### Why this matters
 
-Golden tests (`SerializationTest.php`) verify JSON→Model→JSON roundtrip. If the fixture is too sparse, roundtrip will pass trivially — missing fields become `null` in both directions, hiding schema/SDK mismatches. A rich fixture catches:
-- Fields present in schema but missing in generated SDK model (forgotten `generate-php`)
+Golden tests (`tests/php/golden/SerializationTest.php` and `tests/java/assertions/src/test/java/com/lognex/test/golden/SerializationTest.java`) verify JSON→Model→JSON roundtrip. If the fixture is too sparse, roundtrip will pass trivially — missing fields become `null` in both directions, hiding schema/SDK mismatches. A rich fixture catches:
+- Fields present in schema but missing in generated SDK model (forgotten `generate-php` or `generate-java`)
 - Incorrect nested object structure (e.g. `$ref` to wrong schema)
 - Type mismatches (integer vs float, string vs object)
 
 ## 9. Golden test registration
 
-In `tests/php/golden/SerializationTest.php`:
+Update both golden test registries:
+
+- `tests/php/golden/SerializationTest.php`
+- `tests/java/assertions/src/test/java/com/lognex/test/golden/SerializationTest.java`
 
 1. Add to `FIXTURE_MODEL_MAP`:
 ```php
 'contract' => 'Contract',
 ```
 
-2. Add any readOnly fields unique to this entity to `IGNORED_FIELDS` if needed.
+2. Use the Java model name if it differs from PHP (for example, `File` becomes `ModelFile` in Java).
+3. Add any readOnly fields unique to this entity to `IGNORED_FIELDS` if needed.
 
 ## 10. Smoke tests
 
@@ -884,7 +888,7 @@ Re-read the source `_<entity>.md` file and verify completeness:
 3. For document entities, verify `positions` and similar MetaArray fields are included as objects with `meta.size/limit/offset`
 4. For entities with computed fields (assortment: `stock/reserve/inTransit/quantity`), verify they are present in the fixture
 5. For entities with `operations` arrays (cashin/cashout), verify items include both `meta` and `linkedSum`
-6. After any schema change, regenerate the SDK (`make generate-php`) **before** running golden tests — otherwise the SDK models won't have the new fields
+6. After any schema change, regenerate both SDKs (`make generate-php`, `make generate-java`) **before** running golden tests — otherwise the generated models won't have the new fields
 
 ### Smoke test check
 1. Count test methods = count of distinct endpoint+method combinations
@@ -898,12 +902,14 @@ Re-read the source `_<entity>.md` file and verify completeness:
 docker compose run --rm sdk make lint           # Redocly lint — must say "valid"
 docker compose run --rm sdk make bundle         # produces dist/openapi.yaml + dist/openapi.json
 docker compose run --rm sdk make generate-php   # generates PHP SDK in clients/php/
+docker compose run --rm sdk make generate-java  # generates Java SDK in clients/java/
 docker compose restart mock                     # CRITICAL: reload bundled spec in mock server
 docker compose run --rm sdk make test-golden-php  # roundtrip JSON ↔ SDK model
+docker compose run --rm java-sdk make test-golden-java  # Java roundtrip against the same shared fixtures
 docker compose run --rm sdk make test-smoke       # HTTP smoke against openapi-mock
 ```
 
-`test-smoke` is the canonical local smoke target. `test-smoke-php` exists as a PHP-only shortcut and may be used for narrower reruns.
+`test-smoke` is the canonical local smoke target.
 
 ### Mock server restart — required after every `make bundle`
 
@@ -920,17 +926,19 @@ docker compose rm -sf mock && docker compose up -d mock
 
 ### Schema change → SDK regeneration — required before golden tests
 
-After modifying any YAML schema, **always run `make generate-php`** before golden tests. The PHP SDK models are generated code — they won't reflect new/changed properties until regenerated. Golden tests will silently pass with null values for missing fields, giving a false sense of correctness.
+After modifying any YAML schema, **always run `make generate-php` and `make generate-java`** before golden tests. The SDK models are generated code — they won't reflect new/changed properties until regenerated. Golden tests can otherwise give a false sense of correctness.
 
 ### Verification order matters
 
 The correct sequence is:
 1. `lint` — catch YAML/OpenAPI syntax issues
 2. `bundle` — produce `dist/openapi.yaml`
-3. `generate-php` — regenerate SDK models from the updated spec
-4. `restart mock` — reload the bundled spec in the mock server
-5. `test-golden-php` — verify roundtrip serialization with rich fixtures
-6. `test-smoke` — verify endpoint reachability against the mock
+3. `generate-php` — regenerate PHP SDK models from the updated spec
+4. `generate-java` — regenerate Java SDK models from the updated spec
+5. `restart mock` — reload the bundled spec in the mock server
+6. `test-golden-php` — verify PHP roundtrip serialization with rich fixtures
+7. `test-golden-java` — verify Java roundtrip serialization with the same fixtures
+8. `test-smoke` — verify endpoint reachability against the mock
 
-Skipping step 3 after schema changes → golden tests pass falsely.
-Skipping step 4 after adding endpoints → smoke tests fail with 404.
+Skipping steps 3-4 after schema changes → golden tests pass falsely or only one SDK is actually covered.
+Skipping step 5 after adding endpoints → smoke tests fail with 404.

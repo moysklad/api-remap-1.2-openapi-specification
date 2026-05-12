@@ -49,7 +49,32 @@ mirror-to-github:
       if [ -f "catalog-info.yaml" ]; then
         echo "Removing catalog-info.yaml..."
         rm -f catalog-info.yaml
-      fi      
+      fi
+
+      if [ -d "utils_python" ]; then
+        echo "Removing utils_python directory..."
+        rm -rf utils_python
+      fi
+
+      if [ -f "env_clean.py" ]; then
+        echo "Removing env_clean.py..."
+        rm -rf env_clean.py
+      fi
+
+      if [ -f "env_prepare.py" ]; then
+        echo "Removing env_prepare.py..."
+        rm -rf env_prepare.py
+      fi
+
+      if [ -f ".versionrc.json" ]; then
+        echo "Removing .versionrc.json..."
+        rm -f .versionrc.json
+      fi
+
+      if [ -f "scripts/generate-diff-changelog.js" ]; then
+        echo "Removing scripts/generate-diff-changelog.js..."
+        rm -f scripts/generate-diff-changelog.js
+      fi
 
       # создаем новый корневой commit
       git checkout --orphan temp-branch
