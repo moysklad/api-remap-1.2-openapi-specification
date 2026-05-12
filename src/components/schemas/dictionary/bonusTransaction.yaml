@@ -28,8 +28,12 @@ properties:
     $ref: '../../../openapi.yaml#/components/schemas/Organization'
   parentDocument:
     description: Метаданные связанного документа бонусной операции
+#   todo retaildemand or retailsalesreturn
     nullable: true
-    $ref: '../../../openapi.yaml#/components/schemas/StabEntity'
+    type: object
+    properties:
+      meta:
+        $ref: '../common/meta.yaml'
   applicable:
     type: boolean
     description: Отметка о проведении
