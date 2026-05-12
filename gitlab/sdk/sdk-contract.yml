@@ -115,10 +115,12 @@ sdk-contract:
   image: python:3.11
   parallel:
     matrix:
-      - CONTRACT_SHARD: dictionaries-1
-      - CONTRACT_SHARD: dictionaries-2
-      - CONTRACT_SHARD: dictionaries-3
-      - CONTRACT_SHARD: dictionaries-4
+      - CONTRACT_SHARD: alpha-a-b
+      - CONTRACT_SHARD: alpha-c-1
+      - CONTRACT_SHARD: alpha-c-2
+      - CONTRACT_SHARD: alpha-d-i
+      - CONTRACT_SHARD: alpha-p
+      - CONTRACT_SHARD: alpha-r-z
   needs:
     - job: bundle-openapi
       artifacts: true
@@ -137,7 +139,7 @@ sdk-contract:
         echo "Skipping Schemathesis execution on master push; marking sdk-contract as passed."
         exit 0
       fi
-    - pip install schemathesis
+    - pip install "schemathesis==${SCHEMATHESIS_VERSION:-4.17.0}"
     - |
       if [ -z "$SCHEMATHESIS_HOST" ] || [ -z "$SCHEMATHESIS_LOGIN" ] || [ -z "$SCHEMATHESIS_PASSWORD" ]; then
         echo "ERROR: SCHEMATHESIS_* variables are not set. Environment was not prepared (create-contract-user did not run)."
@@ -154,23 +156,36 @@ sdk-contract:
       # examples отключён: операции с AttributeAbstract (oneOf без дискриминатора)
       # вызывают Schema Error при генерации примеров — это не дефект API.
       SCHEMATHESIS_PHASES="${SCHEMATHESIS_PHASES:-coverage}"
+      # coverage в режиме all строит negative cases даже при excluded negative checks;
+      # на сложных схемах это даёт основной timeout. При необходимости можно
+      # переопределить SCHEMATHESIS_MODE=all в ручном pipeline.
+      SCHEMATHESIS_MODE="${SCHEMATHESIS_MODE:-positive}"
       SCHEMATHESIS_MAX_EXAMPLES="${SCHEMATHESIS_MAX_EXAMPLES:-50}"
       SCHEMATHESIS_WORKERS="${SCHEMATHESIS_WORKERS:-auto}"
+      SCHEMATHESIS_GENERATION_DATABASE="${SCHEMATHESIS_GENERATION_DATABASE:-none}"
+      SCHEMATHESIS_REQUEST_TIMEOUT="${SCHEMATHESIS_REQUEST_TIMEOUT:-10}"
+      SCHEMATHESIS_NO_SHRINK="${SCHEMATHESIS_NO_SHRINK:-1}"
       SCHEMATHESIS_INCLUDE_PATH_REGEX="${SCHEMATHESIS_INCLUDE_PATH_REGEX:-}"
 
       if [ -z "$SCHEMATHESIS_INCLUDE_PATH_REGEX" ]; then
         case "${CONTRACT_SHARD:-}" in
-          dictionaries-1)
-            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/(entity/(commissionreportin|employee|cashin|bundle|bonusprogram|group|personaldiscount)(/|$)|context/companysettings(/|$))'
+          alpha-a-b)
+            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/(accumulationdiscount|assortment|bonusprogram|bonustransaction|bundle)(/|$)'
             ;;
-          dictionaries-2)
-            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/(product|internalorder|cashout|role|country|currency|discount|specialpricediscount)(/|$)'
+          alpha-c-1)
+            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/(entity/(cashin|cashout|commissionreportin)(/|$)|context/companysettings(/|$))'
             ;;
-          dictionaries-3)
-            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/(counterparty|customerorder|contract|service|productfolder|customentity|accumulationdiscount|thing)(/|$)'
+          alpha-c-2)
+            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/(contract|counterparty|country|currency|customentity|customerorder)(/|$)'
             ;;
-          dictionaries-4)
-            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/(store|purchaseorder|retailstore|variant|uom|assortment|bonustransaction)(/|$)'
+          alpha-d-i)
+            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/(discount|employee|group|internalorder)(/|$)'
+            ;;
+          alpha-p)
+            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/(personaldiscount|product|productfolder|purchaseorder)(/|$)'
+            ;;
+          alpha-r-z)
+            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/(retailstore|role|service|specialpricediscount|store|thing|uom|variant)(/|$)'
             ;;
         esac
       fi
@@ -189,8 +204,12 @@ sdk-contract:
       echo "==> Running Schemathesis tests"
       echo "    Base URL: $SCHEMATHESIS_BASE_URL"
       echo "    Phases: $SCHEMATHESIS_PHASES"
+      echo "    Mode: $SCHEMATHESIS_MODE"
       echo "    Max examples: $SCHEMATHESIS_MAX_EXAMPLES"
       echo "    Workers: $SCHEMATHESIS_WORKERS"
+      echo "    Generation database: $SCHEMATHESIS_GENERATION_DATABASE"
+      echo "    Request timeout: $SCHEMATHESIS_REQUEST_TIMEOUT"
+      echo "    No shrink: $SCHEMATHESIS_NO_SHRINK"
       echo "    Shard: ${CONTRACT_SHARD:-all}"
       echo "    Include path regex: ${SCHEMATHESIS_INCLUDE_PATH_REGEX:-<none>}"
       echo "    Exclude checks: $EXCLUDE_CHECKS"
@@ -201,8 +220,15 @@ sdk-contract:
         -H 'Accept-Encoding: gzip, deflate, br' \
         --max-examples "$SCHEMATHESIS_MAX_EXAMPLES" \
         --phases "$SCHEMATHESIS_PHASES" \
+        --mode "$SCHEMATHESIS_MODE" \
         --workers "$SCHEMATHESIS_WORKERS" \
-        --exclude-checks "$EXCLUDE_CHECKS"
+        --exclude-checks "$EXCLUDE_CHECKS" \
+        --generation-database "$SCHEMATHESIS_GENERATION_DATABASE" \
+        --request-timeout "$SCHEMATHESIS_REQUEST_TIMEOUT"
+
+      if [ "$SCHEMATHESIS_NO_SHRINK" = "1" ]; then
+        set -- "$@" --no-shrink
+      fi
 
       if [ -n "$SCHEMATHESIS_INCLUDE_PATH_REGEX" ]; then
         set -- "$@" --include-path-regex "$SCHEMATHESIS_INCLUDE_PATH_REGEX"
