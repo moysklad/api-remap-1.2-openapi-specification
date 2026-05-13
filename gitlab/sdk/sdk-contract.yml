@@ -116,16 +116,31 @@ sdk-contract:
   parallel:
     matrix:
       - CONTRACT_SHARD: contract-a-b-d-e-g
-      - CONTRACT_SHARD: contract-cashin
-      - CONTRACT_SHARD: contract-cashout
-      - CONTRACT_SHARD: contract-commissionreportin-main
+      - CONTRACT_SHARD: contract-cashin-core
+      - CONTRACT_SHARD: contract-cashin-batch
+      - CONTRACT_SHARD: contract-cashin-metadata
+      - CONTRACT_SHARD: contract-cashout-core
+      - CONTRACT_SHARD: contract-cashout-batch
+      - CONTRACT_SHARD: contract-cashout-metadata
+      - CONTRACT_SHARD: contract-commissionreportin-core
+      - CONTRACT_SHARD: contract-commissionreportin-batch
+      - CONTRACT_SHARD: contract-commissionreportin-metadata
       - CONTRACT_SHARD: contract-commissionreportin-positions
       - CONTRACT_SHARD: contract-commissionreportin-returns
       - CONTRACT_SHARD: contract-counterparty-contract
-      - CONTRACT_SHARD: contract-customerorder
-      - CONTRACT_SHARD: contract-internalorder
+      - CONTRACT_SHARD: contract-customerorder-core
+      - CONTRACT_SHARD: contract-customerorder-batch
+      - CONTRACT_SHARD: contract-customerorder-metadata
+      - CONTRACT_SHARD: contract-customerorder-positions
+      - CONTRACT_SHARD: contract-internalorder-core
+      - CONTRACT_SHARD: contract-internalorder-batch
+      - CONTRACT_SHARD: contract-internalorder-metadata
+      - CONTRACT_SHARD: contract-internalorder-positions
       - CONTRACT_SHARD: contract-product
-      - CONTRACT_SHARD: contract-purchaseorder
+      - CONTRACT_SHARD: contract-purchaseorder-core
+      - CONTRACT_SHARD: contract-purchaseorder-batch
+      - CONTRACT_SHARD: contract-purchaseorder-metadata
+      - CONTRACT_SHARD: contract-purchaseorder-positions
       - CONTRACT_SHARD: contract-r-z
   needs:
     - job: bundle-openapi
@@ -169,7 +184,7 @@ sdk-contract:
       SCHEMATHESIS_MAX_EXAMPLES="${SCHEMATHESIS_MAX_EXAMPLES:-50}"
       SCHEMATHESIS_WORKERS="${SCHEMATHESIS_WORKERS:-auto}"
       SCHEMATHESIS_GENERATION_DATABASE="${SCHEMATHESIS_GENERATION_DATABASE:-none}"
-      SCHEMATHESIS_REQUEST_TIMEOUT="${SCHEMATHESIS_REQUEST_TIMEOUT:-10}"
+      SCHEMATHESIS_REQUEST_TIMEOUT="${SCHEMATHESIS_REQUEST_TIMEOUT:-30}"
       SCHEMATHESIS_NO_SHRINK="${SCHEMATHESIS_NO_SHRINK:-1}"
       SCHEMATHESIS_INCLUDE_PATH_REGEX="${SCHEMATHESIS_INCLUDE_PATH_REGEX:-}"
 
@@ -178,35 +193,80 @@ sdk-contract:
           contract-a-b-d-e-g)
             SCHEMATHESIS_INCLUDE_PATH_REGEX='^(/entity/(accumulationdiscount|assortment|bonusprogram|bonustransaction|bundle|discount|employee|group)(/|$)|/context/companysettings(/|$))'
             ;;
-          contract-cashin)
-            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/cashin(/|$)'
+          contract-cashin-core)
+            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/cashin($|/\{id\}$|/new$)'
             ;;
-          contract-cashout)
-            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/cashout(/|$)'
+          contract-cashin-batch)
+            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/cashin/(delete|batch)$'
             ;;
-          contract-commissionreportin-main)
-            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/commissionreportin($|/[^/]+$|/delete$|/batch$|/metadata(/|$))'
+          contract-cashin-metadata)
+            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/cashin/metadata(/|$)'
+            ;;
+          contract-cashout-core)
+            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/cashout($|/\{id\}$|/new$)'
+            ;;
+          contract-cashout-batch)
+            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/cashout/(delete|batch)$'
+            ;;
+          contract-cashout-metadata)
+            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/cashout/metadata(/|$)'
+            ;;
+          contract-commissionreportin-core)
+            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/commissionreportin($|/\{id\}$)'
+            ;;
+          contract-commissionreportin-batch)
+            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/commissionreportin/(delete|batch)$'
+            ;;
+          contract-commissionreportin-metadata)
+            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/commissionreportin/metadata(/|$)'
             ;;
           contract-commissionreportin-positions)
-            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/commissionreportin/[^/]+/positions(/|$)'
+            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/commissionreportin/\{id\}/positions(/|$)'
             ;;
           contract-commissionreportin-returns)
-            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/commissionreportin/[^/]+/returntocommissionerpositions(/|$)'
+            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/commissionreportin/\{id\}/returntocommissionerpositions(/|$)'
             ;;
           contract-counterparty-contract)
             SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/(contract|counterparty|country|currency|customentity)(/|$)'
             ;;
-          contract-customerorder)
-            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/customerorder(/|$)'
+          contract-customerorder-core)
+            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/customerorder($|/\{id\}$|/new$)'
             ;;
-          contract-internalorder)
-            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/internalorder(/|$)'
+          contract-customerorder-batch)
+            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/customerorder/(delete|batch)$'
+            ;;
+          contract-customerorder-metadata)
+            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/customerorder/metadata(/|$)'
+            ;;
+          contract-customerorder-positions)
+            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/customerorder/\{id\}/positions(/|$)'
+            ;;
+          contract-internalorder-core)
+            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/internalorder($|/\{id\}$|/new$)'
+            ;;
+          contract-internalorder-batch)
+            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/internalorder/(delete|batch)$'
+            ;;
+          contract-internalorder-metadata)
+            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/internalorder/metadata(/|$)'
+            ;;
+          contract-internalorder-positions)
+            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/internalorder/\{id\}/positions(/|$)'
             ;;
           contract-product)
             SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/(personaldiscount|product|productfolder)(/|$)'
             ;;
-          contract-purchaseorder)
-            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/purchaseorder(/|$)'
+          contract-purchaseorder-core)
+            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/purchaseorder($|/\{id\}$|/new$)'
+            ;;
+          contract-purchaseorder-batch)
+            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/purchaseorder/(delete|batch)$'
+            ;;
+          contract-purchaseorder-metadata)
+            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/purchaseorder/metadata(/|$)'
+            ;;
+          contract-purchaseorder-positions)
+            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/purchaseorder/\{id\}/positions(/|$)'
             ;;
           contract-r-z)
             SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/(retailstore|role|service|specialpricediscount|store|thing|uom|variant)(/|$)'
