@@ -105,6 +105,43 @@ class ApiEndpointsTest extends TestCase
     }
 
     /**
+     * Проверяет доступность endpoint'а печати этикеток и ценников.
+     * POST /entity/{type}/{id}/export
+     */
+    public function testPrintLabels(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/product/' . self::TEST_UUID . '/export', [
+            'json' => [
+                'organization' => [
+                    'meta' => [
+                        'href' => 'https://api.moysklad.ru/api/remap/1.2/entity/organization/' . self::TEST_UUID,
+                        'type' => 'organization',
+                        'mediaType' => 'application/json',
+                    ],
+                ],
+                'count' => 10,
+                'salePrice' => [
+                    'priceType' => [
+                        'meta' => [
+                            'href' => 'https://api.moysklad.ru/api/remap/1.2/context/companysettings/pricetype/' . self::TEST_UUID,
+                            'type' => 'pricetype',
+                            'mediaType' => 'application/json',
+                        ],
+                    ],
+                ],
+                'template' => [
+                    'meta' => [
+                        'href' => 'https://api.moysklad.ru/api/remap/1.2/entity/assortment/metadata/embeddedtemplate/' . self::TEST_UUID,
+                        'type' => 'embeddedtemplate',
+                        'mediaType' => 'application/json',
+                    ],
+                ],
+            ],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
      * Проверяет доступность endpoint'а обновления товара.
      * PUT /entity/product/{id}
      */

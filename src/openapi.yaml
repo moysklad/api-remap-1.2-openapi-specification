@@ -337,6 +337,9 @@ paths:
     $ref: './paths/dictionaries/variants/variantcharacteristics.yaml'
   /entity/variant/metadata/characteristics/{id}:
     $ref: './paths/dictionaries/variants/variantcharacteristics-by-id.yaml'
+  # Labels
+  /entity/{type}/{id}/export:
+    $ref: './paths/dictionaries/labels/labels-print.yaml'
   # Things
   /entity/thing:
     $ref: './paths/dictionaries/things/things.yaml'
@@ -618,6 +621,8 @@ components:
       $ref: './components/schemas/dictionary/employeeSecurity.yaml'
     EmployeeRole:
       $ref: './components/schemas/dictionary/employeeRole.yaml'
+    EmbeddedTemplate:
+      $ref: './components/schemas/dictionary/embeddedTemplate.yaml'
     File:
       $ref: './components/schemas/common/file.yaml'
     FileUpload:
@@ -636,6 +641,8 @@ components:
       $ref: './components/schemas/dictionary/group.yaml'
     GroupList:
       $ref: './components/schemas/dictionary/groupList.yaml'
+    LabelPrintRequest:
+      $ref: './components/schemas/dictionary/labelPrintRequest.yaml'
     Image:
       $ref: './components/schemas/common/image.yaml'
     ImageList:
@@ -958,6 +965,8 @@ tags:
     description: Операции с комплектами
   - name: Variants
     description: Операции с модификациями
+  - name: Labels
+    description: Операции с печатью этикеток и ценников
   - name: Things
     description: Операции с серийными номерами
   - name: Stores
