@@ -198,6 +198,12 @@ paths:
   /entity/service/{id}/files/{fileId}:
     $ref: './paths/dictionaries/services/service-file-by-id.yaml'
   #
+  # SalePlatforms
+  /entity/saleplatform:
+    $ref: './paths/dictionaries/saleplatforms/saleplatforms.yaml'
+  /entity/saleplatform/{id}:
+    $ref: './paths/dictionaries/saleplatforms/saleplatform-by-id.yaml'
+  #
   # PriceTypes
   /context/companysettings/pricetype:
     $ref: './paths/dictionaries/pricetypes/pricetypes.yaml'
@@ -716,6 +722,12 @@ components:
       $ref: './components/schemas/dictionary/retailStore.yaml'
     SalePrice:
       $ref: './components/schemas/dictionary/salePrice.yaml'
+    SalePlatform:
+      $ref: './components/schemas/dictionary/salePlatform.yaml'
+    SalePlatformList:
+      $ref: './components/schemas/dictionary/salePlatformList.yaml'
+    SalePlatformGroup:
+      $ref: './components/schemas/dictionary/salePlatformGroup.yaml'
     SalesReturn:
       $ref: './components/schemas/dictionary/salesReturn.yaml'
     Service:
@@ -955,6 +967,8 @@ tags:
     description: Операции с услугами
   - name: PriceTypes
     description: Операции с типами цен
+  - name: SalePlatforms
+    description: Операции с площадками для продаж
   - name: RetailStores
     description: Операции с точками продаж
   - name: Cashiers

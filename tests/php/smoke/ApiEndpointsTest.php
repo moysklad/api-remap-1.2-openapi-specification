@@ -933,6 +933,28 @@ class ApiEndpointsTest extends TestCase
         $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
     }
 
+    // ==================== SALE PLATFORMS ====================
+
+    /**
+     * Проверяет доступность endpoint'а получения списка площадок для продаж.
+     * GET /entity/saleplatform
+     */
+    public function testListSalePlatforms(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/saleplatform');
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * Проверяет доступность endpoint'а получения площадки для продаж по ID.
+     * GET /entity/saleplatform/{id}
+     */
+    public function testGetSalePlatformById(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/saleplatform/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
     public function testListStores(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/store');

@@ -55,6 +55,7 @@ class SerializationTest extends TestCase
         'service' => 'Service',
         'uom' => 'Uom',
         'price_type' => 'PriceType',
+        'sale_platform' => 'SalePlatform',
         'store' => 'Store',
         'retail_store' => 'RetailStore',
         'cashier' => 'Cashier',
