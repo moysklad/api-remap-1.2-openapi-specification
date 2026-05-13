@@ -38,11 +38,12 @@ Follow this order. Read [reference.md](reference.md) for templates and edge-case
 5. **Create schemas** — entity + list schemas; for documents with positions also position + position list schemas. For every schema that has a top-level `meta`, add `x-entity-static-builder` (see "Static builder extension" below).
 6. **Create paths** — one YAML per endpoint group. Reference schemas through `../../../openapi.yaml#/components/schemas/<SchemaName>` from request/response bodies.
 7. **Register in `src/openapi.yaml`** — paths, `components.schemas`, and tags in the local style used nearby.
-8. **Add test data** — create a rich `tests/php/fixtures/<snake_case>.json`, add `FIXTURE_MODEL_MAP`, and update `IGNORED_FIELDS` only when required.
-9. **Add smoke coverage** — one test method per endpoint+method from the endpoint matrix.
-10. **Cross-check** — re-read the MD and verify fields, endpoints, refs, nullable values, enums, fixtures, smoke tests, and `x-entity-static-builder` presence on every schema with `meta`.
-11. **Verify** — run the Docker make sequence below.
-12. **Report** — mention any stubs created or left unexpanded, intentionally skipped MD fields, and checks run.
+8. **Assign contract shard** — add the new entity keyword to exactly one `sdk-contract` `CONTRACT_SHARD` regex in `gitlab/sdk/sdk-contract.yml` (see "Schemathesis contract shard assignment" below).
+9. **Add test data** — create a rich `tests/php/fixtures/<snake_case>.json`, add `FIXTURE_MODEL_MAP`, and update `IGNORED_FIELDS` only when required.
+10. **Add smoke coverage** — one test method per endpoint+method from the endpoint matrix.
+11. **Cross-check** — re-read the MD and verify fields, endpoints, refs, nullable values, enums, fixtures, smoke tests, contract shard assignment, and `x-entity-static-builder` presence on every schema with `meta`.
+12. **Verify** — run the Docker make sequence below.
+13. **Report** — mention any stubs created or left unexpanded, intentionally skipped MD fields, contract shard chosen, and checks run.
 
 ## Endpoint matrix quick template
 
@@ -85,9 +86,30 @@ Before verification, re-read the MD and confirm:
 - `+Только для чтения`, nullable values, enum/open string choices, `String(N)`, and money/weight numeric formats are represented correctly.
 - Nested object structures match MD JSON examples exactly.
 - Every API operation section maps to a path + method and a smoke test.
+- Every new `/entity/<keyword>` or non-entity API path is covered by exactly one `sdk-contract` shard regex in `gitlab/sdk/sdk-contract.yml`.
 - Metadata attributes and `metadata/states/{id}` exist when the MD metadata section requires them.
 - Every schema with a top-level `meta` field carries `x-entity-static-builder` (entity → keyword + `id`; position → `parentId` + `id` + `<keyword>position` type).
 - The fixture uses the richest single-entity GET response, not a minimal create request.
+
+## Schemathesis contract shard assignment
+
+Contract tests are manually run from `sdk-contract` in `gitlab/sdk/sdk-contract.yml`. The job uses `CONTRACT_SHARD` matrix entries and `SCHEMATHESIS_INCLUDE_PATH_REGEX` filters to keep each Schemathesis job small enough for the CI timeout.
+
+When adding a new entity:
+
+1. Add its URL keyword (`/entity/<keyword>`) to exactly one shard regex in `gitlab/sdk/sdk-contract.yml`.
+2. Prefer balancing by expected Schemathesis cost, not alphabetic order. Full document entities, entities with positions, and entities with many nested refs should usually get their own shard or be added only to a light shard.
+3. Do not add the same keyword to multiple shard regexes.
+4. After updating shards, verify coverage locally by parsing `dist/openapi.yaml` or `src/openapi.yaml`: every operation should match exactly one shard regex, with no missing or duplicate operations.
+
+Current guidance:
+
+| Entity type | Recommended shard handling |
+|-------------|----------------------------|
+| Heavy document with positions or large request body | Own shard, or split by subpaths if it still exceeds CI timeout |
+| Medium dictionary/document | Add to a medium/light shard after checking operation count and schema complexity |
+| Small read-only or simple dictionary | Add to an existing light shard |
+| Non-`/entity` API path | Add an explicit alternative to the most suitable shard regex |
 
 ## Static builder extension (`x-entity-static-builder`)
 

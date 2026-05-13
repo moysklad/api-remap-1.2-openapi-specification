@@ -115,12 +115,18 @@ sdk-contract:
   image: python:3.11
   parallel:
     matrix:
-      - CONTRACT_SHARD: alpha-a-b
-      - CONTRACT_SHARD: alpha-c-1
-      - CONTRACT_SHARD: alpha-c-2
-      - CONTRACT_SHARD: alpha-d-i
-      - CONTRACT_SHARD: alpha-p
-      - CONTRACT_SHARD: alpha-r-z
+      - CONTRACT_SHARD: contract-a-b-d-e-g
+      - CONTRACT_SHARD: contract-cashin
+      - CONTRACT_SHARD: contract-cashout
+      - CONTRACT_SHARD: contract-commissionreportin-main
+      - CONTRACT_SHARD: contract-commissionreportin-positions
+      - CONTRACT_SHARD: contract-commissionreportin-returns
+      - CONTRACT_SHARD: contract-counterparty-contract
+      - CONTRACT_SHARD: contract-customerorder
+      - CONTRACT_SHARD: contract-internalorder
+      - CONTRACT_SHARD: contract-product
+      - CONTRACT_SHARD: contract-purchaseorder
+      - CONTRACT_SHARD: contract-r-z
   needs:
     - job: bundle-openapi
       artifacts: true
@@ -169,22 +175,40 @@ sdk-contract:
 
       if [ -z "$SCHEMATHESIS_INCLUDE_PATH_REGEX" ]; then
         case "${CONTRACT_SHARD:-}" in
-          alpha-a-b)
-            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/(accumulationdiscount|assortment|bonusprogram|bonustransaction|bundle)(/|$)'
+          contract-a-b-d-e-g)
+            SCHEMATHESIS_INCLUDE_PATH_REGEX='^(/entity/(accumulationdiscount|assortment|bonusprogram|bonustransaction|bundle|discount|employee|group)(/|$)|/context/companysettings(/|$))'
             ;;
-          alpha-c-1)
-            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/(entity/(cashin|cashout|commissionreportin)(/|$)|context/companysettings(/|$))'
+          contract-cashin)
+            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/cashin(/|$)'
             ;;
-          alpha-c-2)
-            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/(contract|counterparty|country|currency|customentity|customerorder)(/|$)'
+          contract-cashout)
+            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/cashout(/|$)'
             ;;
-          alpha-d-i)
-            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/(discount|employee|group|internalorder)(/|$)'
+          contract-commissionreportin-main)
+            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/commissionreportin($|/[^/]+$|/delete$|/batch$|/metadata(/|$))'
             ;;
-          alpha-p)
-            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/(personaldiscount|product|productfolder|purchaseorder)(/|$)'
+          contract-commissionreportin-positions)
+            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/commissionreportin/[^/]+/positions(/|$)'
             ;;
-          alpha-r-z)
+          contract-commissionreportin-returns)
+            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/commissionreportin/[^/]+/returntocommissionerpositions(/|$)'
+            ;;
+          contract-counterparty-contract)
+            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/(contract|counterparty|country|currency|customentity)(/|$)'
+            ;;
+          contract-customerorder)
+            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/customerorder(/|$)'
+            ;;
+          contract-internalorder)
+            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/internalorder(/|$)'
+            ;;
+          contract-product)
+            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/(personaldiscount|product|productfolder)(/|$)'
+            ;;
+          contract-purchaseorder)
+            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/purchaseorder(/|$)'
+            ;;
+          contract-r-z)
             SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/(retailstore|role|service|specialpricediscount|store|thing|uom|variant)(/|$)'
             ;;
         esac
