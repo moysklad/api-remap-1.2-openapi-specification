@@ -13,6 +13,6 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../../../openapi.yaml#/components/schemas/DocumentMetadata'
+            $ref: '../../../openapi.yaml#/components/schemas/Metadata'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
