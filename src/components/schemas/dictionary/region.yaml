@@ -1,5 +1,13 @@
 type: object
 description: Регион
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "region"
+    - param: "id"
+  type: "region"
 properties:
   meta:
     $ref: '../common/meta.yaml'

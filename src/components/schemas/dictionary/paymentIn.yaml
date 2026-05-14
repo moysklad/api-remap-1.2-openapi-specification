@@ -1,5 +1,13 @@
 type: object
 description: Входящий платеж
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "paymentin"
+    - param: "id"
+  type: "paymentin"
 properties:
   meta:
     description: Метаданные Входящего платежа

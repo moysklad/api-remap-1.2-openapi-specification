@@ -1,5 +1,13 @@
 type: object
 description: Канал продаж
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "saleschannel"
+    - param: "id"
+  type: "saleschannel"
 properties:
   meta:
     description: Метаданные Канала продаж

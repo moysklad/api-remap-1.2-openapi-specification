@@ -1,5 +1,13 @@
 type: object
 description: Проект
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "project"
+    - param: "id"
+  type: "project"
 properties:
   meta:
     description: Метаданные Проекта

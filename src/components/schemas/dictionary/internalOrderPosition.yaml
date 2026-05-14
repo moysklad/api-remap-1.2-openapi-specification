@@ -1,5 +1,16 @@
 type: object
 description: Позиция Внутреннего заказа
+x-entity-static-builder:
+  methodParams:
+    - "parentId"
+    - "id"
+  href:
+    - path: "entity"
+    - path: "internalorder"
+    - param: "parentId"
+    - path: "positions"
+    - param: "id"
+  type: "internalorderposition"
 properties:
   meta:
     description: Метаданные позиции

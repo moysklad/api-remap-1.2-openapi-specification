@@ -1,5 +1,13 @@
 type: object
 description: Отгрузка
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "demand"
+    - param: "id"
+  type: "demand"
 properties:
   meta:
     description: Метаданные Отгрузки

@@ -1,4 +1,12 @@
 type: object
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "product"
+    - param: "id"
+  type: "product"
 properties:
   meta:
     description: Метаданные Товара

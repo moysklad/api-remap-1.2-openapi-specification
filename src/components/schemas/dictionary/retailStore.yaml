@@ -1,5 +1,13 @@
 type: object
 description: Точка продаж
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "retailstore"
+    - param: "id"
+  type: "retailstore"
 properties:
   id:
     type: string
