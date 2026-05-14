@@ -15,9 +15,25 @@ post:
         schema:
           type: array
           items:
-            $ref: '../../../openapi.yaml#/components/schemas/Product'
+            type: object
+            required:
+              - meta
+            properties:
+              meta:
+                $ref: '../../../openapi.yaml#/components/schemas/Meta'
           minItems: 1
           maxItems: 1000
+        example:
+          - meta:
+              href: "https://api.moysklad.ru/api/remap/1.2/entity/product/7944ef04-f831-11e5-7a69-971500188b1"
+              metadataHref: "https://api.moysklad.ru/api/remap/1.2/entity/product/metadata"
+              type: "product"
+              mediaType: "application/json"
+          - meta:
+              href: "https://api.moysklad.ru/api/remap/1.2/entity/product/7944ef04-f831-11e5-7a69-971500188b2"
+              metadataHref: "https://api.moysklad.ru/api/remap/1.2/entity/product/metadata"
+              type: "product"
+              mediaType: "application/json"
   responses:
     '200':
       description: Результат по каждому элементу (успех или объект ошибки)

@@ -591,6 +591,8 @@ components:
       $ref: './components/schemas/dictionary/employeeSecurity.yaml'
     EmployeeRole:
       $ref: './components/schemas/dictionary/employeeRole.yaml'
+    EntityRef:
+      $ref: './components/schemas/common/entityRef.yaml'
     File:
       $ref: './components/schemas/common/file.yaml'
     FileUpload:
