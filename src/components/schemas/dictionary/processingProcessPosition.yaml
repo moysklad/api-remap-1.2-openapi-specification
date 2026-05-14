@@ -36,6 +36,8 @@ properties:
       type: object
       properties:
         processingstage:
-          meta:
-            description: Метаданные Этапа производства
-            $ref: '../common/meta.yaml'
+          type: object
+          properties:
+            meta:
+              description: Метаданные Этапа производства
+              $ref: '../common/meta.yaml'
