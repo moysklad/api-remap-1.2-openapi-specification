@@ -76,6 +76,7 @@ class SerializationTest extends TestCase
         'facture_out' => 'FactureOut',
         'company_settings' => 'CompanySettings',
         'company_settings_metadata' => 'CompanySettingsMetadata',
+        'subscription' => 'Subscription',
         'assortment_settings' => 'AssortmentSettings',
         'assortment' => 'Assortment',
         'discount' => 'Discount',

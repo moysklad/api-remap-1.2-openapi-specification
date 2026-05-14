@@ -217,6 +217,8 @@ paths:
     $ref: './paths/dictionaries/companysettings/companysettings.yaml'
   /context/companysettings/metadata:
     $ref: './paths/dictionaries/companysettings/companysettings-metadata.yaml'
+  /accountSettings/subscription:
+    $ref: './paths/dictionaries/companysettings/companysubscription.yaml'
 
   # Discounts
   /entity/discount:
@@ -902,6 +904,10 @@ components:
       $ref: './components/schemas/dictionary/companySettings.yaml'
     CompanySettingsMetadata:
       $ref: './components/schemas/dictionary/companySettingsMetadata.yaml'
+    Subscription:
+      $ref: './components/schemas/dictionary/subscription.yaml'
+    SubscriptionTariff:
+      $ref: './components/schemas/dictionary/subscriptionTariff.yaml'
     MarkingSellingMode:
       $ref: './components/schemas/dictionary/markingSellingMode.yaml'
     MarksCheckMode:
@@ -997,6 +1003,8 @@ tags:
     description: Операции с полученными отчетами комиссионера
   - name: CompanySettings
     description: Операции с настройками компании
+  - name: Subscriptions
+    description: Операции с подпиской компании
   - name: Discounts
     description: Операции со скидками
   - name: Assortment

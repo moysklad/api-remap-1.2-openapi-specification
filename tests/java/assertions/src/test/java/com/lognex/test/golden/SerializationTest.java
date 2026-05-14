@@ -86,6 +86,7 @@ class SerializationTest extends BaseTestCase {
         FIXTURE_MODEL_MAP.put("facture_out", "FactureOut");
         FIXTURE_MODEL_MAP.put("company_settings", "CompanySettings");
         FIXTURE_MODEL_MAP.put("company_settings_metadata", "CompanySettingsMetadata");
+        FIXTURE_MODEL_MAP.put("subscription", "Subscription");
         FIXTURE_MODEL_MAP.put("assortment_settings", "AssortmentSettings");
         FIXTURE_MODEL_MAP.put("assortment", "Assortment");
         FIXTURE_MODEL_MAP.put("discount", "Discount");

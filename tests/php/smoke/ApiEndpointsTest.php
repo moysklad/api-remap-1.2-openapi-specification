@@ -933,6 +933,18 @@ class ApiEndpointsTest extends TestCase
         $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
     }
 
+    // ==================== SUBSCRIPTIONS ====================
+
+    /**
+     * Проверяет доступность endpoint'а получения подписки компании.
+     * GET /accountSettings/subscription
+     */
+    public function testGetSubscription(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/accountSettings/subscription');
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
     // ==================== SALE PLATFORMS ====================
 
     /**
