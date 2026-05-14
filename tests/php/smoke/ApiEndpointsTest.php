@@ -771,6 +771,28 @@ class ApiEndpointsTest extends TestCase
         $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
     }
 
+    // ==================== REGIONS ====================
+
+    /**
+     * Проверяет доступность endpoint'а получения списка регионов.
+     * GET /entity/region
+     */
+    public function testListRegions(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/region');
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * Проверяет доступность endpoint'а получения региона по ID.
+     * GET /entity/region/{id}
+     */
+    public function testGetRegionById(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/region/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
     // ==================== PRODUCT FOLDERS ====================
 
     /**

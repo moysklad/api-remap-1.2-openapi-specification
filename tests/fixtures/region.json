@@ -1,0 +1,14 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/region/00000000-0000-0000-0000-000000000077",
+    "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/region/metadata",
+    "type": "region",
+    "mediaType": "application/json"
+  },
+  "id": "00000000-0000-0000-0000-000000000077",
+  "version": 0,
+  "updated": "2018-11-29 00:00:00",
+  "name": "г Москва",
+  "code": "77",
+  "externalCode": "77"
+}

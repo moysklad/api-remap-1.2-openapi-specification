@@ -51,6 +51,7 @@ class SerializationTest extends TestCase
         'group' => 'Group',
         'entity_with_extra_field' => 'Group',
         'country' => 'Country',
+        'region' => 'Region',
         'product_folder' => 'ProductFolder',
         'service' => 'Service',
         'uom' => 'Uom',

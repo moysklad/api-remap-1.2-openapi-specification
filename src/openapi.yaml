@@ -112,6 +112,12 @@ paths:
   /entity/country/batch:
     $ref: './paths/dictionaries/countries/countries-batch.yaml'
   #
+  # Regions
+  /entity/region:
+    $ref: './paths/dictionaries/regions/regions.yaml'
+  /entity/region/{id}:
+    $ref: './paths/dictionaries/regions/region-by-id.yaml'
+  #
   # ProductFolders
   /entity/productfolder:
     $ref: './paths/dictionaries/productFolders/productFolders.yaml'
@@ -734,6 +740,8 @@ components:
       $ref: './components/schemas/dictionary/productFolderList.yaml'
     Region:
       $ref: './components/schemas/dictionary/region.yaml'
+    RegionList:
+      $ref: './components/schemas/dictionary/regionList.yaml'
     RewardType:
       $ref: './components/schemas/dictionary/rewardType.yaml'
     RetailStore:
@@ -975,6 +983,8 @@ tags:
     description: Операции с группами
   - name: Countries
     description: Операции со странами
+  - name: Regions
+    description: Операции с регионами
   - name: ProductFolders
     description: Операции с группами товаров
   - name: Uoms
