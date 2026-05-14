@@ -53,6 +53,7 @@ class SerializationTest extends TestCase
         'country' => 'Country',
         'product_folder' => 'ProductFolder',
         'processing_stage' => 'ProcessingStage',
+        'processing_process' => 'ProcessingProcess',
         'service' => 'Service',
         'uom' => 'Uom',
         'price_type' => 'PriceType',

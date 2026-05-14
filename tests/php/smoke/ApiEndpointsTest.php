@@ -942,6 +942,184 @@ class ApiEndpointsTest extends TestCase
         $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
     }
 
+    // ==================== PROCESSING PROCESSES ====================
+
+    /**
+     * Проверяет доступность endpoint'а получения списка Техпроцессов.
+     * GET /entity/processingprocess
+     */
+    public function testListProcessingProcesses(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/processingprocess');
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * Проверяет доступность endpoint'а создания Техпроцесса.
+     * POST /entity/processingprocess
+     */
+    public function testCreateProcessingProcess(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/processingprocess', [
+            'json' => ['name' => 'Test Processing Process', 'positions' => [[
+                'processingstage' => [
+                    'meta' => [
+                        'href' => 'https://api.moysklad.ru/api/remap/1.2/entity/processingstage/' . self::TEST_UUID,
+                        'type' => 'processingstage',
+                        'mediaType' => 'application/json',
+                    ],
+                ],
+            ]]],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * Проверяет доступность endpoint'а получения Техпроцесса по ID.
+     * GET /entity/processingprocess/{id}
+     */
+    public function testGetProcessingProcessById(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/processingprocess/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а обновления Техпроцесса.
+     * PUT /entity/processingprocess/{id}
+     */
+    public function testUpdateProcessingProcess(): void
+    {
+        $response = $this->client->put(self::API_BASE_PATH . '/entity/processingprocess/' . self::TEST_UUID, [
+            'json' => ['name' => 'Updated Processing Process'],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а удаления Техпроцесса.
+     * DELETE /entity/processingprocess/{id}
+     */
+    public function testDeleteProcessingProcess(): void
+    {
+        $response = $this->client->delete(self::API_BASE_PATH . '/entity/processingprocess/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::DELETE_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а массового удаления Техпроцессов.
+     * POST /entity/processingprocess/delete
+     */
+    public function testBatchDeleteProcessingProcesses(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/processingprocess/delete', [
+            'json' => [['meta' => ['href' => 'https://api.moysklad.ru/api/remap/1.2/entity/processingprocess/' . self::TEST_UUID, 'type' => 'processingprocess', 'mediaType' => 'application/json']]],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * Проверяет доступность endpoint'а массового создания и обновления Техпроцессов.
+     * POST /entity/processingprocess/batch
+     */
+    public function testBatchCreateProcessingProcesses(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/processingprocess/batch', [
+            'json' => [['name' => 'Test Processing Process', 'positions' => [[
+                'processingstage' => [
+                    'meta' => [
+                        'href' => 'https://api.moysklad.ru/api/remap/1.2/entity/processingstage/' . self::TEST_UUID,
+                        'type' => 'processingstage',
+                        'mediaType' => 'application/json',
+                    ],
+                ],
+            ]]]],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * Проверяет доступность endpoint'а получения позиций Техпроцесса.
+     * GET /entity/processingprocess/{id}/positions
+     */
+    public function testListProcessingProcessPositions(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/processingprocess/' . self::TEST_UUID . '/positions');
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а создания позиций Техпроцесса.
+     * POST /entity/processingprocess/{id}/positions
+     */
+    public function testCreateProcessingProcessPositions(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/processingprocess/' . self::TEST_UUID . '/positions', [
+            'json' => [[
+                'processingstage' => [
+                    'meta' => [
+                        'href' => 'https://api.moysklad.ru/api/remap/1.2/entity/processingstage/' . self::TEST_UUID,
+                        'type' => 'processingstage',
+                        'mediaType' => 'application/json',
+                    ],
+                ],
+            ]],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а получения позиции Техпроцесса по ID.
+     * GET /entity/processingprocess/{id}/positions/{positionId}
+     */
+    public function testGetProcessingProcessPositionById(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/processingprocess/' . self::TEST_UUID . '/positions/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а обновления позиции Техпроцесса.
+     * PUT /entity/processingprocess/{id}/positions/{positionId}
+     */
+    public function testUpdateProcessingProcessPosition(): void
+    {
+        $response = $this->client->put(self::API_BASE_PATH . '/entity/processingprocess/' . self::TEST_UUID . '/positions/' . self::TEST_UUID, [
+            'json' => [
+                'processingstage' => [
+                    'meta' => [
+                        'href' => 'https://api.moysklad.ru/api/remap/1.2/entity/processingstage/' . self::TEST_UUID,
+                        'type' => 'processingstage',
+                        'mediaType' => 'application/json',
+                    ],
+                ],
+            ],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а удаления позиции Техпроцесса.
+     * DELETE /entity/processingprocess/{id}/positions/{positionId}
+     */
+    public function testDeleteProcessingProcessPosition(): void
+    {
+        $response = $this->client->delete(self::API_BASE_PATH . '/entity/processingprocess/' . self::TEST_UUID . '/positions/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::DELETE_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а массового удаления позиций Техпроцесса.
+     * POST /entity/processingprocess/{id}/positions/delete
+     */
+    public function testBatchDeleteProcessingProcessPositions(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/processingprocess/' . self::TEST_UUID . '/positions/delete', [
+            'json' => [['meta' => ['href' => 'https://api.moysklad.ru/api/remap/1.2/entity/processingprocess/' . self::TEST_UUID . '/positions/' . self::TEST_UUID, 'type' => 'processingprocessposition', 'mediaType' => 'application/json']]],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
     // ==================== PRICE TYPES ====================
 
     /**
