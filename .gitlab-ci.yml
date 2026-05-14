@@ -25,7 +25,6 @@
 # 3. Merge/push в master:
 #    - check-openapi-changes: проверка изменений OpenAPI относительно последнего тега
 #    - lint-openapi и bundle-openapi
-#    - deploy-contract-env/create-contract-user/remove-contract-env и sdk-contract
 #    - generate-sdk-*, sdk-golden-*, sdk-smoke-*
 #    - version:auto: автоматическое версионирование и CHANGELOG/тег
 #    - mirror-to-github и create-github-release: зеркалирование и GitHub Release
@@ -41,17 +40,9 @@
 #   Примеры: "php", "php,python,java", "" (пустая строка = все доступные)
 #   По умолчанию: "" (генерируются все доступные SDK)
 #
-# SCHEMATHESIS_HOST:
-#   URL API сервера для schemathesis тестов (например: https://api-api-1.testms-test.lognex.ru)
-#   Обязателен при ручном запуске
-#
-# SCHEMATHESIS_LOGIN:
-#   Логин для авторизации в API (Basic auth)
-#   Обязателен при ручном запуске
-#
-# SCHEMATHESIS_PASSWORD:
-#   Пароль для авторизации в API (Basic auth)
-#   Обязателен при ручном запуске
+# SCHEMATHESIS_HOST / SCHEMATHESIS_LOGIN / SCHEMATHESIS_PASSWORD:
+#   Необязательные override-переменные для ручных contract-тестов.
+#   По умолчанию export'ятся из deploy-contract-env/create-contract-user.
 #
 # GIT_PASSWORD:
 #   Токен для доступа к GitHub (нужен для PUSH_TO_REMOTE=true и зеркалирования)

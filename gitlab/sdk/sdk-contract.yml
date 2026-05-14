@@ -4,7 +4,9 @@
 # - fuzzing: генерация случайных данных для поиска уязвимостей
 # - stateful: тесты с изменением состояния
 #
-# По умолчанию: coverage. Job разбита на 4 path-shards через parallel:matrix.
+# По умолчанию: examples. Coverage запускается вручную через
+# SCHEMATHESIS_PHASES=coverage и опциональные SCHEMATHESIS_INCLUDE_PATH_REGEX /
+# SCHEMATHESIS_INCLUDE_METHOD / SCHEMATHESIS_INCLUDE_OPERATION_ID.
 
 deploy-contract-env:
   stage: before-contract-test
@@ -13,9 +15,7 @@ deploy-contract-env:
     - job: bundle-openapi
       artifacts: false
   rules:
-    # Merge/push в master и ручной запуск (web)
-    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME == "master"'
-      when: on_success
+    # Контрактные тесты запускаются только вручную на ветке (web)
     - if: '$CI_PIPELINE_SOURCE == "web"'
       when: on_success
     - when: never
@@ -36,11 +36,6 @@ deploy-contract-env:
         fi
       fi
   script:
-    - |
-      if [ "$CI_PIPELINE_SOURCE" = "push" ] && [ "$CI_COMMIT_REF_NAME" = "master" ]; then
-        echo "Skipping contract environment deploy on master push; marking deploy-contract-env as passed."
-        exit 0
-      fi
     # Окружение для contract-тестов по умолчанию поднимаем с последнего тэга moysklad, если не задан $PARAM_VERSION
     # Schemathesis по OpenAPI: окружение живёт дольше дефолта client.py (20 мин); переопределить — переменной ENV_TTL_MINUTES
     - export ENV_TTL_MINUTES="${ENV_TTL_MINUTES:-60}"
@@ -62,18 +57,11 @@ create-contract-user:
     - job: deploy-contract-env
       artifacts: true
   rules:
-    # Merge/push в master и ручной запуск (web)
-    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME == "master"'
-      when: on_success
+    # Контрактные тесты запускаются только вручную на ветке (web)
     - if: '$CI_PIPELINE_SOURCE == "web"'
       when: on_success
     - when: never
   script:
-    - |
-      if [ "$CI_PIPELINE_SOURCE" = "push" ] && [ "$CI_COMMIT_REF_NAME" = "master" ]; then
-        echo "Skipping contract user creation on master push; marking create-contract-user as passed."
-        exit 0
-      fi
     - apk add --no-cache curl
     - |
       RESPONSE=$(curl --location -X POST "$API_HOST/api/remap/1.2/register" \
@@ -99,10 +87,7 @@ remove-contract-env:
     - job: deploy-contract-env
       artifacts: true
   rules:
-    # Merge/push в master и ручной запуск (web)
-    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME == "master"'
-      when: manual
-      allow_failure: true
+    # Очистка contract-окружения доступна только для ручного запуска на ветке (web)
     - if: '$CI_PIPELINE_SOURCE == "web"'
       when: manual
       allow_failure: true
@@ -113,53 +98,17 @@ remove-contract-env:
 sdk-contract:
   stage: contract-test
   image: python:3.11
-  parallel:
-    matrix:
-      - CONTRACT_SHARD: contract-a-b-d-e-g
-      - CONTRACT_SHARD: contract-cashin-core
-      - CONTRACT_SHARD: contract-cashin-batch
-      - CONTRACT_SHARD: contract-cashin-metadata
-      - CONTRACT_SHARD: contract-cashout-core
-      - CONTRACT_SHARD: contract-cashout-batch
-      - CONTRACT_SHARD: contract-cashout-metadata
-      - CONTRACT_SHARD: contract-commissionreportin-core
-      - CONTRACT_SHARD: contract-commissionreportin-batch
-      - CONTRACT_SHARD: contract-commissionreportin-metadata
-      - CONTRACT_SHARD: contract-commissionreportin-positions
-      - CONTRACT_SHARD: contract-commissionreportin-returns
-      - CONTRACT_SHARD: contract-counterparty-contract
-      - CONTRACT_SHARD: contract-customerorder-core
-      - CONTRACT_SHARD: contract-customerorder-batch
-      - CONTRACT_SHARD: contract-customerorder-metadata
-      - CONTRACT_SHARD: contract-customerorder-positions
-      - CONTRACT_SHARD: contract-internalorder-core
-      - CONTRACT_SHARD: contract-internalorder-batch
-      - CONTRACT_SHARD: contract-internalorder-metadata
-      - CONTRACT_SHARD: contract-internalorder-positions
-      - CONTRACT_SHARD: contract-product
-      - CONTRACT_SHARD: contract-purchaseorder-core
-      - CONTRACT_SHARD: contract-purchaseorder-batch
-      - CONTRACT_SHARD: contract-purchaseorder-metadata
-      - CONTRACT_SHARD: contract-purchaseorder-positions
-      - CONTRACT_SHARD: contract-r-z
   needs:
     - job: bundle-openapi
       artifacts: true
     - job: create-contract-user
       artifacts: true
   rules:
-    # Merge/push в master и ручной запуск (web)
-    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME == "master"'
-      when: on_success
+    # Контрактные тесты запускаются только вручную на ветке (web)
     - if: '$CI_PIPELINE_SOURCE == "web"'
       when: on_success
     - when: never
   script:
-    - |
-      if [ "$CI_PIPELINE_SOURCE" = "push" ] && [ "$CI_COMMIT_REF_NAME" = "master" ]; then
-        echo "Skipping Schemathesis execution on master push; marking sdk-contract as passed."
-        exit 0
-      fi
     - pip install "schemathesis==${SCHEMATHESIS_VERSION:-4.17.0}"
     - |
       if [ -z "$SCHEMATHESIS_HOST" ] || [ -z "$SCHEMATHESIS_LOGIN" ] || [ -z "$SCHEMATHESIS_PASSWORD" ]; then
@@ -173,106 +122,22 @@ sdk-contract:
         *) SCHEMATHESIS_BASE_URL="${SCHEMATHESIS_HOST%/}/api/remap/1.2" ;;
       esac
       
-      # Режимы тестирования (по умолчанию: coverage).
-      # examples отключён: операции с AttributeAbstract (oneOf без дискриминатора)
-      # вызывают Schema Error при генерации примеров — это не дефект API.
-      SCHEMATHESIS_PHASES="${SCHEMATHESIS_PHASES:-coverage}"
-      # coverage в режиме all строит negative cases даже при excluded negative checks;
-      # на сложных схемах это даёт основной timeout. При необходимости можно
-      # переопределить SCHEMATHESIS_MODE=all в ручном pipeline.
+      # По умолчанию запускаем только examples. Coverage на полной схеме слишком
+      # дорогой для общего пайплайна; для точечной проверки новых/изменённых
+      # сущностей переопределяйте SCHEMATHESIS_PHASES=coverage и
+      # SCHEMATHESIS_INCLUDE_PATH_REGEX / SCHEMATHESIS_INCLUDE_METHOD /
+      # SCHEMATHESIS_INCLUDE_OPERATION_ID в ручном pipeline.
+      SCHEMATHESIS_PHASES="${SCHEMATHESIS_PHASES:-examples}"
       SCHEMATHESIS_MODE="${SCHEMATHESIS_MODE:-positive}"
       SCHEMATHESIS_MAX_EXAMPLES="${SCHEMATHESIS_MAX_EXAMPLES:-50}"
       SCHEMATHESIS_WORKERS="${SCHEMATHESIS_WORKERS:-auto}"
       SCHEMATHESIS_GENERATION_DATABASE="${SCHEMATHESIS_GENERATION_DATABASE:-none}"
       SCHEMATHESIS_REQUEST_TIMEOUT="${SCHEMATHESIS_REQUEST_TIMEOUT:-30}"
       SCHEMATHESIS_NO_SHRINK="${SCHEMATHESIS_NO_SHRINK:-1}"
+      SCHEMATHESIS_REPEAT="${SCHEMATHESIS_REPEAT:-1}"
       SCHEMATHESIS_INCLUDE_PATH_REGEX="${SCHEMATHESIS_INCLUDE_PATH_REGEX:-}"
-
-      if [ -z "$SCHEMATHESIS_INCLUDE_PATH_REGEX" ]; then
-        case "${CONTRACT_SHARD:-}" in
-          contract-a-b-d-e-g)
-            SCHEMATHESIS_INCLUDE_PATH_REGEX='^(/entity/(accumulationdiscount|assortment|bonusprogram|bonustransaction|bundle|discount|employee|group)(/|$)|/context/companysettings(/|$))'
-            ;;
-          contract-cashin-core)
-            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/cashin($|/\{id\}$|/new$)'
-            ;;
-          contract-cashin-batch)
-            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/cashin/(delete|batch)$'
-            ;;
-          contract-cashin-metadata)
-            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/cashin/metadata(/|$)'
-            ;;
-          contract-cashout-core)
-            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/cashout($|/\{id\}$|/new$)'
-            ;;
-          contract-cashout-batch)
-            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/cashout/(delete|batch)$'
-            ;;
-          contract-cashout-metadata)
-            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/cashout/metadata(/|$)'
-            ;;
-          contract-commissionreportin-core)
-            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/commissionreportin($|/\{id\}$)'
-            ;;
-          contract-commissionreportin-batch)
-            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/commissionreportin/(delete|batch)$'
-            ;;
-          contract-commissionreportin-metadata)
-            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/commissionreportin/metadata(/|$)'
-            ;;
-          contract-commissionreportin-positions)
-            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/commissionreportin/\{id\}/positions(/|$)'
-            ;;
-          contract-commissionreportin-returns)
-            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/commissionreportin/\{id\}/returntocommissionerpositions(/|$)'
-            ;;
-          contract-counterparty-contract)
-            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/(contract|counterparty|country|currency|customentity)(/|$)'
-            ;;
-          contract-customerorder-core)
-            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/customerorder($|/\{id\}$|/new$)'
-            ;;
-          contract-customerorder-batch)
-            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/customerorder/(delete|batch)$'
-            ;;
-          contract-customerorder-metadata)
-            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/customerorder/metadata(/|$)'
-            ;;
-          contract-customerorder-positions)
-            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/customerorder/\{id\}/positions(/|$)'
-            ;;
-          contract-internalorder-core)
-            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/internalorder($|/\{id\}$|/new$)'
-            ;;
-          contract-internalorder-batch)
-            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/internalorder/(delete|batch)$'
-            ;;
-          contract-internalorder-metadata)
-            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/internalorder/metadata(/|$)'
-            ;;
-          contract-internalorder-positions)
-            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/internalorder/\{id\}/positions(/|$)'
-            ;;
-          contract-product)
-            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/(personaldiscount|product|productfolder)(/|$)'
-            ;;
-          contract-purchaseorder-core)
-            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/purchaseorder($|/\{id\}$|/new$)'
-            ;;
-          contract-purchaseorder-batch)
-            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/purchaseorder/(delete|batch)$'
-            ;;
-          contract-purchaseorder-metadata)
-            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/purchaseorder/metadata(/|$)'
-            ;;
-          contract-purchaseorder-positions)
-            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/purchaseorder/\{id\}/positions(/|$)'
-            ;;
-          contract-r-z)
-            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/(retailstore|role|service|specialpricediscount|store|thing|uom|variant)(/|$)'
-            ;;
-        esac
-      fi
+      SCHEMATHESIS_INCLUDE_METHOD="${SCHEMATHESIS_INCLUDE_METHOD:-}"
+      SCHEMATHESIS_INCLUDE_OPERATION_ID="${SCHEMATHESIS_INCLUDE_OPERATION_ID:-}"
       
       AUTH_HEADER=$(echo -n "${SCHEMATHESIS_LOGIN}:${SCHEMATHESIS_PASSWORD}" | base64)
       
@@ -294,8 +159,10 @@ sdk-contract:
       echo "    Generation database: $SCHEMATHESIS_GENERATION_DATABASE"
       echo "    Request timeout: $SCHEMATHESIS_REQUEST_TIMEOUT"
       echo "    No shrink: $SCHEMATHESIS_NO_SHRINK"
-      echo "    Shard: ${CONTRACT_SHARD:-all}"
+      echo "    Repeat: $SCHEMATHESIS_REPEAT"
       echo "    Include path regex: ${SCHEMATHESIS_INCLUDE_PATH_REGEX:-<none>}"
+      echo "    Include method: ${SCHEMATHESIS_INCLUDE_METHOD:-<none>}"
+      echo "    Include operationId: ${SCHEMATHESIS_INCLUDE_OPERATION_ID:-<none>}"
       echo "    Exclude checks: $EXCLUDE_CHECKS"
 
       set -- schemathesis run dist/openapi.yaml \
@@ -318,4 +185,17 @@ sdk-contract:
         set -- "$@" --include-path-regex "$SCHEMATHESIS_INCLUDE_PATH_REGEX"
       fi
 
-      "$@"
+      if [ -n "$SCHEMATHESIS_INCLUDE_METHOD" ]; then
+        set -- "$@" --include-method "$SCHEMATHESIS_INCLUDE_METHOD"
+      fi
+
+      if [ -n "$SCHEMATHESIS_INCLUDE_OPERATION_ID" ]; then
+        set -- "$@" --include-operation-id "$SCHEMATHESIS_INCLUDE_OPERATION_ID"
+      fi
+
+      run_index=1
+      while [ "$run_index" -le "$SCHEMATHESIS_REPEAT" ]; do
+        echo "==> Schemathesis run $run_index/$SCHEMATHESIS_REPEAT"
+        "$@"
+        run_index=$((run_index + 1))
+      done

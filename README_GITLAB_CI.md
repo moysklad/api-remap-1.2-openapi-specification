@@ -41,17 +41,13 @@
 
 #### 3. Merge/push в master
 
-При push/merge в `master` запускается полный релизный flow: проверки, контрактные тесты, версионирование и зеркалирование.
+При push/merge в `master` запускается полный релизный flow: проверки, версионирование и зеркалирование. Contract-тесты Schemathesis и их обвязка в master pipeline не включаются.
 
 | Job                     | Описание                                                                                          |
 |-------------------------|---------------------------------------------------------------------------------------------------|
 | `check-openapi-changes` | Проверка изменений OpenAPI относительно последнего тега в текущем репо                            |
 | `lint-openapi`          | Проверка спецификации                                                                             |
 | `bundle-openapi`        | Сборка bundled версии                                                                             |
-| `deploy-contract-env`   | Подготовка окружения для schemathesis; при `push` в `master` job завершается успешно без реального deploy |
-| `create-contract-user`  | Создание пользователя и экспорт SCHEMATHESIS_* переменных; при `push` в `master` job завершается успешно без реального register |
-| `sdk-contract`          | Контрактные тесты Schemathesis; при `push` в `master` job завершается успешно без запуска Schemathesis |
-| `remove-contract-env`   | Очистка окружения (manual, allow_failure)                                                         |
 | `generate-sdk-*`        | Генерация SDK                                                                                     |
 | `sdk-golden-*`          | Golden тесты                                                                                      |
 | `sdk-smoke-*`           | Smoke тесты                                                                                       |
@@ -96,17 +92,20 @@
 
 ### Переменные для Schemathesis тестов
 
-Обязательны при ручном запуске (web):
+Используются для ручных contract-тестов в pipeline `web`. По умолчанию `SCHEMATHESIS_HOST`, `SCHEMATHESIS_LOGIN` и `SCHEMATHESIS_PASSWORD` экспортируются из `deploy-contract-env` / `create-contract-user`; при необходимости их можно переопределить вручную:
 
 | Переменная                    | Описание                      | Пример               |
 |-------------------------------|-------------------------------|----------------------|
 | `SCHEMATHESIS_HOST`           | URL API сервера               | `host`               |
 | `SCHEMATHESIS_LOGIN`          | Логин для Basic auth          | `admin@test_user`    |
 | `SCHEMATHESIS_PASSWORD`       | Пароль для Basic auth         | `password123`        |
-| `SCHEMATHESIS_PHASES`         | Режимы тестирования           | `coverage` (по умолчанию) |
+| `SCHEMATHESIS_PHASES`         | Режимы тестирования           | `examples` (по умолчанию) |
 | `SCHEMATHESIS_MAX_EXAMPLES`   | Максимум примеров на эндпоинт | `50` (по умолчанию)  |
-| `SCHEMATHESIS_WORKERS`        | Количество parallel workers внутри каждого shard | `1` (по умолчанию) |
-| `SCHEMATHESIS_INCLUDE_PATH_REGEX` | Переопределение path-фильтра для shard | Автоматически задаётся по `CONTRACT_SHARD` |
+| `SCHEMATHESIS_WORKERS`        | Количество parallel workers внутри job | `auto` (по умолчанию) |
+| `SCHEMATHESIS_REPEAT`         | Сколько раз подряд повторить один и тот же прогон Schemathesis | `1` (по умолчанию) |
+| `SCHEMATHESIS_INCLUDE_PATH_REGEX` | Опциональный path-фильтр для ручного targeted coverage | Не задано |
+| `SCHEMATHESIS_INCLUDE_METHOD` | Опциональный HTTP method-фильтр для ручного targeted coverage | Не задано |
+| `SCHEMATHESIS_INCLUDE_OPERATION_ID` | Опциональный operationId-фильтр для ручной проверки конкретного example | Не задано |
 
 
 **Режимы тестирования (SCHEMATHESIS_PHASES):**
@@ -115,13 +114,33 @@
 - `fuzzing` - случайные данные
 - `stateful` - изменение данных
 
-**По умолчанию:** `coverage`
+**По умолчанию:** `examples`
 
-`sdk-contract` запускается как `parallel:matrix` из 4 shards:
-- `dictionaries-1` — `commissionreportin`, `employee`, `cashin`, `bundle`, `companysettings`, `bonusprogram`, `group`, `personaldiscount`.
-- `dictionaries-2` — `product`, `internalorder`, `cashout`, `role`, `country`, `currency`, `discount`, `specialpricediscount`.
-- `dictionaries-3` — `counterparty`, `customerorder`, `contract`, `service`, `productfolder`, `customentity`, `accumulationdiscount`, `thing`.
-- `dictionaries-4` — `store`, `purchaseorder`, `retailstore`, `variant`, `uom`, `assortment`, `bonustransaction`.
+`sdk-contract` запускается одной job. Полный `coverage` не входит в общий pipeline,
+потому что на сложных схемах документов он генерирует слишком много комбинаций и
+упирается в timeout. Для ручной точечной проверки новых или изменённых сущностей
+переопределяйте фазы и фильтры:
+
+```bash
+SCHEMATHESIS_PHASES=coverage
+SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/product(/|$)'
+SCHEMATHESIS_INCLUDE_METHOD=POST
+```
+
+Для точечной проверки добавленного example удобнее фильтровать по `operationId`:
+
+```bash
+SCHEMATHESIS_PHASES=examples
+SCHEMATHESIS_INCLUDE_OPERATION_ID=createProduct
+```
+
+Для проверки, что новый example не конфликтует с остальными и не ломает
+повторный запуск, прогоняйте весь `examples` два раза подряд:
+
+```bash
+SCHEMATHESIS_PHASES=examples
+SCHEMATHESIS_REPEAT=2
+```
 
 ### Переменные для Push/Mirror
 
@@ -150,8 +169,8 @@
 | Стадия                   | Описание                                                                                                                           |
 |--------------------------|------------------------------------------------------------------------------------------------------------------------------------|
 | `changes-check`          | Проверка изменений OpenAPI в `src/` относительно последнего тега (теги из текущего репо)                                           |
-| `verify`                 | Проверка спецификации, bundling; подготовка окружения для contract (deploy-contract-env на ветке **stable**, create-contract-user) |
-| `contract-test`          | Контрактные тесты Schemathesis (`sdk-contract` в 4 parallel path-shards) — после verify, до generate-sdk                           |
+| `verify`                 | Проверка спецификации, bundling; в ручном pipeline `web` сюда также входят `deploy-contract-env` и `create-contract-user` |
+| `contract-test`          | Контрактные тесты Schemathesis (`sdk-contract`) — только в ручном pipeline `web`, после verify, до generate-sdk                    |
 | `generate-sdk`           | Генерация SDK                                                                                                                      |
 | `test`                   | Тестирование (golden, smoke)                                                                                                       |
 | `version`                | Автоматическое версионирование и подготовка CHANGELOG/тегов                                                                        |
@@ -187,4 +206,3 @@ Job `version:auto`:
 - пушит новый тег и текущую ветку.
 
 При отсутствии тегов versioning стартует с `0.y.0` (MINOR).
-

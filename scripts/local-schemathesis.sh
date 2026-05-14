@@ -22,25 +22,51 @@ case "$SCHEMATHESIS_HOST" in
   *) SCHEMATHESIS_BASE_URL="${SCHEMATHESIS_HOST%/}/api/remap/1.2" ;;
 esac
 # Используем venv, чтобы не упираться в externally-managed-environment (PEP 668) в Docker/Alpine
-SCHEMATHESIS_VENV="${SCHEMATHESIS_VENV:-$ROOT_DIR/.venv-schemathesis}"
-if [ ! -d "$SCHEMATHESIS_VENV" ] || [ ! -x "$SCHEMATHESIS_VENV/bin/schemathesis" ]; then
+SCHEMATHESIS_VENV_DEFAULT="$ROOT_DIR/.venv-schemathesis"
+SCHEMATHESIS_VENV="${SCHEMATHESIS_VENV:-$SCHEMATHESIS_VENV_DEFAULT}"
+SCHEMATHESIS_VERSION_PIN="${SCHEMATHESIS_VERSION:-4.17.0}"
+if [ -e "$SCHEMATHESIS_VENV" ] && [ ! -w "$SCHEMATHESIS_VENV" ]; then
+  SCHEMATHESIS_VENV="/tmp/remap-api-specification-schemathesis-venv-$(id -u)"
+  echo "Existing Schemathesis venv is not writable; using $SCHEMATHESIS_VENV"
+fi
+
+INSTALLED_SCHEMATHESIS_VERSION=""
+if [ -x "$SCHEMATHESIS_VENV/bin/schemathesis" ]; then
+  INSTALLED_SCHEMATHESIS_VERSION=$("$SCHEMATHESIS_VENV/bin/schemathesis" --version 2>/dev/null | sed -n 's/^schemathesis, version //p')
+fi
+
+if [ ! -d "$SCHEMATHESIS_VENV" ] || [ ! -x "$SCHEMATHESIS_VENV/bin/schemathesis" ] || [ "$INSTALLED_SCHEMATHESIS_VERSION" != "$SCHEMATHESIS_VERSION_PIN" ]; then
   echo "Creating Schemathesis venv at $SCHEMATHESIS_VENV..."
-  python3 -m venv "$SCHEMATHESIS_VENV"
-  "$SCHEMATHESIS_VENV/bin/pip" install -q schemathesis
+  python3 -m venv --clear "$SCHEMATHESIS_VENV"
+  "$SCHEMATHESIS_VENV/bin/pip" install -q "schemathesis==$SCHEMATHESIS_VERSION_PIN"
 fi
 
 # Режимы тестирования:
-# - examples: базовые тесты с примерами из спецификации; отключён по умолчанию, так как
-#   операции с AttributeAbstract (oneOf без дискриминатора) вызывают Schema Error при генерации
-# - coverage: расширенное покрытие всех комбинаций параметров (основная фаза)
+# - examples: базовые тесты с примерами из спецификации (по умолчанию)
+# - coverage: расширенное покрытие всех комбинаций параметров; запускайте вручную
+#   только на конкретных изменённых сущностях через SCHEMATHESIS_INCLUDE_PATH_REGEX
+#   и, если нужно, SCHEMATHESIS_INCLUDE_METHOD или SCHEMATHESIS_INCLUDE_OPERATION_ID
 # - fuzzing: генерация случайных данных для поиска уязвимостей
 # - stateful: тесты с изменением состояния
 #
-# По умолчанию: coverage
-# Включить examples: SCHEMATHESIS_PHASES=examples,coverage
-# С изменением данных: SCHEMATHESIS_PHASES=coverage,fuzzing,stateful
-SCHEMATHESIS_PHASES="${SCHEMATHESIS_PHASES:-coverage}"
+# По умолчанию: examples
+# Coverage для конкретной сущности:
+#   SCHEMATHESIS_PHASES=coverage SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/product(/|$)' make schemathesis
+#   SCHEMATHESIS_PHASES=coverage SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/product$' SCHEMATHESIS_INCLUDE_METHOD=POST make schemathesis
+#   SCHEMATHESIS_PHASES=examples SCHEMATHESIS_INCLUDE_OPERATION_ID=createProduct make schemathesis
+# Полный regression + repeatability check:
+#   SCHEMATHESIS_PHASES=examples SCHEMATHESIS_REPEAT=2 make schemathesis
+SCHEMATHESIS_PHASES="${SCHEMATHESIS_PHASES:-examples}"
+SCHEMATHESIS_MODE="${SCHEMATHESIS_MODE:-positive}"
 SCHEMATHESIS_MAX_EXAMPLES="${SCHEMATHESIS_MAX_EXAMPLES:-50}"
+SCHEMATHESIS_WORKERS="${SCHEMATHESIS_WORKERS:-auto}"
+SCHEMATHESIS_GENERATION_DATABASE="${SCHEMATHESIS_GENERATION_DATABASE:-none}"
+SCHEMATHESIS_REQUEST_TIMEOUT="${SCHEMATHESIS_REQUEST_TIMEOUT:-30}"
+SCHEMATHESIS_NO_SHRINK="${SCHEMATHESIS_NO_SHRINK:-1}"
+SCHEMATHESIS_REPEAT="${SCHEMATHESIS_REPEAT:-1}"
+SCHEMATHESIS_INCLUDE_PATH_REGEX="${SCHEMATHESIS_INCLUDE_PATH_REGEX:-}"
+SCHEMATHESIS_INCLUDE_METHOD="${SCHEMATHESIS_INCLUDE_METHOD:-}"
+SCHEMATHESIS_INCLUDE_OPERATION_ID="${SCHEMATHESIS_INCLUDE_OPERATION_ID:-}"
 
 AUTH_HEADER=$(echo -n "${SCHEMATHESIS_LOGIN}:${SCHEMATHESIS_PASSWORD}" | base64)
 
@@ -56,13 +82,49 @@ EXCLUDE_CHECKS="positive_data_acceptance,unsupported_method,negative_data_reject
 echo "==> Running Schemathesis tests"
 echo "    Base URL: $SCHEMATHESIS_BASE_URL"
 echo "    Phases: $SCHEMATHESIS_PHASES"
+echo "    Mode: $SCHEMATHESIS_MODE"
 echo "    Max examples: $SCHEMATHESIS_MAX_EXAMPLES"
+echo "    Workers: $SCHEMATHESIS_WORKERS"
+echo "    Generation database: $SCHEMATHESIS_GENERATION_DATABASE"
+echo "    Request timeout: $SCHEMATHESIS_REQUEST_TIMEOUT"
+echo "    No shrink: $SCHEMATHESIS_NO_SHRINK"
+echo "    Repeat: $SCHEMATHESIS_REPEAT"
+echo "    Include path regex: ${SCHEMATHESIS_INCLUDE_PATH_REGEX:-<none>}"
+echo "    Include method: ${SCHEMATHESIS_INCLUDE_METHOD:-<none>}"
+echo "    Include operationId: ${SCHEMATHESIS_INCLUDE_OPERATION_ID:-<none>}"
 echo "    Exclude checks: $EXCLUDE_CHECKS"
 
-exec "$SCHEMATHESIS_VENV/bin/schemathesis" run dist/openapi.yaml \
+set -- "$SCHEMATHESIS_VENV/bin/schemathesis" run dist/openapi.yaml \
   --url "$SCHEMATHESIS_BASE_URL" \
   -H "Authorization: Basic $AUTH_HEADER" \
   -H 'Accept-Encoding: gzip, deflate, br' \
   --max-examples "$SCHEMATHESIS_MAX_EXAMPLES" \
   --phases "$SCHEMATHESIS_PHASES" \
-  --exclude-checks "$EXCLUDE_CHECKS"
+  --mode "$SCHEMATHESIS_MODE" \
+  --workers "$SCHEMATHESIS_WORKERS" \
+  --exclude-checks "$EXCLUDE_CHECKS" \
+  --generation-database "$SCHEMATHESIS_GENERATION_DATABASE" \
+  --request-timeout "$SCHEMATHESIS_REQUEST_TIMEOUT"
+
+if [ "$SCHEMATHESIS_NO_SHRINK" = "1" ]; then
+  set -- "$@" --no-shrink
+fi
+
+if [ -n "$SCHEMATHESIS_INCLUDE_PATH_REGEX" ]; then
+  set -- "$@" --include-path-regex "$SCHEMATHESIS_INCLUDE_PATH_REGEX"
+fi
+
+if [ -n "$SCHEMATHESIS_INCLUDE_METHOD" ]; then
+  set -- "$@" --include-method "$SCHEMATHESIS_INCLUDE_METHOD"
+fi
+
+if [ -n "$SCHEMATHESIS_INCLUDE_OPERATION_ID" ]; then
+  set -- "$@" --include-operation-id "$SCHEMATHESIS_INCLUDE_OPERATION_ID"
+fi
+
+run_index=1
+while [ "$run_index" -le "$SCHEMATHESIS_REPEAT" ]; do
+  echo "==> Schemathesis run $run_index/$SCHEMATHESIS_REPEAT"
+  "$@"
+  run_index=$((run_index + 1))
+done

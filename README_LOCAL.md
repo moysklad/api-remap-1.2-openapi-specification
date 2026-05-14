@@ -63,9 +63,9 @@ docker compose run --rm sdk make test-smoke
 docker compose run --rm sdk make test-smoke-php
 
 # Контрактные тесты Schemathesis (один для всех языков)
-docker compose run --rm -e SCHEMATHESIS_HOST=host -e SCHEMATHESIS_LOGIN=login -e SCHEMATHESIS_PASSWORD=pass sdk make schemathes
+docker compose run --rm -e SCHEMATHESIS_HOST=host -e SCHEMATHESIS_LOGIN=login -e SCHEMATHESIS_PASSWORD=pass sdk make schemathesis
 
-# Полный прогон (lint, bundle, generate-php, test-golden, test-smoke, schemathesis)
+# Полный прогон (lint, bundle, generate-php, test-golden, test-smoke)
 docker compose run --rm sdk make all
 ```
 
@@ -209,7 +209,35 @@ schemathesis run dist/openapi.yaml \
   --url "$SCHEMATHESIS_HOST" \
   -H "Authorization: Basic ${AUTH_HEADER}" \
   --max-examples=50 \
-  --phases examples,fuzzing,stateful
+  --phases examples
+```
+
+Локальный `make schemathesis` по умолчанию также запускает только `examples`.
+Для ручного targeted coverage по конкретной изменённой сущности задайте фильтры:
+
+```bash
+SCHEMATHESIS_PHASES=coverage \
+SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/product(/|$)' \
+SCHEMATHESIS_INCLUDE_METHOD=POST \
+make schemathesis
+```
+
+Для точечной проверки добавленного example используйте `operationId`:
+
+```bash
+SCHEMATHESIS_PHASES=examples \
+SCHEMATHESIS_INCLUDE_OPERATION_ID=createProduct \
+make schemathesis
+```
+
+Чтобы проверить, что новый example не ломает остальные операции и не оставляет
+данные, из-за которых повторный прогон падает, запускайте весь examples-набор
+два раза подряд на одном окружении:
+
+```bash
+SCHEMATHESIS_PHASES=examples \
+SCHEMATHESIS_REPEAT=2 \
+make schemathesis
 ```
 
 ## Ссылки
