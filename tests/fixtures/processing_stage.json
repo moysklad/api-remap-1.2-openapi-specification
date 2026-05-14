@@ -1,0 +1,57 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/processingstage/d2308bcc-8fd9-11ed-ac12-000b000000c1",
+    "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/processingstage/metadata",
+    "type": "processingstage",
+    "mediaType": "application/json",
+    "uuidHref": "https://online.moysklad.ru/app/#processingstage/edit?id=d2308bcc-8fd9-11ed-ac12-000b000000c1"
+  },
+  "id": "d2308bcc-8fd9-11ed-ac12-000b000000c1",
+  "accountId": "d063f3f3-8fd9-11ed-ac12-000e00000000",
+  "owner": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/employee/d105a6bf-8fd9-11ed-ac12-000b0000004f",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/employee/metadata",
+      "type": "employee",
+      "mediaType": "application/json",
+      "uuidHref": "https://online.moysklad.ru/app/#employee/edit?id=d105a6bf-8fd9-11ed-ac12-000b0000004f"
+    }
+  },
+  "shared": true,
+  "standardHourCost": 0.0,
+  "group": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/group/d0668856-8fd9-11ed-ac12-000e00000001",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/group/metadata",
+      "type": "group",
+      "mediaType": "application/json"
+    }
+  },
+  "updated": "2023-01-11 09:01:18.363",
+  "name": "Основной этап",
+  "description": "Подготовка",
+  "externalCode": "sTV9PL-HjZkNgDMUqvKKe3",
+  "archived": false,
+  "allPerformers": false,
+  "distributionRequired": false,
+  "performers": [
+    {
+      "meta": {
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/employee/83db6e80-761b-4e3d-aee8-641299ed0898",
+        "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/employee/metadata",
+        "type": "employee",
+        "mediaType": "application/json",
+        "uuidHref": "https://online.moysklad.ru/app/#employee/edit?id=83db6e80-761b-4e3d-aee8-641299ed0898"
+      }
+    }
+  ],
+  "materialStore": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/store/d0668856-8fd9-11ed-ac12-000e00000002",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/store/metadata",
+      "type": "store",
+      "mediaType": "application/json",
+      "uuidHref": "https://online.moysklad.ru/app/#warehouse/edit?id=d0668856-8fd9-11ed-ac12-000e00000002"
+    }
+  }
+}

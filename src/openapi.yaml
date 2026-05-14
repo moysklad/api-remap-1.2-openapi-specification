@@ -116,6 +116,16 @@ paths:
   /entity/uom/batch:
     $ref: './paths/dictionaries/uoms/uoms-batch.yaml'
   #
+  # ProcessingStages
+  /entity/processingstage:
+    $ref: './paths/dictionaries/processingstages/processingstages.yaml'
+  /entity/processingstage/{id}:
+    $ref: './paths/dictionaries/processingstages/processingstage-by-id.yaml'
+  /entity/processingstage/delete:
+    $ref: './paths/dictionaries/processingstages/processingstages-delete.yaml'
+  /entity/processingstage/batch:
+    $ref: './paths/dictionaries/processingstages/processingstages-batch.yaml'
+  #
   # Currencies
   /entity/currency:
     $ref: './paths/dictionaries/currencies/currencies.yaml'
@@ -701,6 +711,10 @@ components:
       $ref: './components/schemas/dictionary/productFolder.yaml'
     ProductFolderList:
       $ref: './components/schemas/dictionary/productFolderList.yaml'
+    ProcessingStage:
+      $ref: './components/schemas/dictionary/processingStage.yaml'
+    ProcessingStageList:
+      $ref: './components/schemas/dictionary/processingStageList.yaml'
     Region:
       $ref: './components/schemas/dictionary/region.yaml'
     RewardType:
@@ -936,6 +950,8 @@ tags:
     description: Операции с группами товаров
   - name: Uoms
     description: Операции с единицами измерений
+  - name: ProcessingStages
+    description: Операции с Этапами производства
   - name: Currencies
     description: Операции с валютами
   - name: Employees
