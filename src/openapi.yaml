@@ -142,6 +142,16 @@ paths:
   /entity/currency/batch:
     $ref: './paths/dictionaries/currencies/currencies-batch.yaml'
   #
+  # TaxRates
+  /entity/taxrate:
+    $ref: './paths/dictionaries/taxrates/taxrates.yaml'
+  /entity/taxrate/{id}:
+    $ref: './paths/dictionaries/taxrates/taxrate-by-id.yaml'
+  /entity/taxrate/delete:
+    $ref: './paths/dictionaries/taxrates/taxrates-delete.yaml'
+  /entity/taxrate/batch:
+    $ref: './paths/dictionaries/taxrates/taxrates-batch.yaml'
+  #
   # Employees
   /entity/employee:
     $ref: './paths/dictionaries/employees/employees.yaml'
@@ -751,6 +761,10 @@ components:
       $ref: './components/schemas/dictionary/storeBalance.yaml'
     StoreBalanceList:
       $ref: './components/schemas/dictionary/storeBalanceList.yaml'
+    TaxRate:
+      $ref: './components/schemas/dictionary/taxRate.yaml'
+    TaxRateList:
+      $ref: './components/schemas/dictionary/taxRateList.yaml'
     TaxSystem:
       $ref: './components/schemas/dictionary/taxSystem.yaml'
     TrackingType:
@@ -956,6 +970,8 @@ tags:
     description: Операции с единицами измерений
   - name: Currencies
     description: Операции с валютами
+  - name: TaxRates
+    description: Операции со ставками НДС
   - name: Employees
     description: Операции с сотрудниками
   - name: Contracts

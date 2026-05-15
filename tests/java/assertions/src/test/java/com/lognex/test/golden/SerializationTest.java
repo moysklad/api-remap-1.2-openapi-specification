@@ -61,6 +61,7 @@ class SerializationTest extends BaseTestCase {
         FIXTURE_MODEL_MAP.put("group", "Group");
         FIXTURE_MODEL_MAP.put("entity_with_extra_field", "Group");
         FIXTURE_MODEL_MAP.put("country", "Country");
+        FIXTURE_MODEL_MAP.put("tax_rate", "TaxRate");
         FIXTURE_MODEL_MAP.put("product_folder", "ProductFolder");
         FIXTURE_MODEL_MAP.put("service", "Service");
         FIXTURE_MODEL_MAP.put("uom", "Uom");

@@ -734,6 +734,88 @@ class ApiEndpointsTest extends TestCase
         $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
     }
 
+    // ==================== TAX RATES ====================
+
+    /**
+     * Проверяет доступность endpoint'а получения списка ставок НДС.
+     * GET /entity/taxrate
+     *
+     * @see https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-stavka-nds
+     */
+    public function testListTaxRates(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/taxrate');
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * Проверяет доступность endpoint'а получения ставки НДС по ID.
+     * GET /entity/taxrate/{id}
+     */
+    public function testGetTaxRateById(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/taxrate/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а создания ставки НДС.
+     * POST /entity/taxrate
+     */
+    public function testCreateTaxRate(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/taxrate', [
+            'json' => ['rate' => 33.0],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * Проверяет доступность endpoint'а изменения ставки НДС.
+     * PUT /entity/taxrate/{id}
+     */
+    public function testUpdateTaxRate(): void
+    {
+        $response = $this->client->put(self::API_BASE_PATH . '/entity/taxrate/' . self::TEST_UUID, [
+            'json' => ['rate' => 28.0],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а удаления ставки НДС.
+     * DELETE /entity/taxrate/{id}
+     */
+    public function testDeleteTaxRate(): void
+    {
+        $response = $this->client->delete(self::API_BASE_PATH . '/entity/taxrate/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::DELETE_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а массового создания и обновления ставок НДС.
+     * POST /entity/taxrate/batch
+     */
+    public function testBatchCreateTaxRates(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/taxrate/batch', [
+            'json' => [['rate' => 33.0]],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * Проверяет доступность endpoint'а массового удаления ставок НДС.
+     * POST /entity/taxrate/delete
+     */
+    public function testBatchDeleteTaxRates(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/taxrate/delete', [
+            'json' => [['meta' => ['href' => 'https://api.moysklad.ru/api/remap/1.2/entity/taxrate/' . self::TEST_UUID, 'type' => 'taxrate', 'mediaType' => 'application/json']]],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
     // ==================== PRODUCT FOLDERS ====================
 
     /**

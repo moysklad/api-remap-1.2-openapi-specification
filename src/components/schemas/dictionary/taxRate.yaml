@@ -1,0 +1,57 @@
+type: object
+description: Ставка НДС
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "taxrate"
+    - param: "id"
+  type: "taxrate"
+properties:
+  meta:
+    description: Метаданные налоговой ставки
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID налоговой ставки
+    readOnly: true
+    example: "6031a4ab-fec1-11ec-0a80-059200000007"
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+    example: "c6bc8eaa-fe92-11ec-0a82-062000000018"
+  owner:
+    description: Метаданные владельца (Сотрудника)
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Employee'
+  shared:
+    type: boolean
+    description: Флаг общего доступа
+    example: true
+  group:
+    description: Метаданные отдела-владельца
+    $ref: '../../../openapi.yaml#/components/schemas/Group'
+  updated:
+    type: string
+    description: Момент последнего обновления сущности
+    readOnly: true
+    example: "2022-07-08 16:25:03.726"
+  rate:
+    type: number
+    format: float
+    description: Значение налоговой ставки
+    example: 33.0
+  archived:
+    type: boolean
+    description: Флаг принадлежности ставки к архивным ставкам
+    example: false
+  comment:
+    type: string
+    description: Комментарий к налоговой ставке
+    example: "Ставка на продукты с ГМО"
