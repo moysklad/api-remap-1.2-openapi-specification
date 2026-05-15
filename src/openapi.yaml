@@ -52,6 +52,22 @@ paths:
   /entity/contract/metadata/states/{id}:
     $ref: './paths/dictionaries/contracts/contract-metadata-state-by-id.yaml'
 
+  # Consignments
+  /entity/consignment:
+    $ref: './paths/dictionaries/consignments/consignments.yaml'
+  /entity/consignment/{id}:
+    $ref: './paths/dictionaries/consignments/consignment-by-id.yaml'
+  /entity/consignment/delete:
+    $ref: './paths/dictionaries/consignments/consignments-delete.yaml'
+  /entity/consignment/batch:
+    $ref: './paths/dictionaries/consignments/consignments-batch.yaml'
+  /entity/consignment/metadata:
+    $ref: './paths/dictionaries/consignments/consignment-metadata.yaml'
+  /entity/consignment/metadata/attributes:
+    $ref: './paths/dictionaries/consignments/consignment-metadata-attribute.yaml'
+  /entity/consignment/metadata/attributes/{id}:
+    $ref: './paths/dictionaries/consignments/consignment-metadata-attribute-by-id.yaml'
+
   # Products
   /entity/product:
     $ref: './paths/dictionaries/products/products.yaml'
@@ -764,6 +780,8 @@ components:
       $ref: './components/schemas/dictionary/bundleComponentList.yaml'
     Consignment:
       $ref: './components/schemas/dictionary/consignment.yaml'
+    ConsignmentList:
+      $ref: './components/schemas/dictionary/consignmentList.yaml'
     Variant:
       $ref: './components/schemas/dictionary/variant.yaml'
     VariantList:
@@ -942,6 +960,8 @@ tags:
     description: Операции с сотрудниками
   - name: Contracts
     description: Операции с договорами
+  - name: Consignments
+    description: Операции с партиями
   - name: Counterparties
     description: Операции с контрагентами
   - name: Services

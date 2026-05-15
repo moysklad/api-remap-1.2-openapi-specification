@@ -1283,6 +1283,174 @@ class ApiEndpointsTest extends TestCase
         $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
     }
 
+    // ==================== CONSIGNMENTS ====================
+
+    /**
+     * GET /entity/consignment
+     */
+    public function testListConsignments(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/consignment');
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * GET /entity/consignment/{id}
+     */
+    public function testGetConsignmentById(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/consignment/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * POST /entity/consignment
+     */
+    public function testCreateConsignment(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/consignment', [
+            'json' => [
+                'label' => 'Test Consignment',
+                'assortment' => [
+                    'meta' => [
+                        'href' => 'https://api.moysklad.ru/api/remap/1.2/entity/variant/' . self::TEST_UUID,
+                        'type' => 'variant',
+                        'mediaType' => 'application/json',
+                    ],
+                ],
+            ],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * PUT /entity/consignment/{id}
+     */
+    public function testUpdateConsignment(): void
+    {
+        $response = $this->client->put(self::API_BASE_PATH . '/entity/consignment/' . self::TEST_UUID, [
+            'json' => [
+                'label' => 'Updated Consignment',
+                'assortment' => [
+                    'meta' => [
+                        'href' => 'https://api.moysklad.ru/api/remap/1.2/entity/variant/' . self::TEST_UUID,
+                        'type' => 'variant',
+                        'mediaType' => 'application/json',
+                    ],
+                ],
+            ],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * DELETE /entity/consignment/{id}
+     */
+    public function testDeleteConsignment(): void
+    {
+        $response = $this->client->delete(self::API_BASE_PATH . '/entity/consignment/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::DELETE_CODES);
+    }
+
+    /**
+     * POST /entity/consignment/delete
+     */
+    public function testDeleteConsignmentsBatch(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/consignment/delete', [
+            'json' => [
+                ['meta' => ['href' => 'https://api.moysklad.ru/api/remap/1.2/entity/consignment/' . self::TEST_UUID, 'type' => 'consignment', 'mediaType' => 'application/json']],
+            ],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * POST /entity/consignment/batch
+     */
+    public function testCreateConsignmentsBatch(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/consignment/batch', [
+            'json' => [
+                [
+                    'label' => 'Batch Consignment',
+                    'assortment' => [
+                        'meta' => [
+                            'href' => 'https://api.moysklad.ru/api/remap/1.2/entity/variant/' . self::TEST_UUID,
+                            'type' => 'variant',
+                            'mediaType' => 'application/json',
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * GET /entity/consignment/metadata
+     */
+    public function testGetConsignmentMetadata(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/consignment/metadata');
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * GET /entity/consignment/metadata/attributes
+     */
+    public function testGetConsignmentMetadataAttributes(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/consignment/metadata/attributes');
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * POST /entity/consignment/metadata/attributes
+     */
+    public function testCreateConsignmentMetadataAttribute(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/consignment/metadata/attributes', [
+            'json' => [
+                'name' => 'consignment attribute',
+                'type' => 'string',
+            ],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * GET /entity/consignment/metadata/attributes/{id}
+     */
+    public function testGetConsignmentMetadataAttributeById(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/consignment/metadata/attributes/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * PUT /entity/consignment/metadata/attributes/{id}
+     */
+    public function testUpdateConsignmentMetadataAttribute(): void
+    {
+        $response = $this->client->put(self::API_BASE_PATH . '/entity/consignment/metadata/attributes/' . self::TEST_UUID, [
+            'json' => [
+                'name' => 'updated consignment attribute',
+                'type' => 'string',
+            ],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * DELETE /entity/consignment/metadata/attributes/{id}
+     */
+    public function testDeleteConsignmentMetadataAttribute(): void
+    {
+        $response = $this->client->delete(self::API_BASE_PATH . '/entity/consignment/metadata/attributes/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::DELETE_CODES);
+    }
+
     // ==================== COMPANY SETTINGS ====================
 
     /**
