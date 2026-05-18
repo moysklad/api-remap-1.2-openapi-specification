@@ -68,6 +68,16 @@ paths:
   /entity/consignment/metadata/attributes/{id}:
     $ref: './paths/dictionaries/consignments/consignment-metadata-attribute-by-id.yaml'
 
+  # ExpenseItems
+  /entity/expenseitem:
+    $ref: './paths/dictionaries/expenseitems/expenseitems.yaml'
+  /entity/expenseitem/{id}:
+    $ref: './paths/dictionaries/expenseitems/expenseitem-by-id.yaml'
+  /entity/expenseitem/delete:
+    $ref: './paths/dictionaries/expenseitems/expenseitems-delete.yaml'
+  /entity/expenseitem/batch:
+    $ref: './paths/dictionaries/expenseitems/expenseitems-batch.yaml'
+
   # Products
   /entity/product:
     $ref: './paths/dictionaries/products/products.yaml'
@@ -887,6 +897,8 @@ components:
       $ref: './components/schemas/dictionary/cashInList.yaml'
     ExpenseItem:
       $ref: './components/schemas/dictionary/expenseItem.yaml'
+    ExpenseItemList:
+      $ref: './components/schemas/dictionary/expenseItemList.yaml'
     ProductionTask:
       $ref: './components/schemas/dictionary/productionTask.yaml'
     Move:
@@ -978,6 +990,8 @@ tags:
     description: Операции с договорами
   - name: Consignments
     description: Операции с партиями
+  - name: ExpenseItems
+    description: Операции со статьями расходов
   - name: Counterparties
     description: Операции с контрагентами
   - name: Services

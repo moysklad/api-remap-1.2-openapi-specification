@@ -1533,6 +1533,98 @@ class ApiEndpointsTest extends TestCase
         $this->assertContains($response->getStatusCode(), self::DELETE_CODES);
     }
 
+    // ==================== EXPENSE ITEMS ====================
+
+    /**
+     * GET /entity/expenseitem
+     */
+    public function testListExpenseItems(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/expenseitem');
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * GET /entity/expenseitem/{id}
+     */
+    public function testGetExpenseItemById(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/expenseitem/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * POST /entity/expenseitem
+     */
+    public function testCreateExpenseItem(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/expenseitem', [
+            'json' => [
+                'name' => 'Налоги и не налоги',
+                'description' => 'Статья расходов налоги',
+                'code' => 'nalogi',
+                'externalCode' => 'wwoaon21431',
+            ],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * PUT /entity/expenseitem/{id}
+     */
+    public function testUpdateExpenseItem(): void
+    {
+        $response = $this->client->put(self::API_BASE_PATH . '/entity/expenseitem/' . self::TEST_UUID, [
+            'json' => [
+                'name' => 'Не налоги и налоги',
+                'description' => 'Налоги и не налоги. Такая вот статья',
+                'code' => 'nalogi i net',
+                'externalCode' => 'wwoa1142aon21431',
+            ],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * DELETE /entity/expenseitem/{id}
+     */
+    public function testDeleteExpenseItem(): void
+    {
+        $response = $this->client->delete(self::API_BASE_PATH . '/entity/expenseitem/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::DELETE_CODES);
+    }
+
+    /**
+     * POST /entity/expenseitem/delete
+     */
+    public function testDeleteExpenseItemsBatch(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/expenseitem/delete', [
+            'json' => [
+                ['meta' => ['href' => 'https://api.moysklad.ru/api/remap/1.2/entity/expenseitem/' . self::TEST_UUID, 'type' => 'expenseitem', 'mediaType' => 'application/json']],
+            ],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * POST /entity/expenseitem/batch
+     */
+    public function testCreateExpenseItemsBatch(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/expenseitem/batch', [
+            'json' => [
+                [
+                    'name' => 'Налоги и не налоги',
+                    'description' => 'Статья расходов налоги',
+                    'code' => 'nalogi',
+                    'externalCode' => 'wwoaon21431',
+                ],
+            ],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
     // ==================== COMPANY SETTINGS ====================
 
     /**
