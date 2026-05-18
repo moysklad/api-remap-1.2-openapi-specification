@@ -264,8 +264,10 @@ properties:
     items:
       type: string
     description: Теги, создаваемые у агентов
+    nullable: true
   filterAgentsTags:
     type: array
+    nullable: true
     items:
       type: string
     description: Группы, по которым фильтруются агенты
@@ -280,6 +282,7 @@ properties:
     items:
       $ref: '../../../openapi.yaml#/components/schemas/State'
     description: Возможные состояния заказов покупателей
+    nullable: true
   discountEnable:
     type: boolean
     description: Признак включения скидок
@@ -307,6 +310,7 @@ properties:
           maxLength: 255
           description: Наименование (номер) последней операции
     description: Последние операции
+    nullable: true
   masterRetailStores:
     description: Список касс-мастеров
     nullable: true

@@ -8,11 +8,13 @@ properties:
   states:
     type: array
     description: Массив статусов контрагентов
+    nullable: true
     items:
       $ref: '../../../components/schemas/dictionary/state.yaml'
   tags:
     type: array
     description: Тэги контрагентов
+    nullable: true
     items:
       type: string
   createShared:

@@ -34,7 +34,8 @@ Skills лежат в `.cursor/skills/`.
 - разбирать MD-документацию на схемы и endpoints;
 - создавать entity, list, position, metadata, batch и delete schemas/paths;
 - регистрировать новые paths и schemas в `src/openapi.yaml`;
-- добавлять PHP fixtures и golden/smoke тесты;
+- добавлять общие fixtures в `tests/fixtures/`, обновлять PHP/Java golden-тесты и PHP smoke-тесты;
+- правильно использовать `x-entity-static-builder`, который теперь генерирует `createWithMeta(...)` helper и для PHP, и для Java SDK через custom templates;
 - соблюдать текущие соглашения по `$ref` (`../../../openapi.yaml#/components/schemas/<SchemaName>` в request/response body path-файлов);
 - запускать правильную последовательность Docker-проверок.
 

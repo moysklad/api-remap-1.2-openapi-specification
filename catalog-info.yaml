@@ -21,11 +21,51 @@ metadata:
     - url: https://git.company.lognex/moysklad/misc/api-sdk-builder/-/blob/master/README.md
       title: Описания сборки SDK Remap 1.2
   description: |
-    SDK для JSON API 1.2
+    Устаревшее SDK для JSON API 1.2
 spec:
   type: library
   system: sdk
   lifecycle: production
+  owner: group:default/team-api
+
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: remap-1.2-java-sdk
+  annotations:
+    backstage.io/source-location: url:https://git.company.lognex/moysklad/misc/remap-1.2-java-sdk/tree/master
+  links:
+    - url: https://central.sonatype.com/artifact/ru.moysklad.api/remap-1.2-sdk
+      title: Maven central repository
+    - url: https://git.company.lognex/moysklad/misc/api-sdk-builder/-/blob/master/README.md
+      title: Описания сборки SDK Remap 1.2
+  description: |
+    SDK для JSON API 1.2
+spec:
+  type: library
+  system: sdk
+  lifecycle: experimental
+  owner: group:default/team-api
+
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: remap-1.2-php-sdk
+  annotations:
+    backstage.io/source-location: url:https://git.company.lognex/moysklad/misc/php-remap-1.2-sdk/tree/master
+  links:
+    - url: https://packagist.org/packages/moysklad/remap-1.2-php-sdk
+      title: Packagist
+    - url: https://git.company.lognex/moysklad/misc/api-sdk-builder/-/blob/master/README.md
+      title: Описания сборки SDK Remap 1.2
+  description: |
+    SDK для JSON API 1.2
+spec:
+  type: library
+  system: sdk
+  lifecycle: experimental
   owner: group:default/team-api
 
 

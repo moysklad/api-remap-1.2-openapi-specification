@@ -9,7 +9,7 @@ LANGUAGES_LIST := $(subst $(comma), ,$(LANGUAGES))
 comma := ,
 
 .PHONY: help lint bundle generate generate-php generate-python generate-java generate-javascript \
-	test-smoke test-golden test-smoke-php test-golden-php test-smoke-python test-golden-python \
+	test-smoke test-golden test-golden-php test-golden-java test-golden-javascript test-golden-python \
 	schemathesis all
 
 help:
@@ -21,9 +21,8 @@ help:
 	@echo "  generate-python   - generate Python SDK only (if script in package.json)"
 	@echo "  generate-java     - generate Java SDK only (if script in package.json)"
 	@echo "  generate-javascript - generate JavaScript SDK only (if script in package.json)"
-	@echo "  test-smoke        - smoke tests for LANGUAGES (openapi-mock + tests). Default: php"
+	@echo "  test-smoke        - smoke tests (openapi-mock + tests)."
 	@echo "  test-golden       - golden tests for LANGUAGES. Default: php"
-	@echo "  test-smoke-php, test-golden-php - only PHP"
 	@echo "  schemathesis      - contract tests (SCHEMATHESIS_HOST, _LOGIN, _PASSWORD)"
 	@echo "  all               - lint + bundle + generate (php) + test-golden + test-smoke"
 
@@ -59,34 +58,21 @@ generate-javascript:
 npm-ci:
 	sh scripts/npm-ci-public-registry.sh
 
-# Тесты по языкам
+# Требует dist/openapi.yaml (сделайте make bundle перед первым запуском)
 test-smoke:
-	@for lang in $(LANGUAGES_LIST); do $(MAKE) test-smoke-$$lang || true; done
+	sh scripts/local-test-smoke.sh php
 
 test-golden:
 	@for lang in $(LANGUAGES_LIST); do $(MAKE) test-golden-$$lang || true; done
 
-# Требует dist/openapi.yaml (сделайте make bundle перед первым запуском)
-test-smoke-php:
-	sh scripts/local-test-smoke.sh php
-
 test-golden-php:
 	sh scripts/local-test-golden.sh php
-
-test-smoke-python:
-	sh scripts/local-test-smoke.sh python
 
 test-golden-python:
 	sh scripts/local-test-golden.sh python
 
-test-smoke-java:
-	sh scripts/local-test-smoke.sh java
-
 test-golden-java:
 	sh scripts/local-test-golden.sh java
-
-test-smoke-javascript:
-	sh scripts/local-test-smoke.sh javascript
 
 test-golden-javascript:
 	sh scripts/local-test-golden.sh javascript
@@ -107,6 +93,6 @@ all:
 	npm run generate-php
 	@echo "==> [5/6] test-golden-php..."
 	$(MAKE) test-golden-php
-	@echo "==> [6/6] test-smoke-php..."
-	$(MAKE) test-smoke-php
-	@echo "Done: lint, bundle, generate-php, test-golden-php, test-smoke-php"
+	@echo "==> [6/6] test-smoke..."
+	$(MAKE) test-smoke
+	@echo "Done: lint, bundle, generate-php, test-golden-php, test-smoke"

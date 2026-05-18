@@ -510,9 +510,36 @@ components:
     AssortmentSettings:
       $ref: './components/schemas/dictionary/assortmentSettings.yaml'
     AttributeAbstract:
-      $ref: './components/schemas/common/attributeAbstract.yaml'
-    AttributeBase:
-      $ref: './components/schemas/common/attributeBase.yaml'
+      type: object
+      required:
+        - type
+      discriminator:
+        propertyName: type
+        mapping:
+          file: '#/components/schemas/AttributeFile'
+          string: '#/components/schemas/AttributeString'
+          text: '#/components/schemas/AttributeText'
+          link: '#/components/schemas/AttributeLink'
+          time: '#/components/schemas/AttributeDateTime'
+          double: '#/components/schemas/AttributeDouble'
+          long: '#/components/schemas/AttributeLong'
+          boolean: '#/components/schemas/AttributeBool'
+          customentity: '#/components/schemas/AttributeCustomEntity'
+          undefined: '#/components/schemas/AttributeObject'
+      allOf:
+        - $ref: '#/components/schemas/AttributeMetaField'
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: ID дополнительного поля
+        name:
+          type: string
+          description: Наименование дополнительного поля
+        type:
+          type: string
+    AttributeMetaField:
+      $ref: './components/schemas/common/attributeMetaField.yaml'
     AttributeBool:
       $ref: './components/schemas/common/attributeBool.yaml'
     AttributeCustomEntity:
@@ -619,8 +646,31 @@ components:
       $ref: './components/schemas/common/metaList.yaml'
     Metadata:
       $ref: './components/schemas/common/metadata.yaml'
+    Context:
+      $ref: './components/schemas/common/context.yaml'
     MinimumStockAbstract:
-      $ref: './components/schemas/dictionary/minimumStockAbstract.yaml'
+      type: object
+      required:
+        - type
+      discriminator:
+        propertyName: type
+        mapping:
+          ALL_WAREHOUSE_SUM: '#/components/schemas/MinimumStockAllWarehouseSum'
+          ALL_WAREHOUSE_SAME: '#/components/schemas/MinimumStockAllWarehouseSame'
+          WAREHOUSE_VARIED: '#/components/schemas/MinimumStockWarehouseVaried'
+      properties:
+        type:
+          type: string
+          readOnly: true
+          enum:
+            - ALL_WAREHOUSE_SUM
+            - ALL_WAREHOUSE_SAME
+            - WAREHOUSE_VARIED
+          description: Тип неснижаемого остатка
+        inherited:
+          type: boolean
+          nullable: true
+          description: Признак наследуемости
     MinimumStockAllWarehouseSame:
       $ref: './components/schemas/dictionary/minimumStockAllWarehouseSame.yaml'
     MinimumStockAllWarehouseSum:

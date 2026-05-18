@@ -345,9 +345,9 @@ The position `meta.type` returned by the API uses the suffix `position` glued to
 
 ## 5a. Static builder extension — `x-entity-static-builder`
 
-The custom OpenAPI vendor extension `x-entity-static-builder` drives the PHP custom template `customtemplates/php/model_entity_static_builder.mustache`, which generates a `public static function createWithMeta(...)` helper that returns a model with `meta.href`, `meta.type`, and `id` already populated. This removes the boilerplate of manually constructing `Meta` and stitching it into a model when callers only need a reference object.
+The custom OpenAPI vendor extension `x-entity-static-builder` drives both `customtemplates/php/model_entity_static_builder.mustache` and `customtemplates/java/model_entity_static_builder.mustache`. They generate a static `createWithMeta(...)` helper that returns a model with `meta.href`, `meta.type`, and `id` already populated. This removes the boilerplate of manually constructing `Meta` and stitching it into a model when callers only need a reference object.
 
-Background: `src/custom-extension-readme.md` and `customtemplates/php/readme.md`.
+Background: `src/custom-extension-readme.md`, `customtemplates/php/readme.md`, and `customtemplates/java/readme.md`.
 
 ### When to add
 
@@ -371,12 +371,12 @@ x-entity-static-builder:
   type: "<keyword>"           # value written into Meta.type
 ```
 
-The mustache template joins `href` segments with `' . '/' . '`, prepends `Configuration::getDefaultConfiguration()->getHost()`, calls `setMeta`/`setId` on the model, and returns it.
+The templates join `href` segments, prepend the SDK base URL, call `setMeta`/`setId` on the model, and return it.
 
-Hard requirements (template will break or produce wrong output otherwise):
+Hard requirements (either template will break or produce wrong output otherwise):
 
-- `methodParams` **must include `"id"`** literally — the generated body ends with `$o->setId($id);`, which references the PHP `$id` variable. A different name will cause a generation/compile error.
-- Every `param` value in `href` **must exist in `methodParams`** — the template emits `$<param>` without checking; an unknown name produces an undefined-variable PHP file.
+- `methodParams` **must include `"id"`** literally — both generated bodies end with `setId(id)` / `setId($id)`. A different name will cause a generation/compile error.
+- Every `param` value in `href` **must exist in `methodParams`** — the templates emit the parameter name directly (`id` in Java, `$id` in PHP) without checking; an unknown name produces invalid generated code.
 
 Project convention (not enforced by the template, follow for consistency with peers):
 
@@ -445,11 +445,27 @@ public static function createWithMeta(string $parentId, string $id): CustomerOrd
 }
 ```
 
+### Generated Java (illustrative)
+
+```java
+public static CustomerOrderPosition createWithMeta(String parentId, String id) {
+    CustomerOrderPosition o = new CustomerOrderPosition();
+    Meta meta = new Meta();
+    meta.setType("customerorderposition");
+    String href = org.openapitools.client.Configuration.getDefaultApiClient().getBaseURL()
+        + "/" + "entity" + "/" + "customerorder" + "/" + parentId + "/" + "positions" + "/" + id;
+    meta.setHref(href);
+    o.setMeta(meta);
+    o.setId(id);
+    return o;
+}
+```
+
 ### Validation rules
 
 1. Keep `methodParams` and `href` values as quoted strings (`"id"`, not `id`) to match peers and avoid YAML boolean/null coercion surprises.
 2. `type` must match the exact `meta.type` from the MD JSON example — Redocly lint will not catch a typo here, but golden tests and SDK consumers will surface a mismatch.
-3. Re-generate PHP after adding/changing the block: `docker compose run --rm sdk make generate-php`. The new method appears at the top of the model class, right after the `DISCRIMINATOR` constant (see `customtemplates/php/model_generic.mustache`).
+3. Re-generate both SDKs after adding/changing the block: `docker compose run --rm sdk make generate-php` and `docker compose run --rm sdk make generate-java`. The helper appears near the top of the generated model class; PHP injects it via `customtemplates/php/model_generic.mustache`, Java via `customtemplates/java/pojo.mustache`.
 4. If the schema is a stub today and you expand it later, keep the existing `x-entity-static-builder` block — it does not need to change when properties are added.
 
 ## 6. Path file templates
@@ -790,7 +806,7 @@ Add to `tags:` array:
 
 ## 8. Fixture file
 
-Create `tests/php/fixtures/<snake_case>.json` using a JSON example from the MD file.
+Create `tests/fixtures/<snake_case>.json` using a JSON example from the MD file.
 
 ### Choosing the right JSON example
 
@@ -810,21 +826,25 @@ Pick the **richest** single-entity JSON response from the MD — typically from 
 
 ### Why this matters
 
-Golden tests (`SerializationTest.php`) verify JSON→Model→JSON roundtrip. If the fixture is too sparse, roundtrip will pass trivially — missing fields become `null` in both directions, hiding schema/SDK mismatches. A rich fixture catches:
-- Fields present in schema but missing in generated SDK model (forgotten `generate-php`)
+Golden tests (`tests/php/golden/SerializationTest.php` and `tests/java/assertions/src/test/java/com/lognex/test/golden/SerializationTest.java`) verify JSON→Model→JSON roundtrip. If the fixture is too sparse, roundtrip will pass trivially — missing fields become `null` in both directions, hiding schema/SDK mismatches. A rich fixture catches:
+- Fields present in schema but missing in generated SDK model (forgotten `generate-php` or `generate-java`)
 - Incorrect nested object structure (e.g. `$ref` to wrong schema)
 - Type mismatches (integer vs float, string vs object)
 
 ## 9. Golden test registration
 
-In `tests/php/golden/SerializationTest.php`:
+Update both golden test registries:
+
+- `tests/php/golden/SerializationTest.php`
+- `tests/java/assertions/src/test/java/com/lognex/test/golden/SerializationTest.java`
 
 1. Add to `FIXTURE_MODEL_MAP`:
 ```php
 'contract' => 'Contract',
 ```
 
-2. Add any readOnly fields unique to this entity to `IGNORED_FIELDS` if needed.
+2. Use the Java model name if it differs from PHP (for example, `File` becomes `ModelFile` in Java).
+3. Add any readOnly fields unique to this entity to `IGNORED_FIELDS` if needed.
 
 ## 10. Smoke tests
 
@@ -884,7 +904,7 @@ Re-read the source `_<entity>.md` file and verify completeness:
 3. For document entities, verify `positions` and similar MetaArray fields are included as objects with `meta.size/limit/offset`
 4. For entities with computed fields (assortment: `stock/reserve/inTransit/quantity`), verify they are present in the fixture
 5. For entities with `operations` arrays (cashin/cashout), verify items include both `meta` and `linkedSum`
-6. After any schema change, regenerate the SDK (`make generate-php`) **before** running golden tests — otherwise the SDK models won't have the new fields
+6. After any schema change, regenerate both SDKs (`make generate-php`, `make generate-java`) **before** running golden tests — otherwise the generated models won't have the new fields
 
 ### Smoke test check
 1. Count test methods = count of distinct endpoint+method combinations
@@ -898,12 +918,14 @@ Re-read the source `_<entity>.md` file and verify completeness:
 docker compose run --rm sdk make lint           # Redocly lint — must say "valid"
 docker compose run --rm sdk make bundle         # produces dist/openapi.yaml + dist/openapi.json
 docker compose run --rm sdk make generate-php   # generates PHP SDK in clients/php/
+docker compose run --rm sdk make generate-java  # generates Java SDK in clients/java/
 docker compose restart mock                     # CRITICAL: reload bundled spec in mock server
 docker compose run --rm sdk make test-golden-php  # roundtrip JSON ↔ SDK model
+docker compose run --rm java-sdk make test-golden-java  # Java roundtrip against the same shared fixtures
 docker compose run --rm sdk make test-smoke       # HTTP smoke against openapi-mock
 ```
 
-`test-smoke` is the canonical local smoke target. `test-smoke-php` exists as a PHP-only shortcut and may be used for narrower reruns.
+`test-smoke` is the canonical local smoke target.
 
 ### Mock server restart — required after every `make bundle`
 
@@ -920,17 +942,19 @@ docker compose rm -sf mock && docker compose up -d mock
 
 ### Schema change → SDK regeneration — required before golden tests
 
-After modifying any YAML schema, **always run `make generate-php`** before golden tests. The PHP SDK models are generated code — they won't reflect new/changed properties until regenerated. Golden tests will silently pass with null values for missing fields, giving a false sense of correctness.
+After modifying any YAML schema, **always run `make generate-php` and `make generate-java`** before golden tests. The SDK models are generated code — they won't reflect new/changed properties until regenerated. Golden tests can otherwise give a false sense of correctness.
 
 ### Verification order matters
 
 The correct sequence is:
 1. `lint` — catch YAML/OpenAPI syntax issues
 2. `bundle` — produce `dist/openapi.yaml`
-3. `generate-php` — regenerate SDK models from the updated spec
-4. `restart mock` — reload the bundled spec in the mock server
-5. `test-golden-php` — verify roundtrip serialization with rich fixtures
-6. `test-smoke` — verify endpoint reachability against the mock
+3. `generate-php` — regenerate PHP SDK models from the updated spec
+4. `generate-java` — regenerate Java SDK models from the updated spec
+5. `restart mock` — reload the bundled spec in the mock server
+6. `test-golden-php` — verify PHP roundtrip serialization with rich fixtures
+7. `test-golden-java` — verify Java roundtrip serialization with the same fixtures
+8. `test-smoke` — verify endpoint reachability against the mock
 
-Skipping step 3 after schema changes → golden tests pass falsely.
-Skipping step 4 after adding endpoints → smoke tests fail with 404.
+Skipping steps 3-4 after schema changes → golden tests pass falsely or only one SDK is actually covered.
+Skipping step 5 after adding endpoints → smoke tests fail with 404.

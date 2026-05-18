@@ -60,10 +60,9 @@ docker compose run --rm sdk make test-golden-php
 # ВАЖНО: после make bundle перезапустите mock — он кэширует спецификацию при старте
 docker compose restart mock
 docker compose run --rm sdk make test-smoke
-docker compose run --rm sdk make test-smoke-php
 
 # Контрактные тесты Schemathesis (один для всех языков)
-docker compose run --rm -e SCHEMATHESIS_HOST=host -e SCHEMATHESIS_LOGIN=login -e SCHEMATHESIS_PASSWORD=pass sdk make schemathes
+docker compose run --rm -e SCHEMATHESIS_HOST=host -e SCHEMATHESIS_LOGIN=login -e SCHEMATHESIS_PASSWORD=pass sdk make schemathesis
 
 # Полный прогон (lint, bundle, generate-php, test-golden, test-smoke, schemathesis)
 docker compose run --rm sdk make all
@@ -104,6 +103,8 @@ api-sdk-builder/
 │   ├── .gitlab-ci-sdk-validate.yml   # Валидация SDK (lint, tests)
 │   ├── .gitlab-ci-github-mirror.yml  # Зеркалирование в GitHub
 │   ├── .gitlab-ci-prepare-sdk-php.yml# Подготовка внутреннего репозитория PHP SDK (ветки и релиз мастер‑ветки)
+│   ├── .gitlab-ci-prepare-sdk-java.yml# Подготовка внутреннего репозитория Java SDK (ветки и релиз мастер‑ветки)
+│   ├── .gitlab-ci-deploy-sdk-java.yml# Публикация Java SDK в Artifactory/Maven
 │   ├── .gitlab-ci-java-sdk.yml       # Старый Java SDK (обратная совместимость)
 │   ├── .gitlab-ci-spec-gen.yml       # Старый PHP через OpenAPI (обратная совместимость)
 │   ├── version.gitlab-ci.yml         # Версионирование спецификации
@@ -143,10 +144,9 @@ api-sdk-builder/
 Создайте папку `tests/<language>/` со структурой:
 
 ```
+fixtures/             # Эталонные JSON файлы
 tests/<language>/
 ├── golden/           # Golden тесты (сериализация/десериализация)
-├── smoke/            # Smoke тесты (проверка эндпоинтов)
-├── fixtures/         # Эталонные JSON файлы
 └── README.md         # Инструкции
 ```
 
@@ -191,7 +191,7 @@ $this->assertEquals($jsonData['name'], $product->getName());
 Проверяют доступность эндпоинтов через openapi-mock сервер ([muonsoft/openapi-mock](https://github.com/muonsoft/openapi-mock)):
 
 ```php
-// Пример PHP smoke теста
+// Пример smoke теста
 $response = $client->get('/api/remap/1.2/entity/product');
 $this->assertContains($response->getStatusCode(), [200, 401, 500]);
 ```

@@ -52,7 +52,7 @@ sdk-golden-php:
 
 sdk-golden-java:
   stage: test
-  image: maven:3.9-eclipse-temurin-17
+  image: docker.infra.lognex/maven-jdk11:7.8-release
   needs:
     - job: generate-sdk-java
       artifacts: true
@@ -62,7 +62,13 @@ sdk-golden-java:
       when: on_success
   script:
     - |
-      echo "Java golden tests placeholder. No real Java tests configured yet."
+      if [ -d "tests/java/assertions" ]; then
+        echo "=== Golden tests (Java) ==="
+        mvn test -Dtest=**/golden/** -Dsurefire.failIfNoSpecifiedTests=false
+      else
+        echo "WARNING: tests/java/assertions directory not found"
+        exit 1
+      fi
 
 # JavaScript Golden JSON тесты (заглушка)
 #sdk-golden-javascript:

@@ -37,6 +37,7 @@ properties:
   attributes:
     type: array
     description: Коллекция метаданных доп. полей
+    nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
   code:
@@ -192,6 +193,7 @@ properties:
   payments:
     type: array
     description: Массив ссылок на связанные платежи
+    nullable: true
     items:
       anyOf:
         - $ref: '../../../openapi.yaml#/components/schemas/PaymentIn'

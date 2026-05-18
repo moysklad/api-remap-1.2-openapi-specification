@@ -9,15 +9,13 @@
   variables:
     SMOKE_BASE_URL: http://mock:8080
 
-# PHP Smoke тесты: openapi-mock запускается в том же контейнере
+# Smoke тесты: openapi-mock запускается в том же контейнере
 # (GitLab CI service не имеет доступа к артефакту dist/openapi.yaml)
-sdk-smoke-php:
+sdk-smoke:
   stage: test
   image: php:8.2-cli
   needs:
     - job: bundle-openapi
-      artifacts: true
-    - job: generate-sdk-php
       artifacts: true
   rules:
     - if: '$SDK_LANGUAGES == "" || $SDK_LANGUAGES =~ /php/'
@@ -94,68 +92,3 @@ sdk-smoke-php:
         exit 1
       fi
 
-# Python Smoke тесты с openapi-mock (заглушка)
-#sdk-smoke-python:
-#  extends: .sdk-smoke-base
-#  image: python:3.11
-#  needs:
-#    - job: bundle-openapi
-#      artifacts: true
-#    - job: generate-sdk-python
-#      artifacts: true
-#      optional: true
-#  rules:
-#    - if: '$SDK_LANGUAGES =~ /python/'
-#      when: on_success
-#  script:
-#    - |
-#      if [ -d "tests/python" ] && [ -f "tests/python/requirements.txt" ]; then
-#        cd tests/python
-#        pip install -r requirements.txt
-#        pytest smoke/ -v
-#      else
-#        echo "WARNING: tests/python directory not configured, skipping Python smoke tests"
-#        echo "Create tests/python directory with pytest tests to enable"
-#        exit 1
-#      fi
-
-sdk-smoke-java:
-  extends: .sdk-smoke-base
-  image: maven:3.9-eclipse-temurin-17
-  needs:
-    - job: bundle-openapi
-      artifacts: true
-    - job: generate-sdk-java
-      artifacts: true
-      optional: true
-  rules:
-    - if: '$SDK_LANGUAGES == "" || $SDK_LANGUAGES =~ /java/'
-      when: on_success
-  script:
-    - |
-      echo "Java smoke tests placeholder. No real Java tests configured yet."
-
-# JavaScript Smoke тесты с openapi-mock (заглушка)
-#sdk-smoke-javascript:
-#  extends: .sdk-smoke-base
-#  image: node:20
-#  needs:
-#    - job: bundle-openapi
-#      artifacts: true
-#    - job: generate-sdk-javascript
-#      artifacts: true
-#      optional: true
-#  rules:
-#    - if: '$SDK_LANGUAGES =~ /javascript/'
-#      when: on_success
-#  script:
-#    - |
-#      if [ -d "tests/javascript" ] && [ -f "tests/javascript/package.json" ]; then
-#        cd tests/javascript
-#        npm ci
-#        npm run test:smoke
-#      else
-#        echo "WARNING: tests/javascript directory not configured, skipping JavaScript smoke tests"
-#        echo "Create tests/javascript directory with npm project to enable"
-#        exit 1
-#      fi

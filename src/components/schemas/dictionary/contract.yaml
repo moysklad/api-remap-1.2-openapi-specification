@@ -114,5 +114,6 @@ properties:
   attributes:
     type: array
     description: Коллекция доп. полей
+    nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'

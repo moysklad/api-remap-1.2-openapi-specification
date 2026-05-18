@@ -38,7 +38,7 @@ Follow this order. Read [reference.md](reference.md) for templates and edge-case
 5. **Create schemas** — entity + list schemas; for documents with positions also position + position list schemas. For every schema that has a top-level `meta`, add `x-entity-static-builder` (see "Static builder extension" below).
 6. **Create paths** — one YAML per endpoint group. Reference schemas through `../../../openapi.yaml#/components/schemas/<SchemaName>` from request/response bodies.
 7. **Register in `src/openapi.yaml`** — paths, `components.schemas`, and tags in the local style used nearby.
-8. **Add test data** — create a rich `tests/php/fixtures/<snake_case>.json`, add `FIXTURE_MODEL_MAP`, and update `IGNORED_FIELDS` only when required.
+8. **Add test data** — create a rich shared fixture in `tests/fixtures/<snake_case>.json`, register it in both PHP and Java `FIXTURE_MODEL_MAP`, and update `IGNORED_FIELDS` only when required.
 9. **Add smoke coverage** — one test method per endpoint+method from the endpoint matrix.
 10. **Cross-check** — re-read the MD and verify fields, endpoints, refs, nullable values, enums, fixtures, smoke tests, and `x-entity-static-builder` presence on every schema with `meta`.
 11. **Verify** — run the Docker make sequence below.
@@ -91,7 +91,7 @@ Before verification, re-read the MD and confirm:
 
 ## Static builder extension (`x-entity-static-builder`)
 
-Custom OpenAPI vendor extension consumed by `customtemplates/php/model_entity_static_builder.mustache` to generate a static `createWithMeta(...)` helper on PHP SDK models. Required on **every** schema that has a top-level `meta`, including stubs.
+Custom OpenAPI vendor extension consumed by `customtemplates/php/model_entity_static_builder.mustache` and `customtemplates/java/model_entity_static_builder.mustache` to generate a static `createWithMeta(...)` helper on PHP and Java SDK models. Required on **every** schema that has a top-level `meta`, including stubs.
 
 Conventions for this project:
 
@@ -100,7 +100,7 @@ Conventions for this project:
 | Entity (dictionary or document) | `["id"]` | `path: "entity"` → `path: "<keyword>"` → `param: "id"` | `"<keyword>"` |
 | Position (document) | `["parentId", "id"]` | `path: "entity"` → `path: "<keyword>"` → `param: "parentId"` → `path: "positions"` → `param: "id"` | `"<keyword>position"` |
 
-`<keyword>` is the lowercase URL keyword from MD (matches `meta.type` returned by the API). Place the block at the top of the schema, between `description` and `properties`. Detailed template and rules are in [reference.md](reference.md); peer references: `src/components/schemas/dictionary/customerOrder.yaml`, `src/components/schemas/dictionary/customerOrderPosition.yaml`. Background documentation lives in `src/custom-extension-readme.md` and `customtemplates/php/readme.md`.
+`<keyword>` is the lowercase URL keyword from MD (matches `meta.type` returned by the API). Place the block at the top of the schema, between `description` and `properties`. Detailed template and rules are in [reference.md](reference.md); peer references: `src/components/schemas/dictionary/customerOrder.yaml`, `src/components/schemas/dictionary/customerOrderPosition.yaml`. Background documentation lives in `src/custom-extension-readme.md`, `customtemplates/php/readme.md`, and `customtemplates/java/readme.md`.
 
 ## Enum fields and SDK compatibility
 
@@ -122,12 +122,14 @@ Use Docker make targets for verification. Do not use `npm run` directly for the 
 docker compose run --rm sdk make lint           # Redocly lint
 docker compose run --rm sdk make bundle         # produces dist/openapi.yaml + dist/openapi.json
 docker compose run --rm sdk make generate-php   # generates PHP SDK in clients/php/
+docker compose run --rm sdk make generate-java  # generates Java SDK in clients/java/
 docker compose restart mock                     # CRITICAL: reload bundled spec in mock server
 docker compose run --rm sdk make test-golden-php
+docker compose run --rm java-sdk make test-golden-java
 docker compose run --rm sdk make test-smoke
 ```
 
-`test-smoke` is the canonical local smoke target. `test-smoke-php` exists as a PHP-only shortcut, but prefer the generic target unless the user asks for a narrower check.
+`test-smoke` is the canonical local smoke target.
 
 ## Naming conventions
 

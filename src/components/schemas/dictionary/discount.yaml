@@ -9,11 +9,13 @@ properties:
   assortment:
     type: array
     description: Массив метаданных товаров, услуг и модификаций
+    nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/DiscountAssortmentItem'
   productFolders:
     type: array
     description: Массив метаданных Групп товаров
+    nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/ProductFolder'
 

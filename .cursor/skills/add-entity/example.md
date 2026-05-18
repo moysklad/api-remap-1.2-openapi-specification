@@ -62,7 +62,7 @@ src/paths/dictionaries/contracts/contract-metadata.yaml  # GET metadata
 src/paths/dictionaries/contracts/contract-metadata-attribute.yaml      # GET/POST attributes
 src/paths/dictionaries/contracts/contract-metadata-attribute-by-id.yaml # GET/PUT/DELETE attribute
 src/paths/dictionaries/contracts/contract-metadata-state-by-id.yaml    # GET/PUT/DELETE state (MD metadata has `states`)
-tests/php/fixtures/contract.json                         # golden fixture (rich JSON)
+tests/fixtures/contract.json                             # shared golden fixture (rich JSON)
 ```
 
 ## Files modified
@@ -70,6 +70,7 @@ tests/php/fixtures/contract.json                         # golden fixture (rich 
 ```
 src/openapi.yaml                              # paths + ContractList in components.schemas + tag
 tests/php/golden/SerializationTest.php         # FIXTURE_MODEL_MAP += 'contract' => 'Contract'
+tests/java/assertions/src/test/java/com/lognex/test/golden/SerializationTest.java # FIXTURE_MODEL_MAP += "contract" -> "Contract"
 tests/php/smoke/ApiEndpointsTest.php           # 10 new test methods
 ```
 
@@ -81,7 +82,7 @@ tests/php/smoke/ApiEndpointsTest.php           # 10 new test methods
 4. **`rate` is an inline object** — not a `$ref` because it has a custom shape (`currency` + `value`), same pattern as in `customerOrder.yaml`.
 5. **Metadata endpoints** reuse `DocumentMetadata`, `AttributeMetaInfo`, `AttributeMetaInfoList` — shared schemas from `common/`.
 6. **States endpoint** — MD metadata section has `states` field → created `contract-metadata-state-by-id.yaml` with GET/PUT/DELETE (DELETE has `404: NotFoundEmpty`). Discovered by comparing with `customerorder` which has the same pattern.
-7. **Static builder** — `Contract` has `meta`, so `contract.yaml` carries `x-entity-static-builder` with the dictionary convention (`methodParams: ["id"]`, `href: entity / contract / $id`, `type: "contract"`). The list schema `contractList.yaml` does **not** get the block — only schemas with their own `meta`. After regeneration, `Contract::createWithMeta($id)` is available in the PHP SDK.
+7. **Static builder** — `Contract` has `meta`, so `contract.yaml` carries `x-entity-static-builder` with the dictionary convention (`methodParams: ["id"]`, `href: entity / contract / $id`, `type: "contract"`). The list schema `contractList.yaml` does **not** get the block — only schemas with their own `meta`. After regeneration, the helper is available in both SDKs: `Contract::createWithMeta($id)` in PHP and `Contract.createWithMeta(id)` in Java.
 
 ## Verification results
 
@@ -89,9 +90,11 @@ tests/php/smoke/ApiEndpointsTest.php           # 10 new test methods
 |------|---------|--------|
 | Lint | `docker compose run --rm sdk make lint` | Valid (253 warnings, all pre-existing pattern) |
 | Bundle | `docker compose run --rm sdk make bundle` | OK |
-| Generate | `docker compose run --rm sdk make generate-php` | `Contract.php`, `ContractList.php` generated |
+| Generate PHP | `docker compose run --rm sdk make generate-php` | `Contract.php`, `ContractList.php` generated |
+| Generate Java | `docker compose run --rm sdk make generate-java` | Java SDK regenerated with `Contract` model support |
 | **Mock restart** | `docker compose restart mock` | Container restarted, loaded fresh `dist/openapi.yaml` |
-| Golden | `docker compose run --rm sdk make test-golden-php` | 36/36 passed |
+| Golden PHP | `docker compose run --rm sdk make test-golden-php` | 36/36 passed |
+| Golden Java | `docker compose run --rm java-sdk make test-golden-java` | Passed |
 | Smoke | `docker compose run --rm sdk make test-smoke` | 108/108 passed |
 
 > **Note:** The mock restart step is critical. Without it, smoke tests return 404 for any newly added endpoints because openapi-mock caches the spec in memory on startup and does not reload it automatically. If `docker compose restart mock` doesn't help (stale container), use `docker compose rm -sf mock && docker compose up -d mock`.
@@ -101,7 +104,7 @@ tests/php/smoke/ApiEndpointsTest.php           # 10 new test methods
 | Pitfall | Symptom | Fix |
 |---------|---------|-----|
 | Missing `docker compose restart mock` | Smoke tests fail with `404 means endpoint path did not match` for new endpoints | Run `docker compose restart mock` (or `rm -sf mock && up -d mock`) after `make bundle` |
-| Missing `make generate-php` after schema change | Golden tests pass but fixture fields are `null` (no actual roundtrip coverage) | Always run `make generate-php` after schema changes, before golden tests |
+| Missing `make generate-php` / `make generate-java` after schema change | Golden tests pass but fixture fields are `null`, or only one SDK is actually covered | Always regenerate both SDKs after schema changes, before golden tests |
 | Sparse fixture (creation request instead of GET response) | Golden test passes trivially — all missing fields round-trip as `null` | Use the richest single-entity JSON from "Получить <сущность>" section in MD |
 | Nested structure mismatch (e.g. `attributes` should be an object with `meta`, not a direct `$ref`) | Golden test fails or SDK model has wrong property types | Cross-check fixture JSON against MD JSON examples for nested object shapes |
 | Missing `metadata/states/{id}` endpoint | Smoke test for state CRUD fails; MD metadata section has `states` field but path file was not created | Check MD metadata section for `states`; compare endpoint set with peer entities (e.g. `customerorder`) |
@@ -145,7 +148,7 @@ src/paths/documents/<entities>/<entities>-delete.yaml
 src/paths/documents/<entities>/<entity>-positions.yaml
 src/paths/documents/<entities>/<entity>-position-by-id.yaml
 src/paths/documents/<entities>/<entity>-positions-delete.yaml
-tests/php/fixtures/<snake_case>.json
+tests/fixtures/<snake_case>.json
 ```
 
 ### Key decisions

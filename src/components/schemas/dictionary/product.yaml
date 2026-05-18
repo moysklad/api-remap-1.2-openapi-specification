@@ -124,7 +124,7 @@ properties:
     description: Вес
   volume:
     type: number
-    format: float
+    format: double
     minimum: 0
     description: Объем
   buyPrice:
@@ -133,6 +133,7 @@ properties:
   salePrices:
     type: array
     description: Цены продажи
+    nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/SalePrice'
   supplier:
@@ -167,18 +168,19 @@ properties:
       - $ref: '../../../openapi.yaml#/components/schemas/ImageList'
   files:
     description: Метаданные массива Файлов
-    nullable: true
     type: object
     allOf:
       - $ref: '../../../openapi.yaml#/components/schemas/FileList'
   barcodes:
     type: array
     description: Штрихкоды товара
+    nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/Barcode'
   packs:
     type: array
     description: Упаковки товара
+    nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/Pack'
   trackingType:
@@ -200,13 +202,9 @@ properties:
   attributes:
     type: array
     description: Дополнительные поля
+    nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
-  minimumBalance:
-    type: number
-    format: float
-    description: Неснижаемый остаток (устаревшее)
-    deprecated: true
   minimumStock:
     description: |
       Неснижаемый остаток. Не выводится по умолчанию.
@@ -230,6 +228,7 @@ properties:
   things:
     type: array
     description: Серийные номера
+    nullable: true
     items:
       type: string
   syncId:

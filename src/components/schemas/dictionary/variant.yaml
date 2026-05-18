@@ -46,12 +46,14 @@ properties:
     $ref: '../../../openapi.yaml#/components/schemas/Product'
   characteristics:
     type: array
+    nullable: true
     description: Характеристики Модификации
     items:
       $ref: '../../../openapi.yaml#/components/schemas/VariantCharacteristicValue'
   salePrices:
     type: array
     description: Цены продажи
+    nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/SalePrice'
   buyPrice:
@@ -66,11 +68,13 @@ properties:
   barcodes:
     type: array
     description: Штрихкоды Модификации
+    nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/Barcode'
   packs:
     type: array
     description: Упаковки Модификации
+    nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/VariantPack'
   images:
@@ -90,5 +94,6 @@ properties:
   things:
     type: array
     description: Серийные номера
+    nullable: true
     items:
       type: string

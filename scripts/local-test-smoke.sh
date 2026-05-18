@@ -26,35 +26,6 @@ run_php() {
   }
 }
 
-run_python() {
-  if [ ! -d "tests/python" ] || [ ! -f "tests/python/requirements.txt" ]; then
-    echo "Skipping smoke tests for python: tests/python not configured"
-    return 0
-  fi
-  cd tests/python
-  pip install -q -r requirements.txt
-  pytest smoke/ -v 2>/dev/null || echo "Skipping: no smoke tests for python yet"
-}
-
-run_java() {
-  if [ ! -d "tests/java" ] || [ ! -f "tests/java/pom.xml" ]; then
-    echo "Skipping smoke tests for java: tests/java not configured"
-    return 0
-  fi
-  cd tests/java
-  mvn test -Dtest=**/smoke/**
-}
-
-run_javascript() {
-  if [ ! -d "tests/javascript" ] || [ ! -f "tests/javascript/package.json" ]; then
-    echo "Skipping smoke tests for javascript: tests/javascript not configured"
-    return 0
-  fi
-  cd tests/javascript
-  npm ci
-  npm run test:smoke 2>/dev/null || echo "Skipping: no test:smoke script"
-}
-
 SMOKE_URL="${SMOKE_BASE_URL:-http://mock:8080}"
 echo "Waiting for mock server at ${SMOKE_URL}..." >&2
 max=90

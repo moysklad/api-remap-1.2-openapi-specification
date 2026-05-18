@@ -7,3 +7,4 @@ properties:
     type: array
     items:
       $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfo'
+    nullable: true

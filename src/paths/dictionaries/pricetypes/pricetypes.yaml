@@ -18,11 +18,6 @@ get:
               $ref: '../../../openapi.yaml#/components/schemas/PriceType'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
-    
-    
-    
-    
-    
 
 post:
   operationId: createPriceTypesBatch
