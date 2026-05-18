@@ -394,6 +394,8 @@ paths:
     $ref: './paths/documents/internalorders/internalorder-metadata-attribute.yaml'
   /entity/internalorder/metadata/attributes/{id}:
     $ref: './paths/documents/internalorders/internalorder-metadata-attribute-by-id.yaml'
+  /entity/internalorder/metadata/states:
+    $ref: './paths/documents/internalorders/internalorder-metadata-states.yaml'
   /entity/internalorder/metadata/states/{id}:
     $ref: './paths/documents/internalorders/internalorder-metadata-state-by-id.yaml'
   /entity/internalorder/new:
@@ -419,6 +421,8 @@ paths:
     $ref: './paths/documents/customerorders/customerorder-metadata-attribute.yaml'
   /entity/customerorder/metadata/attributes/{id}:
     $ref: './paths/documents/customerorders/customerorder-metadata-attribute-by-id.yaml'
+  /entity/customerorder/metadata/states:
+    $ref: './paths/documents/customerorders/customerorder-metadata-states.yaml'
   /entity/customerorder/metadata/states/{id}:
     $ref: './paths/documents/customerorders/customerorder-metadata-state-by-id.yaml'
   /entity/customerorder/new:
@@ -444,6 +448,8 @@ paths:
     $ref: './paths/documents/purchaseorders/purchaseorder-metadata-attribute.yaml'
   /entity/purchaseorder/metadata/attributes/{id}:
     $ref: './paths/documents/purchaseorders/purchaseorder-metadata-attribute-by-id.yaml'
+  /entity/purchaseorder/metadata/states:
+    $ref: './paths/documents/purchaseorders/purchaseorder-metadata-states.yaml'
   /entity/purchaseorder/metadata/states/{id}:
     $ref: './paths/documents/purchaseorders/purchaseorder-metadata-state-by-id.yaml'
   /entity/purchaseorder/new:
@@ -470,6 +476,8 @@ paths:
     $ref: './paths/documents/commissionreportins/commissionreportin-metadata-attribute.yaml'
   /entity/commissionreportin/metadata/attributes/{id}:
     $ref: './paths/documents/commissionreportins/commissionreportin-metadata-attribute-by-id.yaml'
+  /entity/commissionreportin/metadata/states:
+    $ref: './paths/documents/commissionreportins/commissionreportin-metadata-states.yaml'
   /entity/commissionreportin/metadata/states/{id}:
     $ref: './paths/documents/commissionreportins/commissionreportin-metadata-state-by-id.yaml'
   /entity/commissionreportin/{id}/positions:
@@ -500,6 +508,8 @@ paths:
     $ref: './paths/documents/cashins/cashin-metadata-attribute.yaml'
   /entity/cashin/metadata/attributes/{id}:
     $ref: './paths/documents/cashins/cashin-metadata-attribute-by-id.yaml'
+  /entity/cashin/metadata/states:
+    $ref: './paths/documents/cashins/cashin-metadata-states.yaml'
   /entity/cashin/metadata/states/{id}:
     $ref: './paths/documents/cashins/cashin-metadata-state-by-id.yaml'
   /entity/cashin/new:
@@ -520,6 +530,8 @@ paths:
     $ref: './paths/documents/cashouts/cashout-metadata-attribute.yaml'
   /entity/cashout/metadata/attributes/{id}:
     $ref: './paths/documents/cashouts/cashout-metadata-attribute-by-id.yaml'
+  /entity/cashout/metadata/states:
+    $ref: './paths/documents/cashouts/cashout-metadata-states.yaml'
   /entity/cashout/metadata/states/{id}:
     $ref: './paths/documents/cashouts/cashout-metadata-state-by-id.yaml'
   /entity/cashout/new:
