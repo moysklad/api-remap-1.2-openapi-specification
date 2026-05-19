@@ -47,11 +47,11 @@ Track these columns while implementing:
 | MD signal | API path | HTTP | Path file |
 |-----------|----------|------|-----------|
 | list section | `/entity/<keyword>` | GET | `<entities>.yaml` |
-| create section | `/entity/<keyword>` | POST | `<entities>.yaml` |
+| create section (single object) | `/entity/<keyword>` | POST | `<entities>.yaml` |
+| mass create/update section | `/entity/<keyword>/batch` | POST | `<entities>-batch.yaml` |
 | get by ID section | `/entity/<keyword>/{id}` | GET | `<entity>-by-id.yaml` |
 | update section | `/entity/<keyword>/{id}` | PUT | `<entity>-by-id.yaml` |
 | delete by ID section | `/entity/<keyword>/{id}` | DELETE | `<entity>-by-id.yaml` |
-| mass create/update | `/entity/<keyword>/batch` | POST | `<entities>-batch.yaml` |
 | mass delete | `/entity/<keyword>/delete` | POST | `<entities>-delete.yaml` |
 | metadata | `/entity/<keyword>/metadata` | GET | `<entity>-metadata.yaml` or shared metadata path |
 | metadata attributes list/create | `/entity/<keyword>/metadata/attributes` | GET/POST | `<entity>-metadata-attribute.yaml` |
@@ -61,11 +61,57 @@ Track these columns while implementing:
 | position by ID | `/entity/<keyword>/{id}/positions/{positionId}` | GET/PUT/DELETE | `<entity>-position-by-id.yaml` |
 | positions batch delete | `/entity/<keyword>/{id}/positions/delete` | POST | `<entity>-positions-delete.yaml` |
 
+### Top-level POST vs `/batch` (mandatory split)
+
+- `POST /entity/<keyword>` — single object only.
+  - Request body schema: `$ref: <Entity>`.
+  - Response schema: `$ref: <Entity>`.
+  - Do **not** accept arrays. Do **not** use `oneOf: [<Entity>, array of <Entity>]`.
+- `POST /entity/<keyword>/batch` — mass create/update.
+  - Request body schema: `type: array, items: <Entity>, minItems: 1, maxItems: 1000`.
+  - Response schema: `type: array, items: oneOf: [<Entity>, Error]` (per-item result).
+- Add a separate path file `<entities>-batch.yaml` and register the `.../batch` URL in `src/openapi.yaml` even when the MD `### Массовое создание и обновление ...` example reuses the create URL — Remap models it as a distinct `/batch` path.
+- Smoke test must hit `.../batch` for the mass operation and `.../<keyword>` (object body) for single create — never collapse them into one call.
+
+Reference good/bad examples (for the same reason):
+
+```yaml
+# Good — POST /entity/<keyword>
+post:
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../../../openapi.yaml#/components/schemas/<Entity>'
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/<Entity>'
+```
+
+```yaml
+# Bad — combined single+mass on one POST (do not do this)
+post:
+  requestBody:
+    content:
+      application/json:
+        schema:
+          oneOf:
+            - $ref: '../../../openapi.yaml#/components/schemas/<Entity>'
+            - type: array
+              items:
+                $ref: '../../../openapi.yaml#/components/schemas/<Entity>'
+```
+
+Exception — document positions. The existing peer pattern keeps a single `POST /entity/<keyword>/{id}/positions` with `oneOf: [<Position>, array of <Position>]` and no `/positions/batch`. Follow that peer pattern for new positions endpoints unless the source MD explicitly defines a separate positions batch URL.
+
 ### Remap-specific traps
 
 - Do not infer metadata states from the word "статус" alone; require `states` in metadata response/examples or a peer-backed pattern.
 - Some dictionaries/documents have extra groups (`files`, `images`, `accounts`, `notes`, `storebalances`, security/access actions). Add matrix rows from the exact MD headings and copy the closest peer's file split.
-- Batch operation names in MD may say "Массовое создание и обновление"; model it as `/batch` POST with array response.
+- MD may show `### Массовое создание и обновление ...` with the same example URL as create; still expose it as a separate `POST /batch` path with array body — see "Top-level POST vs `/batch`" above.
 - DELETE metadata state endpoints should include explicit `404: NotFoundEmpty` when the backend can return empty 404.
 - If a path exists in MD but is intentionally skipped, record the reason in the final report.
 

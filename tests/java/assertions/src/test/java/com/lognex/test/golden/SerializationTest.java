@@ -64,6 +64,7 @@ class SerializationTest extends BaseTestCase {
         FIXTURE_MODEL_MAP.put("product_folder", "ProductFolder");
         FIXTURE_MODEL_MAP.put("processing_stage", "ProcessingStage");
         FIXTURE_MODEL_MAP.put("processing_process", "ProcessingProcess");
+        FIXTURE_MODEL_MAP.put("processing_plan_folder", "ProcessingPlanFolder");
         FIXTURE_MODEL_MAP.put("service", "Service");
         FIXTURE_MODEL_MAP.put("uom", "Uom");
         FIXTURE_MODEL_MAP.put("price_type", "PriceType");
@@ -73,9 +74,12 @@ class SerializationTest extends BaseTestCase {
         FIXTURE_MODEL_MAP.put("bundle", "Bundle");
         FIXTURE_MODEL_MAP.put("bundle_component", "BundleComponent");
         FIXTURE_MODEL_MAP.put("variant", "Variant");
+        FIXTURE_MODEL_MAP.put("webhook", "Webhook");
+        FIXTURE_MODEL_MAP.put("webhookstock", "WebhookStock");
         FIXTURE_MODEL_MAP.put("thing", "Thing");
         FIXTURE_MODEL_MAP.put("internal_order", "InternalOrder");
         FIXTURE_MODEL_MAP.put("customer_order", "CustomerOrder");
+        FIXTURE_MODEL_MAP.put("demand", "Demand");
         FIXTURE_MODEL_MAP.put("purchase_order", "PurchaseOrder");
         FIXTURE_MODEL_MAP.put("variantcharacteristic", "VariantCharacteristic");
         FIXTURE_MODEL_MAP.put("contract", "Contract");
