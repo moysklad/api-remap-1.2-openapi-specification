@@ -105,6 +105,12 @@ Before verification, every matrix row must have:
 | `+Обязательное при ответе` | (informational, no YAML effect) |
 | `+Необходимо при создании` | (informational, no YAML effect — `required` is rarely set at object level in this spec) |
 
+Important:
+
+- Do **not** infer `readOnly: true` from `+Обязательное при ответе`.
+- Only the explicit marker `+Только для чтения` should become `readOnly: true`.
+- Fields such as `externalCode` often appear as `+Обязательное при ответе` in MD while still being writable; treat them as normal fields unless the MD explicitly says `+Только для чтения`.
+
 ### Nullable fields
 
 If a field can be `null` (explicit in MD or from JSON examples), add `nullable: true`.
@@ -869,6 +875,7 @@ Re-read the source `_<entity>.md` file and verify completeness:
 2. For each row, confirm a matching property exists in the YAML schema
 3. Verify:
    - `+Только для чтения` → `readOnly: true`
+   - `+Обязательное при ответе` alone does **not** imply `readOnly: true`
    - `[Meta]` type → correct `$ref` pattern (`allOf` for nullable, direct for non-nullable)
    - `Enum` → open string field + separate PascalCase enum component; use **JSON values** from the mapping table, not Russian labels
    - `String(N)` → `maxLength: N`

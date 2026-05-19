@@ -34,7 +34,6 @@ properties:
     type: string
     maxLength: 255
     description: Внешний код Статьи расходов
-    readOnly: true
   name:
     type: string
     maxLength: 255

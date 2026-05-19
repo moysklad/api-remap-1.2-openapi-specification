@@ -1,5 +1,5 @@
 type: object
-description: Список партий
+description: Список Партий
 properties:
   context:
     description: Метаданные о сотруднике, выполнившем запрос
@@ -9,6 +9,6 @@ properties:
     $ref: '../common/metaList.yaml'
   rows:
     type: array
-    description: Массив партий
+    description: Массив Партий
     items:
       $ref: '../../../openapi.yaml#/components/schemas/Consignment'
