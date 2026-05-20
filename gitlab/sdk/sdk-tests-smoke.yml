@@ -17,8 +17,6 @@ sdk-smoke:
   needs:
     - job: bundle-openapi
       artifacts: true
-    - job: generate-sdk-php
-      artifacts: true
   rules:
     - if: '$SDK_LANGUAGES == "" || $SDK_LANGUAGES =~ /php/'
       when: on_success

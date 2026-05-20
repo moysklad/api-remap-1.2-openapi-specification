@@ -37,39 +37,44 @@ deploy-to-maven:
   extends: .deploy-sdk-java-base
   needs:
     - job: merge-branch-java
+      artifacts: true
   rules:
     - if: '$CI_COMMIT_REF_NAME == "master" && $CI_PIPELINE_SOURCE == "push"'
       when: on_success
   before_script:
     - rm -f /etc/apt/sources.list.d/*pgdg*.list || true
     - echo "$GPG_SECRET_KEY" | gpg --import
-    - apt-get update
-    - apt-get install -y --no-install-recommends git
+    - apt-get update && apt-get install -y --no-install-recommends git
     - |
-      if [ ! -s "java-release-tag.txt" ]; then
-        echo "java-release-tag.txt artifact is missing or empty. Getting tag from spec repo."
-        SPEC_REPO_URL="${CI_REPOSITORY_URL}"
-        git clone "$SPEC_REPO_URL" spec-repo
-        cd spec-repo
-        git fetch origin "$CI_COMMIT_REF_NAME" --tags
-        git checkout "$CI_COMMIT_REF_NAME"
-        TAG="$(git describe --tags --abbrev=0 2>/dev/null || echo "")"
-        cd ..
-      else
-        TAG="$(tr -d '\r\n' < java-release-tag.txt)"
-      fi
-    - |
-      if [ -z "$CICD_PAT_JAVA" ]; then
-        echo "CICD_PAT_JAVA is not set. Cannot access internal Java SDK repository."
-        exit 1
-      fi
-    - |
-      if [ -d "sdk-repo/.git" ]; then
-        echo "Using sdk-repo from upstream artifacts."
-      else
-        echo "sdk-repo artifact not found. Cloning SDK repository."
+      if [ ! -d "sdk-repo" ]; then
+        echo "Release artifact expired. Restore release artefact..."
+
+        if [ -z "$CICD_PAT_JAVA" ]; then
+          echo "CICD_PAT_JAVA is not set. Cannot access internal Java SDK repository."
+          exit 1
+        fi
+      
+        echo "Getting tag from spec repo."
+        git clone "${CI_REPOSITORY_URL}" spec-repo
+        git -C spec-repo fetch origin "$CI_COMMIT_REF_NAME" --tags
+        git -C spec-repo checkout "$CI_COMMIT_REF_NAME"
+        TAG="$(git -C spec-repo describe --tags --abbrev=0 2>/dev/null || true)"
+        if [ -z "$TAG" ]; then
+          echo "No release tag found in spec repo. Stop maven release"
+          exit 1
+        fi
+      
+        echo "Cloning SDK repository to sdk-repo."
         SDK_REPO_URL="https://oauth2:${CICD_PAT_JAVA}@git.company.lognex/moysklad/misc/remap-1.2-java-sdk.git"
         git clone --depth=1 --filter=blob:none --single-branch --branch master "$SDK_REPO_URL" sdk-repo
+      else
+        echo "Using sdk-repo from upstream artifacts."
+        TAG_FILE="sdk-repo/java-release-tag.txt"
+        if [ -s "$TAG_FILE" ]; then
+          TAG="$(tr -d '\r\n' < "$TAG_FILE")"
+        else 
+          echo "No release tag found. Stop maven release"
+          exit 1
       fi
     - cd sdk-repo
     - export TZ='Europe/Moscow'

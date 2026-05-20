@@ -82,7 +82,7 @@ tests/php/smoke/ApiEndpointsTest.php           # 10 new test methods
 4. **`rate` is an inline object** — not a `$ref` because it has a custom shape (`currency` + `value`), same pattern as in `customerOrder.yaml`.
 5. **Metadata endpoints** reuse `DocumentMetadata`, `AttributeMetaInfo`, `AttributeMetaInfoList` — shared schemas from `common/`.
 6. **States endpoint** — MD metadata section has `states` field → created `contract-metadata-state-by-id.yaml` with GET/PUT/DELETE (DELETE has `404: NotFoundEmpty`). Discovered by comparing with `customerorder` which has the same pattern.
-7. **Static builder** — `Contract` has `meta`, so `contract.yaml` carries `x-entity-static-builder` with the dictionary convention (`methodParams: ["id"]`, `href: entity / contract / $id`, `type: "contract"`). The list schema `contractList.yaml` does **not** get the block — only schemas with their own `meta`. After regeneration, `Contract::createWithMeta($id)` is available in the PHP SDK.
+7. **Static builder** — `Contract` has `meta`, so `contract.yaml` carries `x-entity-static-builder` with the dictionary convention (`methodParams: ["id"]`, `href: entity / contract / $id`, `type: "contract"`). The list schema `contractList.yaml` does **not** get the block — only schemas with their own `meta`. After regeneration, the helper is available in both SDKs: `Contract::createWithMeta($id)` in PHP and `Contract.createWithMeta(id)` in Java.
 
 ## Verification results
 
