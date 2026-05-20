@@ -1,0 +1,50 @@
+type: object
+description: Этап Техкарты
+x-entity-static-builder:
+  methodParams:
+    - "parentId"
+    - "id"
+  href:
+    - path: "entity"
+    - path: "processingplan"
+    - param: "parentId"
+    - path: "stages"
+    - param: "id"
+  type: "processingplanstages"
+properties:
+  meta:
+    description: Метаданные этапа Техкарты
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID этапа Техкарты
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  enableHourAccounting:
+    type: boolean
+    description: Признак активности учета по нормо-часам
+  cost:
+    type: number
+    format: double
+    description: Стоимость производства на определенном этапе
+  labourCost:
+    type: number
+    format: double
+    description: Оплата труда на определенном этапе
+  standardHour:
+    type: number
+    format: double
+    description: Нормо-часы на определенном этапе
+  standardHourCost:
+    type: number
+    format: double
+    description: Стоимость нормо-часа
+    readOnly: true
+  processingProcessPosition:
+    description: Метаданные позиции техпроцесса
+    $ref: '../../../openapi.yaml#/components/schemas/ProcessingProcessPosition'

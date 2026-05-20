@@ -1,0 +1,81 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/processingplan/6b4ffbf7-ac12-11e6-5bed-427b00000091",
+    "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/processingplan/metadata",
+    "type": "processingplan",
+    "mediaType": "application/json"
+  },
+  "id": "6b4ffbf7-ac12-11e6-5bed-427b00000091",
+  "accountId": "d55cbfba-91f1-11e6-5bed-427b00000000",
+  "owner": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/employee/d5ad957e-91f1-11e6-5bed-427b0000002a",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/employee/metadata",
+      "type": "employee",
+      "mediaType": "application/json"
+    }
+  },
+  "shared": true,
+  "group": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/group/d55da707-91f1-11e6-5bed-427b00000001",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/group/metadata",
+      "type": "group",
+      "mediaType": "application/json"
+    }
+  },
+  "updated": "2016-11-17 14:48:32",
+  "name": "Техкарта",
+  "code": "TC-001",
+  "externalCode": "Lr9zJa9qgpvs6f6laIgtG2",
+  "archived": false,
+  "pathName": "Группа",
+  "parent": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/processingplanfolder/bfb6c5dc-acbb-11e6-5bed-427b00000001",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/processingplanfolder/metadata",
+      "type": "processingplanfolder",
+      "mediaType": "application/json"
+    }
+  },
+  "processingProcess": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/processingprocess/d8da40e9-bbf9-11ed-ac12-0010000000bf",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/processingprocess/metadata",
+      "type": "processingprocess",
+      "mediaType": "application/json"
+    }
+  },
+  "cost": 2000,
+  "costDistributionType": "BY_PRICE",
+  "stages": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/processingplan/6b4ffbf7-ac12-11e6-5bed-427b00000091/stages",
+      "type": "processingplanstages",
+      "mediaType": "application/json",
+      "size": 1,
+      "limit": 1000,
+      "offset": 0
+    }
+  },
+  "materials": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/processingplan/6b4ffbf7-ac12-11e6-5bed-427b00000091/materials",
+      "type": "processingplanmaterial",
+      "mediaType": "application/json",
+      "size": 1,
+      "limit": 1000,
+      "offset": 0
+    }
+  },
+  "products": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/processingplan/6b4ffbf7-ac12-11e6-5bed-427b00000091/products",
+      "type": "processingplanresult",
+      "mediaType": "application/json",
+      "size": 1,
+      "limit": 1000,
+      "offset": 0
+    }
+  }
+}
