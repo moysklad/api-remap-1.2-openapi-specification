@@ -62,6 +62,7 @@ class SerializationTest extends BaseTestCase {
         FIXTURE_MODEL_MAP.put("entity_with_extra_field", "Group");
         FIXTURE_MODEL_MAP.put("country", "Country");
         FIXTURE_MODEL_MAP.put("region", "Region");
+        FIXTURE_MODEL_MAP.put("tax_rate", "TaxRate");
         FIXTURE_MODEL_MAP.put("product_folder", "ProductFolder");
         FIXTURE_MODEL_MAP.put("processing_plan_folder", "ProcessingPlanFolder");
         FIXTURE_MODEL_MAP.put("service", "Service");
@@ -84,6 +85,8 @@ class SerializationTest extends BaseTestCase {
         FIXTURE_MODEL_MAP.put("variantcharacteristic", "VariantCharacteristic");
         FIXTURE_MODEL_MAP.put("contract", "Contract");
         FIXTURE_MODEL_MAP.put("project", "Project");
+        FIXTURE_MODEL_MAP.put("consignment", "Consignment");
+        FIXTURE_MODEL_MAP.put("expense_item", "ExpenseItem");
         FIXTURE_MODEL_MAP.put("cash_in", "CashIn");
         FIXTURE_MODEL_MAP.put("cash_in_operation", "CashInOperation");
         FIXTURE_MODEL_MAP.put("cash_out", "CashOut");

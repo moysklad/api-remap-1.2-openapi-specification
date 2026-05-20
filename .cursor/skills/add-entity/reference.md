@@ -56,6 +56,7 @@ Track these columns while implementing:
 | metadata | `/entity/<keyword>/metadata` | GET | `<entity>-metadata.yaml` or shared metadata path |
 | metadata attributes list/create | `/entity/<keyword>/metadata/attributes` | GET/POST | `<entity>-metadata-attribute.yaml` |
 | metadata attribute by ID | `/entity/<keyword>/metadata/attributes/{id}` | GET/PUT/DELETE | `<entity>-metadata-attribute-by-id.yaml` |
+| metadata states create/batch | `/entity/<keyword>/metadata/states` | POST | `<entity>-metadata-states.yaml` |
 | metadata states by ID | `/entity/<keyword>/metadata/states/{id}` | GET/PUT/DELETE | `<entity>-metadata-state-by-id.yaml` |
 | positions list/create | `/entity/<keyword>/{id}/positions` | GET/POST | `<entity>-positions.yaml` |
 | position by ID | `/entity/<keyword>/{id}/positions/{positionId}` | GET/PUT/DELETE | `<entity>-position-by-id.yaml` |
@@ -112,6 +113,7 @@ Exception — document positions. The existing peer pattern keeps a single `POST
 - Do not infer metadata states from the word "статус" alone; require `states` in metadata response/examples or a peer-backed pattern.
 - Some dictionaries/documents have extra groups (`files`, `images`, `accounts`, `notes`, `storebalances`, security/access actions). Add matrix rows from the exact MD headings and copy the closest peer's file split.
 - MD may show `### Массовое создание и обновление ...` with the same example URL as create; still expose it as a separate `POST /batch` path with array body — see "Top-level POST vs `/batch`" above.
+- State creation and mass state creation may share one endpoint: `POST /entity/<keyword>/metadata/states`. Model this as one operation with `oneOf` request/response (`State` or array of `State`). Do not add per-item `Error` unless the MD or a peer explicitly shows state batch item errors.
 - DELETE metadata state endpoints should include explicit `404: NotFoundEmpty` when the backend can return empty 404.
 - If a path exists in MD but is intentionally skipped, record the reason in the final report.
 
@@ -150,6 +152,12 @@ Before verification, every matrix row must have:
 | `+Только для чтения` | `readOnly: true` |
 | `+Обязательное при ответе` | (informational, no YAML effect) |
 | `+Необходимо при создании` | (informational, no YAML effect — `required` is rarely set at object level in this spec) |
+
+Important:
+
+- Do **not** infer `readOnly: true` from `+Обязательное при ответе`.
+- Only the explicit marker `+Только для чтения` should become `readOnly: true`.
+- Fields such as `externalCode` often appear as `+Обязательное при ответе` in MD while still being writable; treat them as normal fields unless the MD explicitly says `+Только для чтения`.
 
 ### Nullable fields
 
@@ -722,6 +730,49 @@ post:
       $ref: '../../../components/responses.yaml#/CommonError'
 ```
 
+### Metadata states create/batch (POST) — `<entity>-metadata-states.yaml`
+
+**When to create:** if the MD state section describes `Создать статус` or `Массовое создание и обновление Статусов`, and the URL is `/entity/<keyword>/metadata/states`. In this API both single creation and mass create/update can share the same `POST` endpoint, so model them as one OpenAPI operation.
+
+Peer pattern: `src/paths/documents/cashins/cashin-metadata-states.yaml`.
+
+```yaml
+post:
+  operationId: create<PascalSingular>MetadataState
+  tags:
+    - <PascalPlural>
+  summary: Создать статус <PascalSingular>
+  parameters:
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          oneOf:
+            - $ref: '../../../openapi.yaml#/components/schemas/State'
+            - type: array
+              items:
+                $ref: '../../../openapi.yaml#/components/schemas/State'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '../../../openapi.yaml#/components/schemas/State'
+              - type: array
+                items:
+                  $ref: '../../../openapi.yaml#/components/schemas/State'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+```
+
+Do not include `Error` inside the successful array response unless the MD or a peer shows partial per-item errors. For `_states.md`, the successful mass response is an array of status objects only; request-level errors remain covered by `default: CommonError`.
+
 ### Metadata state by ID (GET/PUT/DELETE) — `<entity>-metadata-state-by-id.yaml`
 
 **When to create:** if the MD metadata section (`### Метаданные`) includes a `states` field (array of statuses). Check existing peer entities (e.g. `customerorder-metadata-state-by-id.yaml`) to confirm the pattern.
@@ -931,6 +982,7 @@ Re-read the source `_<entity>.md` file and verify completeness:
 2. For each row, confirm a matching property exists in the YAML schema
 3. Verify:
    - `+Только для чтения` → `readOnly: true`
+   - `+Обязательное при ответе` alone does **not** imply `readOnly: true`
    - `[Meta]` type → correct `$ref` pattern (`allOf` for nullable, direct for non-nullable)
    - `Enum` → open string field + separate PascalCase enum component; use **JSON values** from the mapping table, not Russian labels
    - `String(N)` → `maxLength: N`
@@ -941,7 +993,7 @@ Re-read the source `_<entity>.md` file and verify completeness:
 1. Scan all `### ` headers in the MD that describe API operations
 2. For each one, confirm a matching path file and HTTP method exist
 3. Common set: list, create, get by id, update, delete, batch create, batch delete
-4. If MD has `### Метаданные` → add metadata + attributes (+ if the MD describes statuses, add `metadata/states/{id}` GET/PUT/DELETE; for DELETE with empty 404 from the API, add `404` → `NotFoundEmpty` — see **DELETE `404` with empty body** under §6)
+4. If MD has `### Метаданные` → add metadata + attributes (+ if the MD describes statuses, add `metadata/states` POST when create/mass-create state operations exist, and `metadata/states/{id}` GET/PUT/DELETE; for DELETE with empty 404 from the API, add `404` → `NotFoundEmpty` — see **DELETE `404` with empty body** under §6)
 5. If MD has `### Позиции` (documents) → add positions + position-by-id + positions-delete
 
 ### Fixture check

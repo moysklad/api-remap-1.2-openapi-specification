@@ -131,6 +131,7 @@ Use this pattern for `api-remap-1.2-doc/md/documents/_<entity>.md` when the MD h
 | Batch create/update | MD has mass create/update | `<entities>-batch.yaml` |
 | Batch delete | MD has mass delete | `<entities>-delete.yaml` |
 | Metadata | MD has `### Метаданные` | `<entity>-metadata.yaml`, metadata attribute files |
+| Metadata states create/batch | MD state section has create or mass create/update states | `<entity>-metadata-states.yaml` with `oneOf` `State` or array of `State`; peer: `cashin-metadata-states.yaml` |
 | Metadata states | metadata response includes `states` | `<entity>-metadata-state-by-id.yaml` with explicit `404: NotFoundEmpty` on DELETE |
 | Positions | MD has `### Позиции` | `<entity>-positions.yaml`, `<entity>-position-by-id.yaml`, `<entity>-positions-delete.yaml` |
 
