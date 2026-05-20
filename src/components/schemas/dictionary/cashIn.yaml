@@ -1,5 +1,13 @@
 type: object
 description: Приходный ордер
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "cashin"
+    - param: "id"
+  type: "cashin"
 properties:
   meta:
     description: Метаданные Приходного ордера

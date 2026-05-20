@@ -1,5 +1,13 @@
 type: object
 description: Статья расхода
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "expenseitem"
+    - param: "id"
+  type: "expenseitem"
 properties:
   meta:
     description: Метаданные статьи расхода

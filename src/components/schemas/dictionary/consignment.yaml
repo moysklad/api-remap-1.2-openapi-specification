@@ -1,4 +1,12 @@
 type: object
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "consignment"
+    - param: "id"
+  type: "consignment"
 properties:
   meta:
     description: Метаданные Партии

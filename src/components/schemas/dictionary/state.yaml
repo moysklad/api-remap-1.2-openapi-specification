@@ -1,5 +1,16 @@
 type: object
 description: Статус
+x-entity-static-builder:
+  methodParams:
+    - "entityType"
+    - "id"
+  href:
+    - path: "entity"
+    - param: "entityType"
+    - path: "metadata"
+    - path: "states"
+    - param: "id"
+  type: "state"
 properties:
   meta:
     $ref: '../common/meta.yaml'

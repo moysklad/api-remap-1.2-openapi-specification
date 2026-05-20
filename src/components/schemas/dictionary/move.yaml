@@ -1,5 +1,13 @@
 type: object
 description: Перемещение
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "move"
+    - param: "id"
+  type: "move"
 properties:
   meta:
     description: Метаданные Перемещения

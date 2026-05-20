@@ -1,5 +1,16 @@
 type: object
 description: Кассир
+x-entity-static-builder:
+  methodParams:
+    - "parentId"
+    - "id"
+  href:
+    - path: "entity"
+    - path: "retailstore"
+    - param: "parentId"
+    - path: "cashiers"
+    - param: "id"
+  type: "cashier"
 properties:
   meta:
     description: Метаданные Кассира
