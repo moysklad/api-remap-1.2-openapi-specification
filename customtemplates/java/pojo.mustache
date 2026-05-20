@@ -148,6 +148,30 @@ public class {{classname}} {{#parent}}extends {{{.}}} {{/parent}}{{#vendorExtens
     {{^vendorExtensions.x-is-jackson-optional-nullable}}this.{{name}} = {{name}};{{/vendorExtensions.x-is-jackson-optional-nullable}}
     return this;
   }
+
+  {{#vendorExtensions.x-agent-reference}}
+  /**
+   * Convenience overload — accepts a Counterparty directly. The instance is converted to
+   * {{{datatypeWithEnum}}} via Jackson roundtrip; only `meta` is read by the server.
+   */
+  public {{classname}} {{name}}(ru.moysklad.remap_1_2.model.Counterparty counterparty) {
+    {{{datatypeWithEnum}}} _converted = convertCounterpartyTo{{nameInPascalCase}}(counterparty);
+    {{#vendorExtensions.x-is-jackson-optional-nullable}}this.{{name}} = JsonNullable.<{{{datatypeWithEnum}}}>of(_converted);{{/vendorExtensions.x-is-jackson-optional-nullable}}
+    {{^vendorExtensions.x-is-jackson-optional-nullable}}this.{{name}} = _converted;{{/vendorExtensions.x-is-jackson-optional-nullable}}
+    return this;
+  }
+
+  /**
+   * Convenience overload — accepts an Organization directly. The instance is converted to
+   * {{{datatypeWithEnum}}} via Jackson roundtrip; only `meta` is read by the server.
+   */
+  public {{classname}} {{name}}(ru.moysklad.remap_1_2.model.Organization organization) {
+    {{{datatypeWithEnum}}} _converted = convertOrganizationTo{{nameInPascalCase}}(organization);
+    {{#vendorExtensions.x-is-jackson-optional-nullable}}this.{{name}} = JsonNullable.<{{{datatypeWithEnum}}}>of(_converted);{{/vendorExtensions.x-is-jackson-optional-nullable}}
+    {{^vendorExtensions.x-is-jackson-optional-nullable}}this.{{name}} = _converted;{{/vendorExtensions.x-is-jackson-optional-nullable}}
+    return this;
+  }
+  {{/vendorExtensions.x-agent-reference}}
   {{#isArray}}
 
   public {{classname}} add{{nameInPascalCase}}Item({{{items.datatypeWithEnum}}} {{name}}Item) {
@@ -294,6 +318,46 @@ public class {{classname}} {{#parent}}extends {{{.}}} {{/parent}}{{#vendorExtens
     this.{{name}} = {{name}};
     {{/vendorExtensions.x-is-jackson-optional-nullable}}
   }
+
+  {{#vendorExtensions.x-agent-reference}}
+  public void {{setter}}(ru.moysklad.remap_1_2.model.Counterparty counterparty) {
+    {{{datatypeWithEnum}}} _converted = convertCounterpartyTo{{nameInPascalCase}}(counterparty);
+    {{#vendorExtensions.x-is-jackson-optional-nullable}}this.{{name}} = JsonNullable.<{{{datatypeWithEnum}}}>of(_converted);{{/vendorExtensions.x-is-jackson-optional-nullable}}
+    {{^vendorExtensions.x-is-jackson-optional-nullable}}this.{{name}} = _converted;{{/vendorExtensions.x-is-jackson-optional-nullable}}
+  }
+
+  public void {{setter}}(ru.moysklad.remap_1_2.model.Organization organization) {
+    {{{datatypeWithEnum}}} _converted = convertOrganizationTo{{nameInPascalCase}}(organization);
+    {{#vendorExtensions.x-is-jackson-optional-nullable}}this.{{name}} = JsonNullable.<{{{datatypeWithEnum}}}>of(_converted);{{/vendorExtensions.x-is-jackson-optional-nullable}}
+    {{^vendorExtensions.x-is-jackson-optional-nullable}}this.{{name}} = _converted;{{/vendorExtensions.x-is-jackson-optional-nullable}}
+  }
+
+  private static {{{datatypeWithEnum}}} convertCounterpartyTo{{nameInPascalCase}}(ru.moysklad.remap_1_2.model.Counterparty source) {
+    if (source == null) {
+      return null;
+    }
+    try {
+      com.fasterxml.jackson.databind.ObjectMapper mapper =
+        ru.moysklad.remap_1_2.Configuration.getDefaultApiClient().getObjectMapper();
+      return mapper.readValue(mapper.writeValueAsString(source), {{{datatypeWithEnum}}}.class);
+    } catch (com.fasterxml.jackson.core.JsonProcessingException e) {
+      throw new RuntimeException("Failed to convert Counterparty to {{{datatypeWithEnum}}} for '{{name}}'", e);
+    }
+  }
+
+  private static {{{datatypeWithEnum}}} convertOrganizationTo{{nameInPascalCase}}(ru.moysklad.remap_1_2.model.Organization source) {
+    if (source == null) {
+      return null;
+    }
+    try {
+      com.fasterxml.jackson.databind.ObjectMapper mapper =
+        ru.moysklad.remap_1_2.Configuration.getDefaultApiClient().getObjectMapper();
+      return mapper.readValue(mapper.writeValueAsString(source), {{{datatypeWithEnum}}}.class);
+    } catch (com.fasterxml.jackson.core.JsonProcessingException e) {
+      throw new RuntimeException("Failed to convert Organization to {{{datatypeWithEnum}}} for '{{name}}'", e);
+    }
+  }
+  {{/vendorExtensions.x-agent-reference}}
   {{/isReadOnly}}
 
   {{/vars}}

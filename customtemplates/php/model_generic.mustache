@@ -378,7 +378,16 @@ class {{classname}} {{#parentSchema}}extends {{{parent}}}{{/parentSchema}}{{^par
     /**
      * Sets {{name}}
      *
+    {{#vendorExtensions.x-agent-reference}}
+     * Accepts a Counterparty, Organization, or Agent instance (or null when nullable).
+     * On the wire the server only reads `meta`; non-meta fields are kept locally for
+     * type-safe access and serialized verbatim.
+     *
+     * @param \OpenAPI\Client\Model\Counterparty|\OpenAPI\Client\Model\Organization|{{{dataType}}}{{^required}}|null{{/required}} ${{name}}{{#description}} {{{.}}}{{/description}}
+    {{/vendorExtensions.x-agent-reference}}
+    {{^vendorExtensions.x-agent-reference}}
      * @param {{{dataType}}}{{^required}}|null{{/required}} ${{name}}{{#description}} {{{.}}}{{/description}}{{^description}} {{{name}}}{{/description}}
+    {{/vendorExtensions.x-agent-reference}}
      *
      * @return self
     {{#deprecated}}
@@ -468,6 +477,17 @@ class {{classname}} {{#parentSchema}}extends {{{parent}}}{{/parentSchema}}{{^par
         }
         {{/minItems}}
         {{/hasValidation}}
+        {{#vendorExtensions.x-agent-reference}}
+        if (!is_null(${{name}})
+            && !(${{name}} instanceof \OpenAPI\Client\Model\Counterparty)
+            && !(${{name}} instanceof \OpenAPI\Client\Model\Organization)
+            && !(${{name}} instanceof \OpenAPI\Client\Model\Agent)) {
+            throw new \InvalidArgumentException(
+                "Argument for '{{name}}' must be one of Counterparty, Organization, or Agent; got "
+                . (is_object(${{name}}) ? get_class(${{name}}) : gettype(${{name}}))
+            );
+        }
+        {{/vendorExtensions.x-agent-reference}}
         $this->container['{{name}}'] = ${{name}};
 
         return $this;

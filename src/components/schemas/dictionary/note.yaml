@@ -14,9 +14,11 @@ properties:
     description: ID учетной записи
     readOnly: true
   agent:
-    description: Метаданные Контрагента
-    $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
+    description: Метаданные контрагента или юрлица
     readOnly: true
+    x-agent-reference: true
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Agent'
   author:
     description: Метаданные Сотрудника - создателя события
     $ref: '../../../openapi.yaml#/components/schemas/Employee'

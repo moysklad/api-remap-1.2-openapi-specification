@@ -18,8 +18,10 @@ properties:
     description: Владелец (Сотрудник)
     $ref: '../../../openapi.yaml#/components/schemas/Employee'
   agent:
-    description: Метаданные контрагента, связанного с бонусной операцией
-    $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
+    description: Метаданные контрагента или юрлица, связанного с бонусной операцией
+    x-agent-reference: true
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Agent'
   group:
     description: Отдел сотрудника
     $ref: '../../../openapi.yaml#/components/schemas/Group'
