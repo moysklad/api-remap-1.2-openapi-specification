@@ -9,7 +9,7 @@ LANGUAGES_LIST := $(subst $(comma), ,$(LANGUAGES))
 comma := ,
 
 .PHONY: help lint bundle generate generate-php generate-python generate-java generate-javascript \
-	test-smoke test-golden test-smoke test-golden-php test-smoke-python test-golden-python \
+	test-smoke test-golden test-golden-php test-golden-java test-golden-javascript test-golden-python \
 	schemathesis all
 
 help:
@@ -58,34 +58,21 @@ generate-javascript:
 npm-ci:
 	sh scripts/npm-ci-public-registry.sh
 
-# Тесты по языкам
-test-smoke:
-	@for lang in $(LANGUAGES_LIST); do $(MAKE) test-smoke-$$lang || true; done
-
-test-golden:
-	@for lang in $(LANGUAGES_LIST); do $(MAKE) test-golden-$$lang || true; done
-
 # Требует dist/openapi.yaml (сделайте make bundle перед первым запуском)
 test-smoke:
 	sh scripts/local-test-smoke.sh php
 
+test-golden:
+	@for lang in $(LANGUAGES_LIST); do $(MAKE) test-golden-$$lang || true; done
+
 test-golden-php:
 	sh scripts/local-test-golden.sh php
-
-test-smoke-python:
-	sh scripts/local-test-smoke.sh python
 
 test-golden-python:
 	sh scripts/local-test-golden.sh python
 
-test-smoke-java:
-	sh scripts/local-test-smoke.sh java
-
 test-golden-java:
 	sh scripts/local-test-golden.sh java
-
-test-smoke-javascript:
-	sh scripts/local-test-smoke.sh javascript
 
 test-golden-javascript:
 	sh scripts/local-test-golden.sh javascript

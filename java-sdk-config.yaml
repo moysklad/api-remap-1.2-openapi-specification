@@ -1,0 +1,3 @@
+invokerPackage: "ru.moysklad.remap_1_2"
+apiPackage: "ru.moysklad.remap_1_2.api"
+modelPackage: "ru.moysklad.remap_1_2.model"
