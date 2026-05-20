@@ -18,7 +18,7 @@ deploy-contract-env:
       when: on_success
     - if: '$CI_PIPELINE_SOURCE == "web"'
       when: on_success
-    - when: manual
+    - when: never
   before_script:
     - rm -f /etc/apt/sources.list.d/*pgdg*.list || true
     - apt-get update
@@ -67,7 +67,7 @@ create-contract-user:
       when: on_success
     - if: '$CI_PIPELINE_SOURCE == "web"'
       when: on_success
-    - when: on_success
+    - when: never
   script:
     - |
       if [ "$CI_PIPELINE_SOURCE" = "push" ] && [ "$CI_COMMIT_REF_NAME" = "master" ]; then
@@ -106,8 +106,7 @@ remove-contract-env:
     - if: '$CI_PIPELINE_SOURCE == "web"'
       when: manual
       allow_failure: true
-    - when: manual
-      allow_failure: true
+    - when: never
   script:
     - python3 env_clean.py $NAMESPACE $CI_PIPELINE_ID $CI_JOB_ID
 
@@ -131,7 +130,7 @@ sdk-contract:
       when: on_success
     - if: '$CI_PIPELINE_SOURCE == "web"'
       when: on_success
-    - when: on_success
+    - when: never
   script:
     - |
       if [ "$CI_PIPELINE_SOURCE" = "push" ] && [ "$CI_COMMIT_REF_NAME" = "master" ]; then
