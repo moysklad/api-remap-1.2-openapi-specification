@@ -170,7 +170,7 @@ merge-branch-java:
       fi
     - |
       if [ -n "$TAG" ]; then
-        printf '%s' "$TAG" > ../java-release-tag.txt
+        printf '%s' "$TAG" > java-release-tag.txt
         echo "Saved release tag $TAG for downstream jobs."
       else
         echo "No release tag found in spec repo; downstream Maven deploy will fail if started."
@@ -186,6 +186,5 @@ merge-branch-java:
       fi
   artifacts:
     paths:
-      - java-release-tag.txt
       - sdk-repo/
     expire_in: 3 day

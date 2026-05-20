@@ -34,6 +34,7 @@ public class {{classname}} {{#parent}}extends {{{.}}} {{/parent}}{{#vendorExtens
   private static final long serialVersionUID = 1L;
 
 {{/serializableModel}}
+{{>model_entity_static_builder}}
   {{#vars}}
     {{#isEnum}}
     {{^isContainer}}
