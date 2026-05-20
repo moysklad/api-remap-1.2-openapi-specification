@@ -86,6 +86,22 @@ paths:
   /entity/saleschannel/batch:
     $ref: './paths/dictionaries/saleschannels/saleschannels-batch.yaml'
 
+  # Projects
+  /entity/project:
+    $ref: './paths/dictionaries/projects/projects.yaml'
+  /entity/project/{id}:
+    $ref: './paths/dictionaries/projects/project-by-id.yaml'
+  /entity/project/delete:
+    $ref: './paths/dictionaries/projects/projects-delete.yaml'
+  /entity/project/batch:
+    $ref: './paths/dictionaries/projects/projects-batch.yaml'
+  /entity/project/metadata:
+    $ref: './paths/dictionaries/projects/project-metadata.yaml'
+  /entity/project/metadata/attributes:
+    $ref: './paths/dictionaries/projects/project-metadata-attribute.yaml'
+  /entity/project/metadata/attributes/{id}:
+    $ref: './paths/dictionaries/projects/project-metadata-attribute-by-id.yaml'
+
   # Products
   /entity/product:
     $ref: './paths/dictionaries/products/products.yaml'
@@ -129,6 +145,12 @@ paths:
     $ref: './paths/dictionaries/countries/countries-delete.yaml'
   /entity/country/batch:
     $ref: './paths/dictionaries/countries/countries-batch.yaml'
+  #
+  # Regions
+  /entity/region:
+    $ref: './paths/dictionaries/regions/regions.yaml'
+  /entity/region/{id}:
+    $ref: './paths/dictionaries/regions/region-by-id.yaml'
   #
   # ProductFolders
   /entity/productfolder:
@@ -232,6 +254,12 @@ paths:
   /entity/service/{id}/files/{fileId}:
     $ref: './paths/dictionaries/services/service-file-by-id.yaml'
   #
+  # SalePlatforms
+  /entity/saleplatform:
+    $ref: './paths/dictionaries/saleplatforms/saleplatforms.yaml'
+  /entity/saleplatform/{id}:
+    $ref: './paths/dictionaries/saleplatforms/saleplatform-by-id.yaml'
+  #
   # PriceTypes
   /context/companysettings/pricetype:
     $ref: './paths/dictionaries/pricetypes/pricetypes.yaml'
@@ -245,6 +273,8 @@ paths:
     $ref: './paths/dictionaries/companysettings/companysettings.yaml'
   /context/companysettings/metadata:
     $ref: './paths/dictionaries/companysettings/companysettings-metadata.yaml'
+  /accountSettings/subscription:
+    $ref: './paths/dictionaries/companysettings/companysubscription.yaml'
 
   # UserSettings
   /context/usersettings:
@@ -375,6 +405,9 @@ paths:
     $ref: './paths/dictionaries/variants/variantcharacteristics.yaml'
   /entity/variant/metadata/characteristics/{id}:
     $ref: './paths/dictionaries/variants/variantcharacteristics-by-id.yaml'
+  # Labels
+  /entity/{type}/{id}/export:
+    $ref: './paths/dictionaries/labels/labels-print.yaml'
   # Things
   /entity/thing:
     $ref: './paths/dictionaries/things/things.yaml'
@@ -683,6 +716,8 @@ components:
       $ref: './components/schemas/dictionary/employeeSecurity.yaml'
     EmployeeRole:
       $ref: './components/schemas/dictionary/employeeRole.yaml'
+    EmbeddedTemplate:
+      $ref: './components/schemas/dictionary/embeddedTemplate.yaml'
     File:
       $ref: './components/schemas/common/file.yaml'
     FileUpload:
@@ -701,6 +736,8 @@ components:
       $ref: './components/schemas/dictionary/group.yaml'
     GroupList:
       $ref: './components/schemas/dictionary/groupList.yaml'
+    LabelPrintRequest:
+      $ref: './components/schemas/dictionary/labelPrintRequest.yaml'
     Image:
       $ref: './components/schemas/common/image.yaml'
     ImageList:
@@ -772,12 +809,20 @@ components:
       $ref: './components/schemas/dictionary/productFolderList.yaml'
     Region:
       $ref: './components/schemas/dictionary/region.yaml'
+    RegionList:
+      $ref: './components/schemas/dictionary/regionList.yaml'
     RewardType:
       $ref: './components/schemas/dictionary/rewardType.yaml'
     RetailStore:
       $ref: './components/schemas/dictionary/retailStore.yaml'
     SalePrice:
       $ref: './components/schemas/dictionary/salePrice.yaml'
+    SalePlatform:
+      $ref: './components/schemas/dictionary/salePlatform.yaml'
+    SalePlatformList:
+      $ref: './components/schemas/dictionary/salePlatformList.yaml'
+    SalePlatformGroup:
+      $ref: './components/schemas/dictionary/salePlatformGroup.yaml'
     SalesReturn:
       $ref: './components/schemas/dictionary/salesReturn.yaml'
     Service:
@@ -886,6 +931,8 @@ components:
       $ref: './components/schemas/dictionary/taskNoteFileList.yaml'
     Project:
       $ref: './components/schemas/dictionary/project.yaml'
+    ProjectList:
+      $ref: './components/schemas/dictionary/projectList.yaml'
     SalesChannel:
       $ref: './components/schemas/dictionary/salesChannel.yaml'
     SalesChannelList:
@@ -988,6 +1035,10 @@ components:
       $ref: './components/schemas/dictionary/locale.yaml'
     PrintFormat:
       $ref: './components/schemas/dictionary/printFormat.yaml'
+    Subscription:
+      $ref: './components/schemas/dictionary/subscription.yaml'
+    SubscriptionTariff:
+      $ref: './components/schemas/dictionary/subscriptionTariff.yaml'
     MarkingSellingMode:
       $ref: './components/schemas/dictionary/markingSellingMode.yaml'
     MarksCheckMode:
@@ -1037,6 +1088,8 @@ tags:
     description: Операции с группами
   - name: Countries
     description: Операции со странами
+  - name: Regions
+    description: Операции с регионами
   - name: ProductFolders
     description: Операции с группами товаров
   - name: Uoms
@@ -1051,12 +1104,16 @@ tags:
     description: Операции с задачами
   - name: SalesChannels
     description: Операции с каналами продаж
+  - name: Projects
+    description: Операции с проектами
   - name: Counterparties
     description: Операции с контрагентами
   - name: Services
     description: Операции с услугами
   - name: PriceTypes
     description: Операции с типами цен
+  - name: SalePlatforms
+    description: Операции с площадками для продаж
   - name: RetailStores
     description: Операции с точками продаж
   - name: Cashiers
@@ -1067,6 +1124,8 @@ tags:
     description: Операции с комплектами
   - name: Variants
     description: Операции с модификациями
+  - name: Labels
+    description: Операции с печатью этикеток и ценников
   - name: Things
     description: Операции с серийными номерами
   - name: Stores
@@ -1087,6 +1146,8 @@ tags:
     description: Операции с настройками компании
   - name: UserSettings
     description: Операции с настройками пользователя
+  - name: Subscriptions
+    description: Операции с подпиской компании
   - name: Discounts
     description: Операции со скидками
   - name: Assortment
