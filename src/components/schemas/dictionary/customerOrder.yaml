@@ -121,8 +121,10 @@ properties:
     allOf:
       - $ref: '../../../openapi.yaml#/components/schemas/Account'
   agent:
-    description: Метаданные контрагента
-    $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
+    description: Метаданные контрагента или юрлица
+    anyOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
+      - $ref: '../../../openapi.yaml#/components/schemas/Organization'
   agentAccount:
     description: Метаданные счета контрагента
     nullable: true

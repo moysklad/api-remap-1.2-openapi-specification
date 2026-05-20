@@ -64,9 +64,12 @@ class SerializationTest extends TestCase
         'bundle' => 'Bundle',
         'bundle_component' => 'BundleComponent',
         'variant' => 'Variant',
+        'webhook' => 'Webhook',
+        'webhookstock' => 'WebhookStock',
         'thing' => 'Thing',
         'internal_order' => 'InternalOrder',
         'customer_order' => 'CustomerOrder',
+        'demand' => 'Demand',
         'purchase_order' => 'PurchaseOrder',
         'emission_order' => 'EmissionOrder',
         'variantcharacteristic' => 'VariantCharacteristic',
@@ -95,6 +98,7 @@ class SerializationTest extends TestCase
         'custom_entity' => 'CustomEntity',
         'custom_entity_element' => 'CustomEntityElement',
         'commission_report_in' => 'CommissionReportIn',
+        'processing_plan_folder' => 'ProcessingPlanFolder',
     ];
 
     /**

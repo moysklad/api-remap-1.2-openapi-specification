@@ -1,0 +1,14 @@
+type: object
+description: Список вебхуков на изменение остатков
+properties:
+  context:
+    description: Метаданные о сотруднике, выполнившем запрос
+    $ref: '../common/context.yaml'
+  meta:
+    description: Метаданные о выдаче
+    $ref: '../common/metaList.yaml'
+  rows:
+    type: array
+    description: Массив вебхуков на изменение остатков
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/WebhookStock'
