@@ -345,9 +345,9 @@ The position `meta.type` returned by the API uses the suffix `position` glued to
 
 ## 5a. Static builder extension — `x-entity-static-builder`
 
-The custom OpenAPI vendor extension `x-entity-static-builder` drives the PHP custom template `customtemplates/php/model_entity_static_builder.mustache`, which generates a `public static function createWithMeta(...)` helper that returns a model with `meta.href`, `meta.type`, and `id` already populated. This removes the boilerplate of manually constructing `Meta` and stitching it into a model when callers only need a reference object.
+The custom OpenAPI vendor extension `x-entity-static-builder` drives both `customtemplates/php/model_entity_static_builder.mustache` and `customtemplates/java/model_entity_static_builder.mustache`. They generate a static `createWithMeta(...)` helper that returns a model with `meta.href`, `meta.type`, and `id` already populated. This removes the boilerplate of manually constructing `Meta` and stitching it into a model when callers only need a reference object.
 
-Background: `src/custom-extension-readme.md` and `customtemplates/php/readme.md`.
+Background: `src/custom-extension-readme.md`, `customtemplates/php/readme.md`, and `customtemplates/java/readme.md`.
 
 ### When to add
 
@@ -371,12 +371,12 @@ x-entity-static-builder:
   type: "<keyword>"           # value written into Meta.type
 ```
 
-The mustache template joins `href` segments with `' . '/' . '`, prepends `Configuration::getDefaultConfiguration()->getHost()`, calls `setMeta`/`setId` on the model, and returns it.
+The templates join `href` segments, prepend the SDK base URL, call `setMeta`/`setId` on the model, and return it.
 
-Hard requirements (template will break or produce wrong output otherwise):
+Hard requirements (either template will break or produce wrong output otherwise):
 
-- `methodParams` **must include `"id"`** literally — the generated body ends with `$o->setId($id);`, which references the PHP `$id` variable. A different name will cause a generation/compile error.
-- Every `param` value in `href` **must exist in `methodParams`** — the template emits `$<param>` without checking; an unknown name produces an undefined-variable PHP file.
+- `methodParams` **must include `"id"`** literally — both generated bodies end with `setId(id)` / `setId($id)`. A different name will cause a generation/compile error.
+- Every `param` value in `href` **must exist in `methodParams`** — the templates emit the parameter name directly (`id` in Java, `$id` in PHP) without checking; an unknown name produces invalid generated code.
 
 Project convention (not enforced by the template, follow for consistency with peers):
 
@@ -445,11 +445,27 @@ public static function createWithMeta(string $parentId, string $id): CustomerOrd
 }
 ```
 
+### Generated Java (illustrative)
+
+```java
+public static CustomerOrderPosition createWithMeta(String parentId, String id) {
+    CustomerOrderPosition o = new CustomerOrderPosition();
+    Meta meta = new Meta();
+    meta.setType("customerorderposition");
+    String href = org.openapitools.client.Configuration.getDefaultApiClient().getBaseURL()
+        + "/" + "entity" + "/" + "customerorder" + "/" + parentId + "/" + "positions" + "/" + id;
+    meta.setHref(href);
+    o.setMeta(meta);
+    o.setId(id);
+    return o;
+}
+```
+
 ### Validation rules
 
 1. Keep `methodParams` and `href` values as quoted strings (`"id"`, not `id`) to match peers and avoid YAML boolean/null coercion surprises.
 2. `type` must match the exact `meta.type` from the MD JSON example — Redocly lint will not catch a typo here, but golden tests and SDK consumers will surface a mismatch.
-3. Re-generate PHP after adding/changing the block: `docker compose run --rm sdk make generate-php`. The new method appears at the top of the model class, right after the `DISCRIMINATOR` constant (see `customtemplates/php/model_generic.mustache`).
+3. Re-generate both SDKs after adding/changing the block: `docker compose run --rm sdk make generate-php` and `docker compose run --rm sdk make generate-java`. The helper appears near the top of the generated model class; PHP injects it via `customtemplates/php/model_generic.mustache`, Java via `customtemplates/java/pojo.mustache`.
 4. If the schema is a stub today and you expand it later, keep the existing `x-entity-static-builder` block — it does not need to change when properties are added.
 
 ## 6. Path file templates

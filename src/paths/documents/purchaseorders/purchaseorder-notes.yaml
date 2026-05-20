@@ -37,24 +37,13 @@ post:
     content:
       application/json:
         schema:
-          type: object
-          properties:
-            description:
-              type: string
-              maxLength: 4096
-              description: Текст События
-          required:
-            - description
+          $ref: '../../../openapi.yaml#/components/schemas/EventNote'
   responses:
-    '201':
+    '200':
       description: Событие успешно создано
       content:
         application/json:
           schema:
-            oneOf:
-              - $ref: '../../../openapi.yaml#/components/schemas/EventNote'
-              - type: array
-                items:
-                  $ref: '../../../openapi.yaml#/components/schemas/EventNote'
+            $ref: '../../../openapi.yaml#/components/schemas/EventNote'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'

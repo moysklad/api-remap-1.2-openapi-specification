@@ -25,7 +25,7 @@ post:
   operationId: createEmissionOrderPositions
   tags:
   - EmissionOrders
-  summary: Создать позиции Заказа кодов маркировки
+  summary: Создать позицию Заказа кодов маркировки
   parameters:
   - $ref: '../../../components/parameters.yaml#/entityId'
   - $ref: '../../../components/parameters.yaml#/expand'
@@ -37,23 +37,13 @@ post:
     content:
       application/json:
         schema:
-          oneOf:
-          - $ref: '../../../openapi.yaml#/components/schemas/EmissionOrderPosition'
-          - type: array
-            items:
-              $ref: '../../../openapi.yaml#/components/schemas/EmissionOrderPosition'
-          minItems: 1
-          maxItems: 1000
+          $ref: '../../../openapi.yaml#/components/schemas/EmissionOrderPosition'
   responses:
     '200':
       description: Успешный запрос
       content:
         application/json:
           schema:
-            type: array
-            items:
-              oneOf:
-                - $ref: '../../../openapi.yaml#/components/schemas/EmissionOrderPosition'
-                - $ref: '../../../openapi.yaml#/components/schemas/Error'
+            $ref: '../../../openapi.yaml#/components/schemas/EmissionOrderPosition'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'

@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.openapitools.client.ApiClient;
+import ru.moysklad.remap_1_2.ApiClient;
 
 import java.io.File;
 import java.lang.reflect.Constructor;
@@ -61,10 +61,12 @@ class SerializationTest extends BaseTestCase {
         FIXTURE_MODEL_MAP.put("group", "Group");
         FIXTURE_MODEL_MAP.put("entity_with_extra_field", "Group");
         FIXTURE_MODEL_MAP.put("country", "Country");
+        FIXTURE_MODEL_MAP.put("region", "Region");
         FIXTURE_MODEL_MAP.put("product_folder", "ProductFolder");
         FIXTURE_MODEL_MAP.put("service", "Service");
         FIXTURE_MODEL_MAP.put("uom", "Uom");
         FIXTURE_MODEL_MAP.put("price_type", "PriceType");
+        FIXTURE_MODEL_MAP.put("sale_platform", "SalePlatform");
         FIXTURE_MODEL_MAP.put("store", "Store");
         FIXTURE_MODEL_MAP.put("retail_store", "RetailStore");
         FIXTURE_MODEL_MAP.put("cashier", "Cashier");
@@ -77,6 +79,7 @@ class SerializationTest extends BaseTestCase {
         FIXTURE_MODEL_MAP.put("purchase_order", "PurchaseOrder");
         FIXTURE_MODEL_MAP.put("variantcharacteristic", "VariantCharacteristic");
         FIXTURE_MODEL_MAP.put("contract", "Contract");
+        FIXTURE_MODEL_MAP.put("project", "Project");
         FIXTURE_MODEL_MAP.put("cash_in", "CashIn");
         FIXTURE_MODEL_MAP.put("cash_in_operation", "CashInOperation");
         FIXTURE_MODEL_MAP.put("cash_out", "CashOut");
@@ -85,6 +88,7 @@ class SerializationTest extends BaseTestCase {
         FIXTURE_MODEL_MAP.put("facture_out", "FactureOut");
         FIXTURE_MODEL_MAP.put("company_settings", "CompanySettings");
         FIXTURE_MODEL_MAP.put("company_settings_metadata", "CompanySettingsMetadata");
+        FIXTURE_MODEL_MAP.put("subscription", "Subscription");
         FIXTURE_MODEL_MAP.put("assortment_settings", "AssortmentSettings");
         FIXTURE_MODEL_MAP.put("assortment", "Assortment");
         FIXTURE_MODEL_MAP.put("discount", "Discount");
@@ -161,13 +165,13 @@ class SerializationTest extends BaseTestCase {
         );
     }
 
-    static Stream<org.junit.jupiter.params.provider.Arguments> fixtureProvider() {
+    private static Stream<org.junit.jupiter.params.provider.Arguments> fixtureProvider() {
         return FIXTURE_MODEL_MAP.entrySet().stream()
                 .map(e -> org.junit.jupiter.params.provider.Arguments.of(e.getKey(), e.getValue()));
     }
 
     private String getModelClass(String shortName) {
-        return "org.openapitools.client.model." + shortName;
+        return "ru.moysklad.remap_1_2.model." + shortName;
     }
 
     private Class<?> loadClass(String className) {
