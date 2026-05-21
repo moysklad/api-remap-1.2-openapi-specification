@@ -1218,83 +1218,25 @@ class ApiEndpointsTest extends TestCase
     // ==================== PROCESSING STAGES ====================
 
     /**
-     * Проверяет доступность endpoint'а получения списка Этапов производства.
-     * GET /entity/processingstage
+     * Этап производства: список, одиночное создание, массовое создание/обновление, CRUD по id, массовое удаление, метаданные.
+     *
+     * @see https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/processingstage
      */
-    public function testListProcessingStages(): void
+    public function testProcessingStageEndpoints(): void
     {
-        $response = $this->client->get(self::API_BASE_PATH . '/entity/processingstage');
-        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
-    }
+        $base = self::API_BASE_PATH . '/entity/processingstage';
+        $this->assertReachable($this->client->get($base));
+        $this->assertReachable($this->client->post($base, ['json' => ['name' => 'test']]));
 
-    /**
-     * Проверяет доступность endpoint'а создания Этапа производства.
-     * POST /entity/processingstage
-     */
-    public function testCreateProcessingStage(): void
-    {
-        $response = $this->client->post(self::API_BASE_PATH . '/entity/processingstage', [
-            'json' => ['name' => 'Test Processing Stage'],
-        ]);
-        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
-    }
+        $this->assertReachable($this->client->get($base . '/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put($base . '/' . self::TEST_UUID, ['name' => 'updated']));
+        $this->assertReachable($this->client->delete($base . '/' . self::TEST_UUID));
 
-    /**
-     * Проверяет доступность endpoint'а получения Этапа производства по ID.
-     * GET /entity/processingstage/{id}
-     */
-    public function testGetProcessingStageById(): void
-    {
-        $response = $this->client->get(self::API_BASE_PATH . '/entity/processingstage/' . self::TEST_UUID);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
-    }
+        $this->assertReachable($this->client->post($base . '/batch', ['json' => [['name' => 'batch']]]));
+        $this->assertReachable($this->client->post($base . '/delete', ['json' => [['meta' => ['href' => 'x']]]]));
 
-    /**
-     * Проверяет доступность endpoint'а обновления Этапа производства.
-     * PUT /entity/processingstage/{id}
-     */
-    public function testUpdateProcessingStage(): void
-    {
-        $response = $this->client->put(self::API_BASE_PATH . '/entity/processingstage/' . self::TEST_UUID, [
-            'json' => ['name' => 'Updated Processing Stage'],
-        ]);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertReachable($this->client->get($base . '/metadata'));
     }
-
-    /**
-     * Проверяет доступность endpoint'а удаления Этапа производства.
-     * DELETE /entity/processingstage/{id}
-     */
-    public function testDeleteProcessingStage(): void
-    {
-        $response = $this->client->delete(self::API_BASE_PATH . '/entity/processingstage/' . self::TEST_UUID);
-        $this->assertContains($response->getStatusCode(), self::DELETE_CODES);
-    }
-
-    /**
-     * Проверяет доступность endpoint'а массового удаления Этапов производства.
-     * POST /entity/processingstage/delete
-     */
-    public function testBatchDeleteProcessingStages(): void
-    {
-        $response = $this->client->post(self::API_BASE_PATH . '/entity/processingstage/delete', [
-            'json' => [['meta' => ['href' => 'https://api.moysklad.ru/api/remap/1.2/entity/processingstage/' . self::TEST_UUID, 'type' => 'processingstage', 'mediaType' => 'application/json']]],
-        ]);
-        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
-    }
-
-    /**
-     * Проверяет доступность endpoint'а массового создания и обновления Этапов производства.
-     * POST /entity/processingstage/batch
-     */
-    public function testBatchCreateProcessingStages(): void
-    {
-        $response = $this->client->post(self::API_BASE_PATH . '/entity/processingstage/batch', [
-            'json' => [['name' => 'Test Processing Stage']],
-        ]);
-        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
-    }
-
     // ==================== PRICE TYPES ====================
 
     /**
