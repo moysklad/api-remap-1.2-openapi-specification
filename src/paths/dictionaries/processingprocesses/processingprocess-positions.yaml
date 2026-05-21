@@ -25,8 +25,8 @@ post:
   operationId: createProcessingProcessPositions
   tags:
     - ProcessingProcesses
-  summary: Создать позиции Техпроцесса
-  description: Создание позиций Техпроцесса
+  summary: Создать позицию Техпроцесса
+  description: Создание позиции Техпроцесса
   parameters:
     - $ref: '../../../components/parameters.yaml#/entityId'
     - $ref: '../../../components/parameters.yaml#/expand'
@@ -41,7 +41,7 @@ post:
           $ref: '../../../openapi.yaml#/components/schemas/ProcessingProcessPosition'
   responses:
     '200':
-      description: Позиции Техпроцесса успешно созданы
+      description: Позиция Техпроцесса успешно созданы
       content:
         application/json:
           schema:
