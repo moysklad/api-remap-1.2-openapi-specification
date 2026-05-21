@@ -36,8 +36,4 @@ properties:
       type: object
       properties:
         processingstage:
-          type: object
-          properties:
-            meta:
-              description: Метаданные Этапа производства
-              $ref: '../common/meta.yaml'
+          $ref: '../../../openapi.yaml#/components/schemas/ProcessingStage'
