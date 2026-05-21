@@ -29,7 +29,7 @@ post:
   tags:
     - ProcessingPlans
   summary: Создать Техкарту
-  description: Создание новой Техкарты и массовое создание и обновление Техкарт
+  description: Создание новой Техкарты
   parameters:
     - $ref: '../../../components/parameters.yaml#/expand'
     - $ref: '../../../components/headers.yaml#/AcceptHeader'

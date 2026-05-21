@@ -34,6 +34,7 @@ properties:
   quantity:
     type: number
     format: double
+    minimum: 0.0001
     description: Количество товаров данного вида в позиции
   processingProcessPosition:
     description: Метаданные позиции Техпроцесса

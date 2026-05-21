@@ -31,14 +31,17 @@ properties:
   cost:
     type: number
     format: double
+    minimum: 0
     description: Стоимость производства на определенном этапе
   labourCost:
     type: number
     format: double
+    minimum: 0
     description: Оплата труда на определенном этапе
   standardHour:
     type: number
     format: double
+    minimum: 0
     description: Нормо-часы на определенном этапе
   standardHourCost:
     type: number
