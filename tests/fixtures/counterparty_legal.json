@@ -52,7 +52,19 @@
   },
   "files": null,
   "tags": [],
-  "attributes": [],
+  "attributes": [
+    {
+      "meta": {
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/couterparty/metadata/attributes/0d129ff5-2c8c-11e6-8a84-bae5000000f3",
+        "type": "attributemetadata",
+        "mediaType": "application/json"
+      },
+      "id": "0d129ff5-2c8c-11e6-8a84-bae5000000f3",
+      "name": "AttributeName1",
+      "type": "double",
+      "value": 0.75
+    }
+  ],
   "salesAmount": 0,
   "group": {
     "meta": {
