@@ -95,15 +95,16 @@ Before verification, re-read the MD and confirm:
 
 - Every `#### Атрибуты сущности` row has a schema property, unless explicitly skipped and reported.
 - `+Только для чтения`, nullable values, enum/open string choices, `String(N)`, and money/weight numeric formats are represented correctly.
+- `+Обязательное при ответе` is treated as informational only and never converted to `readOnly: true` unless the same field also has `+Только для чтения`.
 - Nested object structures match MD JSON examples exactly.
 - Every API operation section maps to a path + method and a smoke test.
-- Metadata attributes and `metadata/states/{id}` exist when the MD metadata section requires them.
+- Metadata attributes, `metadata/states`, and `metadata/states/{id}` exist when the MD metadata section requires them.
 - Every schema with a top-level `meta` field carries `x-entity-static-builder` (entity → keyword + `id`; position → `parentId` + `id` + `<keyword>position` type).
 - The fixture uses the richest single-entity GET response, not a minimal create request.
 
 ## Static builder extension (`x-entity-static-builder`)
 
-Custom OpenAPI vendor extension consumed by `customtemplates/php/model_entity_static_builder.mustache` to generate a static `createWithMeta(...)` helper on PHP SDK models. Required on **every** schema that has a top-level `meta`, including stubs.
+Custom OpenAPI vendor extension consumed by `customtemplates/php/model_entity_static_builder.mustache` and `customtemplates/java/model_entity_static_builder.mustache` to generate a static `createWithMeta(...)` helper on PHP and Java SDK models. Required on **every** schema that has a top-level `meta`, including stubs.
 
 Conventions for this project:
 
@@ -112,7 +113,7 @@ Conventions for this project:
 | Entity (dictionary or document) | `["id"]` | `path: "entity"` → `path: "<keyword>"` → `param: "id"` | `"<keyword>"` |
 | Position (document) | `["parentId", "id"]` | `path: "entity"` → `path: "<keyword>"` → `param: "parentId"` → `path: "positions"` → `param: "id"` | `"<keyword>position"` |
 
-`<keyword>` is the lowercase URL keyword from MD (matches `meta.type` returned by the API). Place the block at the top of the schema, between `description` and `properties`. Detailed template and rules are in [reference.md](reference.md); peer references: `src/components/schemas/dictionary/customerOrder.yaml`, `src/components/schemas/dictionary/customerOrderPosition.yaml`. Background documentation lives in `src/custom-extension-readme.md` and `customtemplates/php/readme.md`.
+`<keyword>` is the lowercase URL keyword from MD (matches `meta.type` returned by the API). Place the block at the top of the schema, between `description` and `properties`. Detailed template and rules are in [reference.md](reference.md); peer references: `src/components/schemas/dictionary/customerOrder.yaml`, `src/components/schemas/dictionary/customerOrderPosition.yaml`. Background documentation lives in `src/custom-extension-readme.md`, `customtemplates/php/readme.md`, and `customtemplates/java/readme.md`.
 
 ## Enum fields and SDK compatibility
 

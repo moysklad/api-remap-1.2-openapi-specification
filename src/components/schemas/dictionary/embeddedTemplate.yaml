@@ -1,0 +1,26 @@
+type: object
+description: Шаблон печатной формы
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "assortment"
+    - path: "metadata"
+    - path: "embeddedtemplate"
+    - param: "id"
+  type: "embeddedtemplate"
+properties:
+  meta:
+    description: Метаданные шаблона печатной формы
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID шаблона печатной формы
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true

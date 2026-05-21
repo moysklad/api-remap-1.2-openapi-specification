@@ -1,5 +1,14 @@
 type: object
 description: Тип цены
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "context"
+    - path: "companysettings"
+    - path: "pricetype"
+    - param: "id"
+  type: "pricetype"
 properties:
   meta:
     $ref: '../common/meta.yaml'

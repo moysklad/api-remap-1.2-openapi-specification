@@ -1,0 +1,95 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/task/cfe5a6ae-8b87-11e8-d9ce-84d900000000",
+    "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/task/metadata",
+    "type": "task",
+    "mediaType": "application/json"
+  },
+  "id": "cfe5a6ae-8b87-11e8-d9ce-84d900000000",
+  "accountId": "98182760-8aa1-11e8-7210-075e00000001",
+  "author": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/employee/98fa7086-8aa1-11e8-7210-075e0000002c",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/employee/metadata",
+      "type": "employee",
+      "mediaType": "application/json",
+      "uuidHref": "https://online.moysklad.ru/app/#employee/edit?id=98fa7086-8aa1-11e8-7210-075e0000002c"
+    }
+  },
+  "created": "2018-07-19 22:13:25",
+  "updated": "2018-07-19 22:24:50",
+  "description": "Уточнить контактные лица",
+  "dueToDate": "2018-07-20 22:09:00",
+  "implementer": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/employee/98fa7086-8aa1-11e8-7210-075e0000002c",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/employee/metadata",
+      "type": "employee",
+      "mediaType": "application/json",
+      "uuidHref": "https://online.moysklad.ru/app/#employee/edit?id=98fa7086-8aa1-11e8-7210-075e0000002c"
+    }
+  },
+  "completed": "2018-07-19 22:24:24",
+  "assignee": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/employee/98fa7086-8aa1-11e8-7210-075e0000002c",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/employee/metadata",
+      "type": "employee",
+      "mediaType": "application/json",
+      "uuidHref": "https://online.moysklad.ru/app/#employee/edit?id=98fa7086-8aa1-11e8-7210-075e0000002c"
+    }
+  },
+  "done": true,
+  "agent": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/992b6965-8aa1-11e8-7210-075e00000057",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/metadata",
+      "type": "counterparty",
+      "mediaType": "application/json",
+      "uuidHref": "https://online.moysklad.ru/app/#company/edit?id=992b6965-8aa1-11e8-7210-075e00000057"
+    }
+  },
+  "operation": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/supply/7eb5b552-8aa3-11e8-7210-075e000000f1",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/supply/metadata",
+      "type": "supply",
+      "mediaType": "application/json",
+      "uuidHref": "https://online.moysklad.ru/app/#supply/edit?id=7eb5b552-8aa3-11e8-7210-075e000000f1"
+    }
+  },
+  "state": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/task/metadata/states/4f70c518-60a1-11e7-6adb-ede500000003",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/task/metadata",
+      "type": "state",
+      "mediaType": "application/json"
+    },
+    "id": "4f70c518-60a1-11e7-6adb-ede500000003",
+    "accountId": "0af94520-54f7-11e7-6adb-ede500000001",
+    "name": "Встреча",
+    "color": 15106326,
+    "stateType": "Regular",
+    "entityType": "task"
+  },
+  "notes": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/task/cfe5a6ae-8b87-11e8-d9ce-84d900000000/notes",
+      "type": "tasknote",
+      "mediaType": "application/json",
+      "size": 2,
+      "limit": 1000,
+      "offset": 0
+    }
+  },
+  "files": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/task/cfe5a6ae-8b87-11e8-d9ce-84d900000000/files",
+      "type": "files",
+      "mediaType": "application/json",
+      "size": 0,
+      "limit": 1000,
+      "offset": 0
+    }
+  }
+}

@@ -1,4 +1,12 @@
 type: object
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "accumulationdiscount"
+    - param: "id"
+  type: "accumulationdiscount"
 allOf:
   - $ref: '../../../openapi.yaml#/components/schemas/DiscountBase'
 properties:
