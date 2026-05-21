@@ -75,4 +75,5 @@ properties:
   standardHourCost:
     type: number
     format: double
+    minimum: 0
     description: Стоимость нормо-часа
