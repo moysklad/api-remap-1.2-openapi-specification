@@ -202,9 +202,7 @@ $this->assertContains($response->getStatusCode(), [200, 401, 500]);
 
 #### Contract тесты (Schemathesis)
 
-В job `sdk-contract` (ручной pipeline `web` в GitLab) по умолчанию запускается только фаза `examples` по всей спецификации. Фаза `coverage` в общий пайплайн не входит: на сложных схемах документов она генерирует слишком много комбинаций и упирается в timeout.
-
-**При добавлении или существенном изменении сущности** после локальных lint/bundle/golden/smoke рекомендуется дополнительно прогнать targeted `coverage` только по путям этой сущности — локально или в ручном GitLab pipeline с переменными ниже. `<keyword>` — URL-ключ сущности из спецификации (например, `product`, `customerorder`).
+**При добавлении или существенном изменении сущности** после локальных lint/bundle/golden/smoke рекомендуется дополнительно прогнать targeted `coverage` только по путям этой сущности. `<keyword>` — URL-ключ сущности из спецификации (например, `product`, `customerorder`).
 
 Локально (Docker):
 
@@ -217,8 +215,6 @@ docker compose run --rm \
   -e SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/<keyword>(/|$)' \
   sdk make schemathesis
 ```
-
-В GitLab: ручной запуск pipeline (`web`) на ветке; окружение и креды поднимают `deploy-contract-env` и `create-contract-user`, в Variables задайте `SCHEMATHESIS_PHASES=coverage` и `SCHEMATHESIS_INCLUDE_PATH_REGEX` (при необходимости `SCHEMATHESIS_INCLUDE_METHOD` или `SCHEMATHESIS_INCLUDE_OPERATION_ID`). Подробнее — [README_GITLAB_CI.md](README_GITLAB_CI.md#переменные-для-schemathesis-тестов).
 
 Автоматическое тестирование API на соответствие OpenAPI спецификации:
 
