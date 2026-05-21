@@ -1241,7 +1241,7 @@ class ApiEndpointsTest extends TestCase
     // ==================== PROCESSING PROCESSES ====================
 
     /**
-     * Техпроцесс: список, одиночное создание, массовое создание/обновление, CRUD по id, массовое удаление, метаданные.
+     * Техпроцесс: список, одиночное создание, массовое создание/обновление, CRUD по id, CRUD позиций, массовое удаление, метаданные.
      *
      * @see https://dev.moysklad.ru/doc/api/remap/1.2/#/dictionaries/processingprocess
      */
