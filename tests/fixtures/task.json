@@ -56,7 +56,8 @@
       "type": "supply",
       "mediaType": "application/json",
       "uuidHref": "https://online.moysklad.ru/app/#supply/edit?id=7eb5b552-8aa3-11e8-7210-075e000000f1"
-    }
+    },
+    "states": []
   },
   "state": {
     "meta": {
@@ -80,7 +81,8 @@
       "size": 2,
       "limit": 1000,
       "offset": 0
-    }
+    },
+    "rows": []
   },
   "files": {
     "meta": {
