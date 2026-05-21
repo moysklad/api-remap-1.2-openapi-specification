@@ -1,5 +1,17 @@
 type: object
 description: Счета Контрагентов
+x-entity-static-builder:
+  methodParams:
+    - "entityType"
+    - "parentId"
+    - "id"
+  href:
+    - path: "entity"
+    - param: "entityType"
+    - param: "parentId"
+    - path: "accounts"
+    - param: "id"
+  type: "account"
 properties:
   meta:
     description: Метаданные Счета Контрагента

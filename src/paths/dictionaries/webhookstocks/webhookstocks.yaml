@@ -1,0 +1,53 @@
+get:
+  operationId: getWebhookStocks
+  tags:
+    - WebhookStocks
+  summary: Получить список вебхуков на изменение остатков
+  description: Запрос на получение всех вебхуков на изменение остатков на данной учетной записи
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/limit'
+    - $ref: '../../../components/parameters.yaml#/offset'
+    - $ref: '../../../components/parameters.yaml#/search'
+    - $ref: '../../../components/parameters.yaml#/filter'
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/parameters.yaml#/order'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/WebhookStockList'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+post:
+  operationId: createWebhookStock
+  tags:
+    - WebhookStocks
+  summary: Создать вебхук на изменение остатков
+  description: |
+    Создание одного вебхука (объект в теле).
+    Сочетание stockType, reportType, url должно быть уникальным.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../openapi.yaml#/components/schemas/WebhookStock'
+  responses:
+    '200':
+      description: Один созданный вебхук или массив созданных/изменённых (элемент — сущность или ошибка)
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/WebhookStock'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

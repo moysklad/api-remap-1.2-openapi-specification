@@ -1,0 +1,18 @@
+type: object
+description: Элемент массива events во входящем теле уведомления вебхука
+properties:
+  meta:
+    $ref: '../common/meta.yaml'
+  action:
+    type: string
+    description: Действие, вызвавшее срабатывание. Известные значения описаны в WebhookAction
+    example: "UPDATE"
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+  updatedFields:
+    type: array
+    description: Поля сущности, измененные пользователем (при diffType=FIELDS и action=UPDATE у настройки вебхука)
+    items:
+      type: string

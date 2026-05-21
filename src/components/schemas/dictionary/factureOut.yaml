@@ -1,5 +1,13 @@
 type: object
 description: Счет-фактура выданный (factureout)
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "factureout"
+    - param: "id"
+  type: "factureout"
 properties:
   meta:
     description: Метаданные Счета-фактуры выданного

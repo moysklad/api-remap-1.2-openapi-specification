@@ -1,5 +1,13 @@
 type: object
 description: Исходящий платеж
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "paymentout"
+    - param: "id"
+  type: "paymentout"
 properties:
   meta:
     description: Метаданные Исходящего платежа

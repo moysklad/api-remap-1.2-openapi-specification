@@ -2,6 +2,14 @@ type: object
 description: |
   Возврат покупателя (salesreturn). Заглушка: полное описание сущности в спецификации отсутствует;
   в ответе API возможны дополнительные поля.
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "salesreturn"
+    - param: "id"
+  type: "salesreturn"
 properties:
   meta:
     description: Метаданные возврата покупателя

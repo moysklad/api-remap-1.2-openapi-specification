@@ -1,0 +1,20 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/customerorder/e4609c69-00bc-11ef-ac12-00120000001a/notes/844a0ef9-19ac-11ef-ac12-000b00000000",
+    "type": "eventnote",
+    "mediaType": "application/json"
+  },
+  "id": "844a0ef9-19ac-11ef-ac12-000b00000000",
+  "accountId": "85284e22-f1b3-11ee-ac12-000f00000001",
+  "created": "2024-05-24 12:03:40.849",
+  "description": "{{employee;861d34a9-f1b3-11ee-ac12-00110000004e}}, привет",
+  "author": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/employee/861d34a9-f1b3-11ee-ac12-00110000004e",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/employee/metadata",
+      "type": "employee",
+      "mediaType": "application/json",
+      "uuidHref": "https://online.moysklad.ru/app/#employee/edit?id=861d34a9-f1b3-11ee-ac12-00110000004e"
+    }
+  }
+}
