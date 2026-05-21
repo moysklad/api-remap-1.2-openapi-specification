@@ -934,7 +934,7 @@ class ApiEndpointsTest extends TestCase
     // ==================== PROCESSING PLAN ====================
 
     /**
-     * Техкарта: список, одиночное создание, массовое создание/обновление, CRUD по id, массовое удаление, метаданные.
+     * Техкарта: список, одиночное создание, массовое создание/обновление, CRUD по id и вложенных сущностей, массовое удаление, метаданные.
      *
      * @see https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-gruppa-tehkart
      */
