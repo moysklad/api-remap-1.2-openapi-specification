@@ -1,5 +1,5 @@
 type: object
-description: Счета Контрагентов
+description: Счета контрагентов/юрлиц
 x-entity-static-builder:
   methodParams:
     - "entityType"
@@ -14,7 +14,7 @@ x-entity-static-builder:
   type: "account"
 properties:
   meta:
-    description: Метаданные Счета Контрагента
+    description: Метаданные Счета
     $ref: '../common/meta.yaml'
   id:
     type: string
@@ -55,7 +55,7 @@ properties:
     description: БИК
     example: "044525225"
   currency:
-    description: Метаданные валюты расчетного счета
+    description: Метаданные валюты расчетного счета юрлица
     nullable: true
     type: object
     allOf:
