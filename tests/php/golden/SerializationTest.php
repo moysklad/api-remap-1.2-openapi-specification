@@ -179,7 +179,7 @@ class SerializationTest extends TestCase
 
         // Десериализуем JSON в объект модели
         $model = $this->deserialize($originalJson, $modelClass);
-        $this->assertNotNull($model, "Failed to desaerialize {$fixtureFile} to {$modelName}");
+        $this->assertNotNull($model, "Failed to deserialize {$fixtureFile} to {$modelName}");
 
         // Сериализуем модель обратно в массив
         $serializedJson = $this->serialize($model);
