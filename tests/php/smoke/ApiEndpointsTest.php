@@ -280,6 +280,143 @@ class ApiEndpointsTest extends TestCase
         $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
     }
 
+    // ==================== ORGANIZATIONS ====================
+
+    /**
+     * GET /entity/organization
+     */
+    public function testListOrganizations(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/organization');
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * GET /entity/organization/{id}
+     */
+    public function testGetOrganizationById(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/organization/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * POST /entity/organization
+     */
+    public function testCreateOrganization(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/organization', [
+            'json' => ['name' => 'Test Organization', 'companyType' => 'legal'],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * PUT /entity/organization/{id}
+     */
+    public function testUpdateOrganization(): void
+    {
+        $response = $this->client->put(self::API_BASE_PATH . '/entity/organization/' . self::TEST_UUID, [
+            'json' => ['name' => 'Updated Organization'],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * DELETE /entity/organization/{id}
+     */
+    public function testDeleteOrganization(): void
+    {
+        $response = $this->client->delete(self::API_BASE_PATH . '/entity/organization/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::DELETE_CODES);
+    }
+
+    /**
+     * POST /entity/organization/delete
+     */
+    public function testDeleteOrganizationsBatch(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/organization/delete', [
+            'json' => [
+                ['meta' => ['href' => 'https://api.moysklad.ru/api/remap/1.2/entity/organization/' . self::TEST_UUID, 'type' => 'organization', 'mediaType' => 'application/json']],
+            ],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * POST /entity/organization/batch
+     */
+    public function testCreateOrganizationsBatch(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/organization/batch', [
+            'json' => [
+                ['name' => 'Batch Organization', 'companyType' => 'legal'],
+            ],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * GET /entity/organization/metadata
+     */
+    public function testGetOrganizationMetadata(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/organization/metadata');
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * GET /entity/organization/metadata/attributes/{id}
+     */
+    public function testGetOrganizationMetadataAttributeById(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/organization/metadata/attributes/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * GET /entity/organization/{id}/accounts
+     */
+    public function testGetOrganizationAccounts(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/organization/' . self::TEST_UUID . '/accounts');
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * POST /entity/organization/{id}/accounts
+     */
+    public function testUpdateOrganizationAccounts(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/organization/' . self::TEST_UUID . '/accounts', [
+            'json' => [
+                ['accountNumber' => '40702810123456789012', 'bankName' => 'ПАО Сбербанк', 'bic' => '044525225'],
+            ],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * GET /entity/organization/{id}/accounts/{accountId}
+     */
+    public function testGetOrganizationAccountById(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/organization/' . self::TEST_UUID . '/accounts/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * PUT /entity/organization/{id}/accounts/{accountId}
+     */
+    public function testUpdateOrganizationAccount(): void
+    {
+        $response = $this->client->put(self::API_BASE_PATH . '/entity/organization/' . self::TEST_UUID . '/accounts/' . self::TEST_UUID, [
+            'json' => ['bankName' => 'ПАО ВТБ'],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
     // ==================== COUNTERPARTIES ====================
 
     /**
@@ -1073,6 +1210,38 @@ class ApiEndpointsTest extends TestCase
         $this->assertReachable($this->client->post(self::API_BASE_PATH . '/entity/store/batch', ['json' => [['name' => 'Store Z']]]));
         $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/store/metadata'));
         $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/store/metadata/attributes/' . self::TEST_UUID));
+    }
+
+    public function testOrganizationCrudAndMetaEndpoints(): void
+    {
+        $base = self::API_BASE_PATH . '/entity/organization';
+        $this->assertReachable($this->client->get($base));
+        $this->assertReachable($this->client->post($base, ['json' => ['name' => 'PPF test']]));
+
+        $this->assertReachable($this->client->post($base . '/batch', ['json' => [['name' => 'PPF batch']]]));
+
+        $this->assertReachable($this->client->get($base . '/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put($base . '/' . self::TEST_UUID, ['name' => 'PPF updated']));
+        $this->assertReachable($this->client->delete($base . '/' . self::TEST_UUID));
+
+        $this->assertReachable($this->client->post($base . '/delete', ['json' => [['meta' => ['href' => 'x']]]]));
+
+        $this->assertReachable($this->client->get($base . '/' . self::TEST_UUID . '/accounts'));
+        $this->assertReachable($this->client->post($base . '/' . self::TEST_UUID . '/accounts', ['name' => 'PPF test']));
+
+        $this->assertReachable($this->client->get($base . '/' . self::TEST_UUID . '/accounts/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put($base . '/' . self::TEST_UUID . '/accounts/' . self::TEST_UUID, ['name' => 'PPF test']));
+        $this->assertReachable($this->client->delete($base . '/' . self::TEST_UUID . '/accounts/' . self::TEST_UUID));
+
+        $this->assertReachable($this->client->delete($base . '/' . self::TEST_UUID . '/accounts/delete', ['json' => [['meta' => ['href' => 'x']]]]));
+
+        $this->assertReachable($this->client->get($base . '/metadata'));
+        $this->assertReachable($this->client->get($base . '/metadata/attributes'));
+        $this->assertReachable($this->client->post($base . '/metadata/attributes', ['name' => 'PPF test']));
+
+        $this->assertReachable($this->client->get($base . '/metadata/attributes/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put($base . '/metadata/attributes/' . self::TEST_UUID, ['name' => 'PPF test']));
+        $this->assertReachable($this->client->delete($base . '/metadata/attributes/' . self::TEST_UUID));
     }
 
     public function testStoreZoneAndSlotManagementEndpoints(): void

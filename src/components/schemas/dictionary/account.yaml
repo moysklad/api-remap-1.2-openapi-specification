@@ -42,3 +42,9 @@ properties:
     type: string
     description: БИК
     example: "044525225"
+  currency:
+    description: Метаданные валюты расчетного счета
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Currency'
