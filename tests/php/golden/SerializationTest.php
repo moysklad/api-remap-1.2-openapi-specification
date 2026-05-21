@@ -58,6 +58,7 @@ class SerializationTest extends TestCase
         'processing_stage' => 'ProcessingStage',
         'processing_process' => 'ProcessingProcess',
         'processing_plan' => 'ProcessingPlan',
+        'processing_plan_expanded' => 'ProcessingPlan',
         'service' => 'Service',
         'uom' => 'Uom',
         'price_type' => 'PriceType',
@@ -178,7 +179,7 @@ class SerializationTest extends TestCase
 
         // Десериализуем JSON в объект модели
         $model = $this->deserialize($originalJson, $modelClass);
-        $this->assertNotNull($model, "Failed to deserialize {$fixtureFile} to {$modelName}");
+        $this->assertNotNull($model, "Failed to desaerialize {$fixtureFile} to {$modelName}");
 
         // Сериализуем модель обратно в массив
         $serializedJson = $this->serialize($model);
