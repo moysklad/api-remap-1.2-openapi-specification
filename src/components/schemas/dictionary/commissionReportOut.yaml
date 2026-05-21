@@ -2,6 +2,14 @@ type: object
 description: |
   Выданный отчет комиссионера (commissionreportout). Заглушка: полное описание сущности в спецификации отсутствует;
   в ответе API возможны дополнительные поля.
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "commissionreportout"
+    - param: "id"
+  type: "commissionreportout"
 properties:
   meta:
     description: Метаданные выданного отчета комиссионера

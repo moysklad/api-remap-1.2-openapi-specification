@@ -1,5 +1,13 @@
 type: object
 description: Модификация
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "variant"
+    - param: "id"
+  type: "variant"
 properties:
   meta:
     description: Метаданные Модификации

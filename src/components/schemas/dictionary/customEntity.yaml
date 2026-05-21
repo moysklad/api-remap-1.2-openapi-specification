@@ -1,5 +1,13 @@
 type: object
 description: Пользовательский справочник (customentity)
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "customentity"
+    - param: "id"
+  type: "customentity"
 properties:
   meta:
     description: Метаданные пользовательского справочника
