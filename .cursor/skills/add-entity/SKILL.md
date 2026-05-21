@@ -43,8 +43,8 @@ Follow this order. Read [reference.md](reference.md) for templates and edge-case
 9. **Add test data** — create a rich `tests/php/fixtures/<snake_case>.json`, add `FIXTURE_MODEL_MAP`, and update `IGNORED_FIELDS` only when required.
 10. **Add smoke coverage** — one test method per endpoint+method from the endpoint matrix.
 11. **Cross-check** — re-read the MD and verify fields, endpoints, refs, nullable values, enums, fixtures, smoke tests, examples added with confirmation, and `x-entity-static-builder` presence on every schema with `meta`.
-12. **Verify** — run the Docker make sequence below.
-13. **Report** — mention any stubs created or left unexpanded, intentionally skipped MD fields, example decisions, targeted coverage command, and checks run.
+12. **Verify** — run the Docker make sequence below. If the entity was added or materially changed, also run targeted Schemathesis `coverage` for its paths (locally or GitLab `web` pipeline with `SCHEMATHESIS_PHASES=coverage` and `SCHEMATHESIS_INCLUDE_PATH_REGEX`; CI defaults to `examples` only).
+13. **Report** — mention any stubs created or left unexpanded, intentionally skipped MD fields, example decisions, targeted coverage command (and whether it was run), and checks run.
 
 ## Endpoint matrix quick template
 
@@ -96,6 +96,8 @@ Before verification, re-read the MD and confirm:
 ## Schemathesis examples and targeted coverage
 
 Contract tests run from `sdk-contract` in `gitlab/sdk/sdk-contract.yml`. The default CI and local phase is `examples`; full `coverage` is intentionally not part of the regular pipeline because complex document schemas generate too many cases and can exceed CI timeout.
+
+**After adding or materially changing an entity, run targeted `coverage` for that entity** (not optional documentation-only advice): locally via `make schemathesis` / Docker, or GitLab manual pipeline (`web`) with `SCHEMATHESIS_PHASES=coverage` and path/method/operationId filters below. See `README_LOCAL.md` and `README_GITLAB_CI.md`.
 
 When adding or changing an entity:
 

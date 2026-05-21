@@ -15,12 +15,7 @@ post:
         schema:
           type: array
           items:
-            type: object
-            required:
-              - meta
-            properties:
-              meta:
-                $ref: '../../../openapi.yaml#/components/schemas/Meta'
+            $ref: '../../../openapi.yaml#/components/schemas/EntityRef'
           minItems: 1
           maxItems: 1000
         example:

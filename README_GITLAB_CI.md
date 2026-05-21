@@ -118,8 +118,18 @@
 
 `sdk-contract` запускается одной job. Полный `coverage` не входит в общий pipeline,
 потому что на сложных схемах документов он генерирует слишком много комбинаций и
-упирается в timeout. Для ручной точечной проверки новых или изменённых сущностей
-переопределяйте фазы и фильтры:
+упирается в timeout.
+
+**При добавлении или существенном изменении сущности** в спецификации запускайте ручной pipeline (`web`) на ветке с `deploy-contract-env` → `create-contract-user` → `sdk-contract` и задайте targeted `coverage` только для изменённой сущности (подставьте URL-ключ сущности вместо `<keyword>`):
+
+| Переменная | Значение (пример) |
+|------------|-------------------|
+| `SCHEMATHESIS_PHASES` | `coverage` |
+| `SCHEMATHESIS_INCLUDE_PATH_REGEX` | regex для `/entity/<keyword>` (см. bash-блок ниже) |
+
+Опционально сузьте прогон: `SCHEMATHESIS_INCLUDE_METHOD=POST` или `SCHEMATHESIS_INCLUDE_OPERATION_ID=create<Entity>`. Те же переменные работают при локальном `make schemathesis` — см. [README_LOCAL.md](README_LOCAL.md#contract-тесты-schemathesis).
+
+Для ручной точечной проверки новых или изменённых сущностей переопределяйте фазы и фильтры:
 
 ```bash
 SCHEMATHESIS_PHASES=coverage
