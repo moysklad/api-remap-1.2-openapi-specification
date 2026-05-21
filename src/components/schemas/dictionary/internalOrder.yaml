@@ -1,5 +1,13 @@
 type: object
 description: Внутренний заказ
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "internalorder"
+    - param: "id"
+  type: "internalorder"
 properties:
   meta:
     description: Метаданные Внутреннего заказа

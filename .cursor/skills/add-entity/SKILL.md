@@ -51,12 +51,24 @@ Before creating paths, produce and keep an internal matrix like this:
 | MD section | API path | HTTP | Path file | Smoke test |
 |------------|----------|------|-----------|------------|
 | `### Получить ...` | `/entity/<keyword>` | GET | `<entities>.yaml` | `testList<PascalPlural>` |
-| `### Создать ...` | `/entity/<keyword>` | POST | `<entities>.yaml` | `testCreate<PascalSingular>` |
+| `### Создать ...` (одна сущность) | `/entity/<keyword>` | POST | `<entities>.yaml` | `testCreate<PascalSingular>` |
+| `### Массовое создание и обновление ...` | `/entity/<keyword>/batch` | POST | `<entities>-batch.yaml` | `testCreate<PascalPlural>Batch` |
 | `### Получить ... по ID` | `/entity/<keyword>/{id}` | GET | `<entity>-by-id.yaml` | `testGet<PascalSingular>ById` |
 | `### Изменить ...` | `/entity/<keyword>/{id}` | PUT | `<entity>-by-id.yaml` | `testUpdate<PascalSingular>` |
 | `### Удалить ...` | `/entity/<keyword>/{id}` | DELETE | `<entity>-by-id.yaml` | `testDelete<PascalSingular>` |
 
 Add rows for batch, metadata, attributes, states, positions, files/images, accounts, notes, storebalances, or other MD-specific endpoint groups. Detailed extraction and classification rules are in [reference.md](reference.md).
+
+## Bulk create/update endpoint rule (top-level entities)
+
+For every top-level entity (dictionary or document) keep two separate endpoints:
+
+- `POST /entity/<keyword>` — **single object only**. Request body must be a single `<Entity>` schema; response is a single `<Entity>`. Do not allow array requests, do not use `oneOf: [object, array]`.
+- `POST /entity/<keyword>/batch` — **mass create/update**. Request body is an array of `<Entity>`; response is an array of `oneOf: [<Entity>, Error]` (per-item result), with `minItems: 1` and `maxItems: 1000`.
+
+This applies even when the MD `### Массовое создание и обновление ...` section uses the same example URL as create. The MD groups operations by behavior, not by URL — Remap exposes them as separate paths (`/batch` for arrays).
+
+Exception — **document positions**: the existing peer pattern is a single `POST /entity/<keyword>/{id}/positions` with `oneOf: [<Position>, array of <Position>]` (no `/positions/batch`). Keep that pattern for new document position endpoints unless the source MD explicitly defines a separate positions batch URL.
 
 ## Missing dependency entities
 
@@ -83,9 +95,10 @@ Before verification, re-read the MD and confirm:
 
 - Every `#### Атрибуты сущности` row has a schema property, unless explicitly skipped and reported.
 - `+Только для чтения`, nullable values, enum/open string choices, `String(N)`, and money/weight numeric formats are represented correctly.
+- `+Обязательное при ответе` is treated as informational only and never converted to `readOnly: true` unless the same field also has `+Только для чтения`.
 - Nested object structures match MD JSON examples exactly.
 - Every API operation section maps to a path + method and a smoke test.
-- Metadata attributes and `metadata/states/{id}` exist when the MD metadata section requires them.
+- Metadata attributes, `metadata/states`, and `metadata/states/{id}` exist when the MD metadata section requires them.
 - Every schema with a top-level `meta` field carries `x-entity-static-builder` (entity → keyword + `id`; position → `parentId` + `id` + `<keyword>position` type).
 - The fixture uses the richest single-entity GET response, not a minimal create request.
 

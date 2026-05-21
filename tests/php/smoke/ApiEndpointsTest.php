@@ -105,6 +105,43 @@ class ApiEndpointsTest extends TestCase
     }
 
     /**
+     * Проверяет доступность endpoint'а печати этикеток и ценников.
+     * POST /entity/{type}/{id}/export
+     */
+    public function testPrintLabels(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/product/' . self::TEST_UUID . '/export', [
+            'json' => [
+                'organization' => [
+                    'meta' => [
+                        'href' => 'https://api.moysklad.ru/api/remap/1.2/entity/organization/' . self::TEST_UUID,
+                        'type' => 'organization',
+                        'mediaType' => 'application/json',
+                    ],
+                ],
+                'count' => 10,
+                'salePrice' => [
+                    'priceType' => [
+                        'meta' => [
+                            'href' => 'https://api.moysklad.ru/api/remap/1.2/context/companysettings/pricetype/' . self::TEST_UUID,
+                            'type' => 'pricetype',
+                            'mediaType' => 'application/json',
+                        ],
+                    ],
+                ],
+                'template' => [
+                    'meta' => [
+                        'href' => 'https://api.moysklad.ru/api/remap/1.2/entity/assortment/metadata/embeddedtemplate/' . self::TEST_UUID,
+                        'type' => 'embeddedtemplate',
+                        'mediaType' => 'application/json',
+                    ],
+                ],
+            ],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
      * Проверяет доступность endpoint'а обновления товара.
      * PUT /entity/product/{id}
      */
@@ -871,6 +908,110 @@ class ApiEndpointsTest extends TestCase
         $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
     }
 
+    // ==================== REGIONS ====================
+
+    /**
+     * Проверяет доступность endpoint'а получения списка регионов.
+     * GET /entity/region
+     */
+    public function testListRegions(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/region');
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * Проверяет доступность endpoint'а получения региона по ID.
+     * GET /entity/region/{id}
+     */
+    public function testGetRegionById(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/region/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    // ==================== TAX RATES ====================
+
+    /**
+     * Проверяет доступность endpoint'а получения списка ставок НДС.
+     * GET /entity/taxrate
+     *
+     * @see https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-stavka-nds
+     */
+    public function testListTaxRates(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/taxrate');
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * Проверяет доступность endpoint'а получения ставки НДС по ID.
+     * GET /entity/taxrate/{id}
+     */
+    public function testGetTaxRateById(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/taxrate/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а создания ставки НДС.
+     * POST /entity/taxrate
+     */
+    public function testCreateTaxRate(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/taxrate', [
+            'json' => ['rate' => 33.0],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * Проверяет доступность endpoint'а изменения ставки НДС.
+     * PUT /entity/taxrate/{id}
+     */
+    public function testUpdateTaxRate(): void
+    {
+        $response = $this->client->put(self::API_BASE_PATH . '/entity/taxrate/' . self::TEST_UUID, [
+            'json' => ['rate' => 28.0],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а удаления ставки НДС.
+     * DELETE /entity/taxrate/{id}
+     */
+    public function testDeleteTaxRate(): void
+    {
+        $response = $this->client->delete(self::API_BASE_PATH . '/entity/taxrate/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::DELETE_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а массового создания и обновления ставок НДС.
+     * POST /entity/taxrate/batch
+     */
+    public function testBatchCreateTaxRates(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/taxrate/batch', [
+            'json' => [['rate' => 33.0]],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * Проверяет доступность endpoint'а массового удаления ставок НДС.
+     * POST /entity/taxrate/delete
+     */
+    public function testBatchDeleteTaxRates(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/taxrate/delete', [
+            'json' => [['meta' => ['href' => 'https://api.moysklad.ru/api/remap/1.2/entity/taxrate/' . self::TEST_UUID, 'type' => 'taxrate', 'mediaType' => 'application/json']]],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
     // ==================== PRODUCT FOLDERS ====================
 
     /**
@@ -905,6 +1046,26 @@ class ApiEndpointsTest extends TestCase
             'json' => ['name' => 'Test Folder'],
         ]);
         $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    // ==================== PROCESSING PLAN FOLDERS ====================
+
+    /**
+     * Группы техкарт: список, одиночное создание, массовое создание/обновление, CRUD по id, массовое удаление, метаданные.
+     *
+     * @see https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-gruppa-tehkart
+     */
+    public function testProcessingPlanFolderEndpoints(): void
+    {
+        $base = self::API_BASE_PATH . '/entity/processingplanfolder';
+        $this->assertReachable($this->client->get($base));
+        $this->assertReachable($this->client->post($base, ['json' => ['name' => 'PPF test']]));
+        $this->assertReachable($this->client->post($base . '/batch', ['json' => [['name' => 'PPF batch']]]));
+        $this->assertReachable($this->client->get($base . '/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put($base . '/' . self::TEST_UUID, ['json' => ['name' => 'PPF updated']]));
+        $this->assertReachable($this->client->delete($base . '/' . self::TEST_UUID));
+        $this->assertReachable($this->client->post($base . '/delete', ['json' => [['meta' => ['href' => 'x']]]]));
+        $this->assertReachable($this->client->get($base . '/metadata'));
     }
 
     // ==================== SERVICES ====================
@@ -999,6 +1160,198 @@ class ApiEndpointsTest extends TestCase
         $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
     }
 
+    // ==================== WEBHOOKS ====================
+
+    /**
+     * GET /entity/webhook
+     */
+    public function testListWebhooks(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/webhook');
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * POST /entity/webhook
+     */
+    public function testCreateWebhook(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/webhook', [
+            'json' => [
+                'url' => 'http://www.example.com',
+                'action' => 'CREATE',
+                'entityType' => 'supply',
+            ],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * GET /entity/webhook/{id}
+     */
+    public function testGetWebhookById(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/webhook/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * PUT /entity/webhook/{id}
+     */
+    public function testUpdateWebhook(): void
+    {
+        $response = $this->client->put(self::API_BASE_PATH . '/entity/webhook/' . self::TEST_UUID, [
+            'json' => [
+                'url' => 'http://www.example.com',
+                'action' => 'DELETE',
+            ],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * POST /entity/webhook/batch — массовое создание и обновление
+     */
+    public function testCreateOrUpdateWebhooksBatch(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/webhook/batch', [
+            'json' => [
+                [
+                    'url' => 'http://www.example.com',
+                    'action' => 'CREATE',
+                    'entityType' => 'supply',
+                ],
+            ],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * DELETE /entity/webhook/{id}
+     */
+    public function testDeleteWebhook(): void
+    {
+        $response = $this->client->delete(self::API_BASE_PATH . '/entity/webhook/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::DELETE_CODES);
+    }
+
+    /**
+     * POST /entity/webhook/delete
+     */
+    public function testBatchDeleteWebhooks(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/webhook/delete', [
+            'json' => [
+                [
+                    'meta' => [
+                        'href' => 'https://api.moysklad.ru/api/remap/1.2/entity/webhook/' . self::TEST_UUID,
+                        'metadataHref' => 'https://api.moysklad.ru/api/remap/1.2/entity/webhook/metadata',
+                        'type' => 'webhook',
+                        'mediaType' => 'application/json',
+                    ],
+                ],
+            ],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    // ==================== WEBHOOK STOCK (остатки) ====================
+
+    /**
+     * GET /entity/webhookstock
+     */
+    public function testListWebhookStocks(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/webhookstock');
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * POST /entity/webhookstock — создание одного вебхука
+     */
+    public function testCreateWebhookStock(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/webhookstock', [
+            'json' => [
+                'url' => 'http://www.example.com',
+                'enabled' => true,
+                'reportType' => 'all',
+                'stockType' => 'stock',
+            ],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * POST /entity/webhookstock/batch — массовое создание и обновление (массив в теле)
+     */
+    public function testCreateOrUpdateWebhookStocksBatch(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/webhookstock/batch', [
+            'json' => [
+                [
+                    'url' => 'http://www.example.com',
+                    'stockType' => 'stock',
+                    'reportType' => 'all',
+                ],
+            ],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * GET /entity/webhookstock/{id}
+     */
+    public function testGetWebhookStockById(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/webhookstock/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * PUT /entity/webhookstock/{id}
+     */
+    public function testUpdateWebhookStock(): void
+    {
+        $response = $this->client->put(self::API_BASE_PATH . '/entity/webhookstock/' . self::TEST_UUID, [
+            'json' => [
+                'url' => 'http://www.example.com',
+                'stockType' => 'stock',
+                'reportType' => 'bystore',
+            ],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * DELETE /entity/webhookstock/{id}
+     */
+    public function testDeleteWebhookStock(): void
+    {
+        $response = $this->client->delete(self::API_BASE_PATH . '/entity/webhookstock/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::DELETE_CODES);
+    }
+
+    /**
+     * POST /entity/webhookstock/delete
+     */
+    public function testBatchDeleteWebhookStocks(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/webhookstock/delete', [
+            'json' => [
+                [
+                    'meta' => [
+                        'href' => 'https://api.moysklad.ru/api/remap/1.2/entity/webhookstock/' . self::TEST_UUID,
+                        'metadataHref' => 'https://api.moysklad.ru/api/remap/1.2/entity/webhookstock/metadata',
+                        'type' => 'webhookstock',
+                        'mediaType' => 'application/json',
+                    ],
+                ],
+            ],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
     // ==================== PRICE TYPES ====================
 
     /**
@@ -1031,6 +1384,40 @@ class ApiEndpointsTest extends TestCase
     {
         $response = $this->client->get(self::API_BASE_PATH . '/context/companysettings/pricetype/default');
         $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    // ==================== SUBSCRIPTIONS ====================
+
+    /**
+     * Проверяет доступность endpoint'а получения подписки компании.
+     * GET /accountSettings/subscription
+     */
+    public function testGetSubscription(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/accountSettings/subscription');
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    // ==================== SALE PLATFORMS ====================
+
+    /**
+     * Проверяет доступность endpoint'а получения списка площадок для продаж.
+     * GET /entity/saleplatform
+     */
+    public function testListSalePlatforms(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/saleplatform');
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * Проверяет доступность endpoint'а получения площадки для продаж по ID.
+     * GET /entity/saleplatform/{id}
+     */
+    public function testGetSalePlatformById(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/saleplatform/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
     }
 
     public function testListStores(): void
@@ -1126,6 +1513,7 @@ class ApiEndpointsTest extends TestCase
         $this->assertReachable($this->client->put(self::API_BASE_PATH . '/entity/internalorder/metadata/attributes/' . self::TEST_UUID, ['json' => ['name' => 'atr1']]));
         $this->assertReachable($this->client->delete(self::API_BASE_PATH . '/entity/internalorder/metadata/attributes/' . self::TEST_UUID));
 
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . '/entity/internalorder/metadata/states', ['json' => ['name' => 'state1', 'color' => 15106326, 'stateType' => 'Regular']]));
         $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/internalorder/metadata/states/' . self::TEST_UUID));
         $this->assertReachable($this->client->put(self::API_BASE_PATH . '/entity/internalorder/metadata/states/' . self::TEST_UUID, ['json' => ['name' => 'state1']]));
         $this->assertReachable($this->client->delete(self::API_BASE_PATH . '/entity/internalorder/metadata/states/' . self::TEST_UUID));
@@ -1172,6 +1560,7 @@ class ApiEndpointsTest extends TestCase
         $this->assertReachable($this->client->put(self::API_BASE_PATH . '/entity/customerorder/metadata/attributes/' . self::TEST_UUID, ['json' => ['name' => 'atr1']]));
         $this->assertReachable($this->client->delete(self::API_BASE_PATH . '/entity/customerorder/metadata/attributes/' . self::TEST_UUID));
 
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . '/entity/customerorder/metadata/states', ['json' => ['name' => 'state1', 'color' => 15106326, 'stateType' => 'Regular']]));
         $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/customerorder/metadata/states/' . self::TEST_UUID));
         $this->assertReachable($this->client->put(self::API_BASE_PATH . '/entity/customerorder/metadata/states/' . self::TEST_UUID, ['json' => ['name' => 'state1']]));
         $this->assertReachable($this->client->delete(self::API_BASE_PATH . '/entity/customerorder/metadata/states/' . self::TEST_UUID));
@@ -1187,6 +1576,43 @@ class ApiEndpointsTest extends TestCase
         $this->assertNotEquals(404, $positions->getStatusCode());
     }
 
+    public function testDemandCrudMetadataTemplateAndPositions(): void
+    {
+        $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/demand/'));
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . '/entity/demand', ['json' => ['name' => 'Demand X']]));
+
+        $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/demand/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put(self::API_BASE_PATH . '/entity/demand/' . self::TEST_UUID, ['json' => ['name' => 'Demand Y']]));
+        $this->assertReachable($this->client->delete(self::API_BASE_PATH . '/entity/demand/' . self::TEST_UUID));
+
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . '/entity/demand/delete', ['json' => [['meta' => ['href' => 'x']]]]));
+
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . '/entity/demand/batch', ['json' => [['name' => 'Demand Z']]]));
+
+        $base = self::API_BASE_PATH . '/entity/demand/' . self::TEST_UUID;
+        $this->assertReachable($this->client->get($base . '/positions'));
+        $this->assertReachable($this->client->post($base . '/positions', ['json' => ['quantity' => 1]]));
+        $this->assertReachable($this->client->get($base . '/positions/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put($base . '/positions/' . self::TEST_UUID, ['json' => ['quantity' => 2]]));
+        $this->assertReachable($this->client->delete($base . '/positions/' . self::TEST_UUID));
+        $this->assertReachable($this->client->post($base . '/positions/delete', ['json' => [['meta' => ['href' => 'x']]]]));
+
+        $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/demand/metadata'));
+
+        $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/demand/metadata/attributes'));
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . '/entity/demand/metadata/attributes', ['json' => [['name' => 'atr1']]]));
+
+        $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/demand/metadata/attributes/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put(self::API_BASE_PATH . '/entity/demand/metadata/attributes/' . self::TEST_UUID, ['json' => ['name' => 'atr1']]));
+        $this->assertReachable($this->client->delete(self::API_BASE_PATH . '/entity/demand/metadata/attributes/' . self::TEST_UUID));
+
+        $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/demand/metadata/states/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put(self::API_BASE_PATH . '/entity/demand/metadata/states/' . self::TEST_UUID, ['json' => ['name' => 'state1']]));
+        $this->assertReachable($this->client->delete(self::API_BASE_PATH . '/entity/demand/metadata/states/' . self::TEST_UUID));
+
+        $this->assertReachable($this->client->put(self::API_BASE_PATH . '/entity/demand/new'));
+    }
+
     public function testListPurchaseOrders(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/purchaseorder');
@@ -1199,6 +1625,14 @@ class ApiEndpointsTest extends TestCase
         $positions = $this->client->get(self::API_BASE_PATH . '/entity/purchaseorder/' . self::TEST_UUID . '/positions');
         $this->assertNotEquals(404, $new->getStatusCode());
         $this->assertNotEquals(404, $positions->getStatusCode());
+    }
+
+    public function testCreatePurchaseOrderMetadataState(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/purchaseorder/metadata/states', [
+            'json' => ['name' => 'state1', 'color' => 15106326, 'stateType' => 'Regular'],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
     }
 
     public function testStoreCrudAndMetaEndpoints(): void
@@ -1302,6 +1736,146 @@ class ApiEndpointsTest extends TestCase
         $this->assertDocumentEndpoints('/entity/internalorder');
         $this->assertDocumentEndpoints('/entity/customerorder');
         $this->assertDocumentEndpoints('/entity/purchaseorder');
+    }
+
+    /**
+     * GET /entity/customerorder/{id}/notes
+     */
+    public function testGetCustomerOrderNotes(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/customerorder/' . self::TEST_UUID . '/notes');
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * POST /entity/customerorder/{id}/notes
+     */
+    public function testCreateCustomerOrderNote(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/customerorder/' . self::TEST_UUID . '/notes', [
+            'json' => ['description' => 'Привет, {{employee;730c1b3d-00ba-11ef-ac12-00120000000d}}!'],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * GET /entity/customerorder/{id}/notes/{noteId}
+     */
+    public function testGetCustomerOrderNoteById(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/customerorder/' . self::TEST_UUID . '/notes/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * PUT /entity/customerorder/{id}/notes/{noteId}
+     */
+    public function testUpdateCustomerOrderNote(): void
+    {
+        $response = $this->client->put(self::API_BASE_PATH . '/entity/customerorder/' . self::TEST_UUID . '/notes/' . self::TEST_UUID, [
+            'json' => ['description' => 'Обновленное событие'],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * DELETE /entity/customerorder/{id}/notes/{noteId}
+     */
+    public function testDeleteCustomerOrderNote(): void
+    {
+        $response = $this->client->delete(self::API_BASE_PATH . '/entity/customerorder/' . self::TEST_UUID . '/notes/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::DELETE_CODES);
+    }
+
+    /**
+     * GET /entity/purchaseorder/{id}/notes
+     */
+    public function testGetPurchaseOrderNotes(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/purchaseorder/' . self::TEST_UUID . '/notes');
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * POST /entity/purchaseorder/{id}/notes
+     */
+    public function testCreatePurchaseOrderNote(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/purchaseorder/' . self::TEST_UUID . '/notes', [
+            'json' => ['description' => 'Привет, {{employee;730c1b3d-00ba-11ef-ac12-00120000000d}}!'],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * GET /entity/purchaseorder/{id}/notes/{noteId}
+     */
+    public function testGetPurchaseOrderNoteById(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/purchaseorder/' . self::TEST_UUID . '/notes/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * PUT /entity/purchaseorder/{id}/notes/{noteId}
+     */
+    public function testUpdatePurchaseOrderNote(): void
+    {
+        $response = $this->client->put(self::API_BASE_PATH . '/entity/purchaseorder/' . self::TEST_UUID . '/notes/' . self::TEST_UUID, [
+            'json' => ['description' => 'Обновленное событие'],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * DELETE /entity/purchaseorder/{id}/notes/{noteId}
+     */
+    public function testDeletePurchaseOrderNote(): void
+    {
+        $response = $this->client->delete(self::API_BASE_PATH . '/entity/purchaseorder/' . self::TEST_UUID . '/notes/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::DELETE_CODES);
+    }
+
+    public function testEmissionOrderEndpoints(): void
+    {
+        $base = '/entity/emissionorder';
+
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . $base, [
+            'json' => [
+                'organization' => ['meta' => ['href' => 'https://api.moysklad.ru/api/remap/1.2/entity/organization/' . self::TEST_UUID, 'type' => 'organization', 'mediaType' => 'application/json']],
+                'trackingType' => 'MILK',
+                'emissionType' => 'LOCAL',
+            ],
+        ]));
+        $this->assertReachable($this->client->get(self::API_BASE_PATH . $base . '/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put(self::API_BASE_PATH . $base . '/' . self::TEST_UUID, [
+            'json' => ['name' => 'Updated emission order'],
+        ]));
+
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . $base . '/batch', [
+            'json' => [[
+                'organization' => ['meta' => ['href' => 'https://api.moysklad.ru/api/remap/1.2/entity/organization/' . self::TEST_UUID, 'type' => 'organization', 'mediaType' => 'application/json']],
+                'trackingType' => 'MILK',
+                'emissionType' => 'LOCAL',
+            ]],
+        ]));
+
+        $this->assertReachable($this->client->get(self::API_BASE_PATH . $base . '/metadata'));
+        $this->assertReachable($this->client->get(self::API_BASE_PATH . $base . '/metadata/states/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put(self::API_BASE_PATH . $base . '/metadata/states/' . self::TEST_UUID, ['json' => ['name' => 'state1']]));
+        $this->assertReachable($this->client->delete(self::API_BASE_PATH . $base . '/metadata/states/' . self::TEST_UUID));
+
+        $this->assertReachable($this->client->get(self::API_BASE_PATH . $base . '/' . self::TEST_UUID . '/positions'));
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . $base . '/' . self::TEST_UUID . '/positions', [
+            'json' => [
+                'quantity' => 1,
+                'assortment' => ['meta' => ['href' => 'https://api.moysklad.ru/api/remap/1.2/entity/product/' . self::TEST_UUID, 'type' => 'product', 'mediaType' => 'application/json']],
+            ],
+        ]));
+        $this->assertReachable($this->client->get(self::API_BASE_PATH . $base . '/' . self::TEST_UUID . '/positions/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put(self::API_BASE_PATH . $base . '/' . self::TEST_UUID . '/positions/' . self::TEST_UUID, [
+            'json' => ['quantity' => 2],
+        ]));
     }
 
     private function assertDocumentEndpoints(string $base): void
@@ -1452,6 +2026,713 @@ class ApiEndpointsTest extends TestCase
         $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
     }
 
+    // ==================== SALES CHANNELS ====================
+
+    /**
+     * GET /entity/saleschannel
+     */
+    public function testListSalesChannels(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/saleschannel');
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * GET /entity/saleschannel/{id}
+     */
+    public function testGetSalesChannelById(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/saleschannel/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * POST /entity/saleschannel
+     */
+    public function testCreateSalesChannel(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/saleschannel', [
+            'json' => [
+                'name' => 'Test Sales Channel',
+                'type' => 'OTHER',
+                'description' => 'Test description',
+            ],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * POST /entity/saleschannel/batch
+     */
+    public function testCreateSalesChannelsBatch(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/saleschannel/batch', [
+            'json' => [
+                [
+                    'name' => 'Batch Sales Channel',
+                    'type' => 'OTHER',
+                ],
+            ],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * PUT /entity/saleschannel/{id}
+     */
+    public function testUpdateSalesChannel(): void
+    {
+        $response = $this->client->put(self::API_BASE_PATH . '/entity/saleschannel/' . self::TEST_UUID, [
+            'json' => ['name' => 'Updated Sales Channel'],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * DELETE /entity/saleschannel/{id}
+     */
+    public function testDeleteSalesChannel(): void
+    {
+        $response = $this->client->delete(self::API_BASE_PATH . '/entity/saleschannel/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::DELETE_CODES);
+    }
+
+    /**
+     * POST /entity/saleschannel/delete
+     */
+    public function testDeleteSalesChannelsBatch(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/saleschannel/delete', [
+            'json' => [
+                ['meta' => ['href' => 'https://api.moysklad.ru/api/remap/1.2/entity/saleschannel/' . self::TEST_UUID, 'type' => 'saleschannel', 'mediaType' => 'application/json']],
+            ],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    // ==================== TASKS ====================
+
+    /**
+     * GET /entity/task
+     */
+    public function testListTasks(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/task');
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * POST /entity/task
+     */
+    public function testCreateTask(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/task', [
+            'json' => [
+                'description' => 'Test Task',
+                'assignee' => [
+                    'meta' => [
+                        'href' => 'https://api.moysklad.ru/api/remap/1.2/entity/employee/' . self::TEST_UUID,
+                        'type' => 'employee',
+                        'mediaType' => 'application/json',
+                    ],
+                ],
+                'done' => false,
+            ],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * POST /entity/task/batch
+     */
+    public function testCreateTasksBatch(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/task/batch', [
+            'json' => [
+                [
+                    'description' => 'Batch Task',
+                    'assignee' => [
+                        'meta' => [
+                            'href' => 'https://api.moysklad.ru/api/remap/1.2/entity/employee/' . self::TEST_UUID,
+                            'type' => 'employee',
+                            'mediaType' => 'application/json',
+                        ],
+                    ],
+                    'done' => false,
+                ],
+            ],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * GET /entity/task/{id}
+     */
+    public function testGetTaskById(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/task/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * PUT /entity/task/{id}
+     */
+    public function testUpdateTask(): void
+    {
+        $response = $this->client->put(self::API_BASE_PATH . '/entity/task/' . self::TEST_UUID, [
+            'json' => [
+                'description' => 'Updated Task',
+                'done' => true,
+            ],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * DELETE /entity/task/{id}
+     */
+    public function testDeleteTask(): void
+    {
+        $response = $this->client->delete(self::API_BASE_PATH . '/entity/task/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::DELETE_CODES);
+    }
+
+    /**
+     * POST /entity/task/delete
+     */
+    public function testDeleteTasksBatch(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/task/delete', [
+            'json' => [
+                [
+                    'meta' => [
+                        'href' => 'https://api.moysklad.ru/api/remap/1.2/entity/task/' . self::TEST_UUID,
+                        'type' => 'task',
+                        'mediaType' => 'application/json',
+                    ],
+                ],
+            ],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * GET /entity/task/{id}/notes
+     */
+    public function testGetTaskNotes(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/task/' . self::TEST_UUID . '/notes');
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * POST /entity/task/{id}/notes
+     */
+    public function testCreateTaskNote(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/task/' . self::TEST_UUID . '/notes', [
+            'json' => [
+                'text' => 'Test note',
+            ],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * GET /entity/task/{id}/notes/{noteId}
+     */
+    public function testGetTaskNoteById(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/task/' . self::TEST_UUID . '/notes/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * PUT /entity/task/{id}/notes/{noteId}
+     */
+    public function testUpdateTaskNote(): void
+    {
+        $response = $this->client->put(self::API_BASE_PATH . '/entity/task/' . self::TEST_UUID . '/notes/' . self::TEST_UUID, [
+            'json' => [
+                'text' => 'Updated note',
+            ],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * DELETE /entity/task/{id}/notes/{noteId}
+     */
+    public function testDeleteTaskNote(): void
+    {
+        $response = $this->client->delete(self::API_BASE_PATH . '/entity/task/' . self::TEST_UUID . '/notes/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::DELETE_CODES);
+    }
+
+    /**
+     * POST /entity/task/{id}/notes/delete
+     */
+    public function testDeleteTaskNotesBatch(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/task/' . self::TEST_UUID . '/notes/delete', [
+            'json' => [
+                [
+                    'meta' => [
+                        'href' => 'https://api.moysklad.ru/api/remap/1.2/entity/task/' . self::TEST_UUID . '/notes/' . self::TEST_UUID,
+                        'type' => 'tasknote',
+                        'mediaType' => 'application/json',
+                    ],
+                ],
+            ],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * GET /entity/task/metadata
+     */
+    public function testGetTaskMetadata(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/task/metadata');
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * POST /entity/task/metadata/states
+     */
+    public function testCreateTaskMetadataStates(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/task/metadata/states', [
+            'json' => [
+                'name' => 'Встреча',
+                'color' => 69446,
+            ],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * PUT /entity/task/metadata/states/{id}
+     */
+    public function testUpdateTaskMetadataStateById(): void
+    {
+        $response = $this->client->put(self::API_BASE_PATH . '/entity/task/metadata/states/' . self::TEST_UUID, [
+            'json' => [
+                'name' => 'Связаться',
+                'color' => 255,
+            ],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * DELETE /entity/task/metadata/states/{id}
+     */
+    public function testDeleteTaskMetadataStateById(): void
+    {
+        $response = $this->client->delete(self::API_BASE_PATH . '/entity/task/metadata/states/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::DELETE_CODES);
+    }
+
+// ==================== PROJECTS ====================
+
+    /**
+     * GET /entity/project
+     */
+    public function testListProjects(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/project');
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * GET /entity/project/{id}
+     */
+    public function testGetProjectById(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/project/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * POST /entity/project
+     */
+    public function testCreateProject(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/project', [
+            'json' => [
+                'name' => 'Test Project',
+            ],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * PUT /entity/project/{id}
+     */
+    public function testUpdateProject(): void
+    {
+        $response = $this->client->put(self::API_BASE_PATH . '/entity/project/' . self::TEST_UUID, [
+            'json' => ['name' => 'Updated Project'],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * DELETE /entity/project/{id}
+     */
+    public function testDeleteProject(): void
+    {
+        $response = $this->client->delete(self::API_BASE_PATH . '/entity/project/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::DELETE_CODES);
+    }
+
+    /**
+     * POST /entity/project/delete
+     */
+    public function testDeleteProjectsBatch(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/project/delete', [
+            'json' => [
+                ['meta' => ['href' => 'https://api.moysklad.ru/api/remap/1.2/entity/project/' . self::TEST_UUID, 'type' => 'project', 'mediaType' => 'application/json']],
+            ],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * POST /entity/project/batch
+     */
+    public function testCreateProjectsBatch(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/project/batch', [
+            'json' => [
+                [
+                    'name' => 'Batch Project',
+                ],
+            ],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * GET /entity/project/metadata
+     */
+    public function testGetProjectMetadata(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/project/metadata');
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * GET /entity/project/metadata/attributes
+     */
+    public function testGetProjectMetadataAttributes(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/project/metadata/attributes');
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * POST /entity/project/metadata/attributes
+     */
+    public function testCreateProjectMetadataAttribute(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/project/metadata/attributes', [
+            'json' => ['name' => 'projectAttribute'],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * GET /entity/project/metadata/attributes/{id}
+     */
+    public function testGetProjectMetadataAttributeById(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/project/metadata/attributes/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * PUT /entity/project/metadata/attributes/{id}
+     */
+    public function testUpdateProjectMetadataAttribute(): void
+    {
+        $response = $this->client->put(self::API_BASE_PATH . '/entity/project/metadata/attributes/' . self::TEST_UUID, [
+            'json' => ['name' => 'projectAttributeUpdated'],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * DELETE /entity/project/metadata/attributes/{id}
+     */
+    public function testDeleteProjectMetadataAttribute(): void
+    {
+        $response = $this->client->delete(self::API_BASE_PATH . '/entity/project/metadata/attributes/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::DELETE_CODES);
+    }
+
+    // ==================== CONSIGNMENTS ====================
+
+    /**
+     * GET /entity/consignment
+     */
+    public function testListConsignments(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/consignment');
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * GET /entity/consignment/{id}
+     */
+    public function testGetConsignmentById(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/consignment/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * POST /entity/consignment
+     */
+    public function testCreateConsignment(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/consignment', [
+            'json' => [
+                'label' => 'Test Consignment',
+                'assortment' => [
+                    'meta' => [
+                        'href' => 'https://api.moysklad.ru/api/remap/1.2/entity/variant/' . self::TEST_UUID,
+                        'type' => 'variant',
+                        'mediaType' => 'application/json',
+                    ],
+                ],
+            ],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * PUT /entity/consignment/{id}
+     */
+    public function testUpdateConsignment(): void
+    {
+        $response = $this->client->put(self::API_BASE_PATH . '/entity/consignment/' . self::TEST_UUID, [
+            'json' => [
+                'label' => 'Updated Consignment',
+                'assortment' => [
+                    'meta' => [
+                        'href' => 'https://api.moysklad.ru/api/remap/1.2/entity/variant/' . self::TEST_UUID,
+                        'type' => 'variant',
+                        'mediaType' => 'application/json',
+                    ],
+                ],
+            ],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * DELETE /entity/consignment/{id}
+     */
+    public function testDeleteConsignment(): void
+    {
+        $response = $this->client->delete(self::API_BASE_PATH . '/entity/consignment/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::DELETE_CODES);
+    }
+
+    /**
+     * POST /entity/consignment/delete
+     */
+    public function testDeleteConsignmentsBatch(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/consignment/delete', [
+            'json' => [
+                ['meta' => ['href' => 'https://api.moysklad.ru/api/remap/1.2/entity/consignment/' . self::TEST_UUID, 'type' => 'consignment', 'mediaType' => 'application/json']],
+            ],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * POST /entity/consignment/batch
+     */
+    public function testCreateConsignmentsBatch(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/consignment/batch', [
+            'json' => [
+                [
+                    'label' => 'Batch Consignment',
+                    'assortment' => [
+                        'meta' => [
+                            'href' => 'https://api.moysklad.ru/api/remap/1.2/entity/variant/' . self::TEST_UUID,
+                            'type' => 'variant',
+                            'mediaType' => 'application/json',
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * GET /entity/consignment/metadata
+     */
+    public function testGetConsignmentMetadata(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/consignment/metadata');
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * GET /entity/consignment/metadata/attributes
+     */
+    public function testGetConsignmentMetadataAttributes(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/consignment/metadata/attributes');
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * POST /entity/consignment/metadata/attributes
+     */
+    public function testCreateConsignmentMetadataAttribute(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/consignment/metadata/attributes', [
+            'json' => [
+                'name' => 'consignment attribute',
+                'type' => 'string',
+            ],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * GET /entity/consignment/metadata/attributes/{id}
+     */
+    public function testGetConsignmentMetadataAttributeById(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/consignment/metadata/attributes/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * PUT /entity/consignment/metadata/attributes/{id}
+     */
+    public function testUpdateConsignmentMetadataAttribute(): void
+    {
+        $response = $this->client->put(self::API_BASE_PATH . '/entity/consignment/metadata/attributes/' . self::TEST_UUID, [
+            'json' => [
+                'name' => 'updated consignment attribute',
+                'type' => 'string',
+            ],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * DELETE /entity/consignment/metadata/attributes/{id}
+     */
+    public function testDeleteConsignmentMetadataAttribute(): void
+    {
+        $response = $this->client->delete(self::API_BASE_PATH . '/entity/consignment/metadata/attributes/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::DELETE_CODES);
+    }
+
+    // ==================== EXPENSE ITEMS ====================
+
+    /**
+     * GET /entity/expenseitem
+     */
+    public function testListExpenseItems(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/expenseitem');
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * GET /entity/expenseitem/{id}
+     */
+    public function testGetExpenseItemById(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/expenseitem/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * POST /entity/expenseitem
+     */
+    public function testCreateExpenseItem(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/expenseitem', [
+            'json' => [
+                'name' => 'Налоги и не налоги',
+                'description' => 'Статья расходов налоги',
+                'code' => 'nalogi',
+                'externalCode' => 'wwoaon21431',
+            ],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * PUT /entity/expenseitem/{id}
+     */
+    public function testUpdateExpenseItem(): void
+    {
+        $response = $this->client->put(self::API_BASE_PATH . '/entity/expenseitem/' . self::TEST_UUID, [
+            'json' => [
+                'name' => 'Не налоги и налоги',
+                'description' => 'Налоги и не налоги. Такая вот статья',
+                'code' => 'nalogi i net',
+                'externalCode' => 'wwoa1142aon21431',
+            ],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+    }
+
+    /**
+     * DELETE /entity/expenseitem/{id}
+     */
+    public function testDeleteExpenseItem(): void
+    {
+        $response = $this->client->delete(self::API_BASE_PATH . '/entity/expenseitem/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::DELETE_CODES);
+    }
+
+    /**
+     * POST /entity/expenseitem/delete
+     */
+    public function testDeleteExpenseItemsBatch(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/expenseitem/delete', [
+            'json' => [
+                ['meta' => ['href' => 'https://api.moysklad.ru/api/remap/1.2/entity/expenseitem/' . self::TEST_UUID, 'type' => 'expenseitem', 'mediaType' => 'application/json']],
+            ],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * POST /entity/expenseitem/batch
+     */
+    public function testCreateExpenseItemsBatch(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/expenseitem/batch', [
+            'json' => [
+                [
+                    'name' => 'Налоги и не налоги',
+                    'description' => 'Статья расходов налоги',
+                    'code' => 'nalogi',
+                    'externalCode' => 'wwoaon21431',
+                ],
+            ],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
     // ==================== COMPANY SETTINGS ====================
 
     /**
@@ -1492,6 +2773,62 @@ class ApiEndpointsTest extends TestCase
     {
         $response = $this->client->get(self::API_BASE_PATH . '/context/companysettings/metadata');
         $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    // ==================== USER SETTINGS ====================
+
+    /**
+     * Проверяет доступность endpoint'а получения настроек пользователя.
+     * GET /context/usersettings
+     */
+    public function testGetUserSettings(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/context/usersettings');
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * Проверяет доступность endpoint'а обновления настроек пользователя.
+     * PUT /context/usersettings
+     */
+    public function testUpdateUserSettings(): void
+    {
+        $response = $this->client->put(self::API_BASE_PATH . '/context/usersettings', [
+            'json' => [
+                'defaultCompany' => [
+                    'metadataHref' => self::API_BASE_PATH . '/entity/organization/metadata',
+                    'type' => 'organization',
+                    'mediaType' => 'application/json',
+                ],
+                'defaultCustomerCounterparty' => [
+                    'href' => self::API_BASE_PATH . '/entity/counterparty/' . self::TEST_UUID,
+                    'type' => 'counterparty',
+                    'mediaType' => 'application/json',
+                ],
+                'defaultPurchaseCounterparty' => [
+                    'href' => self::API_BASE_PATH . '/entity/counterparty/' . self::TEST_UUID,
+                    'type' => 'counterparty',
+                    'mediaType' => 'application/json',
+                ],
+                'defaultProject' => [
+                    'href' => self::API_BASE_PATH . '/entity/project/' . self::TEST_UUID,
+                    'type' => 'project',
+                    'mediaType' => 'application/json',
+                ],
+                'defaultPlace' => [
+                    'href' => self::API_BASE_PATH . '/entity/store/' . self::TEST_UUID,
+                    'type' => 'store',
+                    'mediaType' => 'application/json',
+                ],
+                'locale' => 'ru_RU',
+                'mailFooter' => 'подпись в письме',
+                'fieldsPerRow' => 3,
+                'defaultScreen' => 'importcustom',
+                'printFormat' => 'pdf',
+                'autoShowReports' => false,
+            ],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
     }
 
     // ==================== DISCOUNTS ====================
@@ -1984,6 +3321,7 @@ class ApiEndpointsTest extends TestCase
         $this->assertReachable($this->client->get($metaBase . '/attributes/' . self::TEST_UUID));
         $this->assertReachable($this->client->put($metaBase . '/attributes/' . self::TEST_UUID, ['json' => ['name' => 'atr1']]));
         $this->assertReachable($this->client->delete($metaBase . '/attributes/' . self::TEST_UUID));
+        $this->assertReachable($this->client->post($metaBase . '/states', ['json' => ['name' => 'state1', 'color' => 15106326, 'stateType' => 'Regular']]));
         $this->assertReachable($this->client->get($metaBase . '/states/' . self::TEST_UUID));
         $this->assertReachable($this->client->put($metaBase . '/states/' . self::TEST_UUID, ['json' => ['name' => 'state1']]));
         $this->assertReachable($this->client->delete($metaBase . '/states/' . self::TEST_UUID));
@@ -2455,6 +3793,18 @@ class ApiEndpointsTest extends TestCase
     {
         $response = $this->client->delete(self::API_BASE_PATH . '/entity/cashout/metadata/attributes/' . self::TEST_UUID);
         $this->assertContains($response->getStatusCode(), self::DELETE_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а создания статуса документа.
+     * POST /entity/cashout/metadata/states
+     */
+    public function testCreateCashOutMetadataState(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/cashout/metadata/states', [
+            'json' => ['name' => 'state1', 'color' => 15106326, 'stateType' => 'Regular'],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
     }
 
     /**

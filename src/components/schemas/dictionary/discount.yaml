@@ -1,5 +1,13 @@
 type: object
 description: Скидка (discount)
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "discount"
+    - param: "id"
+  type: "discount"
 allOf:
   - $ref: '../../../openapi.yaml#/components/schemas/DiscountBase'
 properties:

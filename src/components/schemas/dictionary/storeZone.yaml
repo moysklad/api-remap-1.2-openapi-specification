@@ -1,5 +1,16 @@
 type: object
 description: Зона склада
+x-entity-static-builder:
+  methodParams:
+    - "parentId"
+    - "id"
+  href:
+    - path: "entity"
+    - path: "store"
+    - param: "parentId"
+    - path: "zones"
+    - param: "id"
+  type: "storezone"
 properties:
   meta:
     description: Метаданные Зоны склада

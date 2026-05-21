@@ -1,5 +1,13 @@
 type: object
 description: Валюта
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "currency"
+    - param: "id"
+  type: "currency"
 properties:
   meta:
     description: Метаданные Валюты

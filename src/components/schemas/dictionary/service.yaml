@@ -1,4 +1,12 @@
 type: object
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "service"
+    - param: "id"
+  type: "service"
 x-entitytype-service: true
 properties:
   meta:

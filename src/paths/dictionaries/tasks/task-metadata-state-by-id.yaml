@@ -1,0 +1,45 @@
+put:
+  operationId: updateTaskMetadataStateById
+  tags:
+    - Tasks
+  summary: Обновить тип задачи
+  description: Обновление типа задачи с указанным id
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../openapi.yaml#/components/schemas/State'
+  responses:
+    '200':
+      description: Тип задачи успешно обновлен
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/State'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+delete:
+  operationId: deleteTaskMetadataStateById
+  tags:
+    - Tasks
+  summary: Удалить тип задачи
+  description: Удаление типа задачи с указанным id
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  responses:
+    '200':
+      description: Тип задачи успешно удален
+    '404':
+      $ref: '../../../components/responses.yaml#/NotFoundEmpty'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

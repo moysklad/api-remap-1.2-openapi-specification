@@ -1,0 +1,97 @@
+type: object
+description: Задача
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "task"
+    - param: "id"
+  type: "task"
+properties:
+  meta:
+    description: Метаданные Задачи
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID Задачи
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  agent:
+    description: Метаданные Контрагента или юрлица, связанного с задачей
+    type: object
+    nullable: true
+    oneOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
+      - $ref: '../../../openapi.yaml#/components/schemas/Organization'
+  assignee:
+    description: Метаданные ответственного за выполнение задачи
+    $ref: '../../../openapi.yaml#/components/schemas/Employee'
+  author:
+    description: Метаданные Сотрудника, создавшего задачу
+    $ref: '../../../openapi.yaml#/components/schemas/Employee'
+    readOnly: true
+  authorApplication:
+    description: Метаданные Решения, создавшего задачу
+    $ref: '../../../openapi.yaml#/components/schemas/Application'
+    readOnly: true
+  completed:
+    type: string
+    description: Время выполнения задачи
+    readOnly: true
+  created:
+    type: string
+    description: Момент создания
+    readOnly: true
+  description:
+    type: string
+    maxLength: 4096
+    description: Текст задачи
+  done:
+    type: boolean
+    description: Отметка о выполнении задачи
+  dueToDate:
+    type: string
+    nullable: true
+    description: Срок задачи
+  files:
+    description: Метаданные массива Файлов
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/FileList'
+  implementer:
+    description: Метаданные Сотрудника, выполнившего задачу
+    nullable: true
+    $ref: '../../../openapi.yaml#/components/schemas/Employee'
+    readOnly: true
+  notes:
+    type: object
+    description: Метаданные комментариев к задаче
+    properties:
+      meta:
+        $ref: '../common/metaList.yaml'
+      rows:
+        type: array
+        description: Массив комментариев к задаче
+        items:
+          $ref: '../../../openapi.yaml#/components/schemas/TaskNote'
+  operation:
+    description: Метаданные документа, связанного с задачей
+    nullable: true
+    $ref: '../../../openapi.yaml#/components/schemas/DocumentMetadata'
+  state:
+    description: Метаданные типа задачи
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/State'
+  updated:
+    type: string
+    description: Момент последнего обновления Задачи
+    readOnly: true
