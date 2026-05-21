@@ -16,5 +16,13 @@
       "mediaType": "application/json",
       "uuidHref": "https://online.moysklad.ru/app/#employee/edit?id=861d34a9-f1b3-11ee-ac12-00110000004e"
     }
+  },
+  "authorApplication": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/application/f8b6e7b4-19ac-11ef-ac12-000b00000021",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/application/metadata",
+      "type": "application",
+      "mediaType": "application/json"
+    }
   }
 }
