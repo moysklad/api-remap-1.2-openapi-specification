@@ -671,6 +671,10 @@ paths:
     $ref: './paths/documents/retaildrawercashins/retaildrawercashins.yaml'
   /entity/retaildrawercashin/{id}:
     $ref: './paths/documents/retaildrawercashins/retaildrawercashin-by-id.yaml'
+  /entity/retaildrawercashin/{id}/files:
+    $ref: './paths/documents/retaildrawercashins/retaildrawercashin-files.yaml'
+  /entity/retaildrawercashin/{id}/files/{fileId}:
+    $ref: './paths/documents/retaildrawercashins/retaildrawercashin-file-by-id.yaml'
   /entity/retaildrawercashin/delete:
     $ref: './paths/documents/retaildrawercashins/retaildrawercashins-delete.yaml'
   /entity/retaildrawercashin/batch:
