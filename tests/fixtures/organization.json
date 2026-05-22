@@ -122,7 +122,7 @@
   "attributes": [
     {
       "meta": {
-        "href": "https://api.moysklad.ru/api/remap/1.2/entity/couterparty/metadata/attributes/0d129ff5-2c8c-11e6-8a84-bae5000000f3",
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/organization/metadata/attributes/0d129ff5-2c8c-11e6-8a84-bae5000000f3",
         "type": "attributemetadata",
         "mediaType": "application/json"
       },
