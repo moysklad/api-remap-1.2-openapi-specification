@@ -746,6 +746,32 @@ paths:
   /entity/cashin/new:
     $ref: './paths/documents/cashins/cashin-new.yaml'
 
+  # Documents - Retail Drawer Cash In
+  /entity/retaildrawercashin:
+    $ref: './paths/documents/retaildrawercashins/retaildrawercashins.yaml'
+  /entity/retaildrawercashin/{id}:
+    $ref: './paths/documents/retaildrawercashins/retaildrawercashin-by-id.yaml'
+  /entity/retaildrawercashin/{id}/files:
+    $ref: './paths/documents/retaildrawercashins/retaildrawercashin-files.yaml'
+  /entity/retaildrawercashin/{id}/files/{fileId}:
+    $ref: './paths/documents/retaildrawercashins/retaildrawercashin-file-by-id.yaml'
+  /entity/retaildrawercashin/delete:
+    $ref: './paths/documents/retaildrawercashins/retaildrawercashins-delete.yaml'
+  /entity/retaildrawercashin/batch:
+    $ref: './paths/documents/retaildrawercashins/retaildrawercashins-batch.yaml'
+  /entity/retaildrawercashin/metadata:
+    $ref: './paths/documents/retaildrawercashins/retaildrawercashin-metadata.yaml'
+  /entity/retaildrawercashin/metadata/attributes:
+    $ref: './paths/documents/retaildrawercashins/retaildrawercashin-metadata-attribute.yaml'
+  /entity/retaildrawercashin/metadata/attributes/{id}:
+    $ref: './paths/documents/retaildrawercashins/retaildrawercashin-metadata-attribute-by-id.yaml'
+  /entity/retaildrawercashin/metadata/states:
+    $ref: './paths/documents/retaildrawercashins/retaildrawercashin-metadata-states.yaml'
+  /entity/retaildrawercashin/metadata/states/{id}:
+    $ref: './paths/documents/retaildrawercashins/retaildrawercashin-metadata-state-by-id.yaml'
+  /entity/retaildrawercashin/new:
+    $ref: './paths/documents/retaildrawercashins/retaildrawercashin-new.yaml'
+
   # Documents - Cash Out Orders
   /entity/cashout:
     $ref: './paths/documents/cashouts/cashouts.yaml'
@@ -1242,6 +1268,10 @@ components:
       $ref: './components/schemas/dictionary/cashInOperation.yaml'
     CashInOperationLinkedSum:
       $ref: './components/schemas/dictionary/cashInOperationLinkedSum.yaml'
+    RetailDrawerCashIn:
+      $ref: './components/schemas/dictionary/retailDrawerCashIn.yaml'
+    RetailDrawerCashInList:
+      $ref: './components/schemas/dictionary/retailDrawerCashInList.yaml'
     CashOutList:
       $ref: './components/schemas/dictionary/cashOutList.yaml'
     CashInList:
@@ -1429,6 +1459,8 @@ tags:
     description: Операции с заказами кодов маркировки
   - name: CashIns
     description: Операции с приходными ордерами
+  - name: RetailDrawerCashIns
+    description: Операции с внесениями денег
   - name: CashOuts
     description: Операции с расходными ордерами
   - name: CommissionReportIns
