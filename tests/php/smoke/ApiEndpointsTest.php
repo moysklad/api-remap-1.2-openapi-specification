@@ -1215,6 +1215,28 @@ class ApiEndpointsTest extends TestCase
         $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
     }
 
+    // ==================== PROCESSING STAGES ====================
+
+    /**
+     * Этап производства: список, одиночное создание, массовое создание/обновление, CRUD по id, массовое удаление, метаданные.
+     *
+     * @see https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/processingstage
+     */
+    public function testProcessingStageEndpoints(): void
+    {
+        $base = self::API_BASE_PATH . '/entity/processingstage';
+        $this->assertReachable($this->client->get($base));
+        $this->assertReachable($this->client->post($base, ['json' => ['name' => 'test']]));
+
+        $this->assertReachable($this->client->get($base . '/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put($base . '/' . self::TEST_UUID, ['name' => 'updated']));
+        $this->assertReachable($this->client->delete($base . '/' . self::TEST_UUID));
+
+        $this->assertReachable($this->client->post($base . '/batch', ['json' => [['name' => 'batch']]]));
+        $this->assertReachable($this->client->post($base . '/delete', ['json' => [['meta' => ['href' => 'x']]]]));
+
+        $this->assertReachable($this->client->get($base . '/metadata'));
+    }
     // ==================== PRICE TYPES ====================
 
     /**
