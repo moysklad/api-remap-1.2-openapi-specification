@@ -1615,6 +1615,38 @@ class ApiEndpointsTest extends TestCase
         $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/store/metadata/attributes/' . self::TEST_UUID));
     }
 
+    public function testOrganizationCrudAndMetaEndpoints(): void
+    {
+        $base = self::API_BASE_PATH . '/entity/organization';
+        $this->assertReachable($this->client->get($base));
+        $this->assertReachable($this->client->post($base, ['json' => ['name' => 'PPF test']]));
+
+        $this->assertReachable($this->client->post($base . '/batch', ['json' => [['name' => 'PPF batch']]]));
+
+        $this->assertReachable($this->client->get($base . '/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put($base . '/' . self::TEST_UUID, ['name' => 'PPF updated']));
+        $this->assertReachable($this->client->delete($base . '/' . self::TEST_UUID));
+
+        $this->assertReachable($this->client->post($base . '/delete', ['json' => [['meta' => ['href' => 'x']]]]));
+
+        $this->assertReachable($this->client->get($base . '/' . self::TEST_UUID . '/accounts'));
+        $this->assertReachable($this->client->post($base . '/' . self::TEST_UUID . '/accounts', ['name' => 'PPF test']));
+
+        $this->assertReachable($this->client->get($base . '/' . self::TEST_UUID . '/accounts/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put($base . '/' . self::TEST_UUID . '/accounts/' . self::TEST_UUID, ['name' => 'PPF test']));
+        $this->assertReachable($this->client->delete($base . '/' . self::TEST_UUID . '/accounts/' . self::TEST_UUID));
+
+        $this->assertReachable($this->client->delete($base . '/' . self::TEST_UUID . '/accounts/delete', ['json' => [['meta' => ['href' => 'x']]]]));
+
+        $this->assertReachable($this->client->get($base . '/metadata'));
+        $this->assertReachable($this->client->get($base . '/metadata/attributes'));
+        $this->assertReachable($this->client->post($base . '/metadata/attributes', ['name' => 'PPF test']));
+
+        $this->assertReachable($this->client->get($base . '/metadata/attributes/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put($base . '/metadata/attributes/' . self::TEST_UUID, ['name' => 'PPF test']));
+        $this->assertReachable($this->client->delete($base . '/metadata/attributes/' . self::TEST_UUID));
+    }
+
     public function testStoreZoneAndSlotManagementEndpoints(): void
     {
         $base = self::API_BASE_PATH . '/entity/store/' . self::TEST_UUID;

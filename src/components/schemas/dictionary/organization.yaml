@@ -31,4 +31,192 @@ properties:
     type: string
     maxLength: 255
     description: Наименование юрлица
-    example: "ООО Поставщик"
+    example: "ОАО СветПром"
+  code:
+    type: string
+    maxLength: 255
+    description: Код юрлица
+  externalCode:
+    type: string
+    maxLength: 255
+    description: Внешний код юрлица
+  archived:
+    type: boolean
+    description: Добавлено ли юрлицо в архив
+    example: false
+  created:
+    type: string
+    description: Дата создания
+    readOnly: true
+  updated:
+    type: string
+    description: Момент последнего обновления юрлица
+    readOnly: true
+  description:
+    type: string
+    maxLength: 4096
+    description: Комментарий к юрлицу
+  companyType:
+    type: string
+    description: Тип юрлица. Известные значения описаны в CompanyType
+    example: "legal"
+  email:
+    type: string
+    format: email
+    description: Адрес электронной почты
+  phone:
+    type: string
+    maxLength: 255
+    description: Номер городского телефона
+  fax:
+    type: string
+    maxLength: 255
+    description: Номер факса
+  actualAddress:
+    type: string
+    maxLength: 255
+    description: Фактический адрес юрлица
+  actualAddressFull:
+    description: Фактический адрес юрлица с детализацией по отдельным полям
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Address'
+  legalAddress:
+    type: string
+    maxLength: 255
+    description: Юридический адрес юрлица
+  legalAddressFull:
+    description: Юридический адрес юрлица с детализацией по отдельным полям
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Address'
+  inn:
+    type: string
+    maxLength: 255
+    description: ИНН
+  kpp:
+    type: string
+    maxLength: 255
+    description: КПП
+  ogrn:
+    type: string
+    maxLength: 255
+    description: ОГРН
+  ogrnip:
+    type: string
+    maxLength: 255
+    description: ОГРНИП
+  okpo:
+    type: string
+    maxLength: 255
+    description: ОКПО
+  certificateNumber:
+    type: string
+    maxLength: 255
+    description: Номер свидетельства
+  certificateDate:
+    type: string
+    description: Дата свидетельства
+  legalTitle:
+    type: string
+    maxLength: 4096
+    description: Полное наименование
+  legalFirstName:
+    type: string
+    maxLength: 255
+    description: Имя для ИП и физлица
+  legalLastName:
+    type: string
+    maxLength: 255
+    description: Фамилия для ИП и физлица
+  legalMiddleName:
+    type: string
+    maxLength: 255
+    description: Отчество для ИП и физлица
+  trackingContractNumber:
+    type: string
+    maxLength: 255
+    description: Номер договора с ЦРПТ
+  trackingContractDate:
+    type: string
+    nullable: true
+    description: Дата договора с ЦРПТ
+  advancePaymentVat:
+    type: number
+    format: double
+    description: Налоговая ставка для авансов для плательщиков НДС
+  payerVat:
+    type: boolean
+    description: Является ли данное юрлицо плательщиком НДС
+  director:
+    type: string
+    maxLength: 255
+    description: Руководитель
+  directorPosition:
+    type: string
+    maxLength: 255
+    description: Должность руководителя
+  chiefAccountant:
+    type: string
+    maxLength: 255
+    description: Главный бухгалтер
+  directorSign:
+    description: Подпись руководителя
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Image'
+  chiefAccountSign:
+    description: Подпись главного бухгалтера
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Image'
+  stamp:
+    description: Печать
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Image'
+  bonusPoints:
+    type: integer
+    description: Бонусные баллы по активной бонусной программе
+    readOnly: true
+  bonusProgram:
+    type: object
+    description: Метаданные активной бонусной программы
+    nullable: true
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/BonusProgram'
+  shared:
+    type: boolean
+    description: Общий доступ
+    example: false
+  group:
+    description: Метаданные отдела сотрудника
+    $ref: '../../../openapi.yaml#/components/schemas/Group'
+  owner:
+    description: Метаданные владельца (Сотрудника)
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Employee'
+  accounts:
+    type: object
+    description: Счета юрлица
+    properties:
+      meta:
+        $ref: '../common/metaList.yaml'
+      rows:
+        nullable: true
+        type: array
+        items:
+          $ref: '../../../openapi.yaml#/components/schemas/Account'
+  attributes:
+    type: array
+    description: Дополнительные поля
+    nullable: true
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'

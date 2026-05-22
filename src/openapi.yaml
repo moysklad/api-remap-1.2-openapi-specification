@@ -346,6 +346,28 @@ paths:
   /entity/counterparty/{id}/files/{fileId}:
     $ref: './paths/dictionaries/counterparties/counterparty-file-by-id.yaml'
   #
+  # Organizations
+  /entity/organization:
+    $ref: './paths/dictionaries/organizations/organizations.yaml'
+  /entity/organization/{id}:
+    $ref: './paths/dictionaries/organizations/organization-by-id.yaml'
+  /entity/organization/delete:
+    $ref: './paths/dictionaries/organizations/organizations-delete.yaml'
+  /entity/organization/batch:
+    $ref: './paths/dictionaries/organizations/organizations-batch.yaml'
+  /entity/organization/metadata:
+    $ref: './paths/dictionaries/organizations/organization-metadata.yaml'
+  /entity/organization/metadata/attributes:
+    $ref: './paths/dictionaries/organizations/organization-metadata-attribute.yaml'
+  /entity/organization/metadata/attributes/{id}:
+    $ref: './paths/dictionaries/organizations/organization-metadata-attribute-by-id.yaml'
+  /entity/organization/{id}/accounts:
+    $ref: './paths/dictionaries/organizations/organization-accounts.yaml'
+  /entity/organization/{id}/accounts/delete:
+    $ref: './paths/dictionaries/organizations/organization-accounts-delete.yaml'
+  /entity/organization/{id}/accounts/{accountId}:
+    $ref: './paths/dictionaries/organizations/organization-account-by-id.yaml'
+  #
   # Services
   /entity/service:
     $ref: './paths/dictionaries/services/services.yaml'
@@ -1064,6 +1086,8 @@ components:
       $ref: './components/schemas/common/documentMetadata.yaml'
     Organization:
       $ref: './components/schemas/dictionary/organization.yaml'
+    OrganizationList:
+      $ref: './components/schemas/dictionary/organizationList.yaml'
 
     Bundle:
       $ref: './components/schemas/dictionary/bundle.yaml'
@@ -1367,6 +1391,8 @@ tags:
     description: Операции со статьями расходов
   - name: Counterparties
     description: Операции с контрагентами
+  - name: Organizations
+    description: Операции с юрлицами
   - name: Services
     description: Операции с услугами
   - name: PriceTypes
