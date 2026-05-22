@@ -220,6 +220,22 @@ paths:
   /entity/processingstage/batch:
     $ref: './paths/dictionaries/processingstages/processingstages-batch.yaml'
   #
+  # ProcessingProcesses
+  /entity/processingprocess:
+    $ref: './paths/dictionaries/processingprocesses/processingprocesses.yaml'
+  /entity/processingprocess/{id}:
+    $ref: './paths/dictionaries/processingprocesses/processingprocess-by-id.yaml'
+  /entity/processingprocess/delete:
+    $ref: './paths/dictionaries/processingprocesses/processingprocesses-delete.yaml'
+  /entity/processingprocess/batch:
+    $ref: './paths/dictionaries/processingprocesses/processingprocesses-batch.yaml'
+  /entity/processingprocess/{id}/positions:
+    $ref: './paths/dictionaries/processingprocesses/processingprocess-positions.yaml'
+  /entity/processingprocess/{id}/positions/{positionId}:
+    $ref: './paths/dictionaries/processingprocesses/processingprocess-position-by-id.yaml'
+  /entity/processingprocess/{id}/positions/delete:
+    $ref: './paths/dictionaries/processingprocesses/processingprocess-positions-delete.yaml'
+  #
   # Currencies
   /entity/currency:
     $ref: './paths/dictionaries/currencies/currencies.yaml'
@@ -924,6 +940,14 @@ components:
       $ref: './components/schemas/dictionary/processingStage.yaml'
     ProcessingStageList:
       $ref: './components/schemas/dictionary/processingStageList.yaml'
+    ProcessingProcess:
+      $ref: './components/schemas/dictionary/processingProcess.yaml'
+    ProcessingProcessList:
+      $ref: './components/schemas/dictionary/processingProcessList.yaml'
+    ProcessingProcessPosition:
+      $ref: './components/schemas/dictionary/processingProcessPosition.yaml'
+    ProcessingProcessPositionList:
+      $ref: './components/schemas/dictionary/processingProcessPositionList.yaml'
     Region:
       $ref: './components/schemas/dictionary/region.yaml'
     RegionList:
@@ -1267,6 +1291,8 @@ tags:
     description: Операции с единицами измерений
   - name: ProcessingStages
     description: Операции с Этапами производства
+  - name: ProcessingProcesses
+    description: Операции с Техпроцессами
   - name: Currencies
     description: Операции с валютами
   - name: TaxRates

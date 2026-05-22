@@ -56,6 +56,7 @@ class SerializationTest extends TestCase
         'tax_rate' => 'TaxRate',
         'product_folder' => 'ProductFolder',
         'processing_stage' => 'ProcessingStage',
+        'processing_process' => 'ProcessingProcess',
         'service' => 'Service',
         'uom' => 'Uom',
         'price_type' => 'PriceType',

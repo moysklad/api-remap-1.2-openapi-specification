@@ -1237,6 +1237,38 @@ class ApiEndpointsTest extends TestCase
 
         $this->assertReachable($this->client->get($base . '/metadata'));
     }
+
+    // ==================== PROCESSING PROCESSES ====================
+
+    /**
+     * Техпроцесс: список, одиночное создание, массовое создание/обновление, CRUD по id, CRUD позиций, массовое удаление, метаданные.
+     *
+     * @see https://dev.moysklad.ru/doc/api/remap/1.2/#/dictionaries/processingprocess
+     */
+    public function testProcessingProcessEndpoints(): void
+    {
+        $base = self::API_BASE_PATH . '/entity/processingprocess';
+        $this->assertReachable($this->client->get($base));
+        $this->assertReachable($this->client->post($base, ['json' => ['name' => 'PPF test']]));
+
+        $this->assertReachable($this->client->post($base . '/batch', ['json' => [['name' => 'PPF batch']]]));
+
+        $this->assertReachable($this->client->get($base . '/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put($base . '/' . self::TEST_UUID, ['name' => 'PPF updated']));
+        $this->assertReachable($this->client->delete($base . '/' . self::TEST_UUID));
+
+        $this->assertReachable($this->client->post($base . '/delete', ['json' => [['meta' => ['href' => 'x']]]]));
+
+        $this->assertReachable($this->client->get($base . '/' . self::TEST_UUID . '/positions'));
+        $this->assertReachable($this->client->post($base . '/' . self::TEST_UUID . '/positions', ['name' => 'PPF test']));
+
+        $this->assertReachable($this->client->get($base . '/' . self::TEST_UUID . '/positions/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put($base . '/' . self::TEST_UUID . '/positions/' . self::TEST_UUID, ['name' => 'PPF test']));
+        $this->assertReachable($this->client->delete($base . '/' . self::TEST_UUID . '/positions/' . self::TEST_UUID));
+
+        $this->assertReachable($this->client->delete($base . '/' . self::TEST_UUID . '/positions/delete', ['json' => [['meta' => ['href' => 'x']]]]));
+    }
+
     // ==================== PRICE TYPES ====================
 
     /**

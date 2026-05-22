@@ -1,0 +1,94 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/processingprocess/d5174779-862b-11eb-ac14-000900000007",
+    "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/processingprocess/metadata",
+    "type": "processingprocess",
+    "mediaType": "application/json",
+    "uuidHref": "https://online.moysklad.ru/app/#processingprocess/edit?id=d5174779-862b-11eb-ac14-000900000007"
+  },
+  "id": "d5174779-862b-11eb-ac14-000900000007",
+  "accountId": "dbb8cfc1-cbfa-11e1-6dfb-889ffa6f49fd",
+  "owner": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/employee/872559f1-cbf3-11e1-9eb9-889ffa6f48fd",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/employee/metadata",
+      "type": "employee",
+      "mediaType": "application/json",
+      "uuidHref": "https://online.moysklad.ru/app/#employee/edit?id=872559f1-cbf3-11e1-9eb9-889ffa6f49fd"
+    }
+  },
+  "shared": true,
+  "group": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/group/f7eb1e3b-fd2a-42f7-b799-b3d1e6b3bf43",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/group/metadata",
+      "type": "group",
+      "mediaType": "application/json"
+    }
+  },
+  "updated": "2021-03-16 10:47:18.160",
+  "name": "Основной техпроцесс",
+  "externalCode": "F1l43a3ojXZShfnzJCKsG3",
+  "archived": false,
+  "positions": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/processingprocess/d5174779-862b-11eb-ac14-000900000007/positions",
+      "type": "processingprocessposition",
+      "mediaType": "application/json",
+      "size": 2,
+      "limit": 1000,
+      "offset": 0
+    },
+    "rows": [
+      {
+        "meta": {
+          "href": "https://api.moysklad.ru/api/remap/1.2/entity/processingprocess/d5174779-862b-11eb-ac14-000900000007/positions/b2c3d4e5-1234-1234-1234-b2c3d4e5f6a7",
+          "type": "processingprocessposition",
+          "mediaType": "application/json"
+        },
+        "id": "b2c3d4e5-1234-1234-1234-b2c3d4e5f6a7",
+        "accountId": "c229f794-26ae-11f1-0a83-1f2100000002",
+        "processingstage": {
+          "meta": {
+            "href": "https://api.moysklad.ru/api/remap/1.2/entity/processingstage/d6877ac4-26ae-11f1-0a83-1f2500000149",
+            "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/product/metadata",
+            "type": "processingstage",
+            "mediaType": "application/json",
+            "uuidHref": "https://api.moysklad.ru/app/#processingstage/edit?id=d6877ac4-26ae-11f1-0a83-1f2500000149"
+          }
+        },
+        "nextPositions": [
+          {
+            "processingstage": {
+              "meta": {
+                "href": "https://api.moysklad.ru/api/remap/1.2/entity/processingstage/d6877ac4-26ae-11f1-0a83-1f250000014a",
+                "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/product/metadata",
+                "type": "processingstage",
+                "mediaType": "application/json",
+                "uuidHref": "https://api.moysklad.ru/app/#processingstage/edit?id=d6877ac4-26ae-11f1-0a83-1f250000014a"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "meta": {
+          "href": "https://api.moysklad.ru/api/remap/1.2/entity/processingprocess/d5174779-862b-11eb-ac14-000900000007/positions/b2c3d4e5-1234-1234-1234-b2c3d4e5f6a7",
+          "type": "processingprocessposition",
+          "mediaType": "application/json"
+        },
+        "id": "b2c3d4e5-1234-1234-1234-b2c3d4e5f6a7",
+        "accountId": "c229f794-26ae-11f1-0a83-1f2100000002",
+        "processingstage": {
+          "meta": {
+            "href": "https://api.moysklad.ru/api/remap/1.2/entity/processingstage/d6877ac4-26ae-11f1-0a83-1f2500000149",
+            "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/product/metadata",
+            "type": "processingstage",
+            "mediaType": "application/json",
+            "uuidHref": "https://api.moysklad.ru/app/#processingstage/edit?id=d6877ac4-26ae-11f1-0a83-1f2500000149"
+          }
+        }
+      }
+    ]
+  }
+}

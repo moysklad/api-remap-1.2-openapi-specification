@@ -63,6 +63,7 @@ properties:
   performers:
     type: array
     description: Метаданные возможных исполнителей
+    nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/Employee'
   materialStore:
