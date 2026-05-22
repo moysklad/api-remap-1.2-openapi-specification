@@ -18,7 +18,7 @@
     }
   },
   "shared": true,
-  "standardHourCost": 0.0,
+  "standardHourCost": 1.0,
   "group": {
     "meta": {
       "href": "https://api.moysklad.ru/api/remap/1.2/entity/group/d0668856-8fd9-11ed-ac12-000e00000001",
