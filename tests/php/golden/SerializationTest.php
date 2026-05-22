@@ -81,6 +81,7 @@ class SerializationTest extends TestCase
         'consignment' => 'Consignment',
         'expense_item' => 'ExpenseItem',
         'cash_in' => 'CashIn',
+        'retail_drawer_cash_in' => 'RetailDrawerCashIn',
         'cash_in_operation' => 'CashInOperation',
         'cash_out' => 'CashOut',
         'cash_out_operation' => 'CashOutOperation',
