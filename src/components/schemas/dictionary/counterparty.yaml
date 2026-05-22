@@ -1,5 +1,13 @@
 type: object
 description: Контрагент
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "counterparty"
+    - param: "id"
+  type: "counterparty"
 properties:
   meta:
     $ref: '../common/meta.yaml'

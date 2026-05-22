@@ -2,6 +2,14 @@ type: object
 description: |
   Возврат поставщику (purchasereturn). Заглушка: в спецификации нет полного описания сущности;
   при развёртывании в ответе API возможны дополнительные поля.
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "purchasereturn"
+    - param: "id"
+  type: "purchasereturn"
 properties:
   meta:
     description: Метаданные возврата поставщику

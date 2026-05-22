@@ -1,5 +1,13 @@
 type: object
 description: Счет покупателя
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "invoiceout"
+    - param: "id"
+  type: "invoiceout"
 properties:
   meta:
     description: Метаданные Счета покупателя
