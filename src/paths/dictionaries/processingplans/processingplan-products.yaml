@@ -1,0 +1,50 @@
+get:
+  operationId: getProcessingPlanProducts
+  tags:
+    - ProcessingPlans
+  summary: Получить продукты Техкарты
+  description: Запрос на получение списка всех продуктов данной Техкарты
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/parameters.yaml#/limit'
+    - $ref: '../../../components/parameters.yaml#/offset'
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/ProcessingPlanProductList'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+post:
+  operationId: createProcessingPlanProducts
+  tags:
+    - ProcessingPlans
+  summary: Создать продукт Техкарты
+  description: Запрос на создание нового продукта в Техкарте
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../openapi.yaml#/components/schemas/ProcessingPlanProduct'
+  responses:
+    '200':
+      description: Продукты Техкарты успешно созданы
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/ProcessingPlanProduct'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

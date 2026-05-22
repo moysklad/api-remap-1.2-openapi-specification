@@ -236,6 +236,38 @@ paths:
   /entity/processingprocess/{id}/positions/delete:
     $ref: './paths/dictionaries/processingprocesses/processingprocess-positions-delete.yaml'
   #
+  # ProcessingPlans
+  /entity/processingplan:
+    $ref: './paths/dictionaries/processingplans/processingplans.yaml'
+  /entity/processingplan/metadata:
+    $ref: './paths/dictionaries/processingplans/processingplan-metadata.yaml'
+  /entity/processingplan/metadata/attributes:
+    $ref: './paths/dictionaries/processingplans/processingplan-metadata-attribute.yaml'
+  /entity/processingplan/metadata/attributes/{id}:
+    $ref: './paths/dictionaries/processingplans/processingplan-metadata-attribute-by-id.yaml'
+  /entity/processingplan/{id}:
+    $ref: './paths/dictionaries/processingplans/processingplan-by-id.yaml'
+  /entity/processingplan/delete:
+    $ref: './paths/dictionaries/processingplans/processingplans-delete.yaml'
+  /entity/processingplan/batch:
+    $ref: './paths/dictionaries/processingplans/processingplans-batch.yaml'
+  /entity/processingplan/{id}/stages:
+    $ref: './paths/dictionaries/processingplans/processingplan-stages.yaml'
+  /entity/processingplan/{id}/stages/{positionId}:
+    $ref: './paths/dictionaries/processingplans/processingplan-stage-by-id.yaml'
+  /entity/processingplan/{id}/materials:
+    $ref: './paths/dictionaries/processingplans/processingplan-materials.yaml'
+  /entity/processingplan/{id}/materials/{positionId}:
+    $ref: './paths/dictionaries/processingplans/processingplan-material-by-id.yaml'
+  /entity/processingplan/{id}/materials/delete:
+    $ref: './paths/dictionaries/processingplans/processingplan-materials-delete.yaml'
+  /entity/processingplan/{id}/products:
+    $ref: './paths/dictionaries/processingplans/processingplan-products.yaml'
+  /entity/processingplan/{id}/products/{positionId}:
+    $ref: './paths/dictionaries/processingplans/processingplan-product-by-id.yaml'
+  /entity/processingplan/{id}/products/delete:
+    $ref: './paths/dictionaries/processingplans/processingplan-products-delete.yaml'
+  #
   # Currencies
   /entity/currency:
     $ref: './paths/dictionaries/currencies/currencies.yaml'
@@ -948,6 +980,26 @@ components:
       $ref: './components/schemas/dictionary/processingProcessPosition.yaml'
     ProcessingProcessPositionList:
       $ref: './components/schemas/dictionary/processingProcessPositionList.yaml'
+    CostDistributionType:
+      $ref: './components/schemas/dictionary/costDistributionType.yaml'
+    ProcessingPlan:
+      $ref: './components/schemas/dictionary/processingPlan.yaml'
+    ProcessingPlanList:
+      $ref: './components/schemas/dictionary/processingPlanList.yaml'
+    ProcessingPlanStage:
+      $ref: './components/schemas/dictionary/processingPlanStage.yaml'
+    ProcessingPlanStageList:
+      $ref: './components/schemas/dictionary/processingPlanStageList.yaml'
+    ProcessingPlanMaterial:
+      $ref: './components/schemas/dictionary/processingPlanMaterial.yaml'
+    ProcessingPlanMaterialList:
+      $ref: './components/schemas/dictionary/processingPlanMaterialList.yaml'
+    ProcessingPlanProduct:
+      $ref: './components/schemas/dictionary/processingPlanProduct.yaml'
+    ProcessingPlanProductList:
+      $ref: './components/schemas/dictionary/processingPlanProductList.yaml'
+    ProcessingPlanMetadata:
+      $ref: './components/schemas/dictionary/processingPlanMetadata.yaml'
     Region:
       $ref: './components/schemas/dictionary/region.yaml'
     RegionList:
@@ -1293,6 +1345,8 @@ tags:
     description: Операции с Этапами производства
   - name: ProcessingProcesses
     description: Операции с Техпроцессами
+  - name: ProcessingPlans
+    description: Операции с Техкартами
   - name: Currencies
     description: Операции с валютами
   - name: TaxRates

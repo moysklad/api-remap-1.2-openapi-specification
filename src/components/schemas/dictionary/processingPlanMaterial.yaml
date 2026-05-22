@@ -1,0 +1,45 @@
+type: object
+description: Материал Техкарты
+x-entity-static-builder:
+  methodParams:
+    - "parentId"
+    - "id"
+  href:
+    - path: "entity"
+    - path: "processingplan"
+    - param: "parentId"
+    - path: "materials"
+    - param: "id"
+  type: "processingplanmaterial"
+properties:
+  meta:
+    description: Метаданные материала Техкарты
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID материала Техкарты
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  assortment:
+    description: Метаданные товара или модификации позиции
+    $ref: '../../../openapi.yaml#/components/schemas/Assortment'
+  product:
+    description: Метаданные товара позиции
+    $ref: '../../../openapi.yaml#/components/schemas/Product'
+  quantity:
+    type: number
+    format: double
+    minimum: 0.0001
+    description: Количество товаров данного вида в позиции
+  processingProcessPosition:
+    description: Метаданные позиции Техпроцесса
+    $ref: '../../../openapi.yaml#/components/schemas/ProcessingProcessPosition'
+  materialProcessingPlan:
+    description: Метаданные техкарты материала
+    readOnly: true
+    $ref: '../../../openapi.yaml#/components/schemas/ProcessingPlan'

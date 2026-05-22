@@ -931,6 +931,58 @@ class ApiEndpointsTest extends TestCase
         $this->assertReachable($this->client->get($base . '/metadata'));
     }
 
+    // ==================== PROCESSING PLAN ====================
+
+    /**
+     * Техкарта: список, одиночное создание, массовое создание/обновление, CRUD по id и вложенных сущностей, массовое удаление, метаданные.
+     *
+     * @see https://dev.moysklad.ru/doc/api/remap/1.2/dictionaries/#suschnosti-gruppa-tehkart
+     */
+    public function testProcessingPlanEndpoints(): void
+    {
+        $base = self::API_BASE_PATH . '/entity/processingplan';
+        $this->assertReachable($this->client->get($base));
+        $this->assertReachable($this->client->post($base, ['json' => ['name' => 'PPF test']]));
+
+        $this->assertReachable($this->client->post($base . '/batch', ['json' => [['name' => 'PPF batch']]]));
+
+        $this->assertReachable($this->client->get($base . '/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put($base . '/' . self::TEST_UUID, ['name' => 'PPF updated']));
+        $this->assertReachable($this->client->delete($base . '/' . self::TEST_UUID));
+
+        $this->assertReachable($this->client->post($base . '/delete', ['json' => [['meta' => ['href' => 'x']]]]));
+
+        $this->assertReachable($this->client->get($base . '/' . self::TEST_UUID . '/stages'));
+        $this->assertReachable($this->client->get($base . '/' . self::TEST_UUID . '/stages/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put($base . '/' . self::TEST_UUID . '/stages/' . self::TEST_UUID, ['name' => 'PPF test']));
+
+        $this->assertReachable($this->client->get($base . '/' . self::TEST_UUID . '/products'));
+        $this->assertReachable($this->client->post($base . '/' . self::TEST_UUID . '/products', ['name' => 'PPF test']));
+
+        $this->assertReachable($this->client->get($base . '/' . self::TEST_UUID . '/products/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put($base . '/' . self::TEST_UUID . '/products/' . self::TEST_UUID, ['name' => 'PPF test']));
+        $this->assertReachable($this->client->delete($base . '/' . self::TEST_UUID . '/products/' . self::TEST_UUID));
+
+        $this->assertReachable($this->client->delete($base . '/' . self::TEST_UUID . '/products/delete', ['json' => [['meta' => ['href' => 'x']]]]));
+
+        $this->assertReachable($this->client->get($base . '/' . self::TEST_UUID . '/materials'));
+        $this->assertReachable($this->client->post($base . '/' . self::TEST_UUID . '/materials', ['name' => 'PPF test']));
+
+        $this->assertReachable($this->client->get($base . '/' . self::TEST_UUID . '/materials/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put($base . '/' . self::TEST_UUID . '/materials/' . self::TEST_UUID, ['name' => 'PPF test']));
+        $this->assertReachable($this->client->delete($base . '/' . self::TEST_UUID . '/materials/' . self::TEST_UUID));
+
+        $this->assertReachable($this->client->delete($base . '/' . self::TEST_UUID . '/materials/delete', ['json' => [['meta' => ['href' => 'x']]]]));
+
+        $this->assertReachable($this->client->get($base . '/metadata'));
+        $this->assertReachable($this->client->get($base . '/metadata/attributes'));
+        $this->assertReachable($this->client->post($base . '/metadata/attributes', ['name' => 'PPF test']));
+
+        $this->assertReachable($this->client->get($base . '/metadata/attributes/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put($base . '/metadata/attributes/' . self::TEST_UUID, ['name' => 'PPF test']));
+        $this->assertReachable($this->client->delete($base . '/metadata/attributes/' . self::TEST_UUID));
+    }
+
     // ==================== SERVICES ====================
 
     /**
