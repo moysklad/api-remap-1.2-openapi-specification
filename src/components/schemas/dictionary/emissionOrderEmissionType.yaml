@@ -1,0 +1,9 @@
+type: string
+description: Известные значения способа ввода в оборот
+enum:
+  - LOCAL
+  - FOREIGN
+  - REMAINS
+  - CROSSBORDER
+  - COMMISSION
+example: "LOCAL"

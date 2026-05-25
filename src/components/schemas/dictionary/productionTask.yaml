@@ -1,5 +1,13 @@
 type: object
 description: Производственное задание
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "productiontask"
+    - param: "id"
+  type: "productiontask"
 properties:
   meta:
     description: Метаданные Производственного задания

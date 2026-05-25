@@ -1,0 +1,50 @@
+get:
+  operationId: getProcessingProcessPositions
+  tags:
+    - ProcessingProcesses
+  summary: Получить позиции Техпроцесса
+  description: Запрос на получение списка всех позиций данного Техпроцесса
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/parameters.yaml#/limit'
+    - $ref: '../../../components/parameters.yaml#/offset'
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/ProcessingProcessPositionList'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+post:
+  operationId: createProcessingProcessPositions
+  tags:
+    - ProcessingProcesses
+  summary: Создать позицию Техпроцесса
+  description: Создание позиции Техпроцесса
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../openapi.yaml#/components/schemas/ProcessingProcessPosition'
+  responses:
+    '200':
+      description: Позиция Техпроцесса успешно созданы
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/ProcessingProcessPosition'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

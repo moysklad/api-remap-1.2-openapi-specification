@@ -1,5 +1,16 @@
 type: object
 description: Позиция Заказа поставщику
+x-entity-static-builder:
+  methodParams:
+    - "parentId"
+    - "id"
+  href:
+    - path: "entity"
+    - path: "purchaseorder"
+    - param: "parentId"
+    - path: "positions"
+    - param: "id"
+  type: "purchaseorderposition"
 properties:
   meta:
     description: Метаданные позиции

@@ -1,5 +1,13 @@
 type: object
 description: Приемка
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "supply"
+    - param: "id"
+  type: "supply"
 properties:
   meta:
     description: Метаданные Приемки

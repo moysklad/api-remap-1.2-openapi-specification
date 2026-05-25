@@ -1,0 +1,27 @@
+type: object
+description: Площадка для продаж
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "saleplatform"
+    - param: "id"
+  type: "saleplatform"
+properties:
+  meta:
+    description: Метаданные Площадки для продаж
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID Площадки для продаж
+    readOnly: true
+  name:
+    type: string
+    maxLength: 255
+    description: Наименование Площадки для продаж
+  salePlatformGroup:
+    type: string
+    description: Группа площадок для продаж. Известные значения описаны в SalePlatformGroup
+    example: "MARKETPLACES"

@@ -1,5 +1,13 @@
 type: object
 description: Предоплата
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "prepayment"
+    - param: "id"
+  type: "prepayment"
 properties:
   meta:
     description: Метаданные Предоплаты
