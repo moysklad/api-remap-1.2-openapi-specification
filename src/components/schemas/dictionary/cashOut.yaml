@@ -84,8 +84,10 @@ properties:
     description: Метаданные юрлица
     $ref: '../../../openapi.yaml#/components/schemas/Organization'
   agent:
-    description: Метаданные контрагента
-    $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
+    description: Метаданные контрагента или юрлица
+    x-agent-reference: true
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Agent'
   expenseItem:
     description: Метаданные статьи расхода
     nullable: true
