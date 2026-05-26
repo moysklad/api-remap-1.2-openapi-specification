@@ -643,6 +643,31 @@ paths:
     $ref: './paths/documents/demands/demand-position-by-id.yaml'
   /entity/demand/{id}/positions/delete:
     $ref: './paths/documents/demands/demand-positions-delete.yaml'
+  # Documents - Sales Returns
+  /entity/salesreturn:
+    $ref: './paths/documents/salesreturns/salesreturns.yaml'
+  /entity/salesreturn/{id}:
+    $ref: './paths/documents/salesreturns/salesreturn-by-id.yaml'
+  /entity/salesreturn/delete:
+    $ref: './paths/documents/salesreturns/salesreturns-delete.yaml'
+  /entity/salesreturn/batch:
+    $ref: './paths/documents/salesreturns/salesreturns-batch.yaml'
+  /entity/salesreturn/metadata:
+    $ref: './paths/documents/salesreturns/salesreturn-metadata.yaml'
+  /entity/salesreturn/metadata/attributes:
+    $ref: './paths/documents/salesreturns/salesreturn-metadata-attribute.yaml'
+  /entity/salesreturn/metadata/attributes/{id}:
+    $ref: './paths/documents/salesreturns/salesreturn-metadata-attribute-by-id.yaml'
+  /entity/salesreturn/metadata/states/{id}:
+    $ref: './paths/documents/salesreturns/salesreturn-metadata-state-by-id.yaml'
+  /entity/salesreturn/new:
+    $ref: './paths/documents/salesreturns/salesreturn-new.yaml'
+  /entity/salesreturn/{id}/positions:
+    $ref: './paths/documents/salesreturns/salesreturn-positions.yaml'
+  /entity/salesreturn/{id}/positions/{positionId}:
+    $ref: './paths/documents/salesreturns/salesreturn-position-by-id.yaml'
+  /entity/salesreturn/{id}/positions/delete:
+    $ref: './paths/documents/salesreturns/salesreturn-positions-delete.yaml'
   # Documents - Purchase Orders
   /entity/purchaseorder:
     $ref: './paths/documents/purchaseorders/purchaseorders.yaml'
@@ -982,6 +1007,8 @@ components:
           type: boolean
           nullable: true
           description: Признак наследуемости
+    Loss:
+      $ref: './components/schemas/dictionary/loss.yaml'
     MinimumStockAllWarehouseSame:
       $ref: './components/schemas/dictionary/minimumStockAllWarehouseSame.yaml'
     MinimumStockAllWarehouseSum:
@@ -1066,6 +1093,12 @@ components:
       $ref: './components/schemas/dictionary/salePlatformGroup.yaml'
     SalesReturn:
       $ref: './components/schemas/dictionary/salesReturn.yaml'
+    SalesReturnList:
+      $ref: './components/schemas/dictionary/salesReturnList.yaml'
+    SalesReturnPosition:
+      $ref: './components/schemas/dictionary/salesReturnPosition.yaml'
+    SalesReturnPositionList:
+      $ref: './components/schemas/dictionary/salesReturnPositionList.yaml'
     Service:
       $ref: './components/schemas/dictionary/service.yaml'
     ServiceList:
@@ -1453,6 +1486,8 @@ tags:
     description: Операции с заказами покупателя
   - name: Demands
     description: Операции с отгрузками
+  - name: SalesReturns
+    description: Операции с возвратами покупателей
   - name: PurchaseOrders
     description: Операции с заказами поставщика
   - name: EmissionOrders

@@ -85,6 +85,7 @@ class SerializationTest extends BaseTestCase {
         FIXTURE_MODEL_MAP.put("internal_order", "InternalOrder");
         FIXTURE_MODEL_MAP.put("customer_order", "CustomerOrder");
         FIXTURE_MODEL_MAP.put("demand", "Demand");
+        FIXTURE_MODEL_MAP.put("sales_return", "SalesReturn");
         FIXTURE_MODEL_MAP.put("purchase_order", "PurchaseOrder");
         FIXTURE_MODEL_MAP.put("emission_order", "EmissionOrder");
         FIXTURE_MODEL_MAP.put("event_note", "EventNote");
