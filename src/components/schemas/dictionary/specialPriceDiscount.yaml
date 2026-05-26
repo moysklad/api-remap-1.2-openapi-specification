@@ -1,5 +1,13 @@
 type: object
 description: Специальная цена (specialpricediscount)
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "specialpricediscount"
+    - param: "id"
+  type: "specialpricediscount"
 allOf:
   - $ref: '../../../openapi.yaml#/components/schemas/DiscountBase'
 properties:

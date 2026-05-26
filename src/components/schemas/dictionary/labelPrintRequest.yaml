@@ -1,0 +1,22 @@
+type: object
+description: Запрос на печать этикеток и ценников
+required:
+  - organization
+  - count
+  - salePrice
+  - template
+properties:
+  organization:
+    description: Метаданные юридического лица
+    $ref: '../../../openapi.yaml#/components/schemas/Organization'
+  count:
+    type: integer
+    minimum: 1
+    maximum: 1000
+    description: Количество ценников/термоэтикеток
+  salePrice:
+    description: Цена продажи
+    $ref: '../../../openapi.yaml#/components/schemas/SalePrice'
+  template:
+    description: Метаданные шаблона печати
+    $ref: '../../../openapi.yaml#/components/schemas/EmbeddedTemplate'

@@ -1,5 +1,13 @@
 type: object
 description: Единица измерения
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "uom"
+    - param: "id"
+  type: "uom"
 properties:
   meta:
     $ref: '../common/meta.yaml'

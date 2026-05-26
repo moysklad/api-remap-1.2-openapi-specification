@@ -1,5 +1,13 @@
 type: object
 description: Счет-фактура полученный (facturein)
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "facturein"
+    - param: "id"
+  type: "facturein"
 properties:
   meta:
     description: Метаданные Счета-фактуры полученного

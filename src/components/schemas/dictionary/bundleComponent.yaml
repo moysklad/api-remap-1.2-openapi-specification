@@ -1,5 +1,16 @@
 type: object
 description: Компонент комплекта
+x-entity-static-builder:
+  methodParams:
+    - "parentId"
+    - "id"
+  href:
+    - path: "entity"
+    - path: "bundle"
+    - param: "parentId"
+    - path: "components"
+    - param: "id"
+  type: "bundlecomponent"
 properties:
   meta:
     description: Метаданные компонента комплекта

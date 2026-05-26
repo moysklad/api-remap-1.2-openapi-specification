@@ -1,5 +1,13 @@
 type: object
 description: Бонусная операция (bonustransaction)
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "bonustransaction"
+    - param: "id"
+  type: "bonustransaction"
 properties:
   meta:
     description: Метаданные бонусной операции

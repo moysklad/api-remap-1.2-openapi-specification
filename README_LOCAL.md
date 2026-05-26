@@ -38,6 +38,12 @@ npm run bundle-json
 
 Docker-среда поддерживает несколько языков SDK (php, python, java, javascript). Сейчас реализованы генерация и тесты для PHP; для остальных языков нужно добавить скрипты в `package.json` и тесты в `tests/<language>/`.
 
+Контейнеры `sdk` и `java-sdk` запускаются под UID/GID пользователя хоста (`${UID:-1000}:${GID:-1000}`), поэтому сгенерированные файлы в `clients/` остаются доступными текущему пользователю. Если ранее SDK уже генерировались контейнером от root, один раз исправьте владельца:
+
+```bash
+sudo chown -R "$(id -u):$(id -g)" clients
+```
+
 ```bash
 # Сборка образа
 docker compose build
@@ -51,10 +57,12 @@ docker compose run --rm sdk make bundle
 # Генерация SDK (по умолчанию PHP; можно несколько: LANGUAGES=php,python)
 docker compose run --rm sdk make generate
 docker compose run --rm sdk make generate-php
+docker compose run --rm sdk make generate-java
 
 # Golden тесты (по умолчанию php)
 docker compose run --rm sdk make test-golden
 docker compose run --rm sdk make test-golden-php
+docker compose run --rm java-sdk make test-golden-java
 
 # Smoke тесты (openapi-mock + тесты по языкам)
 # ВАЖНО: после make bundle перезапустите mock — он кэширует спецификацию при старте
@@ -117,8 +125,10 @@ api-sdk-builder/
 ├── src/
 │   └── openapi.yaml                  # Главный файл OpenAPI спецификации
 ├── customtemplates/
+|   ├── java/                         # Кастомные шаблоны для Java SDK
 │   └── php/                          # Кастомные шаблоны для PHP SDK
 ├── tests/
+│   ├── java/                         # Java тесты (golden)
 │   └── php/                          # PHP тесты (golden + smoke)
 └── clients/                          # Сгенерированные SDK (создаётся при генерации)
 ```

@@ -75,6 +75,7 @@ deploy-to-maven:
         else 
           echo "No release tag found. Stop maven release"
           exit 1
+        fi
       fi
     - cd sdk-repo
     - export TZ='Europe/Moscow'

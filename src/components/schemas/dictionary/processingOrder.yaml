@@ -1,5 +1,13 @@
 type: object
 description: Заказ на производство
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "processingorder"
+    - param: "id"
+  type: "processingorder"
 properties:
   meta:
     description: Метаданные заказа на производство
