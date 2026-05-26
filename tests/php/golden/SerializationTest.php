@@ -77,6 +77,7 @@ class SerializationTest extends TestCase
         'demand' => 'Demand',
         'sales_return' => 'SalesReturn',
         'purchase_order' => 'PurchaseOrder',
+        'purchase_return' => 'PurchaseReturn',
         'emission_order' => 'EmissionOrder',
         'variantcharacteristic' => 'VariantCharacteristic',
         'contract' => 'Contract',

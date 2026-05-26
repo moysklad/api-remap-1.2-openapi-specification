@@ -668,6 +668,33 @@ paths:
     $ref: './paths/documents/salesreturns/salesreturn-position-by-id.yaml'
   /entity/salesreturn/{id}/positions/delete:
     $ref: './paths/documents/salesreturns/salesreturn-positions-delete.yaml'
+  # Documents - Purchase Returns
+  /entity/purchasereturn:
+    $ref: './paths/documents/purchasereturns/purchasereturns.yaml'
+  /entity/purchasereturn/{id}:
+    $ref: './paths/documents/purchasereturns/purchasereturn-by-id.yaml'
+  /entity/purchasereturn/delete:
+    $ref: './paths/documents/purchasereturns/purchasereturns-delete.yaml'
+  /entity/purchasereturn/batch:
+    $ref: './paths/documents/purchasereturns/purchasereturns-batch.yaml'
+  /entity/purchasereturn/metadata:
+    $ref: './paths/documents/purchasereturns/purchasereturn-metadata.yaml'
+  /entity/purchasereturn/metadata/attributes:
+    $ref: './paths/documents/purchasereturns/purchasereturn-metadata-attribute.yaml'
+  /entity/purchasereturn/metadata/attributes/{id}:
+    $ref: './paths/documents/purchasereturns/purchasereturn-metadata-attribute-by-id.yaml'
+  /entity/purchasereturn/metadata/states:
+    $ref: './paths/documents/purchasereturns/purchasereturn-metadata-states.yaml'
+  /entity/purchasereturn/metadata/states/{id}:
+    $ref: './paths/documents/purchasereturns/purchasereturn-metadata-state-by-id.yaml'
+  /entity/purchasereturn/new:
+    $ref: './paths/documents/purchasereturns/purchasereturn-new.yaml'
+  /entity/purchasereturn/{id}/positions:
+    $ref: './paths/documents/purchasereturns/purchasereturn-positions.yaml'
+  /entity/purchasereturn/{id}/positions/{positionId}:
+    $ref: './paths/documents/purchasereturns/purchasereturn-position-by-id.yaml'
+  /entity/purchasereturn/{id}/positions/delete:
+    $ref: './paths/documents/purchasereturns/purchasereturn-positions-delete.yaml'
   # Documents - Purchase Orders
   /entity/purchaseorder:
     $ref: './paths/documents/purchaseorders/purchaseorders.yaml'
@@ -1277,6 +1304,12 @@ components:
       $ref: './components/schemas/dictionary/purchaseOrderPositionList.yaml'
     PurchaseReturn:
       $ref: './components/schemas/dictionary/purchaseReturn.yaml'
+    PurchaseReturnList:
+      $ref: './components/schemas/dictionary/purchaseReturnList.yaml'
+    PurchaseReturnPosition:
+      $ref: './components/schemas/dictionary/purchaseReturnPosition.yaml'
+    PurchaseReturnPositionList:
+      $ref: './components/schemas/dictionary/purchaseReturnPositionList.yaml'
     InvoiceIn:
       $ref: './components/schemas/dictionary/invoiceIn.yaml'
     InvoiceOut:
@@ -1488,6 +1521,8 @@ tags:
     description: Операции с отгрузками
   - name: SalesReturns
     description: Операции с возвратами покупателей
+  - name: PurchaseReturns
+    description: Операции с возвратами поставщикам
   - name: PurchaseOrders
     description: Операции с заказами поставщика
   - name: EmissionOrders
