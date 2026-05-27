@@ -695,6 +695,25 @@ paths:
     $ref: './paths/documents/purchasereturns/purchasereturn-position-by-id.yaml'
   /entity/purchasereturn/{id}/positions/delete:
     $ref: './paths/documents/purchasereturns/purchasereturn-positions-delete.yaml'
+  # Documents - Prepayment Returns
+  /entity/prepaymentreturn:
+    $ref: './paths/documents/prepaymentreturns/prepaymentreturns.yaml'
+  /entity/prepaymentreturn/{id}:
+    $ref: './paths/documents/prepaymentreturns/prepaymentreturn-by-id.yaml'
+  /entity/prepaymentreturn/metadata:
+    $ref: './paths/documents/prepaymentreturns/prepaymentreturn-metadata.yaml'
+  /entity/prepaymentreturn/metadata/attributes:
+    $ref: './paths/documents/prepaymentreturns/prepaymentreturn-metadata-attribute.yaml'
+  /entity/prepaymentreturn/metadata/attributes/{id}:
+    $ref: './paths/documents/prepaymentreturns/prepaymentreturn-metadata-attribute-by-id.yaml'
+  /entity/prepaymentreturn/metadata/states:
+    $ref: './paths/documents/prepaymentreturns/prepaymentreturn-metadata-states.yaml'
+  /entity/prepaymentreturn/metadata/states/{id}:
+    $ref: './paths/documents/prepaymentreturns/prepaymentreturn-metadata-state-by-id.yaml'
+  /entity/prepaymentreturn/{id}/positions:
+    $ref: './paths/documents/prepaymentreturns/prepaymentreturn-positions.yaml'
+  /entity/prepaymentreturn/{id}/positions/{positionId}:
+    $ref: './paths/documents/prepaymentreturns/prepaymentreturn-position-by-id.yaml'
   # Documents - Purchase Orders
   /entity/purchaseorder:
     $ref: './paths/documents/purchaseorders/purchaseorders.yaml'
@@ -1348,6 +1367,14 @@ components:
       $ref: './components/schemas/dictionary/paymentInList.yaml'
     Prepayment:
       $ref: './components/schemas/dictionary/prepayment.yaml'
+    PrepaymentReturn:
+      $ref: './components/schemas/dictionary/prepaymentReturn.yaml'
+    PrepaymentReturnList:
+      $ref: './components/schemas/dictionary/prepaymentReturnList.yaml'
+    PrepaymentReturnPosition:
+      $ref: './components/schemas/dictionary/prepaymentReturnPosition.yaml'
+    PrepaymentReturnPositionList:
+      $ref: './components/schemas/dictionary/prepaymentReturnPositionList.yaml'
     CashOut:
       $ref: './components/schemas/dictionary/cashOut.yaml'
     CashOutOperation:
@@ -1551,6 +1578,8 @@ tags:
     description: Операции с возвратами покупателей
   - name: PurchaseReturns
     description: Операции с возвратами поставщикам
+  - name: PrepaymentReturns
+    description: Операции с возвратами предоплаты
   - name: PurchaseOrders
     description: Операции с заказами поставщика
   - name: EmissionOrders

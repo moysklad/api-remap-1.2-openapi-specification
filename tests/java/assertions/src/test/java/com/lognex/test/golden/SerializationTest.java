@@ -88,6 +88,7 @@ class SerializationTest extends BaseTestCase {
         FIXTURE_MODEL_MAP.put("sales_return", "SalesReturn");
         FIXTURE_MODEL_MAP.put("purchase_order", "PurchaseOrder");
         FIXTURE_MODEL_MAP.put("purchase_return", "PurchaseReturn");
+        FIXTURE_MODEL_MAP.put("prepayment_return", "PrepaymentReturn");
         FIXTURE_MODEL_MAP.put("emission_order", "EmissionOrder");
         FIXTURE_MODEL_MAP.put("event_note", "EventNote");
         FIXTURE_MODEL_MAP.put("variantcharacteristic", "VariantCharacteristic");
