@@ -82,6 +82,7 @@ properties:
     type: number
     format: double
     description: Сумма НДС
+    readOnly: true
   sum:
     type: number
     format: double
@@ -102,8 +103,10 @@ properties:
     allOf:
       - $ref: '../../../openapi.yaml#/components/schemas/Account'
   agent:
-    description: Метаданные контрагента
-    $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
+    description: Метаданные контрагента или юрлица
+    anyOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
+      - $ref: '../../../openapi.yaml#/components/schemas/Organization'
   agentAccount:
     description: Метаданные счета контрагента
     nullable: true
@@ -112,7 +115,9 @@ properties:
       - $ref: '../../../openapi.yaml#/components/schemas/Account'
   store:
     description: Метаданные склада
-    $ref: '../../../openapi.yaml#/components/schemas/Store'
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Store'
   state:
     description: Метаданные статуса Возврата поставщику
     nullable: true
@@ -141,9 +146,9 @@ properties:
     description: Отдел сотрудника
     $ref: '../../../openapi.yaml#/components/schemas/Group'
   attributes:
-    type: array
-    nullable: true
     description: Коллекция метаданных доп. полей
+    nullable: true
+    type: array
     items:
       $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
   files:
@@ -153,6 +158,7 @@ properties:
     allOf:
       - $ref: '../../../openapi.yaml#/components/schemas/FileList'
   rate:
+    description: Валюта
     $ref: '../common/currencyRate.yaml'
   positions:
     type: object

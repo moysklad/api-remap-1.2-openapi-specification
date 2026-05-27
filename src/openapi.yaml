@@ -673,6 +673,10 @@ paths:
     $ref: './paths/documents/purchasereturns/purchasereturns.yaml'
   /entity/purchasereturn/{id}:
     $ref: './paths/documents/purchasereturns/purchasereturn-by-id.yaml'
+  /entity/purchasereturn/{id}/files:
+    $ref: './paths/documents/purchasereturns/purchasereturn-files.yaml'
+  /entity/purchasereturn/{id}/files/{fileId}:
+    $ref: './paths/documents/purchasereturns/purchasereturn-file-by-id.yaml'
   /entity/purchasereturn/delete:
     $ref: './paths/documents/purchasereturns/purchasereturns-delete.yaml'
   /entity/purchasereturn/batch:
