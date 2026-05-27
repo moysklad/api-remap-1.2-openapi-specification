@@ -89,8 +89,10 @@ properties:
     description: Метаданные вашего юрлица
     $ref: '../../../openapi.yaml#/components/schemas/Organization'
   agent:
-    description: Метаданные Контрагента
-    $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
+    description: Метаданные контрагента или юрлица
+    x-agent-reference: true
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Agent'
   state:
     description: Метаданные статуса договора
     nullable: true

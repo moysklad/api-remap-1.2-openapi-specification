@@ -41,6 +41,7 @@ Follow this order. Read [reference.md](reference.md) for templates and edge-case
 8. **Add test data** — create a rich shared fixture in `tests/fixtures/<snake_case>.json`, register it in both PHP and Java `FIXTURE_MODEL_MAP`, and update `IGNORED_FIELDS` only when required.
 9. **Add smoke coverage** — one test method per endpoint+method from the endpoint matrix.
 10. **Cross-check** — re-read the MD and verify fields, endpoints, refs, nullable values, enums, fixtures, smoke tests, and `x-entity-static-builder` presence on every schema with `meta`.
+    If the entity introduces query parameters beyond the common set (`limit`, `offset`, `search`, `filter`, `expand`, `order`, `fields`), decide whether `customtemplates/java/*Options.mustache` needs a typed helper or whether raw `RequestOptions.queryParam(...)` is enough.
 11. **Verify** — run the Docker make sequence below.
 12. **Report** — mention any stubs created or left unexpanded, intentionally skipped MD fields, and checks run.
 
@@ -98,6 +99,7 @@ Before verification, re-read the MD and confirm:
 - `+Обязательное при ответе` is treated as informational only and never converted to `readOnly: true` unless the same field also has `+Только для чтения`.
 - Nested object structures match MD JSON examples exactly.
 - Every API operation section maps to a path + method and a smoke test.
+- Non-standard query parameters are either intentionally left as raw `RequestOptions.queryParam(...)` values or covered by a typed Java options helper.
 - Metadata attributes, `metadata/states`, and `metadata/states/{id}` exist when the MD metadata section requires them.
 - Every schema with a top-level `meta` field carries `x-entity-static-builder` (entity → keyword + `id`; position → `parentId` + `id` + `<keyword>position` type).
 - The fixture uses the richest single-entity GET response, not a minimal create request.

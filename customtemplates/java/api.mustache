@@ -67,6 +67,39 @@ public class {{classname}} extends BaseApi {
     {{#returnType}}return {{/returnType}}this.{{operationId}}({{#allParams}}{{paramName}}, {{/allParams}}Collections.emptyMap());
   }
 
+  {{#queryParams}}
+  {{#-first}}
+  /**
+   * {{summary}}
+   * {{notes}}
+   {{#allParams}}
+   {{^isQueryParam}}{{^isHeaderParam}}
+   * @param {{paramName}} {{description}}{{#required}} (required){{/required}}{{^required}} (optional{{^isContainer}}{{#defaultValue}}, default to {{.}}{{/defaultValue}}{{/isContainer}}){{/required}}
+   {{/isHeaderParam}}{{/isQueryParam}}
+   {{/allParams}}
+   * @param options request options such as pagination, filters, expands, fields, sorting and additional headers
+   {{#returnType}}
+   * @return {{returnType}}
+   {{/returnType}}
+   * @throws ApiException if fails to make API call
+   {{#isDeprecated}}
+   * @deprecated
+   {{/isDeprecated}}
+   {{#externalDocs}}
+   * {{description}}
+   * @see <a href="{{url}}">{{summary}} Documentation</a>
+   {{/externalDocs}}
+   */
+  {{#isDeprecated}}
+  @Deprecated
+  {{/isDeprecated}}
+  public {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{operationId}}({{#allParams}}{{^isQueryParam}}{{^isHeaderParam}}{{>nullable_var_annotations}} {{{dataType}}} {{paramName}}, {{/isHeaderParam}}{{/isQueryParam}}{{/allParams}}RequestOptions options) throws ApiException {
+    RequestOptions effectiveOptions = RequestOptions.emptyIfNull(options);
+    {{#returnType}}return {{/returnType}}this.{{operationId}}({{#allParams}}{{#isQueryParam}}({{{dataType}}}) effectiveOptions.get("{{paramName}}"){{/isQueryParam}}{{#isHeaderParam}}null{{/isHeaderParam}}{{^isQueryParam}}{{^isHeaderParam}}{{paramName}}{{/isHeaderParam}}{{/isQueryParam}}, {{/allParams}}effectiveOptions.getAdditionalHeaders());
+  }
+
+  {{/-first}}
+  {{/queryParams}}
 
   /**
    * {{summary}}
