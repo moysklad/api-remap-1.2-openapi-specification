@@ -1,0 +1,56 @@
+{{>licenseInfo}}
+package {{apiPackage}};
+
+import java.util.StringJoiner;
+
+/**
+ * Helpers for building MoySklad filter query values.
+ */
+public final class Filters {
+  private Filters() {
+  }
+
+  public static String raw(String filter) {
+    return filter;
+  }
+
+  public static String eq(String field, Object value) {
+    return condition(field, "=", value);
+  }
+
+  public static String ne(String field, Object value) {
+    return condition(field, "!=", value);
+  }
+
+  public static String gt(String field, Object value) {
+    return condition(field, ">", value);
+  }
+
+  public static String gte(String field, Object value) {
+    return condition(field, ">=", value);
+  }
+
+  public static String lt(String field, Object value) {
+    return condition(field, "<", value);
+  }
+
+  public static String lte(String field, Object value) {
+    return condition(field, "<=", value);
+  }
+
+  public static String and(String... filters) {
+    StringJoiner joiner = new StringJoiner(";");
+    if (filters != null) {
+      for (String filter : filters) {
+        if (filter != null && !filter.isEmpty()) {
+          joiner.add(filter);
+        }
+      }
+    }
+    return joiner.toString();
+  }
+
+  private static String condition(String field, String operator, Object value) {
+    return field + operator + String.valueOf(value);
+  }
+}
