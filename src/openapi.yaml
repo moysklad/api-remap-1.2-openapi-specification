@@ -926,6 +926,8 @@ components:
       $ref: './components/schemas/dictionary/cashier.yaml'
     ContactPerson:
       $ref: './components/schemas/dictionary/contactPerson.yaml'
+    Agent:
+      $ref: './components/schemas/dictionary/agent.yaml'
     Counterparty:
       $ref: './components/schemas/dictionary/counterparty.yaml'
     CounterpartyList:
