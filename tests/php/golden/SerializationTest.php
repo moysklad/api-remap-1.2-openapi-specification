@@ -91,6 +91,7 @@ class SerializationTest extends TestCase
         'cash_in_operation' => 'CashInOperation',
         'cash_out' => 'CashOut',
         'cash_out_operation' => 'CashOutOperation',
+        'payment_in' => 'PaymentIn',
         'facture_in' => 'FactureIn',
         'facture_out' => 'FactureOut',
         'company_settings' => 'CompanySettings',

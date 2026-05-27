@@ -1,5 +1,5 @@
 description: |
-  Элемент массива `operations` приходного ордера.
+  Элемент массива `operations` входящего платежа.
 
   Допустимые `meta.type`: customerorder, purchasereturn, demand, invoiceout, commissionreportin,
   retailshift.
