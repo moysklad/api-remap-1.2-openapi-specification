@@ -85,7 +85,9 @@ properties:
     $ref: '../../../openapi.yaml#/components/schemas/Organization'
   agent:
     description: Метаданные контрагента
-    $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
+    x-agent-reference: true
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Agent'
   agentAccount:
     description: Метаданные счета контрагента
     nullable: true
