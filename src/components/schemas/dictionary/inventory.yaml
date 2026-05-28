@@ -1,0 +1,24 @@
+type: object
+description: Инвентаризация
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "inventory"
+    - param: "id"
+  type: "inventory"
+properties:
+  meta:
+    description: Метаданные Инвентаризации
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID Инвентаризации
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
