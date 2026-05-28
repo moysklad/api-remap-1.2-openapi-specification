@@ -51,7 +51,6 @@ properties:
   expenseItem:
     description: Метаданные Статьи расходов
     readOnly: true
-    nullable: true
     type: object
     allOf:
       - $ref: '../../../openapi.yaml#/components/schemas/ExpenseItem'
@@ -61,7 +60,6 @@ properties:
     description: Внешний код Списания
   files:
     description: Метаданные массива Файлов (Максимальное количество файлов - 100)
-    readOnly: true
     nullable: true
     type: object
     allOf:
@@ -104,6 +102,7 @@ properties:
     description: Опубликован ли документ
     readOnly: true
   rate:
+    description: Валюта
     $ref: '../common/currencyRate.yaml'
   shared:
     type: boolean

@@ -50,7 +50,6 @@ properties:
         country:
           description: Страна происхождения товара
           readOnly: true
-          nullable: true
           type: object
           allOf:
             - $ref: '../../../openapi.yaml#/components/schemas/Country'
