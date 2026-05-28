@@ -1,0 +1,42 @@
+{{>licenseInfo}}
+package {{apiPackage}};
+
+/**
+ * Optional parameters for entity list endpoints.
+ */
+public class ListOptions extends PageOptions {
+  protected ListOptions(Builder<?> builder) {
+    super(builder);
+  }
+
+  public static Builder<?> builder() {
+    return new Builder<>();
+  }
+
+  public static class Builder<T extends Builder<T>> extends PageOptions.Builder<T> {
+    public T search(String search) {
+      return queryParam("search", search);
+    }
+
+    public T filter(String filter) {
+      return queryParam("filter", filter);
+    }
+
+    public T filters(String... filters) {
+      return filter(Filters.and(filters));
+    }
+
+    public T order(String order) {
+      return queryParam("order", order);
+    }
+
+    public T orders(String... orders) {
+      return order(Orders.and(orders));
+    }
+
+    @Override
+    public ListOptions build() {
+      return new ListOptions(this);
+    }
+  }
+}

@@ -24,11 +24,9 @@ properties:
     readOnly: true
   agent:
     description: Метаданные Контрагента или юрлица, связанного с задачей
-    type: object
-    nullable: true
-    oneOf:
-      - $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
-      - $ref: '../../../openapi.yaml#/components/schemas/Organization'
+    x-agent-reference: true
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Agent'
   assignee:
     description: Метаданные ответственного за выполнение задачи
     $ref: '../../../openapi.yaml#/components/schemas/Employee'

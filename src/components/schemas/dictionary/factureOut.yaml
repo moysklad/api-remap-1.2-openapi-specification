@@ -23,8 +23,10 @@ properties:
     description: ID учетной записи
     readOnly: true
   agent:
-    description: Метаданные контрагента
-    $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
+    description: Метаданные контрагента или юрлица
+    x-agent-reference: true
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Agent'
   applicable:
     type: boolean
     description: Отметка о проведении
@@ -156,7 +158,10 @@ properties:
   consignee:
     description: Грузополучатель (контрагент или юрлицо)
     nullable: true
-    $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
+    type: object
+    x-agent-reference: true
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Agent'
   paymentNumber:
     type: string
     maxLength: 255
