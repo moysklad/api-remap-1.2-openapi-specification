@@ -1582,6 +1582,59 @@ class ApiEndpointsTest extends TestCase
         $this->assertReachable($this->client->put(self::API_BASE_PATH . '/entity/demand/new'));
     }
 
+    public function testRetailDemandCrudMetadataTemplateAndPositions(): void
+    {
+        $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/retaildemand'));
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . '/entity/retaildemand', [
+            'json' => [
+                'retailShift' => [
+                    'meta' => [
+                        'href' => 'https://api.moysklad.ru/api/remap/1.2/entity/retailshift/' . self::TEST_UUID,
+                        'type' => 'retailshift',
+                        'mediaType' => 'application/json',
+                    ],
+                ],
+            ],
+        ]));
+
+        $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/retaildemand/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put(self::API_BASE_PATH . '/entity/retaildemand/' . self::TEST_UUID, ['json' => ['name' => 'Retail Demand Y']]));
+        $this->assertReachable($this->client->delete(self::API_BASE_PATH . '/entity/retaildemand/' . self::TEST_UUID));
+
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . '/entity/retaildemand/delete', ['json' => [['meta' => ['href' => 'x']]]]));
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . '/entity/retaildemand/batch', ['json' => [['name' => 'Retail Demand Z']]]));
+
+        $base = self::API_BASE_PATH . '/entity/retaildemand/' . self::TEST_UUID;
+        $this->assertReachable($this->client->get($base . '/positions'));
+        $this->assertReachable($this->client->post($base . '/positions', ['json' => ['quantity' => 1]]));
+        $this->assertReachable($this->client->get($base . '/positions/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put($base . '/positions/' . self::TEST_UUID, ['json' => ['quantity' => 2]]));
+        $this->assertReachable($this->client->delete($base . '/positions/' . self::TEST_UUID));
+        $this->assertReachable($this->client->post($base . '/positions/delete', ['json' => [['meta' => ['href' => 'x']]]]));
+
+        $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/retaildemand/metadata'));
+        $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/retaildemand/metadata/attributes'));
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . '/entity/retaildemand/metadata/attributes', ['json' => [['name' => 'atr1']]]));
+        $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/retaildemand/metadata/attributes/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put(self::API_BASE_PATH . '/entity/retaildemand/metadata/attributes/' . self::TEST_UUID, ['json' => ['name' => 'atr1']]));
+        $this->assertReachable($this->client->delete(self::API_BASE_PATH . '/entity/retaildemand/metadata/attributes/' . self::TEST_UUID));
+        $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/retaildemand/metadata/states/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put(self::API_BASE_PATH . '/entity/retaildemand/metadata/states/' . self::TEST_UUID, ['json' => ['name' => 'state1']]));
+        $this->assertReachable($this->client->delete(self::API_BASE_PATH . '/entity/retaildemand/metadata/states/' . self::TEST_UUID));
+
+        $this->assertReachable($this->client->put(self::API_BASE_PATH . '/entity/retaildemand/new', [
+            'json' => [
+                'retailShift' => [
+                    'meta' => [
+                        'href' => 'https://api.moysklad.ru/api/remap/1.2/entity/retailshift/' . self::TEST_UUID,
+                        'type' => 'retailshift',
+                        'mediaType' => 'application/json',
+                    ],
+                ],
+            ],
+        ]));
+    }
+
     public function testListPurchaseOrders(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/purchaseorder');

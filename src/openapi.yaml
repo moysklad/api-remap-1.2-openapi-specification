@@ -643,6 +643,31 @@ paths:
     $ref: './paths/documents/demands/demand-position-by-id.yaml'
   /entity/demand/{id}/positions/delete:
     $ref: './paths/documents/demands/demand-positions-delete.yaml'
+  # Documents - Retail Demands
+  /entity/retaildemand:
+    $ref: './paths/documents/retaildemands/retaildemands.yaml'
+  /entity/retaildemand/{id}:
+    $ref: './paths/documents/retaildemands/retaildemand-by-id.yaml'
+  /entity/retaildemand/delete:
+    $ref: './paths/documents/retaildemands/retaildemands-delete.yaml'
+  /entity/retaildemand/batch:
+    $ref: './paths/documents/retaildemands/retaildemands-batch.yaml'
+  /entity/retaildemand/metadata:
+    $ref: './paths/documents/retaildemands/retaildemand-metadata.yaml'
+  /entity/retaildemand/metadata/attributes:
+    $ref: './paths/documents/retaildemands/retaildemand-metadata-attribute.yaml'
+  /entity/retaildemand/metadata/attributes/{id}:
+    $ref: './paths/documents/retaildemands/retaildemand-metadata-attribute-by-id.yaml'
+  /entity/retaildemand/metadata/states/{id}:
+    $ref: './paths/documents/retaildemands/retaildemand-metadata-state-by-id.yaml'
+  /entity/retaildemand/new:
+    $ref: './paths/documents/retaildemands/retaildemand-new.yaml'
+  /entity/retaildemand/{id}/positions:
+    $ref: './paths/documents/retaildemands/retaildemand-positions.yaml'
+  /entity/retaildemand/{id}/positions/{positionId}:
+    $ref: './paths/documents/retaildemands/retaildemand-position-by-id.yaml'
+  /entity/retaildemand/{id}/positions/delete:
+    $ref: './paths/documents/retaildemands/retaildemand-positions-delete.yaml'
   # Documents - Purchase Orders
   /entity/purchaseorder:
     $ref: './paths/documents/purchaseorders/purchaseorders.yaml'
@@ -1308,6 +1333,14 @@ components:
       $ref: './components/schemas/dictionary/demandPositionTrackingCode1162.yaml'
     DemandPositionTrackingCodeType:
       $ref: './components/schemas/dictionary/demandPositionTrackingCodeType.yaml'
+    RetailDemand:
+      $ref: './components/schemas/dictionary/retailDemand.yaml'
+    RetailDemandList:
+      $ref: './components/schemas/dictionary/retailDemandList.yaml'
+    RetailDemandPosition:
+      $ref: './components/schemas/dictionary/retailDemandPosition.yaml'
+    RetailDemandPositionList:
+      $ref: './components/schemas/dictionary/retailDemandPositionList.yaml'
 
     CommissionReportIn:
       $ref: './components/schemas/dictionary/commissionReportIn.yaml'
@@ -1455,6 +1488,8 @@ tags:
     description: Операции с заказами покупателя
   - name: Demands
     description: Операции с отгрузками
+  - name: RetailDemands
+    description: Операции с розничными продажами
   - name: PurchaseOrders
     description: Операции с заказами поставщика
   - name: EmissionOrders
