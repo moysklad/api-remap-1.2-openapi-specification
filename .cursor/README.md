@@ -25,6 +25,12 @@
 
 Skills лежат в `.cursor/skills/`.
 
+## Slash commands
+
+Команды для Cursor Chat лежат в `.cursor/commands/` и вызываются через `/`.
+
+- `/php-sdk-full-audit` — запускает полный QA-аудит PHP SDK по заранее зафиксированному промпту из `.cursor/commands/php-sdk-full-audit.md`.
+
 ### `add-entity`
 
 Этот skill используется при добавлении новой API-сущности, ресурса или endpoint в OpenAPI-спецификацию, особенно если источником является файл `api-remap-1.2-doc/md/**/_*.md`.
