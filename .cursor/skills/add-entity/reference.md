@@ -70,7 +70,7 @@ Track these columns while implementing:
   - Do **not** accept arrays. Do **not** use `oneOf: [<Entity>, array of <Entity>]`.
 - `POST /entity/<keyword>/batch` — mass create/update.
   - Request body schema: `type: array, items: <Entity>, minItems: 1, maxItems: 1000`.
-  - Response schema: `type: array, items: oneOf: [<Entity>, Error]` (per-item result). Do **not** add `minItems`/`maxItems` to the response array — keep limits on request only (see openapi-mock smoke test note in SKILL.md).
+  - Response schema: `type: array, items: oneOf: [<Entity>, Error]` (per-item result). Do **not** add `minItems`/`maxItems` to the response array — keep limits on request only.
 - Add a separate path file `<entities>-batch.yaml` and register the `.../batch` URL in `src/openapi.yaml` even when the MD `### Массовое создание и обновление ...` example reuses the create URL — Remap models it as a distinct `/batch` path.
 - Smoke test must hit `.../batch` for the mass operation and `.../<keyword>` (object body) for single create — never collapse them into one call.
 

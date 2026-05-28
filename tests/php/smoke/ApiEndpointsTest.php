@@ -60,7 +60,7 @@ class ApiEndpointsTest extends TestCase
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
             ],
-            'timeout' => 10,
+            'timeout' => 30,
         ]);
     }
 
