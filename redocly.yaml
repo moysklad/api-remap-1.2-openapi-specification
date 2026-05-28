@@ -1,0 +1,9 @@
+apis:
+  openapi:
+    root: src/openapi.yaml
+    decorators:
+      filter-out:
+        property: type
+        value:
+          - object
+          - array
