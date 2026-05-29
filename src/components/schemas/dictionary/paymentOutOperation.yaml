@@ -1,5 +1,5 @@
 description: |
-  Элемент массива `operations` расходного ордера: **полноценный документ** одного из допустимых типов
+  Элемент массива `operations` исходящего платежа: **полноценный документ** одного из допустимых типов
   плюс обязательное поле `linkedSum`.
 
   Допустимые `meta.type`: salesreturn, supply, invoicein, purchaseorder, commissionreportout
