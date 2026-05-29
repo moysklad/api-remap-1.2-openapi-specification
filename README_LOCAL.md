@@ -54,6 +54,9 @@ docker compose run --rm sdk make lint
 # Сборка bundled спецификации
 docker compose run --rm sdk make bundle
 
+# Сборка облегчённой спецификации для быстрых smoke-тестов
+docker compose run --rm sdk make light-bundle
+
 # Генерация SDK (по умолчанию PHP; можно несколько: LANGUAGES=php,python)
 docker compose run --rm sdk make generate
 docker compose run --rm sdk make generate-php
@@ -65,7 +68,7 @@ docker compose run --rm sdk make test-golden-php
 docker compose run --rm java-sdk make test-golden-java
 
 # Smoke тесты (openapi-mock + тесты по языкам)
-# ВАЖНО: после make bundle перезапустите mock — он кэширует спецификацию при старте
+# ВАЖНО: перед smoke используйте make light-bundle и перезапустите mock — он кэширует спецификацию при старте
 docker compose restart mock
 docker compose run --rm sdk make test-smoke
 
@@ -118,7 +121,7 @@ api-sdk-builder/
 │   ├── version.gitlab-ci.yml         # Версионирование спецификации
 │   └── sdk/
 │       ├── lint-openapi.yml          # Job для lint спецификации
-│       ├── generate-sdk.yml          # Job'ы для генерации SDK
+│       ├── generate-sdk.yml          # Job'ы для bundle-openapi, bundle-smoke-openapi и генерации SDK
 │       ├── sdk-tests-golden.yml      # Golden тесты
 │       ├── sdk-tests-smoke.yml       # Smoke тесты с openapi-mock
 │       └── sdk-contract.yml          # Schemathesis контрактные тесты
@@ -208,7 +211,7 @@ $this->assertContains($response->getStatusCode(), [200, 401, 500]);
 
 > **Примечание:** openapi-mock может возвращать HTTP 500 для эндпоинтов с рекурсивными/глубоко вложенными схемами — это ожидаемое поведение mock-сервера, а не ошибка спецификации.
 
-> **Важно:** openapi-mock загружает `dist/openapi.yaml` **один раз при старте** и кэширует в памяти. После `make bundle` необходимо перезапустить mock-сервер: `docker compose restart mock`. Без перезапуска новые эндпоинты будут возвращать 404. Если `restart` не помогает, пересоздайте контейнер: `docker compose rm -sf mock && docker compose up -d mock`.
+> **Важно:** openapi-mock загружает `dist/openapi.yaml` **один раз при старте** и кэширует в памяти. После `make light-bundle` необходимо перезапустить mock-сервер: `docker compose restart mock`. Без перезапуска новые эндпоинты будут возвращать 404. Если `restart` не помогает, пересоздайте контейнер: `docker compose rm -sf mock && docker compose up -d mock`.
 
 #### Contract тесты (Schemathesis)
 

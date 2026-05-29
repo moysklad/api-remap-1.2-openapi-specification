@@ -6,7 +6,7 @@
     "scripts": {
         "validate": "redocly lint src/openapi.yaml",
         "bundle": "redocly bundle --skip-decorator=filter-out src/openapi.yaml -o dist/openapi.yaml --ext yaml",
-        "bundle-test": "redocly bundle openapi -o dist/openapi.yaml --ext yaml",
+        "light-bundle": "redocly bundle openapi -o dist/openapi.yaml --ext yaml",
         "bundle-json": "redocly bundle --skip-decorator=filter-out src/openapi.yaml -o dist/openapi.json --ext json",
         "docs": "redocly build-docs src/openapi.yaml -o docs/index.html",
         "serve-docs": "redocly preview-docs src/openapi.yaml",

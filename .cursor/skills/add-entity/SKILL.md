@@ -138,13 +138,14 @@ docker compose run --rm sdk make lint           # Redocly lint
 docker compose run --rm sdk make bundle         # produces dist/openapi.yaml + dist/openapi.json
 docker compose run --rm sdk make generate-php   # generates PHP SDK in clients/php/
 docker compose run --rm sdk make generate-java  # generates Java SDK in clients/java/
-docker compose restart mock                     # CRITICAL: reload bundled spec in mock server
 docker compose run --rm sdk make test-golden-php
 docker compose run --rm java-sdk make test-golden-java
+docker compose run --rm sdk make light-bundle    # produces filtered dist/openapi.yaml for fast smoke
+docker compose restart mock                     # CRITICAL: reload smoke bundle in mock server
 docker compose run --rm sdk make test-smoke
 ```
 
-`test-smoke` is the canonical local smoke target.
+`test-smoke` is the canonical local smoke target, but it should run against the `light-bundle` output.
 
 ## Naming conventions
 

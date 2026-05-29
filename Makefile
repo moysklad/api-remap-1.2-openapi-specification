@@ -39,11 +39,11 @@ bundle:
 	npm run bundle
 	npm run bundle-json
 
-bundle-test:
+light-bundle:
 	@echo "==> npm ci..."
 	sh scripts/npm-ci-public-registry.sh
 	@echo "==> bundle OpenAPI spec..."
-	npm run bundle-test
+	npm run light-bundle
 
 # Генерация: все языки из LANGUAGES или по одному
 generate: npm-ci

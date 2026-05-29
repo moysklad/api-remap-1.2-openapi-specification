@@ -22,7 +22,7 @@ bundle-smoke-openapi:
       optional: true
   script:
     - npm ci
-    - npm run bundle-test
+    - npm run light-bundle
   artifacts:
     paths:
       - dist/
