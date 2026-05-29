@@ -7,3 +7,5 @@ apis:
         value:
           - object
           - array
+extends:
+  - recommended
