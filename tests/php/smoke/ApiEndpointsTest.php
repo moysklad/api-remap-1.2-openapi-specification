@@ -3842,6 +3842,44 @@ class ApiEndpointsTest extends TestCase
     }
 
     /**
+     * Проверяет доступность endpoint'ов выплат денег: CRUD, batch, metadata, files и template.
+     */
+    public function testRetailDrawerCashOutCrud(): void
+    {
+        $base = self::API_BASE_PATH . '/entity/retaildrawercashout';
+
+        $this->assertReachable($this->client->get($base));
+        $this->assertReachable($this->client->post($base, ['json' => ['name' => 'X']]));
+
+        $this->assertReachable($this->client->get($base . '/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put($base . '/' . self::TEST_UUID, ['json' => ['name' => 'X']]));
+        $this->assertReachable($this->client->delete($base . '/' . self::TEST_UUID));
+
+        $this->assertReachable($this->client->get($base . '/' . self::TEST_UUID . '/files'));
+        $this->assertReachable($this->client->post($base . '/' . self::TEST_UUID . '/files', ['json' => [['filename' => 'X']],]));
+        $this->assertReachable($this->client->delete($base . '/' . self::TEST_UUID . '/files/' . self::TEST_UUID));
+
+        $this->assertReachable($this->client->post($base . '/delete', ['json' => [['meta' => ['href' => 'x']]]]));
+
+        $this->assertReachable($this->client->post($base . '/batch', ['json' => [['meta' => ['href' => 'x']]]]));
+
+        $this->assertReachable($this->client->get($base . '/metadata'));
+
+        $this->assertReachable($this->client->get($base . '/metadata/attributes'));
+        $this->assertReachable($this->client->post($base . '/metadata/attributes', ['json' => [['name' => 'X']]]));
+        $this->assertReachable($this->client->get($base . '/metadata/attributes/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put($base . '/metadata/attributes/' . self::TEST_UUID, ['json' => ['name' => 'X']]));
+        $this->assertReachable($this->client->delete($base . '/metadata/attributes/' . self::TEST_UUID));
+
+        $this->assertReachable($this->client->post($base . '/metadata/states', ['json' => [['name' => 'X']]]));
+        $this->assertReachable($this->client->get($base . '/metadata/states/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put($base . '/metadata/states/' . self::TEST_UUID, ['json' => ['name' => 'X']]));
+        $this->assertReachable($this->client->delete($base . '/metadata/states/' . self::TEST_UUID));
+
+        $this->assertReachable($this->client->put($base . '/new', ['json' => [['name' => 'X']]]));
+    }
+
+    /**
      * Проверяет доступность endpoint'а получения списка расходных ордеров.
      * GET /entity/cashout
      */
