@@ -145,7 +145,7 @@ docker compose restart mock                     # CRITICAL: reload smoke bundle 
 docker compose run --rm sdk make test-smoke
 ```
 
-`test-smoke` is the canonical local smoke target, but it should run against the `light-bundle` output.
+`test-smoke` is the canonical local smoke target.
 
 ## Naming conventions
 

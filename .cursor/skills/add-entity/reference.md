@@ -1047,7 +1047,7 @@ After modifying any YAML schema, **always run `make generate-php` and `make gene
 
 The correct sequence is:
 1. `lint` — catch YAML/OpenAPI syntax issues
-2. `bundle` — produce the full `dist/openapi.yaml` / `dist/openapi.json` for SDK, docs, and contract checks
+2. `bundle` — produce the full `dist/openapi.yaml`
 3. `generate-php` — regenerate PHP SDK models from the updated spec
 4. `generate-java` — regenerate Java SDK models from the updated spec
 5. `test-golden-php` — verify PHP roundtrip serialization with rich fixtures

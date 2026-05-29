@@ -68,7 +68,7 @@ docker compose run --rm sdk make test-golden-php
 docker compose run --rm java-sdk make test-golden-java
 
 # Smoke тесты (openapi-mock + тесты по языкам)
-# ВАЖНО: перед smoke используйте make light-bundle и перезапустите mock — он кэширует спецификацию при старте
+# ВАЖНО: после make bundle/light-bundle перезапустите mock — он кэширует спецификацию при старте
 docker compose restart mock
 docker compose run --rm sdk make test-smoke
 

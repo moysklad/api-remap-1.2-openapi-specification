@@ -57,7 +57,7 @@ Skills лежат в `.cursor/skills/`.
 
 Если нужно понять, правильно ли сгенерировался SDK:
 
-- сначала лучше смотреть generation logs, вывод `make generate-*`, golden tests, smoke tests (`make light-bundle` + `make test-smoke`) и custom templates;
+- сначала лучше смотреть generation logs, вывод `make generate-*`, golden tests, smoke tests и custom templates;
 - для конкретного SDK-файла можно открыть его явно или попросить агента прочитать точный путь;
 - для широкого ревью SDK можно временно убрать или сузить правило `clients/`, переиндексировать/открыть нужную папку SDK, а после ревью вернуть ignore-правило обратно.
 

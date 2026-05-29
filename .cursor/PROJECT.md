@@ -20,7 +20,7 @@ Modular OpenAPI 3.0.3 specification for MoySklad JSON API 1.2 with automated SDK
 - **Bundling:** Redocly CLI → `dist/openapi.yaml` / `dist/openapi.json`
 - **SDK generation:** OpenAPI Generator CLI (PHP + Java with custom templates in `customtemplates/php/` and `customtemplates/java/`)
 - **Custom schema helper generation:** `x-entity-static-builder` is consumed by both PHP and Java custom templates to generate `createWithMeta(...)` helpers on referenceable models with top-level `meta`
-- **Testing:** PHPUnit (PHP golden + fast smoke via openapi-mock), Maven Surefire (Java golden), Schemathesis (contract)
+- **Testing:** PHPUnit (PHP golden + smoke via openapi-mock), Maven Surefire (Java golden), Schemathesis (contract)
 - **Versioning:** `standard-version` + `oasdiff` (breaking change detection); tag format `MAJOR.MINOR.PATCH` (semver)
 - **Runtime:** Node.js v24.0.1, npm; Docker + Docker Compose for local reproducibility
 - **CI:** GitLab CI/CD (`.gitlab-ci.yml` + included files under `gitlab/`)
@@ -96,7 +96,7 @@ Legacy stages (`prepare`, `deploy-for-space`, `create-user`, `build`, `delete-sp
 
 ## Pipeline Scenarios (summary)
 
-1. **Push to branch** — lint, build the regular SDK/docs bundle, build the filtered smoke bundle, generate PHP+Java SDK, run golden (PHP+Java) and smoke (PHP), prep branch sync for both internal SDK repos, then publish a branch-scoped Java artifact to Artifactory.
+1. **Push to branch** — lint, bundle, light-bundle, generate PHP+Java SDK, run golden (PHP+Java) and smoke (PHP), prep branch sync for both internal SDK repos, then publish a branch-scoped Java artifact to Artifactory.
 2. **Manual (web) on branch** — same as push + schemathesis contract tests + optional `push-sdk-php` (PUSH_TO_REMOTE=true) + the same PHP/Java internal SDK sync and Java Artifactory publish steps.
 3. **Master merge/push** — full flow: checks, green short-circuit for `deploy-contract-env` / `create-contract-user` / `sdk-contract` (no real contract environment setup or Schemathesis execution), SDK generation + tests, `version:auto` (CHANGELOG + tag), `mirror-to-github` + `create-github-release`, manual internal SDK release sync for PHP+Java, then Java publish to Maven Central.
 
@@ -141,7 +141,6 @@ Key differences from Prism: openapi-mock serves endpoints under the `servers.url
 - Java golden tests locally: `docker compose run --rm java-sdk make test-golden-java` (or `make test-golden LANGUAGES=java`).
 - Golden fixtures live in `tests/fixtures/` and are shared by PHP and Java golden tests.
 - PHP tests require PHP 8.1+ with extensions: dom, json, mbstring, curl, Composer.
-- Before smoke tests, run `docker compose run --rm sdk make light-bundle` to write the filtered smoke bundle to `dist/openapi.yaml`.
 - After `make light-bundle`, always `docker compose restart mock` before running smoke tests (see Fast Smoke Bundle and Mock Server section above).
 - Smoke tests are run via `docker compose run --rm sdk make test-smoke`.
 - After modifying any YAML schema, regenerate both SDKs before golden tests: `make generate-php` and `make generate-java`.
