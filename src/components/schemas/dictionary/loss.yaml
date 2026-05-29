@@ -1,0 +1,26 @@
+type: object
+description: |
+  Списание. Заглушка: полное описание сущности в спецификации отсутствует; 
+  Для применения в сервисе заглушка должна быть заменена на полное описание сущности.
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "loss"
+    - param: "id"
+  type: "loss"
+properties:
+  meta:
+    description: Метаданные Списания
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID Списания
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true

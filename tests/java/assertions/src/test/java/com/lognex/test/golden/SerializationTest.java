@@ -85,7 +85,10 @@ class SerializationTest extends BaseTestCase {
         FIXTURE_MODEL_MAP.put("internal_order", "InternalOrder");
         FIXTURE_MODEL_MAP.put("customer_order", "CustomerOrder");
         FIXTURE_MODEL_MAP.put("demand", "Demand");
+        FIXTURE_MODEL_MAP.put("sales_return", "SalesReturn");
         FIXTURE_MODEL_MAP.put("purchase_order", "PurchaseOrder");
+        FIXTURE_MODEL_MAP.put("purchase_return", "PurchaseReturn");
+        FIXTURE_MODEL_MAP.put("prepayment_return", "PrepaymentReturn");
         FIXTURE_MODEL_MAP.put("emission_order", "EmissionOrder");
         FIXTURE_MODEL_MAP.put("event_note", "EventNote");
         FIXTURE_MODEL_MAP.put("variantcharacteristic", "VariantCharacteristic");
@@ -97,9 +100,11 @@ class SerializationTest extends BaseTestCase {
         FIXTURE_MODEL_MAP.put("expense_item", "ExpenseItem");
         FIXTURE_MODEL_MAP.put("cash_in", "CashIn");
         FIXTURE_MODEL_MAP.put("retail_drawer_cash_in", "RetailDrawerCashIn");
+        FIXTURE_MODEL_MAP.put("retail_drawer_cash_out", "RetailDrawerCashOut");
         FIXTURE_MODEL_MAP.put("cash_in_operation", "CashInOperation");
         FIXTURE_MODEL_MAP.put("cash_out", "CashOut");
         FIXTURE_MODEL_MAP.put("cash_out_operation", "CashOutOperation");
+        FIXTURE_MODEL_MAP.put("payment_in", "PaymentIn");
         FIXTURE_MODEL_MAP.put("facture_in", "FactureIn");
         FIXTURE_MODEL_MAP.put("facture_out", "FactureOut");
         FIXTURE_MODEL_MAP.put("company_settings", "CompanySettings");
