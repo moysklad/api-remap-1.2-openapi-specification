@@ -73,6 +73,7 @@ class SerializationTest extends TestCase
         'webhookstock' => 'WebhookStock',
         'thing' => 'Thing',
         'internal_order' => 'InternalOrder',
+        'processing_order' => 'ProcessingOrder',
         'customer_order' => 'CustomerOrder',
         'demand' => 'Demand',
         'sales_return' => 'SalesReturn',
