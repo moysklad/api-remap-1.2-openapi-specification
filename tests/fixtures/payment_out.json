@@ -131,7 +131,7 @@
         }
       }
     ]
-  },salesChannel
+  },
   "salesChannel": {
     "meta": {
       "href": "https://api.moysklad.ru/api/remap/1.2/entity/saleschannel/10b0654b-2859-11f1-0a83-1f2500000244",
