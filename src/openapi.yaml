@@ -664,6 +664,8 @@ paths:
     $ref: './paths/documents/retaildemands/retaildemand-new.yaml'
   /entity/retaildemand/{id}/positions:
     $ref: './paths/documents/retaildemands/retaildemand-positions.yaml'
+  /entity/retaildemand/{id}/positions/batch:
+    $ref: './paths/documents/retaildemands/retaildemand-positions-batch.yaml'
   /entity/retaildemand/{id}/positions/{positionId}:
     $ref: './paths/documents/retaildemands/retaildemand-position-by-id.yaml'
   /entity/retaildemand/{id}/positions/delete:
@@ -1335,6 +1337,8 @@ components:
       $ref: './components/schemas/dictionary/demandPositionTrackingCodeType.yaml'
     RetailDemand:
       $ref: './components/schemas/dictionary/retailDemand.yaml'
+    RetailDemandCheque:
+      $ref: './components/schemas/dictionary/retailDemandCheque.yaml'
     RetailDemandList:
       $ref: './components/schemas/dictionary/retailDemandList.yaml'
     RetailDemandPosition:

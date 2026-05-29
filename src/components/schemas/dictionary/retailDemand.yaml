@@ -82,6 +82,7 @@ properties:
     type: number
     format: double
     description: Сумма НДС
+    readOnly: true
   sum:
     type: number
     format: double
@@ -225,19 +226,5 @@ properties:
     description: Фискальные данные продажи
     readOnly: true
     nullable: true
-    properties:
-      fnNumber:
-        type: string
-        description: Номер фискального накопителя
-      fiscalDocSign:
-        type: string
-        description: Фискальный признак документа
-      fiscalDocNumber:
-        type: string
-        description: Номер фискального документа
-      kktRegNumber:
-        type: string
-        description: Регистрационный номер
-      time:
-        type: string
-        description: Время фискализации
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/RetailDemandCheque'
