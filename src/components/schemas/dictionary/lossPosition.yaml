@@ -1,0 +1,89 @@
+type: object
+description: Позиция Списания
+x-entity-static-builder:
+  methodParams:
+    - "parentId"
+    - "id"
+  href:
+    - path: "entity"
+    - path: "loss"
+    - param: "parentId"
+    - path: "positions"
+    - param: "id"
+  type: "lossposition"
+properties:
+  meta:
+    description: Метаданные позиции
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID позиции
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  assortment:
+    description: Метаданные товара/услуги/партии/модификации, которую представляет собой позиция
+    $ref: '../../../openapi.yaml#/components/schemas/Assortment'
+  declaration:
+    type: array
+    description: |
+      Информация о прослеживаемости импортных товаров.
+      Не входит в ответ по умолчанию; может быть возвращена только при явном запросе `fields=declaration`.
+      Только для чтения.
+    readOnly: true
+    items:
+      type: object
+      description: Информация о прослеживаемости импортных товаров
+      properties:
+        gtd:
+          type: string
+          description: Регистрационный номер партии товара
+          readOnly: true
+        rnpt:
+          type: string
+          description: Грузовая таможенная декларация
+          readOnly: true
+        country:
+          description: Страна происхождения товара
+          readOnly: true
+          type: object
+          allOf:
+            - $ref: '../../../openapi.yaml#/components/schemas/Country'
+        quantity:
+          type: number
+          format: double
+          description: Количество товара с указанными ГТД или РНПТ в позиции документа
+          readOnly: true
+  pack:
+    description: Упаковка Товара
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Pack'
+  price:
+    type: number
+    format: double
+    description: Цена товара/услуги в копейках
+  quantity:
+    type: number
+    format: double
+    description: Количество товаров/услуг данного вида в позиции
+  reason:
+    type: string
+    maxLength: 255
+    description: Причина списания данной позиции
+  slot:
+    description: Ячейка на складе
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/StoreSlot'
+  things:
+    type: array
+    description: Серийные номера
+    items:
+      type: string

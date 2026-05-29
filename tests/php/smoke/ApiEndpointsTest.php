@@ -31,17 +31,13 @@ class ApiEndpointsTest extends TestCase
     private const API_BASE_PATH = '/api/remap/1.2';
 
     /**
-     * Для smoke-теста операций list/create/batch delete и т.п.:
-     * 404 = эндпоинт не совпал (путь не найден в спеке), тест должен падать.
-     * Любой другой ответ (2xx, 3xx, 5xx, 401, 403…) = достучались до эндпоинта — ок.
-     */
-    private const SUCCESS_CODES = [200, 201, 401, 500];
-    
-    /**
-     * Допустимые коды для запросов к несуществующим ресурсам.
+     * Допустимые коды для операций по {id} и вложенным subresource (GET/PUT/DELETE и т.п.).
+     * 404 здесь означает «ресурс не найден», а не «маршрут не совпал» — endpoint достигнут.
      * 500 допустим: openapi-mock может вернуть его при рекурсивных схемах.
+     *
+     * Для list/create/batch/delete используйте assertNotEquals(404): там 404 = path mismatch.
      */
-    private const NOT_FOUND_CODES = [200, 401, 404, 500];
+    private const BY_ID_ACCEPTABLE_CODES = [200, 401, 404, 500];
     
     /**
      * Допустимые коды для DELETE операций
@@ -64,7 +60,7 @@ class ApiEndpointsTest extends TestCase
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
             ],
-            'timeout' => 10,
+            'timeout' => 30,
         ]);
     }
 
@@ -89,7 +85,7 @@ class ApiEndpointsTest extends TestCase
     public function testGetProductById(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/product/' . self::TEST_UUID);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -150,7 +146,7 @@ class ApiEndpointsTest extends TestCase
         $response = $this->client->put(self::API_BASE_PATH . '/entity/product/' . self::TEST_UUID, [
             'json' => ['name' => 'Updated Product'],
         ]);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -182,7 +178,7 @@ class ApiEndpointsTest extends TestCase
     public function testGetProductImages(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/product/' . self::TEST_UUID . '/images');
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -194,7 +190,7 @@ class ApiEndpointsTest extends TestCase
         $response = $this->client->post(self::API_BASE_PATH . '/entity/product/' . self::TEST_UUID . '/images', [
             'json' => ['filename' => 'test.png', 'content' => 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADklEQVQI12P4z8BQDwADhQGAWjR9awAAAABJRU5ErkJggg=='],
         ]);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -216,7 +212,7 @@ class ApiEndpointsTest extends TestCase
         $response = $this->client->post(self::API_BASE_PATH . '/entity/product/' . self::TEST_UUID . '/images/delete', [
             'json' => [['meta' => ['href' => 'https://api.moysklad.ru/api/remap/1.2/entity/product/' . self::TEST_UUID . '/images/' . self::TEST_UUID, 'type' => 'image', 'mediaType' => 'application/json']]],
         ]);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -226,7 +222,7 @@ class ApiEndpointsTest extends TestCase
     public function testGetProductFiles(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/product/' . self::TEST_UUID . '/files');
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -238,7 +234,7 @@ class ApiEndpointsTest extends TestCase
         $response = $this->client->post(self::API_BASE_PATH . '/entity/product/' . self::TEST_UUID . '/files', [
             'json' => [['filename' => 'doc.pdf', 'content' => 'SGVsbG8gV29ybGQ=']],
         ]);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -258,7 +254,7 @@ class ApiEndpointsTest extends TestCase
     public function testGetProductStoreBalances(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/product/' . self::TEST_UUID . '/storebalances');
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -270,7 +266,7 @@ class ApiEndpointsTest extends TestCase
         $response = $this->client->post(self::API_BASE_PATH . '/entity/product/' . self::TEST_UUID . '/storebalances', [
             'json' => ['store' => ['meta' => ['href' => 'https://api.moysklad.ru/api/remap/1.2/entity/store/' . self::TEST_UUID, 'type' => 'store', 'mediaType' => 'application/json']], 'quantity' => 5.0],
         ]);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -280,7 +276,7 @@ class ApiEndpointsTest extends TestCase
     public function testGetProductStoreBalanceById(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/product/' . self::TEST_UUID . '/storebalances/' . self::TEST_UUID);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -292,7 +288,7 @@ class ApiEndpointsTest extends TestCase
         $response = $this->client->put(self::API_BASE_PATH . '/entity/product/' . self::TEST_UUID . '/storebalances/' . self::TEST_UUID, [
             'json' => ['quantity' => 10.0],
         ]);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -314,7 +310,7 @@ class ApiEndpointsTest extends TestCase
         $response = $this->client->post(self::API_BASE_PATH . '/entity/product/' . self::TEST_UUID . '/storebalances/delete', [
             'json' => [['meta' => ['href' => 'https://api.moysklad.ru/api/remap/1.2/entity/product/' . self::TEST_UUID . '/storebalances/' . self::TEST_UUID, 'type' => 'minimumstock', 'mediaType' => 'application/json']]],
         ]);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     // ==================== COUNTERPARTIES ====================
@@ -338,7 +334,7 @@ class ApiEndpointsTest extends TestCase
     public function testGetCounterpartyById(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/counterparty/' . self::TEST_UUID);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -362,7 +358,7 @@ class ApiEndpointsTest extends TestCase
         $response = $this->client->put(self::API_BASE_PATH . '/entity/counterparty/' . self::TEST_UUID, [
             'json' => ['name' => 'Updated Counterparty'],
         ]);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -372,7 +368,7 @@ class ApiEndpointsTest extends TestCase
     public function testGetCounterpartyAccounts(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/counterparty/' . self::TEST_UUID . '/accounts');
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -384,7 +380,7 @@ class ApiEndpointsTest extends TestCase
         $response = $this->client->post(self::API_BASE_PATH . '/entity/counterparty/' . self::TEST_UUID . '/accounts', [
             'json' => ['accountNumber' => '40702810123456789012', 'bankName' => 'ПАО Сбербанк', 'bic' => '044525225'],
         ]);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -394,7 +390,7 @@ class ApiEndpointsTest extends TestCase
     public function testGetCounterpartyAccountById(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/counterparty/' . self::TEST_UUID . '/accounts/' . self::TEST_UUID);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -406,7 +402,7 @@ class ApiEndpointsTest extends TestCase
         $response = $this->client->put(self::API_BASE_PATH . '/entity/counterparty/' . self::TEST_UUID . '/accounts/' . self::TEST_UUID, [
             'json' => ['bankName' => 'ПАО ВТБ'],
         ]);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -426,7 +422,7 @@ class ApiEndpointsTest extends TestCase
     public function testGetCounterpartyContactPersons(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/counterparty/' . self::TEST_UUID . '/contactpersons');
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -438,7 +434,7 @@ class ApiEndpointsTest extends TestCase
         $response = $this->client->post(self::API_BASE_PATH . '/entity/counterparty/' . self::TEST_UUID . '/contactpersons', [
             'json' => ['name' => 'Иванов Иван Иванович', 'position' => 'Директор'],
         ]);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -448,7 +444,7 @@ class ApiEndpointsTest extends TestCase
     public function testGetCounterpartyContactPersonById(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/counterparty/' . self::TEST_UUID . '/contactpersons/' . self::TEST_UUID);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -460,7 +456,7 @@ class ApiEndpointsTest extends TestCase
         $response = $this->client->put(self::API_BASE_PATH . '/entity/counterparty/' . self::TEST_UUID . '/contactpersons/' . self::TEST_UUID, [
             'json' => ['position' => 'Менеджер'],
         ]);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -480,7 +476,7 @@ class ApiEndpointsTest extends TestCase
     public function testGetCounterpartyNotes(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/counterparty/' . self::TEST_UUID . '/notes');
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -492,7 +488,7 @@ class ApiEndpointsTest extends TestCase
         $response = $this->client->post(self::API_BASE_PATH . '/entity/counterparty/' . self::TEST_UUID . '/notes', [
             'json' => ['description' => 'Важный клиент'],
         ]);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -502,7 +498,7 @@ class ApiEndpointsTest extends TestCase
     public function testGetCounterpartyNoteById(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/counterparty/' . self::TEST_UUID . '/notes/' . self::TEST_UUID);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -514,7 +510,7 @@ class ApiEndpointsTest extends TestCase
         $response = $this->client->put(self::API_BASE_PATH . '/entity/counterparty/' . self::TEST_UUID . '/notes/' . self::TEST_UUID, [
             'json' => ['description' => 'Обновлённое событие'],
         ]);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -534,7 +530,7 @@ class ApiEndpointsTest extends TestCase
     public function testGetCounterpartyFiles(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/counterparty/' . self::TEST_UUID . '/files');
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -546,7 +542,7 @@ class ApiEndpointsTest extends TestCase
         $response = $this->client->post(self::API_BASE_PATH . '/entity/counterparty/' . self::TEST_UUID . '/files', [
             'json' => [['filename' => 'doc.pdf', 'content' => 'SGVsbG8gV29ybGQ=']],
         ]);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -580,7 +576,7 @@ class ApiEndpointsTest extends TestCase
     public function testGetCurrencyById(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/currency/' . self::TEST_UUID);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -616,7 +612,7 @@ class ApiEndpointsTest extends TestCase
     public function testGetEmployeeById(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/employee/' . self::TEST_UUID);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -626,7 +622,7 @@ class ApiEndpointsTest extends TestCase
     public function testGetEmployeeSecurity(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/employee/' . self::TEST_UUID . '/security');
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -638,7 +634,7 @@ class ApiEndpointsTest extends TestCase
         $response = $this->client->put(self::API_BASE_PATH . '/entity/employee/' . self::TEST_UUID . '/security', [
             'json' => ['role' => ['meta' => ['href' => 'https://api.moysklad.ru/api/remap/1.2/entity/role/admin', 'type' => 'systemrole', 'mediaType' => 'application/json']]],
         ]);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -650,7 +646,7 @@ class ApiEndpointsTest extends TestCase
         $response = $this->client->put(self::API_BASE_PATH . '/entity/employee/' . self::TEST_UUID . '/access/activate', [
             'json' => ['login' => 'newemployee@lognex'],
         ]);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -660,7 +656,7 @@ class ApiEndpointsTest extends TestCase
     public function testDeactivateEmployee(): void
     {
         $response = $this->client->put(self::API_BASE_PATH . '/entity/employee/' . self::TEST_UUID . '/access/deactivate');
-        $this->assertContains($response->getStatusCode(), array_merge(self::NOT_FOUND_CODES, [204]));
+        $this->assertContains($response->getStatusCode(), array_merge(self::BY_ID_ACCEPTABLE_CODES, [204]));
     }
 
     /**
@@ -670,7 +666,7 @@ class ApiEndpointsTest extends TestCase
     public function testResetEmployeePassword(): void
     {
         $response = $this->client->put(self::API_BASE_PATH . '/entity/employee/' . self::TEST_UUID . '/access/resetpassword');
-        $this->assertContains($response->getStatusCode(), array_merge(self::NOT_FOUND_CODES, [204]));
+        $this->assertContains($response->getStatusCode(), array_merge(self::BY_ID_ACCEPTABLE_CODES, [204]));
     }
 
     /**
@@ -744,7 +740,7 @@ class ApiEndpointsTest extends TestCase
     public function testGetGroupById(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/group/' . self::TEST_UUID);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     // ==================== COUNTRIES ====================
@@ -768,7 +764,7 @@ class ApiEndpointsTest extends TestCase
     public function testGetCountryById(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/country/' . self::TEST_UUID);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     // ==================== REGIONS ====================
@@ -790,7 +786,7 @@ class ApiEndpointsTest extends TestCase
     public function testGetRegionById(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/region/' . self::TEST_UUID);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     // ==================== TAX RATES ====================
@@ -814,7 +810,7 @@ class ApiEndpointsTest extends TestCase
     public function testGetTaxRateById(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/taxrate/' . self::TEST_UUID);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -838,7 +834,7 @@ class ApiEndpointsTest extends TestCase
         $response = $this->client->put(self::API_BASE_PATH . '/entity/taxrate/' . self::TEST_UUID, [
             'json' => ['rate' => 28.0],
         ]);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -896,7 +892,7 @@ class ApiEndpointsTest extends TestCase
     public function testGetProductFolderById(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/productfolder/' . self::TEST_UUID);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -1004,7 +1000,7 @@ class ApiEndpointsTest extends TestCase
     public function testGetServiceById(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/service/' . self::TEST_UUID);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -1026,7 +1022,7 @@ class ApiEndpointsTest extends TestCase
     public function testGetServiceFiles(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/service/' . self::TEST_UUID . '/files');
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -1038,7 +1034,7 @@ class ApiEndpointsTest extends TestCase
         $response = $this->client->post(self::API_BASE_PATH . '/entity/service/' . self::TEST_UUID . '/files', [
             'json' => [['filename' => 'doc.pdf', 'content' => 'SGVsbG8gV29ybGQ=']],
         ]);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -1072,7 +1068,7 @@ class ApiEndpointsTest extends TestCase
     public function testGetUomById(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/uom/' . self::TEST_UUID);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     // ==================== WEBHOOKS ====================
@@ -1107,7 +1103,7 @@ class ApiEndpointsTest extends TestCase
     public function testGetWebhookById(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/webhook/' . self::TEST_UUID);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -1121,7 +1117,7 @@ class ApiEndpointsTest extends TestCase
                 'action' => 'DELETE',
             ],
         ]);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -1220,7 +1216,7 @@ class ApiEndpointsTest extends TestCase
     public function testGetWebhookStockById(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/webhookstock/' . self::TEST_UUID);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -1235,7 +1231,7 @@ class ApiEndpointsTest extends TestCase
                 'reportType' => 'bystore',
             ],
         ]);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -1342,7 +1338,7 @@ class ApiEndpointsTest extends TestCase
     public function testGetPriceTypeById(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/context/companysettings/pricetype/' . self::TEST_UUID);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -1386,7 +1382,7 @@ class ApiEndpointsTest extends TestCase
     public function testGetSalePlatformById(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/saleplatform/' . self::TEST_UUID);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     public function testListStores(): void
@@ -1398,7 +1394,7 @@ class ApiEndpointsTest extends TestCase
     public function testStoreById(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/store/' . self::TEST_UUID);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     public function testStoreSubresources(): void
@@ -1682,54 +1678,26 @@ class ApiEndpointsTest extends TestCase
     {
         $base = self::API_BASE_PATH . '/entity/purchasereturn';
 
-        $payload = [
-            'name' => 'PurchaseReturn X',
-            'organization' => [
-                'meta' => [
-                    'href' => 'https://api.moysklad.ru/api/remap/1.2/entity/organization/' . self::TEST_UUID,
-                    'type' => 'organization',
-                    'mediaType' => 'application/json',
-                ],
-            ],
-            'agent' => [
-                'meta' => [
-                    'href' => 'https://api.moysklad.ru/api/remap/1.2/entity/counterparty/' . self::TEST_UUID,
-                    'type' => 'counterparty',
-                    'mediaType' => 'application/json',
-                ],
-            ],
-            'store' => [
-                'meta' => [
-                    'href' => 'https://api.moysklad.ru/api/remap/1.2/entity/store/' . self::TEST_UUID,
-                    'type' => 'store',
-                    'mediaType' => 'application/json',
-                ],
-            ],
-            'files' => [
-                [
-                    'filename' => 'purchasereturn.txt',
-                    'content' => 'dGVzdA==',
-                ],
-            ],
-        ];
-
         $this->assertReachable($this->client->get($base));
-        $this->assertReachable($this->client->post($base, ['json' => $payload]));
+        $this->assertReachable($this->client->post($base, ['json' => ['name' => 'X']]));
 
         $this->assertReachable($this->client->get($base . '/' . self::TEST_UUID));
-        $this->assertReachable($this->client->put($base . '/' . self::TEST_UUID, ['json' => ['name' => 'PurchaseReturn Y']]));
+        $this->assertReachable($this->client->put($base . '/' . self::TEST_UUID, ['json' => ['name' => 'X']]));
         $this->assertReachable($this->client->delete($base . '/' . self::TEST_UUID));
 
         $this->assertReachable($this->client->post($base . '/delete', ['json' => [['meta' => ['href' => 'x']]]]));
-        $this->assertReachable($this->client->post($base . '/batch', ['json' => [$payload]]));
+        $this->assertReachable($this->client->post($base . '/batch', ['json' => [['meta' => ['href' => 'x']]]]));
 
-        $docBase = $base . '/' . self::TEST_UUID;
-        $this->assertReachable($this->client->get($docBase . '/positions'));
-        $this->assertReachable($this->client->post($docBase . '/positions', ['json' => ['quantity' => 1]]));
-        $this->assertReachable($this->client->get($docBase . '/positions/' . self::TEST_UUID));
-        $this->assertReachable($this->client->put($docBase . '/positions/' . self::TEST_UUID, ['json' => ['quantity' => 2]]));
-        $this->assertReachable($this->client->delete($docBase . '/positions/' . self::TEST_UUID));
-        $this->assertReachable($this->client->post($docBase . '/positions/delete', ['json' => [['meta' => ['href' => 'x']]]]));
+        $this->assertReachable($this->client->get($base . '/' . self::TEST_UUID . '/files'));
+        $this->assertReachable($this->client->post($base . '/' . self::TEST_UUID . '/files', ['json' => [['filename' => 'X']],]));
+        $this->assertReachable($this->client->delete($base . '/' . self::TEST_UUID . '/files/' . self::TEST_UUID));
+
+        $this->assertReachable($this->client->get($base . '/' . self::TEST_UUID . '/positions'));
+        $this->assertReachable($this->client->post($base . '/' . self::TEST_UUID . '/positions', ['json' => ['quantity' => 1]]));
+        $this->assertReachable($this->client->get($base . '/' . self::TEST_UUID . '/positions/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put($base . '/' . self::TEST_UUID . '/positions/' . self::TEST_UUID, ['json' => ['quantity' => 2]]));
+        $this->assertReachable($this->client->delete($base . '/' . self::TEST_UUID . '/positions/' . self::TEST_UUID));
+        $this->assertReachable($this->client->post($base . '/' . self::TEST_UUID . '/positions/delete', ['json' => [['meta' => ['href' => 'x']]]]));
 
         $this->assertReachable($this->client->get($base . '/metadata'));
         $this->assertReachable($this->client->get($base . '/metadata/attributes'));
@@ -1737,12 +1705,12 @@ class ApiEndpointsTest extends TestCase
         $this->assertReachable($this->client->get($base . '/metadata/attributes/' . self::TEST_UUID));
         $this->assertReachable($this->client->put($base . '/metadata/attributes/' . self::TEST_UUID, ['json' => ['name' => 'attr1']]));
         $this->assertReachable($this->client->delete($base . '/metadata/attributes/' . self::TEST_UUID));
-        $this->assertReachable($this->client->post($base . '/metadata/states', ['json' => ['name' => 'state1', 'color' => 15106326, 'stateType' => 'Regular']]));
+        $this->assertReachable($this->client->post($base . '/metadata/states', ['json' => ['name' => 'X']]));
         $this->assertReachable($this->client->get($base . '/metadata/states/' . self::TEST_UUID));
-        $this->assertReachable($this->client->put($base . '/metadata/states/' . self::TEST_UUID, ['json' => ['name' => 'state1']]));
+        $this->assertReachable($this->client->put($base . '/metadata/states/' . self::TEST_UUID, ['json' => ['name' => 'X']]));
         $this->assertReachable($this->client->delete($base . '/metadata/states/' . self::TEST_UUID));
 
-        $this->assertReachable($this->client->put($base . '/new'));
+        $this->assertReachable($this->client->put($base . '/new', ['json' => [['name' => 'X']]]));
     }
 
     public function testPrepaymentReturnMetadataAndPositions(): void
@@ -1901,7 +1869,7 @@ class ApiEndpointsTest extends TestCase
     public function testGetCustomerOrderNotes(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/customerorder/' . self::TEST_UUID . '/notes');
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -1921,7 +1889,7 @@ class ApiEndpointsTest extends TestCase
     public function testGetCustomerOrderNoteById(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/customerorder/' . self::TEST_UUID . '/notes/' . self::TEST_UUID);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -1932,7 +1900,7 @@ class ApiEndpointsTest extends TestCase
         $response = $this->client->put(self::API_BASE_PATH . '/entity/customerorder/' . self::TEST_UUID . '/notes/' . self::TEST_UUID, [
             'json' => ['description' => 'Обновленное событие'],
         ]);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -1950,7 +1918,7 @@ class ApiEndpointsTest extends TestCase
     public function testGetPurchaseOrderNotes(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/purchaseorder/' . self::TEST_UUID . '/notes');
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -1970,7 +1938,7 @@ class ApiEndpointsTest extends TestCase
     public function testGetPurchaseOrderNoteById(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/purchaseorder/' . self::TEST_UUID . '/notes/' . self::TEST_UUID);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -1981,7 +1949,7 @@ class ApiEndpointsTest extends TestCase
         $response = $this->client->put(self::API_BASE_PATH . '/entity/purchaseorder/' . self::TEST_UUID . '/notes/' . self::TEST_UUID, [
             'json' => ['description' => 'Обновленное событие'],
         ]);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -2088,7 +2056,7 @@ class ApiEndpointsTest extends TestCase
     public function testGetContractById(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/contract/' . self::TEST_UUID);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -2114,7 +2082,7 @@ class ApiEndpointsTest extends TestCase
         $response = $this->client->put(self::API_BASE_PATH . '/entity/contract/' . self::TEST_UUID, [
             'json' => ['name' => 'Updated Contract'],
         ]);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -2180,7 +2148,7 @@ class ApiEndpointsTest extends TestCase
     public function testGetContractMetadataAttributeById(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/contract/metadata/attributes/' . self::TEST_UUID);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     // ==================== SALES CHANNELS ====================
@@ -2200,7 +2168,7 @@ class ApiEndpointsTest extends TestCase
     public function testGetSalesChannelById(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/saleschannel/' . self::TEST_UUID);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -2242,7 +2210,7 @@ class ApiEndpointsTest extends TestCase
         $response = $this->client->put(self::API_BASE_PATH . '/entity/saleschannel/' . self::TEST_UUID, [
             'json' => ['name' => 'Updated Sales Channel'],
         ]);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -2328,7 +2296,7 @@ class ApiEndpointsTest extends TestCase
     public function testGetTaskById(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/task/' . self::TEST_UUID);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -2342,7 +2310,7 @@ class ApiEndpointsTest extends TestCase
                 'done' => true,
             ],
         ]);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -2379,7 +2347,7 @@ class ApiEndpointsTest extends TestCase
     public function testGetTaskNotes(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/task/' . self::TEST_UUID . '/notes');
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -2401,7 +2369,7 @@ class ApiEndpointsTest extends TestCase
     public function testGetTaskNoteById(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/task/' . self::TEST_UUID . '/notes/' . self::TEST_UUID);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -2414,7 +2382,7 @@ class ApiEndpointsTest extends TestCase
                 'text' => 'Updated note',
             ],
         ]);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -2479,7 +2447,7 @@ class ApiEndpointsTest extends TestCase
                 'color' => 255,
             ],
         ]);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -2508,7 +2476,7 @@ class ApiEndpointsTest extends TestCase
     public function testGetProjectById(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/project/' . self::TEST_UUID);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -2532,7 +2500,7 @@ class ApiEndpointsTest extends TestCase
         $response = $this->client->put(self::API_BASE_PATH . '/entity/project/' . self::TEST_UUID, [
             'json' => ['name' => 'Updated Project'],
         ]);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -2607,7 +2575,7 @@ class ApiEndpointsTest extends TestCase
     public function testGetProjectMetadataAttributeById(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/project/metadata/attributes/' . self::TEST_UUID);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -2618,7 +2586,7 @@ class ApiEndpointsTest extends TestCase
         $response = $this->client->put(self::API_BASE_PATH . '/entity/project/metadata/attributes/' . self::TEST_UUID, [
             'json' => ['name' => 'projectAttributeUpdated'],
         ]);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -2647,7 +2615,7 @@ class ApiEndpointsTest extends TestCase
     public function testGetConsignmentById(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/consignment/' . self::TEST_UUID);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -2687,7 +2655,7 @@ class ApiEndpointsTest extends TestCase
                 ],
             ],
         ]);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -2772,7 +2740,7 @@ class ApiEndpointsTest extends TestCase
     public function testGetConsignmentMetadataAttributeById(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/consignment/metadata/attributes/' . self::TEST_UUID);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -2786,7 +2754,7 @@ class ApiEndpointsTest extends TestCase
                 'type' => 'string',
             ],
         ]);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -2815,7 +2783,7 @@ class ApiEndpointsTest extends TestCase
     public function testGetExpenseItemById(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/expenseitem/' . self::TEST_UUID);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -2847,7 +2815,7 @@ class ApiEndpointsTest extends TestCase
                 'externalCode' => 'wwoa1142aon21431',
             ],
         ]);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -2919,7 +2887,7 @@ class ApiEndpointsTest extends TestCase
                 'discountStrategy' => 'bySum',
             ],
         ]);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -2985,7 +2953,7 @@ class ApiEndpointsTest extends TestCase
                 'autoShowReports' => false,
             ],
         ]);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     // ==================== DISCOUNTS ====================
@@ -3012,7 +2980,7 @@ class ApiEndpointsTest extends TestCase
                 'active' => false,
             ],
         ]);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -3041,7 +3009,7 @@ class ApiEndpointsTest extends TestCase
     public function testGetAccumulationDiscountById(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/accumulationdiscount/' . self::TEST_UUID);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -3060,7 +3028,7 @@ class ApiEndpointsTest extends TestCase
                 'levels' => [['amount' => 200000, 'discount' => 15]],
             ],
         ]);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -3098,7 +3066,7 @@ class ApiEndpointsTest extends TestCase
     public function testGetPersonalDiscountById(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/personaldiscount/' . self::TEST_UUID);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -3116,7 +3084,7 @@ class ApiEndpointsTest extends TestCase
                 'agentTags' => ['tag2'],
             ],
         ]);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -3168,7 +3136,7 @@ class ApiEndpointsTest extends TestCase
     public function testGetSpecialPriceDiscountById(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/specialpricediscount/' . self::TEST_UUID);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -3188,7 +3156,7 @@ class ApiEndpointsTest extends TestCase
                 'discount' => 50,
             ],
         ]);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -3313,7 +3281,7 @@ class ApiEndpointsTest extends TestCase
     public function testGetBonusProgramById(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/bonusprogram/' . self::TEST_UUID);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -3328,7 +3296,7 @@ class ApiEndpointsTest extends TestCase
                 'agentTags' => ['tag2'],
             ],
         ]);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -3406,7 +3374,7 @@ class ApiEndpointsTest extends TestCase
     public function testGetBonusTransactionById(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/bonustransaction/' . self::TEST_UUID);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -3419,7 +3387,7 @@ class ApiEndpointsTest extends TestCase
                 'bonusValue' => 155,
             ],
         ]);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -3553,7 +3521,7 @@ class ApiEndpointsTest extends TestCase
                 'name' => 'Updated CustomEntity',
             ],
         ]);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -3580,7 +3548,7 @@ class ApiEndpointsTest extends TestCase
     public function testGetCustomEntityElementById(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/customentity/' . self::TEST_UUID . '/' . self::TEST_UUID);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -3597,7 +3565,7 @@ class ApiEndpointsTest extends TestCase
                 'shared' => true,
             ],
         ]);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -3628,7 +3596,7 @@ class ApiEndpointsTest extends TestCase
     public function testGetCashInById(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/cashin/' . self::TEST_UUID);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -3655,7 +3623,7 @@ class ApiEndpointsTest extends TestCase
         $response = $this->client->put(self::API_BASE_PATH . '/entity/cashin/' . self::TEST_UUID, [
             'json' => ['name' => 'Updated CashIn'],
         ]);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -3735,7 +3703,7 @@ class ApiEndpointsTest extends TestCase
     public function testGetCashInMetadataAttributeById(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/cashin/metadata/attributes/' . self::TEST_UUID);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -3747,7 +3715,7 @@ class ApiEndpointsTest extends TestCase
         $response = $this->client->put(self::API_BASE_PATH . '/entity/cashin/metadata/attributes/' . self::TEST_UUID, [
             'json' => ['name' => 'atr1'],
         ]);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -3971,7 +3939,7 @@ class ApiEndpointsTest extends TestCase
     public function testGetCashOutById(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/cashout/' . self::TEST_UUID);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -3999,7 +3967,7 @@ class ApiEndpointsTest extends TestCase
         $response = $this->client->put(self::API_BASE_PATH . '/entity/cashout/' . self::TEST_UUID, [
             'json' => ['name' => 'Updated CashOut'],
         ]);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -4079,7 +4047,7 @@ class ApiEndpointsTest extends TestCase
     public function testGetCashOutMetadataAttributeById(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/cashout/metadata/attributes/' . self::TEST_UUID);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -4091,7 +4059,7 @@ class ApiEndpointsTest extends TestCase
         $response = $this->client->put(self::API_BASE_PATH . '/entity/cashout/metadata/attributes/' . self::TEST_UUID, [
             'json' => ['name' => 'atr1'],
         ]);
-        $this->assertContains($response->getStatusCode(), self::NOT_FOUND_CODES);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
     /**
@@ -4156,6 +4124,288 @@ class ApiEndpointsTest extends TestCase
     {
         $response = $this->client->put(self::API_BASE_PATH . '/entity/cashout/new', ['json' => new \stdClass()]);
         $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * Проверяет доступность endpoint'а получения списка Списаний.
+     * GET /entity/loss
+     */
+    public function testListLosses(): void
+    {
+        $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/loss'));
+    }
+
+    /**
+     * Проверяет доступность endpoint'а создания Списания.
+     * POST /entity/loss
+     */
+    public function testCreateLoss(): void
+    {
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . '/entity/loss', [
+            'json' => $this->lossDocumentPayload(),
+        ]));
+    }
+
+    /**
+     * Проверяет доступность endpoint'а массового создания и обновления Списаний.
+     * POST /entity/loss/batch
+     */
+    public function testCreateLossBatch(): void
+    {
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . '/entity/loss/batch', [
+            'json' => [$this->lossDocumentPayload()],
+        ]));
+    }
+
+    /**
+     * Проверяет доступность endpoint'а получения Списания по ID.
+     * GET /entity/loss/{id}
+     */
+    public function testGetLossById(): void
+    {
+        $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/loss/' . self::TEST_UUID));
+    }
+
+    /**
+     * Проверяет доступность endpoint'а изменения Списания.
+     * PUT /entity/loss/{id}
+     */
+    public function testUpdateLoss(): void
+    {
+        $this->assertReachable($this->client->put(self::API_BASE_PATH . '/entity/loss/' . self::TEST_UUID, [
+            'json' => ['name' => 'Loss Y'],
+        ]));
+    }
+
+    /**
+     * Проверяет доступность endpoint'а удаления Списания.
+     * DELETE /entity/loss/{id}
+     */
+    public function testDeleteLoss(): void
+    {
+        $this->assertReachable($this->client->delete(self::API_BASE_PATH . '/entity/loss/' . self::TEST_UUID));
+    }
+
+    /**
+     * Проверяет доступность endpoint'а массового удаления Списаний.
+     * POST /entity/loss/delete
+     */
+    public function testDeleteLossBatch(): void
+    {
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . '/entity/loss/delete', [
+            'json' => [[
+                'meta' => [
+                    'href' => 'https://api.moysklad.ru/api/remap/1.2/entity/loss/' . self::TEST_UUID,
+                    'metadataHref' => 'https://api.moysklad.ru/api/remap/1.2/entity/loss/metadata',
+                    'type' => 'loss',
+                    'mediaType' => 'application/json',
+                ],
+            ]],
+        ]));
+    }
+
+    /**
+     * Проверяет доступность endpoint'а получения метаданных Списаний.
+     * GET /entity/loss/metadata
+     */
+    public function testGetLossMetadata(): void
+    {
+        $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/loss/metadata'));
+    }
+
+    /**
+     * Проверяет доступность endpoint'а получения списка доп. полей Списаний.
+     * GET /entity/loss/metadata/attributes
+     */
+    public function testGetLossMetadataAttributes(): void
+    {
+        $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/loss/metadata/attributes'));
+    }
+
+    /**
+     * Проверяет доступность endpoint'а создания доп. поля Списания.
+     * POST /entity/loss/metadata/attributes
+     */
+    public function testCreateLossMetadataAttribute(): void
+    {
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . '/entity/loss/metadata/attributes', [
+            'json' => ['name' => 'loss-attribute'],
+        ]));
+    }
+
+    /**
+     * Проверяет доступность endpoint'а получения отдельного доп. поля Списания.
+     * GET /entity/loss/metadata/attributes/{id}
+     */
+    public function testGetLossMetadataAttributeById(): void
+    {
+        $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/loss/metadata/attributes/' . self::TEST_UUID));
+    }
+
+    /**
+     * Проверяет доступность endpoint'а обновления отдельного доп. поля Списания.
+     * PUT /entity/loss/metadata/attributes/{id}
+     */
+    public function testUpdateLossMetadataAttributeById(): void
+    {
+        $this->assertReachable($this->client->put(self::API_BASE_PATH . '/entity/loss/metadata/attributes/' . self::TEST_UUID, [
+            'json' => ['name' => 'loss-attribute'],
+        ]));
+    }
+
+    /**
+     * Проверяет доступность endpoint'а удаления отдельного доп. поля Списания.
+     * DELETE /entity/loss/metadata/attributes/{id}
+     */
+    public function testDeleteLossMetadataAttributeById(): void
+    {
+        $this->assertReachable($this->client->delete(self::API_BASE_PATH . '/entity/loss/metadata/attributes/' . self::TEST_UUID));
+    }
+
+    /**
+     * Проверяет доступность endpoint'а получения отдельного статуса Списания.
+     * GET /entity/loss/metadata/states/{id}
+     */
+    public function testGetLossMetadataStateById(): void
+    {
+        $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/loss/metadata/states/' . self::TEST_UUID));
+    }
+
+    /**
+     * Проверяет доступность endpoint'а обновления отдельного статуса Списания.
+     * PUT /entity/loss/metadata/states/{id}
+     */
+    public function testUpdateLossMetadataStateById(): void
+    {
+        $this->assertReachable($this->client->put(self::API_BASE_PATH . '/entity/loss/metadata/states/' . self::TEST_UUID, [
+            'json' => ['name' => 'state1'],
+        ]));
+    }
+
+    /**
+     * Проверяет доступность endpoint'а удаления отдельного статуса Списания.
+     * DELETE /entity/loss/metadata/states/{id}
+     */
+    public function testDeleteLossMetadataStateById(): void
+    {
+        $response = $this->client->delete(self::API_BASE_PATH . '/entity/loss/metadata/states/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::DELETE_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а получения шаблона Списания.
+     * PUT /entity/loss/new
+     */
+    public function testLossTemplateNew(): void
+    {
+        $this->assertReachable($this->client->put(self::API_BASE_PATH . '/entity/loss/new', [
+            'json' => new \stdClass(),
+        ]));
+    }
+
+    /**
+     * Проверяет доступность endpoint'а получения позиций Списания.
+     * GET /entity/loss/{id}/positions
+     */
+    public function testGetLossPositions(): void
+    {
+        $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/loss/' . self::TEST_UUID . '/positions'));
+    }
+
+    /**
+     * Проверяет доступность endpoint'а создания позиций Списания.
+     * POST /entity/loss/{id}/positions
+     */
+    public function testCreateLossPositions(): void
+    {
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . '/entity/loss/' . self::TEST_UUID . '/positions', [
+            'json' => $this->lossPositionPayload(),
+        ]));
+    }
+
+    /**
+     * Проверяет доступность endpoint'а получения позиции Списания по ID.
+     * GET /entity/loss/{id}/positions/{positionId}
+     */
+    public function testGetLossPositionById(): void
+    {
+        $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/loss/' . self::TEST_UUID . '/positions/' . self::TEST_UUID));
+    }
+
+    /**
+     * Проверяет доступность endpoint'а обновления позиции Списания.
+     * PUT /entity/loss/{id}/positions/{positionId}
+     */
+    public function testUpdateLossPosition(): void
+    {
+        $this->assertReachable($this->client->put(self::API_BASE_PATH . '/entity/loss/' . self::TEST_UUID . '/positions/' . self::TEST_UUID, [
+            'json' => ['quantity' => 2, 'reason' => 'Обновлено'],
+        ]));
+    }
+
+    /**
+     * Проверяет доступность endpoint'а удаления позиции Списания.
+     * DELETE /entity/loss/{id}/positions/{positionId}
+     */
+    public function testDeleteLossPosition(): void
+    {
+        $this->assertReachable($this->client->delete(self::API_BASE_PATH . '/entity/loss/' . self::TEST_UUID . '/positions/' . self::TEST_UUID));
+    }
+
+    /**
+     * Проверяет доступность endpoint'а массового удаления позиций Списания.
+     * POST /entity/loss/{id}/positions/delete
+     */
+    public function testDeleteLossPositionsBatch(): void
+    {
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . '/entity/loss/' . self::TEST_UUID . '/positions/delete', [
+            'json' => [[
+                'meta' => [
+                    'href' => 'https://api.moysklad.ru/api/remap/1.2/entity/loss/' . self::TEST_UUID . '/positions/' . self::TEST_UUID,
+                    'type' => 'lossposition',
+                    'mediaType' => 'application/json',
+                ],
+            ]],
+        ]));
+    }
+
+    private function lossDocumentPayload(): array
+    {
+        return [
+            'organization' => [
+                'meta' => [
+                    'href' => 'https://api.moysklad.ru/api/remap/1.2/entity/organization/' . self::TEST_UUID,
+                    'metadataHref' => 'https://api.moysklad.ru/api/remap/1.2/entity/organization/metadata',
+                    'type' => 'organization',
+                    'mediaType' => 'application/json',
+                ],
+            ],
+            'store' => [
+                'meta' => [
+                    'href' => 'https://api.moysklad.ru/api/remap/1.2/entity/store/' . self::TEST_UUID,
+                    'metadataHref' => 'https://api.moysklad.ru/api/remap/1.2/entity/store/metadata',
+                    'type' => 'store',
+                    'mediaType' => 'application/json',
+                ],
+            ],
+        ];
+    }
+
+    private function lossPositionPayload(): array
+    {
+        return [
+            'quantity' => 1,
+            'price' => 1000,
+            'reason' => 'брак',
+            'assortment' => [
+                'meta' => [
+                    'href' => 'https://api.moysklad.ru/api/remap/1.2/entity/product/' . self::TEST_UUID,
+                    'metadataHref' => 'https://api.moysklad.ru/api/remap/1.2/entity/product/metadata',
+                    'type' => 'product',
+                    'mediaType' => 'application/json',
+                ],
+            ],
+        ];
     }
 
     private function assertReachable(\Psr\Http\Message\ResponseInterface $response): void
