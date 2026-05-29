@@ -17,7 +17,6 @@
   "moment": "2016-11-23 13:00:00",
   "deliveryPlannedMoment": "2016-11-23 13:07:00",
   "applicable": true,
-  "sum": 0,
   "owner": {
     "meta": {
       "href": "https://api.moysklad.ru/api/remap/1.2/entity/employee/d5ad957e-91f1-11e6-5bed-427b0000002a",
