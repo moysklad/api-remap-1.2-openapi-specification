@@ -1,8 +1,8 @@
 post:
-  operationId: deletePrepaymentReturnPositionsBatch
+  operationId: deleteLossPositionsBatch
   tags:
-    - PrepaymentReturns
-  summary: Массовое удаление позиций Возврата предоплаты
+    - Losses
+  summary: Массовое удаление позиций Списания
   parameters:
     - $ref: '../../../components/parameters.yaml#/entityId'
     - $ref: '../../../components/headers.yaml#/AcceptHeader'
@@ -15,7 +15,7 @@ post:
         schema:
           type: array
           items:
-            $ref: '../../../openapi.yaml#/components/schemas/PrepaymentReturnPosition'
+            $ref: '../../../openapi.yaml#/components/schemas/LossPosition'
           minItems: 1
           maxItems: 1000
   responses:

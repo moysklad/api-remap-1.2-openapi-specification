@@ -45,7 +45,7 @@ properties:
   quantity:
     type: number
     format: double
-    description: Количество товаров/услуг данного вида в позиции
+    description: Количество товаров данного вида в позиции
   slot:
     description: Ячейка на складе
     nullable: true
@@ -54,7 +54,9 @@ properties:
       - $ref: '../../../openapi.yaml#/components/schemas/StoreSlot'
   things:
     type: array
-    description: Серийные номера
+    description: |
+      Серийные номера. Игнорируется, если товар позиции не на серийном учёте;
+      иначе количество единиц в позиции совпадает с числом переданных серийных номеров.
     items:
       type: string
   vat:
@@ -62,4 +64,6 @@ properties:
     description: НДС, которым облагается текущая позиция
   vatEnabled:
     type: boolean
-    description: Включен ли НДС для позиции
+    description: |
+      Включён ли НДС для позиции. Пара `(vat = 0, vatEnabled = false)` соответствует НДС «без НДС»;
+      `(vat = 0, vatEnabled = true)` — НДС 0%.
