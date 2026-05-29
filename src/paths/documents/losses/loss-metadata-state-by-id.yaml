@@ -1,28 +1,27 @@
 get:
-  operationId: getPurchaseReturnMetadataAttributeById
+  operationId: getLossMetadataStateById
   tags:
-    - PurchaseReturns
-  summary: Отдельное доп. поле Возврата поставщику
+    - Losses
+  summary: Отдельный статус Списания
   parameters:
     - $ref: '../../../components/parameters.yaml#/entityId'
     - $ref: '../../../components/headers.yaml#/AcceptHeader'
     - $ref: '../../../components/headers.yaml#/AcceptEncoding'
-    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
   responses:
     '200':
       description: Успешный запрос
       content:
         application/json:
           schema:
-            $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfo'
+            $ref: '../../../openapi.yaml#/components/schemas/State'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
 
 put:
-  operationId: updatePurchaseReturnMetadataAttributeById
+  operationId: updateLossMetadataStateById
   tags:
-    - PurchaseReturns
-  summary: Обновить отдельное доп. поле Возврата поставщику
+    - Losses
+  summary: Обновить отдельный статус Списания
   parameters:
     - $ref: '../../../components/parameters.yaml#/entityId'
     - $ref: '../../../components/headers.yaml#/AcceptHeader'
@@ -33,22 +32,22 @@ put:
     content:
       application/json:
         schema:
-          $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfo'
+          $ref: '../../../openapi.yaml#/components/schemas/State'
   responses:
     '200':
       description: Успешный запрос
       content:
         application/json:
           schema:
-            $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfo'
+            $ref: '../../../openapi.yaml#/components/schemas/State'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
 
 delete:
-  operationId: deletePurchaseReturnMetadataAttributeById
+  operationId: deleteLossMetadataStateById
   tags:
-    - PurchaseReturns
-  summary: Удалить отдельное доп. поле Возврата поставщику
+    - Losses
+  summary: Удалить отдельный статус Списания
   parameters:
     - $ref: '../../../components/parameters.yaml#/entityId'
     - $ref: '../../../components/headers.yaml#/AcceptHeader'
@@ -56,5 +55,7 @@ delete:
   responses:
     '200':
       description: Успешный запрос
+    '404':
+      $ref: '../../../components/responses.yaml#/NotFoundEmpty'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'

@@ -1,8 +1,8 @@
 get:
-  operationId: getPurchaseReturnList
+  operationId: getLossList
   tags:
-    - PurchaseReturns
-  summary: Получить список Возвратов поставщикам
+    - Losses
+  summary: Получить список Списаний
   parameters:
     - $ref: '../../../components/parameters.yaml#/limit'
     - $ref: '../../../components/parameters.yaml#/offset'
@@ -17,28 +17,28 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../../../openapi.yaml#/components/schemas/PurchaseReturnList'
+            $ref: '../../../openapi.yaml#/components/schemas/LossList'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
 
 post:
-  operationId: createPurchaseReturn
+  operationId: createLoss
   tags:
-    - PurchaseReturns
-  summary: Создать Возврат поставщику
+    - Losses
+  summary: Создать Списание
   requestBody:
     required: true
     content:
       application/json:
         schema:
-          $ref: '../../../openapi.yaml#/components/schemas/PurchaseReturn'
+          $ref: '../../../openapi.yaml#/components/schemas/Loss'
   responses:
     '200':
       description: Успешный запрос
       content:
         application/json:
           schema:
-            $ref: '../../../openapi.yaml#/components/schemas/PurchaseReturn'
+            $ref: '../../../openapi.yaml#/components/schemas/Loss'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
   parameters:

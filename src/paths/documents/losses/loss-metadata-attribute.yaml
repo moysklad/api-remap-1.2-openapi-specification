@@ -1,8 +1,8 @@
 get:
-  operationId: getPurchaseReturnMetadataAttribute
+  operationId: getLossMetadataAttribute
   tags:
-    - PurchaseReturns
-  summary: Доп. поля Возврата поставщику
+    - Losses
+  summary: Доп. поля Списания
   parameters:
     - $ref: '../../../components/parameters.yaml#/offset'
     - $ref: '../../../components/parameters.yaml#/limit'
@@ -19,10 +19,10 @@ get:
       $ref: '../../../components/responses.yaml#/CommonError'
 
 post:
-  operationId: createPurchaseReturnMetadataAttribute
+  operationId: createLossMetadataAttribute
   tags:
-    - PurchaseReturns
-  summary: Создать доп. поле Возврата поставщику
+    - Losses
+  summary: Создать доп. поле Списания
   parameters:
     - $ref: '../../../components/headers.yaml#/AcceptHeader'
     - $ref: '../../../components/headers.yaml#/AcceptEncoding'

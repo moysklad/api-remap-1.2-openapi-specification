@@ -668,11 +668,40 @@ paths:
     $ref: './paths/documents/salesreturns/salesreturn-position-by-id.yaml'
   /entity/salesreturn/{id}/positions/delete:
     $ref: './paths/documents/salesreturns/salesreturn-positions-delete.yaml'
+  # Documents - Losses
+  /entity/loss:
+    $ref: './paths/documents/losses/losses.yaml'
+  /entity/loss/{id}:
+    $ref: './paths/documents/losses/loss-by-id.yaml'
+  /entity/loss/delete:
+    $ref: './paths/documents/losses/losses-delete.yaml'
+  /entity/loss/batch:
+    $ref: './paths/documents/losses/losses-batch.yaml'
+  /entity/loss/metadata:
+    $ref: './paths/documents/losses/loss-metadata.yaml'
+  /entity/loss/metadata/attributes:
+    $ref: './paths/documents/losses/loss-metadata-attribute.yaml'
+  /entity/loss/metadata/attributes/{id}:
+    $ref: './paths/documents/losses/loss-metadata-attribute-by-id.yaml'
+  /entity/loss/metadata/states/{id}:
+    $ref: './paths/documents/losses/loss-metadata-state-by-id.yaml'
+  /entity/loss/new:
+    $ref: './paths/documents/losses/loss-new.yaml'
+  /entity/loss/{id}/positions:
+    $ref: './paths/documents/losses/loss-positions.yaml'
+  /entity/loss/{id}/positions/{positionId}:
+    $ref: './paths/documents/losses/loss-position-by-id.yaml'
+  /entity/loss/{id}/positions/delete:
+    $ref: './paths/documents/losses/loss-positions-delete.yaml'
   # Documents - Purchase Returns
   /entity/purchasereturn:
     $ref: './paths/documents/purchasereturns/purchasereturns.yaml'
   /entity/purchasereturn/{id}:
     $ref: './paths/documents/purchasereturns/purchasereturn-by-id.yaml'
+  /entity/purchasereturn/{id}/files:
+    $ref: './paths/documents/purchasereturns/purchasereturn-files.yaml'
+  /entity/purchasereturn/{id}/files/{fileId}:
+    $ref: './paths/documents/purchasereturns/purchasereturn-file-by-id.yaml'
   /entity/purchasereturn/delete:
     $ref: './paths/documents/purchasereturns/purchasereturns-delete.yaml'
   /entity/purchasereturn/batch:
@@ -1079,6 +1108,12 @@ components:
           description: Признак наследуемости
     Loss:
       $ref: './components/schemas/dictionary/loss.yaml'
+    LossList:
+      $ref: './components/schemas/dictionary/lossList.yaml'
+    LossPosition:
+      $ref: './components/schemas/dictionary/lossPosition.yaml'
+    LossPositionList:
+      $ref: './components/schemas/dictionary/lossPositionList.yaml'
     MinimumStockAllWarehouseSame:
       $ref: './components/schemas/dictionary/minimumStockAllWarehouseSame.yaml'
     MinimumStockAllWarehouseSum:
@@ -1282,6 +1317,8 @@ components:
       $ref: './components/schemas/dictionary/retailShift.yaml'
     CashierList:
       $ref: './components/schemas/dictionary/cashierList.yaml'
+    Inventory:
+      $ref: './components/schemas/dictionary/inventory.yaml'
 
     InternalOrder:
       $ref: './components/schemas/dictionary/internalOrder.yaml'
@@ -1576,6 +1613,8 @@ tags:
     description: Операции с отгрузками
   - name: SalesReturns
     description: Операции с возвратами покупателей
+  - name: Losses
+    description: Операции со списаниями
   - name: PurchaseReturns
     description: Операции с возвратами поставщикам
   - name: PrepaymentReturns

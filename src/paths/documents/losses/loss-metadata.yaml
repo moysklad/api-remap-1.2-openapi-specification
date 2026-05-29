@@ -1,8 +1,8 @@
 get:
-  operationId: getPurchaseReturnMetadata
+  operationId: getLossMetadata
   tags:
-    - PurchaseReturns
-  summary: Метаданные Возвратов поставщикам
+    - Losses
+  summary: Метаданные Списаний
   responses:
     '200':
       description: Успешный запрос
@@ -15,4 +15,3 @@ get:
   parameters:
     - $ref: '../../../components/headers.yaml#/AcceptHeader'
     - $ref: '../../../components/headers.yaml#/AcceptEncoding'
-    - $ref: '../../../components/parameters.yaml#/expand'

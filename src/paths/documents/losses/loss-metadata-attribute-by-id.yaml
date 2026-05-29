@@ -1,11 +1,10 @@
 get:
-  operationId: getPurchaseReturnMetadataAttribute
+  operationId: getLossMetadataAttributeById
   tags:
-    - PurchaseReturns
-  summary: Доп. поля Возврата поставщику
+    - Losses
+  summary: Отдельное доп. поле Списания
   parameters:
-    - $ref: '../../../components/parameters.yaml#/offset'
-    - $ref: '../../../components/parameters.yaml#/limit'
+    - $ref: '../../../components/parameters.yaml#/entityId'
     - $ref: '../../../components/headers.yaml#/AcceptHeader'
     - $ref: '../../../components/headers.yaml#/AcceptEncoding'
   responses:
@@ -14,16 +13,17 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfoList'
+            $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfo'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
 
-post:
-  operationId: createPurchaseReturnMetadataAttribute
+put:
+  operationId: updateLossMetadataAttributeById
   tags:
-    - PurchaseReturns
-  summary: Создать доп. поле Возврата поставщику
+    - Losses
+  summary: Обновить отдельное доп. поле Списания
   parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
     - $ref: '../../../components/headers.yaml#/AcceptHeader'
     - $ref: '../../../components/headers.yaml#/AcceptEncoding'
     - $ref: '../../../components/headers.yaml#/ContentTypeJson'
@@ -40,5 +40,20 @@ post:
         application/json:
           schema:
             $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfo'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+delete:
+  operationId: deleteLossMetadataAttributeById
+  tags:
+    - Losses
+  summary: Удалить отдельное доп. поле Списания
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
     default:
       $ref: '../../../components/responses.yaml#/CommonError'

@@ -1,30 +1,35 @@
 get:
-  operationId: getPurchaseReturnMetadataAttributeById
+  operationId: getLossPositionById
   tags:
-    - PurchaseReturns
-  summary: Отдельное доп. поле Возврата поставщику
+    - Losses
+  summary: Получить позицию Списания
   parameters:
     - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/parameters.yaml#/fields'
+    - $ref: '../../../components/parameters.yaml#/positionId'
     - $ref: '../../../components/headers.yaml#/AcceptHeader'
     - $ref: '../../../components/headers.yaml#/AcceptEncoding'
-    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
   responses:
     '200':
       description: Успешный запрос
       content:
         application/json:
           schema:
-            $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfo'
+            $ref: '../../../openapi.yaml#/components/schemas/LossPosition'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
 
 put:
-  operationId: updatePurchaseReturnMetadataAttributeById
+  operationId: updateLossPosition
   tags:
-    - PurchaseReturns
-  summary: Обновить отдельное доп. поле Возврата поставщику
+    - Losses
+  summary: Изменить позицию Списания
   parameters:
     - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/parameters.yaml#/fields'
+    - $ref: '../../../components/parameters.yaml#/positionId'
     - $ref: '../../../components/headers.yaml#/AcceptHeader'
     - $ref: '../../../components/headers.yaml#/AcceptEncoding'
     - $ref: '../../../components/headers.yaml#/ContentTypeJson'
@@ -33,24 +38,26 @@ put:
     content:
       application/json:
         schema:
-          $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfo'
+          $ref: '../../../openapi.yaml#/components/schemas/LossPosition'
   responses:
     '200':
       description: Успешный запрос
       content:
         application/json:
           schema:
-            $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfo'
+            $ref: '../../../openapi.yaml#/components/schemas/LossPosition'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
 
 delete:
-  operationId: deletePurchaseReturnMetadataAttributeById
+  operationId: deleteLossPosition
   tags:
-    - PurchaseReturns
-  summary: Удалить отдельное доп. поле Возврата поставщику
+    - Losses
+  summary: Удалить позицию Списания
   parameters:
     - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/parameters.yaml#/positionId'
     - $ref: '../../../components/headers.yaml#/AcceptHeader'
     - $ref: '../../../components/headers.yaml#/AcceptEncoding'
   responses:

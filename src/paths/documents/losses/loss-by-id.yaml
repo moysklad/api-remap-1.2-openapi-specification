@@ -1,30 +1,33 @@
 get:
-  operationId: getPurchaseReturnMetadataAttributeById
+  operationId: getLossById
   tags:
-    - PurchaseReturns
-  summary: Отдельное доп. поле Возврата поставщику
+    - Losses
+  summary: Получить Списание
   parameters:
     - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/parameters.yaml#/fields'
     - $ref: '../../../components/headers.yaml#/AcceptHeader'
     - $ref: '../../../components/headers.yaml#/AcceptEncoding'
-    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
   responses:
     '200':
       description: Успешный запрос
       content:
         application/json:
           schema:
-            $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfo'
+            $ref: '../../../openapi.yaml#/components/schemas/Loss'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
 
 put:
-  operationId: updatePurchaseReturnMetadataAttributeById
+  operationId: updateLoss
   tags:
-    - PurchaseReturns
-  summary: Обновить отдельное доп. поле Возврата поставщику
+    - Losses
+  summary: Изменить Списание
   parameters:
     - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/parameters.yaml#/fields'
     - $ref: '../../../components/headers.yaml#/AcceptHeader'
     - $ref: '../../../components/headers.yaml#/AcceptEncoding'
     - $ref: '../../../components/headers.yaml#/ContentTypeJson'
@@ -33,22 +36,22 @@ put:
     content:
       application/json:
         schema:
-          $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfo'
+          $ref: '../../../openapi.yaml#/components/schemas/Loss'
   responses:
     '200':
       description: Успешный запрос
       content:
         application/json:
           schema:
-            $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfo'
+            $ref: '../../../openapi.yaml#/components/schemas/Loss'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
 
 delete:
-  operationId: deletePurchaseReturnMetadataAttributeById
+  operationId: deleteLoss
   tags:
-    - PurchaseReturns
-  summary: Удалить отдельное доп. поле Возврата поставщику
+    - Losses
+  summary: Удалить Списание
   parameters:
     - $ref: '../../../components/parameters.yaml#/entityId'
     - $ref: '../../../components/headers.yaml#/AcceptHeader'
