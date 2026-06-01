@@ -1,7 +1,7 @@
 type: object
 description: |
   Поле суммы по связанной операции. Комбинируется через `allOf` с телом документа в элементах
-  `operations[]` приходного ордера.
+  `operations[]`.
 required:
   - linkedSum
 properties:
