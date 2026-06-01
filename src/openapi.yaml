@@ -851,6 +851,10 @@ paths:
     $ref: './paths/documents/paymentins/paymentins.yaml'
   /entity/paymentin/{id}:
     $ref: './paths/documents/paymentins/paymentin-by-id.yaml'
+  /entity/paymentin/{id}/files:
+    $ref: './paths/documents/paymentins/paymentin-files.yaml'
+  /entity/paymentin/{id}/files/{fileId}:
+    $ref: './paths/documents/paymentins/paymentin-file-by-id.yaml'
   /entity/paymentin/delete:
     $ref: './paths/documents/paymentins/paymentins-delete.yaml'
   /entity/paymentin/batch:
