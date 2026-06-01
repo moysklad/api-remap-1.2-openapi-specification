@@ -1,0 +1,50 @@
+# Образы CI семейства docker-openapitools.
+# Сборка и публикация: репозиторий docker-openapitools (GitLab CI).
+# При новом релизе образов обновите тег во всех CI_IMAGE_* ниже.
+
+variables:
+  CI_IMAGE_OPENAPITOOLS: $GLOBAL_DOCKER_URL/docker-openapitools-common:ATK-160-444335
+  CI_IMAGE_PHP_TEST: $GLOBAL_DOCKER_URL/docker-openapitools-php-test:ATK-160-444335
+  CI_IMAGE_SCHEMATHESIS: $GLOBAL_DOCKER_URL/docker-openapitools-schemathesis:ATK-160-444335
+  CI_IMAGE_MAVEN_JDK11: $GLOBAL_DOCKER_URL/docker-openapitools-java-maven-jdk11:ATK-160-444335
+  CI_IMAGE_MAVEN_7_8: $GLOBAL_DOCKER_URL/docker-openapitools-java-maven-7.8:ATK-160-444335
+  CI_IMAGE_MAVEN_3_4: $GLOBAL_DOCKER_URL/docker-openapitools-java-maven-3.4:ATK-160-444335
+
+.openapitools-image:
+  image: $CI_IMAGE_OPENAPITOOLS
+
+.npm-cache:
+  cache:
+    key:
+      files:
+        - package-lock.json
+    paths:
+      - .npm/
+    policy: pull-push
+  variables:
+    npm_config_cache: $CI_PROJECT_DIR/.npm
+
+.composer-cache:
+  cache:
+    key:
+      files:
+        - tests/php/composer.lock
+    paths:
+      - tests/php/vendor/
+    policy: pull-push
+
+.php-test-base:
+  image: $CI_IMAGE_PHP_TEST
+  extends: .composer-cache
+
+.maven-jdk11-image:
+  image: $CI_IMAGE_MAVEN_JDK11
+
+.maven-7.8-image:
+  image: $CI_IMAGE_MAVEN_7_8
+
+.maven-3.4-image:
+  image: $CI_IMAGE_MAVEN_3_4
+
+.schemathesis-image:
+  image: $CI_IMAGE_SCHEMATHESIS

@@ -28,9 +28,10 @@
     "author": "МойСклад API Team",
     "license": "MIT",
     "devDependencies": {
-        "@redocly/cli": "^1.0.0",
         "@openapitools/openapi-generator-cli": "^2.7.0",
-        "@stoplight/spectral-cli": "^6.11.0"
+        "@redocly/cli": "^1.0.0",
+        "@stoplight/spectral-cli": "^6.11.0",
+        "standard-version": "^9.5.0"
     },
     "files": [
         "src/openapi.yaml",
