@@ -6,6 +6,7 @@
       alias: mock
       variables:
         OPENAPI_MOCK_SPECIFICATION_URL: /builds/$CI_PROJECT_PATH/dist/openapi.yaml
+        OPENAPI_MOCK_RESPONSE_TIMEOUT: "30"
   variables:
     SMOKE_BASE_URL: http://mock:8080
 
@@ -52,6 +53,7 @@ sdk-smoke:
       echo "Starting openapi-mock server on port 8080..."
       MOCK_LOG=$(mktemp)
       OPENAPI_MOCK_SPECIFICATION_URL=dist/openapi.yaml \
+      OPENAPI_MOCK_RESPONSE_TIMEOUT=30 \
         nohup openapi-mock serve >"$MOCK_LOG" 2>&1 &
       MOCK_PID=$!
       disown $MOCK_PID 2>/dev/null || true

@@ -22,6 +22,7 @@ services:
       - .:/workspace:ro
     environment:
       - OPENAPI_MOCK_SPECIFICATION_URL=/workspace/dist/openapi.yaml
+      - OPENAPI_MOCK_RESPONSE_TIMEOUT=30
     networks:
       - default
 
