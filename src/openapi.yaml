@@ -1420,8 +1420,6 @@ components:
       $ref: './components/schemas/dictionary/cashOut.yaml'
     CashOutOperation:
       $ref: './components/schemas/dictionary/cashOutOperation.yaml'
-    CashOutOperationLinkedSum:
-      $ref: './components/schemas/dictionary/cashOutOperationLinkedSum.yaml'
     CashIn:
       $ref: './components/schemas/dictionary/cashIn.yaml'
     CashInOperation:
