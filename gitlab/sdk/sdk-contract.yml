@@ -21,7 +21,6 @@ deploy-contract-env:
     - when: never
   before_script:
     - rm -f /etc/apt/sources.list.d/*pgdg*.list || true
-    # git предустановлен в docker-openapitools-java-maven-7.8
     # По умолчанию берём последний тег репозитория moysklad без клонирования (только ls-remote)
     - |
       if [ -z "$PARAM_VERSION" ]; then      

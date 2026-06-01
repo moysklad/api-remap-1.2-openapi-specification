@@ -44,7 +44,6 @@ deploy-to-maven:
   before_script:
     - rm -f /etc/apt/sources.list.d/*pgdg*.list || true
     - echo "$GPG_SECRET_KEY" | gpg --import
-    # git предустановлен в docker-openapitools-java-maven-3.4
     - |
       if [ ! -d "sdk-repo" ]; then
         echo "Release artifact expired. Restore release artefact..."
