@@ -1,0 +1,45 @@
+type: object
+description: Позиция Заказа на производство
+x-entity-static-builder:
+  methodParams:
+    - "parentId"
+    - "id"
+  href:
+    - path: "entity"
+    - path: "processingorder"
+    - param: "parentId"
+    - path: "positions"
+    - param: "id"
+  type: "processingorderposition"
+properties:
+  meta:
+    description: Метаданные позиции
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID позиции
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  quantity:
+    type: number
+    format: double
+    minimum: 0
+    description: Количество товаров данного вида в позиции
+  reserve:
+    type: number
+    format: double
+    description: Резерв данной позиции
+  assortment:
+    description: Метаданные товара/услуги/партии/модификации позиции
+    $ref: '../../../openapi.yaml#/components/schemas/Assortment'
+  pack:
+    description: Упаковка Товара
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Pack'

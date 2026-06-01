@@ -24,7 +24,9 @@ properties:
     readOnly: true
   agent:
     description: Метаданные сотрудника, совершившего Внесение
-    $ref: '../../../openapi.yaml#/components/schemas/Employee'
+    x-agent-reference: true
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Agent'
   applicable:
     type: boolean
     description: Отметка о проведении
@@ -102,7 +104,7 @@ properties:
     type: number
     format: double
     description: Сумма Внесения денег в копейках
-    minimum: 0.5
+    minimum: 1
   syncId:
     type: string
     format: uuid
