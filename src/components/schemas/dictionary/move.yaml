@@ -82,10 +82,16 @@ properties:
     $ref: '../../../openapi.yaml#/components/schemas/Organization'
   sourceStore:
     description: Метаданные склада, с которого совершается перемещение
-    $ref: '../../../openapi.yaml#/components/schemas/Store'
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Store'
   targetStore:
     description: Метаданные склада, на который совершается перемещение
-    $ref: '../../../openapi.yaml#/components/schemas/Store'
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Store'
   state:
     description: Метаданные статуса Перемещения
     nullable: true
@@ -129,7 +135,7 @@ properties:
     type: object
     nullable: true
     description: |
-      Накладные расходы.
+      Накладные расходы на уровне документа.
       Если позиции Перемещения не заданы, накладные расходы задать нельзя.
     properties:
       sum:
