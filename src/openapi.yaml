@@ -846,6 +846,9 @@ paths:
     $ref: './paths/documents/purchasereturns/purchasereturn-position-by-id.yaml'
   /entity/purchasereturn/{id}/positions/delete:
     $ref: './paths/documents/purchasereturns/purchasereturn-positions-delete.yaml'
+  # Documents - Prepayments
+  /entity/prepayment/metadata/attributes:
+    $ref: './paths/documents/prepayments/prepayment-metadata-attribute.yaml'
   # Documents - Prepayment Returns
   /entity/prepaymentreturn:
     $ref: './paths/documents/prepaymentreturns/prepaymentreturns.yaml'
@@ -1884,6 +1887,8 @@ tags:
     description: Операции со списаниями
   - name: PurchaseReturns
     description: Операции с возвратами поставщикам
+  - name: Prepayments
+    description: Операции с предоплатами
   - name: PrepaymentReturns
     description: Операции с возвратами предоплаты
   - name: PurchaseOrders

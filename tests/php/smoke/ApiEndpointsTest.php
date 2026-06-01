@@ -1928,6 +1928,14 @@ class ApiEndpointsTest extends TestCase
         $this->assertReachable($this->client->get($docBase . '/positions/' . self::TEST_UUID));
     }
 
+    public function testCreatePrepaymentMetadataAttribute(): void
+    {
+        $this->assertReachable($this->client->post(
+            self::API_BASE_PATH . '/entity/prepayment/metadata/attributes',
+            ['json' => ['name' => 'attr1']]
+        ));
+    }
+
     public function testRetailDemandCrudMetadataTemplateAndPositions(): void
     {
         $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/retaildemand'));
