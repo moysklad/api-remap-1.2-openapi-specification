@@ -109,7 +109,7 @@ properties:
     type: number
     format: double
     description: Сумма Выплаты денег в установленной валюте
-    minimum: 0.5
+    minimum: 1
   syncId:
     type: string
     format: uuid
