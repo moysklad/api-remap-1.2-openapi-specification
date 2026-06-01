@@ -38,6 +38,7 @@ properties:
     type: string
     format: uuid
     description: ID синхронизации
+    readOnly: true
   description:
     type: string
     maxLength: 4096
@@ -58,3 +59,77 @@ properties:
   moment:
     type: string
     description: Дата документа
+  deliveryPlannedMoment:
+    type: string
+    description: Планируемая дата производства
+  applicable:
+    type: boolean
+    description: Отметка о проведении
+  printed:
+    type: boolean
+    description: Напечатан ли документ
+    readOnly: true
+  published:
+    type: boolean
+    description: Опубликован ли документ
+    readOnly: true
+  shared:
+    type: boolean
+    description: Общий доступ
+    readOnly: true
+  organization:
+    description: Метаданные юрлица
+    $ref: '../../../openapi.yaml#/components/schemas/Organization'
+  store:
+    description: Метаданные склада
+    $ref: '../../../openapi.yaml#/components/schemas/Store'
+  state:
+    description: Метаданные статуса Заказа на производство
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/State'
+  processingPlan:
+    description: Метаданные техкарты
+    $ref: '../../../openapi.yaml#/components/schemas/ProcessingPlan'
+  project:
+    description: Метаданные проекта
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Project'
+  owner:
+    description: Владелец (Сотрудник)
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Employee'
+  group:
+    description: Отдел сотрудника
+    $ref: '../../../openapi.yaml#/components/schemas/Group'
+  attributes:
+    type: array
+    description: Коллекция метаданных доп. полей
+    nullable: true
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
+  files:
+    description: Метаданные массива Файлов
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/FileList'
+  positions:
+    type: object
+    description: Позиции Заказа на производство
+    $ref: '../../../openapi.yaml#/components/schemas/ProcessingOrderPositionList'
+  quantity:
+    type: number
+    format: double
+    description: Объем производства
+  processings:
+    type: array
+    description: Массив ссылок на связанные техоперации
+    nullable: true
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/Processing'
