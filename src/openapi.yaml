@@ -643,6 +643,33 @@ paths:
     $ref: './paths/documents/demands/demand-position-by-id.yaml'
   /entity/demand/{id}/positions/delete:
     $ref: './paths/documents/demands/demand-positions-delete.yaml'
+  # Documents - Moves
+  /entity/move:
+    $ref: './paths/documents/moves/moves.yaml'
+  /entity/move/{id}:
+    $ref: './paths/documents/moves/move-by-id.yaml'
+  /entity/move/delete:
+    $ref: './paths/documents/moves/moves-delete.yaml'
+  /entity/move/batch:
+    $ref: './paths/documents/moves/moves-batch.yaml'
+  /entity/move/metadata:
+    $ref: './paths/documents/moves/move-metadata.yaml'
+  /entity/move/metadata/attributes:
+    $ref: './paths/documents/moves/move-metadata-attribute.yaml'
+  /entity/move/metadata/attributes/{id}:
+    $ref: './paths/documents/moves/move-metadata-attribute-by-id.yaml'
+  /entity/move/metadata/states/{id}:
+    $ref: './paths/documents/moves/move-metadata-state-by-id.yaml'
+  /entity/move/new:
+    $ref: './paths/documents/moves/move-new.yaml'
+  /entity/move/{id}/positions:
+    $ref: './paths/documents/moves/move-positions.yaml'
+  /entity/move/{id}/positions/batch:
+    $ref: './paths/documents/moves/move-positions-batch.yaml'
+  /entity/move/{id}/positions/{positionId}:
+    $ref: './paths/documents/moves/move-position-by-id.yaml'
+  /entity/move/{id}/positions/delete:
+    $ref: './paths/documents/moves/move-positions-delete.yaml'
   # Documents - Purchase Orders
   /entity/purchaseorder:
     $ref: './paths/documents/purchaseorders/purchaseorders.yaml'
@@ -1286,6 +1313,14 @@ components:
       $ref: './components/schemas/dictionary/productionTask.yaml'
     Move:
       $ref: './components/schemas/dictionary/move.yaml'
+    MoveList:
+      $ref: './components/schemas/dictionary/moveList.yaml'
+    MoveOverheadDistribution:
+      $ref: './components/schemas/dictionary/moveOverheadDistribution.yaml'
+    MovePosition:
+      $ref: './components/schemas/dictionary/movePosition.yaml'
+    MovePositionList:
+      $ref: './components/schemas/dictionary/movePositionList.yaml'
     ProcessingPlanFolder:
       $ref: './components/schemas/dictionary/processingPlanFolder.yaml'
     ProcessingPlanFolderList:
@@ -1455,6 +1490,8 @@ tags:
     description: Операции с заказами покупателя
   - name: Demands
     description: Операции с отгрузками
+  - name: Moves
+    description: Операции с перемещениями
   - name: PurchaseOrders
     description: Операции с заказами поставщика
   - name: EmissionOrders

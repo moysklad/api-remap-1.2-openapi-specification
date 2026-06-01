@@ -1578,6 +1578,151 @@ class ApiEndpointsTest extends TestCase
         $this->assertReachable($this->client->put(self::API_BASE_PATH . '/entity/demand/new'));
     }
 
+
+    public function testListMoves(): void
+    {
+        $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/move'));
+    }
+
+    public function testCreateMove(): void
+    {
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . '/entity/move', [
+            'json' => $this->moveRequiredPayload(),
+        ]));
+    }
+
+    public function testGetMoveById(): void
+    {
+        $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/move/' . self::TEST_UUID));
+    }
+
+    public function testUpdateMove(): void
+    {
+        $this->assertReachable($this->client->put(self::API_BASE_PATH . '/entity/move/' . self::TEST_UUID, [
+            'json' => ['name' => 'Move Y'],
+        ]));
+    }
+
+    public function testDeleteMove(): void
+    {
+        $this->assertReachable($this->client->delete(self::API_BASE_PATH . '/entity/move/' . self::TEST_UUID));
+    }
+
+    public function testDeleteMovesBatch(): void
+    {
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . '/entity/move/delete', [
+            'json' => $this->moveMetaPayload(),
+        ]));
+    }
+
+    public function testCreateMovesBatch(): void
+    {
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . '/entity/move/batch', [
+            'json' => [$this->moveRequiredPayload()],
+        ]));
+    }
+
+    public function testGetMoveTemplate(): void
+    {
+        $this->assertReachable($this->client->put(self::API_BASE_PATH . '/entity/move/new', [
+            'json' => new \stdClass(),
+        ]));
+    }
+
+    public function testGetMoveMetadata(): void
+    {
+        $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/move/metadata'));
+    }
+
+    public function testGetMoveMetadataAttributes(): void
+    {
+        $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/move/metadata/attributes'));
+    }
+
+    public function testCreateMoveMetadataAttribute(): void
+    {
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . '/entity/move/metadata/attributes', [
+            'json' => ['name' => 'atr1', 'type' => 'string'],
+        ]));
+    }
+
+    public function testGetMoveMetadataAttributeById(): void
+    {
+        $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/move/metadata/attributes/' . self::TEST_UUID));
+    }
+
+    public function testUpdateMoveMetadataAttributeById(): void
+    {
+        $this->assertReachable($this->client->put(self::API_BASE_PATH . '/entity/move/metadata/attributes/' . self::TEST_UUID, [
+            'json' => ['name' => 'atr1'],
+        ]));
+    }
+
+    public function testDeleteMoveMetadataAttributeById(): void
+    {
+        $this->assertReachable($this->client->delete(self::API_BASE_PATH . '/entity/move/metadata/attributes/' . self::TEST_UUID));
+    }
+
+    public function testGetMoveMetadataStateById(): void
+    {
+        $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/move/metadata/states/' . self::TEST_UUID));
+    }
+
+    public function testUpdateMoveMetadataStateById(): void
+    {
+        $this->assertReachable($this->client->put(self::API_BASE_PATH . '/entity/move/metadata/states/' . self::TEST_UUID, [
+            'json' => ['name' => 'state1'],
+        ]));
+    }
+
+    public function testDeleteMoveMetadataStateById(): void
+    {
+        $this->assertReachable($this->client->delete(self::API_BASE_PATH . '/entity/move/metadata/states/' . self::TEST_UUID));
+    }
+
+    public function testGetMovePositions(): void
+    {
+        $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/move/' . self::TEST_UUID . '/positions'));
+    }
+
+    public function testCreateMovePositions(): void
+    {
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . '/entity/move/' . self::TEST_UUID . '/positions', [
+            'json' => $this->movePositionPayload(),
+        ]));
+    }
+
+    public function testCreateMovePositionsBatch(): void
+    {
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . '/entity/move/' . self::TEST_UUID . '/positions/batch', [
+            'json' => [$this->movePositionPayload()],
+        ]));
+    }
+
+    public function testGetMovePositionById(): void
+    {
+        $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/move/' . self::TEST_UUID . '/positions/' . self::TEST_UUID));
+    }
+
+    public function testUpdateMovePosition(): void
+    {
+        $this->assertReachable($this->client->put(self::API_BASE_PATH . '/entity/move/' . self::TEST_UUID . '/positions/' . self::TEST_UUID, [
+            'json' => ['quantity' => 2.0],
+        ]));
+    }
+
+    public function testDeleteMovePosition(): void
+    {
+        $this->assertReachable($this->client->delete(self::API_BASE_PATH . '/entity/move/' . self::TEST_UUID . '/positions/' . self::TEST_UUID));
+    }
+
+    public function testDeleteMovePositionsBatch(): void
+    {
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . '/entity/move/' . self::TEST_UUID . '/positions/delete', [
+            'json' => $this->movePositionMetaPayload(),
+        ]));
+    }
+
     public function testListPurchaseOrders(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/purchaseorder');
@@ -3850,6 +3995,60 @@ class ApiEndpointsTest extends TestCase
     {
         $response = $this->client->put(self::API_BASE_PATH . '/entity/cashout/new', ['json' => new \stdClass()]);
         $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+
+    private function moveRequiredPayload(): array
+    {
+        return [
+            'organization' => $this->entityMeta('organization'),
+            'sourceStore' => $this->entityMeta('store'),
+            'targetStore' => $this->entityMeta('store'),
+        ];
+    }
+
+    private function movePositionPayload(): array
+    {
+        return [
+            'quantity' => 1.0,
+            'price' => 100.0,
+            'assortment' => $this->entityMeta('product'),
+        ];
+    }
+
+    private function moveMetaPayload(): array
+    {
+        return [[
+            'meta' => [
+                'href' => 'https://api.moysklad.ru/api/remap/1.2/entity/move/' . self::TEST_UUID,
+                'metadataHref' => 'https://api.moysklad.ru/api/remap/1.2/entity/move/metadata',
+                'type' => 'move',
+                'mediaType' => 'application/json',
+            ],
+        ]];
+    }
+
+    private function movePositionMetaPayload(): array
+    {
+        return [[
+            'meta' => [
+                'href' => 'https://api.moysklad.ru/api/remap/1.2/entity/move/' . self::TEST_UUID . '/positions/' . self::TEST_UUID,
+                'type' => 'moveposition',
+                'mediaType' => 'application/json',
+            ],
+        ]];
+    }
+
+    private function entityMeta(string $type): array
+    {
+        return [
+            'meta' => [
+                'href' => 'https://api.moysklad.ru/api/remap/1.2/entity/' . $type . '/' . self::TEST_UUID,
+                'metadataHref' => 'https://api.moysklad.ru/api/remap/1.2/entity/' . $type . '/metadata',
+                'type' => $type,
+                'mediaType' => 'application/json',
+            ],
+        ];
     }
 
     private function assertReachable(\Psr\Http\Message\ResponseInterface $response): void
