@@ -670,6 +670,37 @@ paths:
     $ref: './paths/documents/demands/demand-position-by-id.yaml'
   /entity/demand/{id}/positions/delete:
     $ref: './paths/documents/demands/demand-positions-delete.yaml'
+  # Documents - Enters
+  /entity/enter:
+    $ref: './paths/documents/enters/enters.yaml'
+  /entity/enter/{id}:
+    $ref: './paths/documents/enters/enter-by-id.yaml'
+  /entity/enter/{id}/files:
+    $ref: './paths/documents/enters/enter-files.yaml'
+  /entity/enter/{id}/files/{fileId}:
+    $ref: './paths/documents/enters/enter-file-by-id.yaml'
+  /entity/enter/delete:
+    $ref: './paths/documents/enters/enters-delete.yaml'
+  /entity/enter/batch:
+    $ref: './paths/documents/enters/enters-batch.yaml'
+  /entity/enter/metadata:
+    $ref: './paths/documents/enters/enter-metadata.yaml'
+  /entity/enter/metadata/attributes:
+    $ref: './paths/documents/enters/enter-metadata-attribute.yaml'
+  /entity/enter/metadata/attributes/{id}:
+    $ref: './paths/documents/enters/enter-metadata-attribute-by-id.yaml'
+  /entity/enter/metadata/states:
+    $ref: './paths/documents/enters/enter-metadata-states.yaml'
+  /entity/enter/metadata/states/{id}:
+    $ref: './paths/documents/enters/enter-metadata-state-by-id.yaml'
+  /entity/enter/new:
+    $ref: './paths/documents/enters/enter-new.yaml'
+  /entity/enter/{id}/positions:
+    $ref: './paths/documents/enters/enter-positions.yaml'
+  /entity/enter/{id}/positions/{positionId}:
+    $ref: './paths/documents/enters/enter-position-by-id.yaml'
+  /entity/enter/{id}/positions/delete:
+    $ref: './paths/documents/enters/enter-positions-delete.yaml'
   # Documents - Sales Returns
   /entity/salesreturn:
     $ref: './paths/documents/salesreturns/salesreturns.yaml'
@@ -1561,6 +1592,16 @@ components:
       $ref: './components/schemas/dictionary/demandPositionTrackingCode1162.yaml'
     DemandPositionTrackingCodeType:
       $ref: './components/schemas/dictionary/demandPositionTrackingCodeType.yaml'
+    Enter:
+      $ref: './components/schemas/dictionary/enter.yaml'
+    EnterList:
+      $ref: './components/schemas/dictionary/enterList.yaml'
+    EnterOverheadDistribution:
+      $ref: './components/schemas/dictionary/enterOverheadDistribution.yaml'
+    EnterPosition:
+      $ref: './components/schemas/dictionary/enterPosition.yaml'
+    EnterPositionList:
+      $ref: './components/schemas/dictionary/enterPositionList.yaml'
 
     CommissionReportIn:
       $ref: './components/schemas/dictionary/commissionReportIn.yaml'
@@ -1710,6 +1751,8 @@ tags:
     description: Операции с заказами покупателя
   - name: Demands
     description: Операции с отгрузками
+  - name: Enters
+    description: Операции с оприходованиями
   - name: SalesReturns
     description: Операции с возвратами покупателей
   - name: Losses

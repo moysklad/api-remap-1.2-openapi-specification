@@ -76,6 +76,7 @@ class SerializationTest extends TestCase
         'processing_order' => 'ProcessingOrder',
         'customer_order' => 'CustomerOrder',
         'demand' => 'Demand',
+        'enter' => 'Enter',
         'sales_return' => 'SalesReturn',
         'loss' => 'Loss',
         'purchase_order' => 'PurchaseOrder',
