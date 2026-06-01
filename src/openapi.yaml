@@ -618,6 +618,43 @@ paths:
     $ref: './paths/documents/processingorders/processingorder-files.yaml'
   /entity/processingorder/{id}/files/{fileId}:
     $ref: './paths/documents/processingorders/processingorder-file-by-id.yaml'
+  # Documents - Processings
+  /entity/processing:
+    $ref: './paths/documents/processings/processings.yaml'
+  /entity/processing/{id}:
+    $ref: './paths/documents/processings/processing-by-id.yaml'
+  /entity/processing/{id}/files:
+    $ref: './paths/documents/processings/processing-files.yaml'
+  /entity/processing/{id}/files/{fileId}:
+    $ref: './paths/documents/processings/processing-file-by-id.yaml'
+  /entity/processing/delete:
+    $ref: './paths/documents/processings/processings-delete.yaml'
+  /entity/processing/batch:
+    $ref: './paths/documents/processings/processings-batch.yaml'
+  /entity/processing/metadata:
+    $ref: './paths/documents/processings/processing-metadata.yaml'
+  /entity/processing/metadata/attributes:
+    $ref: './paths/documents/processings/processing-metadata-attribute.yaml'
+  /entity/processing/metadata/attributes/{id}:
+    $ref: './paths/documents/processings/processing-metadata-attribute-by-id.yaml'
+  /entity/processing/metadata/states:
+    $ref: './paths/documents/processings/processing-metadata-states.yaml'
+  /entity/processing/metadata/states/{id}:
+    $ref: './paths/documents/processings/processing-metadata-state-by-id.yaml'
+  /entity/processing/new:
+    $ref: './paths/documents/processings/processing-new.yaml'
+  /entity/processing/{id}/materials:
+    $ref: './paths/documents/processings/processing-materials.yaml'
+  /entity/processing/{id}/materials/{positionId}:
+    $ref: './paths/documents/processings/processing-material-by-id.yaml'
+  /entity/processing/{id}/materials/delete:
+    $ref: './paths/documents/processings/processing-materials-delete.yaml'
+  /entity/processing/{id}/products:
+    $ref: './paths/documents/processings/processing-products.yaml'
+  /entity/processing/{id}/products/{positionId}:
+    $ref: './paths/documents/processings/processing-product-by-id.yaml'
+  /entity/processing/{id}/products/delete:
+    $ref: './paths/documents/processings/processing-products-delete.yaml'
   # Documents - Customer Orders
   /entity/customerorder:
     $ref: './paths/documents/customerorders/customerorders.yaml'
@@ -1574,6 +1611,16 @@ components:
       $ref: './components/schemas/dictionary/processingPlanFolderList.yaml'
     Processing:
       $ref: './components/schemas/dictionary/processing.yaml'
+    ProcessingList:
+      $ref: './components/schemas/dictionary/processingList.yaml'
+    ProcessingMaterial:
+      $ref: './components/schemas/dictionary/processingMaterial.yaml'
+    ProcessingMaterialList:
+      $ref: './components/schemas/dictionary/processingMaterialList.yaml'
+    ProcessingProduct:
+      $ref: './components/schemas/dictionary/processingProduct.yaml'
+    ProcessingProductList:
+      $ref: './components/schemas/dictionary/processingProductList.yaml'
     ProcessingOrder:
       $ref: './components/schemas/dictionary/processingOrder.yaml'
     ProcessingOrderPosition:
@@ -1739,6 +1786,8 @@ tags:
     description: Операции c Внутренними заказами
   - name: ProcessingOrders
     description: Операции с заказами на производство
+  - name: Processings
+    description: Операции с техоперациями
   - name: Bundles
     description: Операции с комплектами
   - name: Variants

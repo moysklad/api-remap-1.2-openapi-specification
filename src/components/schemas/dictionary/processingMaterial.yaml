@@ -1,0 +1,35 @@
+type: object
+description: Материал техоперации
+x-entity-static-builder:
+  methodParams:
+    - "parentId"
+    - "id"
+  href:
+    - path: "entity"
+    - path: "processing"
+    - param: "parentId"
+    - path: "materials"
+    - param: "id"
+  type: "processingpositionmaterial"
+properties:
+  meta:
+    description: Метаданные материала техоперации
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID материала техоперации
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  assortment:
+    description: Метаданные товара/партии/модификации позиции
+    $ref: '../../../openapi.yaml#/components/schemas/Assortment'
+  quantity:
+    type: number
+    format: double
+    minimum: 0.0001
+    description: Количество товаров данного вида в позиции
