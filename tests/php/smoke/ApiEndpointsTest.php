@@ -3775,7 +3775,7 @@ class ApiEndpointsTest extends TestCase
      */
     public function testPaymentInCrud(): void
     {
-        $base = self::API_BASE_PATH . '/entity/payment';
+        $base = self::API_BASE_PATH . '/entity/paymentin';
 
         $this->assertReachable($this->client->get($base));
         $this->assertReachable($this->client->post($base, ['json' => ['name' => 'X']]));
