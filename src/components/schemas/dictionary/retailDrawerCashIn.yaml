@@ -24,9 +24,8 @@ properties:
     readOnly: true
   agent:
     description: Метаданные сотрудника, совершившего Внесение
-    x-agent-reference: true
-    allOf:
-      - $ref: '../../../openapi.yaml#/components/schemas/Agent'
+    x-agent-reference: false
+    $ref: '../../../openapi.yaml#/components/schemas/Employee'
   applicable:
     type: boolean
     description: Отметка о проведении
