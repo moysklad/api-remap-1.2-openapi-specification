@@ -244,16 +244,16 @@ properties:
     description: Перевозчик (контрагент или юрлицо)
     nullable: true
     type: object
-    anyOf:
-      - $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
-      - $ref: '../../../openapi.yaml#/components/schemas/Organization'
+    x-agent-reference: true
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Agent'
   consignee:
     description: Грузополучатель (контрагент или юрлицо)
     nullable: true
     type: object
-    anyOf:
-      - $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
-      - $ref: '../../../openapi.yaml#/components/schemas/Organization'
+    x-agent-reference: true
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Agent'
   goodPackQuantity:
     type: integer
     description: Всего мест

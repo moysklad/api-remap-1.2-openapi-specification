@@ -1013,17 +1013,18 @@ docker compose run --rm sdk make lint           # Redocly lint — must say "val
 docker compose run --rm sdk make bundle         # produces dist/openapi.yaml + dist/openapi.json
 docker compose run --rm sdk make generate-php   # generates PHP SDK in clients/php/
 docker compose run --rm sdk make generate-java  # generates Java SDK in clients/java/
-docker compose restart mock                     # CRITICAL: reload bundled spec in mock server
 docker compose run --rm sdk make test-golden-php  # roundtrip JSON ↔ SDK model
 docker compose run --rm java-sdk make test-golden-java  # Java roundtrip against the same shared fixtures
+docker compose run --rm sdk make light-bundle    # produces filtered dist/openapi.yaml for fast smoke
+docker compose restart mock                     # CRITICAL: reload smoke bundle in mock server
 docker compose run --rm sdk make test-smoke       # HTTP smoke against openapi-mock
 ```
 
-`test-smoke` is the canonical local smoke target.
+`test-smoke` is the canonical local smoke target, but it should run against the `light-bundle` output.
 
-### Mock server restart — required after every `make bundle`
+### Mock server restart — required after every `make light-bundle`
 
-The openapi-mock container loads `dist/openapi.yaml` **once on startup** and caches it in memory. It does **not** watch for file changes. If you skip the restart, smoke tests will return **404 for any newly added endpoints**.
+The openapi-mock container loads `dist/openapi.yaml` **once on startup** and caches it in memory. It does **not** watch for file changes. If you skip the restart after `make light-bundle`, smoke tests will return **404 for any newly added endpoints**.
 
 ```bash
 docker compose restart mock
@@ -1042,13 +1043,14 @@ After modifying any YAML schema, **always run `make generate-php` and `make gene
 
 The correct sequence is:
 1. `lint` — catch YAML/OpenAPI syntax issues
-2. `bundle` — produce `dist/openapi.yaml`
+2. `bundle` — produce the full `dist/openapi.yaml`
 3. `generate-php` — regenerate PHP SDK models from the updated spec
 4. `generate-java` — regenerate Java SDK models from the updated spec
-5. `restart mock` — reload the bundled spec in the mock server
-6. `test-golden-php` — verify PHP roundtrip serialization with rich fixtures
-7. `test-golden-java` — verify Java roundtrip serialization with the same fixtures
-8. `test-smoke` — verify endpoint reachability against the mock
+5. `test-golden-php` — verify PHP roundtrip serialization with rich fixtures
+6. `test-golden-java` — verify Java roundtrip serialization with the same fixtures
+7. `light-bundle` — produce the filtered `dist/openapi.yaml` for fast smoke
+8. `restart mock` — reload the smoke bundle in the mock server
+9. `test-smoke` — verify endpoint reachability against the mock
 
 Skipping steps 3-4 after schema changes → golden tests pass falsely or only one SDK is actually covered.
-Skipping step 5 after adding endpoints → smoke tests fail with 404.
+Skipping step 8 after adding endpoints → smoke tests fail with 404.

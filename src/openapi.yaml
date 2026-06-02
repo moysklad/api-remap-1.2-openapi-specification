@@ -614,6 +614,10 @@ paths:
     $ref: './paths/documents/processingorders/processingorder-position-by-id.yaml'
   /entity/processingorder/{id}/positions/delete:
     $ref: './paths/documents/processingorders/processingorder-positions-delete.yaml'
+  /entity/processingorder/{id}/files:
+    $ref: './paths/documents/processingorders/processingorder-files.yaml'
+  /entity/processingorder/{id}/files/{fileId}:
+    $ref: './paths/documents/processingorders/processingorder-file-by-id.yaml'
   # Documents - Processings
   /entity/processing:
     $ref: './paths/documents/processings/processings.yaml'
@@ -1323,6 +1327,8 @@ components:
       $ref: './components/schemas/dictionary/lossPosition.yaml'
     LossPositionList:
       $ref: './components/schemas/dictionary/lossPositionList.yaml'
+    LossDeclaration:
+      $ref: './components/schemas/dictionary/lossDeclaration.yaml'
     MinimumStockAllWarehouseSame:
       $ref: './components/schemas/dictionary/minimumStockAllWarehouseSame.yaml'
     MinimumStockAllWarehouseSum:

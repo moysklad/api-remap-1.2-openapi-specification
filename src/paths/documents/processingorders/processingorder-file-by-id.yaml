@@ -1,9 +1,9 @@
 get:
-  operationId: getPaymentOutFile
+  operationId: getProcessingOrderFile
   tags:
-    - PaymentOuts
-  summary: Получить файл
-  description: Получение Файла.
+    - ProcessingOrders
+  summary: Получить файл Заказа на производство
+  description: Получение Файла Заказа на производство.
   parameters:
     - $ref: '../../../components/parameters.yaml#/entityId'
     - name: fileId
@@ -26,11 +26,11 @@ get:
       $ref: '../../../components/responses.yaml#/CommonError'
 
 delete:
-  operationId: deletePaymentOutFile
+  operationId: deleteProcessingOrderFile
   tags:
-    - PaymentOuts
-  summary: Удалить файл
-  description: Удаление Файла.
+    - ProcessingOrders
+  summary: Удалить файл Заказа на производство
+  description: Удаление Файла Заказа на производство.
   parameters:
     - $ref: '../../../components/parameters.yaml#/entityId'
     - name: fileId
