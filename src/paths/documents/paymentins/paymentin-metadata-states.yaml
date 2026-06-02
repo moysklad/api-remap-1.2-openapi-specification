@@ -12,21 +12,13 @@ post:
     content:
       application/json:
         schema:
-          oneOf:
-            - $ref: '../../../openapi.yaml#/components/schemas/State'
-            - type: array
-              items:
-                $ref: '../../../openapi.yaml#/components/schemas/State'
+          $ref: '../../../openapi.yaml#/components/schemas/State'
   responses:
     '200':
       description: Успешный запрос
       content:
         application/json:
           schema:
-            oneOf:
-              - $ref: '../../../openapi.yaml#/components/schemas/State'
-              - type: array
-                items:
-                  $ref: '../../../openapi.yaml#/components/schemas/State'
+            $ref: '../../../openapi.yaml#/components/schemas/State'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
