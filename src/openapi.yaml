@@ -846,6 +846,33 @@ paths:
     $ref: './paths/documents/purchasereturns/purchasereturn-position-by-id.yaml'
   /entity/purchasereturn/{id}/positions/delete:
     $ref: './paths/documents/purchasereturns/purchasereturn-positions-delete.yaml'
+  # Documents - Supplies
+  /entity/supply:
+    $ref: './paths/documents/supplies/supplies.yaml'
+  /entity/supply/{id}:
+    $ref: './paths/documents/supplies/supply-by-id.yaml'
+  /entity/supply/delete:
+    $ref: './paths/documents/supplies/supplies-delete.yaml'
+  /entity/supply/batch:
+    $ref: './paths/documents/supplies/supplies-batch.yaml'
+  /entity/supply/metadata:
+    $ref: './paths/documents/supplies/supply-metadata.yaml'
+  /entity/supply/metadata/attributes:
+    $ref: './paths/documents/supplies/supply-metadata-attribute.yaml'
+  /entity/supply/metadata/attributes/{id}:
+    $ref: './paths/documents/supplies/supply-metadata-attribute-by-id.yaml'
+  /entity/supply/metadata/states:
+    $ref: './paths/documents/supplies/supply-metadata-states.yaml'
+  /entity/supply/metadata/states/{id}:
+    $ref: './paths/documents/supplies/supply-metadata-state-by-id.yaml'
+  /entity/supply/new:
+    $ref: './paths/documents/supplies/supply-new.yaml'
+  /entity/supply/{id}/positions:
+    $ref: './paths/documents/supplies/supply-positions.yaml'
+  /entity/supply/{id}/positions/{positionId}:
+    $ref: './paths/documents/supplies/supply-position-by-id.yaml'
+  /entity/supply/{id}/positions/delete:
+    $ref: './paths/documents/supplies/supply-positions-delete.yaml'
   # Documents - Prepayments
   /entity/prepayment/metadata/attributes:
     $ref: './paths/documents/prepayments/prepayment-metadata-attribute.yaml'
@@ -1604,6 +1631,18 @@ components:
       $ref: './components/schemas/dictionary/invoiceOut.yaml'
     Supply:
       $ref: './components/schemas/dictionary/supply.yaml'
+    SupplyList:
+      $ref: './components/schemas/dictionary/supplyList.yaml'
+    SupplyPosition:
+      $ref: './components/schemas/dictionary/supplyPosition.yaml'
+    SupplyPositionList:
+      $ref: './components/schemas/dictionary/supplyPositionList.yaml'
+    SupplyOverheadDistribution:
+      $ref: './components/schemas/dictionary/supplyOverheadDistribution.yaml'
+    SupplyPositionTrackingCode:
+      $ref: './components/schemas/dictionary/supplyPositionTrackingCode.yaml'
+    SupplyPositionTrackingCodeType:
+      $ref: './components/schemas/dictionary/supplyPositionTrackingCodeType.yaml'
     PaymentOut:
       $ref: './components/schemas/dictionary/paymentOut.yaml'
     PaymentOutList:
@@ -1887,6 +1926,8 @@ tags:
     description: Операции со списаниями
   - name: PurchaseReturns
     description: Операции с возвратами поставщикам
+  - name: Supplies
+    description: Операции с приемками
   - name: Prepayments
     description: Операции с предоплатами
   - name: PrepaymentReturns

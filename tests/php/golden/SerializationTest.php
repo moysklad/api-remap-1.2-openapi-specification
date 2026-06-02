@@ -84,6 +84,7 @@ class SerializationTest extends TestCase
         'loss' => 'Loss',
         'purchase_order' => 'PurchaseOrder',
         'purchase_return' => 'PurchaseReturn',
+        'supply' => 'Supply',
         'prepayment_return' => 'PrepaymentReturn',
         'emission_order' => 'EmissionOrder',
         'variantcharacteristic' => 'VariantCharacteristic',

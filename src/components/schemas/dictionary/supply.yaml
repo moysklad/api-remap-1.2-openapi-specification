@@ -37,7 +37,7 @@ properties:
   syncId:
     type: string
     format: uuid
-    description: ID синхронизации
+    description: ID синхронизации. После заполнения недоступен для изменения
   description:
     type: string
     maxLength: 4096
@@ -58,3 +58,182 @@ properties:
   moment:
     type: string
     description: Дата документа
+  incomingDate:
+    type: string
+    nullable: true
+    description: Входящая дата
+  incomingNumber:
+    type: string
+    maxLength: 255
+    nullable: true
+    description: Входящий номер
+  applicable:
+    type: boolean
+    description: Отметка о проведении
+  printed:
+    type: boolean
+    description: Напечатан ли документ
+    readOnly: true
+  published:
+    type: boolean
+    description: Опубликован ли документ
+    readOnly: true
+  shared:
+    type: boolean
+    description: Общий доступ
+  vatEnabled:
+    type: boolean
+    description: Учитывается ли НДС
+  vatIncluded:
+    type: boolean
+    description: Включен ли НДС в цену
+  vatSum:
+    type: number
+    format: double
+    description: Сумма НДС
+    readOnly: true
+  sum:
+    type: number
+    format: double
+    description: Сумма Приемки в копейках
+    readOnly: true
+  payedSum:
+    type: number
+    format: double
+    description: Сумма входящих платежей по Приемке
+    readOnly: true
+  organization:
+    description: Метаданные юрлица
+    $ref: '../../../openapi.yaml#/components/schemas/Organization'
+  organizationAccount:
+    description: Метаданные счета юрлица
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Account'
+  agent:
+    description: Метаданные контрагента
+    x-agent-reference: true
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Agent'
+  agentAccount:
+    description: Метаданные счета контрагента
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Account'
+  store:
+    description: Метаданные склада
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Store'
+  state:
+    description: Метаданные статуса Приемки
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/State'
+  contract:
+    description: Метаданные договора
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Contract'
+  project:
+    description: Метаданные проекта
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Project'
+  owner:
+    description: Владелец (Сотрудник)
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Employee'
+  group:
+    description: Отдел сотрудника
+    $ref: '../../../openapi.yaml#/components/schemas/Group'
+  attributes:
+    description: Коллекция метаданных доп. полей
+    nullable: true
+    type: array
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
+  files:
+    description: Метаданные массива Файлов (максимальное количество файлов — 100)
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/FileList'
+  rate:
+    description: Валюта
+    $ref: '../common/currencyRate.yaml'
+  overhead:
+    type: object
+    nullable: true
+    description: |
+      Накладные расходы на уровне документа.
+      Если позиции Приемки не заданы, накладные расходы задать нельзя.
+    properties:
+      sum:
+        type: number
+        format: double
+        description: Сумма в копейках
+      distribution:
+        type: string
+        description: |
+          Распределение накладных расходов между позициями.
+          Известные значения описаны в SupplyOverheadDistribution
+  positions:
+    type: object
+    description: Позиции Приемки
+    $ref: '../../../openapi.yaml#/components/schemas/SupplyPositionList'
+  purchaseOrder:
+    description: |
+      Связанный заказ поставщику (тип `purchaseorder`).
+      Полная схема документа — `PurchaseOrder`.
+    nullable: true
+    type: object
+    properties:
+      meta:
+        description: Метаданные заказа поставщику
+        $ref: '../common/meta.yaml'
+  factureIn:
+    description: Счет-фактура полученный, с которым связана эта Приемка
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/FactureIn'
+  invoicesIn:
+    type: array
+    description: Массив ссылок на связанные счета поставщиков
+    nullable: true
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/InvoiceIn'
+  payments:
+    type: array
+    nullable: true
+    description: Массив ссылок на связанные платежи
+    items:
+      anyOf:
+        - $ref: '../../../openapi.yaml#/components/schemas/PaymentIn'
+        - $ref: '../../../openapi.yaml#/components/schemas/CashIn'
+  productionTask:
+    description: Связанное производственное задание
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/ProductionTask'
+  returns:
+    type: array
+    description: |
+      Массив ссылок на связанные возвраты поставщику (тип `purchasereturn`).
+      Полная схема документа — `PurchaseReturn`.
+    nullable: true
+    items:
+      type: object
+      properties:
+        meta:
+          description: Метаданные возврата поставщику
+          $ref: '../common/meta.yaml'
