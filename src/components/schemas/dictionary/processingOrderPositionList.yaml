@@ -10,5 +10,6 @@ properties:
   rows:
     type: array
     description: Массив позиций Заказа на производство
+    nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/ProcessingOrderPosition'
