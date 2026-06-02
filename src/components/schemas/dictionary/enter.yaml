@@ -86,7 +86,7 @@ properties:
         type: string
         description: |
           Распределение накладных расходов между позициями.
-          Известные значения описаны в EnterOverheadDistribution
+          Известные значения описаны в OverheadDistribution
   owner:
     description: Владелец (Сотрудник)
     nullable: true

@@ -10,5 +10,6 @@ properties:
   rows:
     type: array
     description: Массив материалов техоперации
+    nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/ProcessingMaterial'

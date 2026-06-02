@@ -79,7 +79,8 @@ properties:
     description: Опубликован ли документ
     readOnly: true
   rate:
-    $ref: '../common/currencyRate.yaml'
+    description: Валюта
+    $ref: '../../../openapi.yaml#/components/schemas/CurrencyRate'
   organization:
     description: Метаданные юрлица
     $ref: '../../../openapi.yaml#/components/schemas/Organization'
