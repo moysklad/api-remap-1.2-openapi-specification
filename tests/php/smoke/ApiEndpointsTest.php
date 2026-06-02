@@ -3341,10 +3341,17 @@ class ApiEndpointsTest extends TestCase
         $this->assertReachable($this->client->put($metaBase . '/states/' . self::TEST_UUID, ['json' => ['name' => 'state1']]));
         $this->assertReachable($this->client->delete($metaBase . '/states/' . self::TEST_UUID));
 
+        // Files
+        $filesBase = $idBase . '/files';
+        $this->assertReachable($this->client->get($filesBase));
+        $this->assertReachable($this->client->post($filesBase, ['json' => [['filename' => 'test.pdf']]]));
+        $this->assertReachable($this->client->delete($filesBase . '/' . self::TEST_UUID));
+
         // Positions
         $positionsBase = $idBase . '/positions';
         $this->assertReachable($this->client->get($positionsBase));
         $this->assertReachable($this->client->post($positionsBase, ['json' => ['quantity' => 1]]));
+        $this->assertReachable($this->client->post($positionsBase . '/batch', ['json' => [['quantity' => 1]]]));        
         $this->assertReachable($this->client->get($positionsBase . '/' . self::TEST_UUID));
         $this->assertReachable($this->client->put($positionsBase . '/' . self::TEST_UUID, ['json' => ['quantity' => 2]]));
         $this->assertReachable($this->client->delete($positionsBase . '/' . self::TEST_UUID));

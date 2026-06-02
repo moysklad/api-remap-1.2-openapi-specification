@@ -745,10 +745,16 @@ paths:
     $ref: './paths/documents/commissionreportouts/commissionreportout-metadata-state-by-id.yaml'
   /entity/commissionreportout/{id}/positions:
     $ref: './paths/documents/commissionreportouts/commissionreportout-positions.yaml'
+  /entity/commissionreportout/{id}/positions/batch:
+    $ref: './paths/documents/commissionreportouts/commissionreportout-positions-batch.yaml'
   /entity/commissionreportout/{id}/positions/{positionId}:
     $ref: './paths/documents/commissionreportouts/commissionreportout-position-by-id.yaml'
   /entity/commissionreportout/{id}/positions/delete:
     $ref: './paths/documents/commissionreportouts/commissionreportout-positions-delete.yaml'
+  /entity/commissionreportout/{id}/files:
+    $ref: './paths/documents/commissionreportouts/commissionreportout-files.yaml'
+  /entity/commissionreportout/{id}/files/{fileId}:
+    $ref: './paths/documents/commissionreportouts/commissionreportout-file-by-id.yaml'
 
   # Documents - Cash In Orders
   /entity/cashin:

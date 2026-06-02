@@ -24,10 +24,10 @@ get:
       $ref: '../../../components/responses.yaml#/CommonError'
 
 post:
-  operationId: createCommissionReportOutPositions
+  operationId: createCommissionReportOutPosition
   tags:
     - CommissionReportOuts
-  summary: Создать позиции CommissionReportOut
+  summary: Создать позицию CommissionReportOut
   parameters:
     - $ref: '../../../components/parameters.yaml#/entityId'
     - $ref: '../../../components/parameters.yaml#/expand'
@@ -39,23 +39,13 @@ post:
     content:
       application/json:
         schema:
-          oneOf:
-            - $ref: '../../../openapi.yaml#/components/schemas/CommissionReportOutPosition'
-            - type: array
-              items:
-                $ref: '../../../openapi.yaml#/components/schemas/CommissionReportOutPosition'
-          minItems: 1
-          maxItems: 1000
+          $ref: '../../../openapi.yaml#/components/schemas/CommissionReportOutPosition'
   responses:
     '200':
       description: Успешный запрос
       content:
         application/json:
           schema:
-            type: array
-            items:
-              oneOf:
-                - $ref: '../../../openapi.yaml#/components/schemas/CommissionReportOutPosition'
-                - $ref: '../../../openapi.yaml#/components/schemas/Error'
+            $ref: '../../../openapi.yaml#/components/schemas/CommissionReportOutPosition'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
