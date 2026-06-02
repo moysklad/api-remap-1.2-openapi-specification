@@ -1705,6 +1705,8 @@ components:
       $ref: './components/schemas/dictionary/retailDemand.yaml'
     RetailDemandCheque:
       $ref: './components/schemas/dictionary/retailDemandCheque.yaml'
+    RetailDemandGiftCard:
+      $ref: './components/schemas/dictionary/retailDemandGiftCard.yaml'
     RetailDemandList:
       $ref: './components/schemas/dictionary/retailDemandList.yaml'
     RetailDemandPosition:
