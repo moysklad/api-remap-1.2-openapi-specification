@@ -3854,7 +3854,7 @@ class ApiEndpointsTest extends TestCase
     }
 
     /**
-     * Проверяет доступность endpoint'ов выплат денег: CRUD, batch, metadata, files и template.
+     * Проверяет доступность endpoint'ов Выплат денег: CRUD, batch, metadata, files и template.
      */
     public function testRetailDrawerCashOutCrud(): void
     {
