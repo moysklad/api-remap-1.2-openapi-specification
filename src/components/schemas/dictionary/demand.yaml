@@ -196,7 +196,7 @@ properties:
         type: string
         description: |
           Распределение накладных расходов между позициями.
-          Известные значения описаны в DemandOverheadDistribution
+          Известные значения описаны в overheadDistribution
         example: "weight"
   customerOrder:
     description: Заказ покупателя, с которым связана Отгрузка

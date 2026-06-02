@@ -146,7 +146,7 @@ properties:
         type: string
         description: |
           Распределение накладных расходов между позициями.
-          Известные значения описаны в MoveOverheadDistribution
+          Известные значения описаны в overheadDistribution
         example: "weight"
   internalOrder:
     description: Внутренний заказ, с которым связано Перемещение
@@ -162,14 +162,12 @@ properties:
       - $ref: '../../../openapi.yaml#/components/schemas/CustomerOrder'
   demand:
     description: Отгрузка, связанная с Перемещением
-    nullable: true
     readOnly: true
     type: object
     allOf:
       - $ref: '../../../openapi.yaml#/components/schemas/Demand'
   supply:
     description: Приемка, связанная с Перемещением
-    nullable: true
     readOnly: true
     type: object
     allOf:

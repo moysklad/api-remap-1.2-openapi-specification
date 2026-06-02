@@ -870,6 +870,10 @@ paths:
     $ref: './paths/documents/moves/moves.yaml'
   /entity/move/{id}:
     $ref: './paths/documents/moves/move-by-id.yaml'
+  /entity/move/{id}/files:
+    $ref: './paths/documents/moves/move-files.yaml'
+  /entity/move/{id}/files/{fileId}:
+    $ref: './paths/documents/moves/move-file-by-id.yaml'
   /entity/move/delete:
     $ref: './paths/documents/moves/moves-delete.yaml'
   /entity/move/batch:
@@ -1453,6 +1457,8 @@ components:
       $ref: './components/schemas/dictionary/counterpartyMetadata.yaml'
     DocumentMetadata:
       $ref: './components/schemas/common/documentMetadata.yaml'
+    DocumentOverhead:
+      $ref: './components/schemas/common/documentOverhead.yaml'
     Organization:
       $ref: './components/schemas/dictionary/organization.yaml'
     OrganizationList:
@@ -1655,8 +1661,6 @@ components:
       $ref: './components/schemas/dictionary/move.yaml'
     MoveList:
       $ref: './components/schemas/dictionary/moveList.yaml'
-    MoveOverheadDistribution:
-      $ref: './components/schemas/dictionary/moveOverheadDistribution.yaml'
     MovePosition:
       $ref: './components/schemas/dictionary/movePosition.yaml'
     MovePositionList:
@@ -1689,8 +1693,6 @@ components:
       $ref: './components/schemas/dictionary/demand.yaml'
     DemandList:
       $ref: './components/schemas/dictionary/demandList.yaml'
-    DemandOverheadDistribution:
-      $ref: './components/schemas/dictionary/demandOverheadDistribution.yaml'
     DemandPosition:
       $ref: './components/schemas/dictionary/demandPosition.yaml'
     DemandPositionList:
@@ -1717,8 +1719,6 @@ components:
       $ref: './components/schemas/dictionary/enter.yaml'
     EnterList:
       $ref: './components/schemas/dictionary/enterList.yaml'
-    EnterOverheadDistribution:
-      $ref: './components/schemas/dictionary/enterOverheadDistribution.yaml'
     EnterPosition:
       $ref: './components/schemas/dictionary/enterPosition.yaml'
     EnterPositionList:

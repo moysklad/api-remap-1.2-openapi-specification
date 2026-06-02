@@ -1762,6 +1762,23 @@ class ApiEndpointsTest extends TestCase
         $this->assertReachable($this->client->delete(self::API_BASE_PATH . '/entity/move/metadata/states/' . self::TEST_UUID));
     }
 
+    public function testGetMoveFiles(): void
+    {
+        $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/move/' . self::TEST_UUID . '/files'));
+    }
+
+    public function testAddMoveFiles(): void
+    {
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . '/entity/move/' . self::TEST_UUID . '/files', [
+            'json' => [['filename' => 'X']],
+        ]));
+    }
+
+    public function testDeleteMoveFile(): void
+    {
+        $this->assertReachable($this->client->delete(self::API_BASE_PATH . '/entity/move/' . self::TEST_UUID . '/files/' . self::TEST_UUID));
+    }
+
     public function testGetMovePositions(): void
     {
         $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/move/' . self::TEST_UUID . '/positions'));
