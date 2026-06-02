@@ -1175,6 +1175,8 @@ components:
       $ref: './components/schemas/dictionary/lossPosition.yaml'
     LossPositionList:
       $ref: './components/schemas/dictionary/lossPositionList.yaml'
+    LossDeclaration:
+      $ref: './components/schemas/dictionary/lossDeclaration.yaml'
     MinimumStockAllWarehouseSame:
       $ref: './components/schemas/dictionary/minimumStockAllWarehouseSame.yaml'
     MinimumStockAllWarehouseSum:
