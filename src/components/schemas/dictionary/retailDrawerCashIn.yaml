@@ -87,7 +87,8 @@ properties:
     description: Опубликован ли документ
     readOnly: true
   rate:
-    $ref: '../common/currencyRate.yaml'
+    description: Валюта
+    $ref: '../../../openapi.yaml#/components/schemas/CurrencyRate'
   retailShift:
     description: Метаданные розничной смены
     $ref: '../../../openapi.yaml#/components/schemas/RetailShift'
