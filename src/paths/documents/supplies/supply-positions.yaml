@@ -26,7 +26,7 @@ post:
   operationId: createSupplyPositions
   tags:
     - Supplies
-  summary: Создать позиции Приемки
+  summary: Создать позицию Приемки
   parameters:
     - $ref: '../../../components/parameters.yaml#/entityId'
     - $ref: '../../../components/parameters.yaml#/expand'
@@ -38,23 +38,13 @@ post:
     content:
       application/json:
         schema:
-          oneOf:
-            - $ref: '../../../openapi.yaml#/components/schemas/SupplyPosition'
-            - type: array
-              items:
-                $ref: '../../../openapi.yaml#/components/schemas/SupplyPosition'
-          minItems: 1
-          maxItems: 1000
+          $ref: '../../../openapi.yaml#/components/schemas/SupplyPosition'
   responses:
     '200':
       description: Успешный запрос
       content:
         application/json:
           schema:
-            type: array
-            items:
-              oneOf:
-                - $ref: '../../../openapi.yaml#/components/schemas/SupplyPosition'
-                - $ref: '../../../openapi.yaml#/components/schemas/Error'
+            $ref: '../../../openapi.yaml#/components/schemas/SupplyPosition'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'

@@ -873,6 +873,8 @@ paths:
     $ref: './paths/documents/supplies/supply-new.yaml'
   /entity/supply/{id}/positions:
     $ref: './paths/documents/supplies/supply-positions.yaml'
+  /entity/supply/{id}/positions/batch:
+    $ref: './paths/documents/supplies/supply-positions-batch.yaml'
   /entity/supply/{id}/positions/{positionId}:
     $ref: './paths/documents/supplies/supply-position-by-id.yaml'
   /entity/supply/{id}/positions/delete:

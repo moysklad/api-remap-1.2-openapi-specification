@@ -1881,6 +1881,7 @@ class ApiEndpointsTest extends TestCase
 
         $this->assertReachable($this->client->get($base . '/' . self::TEST_UUID . '/positions'));
         $this->assertReachable($this->client->post($base . '/' . self::TEST_UUID . '/positions', ['json' => ['quantity' => 1]]));
+        $this->assertReachable($this->client->post($base . '/' . self::TEST_UUID . '/positions/batch', ['json' => [['quantity' => 1]]]));
         $this->assertReachable($this->client->get($base . '/' . self::TEST_UUID . '/positions/' . self::TEST_UUID));
         $this->assertReachable($this->client->put($base . '/' . self::TEST_UUID . '/positions/' . self::TEST_UUID, ['json' => ['quantity' => 2]]));
         $this->assertReachable($this->client->delete($base . '/' . self::TEST_UUID . '/positions/' . self::TEST_UUID));
