@@ -217,8 +217,8 @@ properties:
     description: Массив ссылок на связанные платежи
     items:
       anyOf:
+        - $ref: '../../../openapi.yaml#/components/schemas/PaymentOut'
         - $ref: '../../../openapi.yaml#/components/schemas/PaymentIn'
-        - $ref: '../../../openapi.yaml#/components/schemas/CashIn'
   productionTask:
     description: Связанное производственное задание
     nullable: true
@@ -228,12 +228,10 @@ properties:
   returns:
     type: array
     description: |
-      Массив ссылок на связанные возвраты поставщику (тип `purchasereturn`).
-      Полная схема документа — `PurchaseReturn`.
+      Массив ссылок на связанные возвраты
     nullable: true
     items:
-      type: object
-      properties:
-        meta:
-          description: Метаданные возврата поставщику
-          $ref: '../common/meta.yaml'
+      anyOf:
+        - $ref: '../../../openapi.yaml#/components/schemas/SalesReturn'
+        - $ref: '../../../openapi.yaml#/components/schemas/PurchaseReturn'
+        - $ref: '../../../openapi.yaml#/components/schemas/PrepaymentReturn'

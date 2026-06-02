@@ -851,6 +851,10 @@ paths:
     $ref: './paths/documents/supplies/supplies.yaml'
   /entity/supply/{id}:
     $ref: './paths/documents/supplies/supply-by-id.yaml'
+  /entity/supply/{id}/files:
+    $ref: './paths/documents/supplies/supply-files.yaml'
+  /entity/supply/{id}/files/{fileId}:
+    $ref: './paths/documents/supplies/supply-file-by-id.yaml'
   /entity/supply/delete:
     $ref: './paths/documents/supplies/supplies-delete.yaml'
   /entity/supply/batch:

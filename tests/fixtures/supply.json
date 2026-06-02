@@ -224,9 +224,9 @@
   "payments": [
     {
       "meta": {
-        "href": "https://api.moysklad.ru/api/remap/1.2/entity/paymentin/7bb4ef04-f831-11e5-7a69-971500188b19",
-        "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/paymentin/metadata",
-        "type": "paymentin",
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/paymentout/7bb4ef04-f831-11e5-7a69-971500188b19",
+        "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/paymentout/metadata",
+        "type": "paymentout",
         "mediaType": "application/json"
       }
     }
