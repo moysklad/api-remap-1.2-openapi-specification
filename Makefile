@@ -39,6 +39,12 @@ bundle:
 	npm run bundle
 	npm run bundle-json
 
+light-bundle:
+	@echo "==> npm ci..."
+	sh scripts/npm-ci-public-registry.sh
+	@echo "==> bundle OpenAPI spec..."
+	npm run light-bundle
+
 # Генерация: все языки из LANGUAGES или по одному
 generate: npm-ci
 	@for lang in $(LANGUAGES_LIST); do $(MAKE) generate-$$lang || true; done
