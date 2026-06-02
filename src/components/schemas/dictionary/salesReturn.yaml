@@ -156,10 +156,12 @@ properties:
     type: object
     allOf:
       - $ref: '../../../openapi.yaml#/components/schemas/FileList'
-  rate: |
+  rate:
+    description: |
       Валюта документа. 
       Если значение курса валюты не указано, используется курс из справочника валют.
-  $ref: '../../../openapi.yaml#/components/schemas/CurrencyRate'
+    type: object
+    $ref: '../../../openapi.yaml#/components/schemas/CurrencyRate'
   positions:
     type: object
     description: Позиции Возврата покупателя

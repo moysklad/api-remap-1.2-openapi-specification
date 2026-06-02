@@ -101,10 +101,12 @@ properties:
     type: boolean
     description: Опубликован ли документ
     readOnly: true
-  rate: |
-    Валюта документа. 
-    Если значение курса валюты не указано, используется курс из справочника валют.
-  $ref: '../../../openapi.yaml#/components/schemas/CurrencyRate'
+  rate:
+    description: |
+      Валюта документа. 
+      Если значение курса валюты не указано, используется курс из справочника валют.
+    type: object
+    $ref: '../../../openapi.yaml#/components/schemas/CurrencyRate'
   shared:
     type: boolean
     description: Общий доступ

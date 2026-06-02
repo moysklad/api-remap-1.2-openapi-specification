@@ -3,6 +3,7 @@ description: Валюта
 properties:
   currency:
     description: Валюта
+    type: object
     $ref: '../../../openapi.yaml#/components/schemas/Currency'
   value:
     type: number
