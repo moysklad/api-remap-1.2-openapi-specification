@@ -196,7 +196,7 @@ properties:
         type: string
         description: |
           Распределение накладных расходов между позициями.
-          Известные значения описаны в DemandOverheadDistribution
+          Известные значения описаны в OverheadDistribution
         example: "weight"
   customerOrder:
     description: Заказ покупателя, с которым связана Отгрузка
@@ -244,16 +244,16 @@ properties:
     description: Перевозчик (контрагент или юрлицо)
     nullable: true
     type: object
-    anyOf:
-      - $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
-      - $ref: '../../../openapi.yaml#/components/schemas/Organization'
+    x-agent-reference: true
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Agent'
   consignee:
     description: Грузополучатель (контрагент или юрлицо)
     nullable: true
     type: object
-    anyOf:
-      - $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
-      - $ref: '../../../openapi.yaml#/components/schemas/Organization'
+    x-agent-reference: true
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Agent'
   goodPackQuantity:
     type: integer
     description: Всего мест

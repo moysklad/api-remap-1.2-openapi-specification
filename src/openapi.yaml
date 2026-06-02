@@ -614,6 +614,10 @@ paths:
     $ref: './paths/documents/processingorders/processingorder-position-by-id.yaml'
   /entity/processingorder/{id}/positions/delete:
     $ref: './paths/documents/processingorders/processingorder-positions-delete.yaml'
+  /entity/processingorder/{id}/files:
+    $ref: './paths/documents/processingorders/processingorder-files.yaml'
+  /entity/processingorder/{id}/files/{fileId}:
+    $ref: './paths/documents/processingorders/processingorder-file-by-id.yaml'
   # Documents - Processings
   /entity/processing:
     $ref: './paths/documents/processings/processings.yaml'
@@ -906,6 +910,10 @@ paths:
     $ref: './paths/documents/moves/moves.yaml'
   /entity/move/{id}:
     $ref: './paths/documents/moves/move-by-id.yaml'
+  /entity/move/{id}/files:
+    $ref: './paths/documents/moves/move-files.yaml'
+  /entity/move/{id}/files/{fileId}:
+    $ref: './paths/documents/moves/move-file-by-id.yaml'
   /entity/move/delete:
     $ref: './paths/documents/moves/moves-delete.yaml'
   /entity/move/batch:
@@ -1355,6 +1363,8 @@ components:
       $ref: './components/schemas/dictionary/lossPosition.yaml'
     LossPositionList:
       $ref: './components/schemas/dictionary/lossPositionList.yaml'
+    LossDeclaration:
+      $ref: './components/schemas/dictionary/lossDeclaration.yaml'
     MinimumStockAllWarehouseSame:
       $ref: './components/schemas/dictionary/minimumStockAllWarehouseSame.yaml'
     MinimumStockAllWarehouseSum:
@@ -1489,6 +1499,8 @@ components:
       $ref: './components/schemas/dictionary/counterpartyMetadata.yaml'
     DocumentMetadata:
       $ref: './components/schemas/common/documentMetadata.yaml'
+    OverheadDistribution:
+      $ref: './components/schemas/dictionary/overheadDistribution.yaml'
     Organization:
       $ref: './components/schemas/dictionary/organization.yaml'
     OrganizationList:
@@ -1703,8 +1715,6 @@ components:
       $ref: './components/schemas/dictionary/move.yaml'
     MoveList:
       $ref: './components/schemas/dictionary/moveList.yaml'
-    MoveOverheadDistribution:
-      $ref: './components/schemas/dictionary/moveOverheadDistribution.yaml'
     MovePosition:
       $ref: './components/schemas/dictionary/movePosition.yaml'
     MovePositionList:
@@ -1737,8 +1747,6 @@ components:
       $ref: './components/schemas/dictionary/demand.yaml'
     DemandList:
       $ref: './components/schemas/dictionary/demandList.yaml'
-    DemandOverheadDistribution:
-      $ref: './components/schemas/dictionary/demandOverheadDistribution.yaml'
     DemandPosition:
       $ref: './components/schemas/dictionary/demandPosition.yaml'
     DemandPositionList:
@@ -1753,6 +1761,8 @@ components:
       $ref: './components/schemas/dictionary/retailDemand.yaml'
     RetailDemandCheque:
       $ref: './components/schemas/dictionary/retailDemandCheque.yaml'
+    RetailDemandGiftCard:
+      $ref: './components/schemas/dictionary/retailDemandGiftCard.yaml'
     RetailDemandList:
       $ref: './components/schemas/dictionary/retailDemandList.yaml'
     RetailDemandPosition:
@@ -1763,8 +1773,6 @@ components:
       $ref: './components/schemas/dictionary/enter.yaml'
     EnterList:
       $ref: './components/schemas/dictionary/enterList.yaml'
-    EnterOverheadDistribution:
-      $ref: './components/schemas/dictionary/enterOverheadDistribution.yaml'
     EnterPosition:
       $ref: './components/schemas/dictionary/enterPosition.yaml'
     EnterPositionList:
