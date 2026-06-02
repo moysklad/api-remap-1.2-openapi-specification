@@ -92,12 +92,13 @@ tests/php/smoke/ApiEndpointsTest.php           # 10 new test methods
 | Bundle | `docker compose run --rm sdk make bundle` | OK |
 | Generate PHP | `docker compose run --rm sdk make generate-php` | `Contract.php`, `ContractList.php` generated |
 | Generate Java | `docker compose run --rm sdk make generate-java` | Java SDK regenerated with `Contract` model support |
-| **Mock restart** | `docker compose restart mock` | Container restarted, loaded fresh `dist/openapi.yaml` |
 | Golden PHP | `docker compose run --rm sdk make test-golden-php` | 36/36 passed |
 | Golden Java | `docker compose run --rm java-sdk make test-golden-java` | Passed |
+| Smoke bundle | `docker compose run --rm sdk make light-bundle` | Filtered `dist/openapi.yaml` generated for openapi-mock |
+| **Mock restart** | `docker compose restart mock` | Container restarted, loaded fresh smoke bundle |
 | Smoke | `docker compose run --rm sdk make test-smoke` | 108/108 passed |
 
-> **Note:** The mock restart step is critical. Without it, smoke tests return 404 for any newly added endpoints because openapi-mock caches the spec in memory on startup and does not reload it automatically. If `docker compose restart mock` doesn't help (stale container), use `docker compose rm -sf mock && docker compose up -d mock`.
+> **Note:** The mock restart step is critical after `make light-bundle`. Without it, smoke tests return 404 for any newly added endpoints because openapi-mock caches the spec in memory on startup and does not reload it automatically. If `docker compose restart mock` doesn't help (stale container), use `docker compose rm -sf mock && docker compose up -d mock`.
 
 ## Common pitfalls (learned from past iterations)
 
