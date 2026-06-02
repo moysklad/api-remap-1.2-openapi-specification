@@ -14,6 +14,20 @@ bundle-openapi:
       - dist/
     expire_in: 2 hours
 
+bundle-smoke-openapi:
+  stage: verify
+  image: docker.infra.lognex/docker-openapitools:1.2-release
+  needs:
+    - job: lint-openapi
+      optional: true
+  script:
+    - npm ci
+    - npm run light-bundle
+  artifacts:
+    paths:
+      - dist/
+    expire_in: 2 hours
+
 # Базовый шаблон для генерации SDK
 .generate-sdk-base:
   stage: generate-sdk
