@@ -59,6 +59,8 @@ properties:
   quantity:
     type: number
     format: double
+    minimum: 0
+    exclusiveMinimum: true
     description: |
       Количество товаров/услуг данного вида в позиции.
       Если позиция — товар с учётом по серийным номерам, значение всегда равно количеству серийных номеров для этой позиции в документе.
@@ -81,7 +83,7 @@ properties:
       Коды маркировки товаров и транспортных упаковок (иерархическая структура).
       Количество кодов маркировки не влияет на поле quantity позиции.
     items:
-      $ref: '../../../openapi.yaml#/components/schemas/SupplyPositionTrackingCode'
+      $ref: '../../../openapi.yaml#/components/schemas/PositionTrackingCode'
   overhead:
     type: integer
     description: |

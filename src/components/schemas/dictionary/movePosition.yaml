@@ -47,10 +47,11 @@ properties:
   quantity:
     type: number
     format: double
+    minimum: 0
+    exclusiveMinimum: true
     description: |
       Количество товаров/услуг данного вида в позиции.
       Если позиция — товар с учётом по серийным номерам, значение всегда равно количеству серийных номеров для этой позиции в документе.
-    minimum: 0
   sourceSlot:
     description: Ячейка на складе, с которого совершается перемещение
     nullable: true

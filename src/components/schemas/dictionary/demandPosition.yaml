@@ -72,7 +72,7 @@ properties:
       Коды маркировки товаров и транспортных упаковок (иерархическая структура).
       Количество кодов маркировки не влияет на поле quantity позиции.
     items:
-      $ref: '../../../openapi.yaml#/components/schemas/DemandPositionTrackingCode'
+      $ref: '../../../openapi.yaml#/components/schemas/PositionTrackingCode'
   trackingCodes_1162:
     type: array
     description: Коды маркировки в формате тега 1162 (иерархическая структура). Только для чтения в ответе.

@@ -132,22 +132,10 @@ properties:
     description: Метаданные позиций Перемещения
     $ref: '../../../openapi.yaml#/components/schemas/MovePositionList'
   overhead:
-    type: object
-    nullable: true
     description: |
       Накладные расходы на уровне документа.
       Если позиции Перемещения не заданы, накладные расходы задать нельзя.
-    properties:
-      sum:
-        type: number
-        format: double
-        description: Сумма в копейках
-      distribution:
-        type: string
-        description: |
-          Распределение накладных расходов между позициями.
-          Известные значения описаны в OverheadDistribution
-        example: "weight"
+    $ref: '../common/overhead.yaml'
   internalOrder:
     description: Внутренний заказ, с которым связано Перемещение
     nullable: true

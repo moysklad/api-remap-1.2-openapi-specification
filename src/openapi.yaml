@@ -1655,12 +1655,6 @@ components:
       $ref: './components/schemas/dictionary/supplyPosition.yaml'
     SupplyPositionList:
       $ref: './components/schemas/dictionary/supplyPositionList.yaml'
-    SupplyOverheadDistribution:
-      $ref: './components/schemas/dictionary/supplyOverheadDistribution.yaml'
-    SupplyPositionTrackingCode:
-      $ref: './components/schemas/dictionary/supplyPositionTrackingCode.yaml'
-    SupplyPositionTrackingCodeType:
-      $ref: './components/schemas/dictionary/supplyPositionTrackingCodeType.yaml'
     PaymentOut:
       $ref: './components/schemas/dictionary/paymentOut.yaml'
     PaymentOutList:
@@ -1751,12 +1745,12 @@ components:
       $ref: './components/schemas/dictionary/demandPosition.yaml'
     DemandPositionList:
       $ref: './components/schemas/dictionary/demandPositionList.yaml'
-    DemandPositionTrackingCode:
-      $ref: './components/schemas/dictionary/demandPositionTrackingCode.yaml'
     DemandPositionTrackingCode1162:
       $ref: './components/schemas/dictionary/demandPositionTrackingCode1162.yaml'
-    DemandPositionTrackingCodeType:
-      $ref: './components/schemas/dictionary/demandPositionTrackingCodeType.yaml'
+    PositionTrackingCode:
+      $ref: './components/schemas/dictionary/positionTrackingCode.yaml'
+    PositionTrackingCodeType:
+      $ref: './components/schemas/dictionary/positionTrackingCodeType.yaml'
     RetailDemand:
       $ref: './components/schemas/dictionary/retailDemand.yaml'
     RetailDemandCheque:
