@@ -10,5 +10,6 @@ properties:
   rows:
     type: array
     description: Массив продуктов техоперации
+    nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/ProcessingProduct'
