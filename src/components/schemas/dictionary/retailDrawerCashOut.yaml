@@ -23,10 +23,9 @@ properties:
     description: ID учетной записи
     readOnly: true
   agent:
-    description: Метаданные контрагента
+    description: Метаданные сотрудника
     x-agent-reference: true
-    allOf:
-      - $ref: '../../../openapi.yaml#/components/schemas/Agent'
+    $ref: '../../../openapi.yaml#/components/schemas/Employee'
   applicable:
     type: boolean
     description: Отметка о проведении
