@@ -28,11 +28,12 @@ properties:
   quantity:
     type: number
     format: double
-    minimum: 0
+    minimum: 0.000001
     description: Количество товаров данного вида в позиции
   reserve:
     type: number
     format: double
+    minimum: 0
     description: Резерв данной позиции
   assortment:
     description: Метаданные товара/услуги/партии/модификации позиции
