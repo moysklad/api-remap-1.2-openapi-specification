@@ -724,6 +724,32 @@ paths:
   /entity/commissionreportin/{id}/returntocommissionerpositions/delete:
     $ref: './paths/documents/commissionreportins/commissionreportin-returntocommissionerpositions-delete.yaml'
 
+  # Documents - CommissionReportOuts
+  /entity/commissionreportout:
+    $ref: './paths/documents/commissionreportouts/commissionreportouts.yaml'
+  /entity/commissionreportout/{id}:
+    $ref: './paths/documents/commissionreportouts/commissionreportout-by-id.yaml'
+  /entity/commissionreportout/delete:
+    $ref: './paths/documents/commissionreportouts/commissionreportouts-delete.yaml'
+  /entity/commissionreportout/batch:
+    $ref: './paths/documents/commissionreportouts/commissionreportouts-batch.yaml'
+  /entity/commissionreportout/metadata:
+    $ref: './paths/documents/commissionreportouts/commissionreportout-metadata.yaml'
+  /entity/commissionreportout/metadata/attributes:
+    $ref: './paths/documents/commissionreportouts/commissionreportout-metadata-attribute.yaml'
+  /entity/commissionreportout/metadata/attributes/{id}:
+    $ref: './paths/documents/commissionreportouts/commissionreportout-metadata-attribute-by-id.yaml'
+  /entity/commissionreportout/metadata/states:
+    $ref: './paths/documents/commissionreportouts/commissionreportout-metadata-states.yaml'
+  /entity/commissionreportout/metadata/states/{id}:
+    $ref: './paths/documents/commissionreportouts/commissionreportout-metadata-state-by-id.yaml'
+  /entity/commissionreportout/{id}/positions:
+    $ref: './paths/documents/commissionreportouts/commissionreportout-positions.yaml'
+  /entity/commissionreportout/{id}/positions/{positionId}:
+    $ref: './paths/documents/commissionreportouts/commissionreportout-position-by-id.yaml'
+  /entity/commissionreportout/{id}/positions/delete:
+    $ref: './paths/documents/commissionreportouts/commissionreportout-positions-delete.yaml'
+
   # Documents - Cash In Orders
   /entity/cashin:
     $ref: './paths/documents/cashins/cashins.yaml'
@@ -1323,6 +1349,12 @@ components:
       $ref: './components/schemas/dictionary/commissionReportInReturnedPositionList.yaml'
     CommissionReportOut:
       $ref: './components/schemas/dictionary/commissionReportOut.yaml'
+    CommissionReportOutList:
+      $ref: './components/schemas/dictionary/commissionReportOutList.yaml'
+    CommissionReportOutPosition:
+      $ref: './components/schemas/dictionary/commissionReportOutPosition.yaml'
+    CommissionReportOutPositionList:
+      $ref: './components/schemas/dictionary/commissionReportOutPositionList.yaml'
 
     CompanySettings:
       $ref: './components/schemas/dictionary/companySettings.yaml'
@@ -1467,6 +1499,8 @@ tags:
     description: Операции с расходными ордерами
   - name: CommissionReportIns
     description: Операции с полученными отчетами комиссионера
+  - name: CommissionReportOuts
+    description: Операции с выданными отчетами комиссионера
   - name: CompanySettings
     description: Операции с настройками компании
   - name: UserSettings
