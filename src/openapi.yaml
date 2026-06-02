@@ -1463,8 +1463,8 @@ components:
       $ref: './components/schemas/dictionary/counterpartyMetadata.yaml'
     DocumentMetadata:
       $ref: './components/schemas/common/documentMetadata.yaml'
-    DocumentOverhead:
-      $ref: './components/schemas/common/documentOverhead.yaml'
+    OverheadDistribution:
+      $ref: './components/schemas/dictionary/overheadDistribution.yaml'
     Organization:
       $ref: './components/schemas/dictionary/organization.yaml'
     OrganizationList:

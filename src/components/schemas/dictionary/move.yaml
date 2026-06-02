@@ -146,7 +146,7 @@ properties:
         type: string
         description: |
           Распределение накладных расходов между позициями.
-          Известные значения описаны в overheadDistribution
+          Известные значения описаны в OverheadDistribution
         example: "weight"
   internalOrder:
     description: Внутренний заказ, с которым связано Перемещение
