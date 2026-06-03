@@ -88,6 +88,8 @@ variables:
 
 # Сделано через два отдельных пути, чтобы разделить пайплайн где сдк генерится openapi и старой ручной java sdk
 include:
+  - local: 'gitlab/common/ci-images.yml'
+
   # Старый Java SDK пайплайн (для обратной совместимости)
   - local: 'gitlab/.gitlab-ci-java-sdk.yml'
     rules:

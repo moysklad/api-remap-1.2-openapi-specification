@@ -26,7 +26,7 @@ SCHEMATHESIS_VENV="${SCHEMATHESIS_VENV:-$ROOT_DIR/.venv-schemathesis}"
 if [ ! -d "$SCHEMATHESIS_VENV" ] || [ ! -x "$SCHEMATHESIS_VENV/bin/schemathesis" ]; then
   echo "Creating Schemathesis venv at $SCHEMATHESIS_VENV..."
   python3 -m venv "$SCHEMATHESIS_VENV"
-  "$SCHEMATHESIS_VENV/bin/pip" install -q schemathesis
+  "$SCHEMATHESIS_VENV/bin/pip" install -q "schemathesis==4.20.3"
 fi
 
 # Режимы тестирования:

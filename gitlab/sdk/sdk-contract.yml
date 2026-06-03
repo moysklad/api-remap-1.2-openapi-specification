@@ -7,8 +7,8 @@
 # По умолчанию: coverage. Job разбита на 4 path-shards через parallel:matrix.
 
 deploy-contract-env:
+  extends: .maven-7.8-image
   stage: before-contract-test
-  image: $GLOBAL_DOCKER_URL/maven:7.8-release
   needs:
     - job: bundle-openapi
       artifacts: false
@@ -21,8 +21,6 @@ deploy-contract-env:
     - when: never
   before_script:
     - rm -f /etc/apt/sources.list.d/*pgdg*.list || true
-    - apt-get update
-    - apt-get install -y --no-install-recommends git
     # По умолчанию берём последний тег репозитория moysklad без клонирования (только ls-remote)
     - |
       if [ -z "$PARAM_VERSION" ]; then      
@@ -56,8 +54,8 @@ deploy-contract-env:
       dotenv: variable.env
 
 create-contract-user:
+  extends: .openapitools-image
   stage: before-contract-test
-  image: alpine:latest
   needs:
     - job: deploy-contract-env
       artifacts: true
@@ -74,7 +72,6 @@ create-contract-user:
         echo "Skipping contract user creation on master push; marking create-contract-user as passed."
         exit 0
       fi
-    - apk add --no-cache curl
     - |
       RESPONSE=$(curl --location -X POST "$API_HOST/api/remap/1.2/register" \
         --header 'Content-Type: application/x-www-form-urlencoded' \
@@ -93,7 +90,7 @@ create-contract-user:
       dotenv: user.env
 
 remove-contract-env:
-  image: $GLOBAL_DOCKER_URL/maven:7.8-release
+  extends: .maven-7.8-image
   stage: after-contract-test
   needs:
     - job: deploy-contract-env
@@ -111,8 +108,8 @@ remove-contract-env:
     - python3 env_clean.py $NAMESPACE $CI_PIPELINE_ID $CI_JOB_ID
 
 sdk-contract:
+  extends: .schemathesis-image
   stage: contract-test
-  image: python:3.11
   parallel:
     matrix:
       - CONTRACT_SHARD: dictionaries-1
@@ -137,7 +134,6 @@ sdk-contract:
         echo "Skipping Schemathesis execution on master push; marking sdk-contract as passed."
         exit 0
       fi
-    - pip install schemathesis
     - |
       if [ -z "$SCHEMATHESIS_HOST" ] || [ -z "$SCHEMATHESIS_LOGIN" ] || [ -z "$SCHEMATHESIS_PASSWORD" ]; then
         echo "ERROR: SCHEMATHESIS_* variables are not set. Environment was not prepared (create-contract-user did not run)."
