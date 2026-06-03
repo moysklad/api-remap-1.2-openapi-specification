@@ -819,6 +819,39 @@ paths:
     $ref: './paths/documents/losses/loss-position-by-id.yaml'
   /entity/loss/{id}/positions/delete:
     $ref: './paths/documents/losses/loss-positions-delete.yaml'
+  # Documents - Inventories
+  /entity/inventory:
+    $ref: './paths/documents/inventories/inventories.yaml'
+  /entity/inventory/{id}:
+    $ref: './paths/documents/inventories/inventory-by-id.yaml'
+  /entity/inventory/{id}/files:
+    $ref: './paths/documents/inventories/inventory-files.yaml'
+  /entity/inventory/{id}/files/{fileId}:
+    $ref: './paths/documents/inventories/inventory-file-by-id.yaml'
+  /entity/inventory/delete:
+    $ref: './paths/documents/inventories/inventories-delete.yaml'
+  /entity/inventory/batch:
+    $ref: './paths/documents/inventories/inventories-batch.yaml'
+  /entity/inventory/metadata:
+    $ref: './paths/documents/inventories/inventory-metadata.yaml'
+  /entity/inventory/metadata/attributes:
+    $ref: './paths/documents/inventories/inventory-metadata-attribute.yaml'
+  /entity/inventory/metadata/attributes/{id}:
+    $ref: './paths/documents/inventories/inventory-metadata-attribute-by-id.yaml'
+  /entity/inventory/metadata/states:
+    $ref: './paths/documents/inventories/inventory-metadata-states.yaml'
+  /entity/inventory/metadata/states/{id}:
+    $ref: './paths/documents/inventories/inventory-metadata-state-by-id.yaml'
+  /entity/inventory/new:
+    $ref: './paths/documents/inventories/inventory-new.yaml'
+  /entity/inventory/{id}/positions:
+    $ref: './paths/documents/inventories/inventory-positions.yaml'
+  /entity/inventory/{id}/positions/{positionId}:
+    $ref: './paths/documents/inventories/inventory-position-by-id.yaml'
+  /entity/inventory/{id}/positions/delete:
+    $ref: './paths/documents/inventories/inventory-positions-delete.yaml'
+  /rpc/inventory/{id}/recalcCalculatedQuantity:
+    $ref: './paths/documents/inventories/inventory-recalc-calculated-quantity.yaml'
   # Documents - Purchase Returns
   /entity/purchasereturn:
     $ref: './paths/documents/purchasereturns/purchasereturns.yaml'
@@ -1536,6 +1569,12 @@ components:
       $ref: './components/schemas/dictionary/cashierList.yaml'
     Inventory:
       $ref: './components/schemas/dictionary/inventory.yaml'
+    InventoryList:
+      $ref: './components/schemas/dictionary/inventoryList.yaml'
+    InventoryPosition:
+      $ref: './components/schemas/dictionary/inventoryPosition.yaml'
+    InventoryPositionList:
+      $ref: './components/schemas/dictionary/inventoryPositionList.yaml'
 
     InternalOrder:
       $ref: './components/schemas/dictionary/internalOrder.yaml'
@@ -1890,6 +1929,8 @@ tags:
     description: Операции с возвратами покупателей
   - name: Losses
     description: Операции со списаниями
+  - name: Inventories
+    description: Операции с инвентаризациями
   - name: PurchaseReturns
     description: Операции с возвратами поставщикам
   - name: PrepaymentReturns
