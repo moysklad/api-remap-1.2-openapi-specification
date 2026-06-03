@@ -32,7 +32,7 @@ properties:
     type: integer
     description: Себестоимость (только для услуг)
   declaration:
-    $ref: '../common/declaration.yaml'
+    $ref: '../../../openapi.yaml#/components/schemas/Declaration'
   discount:
     type: number
     format: double

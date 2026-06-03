@@ -29,7 +29,7 @@ properties:
     description: Метаданные товара/услуги/партии/модификации, которую представляет собой позиция
     $ref: '../../../openapi.yaml#/components/schemas/Assortment'
   declaration:
-    $ref: '../common/declaration.yaml'
+    $ref: '../../../openapi.yaml#/components/schemas/Declaration'
   pack:
     description: Упаковка Товара
     nullable: true

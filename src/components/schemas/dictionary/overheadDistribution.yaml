@@ -1,5 +1,5 @@
 type: string
-description: Распределение накладных расходов между позициями Оприходования. Известные значения поля overhead.distribution
+description: Распределение накладных расходов между позициями документа. Известные значения поля overhead.distribution
 enum:
   - weight
   - volume

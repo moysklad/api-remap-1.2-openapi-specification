@@ -7,4 +7,5 @@ properties:
     format: double
     description: Сумма в копейках
   distribution:
-    $ref: '../../../openapi.yaml#/components/schemas/OverheadDistribution'
+    type: string
+    description: Распределение накладных расходов. Возможные значения описаны в OverheadDistribution
