@@ -101,7 +101,7 @@ properties:
     allOf:
       - $ref: '../../../openapi.yaml#/components/schemas/Account'
   agent:
-    description: Метаданные контрагента
+    description: Метаданные Контрагента или юрлица
     x-agent-reference: true
     allOf:
       - $ref: '../../../openapi.yaml#/components/schemas/Agent'
@@ -157,7 +157,11 @@ properties:
     allOf:
       - $ref: '../../../openapi.yaml#/components/schemas/FileList'
   rate:
-    $ref: '../common/currencyRate.yaml'
+    description: |
+      Валюта документа. 
+      Если значение курса валюты не указано, используется курс из справочника валют.
+    type: object
+    $ref: '../../../openapi.yaml#/components/schemas/CurrencyRate'
   positions:
     type: object
     description: Позиции Возврата покупателя
