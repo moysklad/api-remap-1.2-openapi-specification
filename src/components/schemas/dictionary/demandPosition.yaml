@@ -116,6 +116,8 @@ properties:
   vat:
     type: integer
     description: НДС, которым облагается текущая позиция
+    minimum: 0
+    maximum: 100
   vatEnabled:
     type: boolean
     description: |
