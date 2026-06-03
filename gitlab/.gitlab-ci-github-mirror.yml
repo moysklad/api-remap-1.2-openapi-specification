@@ -45,6 +45,16 @@ mirror-to-github:
         echo "Removing README_LOCAL.md..."
         rm -f README_LOCAL.md
       fi      
+
+      if [ -f "README_OLD_JAVA_SDK.md" ]; then
+        echo "Removing README_OLD_JAVA_SDK.md..."
+        rm -f README_OLD_JAVA_SDK.md
+      fi   
+
+      if [ -f "how_to_known_namespace.png" ]; then
+        echo "Removing how_to_known_namespace.png..."
+        rm -f how_to_known_namespace.png
+      fi
       
       if [ -f "catalog-info.yaml" ]; then
         echo "Removing catalog-info.yaml..."

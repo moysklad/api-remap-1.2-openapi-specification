@@ -15,7 +15,8 @@
 | Job                      | Описание                                                                 |
 |--------------------------|--------------------------------------------------------------------------|
 | `lint-openapi`           | Проверка OpenAPI спецификации с помощью Redocly                          |
-| `bundle-openapi`         | Сборка bundled версии спецификации                                       |
+| `bundle-openapi`         | Сборка полной bundled версии спецификации для SDK/docs/contract          |
+| `bundle-smoke-openapi`   | Сборка облегчённой bundled версии спецификации для быстрых smoke-тестов  |
 | `generate-sdk-php`       | Генерация PHP SDK                                                        |
 | `generate-sdk-java`      | Генерация Java SDK (заглушка)                                            |
 | `sdk-golden-php`         | Golden тесты для PHP (сериализация/десериализация)                       |
@@ -29,7 +30,8 @@
 
 | Job                               | Описание                                                                 |
 |-----------------------------------|--------------------------------------------------------------------------|
-| `lint-openapi` / `bundle-openapi` | Проверка и сборка спецификации                                           |
+| `lint-openapi` / `bundle-openapi` | Проверка и сборка полной спецификации                                    |
+| `bundle-smoke-openapi`            | Сборка облегчённой спецификации для smoke-тестов                         |
 | `generate-sdk-*`                  | Генерация SDK                                                            |
 | `sdk-golden-*`                    | Golden тесты SDK                                                         |
 | `sdk-smoke`                       | Smoke тесты SDK                                                          |
@@ -47,7 +49,8 @@
 |-------------------------|---------------------------------------------------------------------------------------------------|
 | `check-openapi-changes` | Проверка изменений OpenAPI относительно последнего тега в текущем репо                            |
 | `lint-openapi`          | Проверка спецификации                                                                             |
-| `bundle-openapi`        | Сборка bundled версии                                                                             |
+| `bundle-openapi`        | Сборка полной bundled версии для SDK/docs/contract                                                 |
+| `bundle-smoke-openapi`  | Сборка облегчённой bundled версии для smoke-тестов                                                 |
 | `deploy-contract-env`   | Подготовка окружения для schemathesis; при `push` в `master` job завершается успешно без реального deploy |
 | `create-contract-user`  | Создание пользователя и экспорт SCHEMATHESIS_* переменных; при `push` в `master` job завершается успешно без реального register |
 | `sdk-contract`          | Контрактные тесты Schemathesis; при `push` в `master` job завершается успешно без запуска Schemathesis |
@@ -155,7 +158,7 @@ Java release jobs (`deploy-to-artifactory`, `deploy-to-maven`) описаны в
 | Стадия                   | Описание                                                                                                                           |
 |--------------------------|------------------------------------------------------------------------------------------------------------------------------------|
 | `changes-check`          | Проверка изменений OpenAPI в `src/` относительно последнего тега (теги из текущего репо)                                           |
-| `verify`                 | Проверка спецификации, bundling; подготовка окружения для contract (deploy-contract-env на ветке **stable**, create-contract-user) |
+| `verify`                 | Проверка спецификации, полный bundling, отдельный smoke bundling; подготовка окружения для contract (deploy-contract-env на ветке **stable**, create-contract-user) |
 | `contract-test`          | Контрактные тесты Schemathesis (`sdk-contract` в 4 parallel path-shards) — после verify, до generate-sdk                           |
 | `generate-sdk`           | Генерация SDK                                                                                                                      |
 | `test`                   | Тестирование (golden, smoke)                                                                                                       |

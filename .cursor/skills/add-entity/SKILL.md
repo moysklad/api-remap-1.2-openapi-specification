@@ -65,7 +65,7 @@ Add rows for batch, metadata, attributes, states, positions, files/images, accou
 For every top-level entity (dictionary or document) keep two separate endpoints:
 
 - `POST /entity/<keyword>` — **single object only**. Request body must be a single `<Entity>` schema; response is a single `<Entity>`. Do not allow array requests, do not use `oneOf: [object, array]`.
-- `POST /entity/<keyword>/batch` — **mass create/update**. Request body is an array of `<Entity>`; response is an array of `oneOf: [<Entity>, Error]` (per-item result), with `minItems: 1` and `maxItems: 1000`.
+- `POST /entity/<keyword>/batch` — **mass create/update**. Request body is an array of `<Entity>` with `minItems: 1` and `maxItems: 1000`; response is an array of `oneOf: [<Entity>, Error]` (per-item result) **without** `minItems`/`maxItems` on the response schema.
 
 This applies even when the MD `### Массовое создание и обновление ...` section uses the same example URL as create. The MD groups operations by behavior, not by URL — Remap exposes them as separate paths (`/batch` for arrays).
 
@@ -138,9 +138,10 @@ docker compose run --rm sdk make lint           # Redocly lint
 docker compose run --rm sdk make bundle         # produces dist/openapi.yaml + dist/openapi.json
 docker compose run --rm sdk make generate-php   # generates PHP SDK in clients/php/
 docker compose run --rm sdk make generate-java  # generates Java SDK in clients/java/
-docker compose restart mock                     # CRITICAL: reload bundled spec in mock server
 docker compose run --rm sdk make test-golden-php
 docker compose run --rm java-sdk make test-golden-java
+docker compose run --rm sdk make light-bundle    # produces filtered dist/openapi.yaml for fast smoke
+docker compose restart mock                     # CRITICAL: reload smoke bundle in mock server
 docker compose run --rm sdk make test-smoke
 ```
 
