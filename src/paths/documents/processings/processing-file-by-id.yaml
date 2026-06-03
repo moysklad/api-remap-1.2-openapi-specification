@@ -2,7 +2,7 @@ get:
   operationId: getProcessingFile
   tags:
     - Processings
-  summary: Поулчить файл техоперации
+  summary: Получить файл техоперации
   description: Получение Файла Техоперации.
   parameters:
     - $ref: '../../../components/parameters.yaml#/entityId'

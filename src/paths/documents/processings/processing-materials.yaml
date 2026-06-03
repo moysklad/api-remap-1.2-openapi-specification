@@ -45,6 +45,6 @@ post:
       content:
         application/json:
           schema:
-            $ref: '../../../openapi.yaml#/components/schemas/Error'
+            $ref: '../../../openapi.yaml#/components/schemas/ProcessingMaterial'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
