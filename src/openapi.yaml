@@ -1460,7 +1460,7 @@ components:
     PaymentInOperation:
       $ref: './components/schemas/dictionary/paymentInOperation.yaml'
     OperationLinkedSum:
-      $ref: './components/schemas/dictionary/OperationLinkedSum.yaml'
+      $ref: './components/schemas/dictionary/operationLinkedSum.yaml'
     RetailDrawerCashIn:
       $ref: './components/schemas/dictionary/retailDrawerCashIn.yaml'
     RetailDrawerCashInList:
