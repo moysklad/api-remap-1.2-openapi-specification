@@ -1,16 +1,13 @@
 # PHP Golden JSON тесты (сериализация/десериализация)
 sdk-golden-php:
+  extends: .php-test-base
   stage: test
-  image: php:8.2-cli
   needs:
     - job: generate-sdk-php
       artifacts: true
   rules:
     - if: '$SDK_LANGUAGES == "" || $SDK_LANGUAGES =~ /php/'
       when: on_success
-  before_script:
-    - apt-get update && apt-get install -y git unzip curl
-    - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
   script:
     - |
       if [ -d "tests/php" ]; then
@@ -51,8 +48,8 @@ sdk-golden-php:
 #      fi
 
 sdk-golden-java:
+  extends: .maven-jdk11-image
   stage: test
-  image: docker.infra.lognex/maven-jdk11:7.8-release
   needs:
     - job: generate-sdk-java
       artifacts: true

@@ -1,7 +1,7 @@
 # Prepare Java SDK repository on internal GitLab
 
 .prepare-sdk-java-base:
-  image: docker.infra.lognex/docker-openapitools:1.2-release
+  extends: .openapitools-image
   stage: prepare-sdk-repository
   before_script:
     - git config --global user.name "$GIT_USER"

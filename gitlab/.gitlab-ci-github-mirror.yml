@@ -5,7 +5,7 @@
 
 # Push OpenApi Specification and tags to GitHub
 mirror-to-github:
-  image: docker.infra.lognex/docker-openapitools:1.2-release
+  extends: .openapitools-image
   stage: mirror
   before_script:
     - git config --global user.name "$GIT_USER"
@@ -103,7 +103,9 @@ mirror-to-github:
       git push github --tags --no-verify || echo "No tags to push"
 
 create-github-release:
-  image: docker.infra.lognex/docker-openapitools:1.2-release
+  extends:
+    - .openapitools-image
+    - .npm-cache
   stage: mirror
   needs:
     - job: mirror-to-github

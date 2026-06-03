@@ -1,6 +1,6 @@
 check-openapi-changes:
+  extends: .openapitools-image
   stage: changes-check
-  image: docker.infra.lognex/docker-openapitools:1.2-release
   rules:
     # Теги берём из текущего репозитория (git describe в клоне пайплайна)
     # Запускаем при merge/push в master и при ручном запуске (web) на master
@@ -28,8 +28,8 @@ check-openapi-changes:
       fi
 
 lint-openapi:
+  extends: .openapitools-image
   stage: verify
-  image: redocly/cli
   needs:
     - job: check-openapi-changes
       optional: true
