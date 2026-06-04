@@ -614,6 +614,10 @@ paths:
     $ref: './paths/documents/processingorders/processingorder-position-by-id.yaml'
   /entity/processingorder/{id}/positions/delete:
     $ref: './paths/documents/processingorders/processingorder-positions-delete.yaml'
+  /entity/processingorder/{id}/files:
+    $ref: './paths/documents/processingorders/processingorder-files.yaml'
+  /entity/processingorder/{id}/files/{fileId}:
+    $ref: './paths/documents/processingorders/processingorder-file-by-id.yaml'
   # Documents - Processings
   /entity/processing:
     $ref: './paths/documents/processings/processings.yaml'
@@ -869,6 +873,39 @@ paths:
     $ref: './paths/documents/losses/loss-position-by-id.yaml'
   /entity/loss/{id}/positions/delete:
     $ref: './paths/documents/losses/loss-positions-delete.yaml'
+  # Documents - Inventories
+  /entity/inventory:
+    $ref: './paths/documents/inventories/inventories.yaml'
+  /entity/inventory/{id}:
+    $ref: './paths/documents/inventories/inventory-by-id.yaml'
+  /entity/inventory/{id}/files:
+    $ref: './paths/documents/inventories/inventory-files.yaml'
+  /entity/inventory/{id}/files/{fileId}:
+    $ref: './paths/documents/inventories/inventory-file-by-id.yaml'
+  /entity/inventory/delete:
+    $ref: './paths/documents/inventories/inventories-delete.yaml'
+  /entity/inventory/batch:
+    $ref: './paths/documents/inventories/inventories-batch.yaml'
+  /entity/inventory/metadata:
+    $ref: './paths/documents/inventories/inventory-metadata.yaml'
+  /entity/inventory/metadata/attributes:
+    $ref: './paths/documents/inventories/inventory-metadata-attribute.yaml'
+  /entity/inventory/metadata/attributes/{id}:
+    $ref: './paths/documents/inventories/inventory-metadata-attribute-by-id.yaml'
+  /entity/inventory/metadata/states:
+    $ref: './paths/documents/inventories/inventory-metadata-states.yaml'
+  /entity/inventory/metadata/states/{id}:
+    $ref: './paths/documents/inventories/inventory-metadata-state-by-id.yaml'
+  /entity/inventory/new:
+    $ref: './paths/documents/inventories/inventory-new.yaml'
+  /entity/inventory/{id}/positions:
+    $ref: './paths/documents/inventories/inventory-positions.yaml'
+  /entity/inventory/{id}/positions/{positionId}:
+    $ref: './paths/documents/inventories/inventory-position-by-id.yaml'
+  /entity/inventory/{id}/positions/delete:
+    $ref: './paths/documents/inventories/inventory-positions-delete.yaml'
+  /rpc/inventory/{id}/recalcCalculatedQuantity:
+    $ref: './paths/documents/inventories/inventory-recalc-calculated-quantity.yaml'
   # Documents - Purchase Returns
   /entity/purchasereturn:
     $ref: './paths/documents/purchasereturns/purchasereturns.yaml'
@@ -960,6 +997,10 @@ paths:
     $ref: './paths/documents/moves/moves.yaml'
   /entity/move/{id}:
     $ref: './paths/documents/moves/move-by-id.yaml'
+  /entity/move/{id}/files:
+    $ref: './paths/documents/moves/move-files.yaml'
+  /entity/move/{id}/files/{fileId}:
+    $ref: './paths/documents/moves/move-file-by-id.yaml'
   /entity/move/delete:
     $ref: './paths/documents/moves/moves-delete.yaml'
   /entity/move/batch:
@@ -1062,6 +1103,38 @@ paths:
     $ref: './paths/documents/commissionreportins/commissionreportin-returntocommissionerposition-by-id.yaml'
   /entity/commissionreportin/{id}/returntocommissionerpositions/delete:
     $ref: './paths/documents/commissionreportins/commissionreportin-returntocommissionerpositions-delete.yaml'
+
+  # Documents - CommissionReportOuts
+  /entity/commissionreportout:
+    $ref: './paths/documents/commissionreportouts/commissionreportouts.yaml'
+  /entity/commissionreportout/{id}:
+    $ref: './paths/documents/commissionreportouts/commissionreportout-by-id.yaml'
+  /entity/commissionreportout/delete:
+    $ref: './paths/documents/commissionreportouts/commissionreportouts-delete.yaml'
+  /entity/commissionreportout/batch:
+    $ref: './paths/documents/commissionreportouts/commissionreportouts-batch.yaml'
+  /entity/commissionreportout/metadata:
+    $ref: './paths/documents/commissionreportouts/commissionreportout-metadata.yaml'
+  /entity/commissionreportout/metadata/attributes:
+    $ref: './paths/documents/commissionreportouts/commissionreportout-metadata-attribute.yaml'
+  /entity/commissionreportout/metadata/attributes/{id}:
+    $ref: './paths/documents/commissionreportouts/commissionreportout-metadata-attribute-by-id.yaml'
+  /entity/commissionreportout/metadata/states:
+    $ref: './paths/documents/commissionreportouts/commissionreportout-metadata-states.yaml'
+  /entity/commissionreportout/metadata/states/{id}:
+    $ref: './paths/documents/commissionreportouts/commissionreportout-metadata-state-by-id.yaml'
+  /entity/commissionreportout/{id}/positions:
+    $ref: './paths/documents/commissionreportouts/commissionreportout-positions.yaml'
+  /entity/commissionreportout/{id}/positions/batch:
+    $ref: './paths/documents/commissionreportouts/commissionreportout-positions-batch.yaml'
+  /entity/commissionreportout/{id}/positions/{positionId}:
+    $ref: './paths/documents/commissionreportouts/commissionreportout-position-by-id.yaml'
+  /entity/commissionreportout/{id}/positions/delete:
+    $ref: './paths/documents/commissionreportouts/commissionreportout-positions-delete.yaml'
+  /entity/commissionreportout/{id}/files:
+    $ref: './paths/documents/commissionreportouts/commissionreportout-files.yaml'
+  /entity/commissionreportout/{id}/files/{fileId}:
+    $ref: './paths/documents/commissionreportouts/commissionreportout-file-by-id.yaml'
 
   # Documents - Cash In Orders
   /entity/cashin:
@@ -1378,6 +1451,10 @@ components:
       $ref: './components/schemas/common/metadata.yaml'
     Context:
       $ref: './components/schemas/common/context.yaml'
+    Declaration:
+      $ref: './components/schemas/common/declaration.yaml'
+    Gtd:
+      $ref: './components/schemas/common/gtd.yaml'
     MinimumStockAbstract:
       type: object
       required:
@@ -1543,6 +1620,8 @@ components:
       $ref: './components/schemas/dictionary/counterpartyMetadata.yaml'
     DocumentMetadata:
       $ref: './components/schemas/common/documentMetadata.yaml'
+    OverheadDistribution:
+      $ref: './components/schemas/dictionary/overheadDistribution.yaml'
     Organization:
       $ref: './components/schemas/dictionary/organization.yaml'
     OrganizationList:
@@ -1614,6 +1693,12 @@ components:
       $ref: './components/schemas/dictionary/cashierList.yaml'
     Inventory:
       $ref: './components/schemas/dictionary/inventory.yaml'
+    InventoryList:
+      $ref: './components/schemas/dictionary/inventoryList.yaml'
+    InventoryPosition:
+      $ref: './components/schemas/dictionary/inventoryPosition.yaml'
+    InventoryPositionList:
+      $ref: './components/schemas/dictionary/inventoryPositionList.yaml'
 
     InternalOrder:
       $ref: './components/schemas/dictionary/internalOrder.yaml'
@@ -1709,12 +1794,6 @@ components:
       $ref: './components/schemas/dictionary/supplyPosition.yaml'
     SupplyPositionList:
       $ref: './components/schemas/dictionary/supplyPositionList.yaml'
-    SupplyOverheadDistribution:
-      $ref: './components/schemas/dictionary/supplyOverheadDistribution.yaml'
-    SupplyPositionTrackingCode:
-      $ref: './components/schemas/dictionary/supplyPositionTrackingCode.yaml'
-    SupplyPositionTrackingCodeType:
-      $ref: './components/schemas/dictionary/supplyPositionTrackingCodeType.yaml'
     PaymentOut:
       $ref: './components/schemas/dictionary/paymentOut.yaml'
     PaymentOutList:
@@ -1746,7 +1825,7 @@ components:
     PaymentInOperation:
       $ref: './components/schemas/dictionary/paymentInOperation.yaml'
     OperationLinkedSum:
-      $ref: './components/schemas/dictionary/OperationLinkedSum.yaml'
+      $ref: './components/schemas/dictionary/operationLinkedSum.yaml'
     RetailDrawerCashIn:
       $ref: './components/schemas/dictionary/retailDrawerCashIn.yaml'
     RetailDrawerCashInList:
@@ -1769,8 +1848,6 @@ components:
       $ref: './components/schemas/dictionary/move.yaml'
     MoveList:
       $ref: './components/schemas/dictionary/moveList.yaml'
-    MoveOverheadDistribution:
-      $ref: './components/schemas/dictionary/moveOverheadDistribution.yaml'
     MovePosition:
       $ref: './components/schemas/dictionary/movePosition.yaml'
     MovePositionList:
@@ -1803,22 +1880,22 @@ components:
       $ref: './components/schemas/dictionary/demand.yaml'
     DemandList:
       $ref: './components/schemas/dictionary/demandList.yaml'
-    DemandOverheadDistribution:
-      $ref: './components/schemas/dictionary/demandOverheadDistribution.yaml'
     DemandPosition:
       $ref: './components/schemas/dictionary/demandPosition.yaml'
     DemandPositionList:
       $ref: './components/schemas/dictionary/demandPositionList.yaml'
-    DemandPositionTrackingCode:
-      $ref: './components/schemas/dictionary/demandPositionTrackingCode.yaml'
     DemandPositionTrackingCode1162:
       $ref: './components/schemas/dictionary/demandPositionTrackingCode1162.yaml'
-    DemandPositionTrackingCodeType:
-      $ref: './components/schemas/dictionary/demandPositionTrackingCodeType.yaml'
+    PositionTrackingCode:
+      $ref: './components/schemas/dictionary/positionTrackingCode.yaml'
+    PositionTrackingCodeType:
+      $ref: './components/schemas/dictionary/positionTrackingCodeType.yaml'
     RetailDemand:
       $ref: './components/schemas/dictionary/retailDemand.yaml'
     RetailDemandCheque:
       $ref: './components/schemas/dictionary/retailDemandCheque.yaml'
+    RetailDemandGiftCard:
+      $ref: './components/schemas/dictionary/retailDemandGiftCard.yaml'
     RetailDemandList:
       $ref: './components/schemas/dictionary/retailDemandList.yaml'
     RetailDemandPosition:
@@ -1829,8 +1906,6 @@ components:
       $ref: './components/schemas/dictionary/enter.yaml'
     EnterList:
       $ref: './components/schemas/dictionary/enterList.yaml'
-    EnterOverheadDistribution:
-      $ref: './components/schemas/dictionary/enterOverheadDistribution.yaml'
     EnterPosition:
       $ref: './components/schemas/dictionary/enterPosition.yaml'
     EnterPositionList:
@@ -1850,6 +1925,12 @@ components:
       $ref: './components/schemas/dictionary/commissionReportInReturnedPositionList.yaml'
     CommissionReportOut:
       $ref: './components/schemas/dictionary/commissionReportOut.yaml'
+    CommissionReportOutList:
+      $ref: './components/schemas/dictionary/commissionReportOutList.yaml'
+    CommissionReportOutPosition:
+      $ref: './components/schemas/dictionary/commissionReportOutPosition.yaml'
+    CommissionReportOutPositionList:
+      $ref: './components/schemas/dictionary/commissionReportOutPositionList.yaml'
 
     CompanySettings:
       $ref: './components/schemas/dictionary/companySettings.yaml'
@@ -2000,6 +2081,8 @@ tags:
     description: Операции с возвратами покупателей
   - name: Losses
     description: Операции со списаниями
+  - name: Inventories
+    description: Операции с инвентаризациями
   - name: PurchaseReturns
     description: Операции с возвратами поставщикам
   - name: Supplies
@@ -2026,6 +2109,8 @@ tags:
     description: Операции с расходными ордерами
   - name: CommissionReportIns
     description: Операции с полученными отчетами комиссионера
+  - name: CommissionReportOuts
+    description: Операции с выданными отчетами комиссионера
   - name: CompanySettings
     description: Операции с настройками компании
   - name: UserSettings

@@ -29,35 +29,7 @@ properties:
     description: Метаданные товара/услуги/партии/модификации, которую представляет собой позиция
     $ref: '../../../openapi.yaml#/components/schemas/Assortment'
   declaration:
-    type: array
-    description: |
-      Информация о прослеживаемости импортных товаров.
-      Не входит в ответ по умолчанию; может быть возвращена только при явном запросе `fields=declaration`.
-      Только для чтения.
-    readOnly: true
-    items:
-      type: object
-      description: Информация о прослеживаемости импортных товаров
-      properties:
-        gtd:
-          type: string
-          description: Регистрационный номер партии товара
-          readOnly: true
-        rnpt:
-          type: string
-          description: Грузовая таможенная декларация
-          readOnly: true
-        country:
-          description: Страна происхождения товара
-          readOnly: true
-          type: object
-          allOf:
-            - $ref: '../../../openapi.yaml#/components/schemas/Country'
-        quantity:
-          type: number
-          format: double
-          description: Количество товара с указанными ГТД или РНПТ в позиции документа
-          readOnly: true
+    $ref: '../../../openapi.yaml#/components/schemas/Declaration'
   pack:
     description: Упаковка Товара
     nullable: true

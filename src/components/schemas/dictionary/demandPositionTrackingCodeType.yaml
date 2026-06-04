@@ -1,7 +1,0 @@
-type: string
-description: Известные значения типа кода маркировки в позиции Отгрузки
-enum:
-  - trackingcode
-  - consumerpack
-  - transportpack
-example: "trackingcode"

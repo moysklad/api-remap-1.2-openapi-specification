@@ -150,11 +150,13 @@ properties:
     $ref: '../../../openapi.yaml#/components/schemas/CommissionReportInReturnedPositionList'
   rewardPercent:
     type: integer
+    minimum: 0
+    maximum: 100
     description: Процент вознаграждения
   rewardType:
     type: string
     maxLength: 255
-    description: Тип вознаграждения
+    description: Тип Вознаграждения. Известные значения описаны в RewardType
   salesChannel:
     description: Метаданные канала продаж
     nullable: true

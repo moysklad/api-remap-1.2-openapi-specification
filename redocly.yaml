@@ -1,0 +1,23 @@
+apis:
+  openapi:
+    root: src/openapi.yaml
+    decorators:
+      filter-out:
+        property: type
+        value:
+          - object
+          - array
+extends:
+  - recommended
+
+rules:
+  rule/agent:
+    severity: error
+    subject:
+      type: Schema
+      filterInParentKeys:
+        - agent
+    message: 'Property "agent" must define x-agent-reference (true or false)'
+    assertions:
+      required:
+        - x-agent-reference

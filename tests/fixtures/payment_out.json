@@ -90,7 +90,7 @@
   },
   "files": {
     "meta": {
-      "href": "https://api.moysklad.ru/api/remap/1.2/entity/retaildrawercashout/b3922fc3-01b5-11f1-0a81-0727000000bf/files",
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/paymentout/b3922fc3-01b5-11f1-0a81-0727000000bf/files",
       "type": "files",
       "mediaType": "application/json",
       "size": 1,

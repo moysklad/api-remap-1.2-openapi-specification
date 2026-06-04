@@ -170,35 +170,21 @@ properties:
     description: Валюта
     $ref: '../common/currencyRate.yaml'
   overhead:
-    type: object
-    nullable: true
     description: |
       Накладные расходы на уровне документа.
       Если позиции Приемки не заданы, накладные расходы задать нельзя.
-    properties:
-      sum:
-        type: number
-        format: double
-        description: Сумма в копейках
-      distribution:
-        type: string
-        description: |
-          Распределение накладных расходов между позициями.
-          Известные значения описаны в SupplyOverheadDistribution
+    $ref: '../common/overhead.yaml'
   positions:
     type: object
     description: Позиции Приемки
     $ref: '../../../openapi.yaml#/components/schemas/SupplyPositionList'
   purchaseOrder:
     description: |
-      Связанный заказ поставщику (тип `purchaseorder`).
-      Полная схема документа — `PurchaseOrder`.
+      Заказ поставщику, с которым связана Приемка
     nullable: true
     type: object
-    properties:
-      meta:
-        description: Метаданные заказа поставщику
-        $ref: '../common/meta.yaml'
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/PurchaseOrder'
   factureIn:
     description: Счет-фактура полученный, с которым связана эта Приемка
     nullable: true
