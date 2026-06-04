@@ -77,6 +77,7 @@ class SerializationTest extends TestCase
         'processing' => 'Processing',
         'customer_order' => 'CustomerOrder',
         'invoice_out' => 'InvoiceOut',
+        'invoice_in' => 'InvoiceIn',
         'demand' => 'Demand',
         'move' => 'Move',
         'retail_demand' => 'RetailDemand',

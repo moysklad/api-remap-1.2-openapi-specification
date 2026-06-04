@@ -1656,6 +1656,39 @@ class ApiEndpointsTest extends TestCase
         $this->assertReachable($this->client->put(self::API_BASE_PATH . '/entity/invoiceout/new'));
     }
 
+    public function testInvoiceInCrudMetadataTemplateAndPositions(): void
+    {
+        $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/invoicein/'));
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . '/entity/invoicein', ['json' => ['name' => 'InvoiceIn X']]));
+
+        $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/invoicein/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put(self::API_BASE_PATH . '/entity/invoicein/' . self::TEST_UUID, ['json' => ['name' => 'InvoiceIn Y']]));
+        $this->assertReachable($this->client->delete(self::API_BASE_PATH . '/entity/invoicein/' . self::TEST_UUID));
+
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . '/entity/invoicein/delete', ['json' => [['meta' => ['href' => 'x']]]]));
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . '/entity/invoicein/batch', ['json' => [['name' => 'InvoiceIn Z']]]));
+
+        $base = self::API_BASE_PATH . '/entity/invoicein/' . self::TEST_UUID;
+        $this->assertReachable($this->client->get($base . '/positions'));
+        $this->assertReachable($this->client->post($base . '/positions', ['json' => ['quantity' => 1]]));
+        $this->assertReachable($this->client->get($base . '/positions/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put($base . '/positions/' . self::TEST_UUID, ['json' => ['quantity' => 2]]));
+        $this->assertReachable($this->client->delete($base . '/positions/' . self::TEST_UUID));
+        $this->assertReachable($this->client->post($base . '/positions/delete', ['json' => [['meta' => ['href' => 'x']]]]));
+
+        $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/invoicein/metadata'));
+        $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/invoicein/metadata/attributes'));
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . '/entity/invoicein/metadata/attributes', ['json' => [['name' => 'atr1']]]));
+        $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/invoicein/metadata/attributes/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put(self::API_BASE_PATH . '/entity/invoicein/metadata/attributes/' . self::TEST_UUID, ['json' => ['name' => 'atr1']]));
+        $this->assertReachable($this->client->delete(self::API_BASE_PATH . '/entity/invoicein/metadata/attributes/' . self::TEST_UUID));
+        $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/invoicein/metadata/states/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put(self::API_BASE_PATH . '/entity/invoicein/metadata/states/' . self::TEST_UUID, ['json' => ['name' => 'state1']]));
+        $this->assertReachable($this->client->delete(self::API_BASE_PATH . '/entity/invoicein/metadata/states/' . self::TEST_UUID));
+
+        $this->assertReachable($this->client->put(self::API_BASE_PATH . '/entity/invoicein/new'));
+    }
+
     public function testDemandCrudMetadataTemplateAndPositions(): void
     {
         $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/demand/'));

@@ -709,6 +709,33 @@ paths:
     $ref: './paths/documents/invoiceouts/invoiceout-position-by-id.yaml'
   /entity/invoiceout/{id}/positions/delete:
     $ref: './paths/documents/invoiceouts/invoiceout-positions-delete.yaml'
+  # Documents - Invoices In
+  /entity/invoicein:
+    $ref: './paths/documents/invoiceins/invoiceins.yaml'
+  /entity/invoicein/{id}:
+    $ref: './paths/documents/invoiceins/invoicein-by-id.yaml'
+  /entity/invoicein/delete:
+    $ref: './paths/documents/invoiceins/invoiceins-delete.yaml'
+  /entity/invoicein/batch:
+    $ref: './paths/documents/invoiceins/invoiceins-batch.yaml'
+  /entity/invoicein/metadata:
+    $ref: './paths/documents/invoiceins/invoicein-metadata.yaml'
+  /entity/invoicein/metadata/attributes:
+    $ref: './paths/documents/invoiceins/invoicein-metadata-attribute.yaml'
+  /entity/invoicein/metadata/attributes/{id}:
+    $ref: './paths/documents/invoiceins/invoicein-metadata-attribute-by-id.yaml'
+  /entity/invoicein/metadata/states/{id}:
+    $ref: './paths/documents/invoiceins/invoicein-metadata-state-by-id.yaml'
+  /entity/invoicein/new:
+    $ref: './paths/documents/invoiceins/invoicein-new.yaml'
+  /entity/invoicein/{id}/positions:
+    $ref: './paths/documents/invoiceins/invoicein-positions.yaml'
+  /entity/invoicein/{id}/positions/batch:
+    $ref: './paths/documents/invoiceins/invoicein-positions-batch.yaml'
+  /entity/invoicein/{id}/positions/{positionId}:
+    $ref: './paths/documents/invoiceins/invoicein-position-by-id.yaml'
+  /entity/invoicein/{id}/positions/delete:
+    $ref: './paths/documents/invoiceins/invoicein-positions-delete.yaml'
   # Documents - Demands
   /entity/demand:
     $ref: './paths/documents/demands/demands.yaml'
@@ -1660,6 +1687,12 @@ components:
       $ref: './components/schemas/dictionary/purchaseReturnPositionList.yaml'
     InvoiceIn:
       $ref: './components/schemas/dictionary/invoiceIn.yaml'
+    InvoiceInList:
+      $ref: './components/schemas/dictionary/invoiceInList.yaml'
+    InvoiceInPosition:
+      $ref: './components/schemas/dictionary/invoiceInPosition.yaml'
+    InvoiceInPositionList:
+      $ref: './components/schemas/dictionary/invoiceInPositionList.yaml'
     InvoiceOut:
       $ref: './components/schemas/dictionary/invoiceOut.yaml'
     InvoiceOutList:
@@ -1951,6 +1984,8 @@ tags:
     description: Операции со складами
   - name: CustomerOrders
     description: Операции с заказами покупателя
+  - name: InvoiceIns
+    description: Операции со счетами поставщику
   - name: InvoiceOuts
     description: Операции со счетами покупателю
   - name: Demands
