@@ -6,7 +6,7 @@ properties:
     description: Значение кода маркировки
   type:
     type: string
-    description: Тип кода маркировки. Известные значения описаны в DemandPositionTrackingCodeType
+    description: Тип кода маркировки. Известные значения описаны в PositionTrackingCodeType
     example: "trackingcode"
   trackingCodes:
     type: array
@@ -14,4 +14,4 @@ properties:
       Вложенные коды маркировки. Может присутствовать только если type имеет значения `consumerpack` или `transportpack`.
       Допустима вложенность кодов маркировки товаров в транспортные упаковки; транспортные упаковки не могут иметь вложенных упаковок.
     items:
-      $ref: '../../../openapi.yaml#/components/schemas/DemandPositionTrackingCode'
+      $ref: '../../../openapi.yaml#/components/schemas/PositionTrackingCode'

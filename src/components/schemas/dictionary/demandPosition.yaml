@@ -32,36 +32,7 @@ properties:
     type: integer
     description: Себестоимость (только для услуг)
   declaration:
-    type: array
-    description: |
-      Информация о прослеживаемости импортных товаров (ГТД, РНПТ и связанное количество).
-      Не входит в ответ по умолчанию; может быть возвращена только при явном запросе расширенного набора полей для позиций документа.
-      Только для чтения.
-    readOnly: true
-    items:
-      type: object
-      description: Запись о движении импортных товаров по ГТД или РНПТ
-      properties:
-        gtd:
-          type: string
-          description: Грузовая таможенная декларация
-          readOnly: true
-        rnpt:
-          type: string
-          description: Регистрационный номер партии товара (прослеживаемый товар)
-          readOnly: true
-        country:
-          description: Страна происхождения товара
-          readOnly: true
-          nullable: true
-          type: object
-          allOf:
-            - $ref: '../../../openapi.yaml#/components/schemas/Country'
-        quantity:
-          type: number
-          format: double
-          description: Количество товара с указанными ГТД или РНПТ в позиции документа
-          readOnly: true
+    $ref: '../../../openapi.yaml#/components/schemas/Declaration'
   discount:
     type: number
     format: double
@@ -101,7 +72,7 @@ properties:
       Коды маркировки товаров и транспортных упаковок (иерархическая структура).
       Количество кодов маркировки не влияет на поле quantity позиции.
     items:
-      $ref: '../../../openapi.yaml#/components/schemas/DemandPositionTrackingCode'
+      $ref: '../../../openapi.yaml#/components/schemas/PositionTrackingCode'
   trackingCodes_1162:
     type: array
     description: Коды маркировки в формате тега 1162 (иерархическая структура). Только для чтения в ответе.

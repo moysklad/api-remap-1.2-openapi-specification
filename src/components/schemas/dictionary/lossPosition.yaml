@@ -29,14 +29,7 @@ properties:
     description: Метаданные товара/услуги/партии/модификации, которую представляет собой позиция
     $ref: '../../../openapi.yaml#/components/schemas/Assortment'
   declaration:
-    type: array
-    description: |
-      Информация о прослеживаемости импортных товаров.
-      Не входит в ответ по умолчанию; может быть возвращена только при явном запросе `fields=declaration`.
-      Только для чтения.
-    readOnly: true
-    items:
-      $ref: '../../../openapi.yaml#/components/schemas/LossDeclaration'
+    $ref: '../../../openapi.yaml#/components/schemas/Declaration'
   pack:
     description: Упаковка Товара
     nullable: true

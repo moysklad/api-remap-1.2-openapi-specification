@@ -44,11 +44,8 @@ properties:
   gtd:
     type: object
     nullable: true
-    description: ГТД
-    properties:
-      name:
-        type: string
-        description: Номер ГТД
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Gtd'
   pack:
     description: Упаковка Товара
     nullable: true
