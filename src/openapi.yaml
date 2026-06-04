@@ -587,6 +587,37 @@ paths:
     $ref: './paths/documents/internalorders/internalorder-position-by-id.yaml'
   /entity/internalorder/{id}/positions/delete:
     $ref: './paths/documents/internalorders/internalorder-positions-delete.yaml'
+  # Documents - Processing Orders
+  /entity/processingorder:
+    $ref: './paths/documents/processingorders/processingorders.yaml'
+  /entity/processingorder/{id}:
+    $ref: './paths/documents/processingorders/processingorder-by-id.yaml'
+  /entity/processingorder/delete:
+    $ref: './paths/documents/processingorders/processingorders-delete.yaml'
+  /entity/processingorder/batch:
+    $ref: './paths/documents/processingorders/processingorders-batch.yaml'
+  /entity/processingorder/metadata:
+    $ref: './paths/documents/processingorders/processingorder-metadata.yaml'
+  /entity/processingorder/metadata/attributes:
+    $ref: './paths/documents/processingorders/processingorder-metadata-attribute.yaml'
+  /entity/processingorder/metadata/attributes/{id}:
+    $ref: './paths/documents/processingorders/processingorder-metadata-attribute-by-id.yaml'
+  /entity/processingorder/metadata/states:
+    $ref: './paths/documents/processingorders/processingorder-metadata-states.yaml'
+  /entity/processingorder/metadata/states/{id}:
+    $ref: './paths/documents/processingorders/processingorder-metadata-state-by-id.yaml'
+  /entity/processingorder/new:
+    $ref: './paths/documents/processingorders/processingorder-new.yaml'
+  /entity/processingorder/{id}/positions:
+    $ref: './paths/documents/processingorders/processingorder-positions.yaml'
+  /entity/processingorder/{id}/positions/{positionId}:
+    $ref: './paths/documents/processingorders/processingorder-position-by-id.yaml'
+  /entity/processingorder/{id}/positions/delete:
+    $ref: './paths/documents/processingorders/processingorder-positions-delete.yaml'
+  /entity/processingorder/{id}/files:
+    $ref: './paths/documents/processingorders/processingorder-files.yaml'
+  /entity/processingorder/{id}/files/{fileId}:
+    $ref: './paths/documents/processingorders/processingorder-file-by-id.yaml'
   # Documents - Customer Orders
   /entity/customerorder:
     $ref: './paths/documents/customerorders/customerorders.yaml'
@@ -1541,8 +1572,16 @@ components:
       $ref: './components/schemas/dictionary/processingPlanFolder.yaml'
     ProcessingPlanFolderList:
       $ref: './components/schemas/dictionary/processingPlanFolderList.yaml'
+    Processing:
+      $ref: './components/schemas/dictionary/processing.yaml'
     ProcessingOrder:
       $ref: './components/schemas/dictionary/processingOrder.yaml'
+    ProcessingOrderPosition:
+      $ref: './components/schemas/dictionary/processingOrderPosition.yaml'
+    ProcessingOrderPositionList:
+      $ref: './components/schemas/dictionary/processingOrderPositionList.yaml'
+    ProcessingOrderList:
+      $ref: './components/schemas/dictionary/processingOrderList.yaml'
     Demand:
       $ref: './components/schemas/dictionary/demand.yaml'
     DemandList:
@@ -1702,6 +1741,8 @@ tags:
     description: Операции с кассирами
   - name: InternalOrders
     description: Операции c Внутренними заказами
+  - name: ProcessingOrders
+    description: Операции с заказами на производство
   - name: Bundles
     description: Операции с комплектами
   - name: Variants

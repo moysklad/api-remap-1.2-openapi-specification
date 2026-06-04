@@ -1494,6 +1494,47 @@ class ApiEndpointsTest extends TestCase
         $this->assertNotEquals(404, $positions->getStatusCode());
     }
 
+    public function testProcessingOrderCrudAndCPositionsEndpoints(): void
+    {
+        $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/processingorder/'));
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . '/entity/processingorder', ['json' => ['name' => 'ProcessingOrder X']]));
+
+        $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/processingorder/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put(self::API_BASE_PATH . '/entity/processingorder/' . self::TEST_UUID, ['json' => ['name' => 'ProcessingOrder Y']]));
+        $this->assertReachable($this->client->delete(self::API_BASE_PATH . '/entity/processingorder/' . self::TEST_UUID));
+
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . '/entity/processingorder/delete', ['json' => [['meta' => ['href' => 'x']]]]));
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . '/entity/processingorder/batch', ['json' => [['name' => 'processingorder Z']]]));
+
+        $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/processingorder/' . self::TEST_UUID . '/positions'));
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . '/entity/processingorder/' . self::TEST_UUID . '/positions', ['json' => ['quantity' => 1]]));
+
+        $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/processingorder/' . self::TEST_UUID . '/positions/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put(self::API_BASE_PATH . '/entity/processingorder/' . self::TEST_UUID . '/positions/' . self::TEST_UUID, ['json' => ['quantity' => 2]]));
+        $this->assertReachable($this->client->delete(self::API_BASE_PATH . '/entity/processingorder/' . self::TEST_UUID . '/positions/' . self::TEST_UUID));
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . '/entity/processingorder/' . self::TEST_UUID . '/positions/delete', ['json' => [['meta' => ['href' => 'x']]]]));
+
+        $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/processingorder/' . self::TEST_UUID . '/files'));
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . '/entity/processingorder/' . self::TEST_UUID . '/files', ['json' => [['filename' => 'doc.pdf', 'content' => 'SGVsbG8gV29ybGQ=']]]));
+        $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/processingorder/' . self::TEST_UUID . '/files/' . self::TEST_UUID));
+        $this->assertReachable($this->client->delete(self::API_BASE_PATH . '/entity/processingorder/' . self::TEST_UUID . '/files/' . self::TEST_UUID));
+
+        $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/processingorder/metadata'));
+        $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/processingorder/metadata/attributes'));
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . '/entity/processingorder/metadata/attributes', ['json' => [['name' => 'atr1']]]));
+
+        $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/processingorder/metadata/attributes/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put(self::API_BASE_PATH . '/entity/processingorder/metadata/attributes/' . self::TEST_UUID, ['json' => ['name' => 'atr1']]));
+        $this->assertReachable($this->client->delete(self::API_BASE_PATH . '/entity/processingorder/metadata/attributes/' . self::TEST_UUID));
+
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . '/entity/processingorder/metadata/states', ['json' => ['name' => 'state1', 'color' => 15106326, 'stateType' => 'Regular']]));
+        $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/processingorder/metadata/states/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put(self::API_BASE_PATH . '/entity/processingorder/metadata/states/' . self::TEST_UUID, ['json' => ['name' => 'state1']]));
+        $this->assertReachable($this->client->delete(self::API_BASE_PATH . '/entity/processingorder/metadata/states/' . self::TEST_UUID));
+
+        $this->assertReachable($this->client->put(self::API_BASE_PATH . '/entity/processingorder/new'));
+    }
+
     public function testCustomerOrderCrudAndCPositionsEndpoints(): void
     {
         $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/customerorder/'));
@@ -1822,6 +1863,7 @@ class ApiEndpointsTest extends TestCase
     public function testDocumentEndpointsInternalCustomerPurchase(): void
     {
         $this->assertDocumentEndpoints('/entity/internalorder');
+        $this->assertDocumentEndpoints('/entity/processingorder');
         $this->assertDocumentEndpoints('/entity/customerorder');
         $this->assertDocumentEndpoints('/entity/purchaseorder');
     }
