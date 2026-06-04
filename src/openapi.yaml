@@ -929,8 +929,6 @@ components:
       $ref: './components/schemas/dictionary/employeeRole.yaml'
     EmbeddedTemplate:
       $ref: './components/schemas/dictionary/embeddedTemplate.yaml'
-    EntityRef:
-      $ref: './components/schemas/common/entityRef.yaml'
     File:
       $ref: './components/schemas/common/file.yaml'
     FileUpload:
