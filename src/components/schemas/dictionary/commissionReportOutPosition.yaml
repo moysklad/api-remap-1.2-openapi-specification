@@ -1,16 +1,16 @@
 type: object
-description: Позиция возврата на склад комиссионера Полученного отчета комиссионера
+description: Позиция Выданного отчета комиссионера
 x-entity-static-builder:
   methodParams:
     - "parentId"
     - "id"
   href:
     - path: "entity"
-    - path: "commissionreportin"
+    - path: "commissionreportout"
     - param: "parentId"
-    - path: "returntocommissionerpositions"
+    - path: "positions"
     - param: "id"
-  type: "commissionreportinreturnedposition"
+  type: "commissionreportoutposition"
 properties:
   meta:
     description: Метаданные позиции
@@ -29,6 +29,8 @@ properties:
     type: number
     format: double
     description: Количество товаров/услуг в позиции
+    minimum: 0
+    exclusiveMinimum: true
   price:
     type: number
     format: double
@@ -36,16 +38,20 @@ properties:
   reward:
     type: number
     format: double
+    minimum: 0
     description: Вознаграждение
   vat:
     type: integer
     description: НДС для позиции
-    minimum: 0
-    maximum: 100
   vatEnabled:
     type: boolean
     description: Включен ли НДС для позиции
   assortment:
     description: Метаданные товара/партии/модификации/комплекта, которую представляет позиция
     $ref: '../../../openapi.yaml#/components/schemas/Assortment'
-
+  pack:
+    description: Упаковка Товара
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Pack'

@@ -1,8 +1,8 @@
 get:
-  operationId: getProcessingMaterials
+  operationId: getCommissionReportOutPositions
   tags:
-    - Processings
-  summary: Получить материалы Processing
+    - CommissionReportOuts
+  summary: Получить позиции CommissionReportOut
   parameters:
     - $ref: '../../../components/parameters.yaml#/entityId'
     - $ref: '../../../components/parameters.yaml#/limit'
@@ -10,21 +10,24 @@ get:
     - $ref: '../../../components/parameters.yaml#/expand'
     - $ref: '../../../components/headers.yaml#/AcceptHeader'
     - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
   responses:
     '200':
       description: Успешный запрос
       content:
         application/json:
           schema:
-            $ref: '../../../openapi.yaml#/components/schemas/ProcessingMaterialList'
+            type: array
+            items:
+              $ref: '../../../openapi.yaml#/components/schemas/CommissionReportOutPosition'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
 
 post:
-  operationId: createProcessingMaterials
+  operationId: createCommissionReportOutPosition
   tags:
-    - Processings
-  summary: Создать материалы Processing
+    - CommissionReportOuts
+  summary: Создать позицию CommissionReportOut
   parameters:
     - $ref: '../../../components/parameters.yaml#/entityId'
     - $ref: '../../../components/parameters.yaml#/expand'
@@ -36,15 +39,13 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../../../openapi.yaml#/components/schemas/ProcessingMaterial'
-          minItems: 1
-          maxItems: 1000
+          $ref: '../../../openapi.yaml#/components/schemas/CommissionReportOutPosition'
   responses:
     '200':
       description: Успешный запрос
       content:
         application/json:
           schema:
-            $ref: '../../../openapi.yaml#/components/schemas/ProcessingMaterial'
+            $ref: '../../../openapi.yaml#/components/schemas/CommissionReportOutPosition'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'

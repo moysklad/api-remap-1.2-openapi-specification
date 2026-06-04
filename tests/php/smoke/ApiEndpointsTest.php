@@ -3791,6 +3791,54 @@ class ApiEndpointsTest extends TestCase
         $this->assertReachable($this->client->post($returnPositionsBase . '/delete', ['json' => [['meta' => ['href' => 'x']]]]));
     }
 
+    /**
+     * Проверяет доступность CRUD + metadata + positions subresources
+     * для /entity/commissionreportout
+     */
+    public function testCommissionReportOutCrudMetadataAndPositionsEndpoints(): void
+    {
+        $base = self::API_BASE_PATH . '/entity/commissionreportout';
+        $idBase = $base . '/' . self::TEST_UUID;
+
+        // CRUD + batch endpoints
+        $this->assertReachable($this->client->get($base . '/'));
+        $this->assertReachable($this->client->post($base, ['json' => ['name' => 'CommissionReportOut Test']]));
+        $this->assertReachable($this->client->get($idBase));
+        $this->assertReachable($this->client->put($idBase, ['json' => ['name' => 'CommissionReportOut Updated']]));
+        $this->assertReachable($this->client->delete($idBase));
+        $this->assertReachable($this->client->post($base . '/delete', ['json' => [['meta' => ['href' => 'x']]]]));
+        $this->assertReachable($this->client->post($base . '/batch', ['json' => [['name' => 'CommissionReportOut Batch']]]));
+
+        // Metadata
+        $metaBase = $base . '/metadata';
+        $this->assertReachable($this->client->get($metaBase));
+        $this->assertReachable($this->client->get($metaBase . '/attributes'));
+        $this->assertReachable($this->client->post($metaBase . '/attributes', ['json' => [['name' => 'atr1']]]));
+        $this->assertReachable($this->client->get($metaBase . '/attributes/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put($metaBase . '/attributes/' . self::TEST_UUID, ['json' => ['name' => 'atr1']]));
+        $this->assertReachable($this->client->delete($metaBase . '/attributes/' . self::TEST_UUID));
+        $this->assertReachable($this->client->post($metaBase . '/states', ['json' => ['name' => 'state1', 'color' => 15106326, 'stateType' => 'Regular']]));
+        $this->assertReachable($this->client->get($metaBase . '/states/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put($metaBase . '/states/' . self::TEST_UUID, ['json' => ['name' => 'state1']]));
+        $this->assertReachable($this->client->delete($metaBase . '/states/' . self::TEST_UUID));
+
+        // Files
+        $filesBase = $idBase . '/files';
+        $this->assertReachable($this->client->get($filesBase));
+        $this->assertReachable($this->client->post($filesBase, ['json' => [['filename' => 'test.pdf']]]));
+        $this->assertReachable($this->client->delete($filesBase . '/' . self::TEST_UUID));
+
+        // Positions
+        $positionsBase = $idBase . '/positions';
+        $this->assertReachable($this->client->get($positionsBase));
+        $this->assertReachable($this->client->post($positionsBase, ['json' => ['quantity' => 1]]));
+        $this->assertReachable($this->client->post($positionsBase . '/batch', ['json' => [['quantity' => 1]]]));
+        $this->assertReachable($this->client->get($positionsBase . '/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put($positionsBase . '/' . self::TEST_UUID, ['json' => ['quantity' => 2]]));
+        $this->assertReachable($this->client->delete($positionsBase . '/' . self::TEST_UUID));
+        $this->assertReachable($this->client->post($positionsBase . '/delete', ['json' => [['meta' => ['href' => 'x']]]]));
+    }
+
     // ==================== CUSTOM ENTITIES ====================
 
     /**
@@ -4317,7 +4365,7 @@ class ApiEndpointsTest extends TestCase
     }
 
     /**
-     * Проверяет доступность endpoint'ов выплат денег: CRUD, batch, metadata, files и template.
+     * Проверяет доступность endpoint'ов Выплат денег: CRUD, batch, metadata, files и template.
      */
     public function testRetailDrawerCashOutCrud(): void
     {

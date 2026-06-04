@@ -120,6 +120,7 @@ class SerializationTest extends TestCase
         'custom_entity' => 'CustomEntity',
         'custom_entity_element' => 'CustomEntityElement',
         'commission_report_in' => 'CommissionReportIn',
+        'commission_report_out' => 'CommissionReportOut',
         'processing_plan_folder' => 'ProcessingPlanFolder',
         'organization' => 'Organization',
         'organization_account' => 'Account',
