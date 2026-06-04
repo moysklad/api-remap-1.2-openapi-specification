@@ -1211,6 +1211,18 @@ paths:
   /entity/retaildrawercashout/new:
     $ref: './paths/documents/retaildrawercashouts/retaildrawercashout-new.yaml'
 
+  # Documents - Retail Shifts
+  /entity/retailshift:
+    $ref: './paths/documents/retailshifts/retailshifts.yaml'
+  /entity/retailshift/{id}:
+    $ref: './paths/documents/retailshifts/retailshift-by-id.yaml'
+  /entity/retailshift/metadata:
+    $ref: './paths/documents/retailshifts/retailshift-metadata.yaml'
+  /entity/retailshift/metadata/attributes:
+    $ref: './paths/documents/retailshifts/retailshift-metadata-attribute.yaml'
+  /entity/retailshift/metadata/attributes/{id}:
+    $ref: './paths/documents/retailshifts/retailshift-metadata-attribute-by-id.yaml'
+
   # Documents - Cash Out Orders
   /entity/cashout:
     $ref: './paths/documents/cashouts/cashouts.yaml'
@@ -1638,6 +1650,8 @@ components:
       $ref: './components/schemas/dictionary/retailStoreList.yaml'
     RetailShift:
       $ref: './components/schemas/dictionary/retailShift.yaml'
+    RetailShiftList:
+      $ref: './components/schemas/dictionary/retailShiftList.yaml'
     CashierList:
       $ref: './components/schemas/dictionary/cashierList.yaml'
     Inventory:
@@ -2040,6 +2054,8 @@ tags:
     description: Операции с внесениями денег
   - name: RetailDrawerCashOuts
     description: Операции с выплатами денег
+  - name: RetailShifts
+    description: Операции с розничными сменами
   - name: CashOuts
     description: Операции с расходными ордерами
   - name: CommissionReportIns

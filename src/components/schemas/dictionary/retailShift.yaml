@@ -1,7 +1,5 @@
 type: object
-description: |
-  Смена (retailshift). Заглушка: в спецификации нет полного описания сущности;
-  при развёртывании в ответе API возможны дополнительные поля.
+description: Розничная смена
 x-entity-static-builder:
   methodParams:
     - "id"
@@ -12,15 +10,255 @@ x-entity-static-builder:
   type: "retailshift"
 properties:
   meta:
-    description: Метаданные смены
+    description: Метаданные Розничной смены
     $ref: '../common/meta.yaml'
   id:
     type: string
     format: uuid
-    description: ID смены
+    description: ID Розничной смены
     readOnly: true
   accountId:
     type: string
     format: uuid
     description: ID учетной записи
     readOnly: true
+  acquire:
+    description: Метаданные Банка-эквайера по операциям по карте
+    nullable: true
+    type: object
+    x-agent-reference: true
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Agent'
+  agentAccount:
+    description: Метаданные счета контрагента
+    nullable: true
+    readOnly: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Account'
+  attributes:
+    type: array
+    description: Коллекция метаданных доп. полей
+    nullable: true
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
+  bankComission:
+    type: number
+    format: double
+    description: Сумма комиссии эквайера за проведение безналичных платежей по банковской карте
+  bankPercent:
+    type: number
+    format: double
+    description: Комиссия банка-эквайера по операциям по карте (в процентах)
+  cheque:
+    type: object
+    description: Информация о смене ККТ
+    nullable: true
+    properties:
+      start:
+        type: object
+        nullable: true
+        description: Информация об открытии смены ККТ
+        properties:
+          fnNumber:
+            type: string
+            description: Номер фискального накопителя
+          kktRegNumber:
+            type: string
+            description: Регистрационный номер ККТ
+          fiscalDocSign:
+            type: string
+            description: Фискальный признак документа
+          shiftNumber:
+            type: string
+            description: Номер смены ККТ
+          fiscalDocNumber:
+            type: string
+            description: Номер фискального документа
+          time:
+            type: string
+            description: Дата и время открытия смены
+      end:
+        type: object
+        nullable: true
+        description: Информация о закрытии смены ККТ
+        properties:
+          chequesTotal:
+            type: integer
+            description: Количество чеков за смену
+          fiscalDocNumber:
+            type: string
+            description: Номер фискального документа
+          fiscalDocSign:
+            type: string
+            description: Фискальный признак документа
+          fiscalDocsTotal:
+            type: integer
+            description: Количество фискальных документов за смену
+          fnNumber:
+            type: string
+            description: Номер фискального накопителя
+          kktRegNumber:
+            type: string
+            description: Регистрационный номер ККТ
+          shiftNumber:
+            type: string
+            description: Номер смены ККТ
+          time:
+            type: string
+            description: Дата и время закрытия смены
+  closeDate:
+    type: string
+    nullable: true
+    description: Дата закрытия смены
+  contract:
+    description: Метаданные договора
+    nullable: true
+    readOnly: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Contract'
+  created:
+    type: string
+    description: Дата создания
+    readOnly: true
+  deleted:
+    type: string
+    nullable: true
+    description: Момент последнего удаления Розничной смены
+    readOnly: true
+  description:
+    type: string
+    maxLength: 4096
+    nullable: true
+    description: Комментарий Розничной смены
+  externalCode:
+    type: string
+    maxLength: 255
+    description: Внешний код Розничной смены
+  files:
+    description: Метаданные массива Файлов
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/FileList'
+  group:
+    description: Отдел сотрудника
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Group'
+  moment:
+    type: string
+    description: Дата смены
+  name:
+    type: string
+    maxLength: 255
+    description: Наименование Розничной смены
+  operations:
+    type: array
+    description: Коллекция метаданных связанных операций
+    nullable: true
+    readOnly: true
+    items:
+      type: object
+      properties:
+        meta:
+          description: Метаданные связанной операции
+          $ref: '../common/meta.yaml'
+  organization:
+    description: Метаданные юрлица
+    $ref: '../../../openapi.yaml#/components/schemas/Organization'
+  organizationAccount:
+    description: Метаданные счета юрлица
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Account'
+  owner:
+    description: Владелец (Сотрудник)
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Employee'
+  paymentOperations:
+    type: array
+    description: Коллекция метаданных платежных операций
+    nullable: true
+    readOnly: true
+    items:
+      type: object
+      properties:
+        meta:
+          description: Метаданные платежной операции
+          $ref: '../common/meta.yaml'
+        linkedSum:
+          type: number
+          format: double
+          description: Связанная сумма платежной операции
+  printed:
+    type: boolean
+    description: Напечатан ли документ
+    readOnly: true
+  proceedsCash:
+    type: number
+    format: double
+    description: Выручка наличными
+    readOnly: true
+  proceedsNoCash:
+    type: number
+    format: double
+    description: Выручка безнал
+    readOnly: true
+  published:
+    type: boolean
+    description: Опубликован ли документ
+    readOnly: true
+  qrAcquire:
+    description: Метаданные Банка-эквайера по операциям по QR-коду
+    nullable: true
+    type: object
+    x-agent-reference: true
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Agent'
+  qrBankComission:
+    type: number
+    format: double
+    description: Сумма комиссии эквайера за проведение безналичных платежей по QR-коду
+  qrBankPercent:
+    type: number
+    format: double
+    description: Комиссия банка-эквайера по операция по QR-коду (в процентах)
+  receivedCash:
+    type: number
+    format: double
+    description: Получено наличными
+    readOnly: true
+  receivedNoCash:
+    type: number
+    format: double
+    description: Получено безнал
+    readOnly: true
+  retailStore:
+    description: Метаданные точки продаж
+    $ref: '../../../openapi.yaml#/components/schemas/RetailStore'
+  shared:
+    type: boolean
+    description: Общий доступ
+  store:
+    description: Метаданные склада
+    $ref: '../../../openapi.yaml#/components/schemas/Store'
+  syncId:
+    type: string
+    format: uuid
+    description: ID синхронизации
+  updated:
+    type: string
+    description: Момент последнего обновления Розничной смены
+    readOnly: true
+  vatEnabled:
+    type: boolean
+    description: Учитывается ли НДС
+    readOnly: true
+  vatIncluded:
+    type: boolean
+    description: Включен ли НДС в цену
