@@ -1487,6 +1487,8 @@ components:
       $ref: './components/schemas/dictionary/demand.yaml'
     DemandList:
       $ref: './components/schemas/dictionary/demandList.yaml'
+    DemandOverhead:
+      $ref: './components/schemas/dictionary/demandOverhead.yaml'
     DemandOverheadDistribution:
       $ref: './components/schemas/dictionary/demandOverheadDistribution.yaml'
     DemandPosition:
@@ -1503,6 +1505,8 @@ components:
       $ref: './components/schemas/dictionary/enter.yaml'
     EnterList:
       $ref: './components/schemas/dictionary/enterList.yaml'
+    EnterOverhead:
+      $ref: './components/schemas/dictionary/enterOverhead.yaml'
     EnterOverheadDistribution:
       $ref: './components/schemas/dictionary/enterOverheadDistribution.yaml'
     EnterPosition:

@@ -95,6 +95,7 @@ properties:
     readOnly: true
   organization:
     description: Метаданные юрлица
+    type: object
     $ref: '../../../openapi.yaml#/components/schemas/Organization'
   organizationAccount:
     description: Метаданные счета юрлица
@@ -103,7 +104,8 @@ properties:
     allOf:
       - $ref: '../../../openapi.yaml#/components/schemas/Account'
   agent:
-    description: Метаданные контрагента
+    description: Метаданные контрагента или юрлица
+    type: object
     x-agent-reference: true
     allOf:
       - $ref: '../../../openapi.yaml#/components/schemas/Agent'
@@ -116,8 +118,7 @@ properties:
   store:
     description: Метаданные склада
     type: object
-    allOf:
-      - $ref: '../../../openapi.yaml#/components/schemas/Store'
+    $ref: '../../../openapi.yaml#/components/schemas/Store'
   state:
     description: Метаданные статуса Возврата поставщику
     nullable: true
@@ -158,12 +159,16 @@ properties:
     allOf:
       - $ref: '../../../openapi.yaml#/components/schemas/FileList'
   rate:
-    description: Валюта
-    $ref: '../common/currencyRate.yaml'
+    description: |
+      Валюта документа. Если значение курса валюты не указано, используется курс из справочника валют.
+    type: object
+    $ref: '../../../openapi.yaml#/components/schemas/CurrencyRate'
   positions:
     type: object
+    nullable: true
     description: Позиции Возврата поставщику
-    $ref: '../../../openapi.yaml#/components/schemas/PurchaseReturnPositionList'
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/PurchaseReturnPositionList'
   supply:
     description: Приемка, по которой произошел возврат
     nullable: true
