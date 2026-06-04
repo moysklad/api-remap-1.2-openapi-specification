@@ -176,7 +176,6 @@ properties:
   taxSystem:
     type: string
     description: Код системы налогообложения. Известные значения описаны в TaxSystem
-    example: "GENERAL_TAX_SYSTEM"
   rate:
     $ref: '../common/currencyRate.yaml'
   positions:

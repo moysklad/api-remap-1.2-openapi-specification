@@ -12,14 +12,12 @@ properties:
         error:
           type: string
           description: Заголовок ошибки
-          example: "Ошибка в структуре JSON передаваемого запроса"
         parameter:
           type: string
           description: Параметр, на котором произошла ошибка
         code:
           type: integer
           description: Код ошибки
-          example: 1000
         error_message:
           type: string
           description: Сообщение, прилагаемое к ошибке

@@ -49,7 +49,6 @@ properties:
     type: string
     maxLength: 255
     description: Наименование товара
-    example: "Товар 1"
   code:
     type: string
     maxLength: 255
@@ -184,7 +183,6 @@ properties:
   trackingType:
     type: string
     description: Тип маркируемой продукции. Известные значения описаны в TrackingType
-    example: "MILK"
   tnved:
     type: string
     maxLength: 255
@@ -192,11 +190,9 @@ properties:
   paymentItemType:
     type: string
     description: Признак предмета расчета. Известные значения описаны в PaymentItemType
-    example: "GOOD"
   taxSystem:
     type: string
     description: Код системы налогообложения. Известные значения описаны в TaxSystem
-    example: "GENERAL_TAX_SYSTEM"
   attributes:
     type: array
     description: Дополнительные поля
@@ -239,4 +235,4 @@ properties:
   ppeType:
     type: string
     description: Код вида номенклатурной классификации медицинских средств индивидуальной защиты. Известные значения описаны в PpeType
-    example: "2400001226405"
+

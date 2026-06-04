@@ -40,19 +40,6 @@ post:
       application/json:
         schema:
           $ref: '../../../openapi.yaml#/components/schemas/BonusProgram'
-        example:
-          name: bonusprogram
-          active: true
-          allProducts: true
-          allAgents: false
-          agentTags:
-            - tag1
-            - tag2
-          earnRateRoublesToPoint: 7
-          spendRatePointsToRouble: 4
-          maxPaidRatePercents: 50
-          postponedBonusesDelayDays: 7
-          earnWhileRedeeming: false
   responses:
     '200':
       description: Бонусная программа успешно создана
@@ -60,25 +47,5 @@ post:
         application/json:
           schema:
             $ref: '../../../openapi.yaml#/components/schemas/BonusProgram'
-          example:
-            meta:
-              href: https://api.moysklad.ru/api/remap/1.2/entity/bonusprogram/87c69fae-c1ad-4700-a852-f21939470760
-              metadataHref: https://api.moysklad.ru/api/remap/1.2/entity/bonusprogram/metadata
-              type: bonusprogram
-              mediaType: application/json
-              uuidHref: https://online.moysklad.ru/app/#discount/edit?id=1223d051-ba76-11e8-3353-995e0000005a
-            id: 87c69fae-c1ad-4700-a852-f21939470760
-            accountId: dbb8cfc1-cbfa-11e1-6dfb-889ffa6f49fd
-            name: bonusprogram
-            active: false
-            agentTags:
-              - tag1
-              - tag2
-            earnRateRoublesToPoint: 7
-            spendRatePointsToRouble: 4
-            maxPaidRatePercents: 50
-            welcomeBonusesEnabled: false
-            postponedBonusesDelayDays: 7
-            earnWhileRedeeming: false
     default:
       $ref: '../../../components/responses.yaml#/CommonError'

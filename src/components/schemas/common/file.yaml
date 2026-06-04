@@ -7,17 +7,14 @@ properties:
     type: string
     maxLength: 255
     description: Название файла
-    example: "Инструкция по эксплуатации"
   filename:
     type: string
     maxLength: 255
     description: Имя файла
-    example: "instruction.pdf"
   size:
     type: integer
     description: Размер файла в байтах
     readOnly: true
-    example: 1048576
   created:
     type: string
     #    format: date-time  # API использует формат: YYYY-MM-DD HH:MM:SS.mmm

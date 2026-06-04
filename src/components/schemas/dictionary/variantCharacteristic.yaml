@@ -18,7 +18,6 @@ properties:
     maxLength: 255
     readOnly: true
     description: Тип значения Характеристики. Известные значения описаны в VariantCharacteristicType
-    example: "string"
   required:
     type: boolean
     readOnly: true

@@ -14,11 +14,6 @@ get:
         application/json:
           schema:
             $ref: '../../../openapi.yaml#/components/schemas/EmployeeRole'
-          example:
-            meta:
-              href: "https://api.moysklad.ru/api/remap/1.2/entity/role/cashier"
-              type: "systemrole"
-              mediaType: "application/json"
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
     

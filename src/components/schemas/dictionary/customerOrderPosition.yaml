@@ -55,7 +55,6 @@ properties:
   taxSystem:
     type: string
     description: Код системы налогообложения. Известные значения описаны в TaxSystem
-    example: "GENERAL_TAX_SYSTEM"
   assortment:
     description: Метаданные товара/услуги/модификации/комплекта, которую представляет собой позиция
     $ref: '../../../openapi.yaml#/components/schemas/Assortment'

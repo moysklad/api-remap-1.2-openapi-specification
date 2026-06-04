@@ -8,12 +8,10 @@ properties:
     format: uuid
     description: ID статуса
     readOnly: true
-    example: "12a8b923-692c-11e6-8a84-bae500000057"
   name:
     type: string
     maxLength: 255
     description: Наименование статуса
-    example: "Новый"
   accountId:
     type: string
     format: uuid
@@ -22,13 +20,10 @@ properties:
   color:
     type: integer
     description: Цвет Статуса
-    example: 15106326
   entityType:
     type: string
     description: Тип сущности, к которой относится Статус (ключевое слово в рамках JSON API)
     readOnly: true
-    example: "counterparty"
   stateType:
     type: string
     description: Тип Статуса. Известные значения описаны в StateType
-    example: "Regular"

@@ -23,7 +23,6 @@ put:
               type: string
               maxLength: 255
               description: Логин сотрудника (обязателен при первой активации)
-              example: "newcashier@lognex"
             group:
               type: object
               description: Метаданные группы
@@ -56,8 +55,5 @@ put:
               mailActivationRequired:
                 type: boolean
                 description: Признак того, что на почту сотрудника выслано письмо для активации
-                example: true
-          example:
-            mailActivationRequired: true
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
