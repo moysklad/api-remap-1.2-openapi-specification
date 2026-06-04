@@ -669,7 +669,7 @@ post:
         schema:
           type: array
           items:
-            $ref: '../../../openapi.yaml#/components/schemas/EntityRef'
+            $ref: '../../../openapi.yaml#/components/schemas/<PascalSingular>'
           minItems: 1
           maxItems: 1000
   responses:
@@ -683,11 +683,13 @@ post:
               oneOf:
                 - $ref: '../../../openapi.yaml#/components/schemas/DeleteInfo'
                 - $ref: '../../../openapi.yaml#/components/schemas/Error'
+            minItems: 1
+            maxItems: 1000
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
 ```
 
-Use the same `EntityRef[]` default for `<entity>-positions-delete.yaml` when the MD says the request body contains JSON metadata / meta-objects of positions to delete. Only use the full entity or position schema if the MD explicitly documents a richer payload.
+For `<entity>-positions-delete.yaml`, use an array of `<PascalSingular>Position` (same pattern as `customerorder-positions-delete.yaml`).
 
 ### Batch create/update — `<entities>-batch.yaml`
 

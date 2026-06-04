@@ -1,7 +1,0 @@
-type: object
-description: Минимальная ссылка на сущность для batch-delete операций
-required:
-  - meta
-properties:
-  meta:
-    $ref: '../common/meta.yaml'

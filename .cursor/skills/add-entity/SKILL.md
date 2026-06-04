@@ -37,7 +37,6 @@ Follow this order. Read [reference.md](reference.md) for templates and edge-case
 4. **Check dependencies** — for each `[Meta]` field, verify the target exists in `src/openapi.yaml` `components.schemas`; expand stubs or create minimal stubs only when safe.
 5. **Create schemas** — entity + list schemas; for documents with positions also position + position list schemas. For every schema that has a top-level `meta`, add `x-entity-static-builder` (see "Static builder extension" below).
 6. **Create paths** — one YAML per endpoint group. Reference schemas through `../../../openapi.yaml#/components/schemas/<SchemaName>` from request/response bodies.
-   For mass delete endpoints (`/entity/<keyword>/delete` and `/entity/<keyword>/{id}/positions/delete`), prefer arrays of `EntityRef` when the MD says the request body contains JSON metadata / meta-objects to delete; do not point delete request bodies at the full entity schema unless the MD explicitly requires the full payload.
 7. **Register in `src/openapi.yaml`** — paths, `components.schemas`, and tags in the local style used nearby.
 8. **Plan Schemathesis checks** — default contract tests run only `examples`; add OpenAPI examples only with explicit user confirmation, and document the manual targeted coverage command for the changed entity (see "Schemathesis examples and targeted coverage" below).
 9. **Add test data** — create a rich shared fixture in `tests/fixtures/<snake_case>.json`, register it in both PHP and Java `FIXTURE_MODEL_MAP`, and update `IGNORED_FIELDS` only when required.
@@ -102,7 +101,6 @@ Before verification, re-read the MD and confirm:
 - Nested object structures match MD JSON examples exactly.
 - Every API operation section maps to a path + method and a smoke test.
 - For every new `/entity/<keyword>` or non-entity API path, report the manual `SCHEMATHESIS_INCLUDE_PATH_REGEX` to use if targeted coverage is needed.
-- Batch delete request bodies use `EntityRef[]` when the MD describes deletion by metadata / meta-objects; the same default applies to `positions-delete` unless the MD shows a richer payload.
 - Metadata attributes and `metadata/states/{id}` exist when the MD metadata section requires them.
 - Non-standard query parameters are either intentionally left as raw `RequestOptions.queryParam(...)` values or covered by a typed Java options helper.
 - Metadata attributes, `metadata/states`, and `metadata/states/{id}` exist when the MD metadata section requires them.
