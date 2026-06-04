@@ -877,6 +877,32 @@ paths:
   /entity/cashin/new:
     $ref: './paths/documents/cashins/cashin-new.yaml'
 
+  # Documents - Payment In
+  /entity/paymentin:
+    $ref: './paths/documents/paymentins/paymentins.yaml'
+  /entity/paymentin/{id}:
+    $ref: './paths/documents/paymentins/paymentin-by-id.yaml'
+  /entity/paymentin/{id}/files:
+    $ref: './paths/documents/paymentins/paymentin-files.yaml'
+  /entity/paymentin/{id}/files/{fileId}:
+    $ref: './paths/documents/paymentins/paymentin-file-by-id.yaml'
+  /entity/paymentin/delete:
+    $ref: './paths/documents/paymentins/paymentins-delete.yaml'
+  /entity/paymentin/batch:
+    $ref: './paths/documents/paymentins/paymentins-batch.yaml'
+  /entity/paymentin/metadata:
+    $ref: './paths/documents/paymentins/paymentin-metadata.yaml'
+  /entity/paymentin/metadata/attributes:
+    $ref: './paths/documents/paymentins/paymentin-metadata-attribute.yaml'
+  /entity/paymentin/metadata/attributes/{id}:
+    $ref: './paths/documents/paymentins/paymentin-metadata-attribute-by-id.yaml'
+  /entity/paymentin/metadata/states:
+    $ref: './paths/documents/paymentins/paymentin-metadata-states.yaml'
+  /entity/paymentin/metadata/states/{id}:
+    $ref: './paths/documents/paymentins/paymentin-metadata-state-by-id.yaml'
+  /entity/paymentin/new:
+    $ref: './paths/documents/paymentins/paymentin-new.yaml'
+
   # Documents - Retail Drawer Cash In
   /entity/retaildrawercashin:
     $ref: './paths/documents/retaildrawercashins/retaildrawercashins.yaml'
@@ -1411,6 +1437,8 @@ components:
       $ref: './components/schemas/dictionary/paymentOut.yaml'
     PaymentIn:
       $ref: './components/schemas/dictionary/paymentIn.yaml'
+    PaymentInList:
+      $ref: './components/schemas/dictionary/paymentInList.yaml'
     Prepayment:
       $ref: './components/schemas/dictionary/prepayment.yaml'
     PrepaymentReturn:
@@ -1425,14 +1453,14 @@ components:
       $ref: './components/schemas/dictionary/cashOut.yaml'
     CashOutOperation:
       $ref: './components/schemas/dictionary/cashOutOperation.yaml'
-    CashOutOperationLinkedSum:
-      $ref: './components/schemas/dictionary/cashOutOperationLinkedSum.yaml'
     CashIn:
       $ref: './components/schemas/dictionary/cashIn.yaml'
     CashInOperation:
       $ref: './components/schemas/dictionary/cashInOperation.yaml'
-    CashInOperationLinkedSum:
-      $ref: './components/schemas/dictionary/cashInOperationLinkedSum.yaml'
+    PaymentInOperation:
+      $ref: './components/schemas/dictionary/paymentInOperation.yaml'
+    OperationLinkedSum:
+      $ref: './components/schemas/dictionary/operationLinkedSum.yaml'
     RetailDrawerCashIn:
       $ref: './components/schemas/dictionary/retailDrawerCashIn.yaml'
     RetailDrawerCashInList:
@@ -1648,6 +1676,8 @@ tags:
     description: Операции с заказами кодов маркировки
   - name: CashIns
     description: Операции с приходными ордерами
+  - name: PaymentIns
+    description: Операции с входящими платежами
   - name: RetailDrawerCashIns
     description: Операции с внесениями денег
   - name: CashOuts

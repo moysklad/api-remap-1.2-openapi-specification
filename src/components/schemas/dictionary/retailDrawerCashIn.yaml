@@ -24,6 +24,7 @@ properties:
     readOnly: true
   agent:
     description: Метаданные сотрудника, совершившего Внесение
+    x-agent-reference: false
     $ref: '../../../openapi.yaml#/components/schemas/Employee'
   applicable:
     type: boolean
