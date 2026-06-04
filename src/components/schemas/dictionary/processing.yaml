@@ -22,3 +22,131 @@ properties:
     format: uuid
     description: ID учетной записи
     readOnly: true
+  name:
+    type: string
+    maxLength: 255
+    description: Наименование техоперации
+  code:
+    type: string
+    maxLength: 255
+    description: Код техоперации
+  externalCode:
+    type: string
+    maxLength: 255
+    description: Внешний код техоперации
+  syncId:
+    type: string
+    format: uuid
+    description: ID синхронизации
+  description:
+    type: string
+    maxLength: 4096
+    nullable: true
+    description: Комментарий техоперации
+  created:
+    type: string
+    description: Дата создания
+    readOnly: true
+  deleted:
+    type: string
+    description: Момент последнего удаления техоперации
+    readOnly: true
+  updated:
+    type: string
+    description: Момент последнего обновления техоперации
+    readOnly: true
+  moment:
+    type: string
+    description: Дата документа
+  applicable:
+    type: boolean
+    description: Отметка о проведении
+  printed:
+    type: boolean
+    description: Напечатан ли документ
+    readOnly: true
+  published:
+    type: boolean
+    description: Опубликован ли документ
+    readOnly: true
+  shared:
+    type: boolean
+    description: Общий доступ
+  organization:
+    description: Метаданные юрлица
+    $ref: '../../../openapi.yaml#/components/schemas/Organization'
+  organizationAccount:
+    description: Метаданные счета юрлица
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Account'
+  processingPlan:
+    description: Метаданные техкарты
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/ProcessingPlan'
+  processingOrder:
+    description: Метаданные заказа на производство
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/ProcessingOrder'
+  project:
+    description: Метаданные проекта
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Project'
+  owner:
+    description: Владелец (Сотрудник)
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Employee'
+  group:
+    description: Отдел сотрудника
+    $ref: '../../../openapi.yaml#/components/schemas/Group'
+  state:
+    description: Метаданные статуса техоперации
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/State'
+  attributes:
+    type: array
+    description: Коллекция метаданных доп. полей
+    nullable: true
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
+  files:
+    description: Метаданные массива файлов
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/FileList'
+  productsStore:
+    description: Метаданные склада для продукции
+    $ref: '../../../openapi.yaml#/components/schemas/Store'
+  materialsStore:
+    description: Метаданные склада для материалов
+    $ref: '../../../openapi.yaml#/components/schemas/Store'
+  products:
+    type: object
+    description: Метаданные продуктов техоперации
+    $ref: '../../../openapi.yaml#/components/schemas/ProcessingProductList'
+  materials:
+    type: object
+    description: Метаданные материалов техоперации
+    $ref: '../../../openapi.yaml#/components/schemas/ProcessingMaterialList'
+  quantity:
+    type: number
+    format: double
+    minimum: 0.0001
+    description: Объем производства
+  processingSum:
+    type: number
+    format: double
+    minimum: 0
+    description: Затраты на производство за единицу объема производства
