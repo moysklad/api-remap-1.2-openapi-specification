@@ -1065,6 +1065,28 @@ paths:
   /entity/paymentin/new:
     $ref: './paths/documents/paymentins/paymentin-new.yaml'
 
+  # Documents - Facture Out
+  /entity/factureout:
+    $ref: './paths/documents/factureouts/factureouts.yaml'
+  /entity/factureout/{id}:
+    $ref: './paths/documents/factureouts/factureout-by-id.yaml'
+  /entity/factureout/delete:
+    $ref: './paths/documents/factureouts/factureouts-delete.yaml'
+  /entity/factureout/batch:
+    $ref: './paths/documents/factureouts/factureouts-batch.yaml'
+  /entity/factureout/metadata:
+    $ref: './paths/documents/factureouts/factureout-metadata.yaml'
+  /entity/factureout/metadata/attributes:
+    $ref: './paths/documents/factureouts/factureout-metadata-attribute.yaml'
+  /entity/factureout/metadata/attributes/{id}:
+    $ref: './paths/documents/factureouts/factureout-metadata-attribute-by-id.yaml'
+  /entity/factureout/metadata/states:
+    $ref: './paths/documents/factureouts/factureout-metadata-states.yaml'
+  /entity/factureout/metadata/states/{id}:
+    $ref: './paths/documents/factureouts/factureout-metadata-state-by-id.yaml'
+  /entity/factureout/new:
+    $ref: './paths/documents/factureouts/factureout-new.yaml'
+
   # Documents - Payment Out
   /entity/paymentout:
     $ref: './paths/documents/paymentouts/paymentouts.yaml'
@@ -1308,6 +1330,8 @@ components:
       $ref: './components/schemas/common/fileList.yaml'
     FactureOut:
       $ref: './components/schemas/dictionary/factureOut.yaml'
+    FactureOutList:
+      $ref: './components/schemas/dictionary/factureOutList.yaml'
     FactureIn:
       $ref: './components/schemas/dictionary/factureIn.yaml'
     FiscalType:
@@ -1950,6 +1974,8 @@ tags:
     description: Операции с приходными ордерами
   - name: PaymentIns
     description: Операции с входящими платежами
+  - name: FactureOuts
+    description: Операции со Счетами-фактурами выданными
   - name: PaymentOuts
     description: Операции с исходящими платежами
   - name: RetailDrawerCashIns

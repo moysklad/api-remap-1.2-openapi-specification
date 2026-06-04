@@ -1,0 +1,26 @@
+put:
+  operationId: getFactureOutTemplate
+  tags:
+    - FactureOuts
+  summary: Шаблон Счета-фактуры выданного
+  description: |
+    Предзаполненный шаблон Счета-фактуры выданного на основе отгрузки, возврата поставщику или входящего платежа.
+  parameters:
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: false
+    content:
+      application/json:
+        schema:
+          type: object
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/FactureOut'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
