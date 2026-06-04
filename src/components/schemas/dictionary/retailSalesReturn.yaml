@@ -92,6 +92,8 @@ properties:
   noCashSum:
     type: number
     format: double
+    minimum: 0
+    exclusiveMinimum: true
     description: Оплачено картой
   organization:
     description: Метаданные юрлица
@@ -123,6 +125,8 @@ properties:
   qrSum:
     type: number
     format: double
+    minimum: 0
+    exclusiveMinimum: true
     description: Оплачено по QR-коду
   rate:
     description: |
@@ -175,3 +179,4 @@ properties:
     type: number
     format: double
     description: Сумма НДС
+    readOnly: true

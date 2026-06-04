@@ -31,6 +31,7 @@ properties:
   cost:
     type: integer
     description: Себестоимость (выводится, если документ был создан без основания)
+    minimum: 0
   discount:
     type: number
     format: double
@@ -45,6 +46,7 @@ properties:
     type: number
     format: double
     description: Цена товара/услуги в копейках
+    minimum: 0
   quantity:
     type: number
     format: double
