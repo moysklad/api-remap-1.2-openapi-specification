@@ -1647,6 +1647,10 @@ class ApiEndpointsTest extends TestCase
         $this->assertReachable($this->client->put($base . '/positions/' . self::TEST_UUID, ['json' => ['quantity' => 2]]));
         $this->assertReachable($this->client->delete($base . '/positions/' . self::TEST_UUID));
         $this->assertReachable($this->client->post($base . '/positions/delete', ['json' => [['meta' => ['href' => 'x']]]]));
+        $this->assertReachable($this->client->get($base . '/files'));
+        $this->assertReachable($this->client->post($base . '/files', ['json' => [['filename' => 'X']]]));
+        $this->assertReachable($this->client->get($base . '/files/' . self::TEST_UUID));
+        $this->assertReachable($this->client->delete($base . '/files/' . self::TEST_UUID));
 
         $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/invoiceout/metadata'));
         $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/invoiceout/metadata/attributes'));
@@ -1680,6 +1684,10 @@ class ApiEndpointsTest extends TestCase
         $this->assertReachable($this->client->put($base . '/positions/' . self::TEST_UUID, ['json' => ['quantity' => 2]]));
         $this->assertReachable($this->client->delete($base . '/positions/' . self::TEST_UUID));
         $this->assertReachable($this->client->post($base . '/positions/delete', ['json' => [['meta' => ['href' => 'x']]]]));
+        $this->assertReachable($this->client->get($base . '/files'));
+        $this->assertReachable($this->client->post($base . '/files', ['json' => [['filename' => 'X']]]));
+        $this->assertReachable($this->client->get($base . '/files/' . self::TEST_UUID));
+        $this->assertReachable($this->client->delete($base . '/files/' . self::TEST_UUID));
 
         $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/invoicein/metadata'));
         $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/invoicein/metadata/attributes'));

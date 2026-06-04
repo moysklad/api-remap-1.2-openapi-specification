@@ -4,6 +4,7 @@ post:
     - InvoiceIns
   summary: Создать позиции Счета поставщику
   parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
     - $ref: '../../../components/parameters.yaml#/expand'
     - $ref: '../../../components/headers.yaml#/AcceptHeader'
     - $ref: '../../../components/headers.yaml#/AcceptEncoding'

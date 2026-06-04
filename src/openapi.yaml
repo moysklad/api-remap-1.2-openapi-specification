@@ -713,6 +713,10 @@ paths:
     $ref: './paths/documents/invoiceouts/invoiceout-position-by-id.yaml'
   /entity/invoiceout/{id}/positions/delete:
     $ref: './paths/documents/invoiceouts/invoiceout-positions-delete.yaml'
+  /entity/invoiceout/{id}/files:
+    $ref: './paths/documents/invoiceouts/invoiceout-files.yaml'
+  /entity/invoiceout/{id}/files/{fileId}:
+    $ref: './paths/documents/invoiceouts/invoiceout-file-by-id.yaml'
   # Documents - Invoices In
   /entity/invoicein:
     $ref: './paths/documents/invoiceins/invoiceins.yaml'
@@ -740,6 +744,10 @@ paths:
     $ref: './paths/documents/invoiceins/invoicein-position-by-id.yaml'
   /entity/invoicein/{id}/positions/delete:
     $ref: './paths/documents/invoiceins/invoicein-positions-delete.yaml'
+  /entity/invoicein/{id}/files:
+    $ref: './paths/documents/invoiceins/invoicein-files.yaml'
+  /entity/invoicein/{id}/files/{fileId}:
+    $ref: './paths/documents/invoiceins/invoicein-file-by-id.yaml'
   # Documents - Demands
   /entity/demand:
     $ref: './paths/documents/demands/demands.yaml'
