@@ -226,7 +226,8 @@ schemathesis run dist/openapi.yaml \
   --phases examples
 ```
 
-Локальный `make schemathesis` по умолчанию также запускает только `examples`.
+Локальный `make schemathesis` по умолчанию: фаза `examples`, `--mode positive`, проверка `positive_data_acceptance` (валидные example → **2XX**). Без `requestBody.example` операция в examples не тестируется (у Schemathesis `fill-missing` выключен по умолчанию).
+
 Для ручного targeted coverage по конкретной изменённой сущности задайте фильтры:
 
 ```bash
@@ -244,15 +245,7 @@ SCHEMATHESIS_INCLUDE_OPERATION_ID=createProduct \
 make schemathesis
 ```
 
-Чтобы проверить, что новый example не ломает остальные операции и не оставляет
-данные, из-за которых повторный прогон падает, запускайте весь examples-набор
-два раза подряд на одном окружении:
-
-```bash
-SCHEMATHESIS_PHASES=examples \
-SCHEMATHESIS_REPEAT=2 \
-make schemathesis
-```
+Отладка: `SCHEMATHESIS_REPEAT=2` — два прогона подряд; `SCHEMATHESIS_SEED` — другой seed (по умолчанию `1`).
 
 ## Ссылки
 

@@ -42,28 +42,23 @@ if [ ! -d "$SCHEMATHESIS_VENV" ] || [ ! -x "$SCHEMATHESIS_VENV/bin/schemathesis"
 fi
 
 # Режимы тестирования:
-# - examples: базовые тесты с примерами из спецификации (по умолчанию)
-# - coverage: расширенное покрытие всех комбинаций параметров; запускайте вручную
-#   только на конкретных изменённых сущностях через SCHEMATHESIS_INCLUDE_PATH_REGEX
-#   и, если нужно, SCHEMATHESIS_INCLUDE_METHOD или SCHEMATHESIS_INCLUDE_OPERATION_ID
-# - fuzzing: генерация случайных данных для поиска уязвимостей
-# - stateful: тесты с изменением состояния
+# - examples: позитивные тесты по example из спеки (по умолчанию; fill-missing выключен в Schemathesis)
+# - coverage: расширенное покрытие; только на изменённых сущностях через SCHEMATHESIS_INCLUDE_*
+# - fuzzing / stateful: вручную при необходимости
 #
-# По умолчанию: examples
 # Coverage для конкретной сущности:
 #   SCHEMATHESIS_PHASES=coverage SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/product(/|$)' make schemathesis
-#   SCHEMATHESIS_PHASES=coverage SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/product$' SCHEMATHESIS_INCLUDE_METHOD=POST make schemathesis
 #   SCHEMATHESIS_PHASES=examples SCHEMATHESIS_INCLUDE_OPERATION_ID=createProduct make schemathesis
-# Полный regression + repeatability check:
-#   SCHEMATHESIS_PHASES=examples SCHEMATHESIS_REPEAT=2 make schemathesis
+# Отладка воспроизводимости (два прогона подряд):
+#   SCHEMATHESIS_REPEAT=2 make schemathesis
 SCHEMATHESIS_PHASES="${SCHEMATHESIS_PHASES:-examples}"
 SCHEMATHESIS_MODE="${SCHEMATHESIS_MODE:-positive}"
 SCHEMATHESIS_MAX_EXAMPLES="${SCHEMATHESIS_MAX_EXAMPLES:-50}"
 SCHEMATHESIS_WORKERS="${SCHEMATHESIS_WORKERS:-auto}"
-SCHEMATHESIS_GENERATION_DATABASE="${SCHEMATHESIS_GENERATION_DATABASE:-none}"
 SCHEMATHESIS_REQUEST_TIMEOUT="${SCHEMATHESIS_REQUEST_TIMEOUT:-30}"
 SCHEMATHESIS_NO_SHRINK="${SCHEMATHESIS_NO_SHRINK:-1}"
 SCHEMATHESIS_REPEAT="${SCHEMATHESIS_REPEAT:-1}"
+SCHEMATHESIS_SEED="${SCHEMATHESIS_SEED:-1}"
 SCHEMATHESIS_INCLUDE_PATH_REGEX="${SCHEMATHESIS_INCLUDE_PATH_REGEX:-}"
 SCHEMATHESIS_INCLUDE_METHOD="${SCHEMATHESIS_INCLUDE_METHOD:-}"
 SCHEMATHESIS_INCLUDE_OPERATION_ID="${SCHEMATHESIS_INCLUDE_OPERATION_ID:-}"
@@ -73,11 +68,10 @@ AUTH_HEADER=$(echo -n "${SCHEMATHESIS_LOGIN}:${SCHEMATHESIS_PASSWORD}" | base64)
 # Исключаемые проверки:
 # @see https://schemathesis.readthedocs.io/en/stable/reference/checks/
 # - unsupported_method: nginx возвращает 405 без заголовка Allow (требуется по RFC 9110)
-# - positive_data_acceptance: API может вернуть 400/412 при валидной по схеме дате (бизнес-правила);
-#   коды 400/412 документированы в спецификации
-# - negative_data_rejection: API принимает запросы с невалидными заголовками/параметрами
-#   (например, x-schemathesis-unknown-property) — поведение nginx/балансировщика, не дефект спеки
-EXCLUDE_CHECKS="positive_data_acceptance,unsupported_method,negative_data_rejection"
+# - negative_data_rejection: невалидные заголовки/параметры — поведение nginx, не дефект спеки
+# - ignored_auth: лишние запросы без тела для проверки 401
+# positive_data_acceptance включён: валидные example должны давать 2XX
+EXCLUDE_CHECKS="unsupported_method,negative_data_rejection,ignored_auth"
 
 echo "==> Running Schemathesis tests"
 echo "    Base URL: $SCHEMATHESIS_BASE_URL"
@@ -85,10 +79,10 @@ echo "    Phases: $SCHEMATHESIS_PHASES"
 echo "    Mode: $SCHEMATHESIS_MODE"
 echo "    Max examples: $SCHEMATHESIS_MAX_EXAMPLES"
 echo "    Workers: $SCHEMATHESIS_WORKERS"
-echo "    Generation database: $SCHEMATHESIS_GENERATION_DATABASE"
 echo "    Request timeout: $SCHEMATHESIS_REQUEST_TIMEOUT"
 echo "    No shrink: $SCHEMATHESIS_NO_SHRINK"
 echo "    Repeat: $SCHEMATHESIS_REPEAT"
+echo "    Seed: $SCHEMATHESIS_SEED"
 echo "    Include path regex: ${SCHEMATHESIS_INCLUDE_PATH_REGEX:-<none>}"
 echo "    Include method: ${SCHEMATHESIS_INCLUDE_METHOD:-<none>}"
 echo "    Include operationId: ${SCHEMATHESIS_INCLUDE_OPERATION_ID:-<none>}"
@@ -103,7 +97,8 @@ set -- "$SCHEMATHESIS_VENV/bin/schemathesis" run dist/openapi.yaml \
   --mode "$SCHEMATHESIS_MODE" \
   --workers "$SCHEMATHESIS_WORKERS" \
   --exclude-checks "$EXCLUDE_CHECKS" \
-  --generation-database "$SCHEMATHESIS_GENERATION_DATABASE" \
+  --generation-deterministic \
+  --seed "$SCHEMATHESIS_SEED" \
   --request-timeout "$SCHEMATHESIS_REQUEST_TIMEOUT"
 
 if [ "$SCHEMATHESIS_NO_SHRINK" = "1" ]; then

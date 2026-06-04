@@ -102,7 +102,8 @@
 | `SCHEMATHESIS_PHASES`         | Режимы тестирования           | `examples` (по умолчанию) |
 | `SCHEMATHESIS_MAX_EXAMPLES`   | Максимум примеров на эндпоинт | `50` (по умолчанию)  |
 | `SCHEMATHESIS_WORKERS`        | Количество parallel workers внутри job | `auto` (по умолчанию) |
-| `SCHEMATHESIS_REPEAT`         | Сколько раз подряд повторить один и тот же прогон Schemathesis | `1` (по умолчанию) |
+| `SCHEMATHESIS_REPEAT`         | Сколько раз подряд повторить прогон (отладка) | `1` (по умолчанию) |
+| `SCHEMATHESIS_SEED`           | Seed для `--generation-deterministic` | `1` (по умолчанию) |
 | `SCHEMATHESIS_INCLUDE_PATH_REGEX` | Опциональный path-фильтр для ручного targeted coverage | Не задано |
 | `SCHEMATHESIS_INCLUDE_METHOD` | Опциональный HTTP method-фильтр для ручного targeted coverage | Не задано |
 | `SCHEMATHESIS_INCLUDE_OPERATION_ID` | Опциональный operationId-фильтр для ручной проверки конкретного example | Не задано |
@@ -114,7 +115,7 @@
 - `fuzzing` - случайные данные
 - `stateful` - изменение данных
 
-**По умолчанию:** `examples`
+**По умолчанию:** `examples`, `--mode positive`, `positive_data_acceptance` (example → **2XX**).
 
 `sdk-contract` запускается одной job. Полный `coverage` не входит в общий pipeline,
 потому что на сложных схемах документов он генерирует слишком много комбинаций и
@@ -144,13 +145,7 @@ SCHEMATHESIS_PHASES=examples
 SCHEMATHESIS_INCLUDE_OPERATION_ID=createProduct
 ```
 
-Для проверки, что новый example не конфликтует с остальными и не ломает
-повторный запуск, прогоняйте весь `examples` два раза подряд:
-
-```bash
-SCHEMATHESIS_PHASES=examples
-SCHEMATHESIS_REPEAT=2
-```
+Для отладки воспроизводимости на одном окружении: `SCHEMATHESIS_REPEAT=2`.
 
 ### Переменные для Push/Mirror
 

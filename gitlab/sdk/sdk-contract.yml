@@ -1,5 +1,5 @@
 # Режимы тестирования (SCHEMATHESIS_PHASES):
-# - examples: базовые тесты с примерами из спецификации (по умолчанию)
+# - examples: позитивные тесты по example из спеки (по умолчанию)
 # - coverage: расширенное покрытие всех комбинаций параметров
 # - fuzzing: генерация случайных данных для поиска уязвимостей
 # - stateful: тесты с изменением состояния
@@ -131,24 +131,19 @@ sdk-contract:
       SCHEMATHESIS_MODE="${SCHEMATHESIS_MODE:-positive}"
       SCHEMATHESIS_MAX_EXAMPLES="${SCHEMATHESIS_MAX_EXAMPLES:-50}"
       SCHEMATHESIS_WORKERS="${SCHEMATHESIS_WORKERS:-auto}"
-      SCHEMATHESIS_GENERATION_DATABASE="${SCHEMATHESIS_GENERATION_DATABASE:-none}"
       SCHEMATHESIS_REQUEST_TIMEOUT="${SCHEMATHESIS_REQUEST_TIMEOUT:-30}"
       SCHEMATHESIS_NO_SHRINK="${SCHEMATHESIS_NO_SHRINK:-1}"
       SCHEMATHESIS_REPEAT="${SCHEMATHESIS_REPEAT:-1}"
+      SCHEMATHESIS_SEED="${SCHEMATHESIS_SEED:-1}"
       SCHEMATHESIS_INCLUDE_PATH_REGEX="${SCHEMATHESIS_INCLUDE_PATH_REGEX:-}"
       SCHEMATHESIS_INCLUDE_METHOD="${SCHEMATHESIS_INCLUDE_METHOD:-}"
       SCHEMATHESIS_INCLUDE_OPERATION_ID="${SCHEMATHESIS_INCLUDE_OPERATION_ID:-}"
+
+      EXCLUDE_CHECKS="unsupported_method,negative_data_rejection,ignored_auth"
       
       AUTH_HEADER=$(echo -n "${SCHEMATHESIS_LOGIN}:${SCHEMATHESIS_PASSWORD}" | base64)
       
-      # Исключаемые проверки:
-      # @see https://schemathesis.readthedocs.io/en/stable/reference/checks/
-      # - unsupported_method: nginx возвращает 405 без заголовка Allow (требуется по RFC 9110)
-      # - positive_data_acceptance: API может вернуть 400/412 при валидной по схеме дате (бизнес-правила);
-      #   коды 400/412 документированы в спецификации
-      # - negative_data_rejection: API принимает запросы с невалидными заголовками/параметрами
-      #   (например, x-schemathesis-unknown-property) — поведение nginx/балансировщика, не дефект спеки
-      EXCLUDE_CHECKS="positive_data_acceptance,unsupported_method,negative_data_rejection"
+      # positive_data_acceptance включён: валидные example должны давать 2XX
   
       echo "==> Running Schemathesis tests"
       echo "    Base URL: $SCHEMATHESIS_BASE_URL"
@@ -156,10 +151,10 @@ sdk-contract:
       echo "    Mode: $SCHEMATHESIS_MODE"
       echo "    Max examples: $SCHEMATHESIS_MAX_EXAMPLES"
       echo "    Workers: $SCHEMATHESIS_WORKERS"
-      echo "    Generation database: $SCHEMATHESIS_GENERATION_DATABASE"
       echo "    Request timeout: $SCHEMATHESIS_REQUEST_TIMEOUT"
       echo "    No shrink: $SCHEMATHESIS_NO_SHRINK"
       echo "    Repeat: $SCHEMATHESIS_REPEAT"
+      echo "    Seed: $SCHEMATHESIS_SEED"
       echo "    Include path regex: ${SCHEMATHESIS_INCLUDE_PATH_REGEX:-<none>}"
       echo "    Include method: ${SCHEMATHESIS_INCLUDE_METHOD:-<none>}"
       echo "    Include operationId: ${SCHEMATHESIS_INCLUDE_OPERATION_ID:-<none>}"
@@ -174,7 +169,8 @@ sdk-contract:
         --mode "$SCHEMATHESIS_MODE" \
         --workers "$SCHEMATHESIS_WORKERS" \
         --exclude-checks "$EXCLUDE_CHECKS" \
-        --generation-database "$SCHEMATHESIS_GENERATION_DATABASE" \
+        --generation-deterministic \
+        --seed "$SCHEMATHESIS_SEED" \
         --request-timeout "$SCHEMATHESIS_REQUEST_TIMEOUT"
 
       if [ "$SCHEMATHESIS_NO_SHRINK" = "1" ]; then
