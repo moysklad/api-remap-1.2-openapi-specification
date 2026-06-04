@@ -5,7 +5,7 @@
 
 # Push OpenApi Specification and tags to GitHub
 mirror-to-github:
-  image: docker.infra.lognex/docker-openapitools:1.2-release
+  extends: .openapitools-image
   stage: mirror
   before_script:
     - git config --global user.name "$GIT_USER"
@@ -45,6 +45,16 @@ mirror-to-github:
         echo "Removing README_LOCAL.md..."
         rm -f README_LOCAL.md
       fi      
+
+      if [ -f "README_OLD_JAVA_SDK.md" ]; then
+        echo "Removing README_OLD_JAVA_SDK.md..."
+        rm -f README_OLD_JAVA_SDK.md
+      fi   
+
+      if [ -f "how_to_known_namespace.png" ]; then
+        echo "Removing how_to_known_namespace.png..."
+        rm -f how_to_known_namespace.png
+      fi
       
       if [ -f "catalog-info.yaml" ]; then
         echo "Removing catalog-info.yaml..."
@@ -93,7 +103,9 @@ mirror-to-github:
       git push github --tags --no-verify || echo "No tags to push"
 
 create-github-release:
-  image: docker.infra.lognex/docker-openapitools:1.2-release
+  extends:
+    - .openapitools-image
+    - .npm-cache
   stage: mirror
   needs:
     - job: mirror-to-github

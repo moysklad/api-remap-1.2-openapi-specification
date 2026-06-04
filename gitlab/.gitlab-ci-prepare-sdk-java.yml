@@ -1,0 +1,190 @@
+# Prepare Java SDK repository on internal GitLab
+
+.prepare-sdk-java-base:
+  extends: .openapitools-image
+  stage: prepare-sdk-repository
+  before_script:
+    - git config --global user.name "$GIT_USER"
+    - git config --global user.email "$GIT_MAIL"
+
+prep-branch-and-mr-java:
+  extends: .prepare-sdk-java-base
+  needs:
+    - job: generate-sdk-java
+      artifacts: true
+    - job: sdk-golden-java
+    - job: sdk-smoke
+  rules:
+    # Автоматически при push в ветку (кроме master/release)
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH != "master" && $CI_COMMIT_BRANCH != "release" && $CI_COMMIT_TAG == null'
+      when: on_success
+    # В пайплайне, запущенном вручную на ветке (кроме master/release)
+    - if: '$CI_PIPELINE_SOURCE == "web" && $CI_COMMIT_BRANCH != "master" && $CI_COMMIT_BRANCH != "release" && $CI_COMMIT_TAG == null'
+      when: on_success
+    - when: never
+  script:
+    - |
+      if [ ! -d "clients/java" ]; then
+        echo "Directory clients/java not found. Nothing to sync."
+        exit 0
+      fi
+    - |
+      if [ -z "$CICD_PAT_JAVA" ]; then
+        echo "CICD_PAT_JAVA is not set. Cannot access internal Java SDK repository."
+        exit 1
+      fi
+
+    - SDK_REPO_URL="https://oauth2:${CICD_PAT_JAVA}@git.company.lognex/moysklad/misc/remap-1.2-java-sdk.git"
+    - BRANCH_NAME="${CI_COMMIT_REF_NAME}"
+
+    - echo "Cloning internal SDK repo ${SDK_REPO_URL}"
+    - git clone --depth=1 --filter=blob:none --single-branch --branch master "$SDK_REPO_URL" sdk-repo
+    - cd sdk-repo
+    - |
+      # Создаём/обновляем ветку для текущего ref
+      if git ls-remote --exit-code --heads origin "$BRANCH_NAME" >/dev/null 2>&1; then
+        echo "Branch $BRANCH_NAME exists in remote. Checking it out."
+        git fetch origin "$BRANCH_NAME":"refs/remotes/origin/$BRANCH_NAME"
+        git checkout -B "$BRANCH_NAME" "origin/$BRANCH_NAME"
+      else
+        echo "Branch $BRANCH_NAME does not exist. Creating from origin/master."
+        git checkout -B "$BRANCH_NAME" origin/master
+      fi
+    - |
+      # Копируем весь сгенерированный Java SDK (всё содержимое clients/java/*)
+      rsync -a --delete --exclude ".git" ../clients/java/ ./
+      if [ -f "../CHANGELOG.md" ]; then
+        cp ../CHANGELOG.md ./CHANGELOG.md
+      else
+        echo "CHANGELOG.md not found in spec repo; skipping copy."
+      fi
+    - |
+      git add -A
+      if git diff --staged --quiet; then
+        echo "No changes to commit in internal SDK repository. Skipping push and MR creation."
+        exit 0
+      fi
+
+    - git commit -m "$BRANCH_NAME Auto-generated Java SDK from OpenAPI specification"
+    - git push -u origin "$BRANCH_NAME"
+
+      # Создаём предварительный MR, если его ещё нет
+    - API_BASE="https://git.company.lognex/api/v4"
+    - PROJECT_ENCODED="moysklad%2Fmisc%2Fremap-1.2-java-sdk"
+
+    - echo "Checking existing OPEN merge requests for branch $BRANCH_NAME -> master"
+    - |
+      EXISTING_MR=$(curl -k -sS --header "PRIVATE-TOKEN: ${CICD_PAT_JAVA}" "${API_BASE}/projects/${PROJECT_ENCODED}/merge_requests?source_branch=${BRANCH_NAME}&target_branch=master&state=opened&per_page=1")
+
+    - |
+      if [ "$EXISTING_MR" != "[]" ]; then
+        echo "Open merge request already exists for branch $BRANCH_NAME. Skipping MR creation."
+        exit 0
+      fi
+
+    - echo "Creating draft merge request for branch $BRANCH_NAME -> master"
+    - MR_TITLE="${BRANCH_NAME} Auto-generated Java SDK from OpenAPI specification"
+    - |  
+      curl -k -sS --request POST \
+        --header "PRIVATE-TOKEN: ${CICD_PAT_JAVA}" \
+        --data-urlencode "source_branch=${BRANCH_NAME}" \
+        --data-urlencode "target_branch=master" \
+        --data-urlencode "title=Draft: ${MR_TITLE}" \
+        "${API_BASE}/projects/${PROJECT_ENCODED}/merge_requests" >/dev/null
+  artifacts:
+    paths:
+      - sdk-repo/
+    expire_in: 1 day
+
+merge-branch-java:
+  extends: .prepare-sdk-java-base
+  needs:
+    - job: generate-sdk-java
+      artifacts: true
+    - job: sdk-golden-java
+    - job: sdk-smoke
+    - job: version:auto
+      optional: true
+    - job: create-github-release
+      optional: true
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "master" && $CI_PIPELINE_SOURCE == "push"'
+      when: manual
+    - when: never
+  script:
+    - |
+      if [ ! -d "clients/java" ]; then
+        echo "Directory clients/java not found. Nothing to sync."
+        exit 0
+      fi
+    - |
+      if [ -z "$CICD_PAT_JAVA" ]; then
+        echo "CICD_PAT_JAVA is not set. Cannot access internal Java SDK repository."
+        exit 1
+      fi
+
+    # Используем отдельный клон репозитория спецификации,
+    # чтобы видеть состояние после job version:auto (новый коммит и тег)
+    - SPEC_REPO_URL="${CI_REPOSITORY_URL}"
+    - git clone "$SPEC_REPO_URL" spec-repo
+    - cd spec-repo
+
+    # Обновляем ветку и теги — сюда уже подтянуты изменения, сделанные в version:auto
+    - git fetch origin "$CI_COMMIT_REF_NAME" --tags
+    - git checkout "$CI_COMMIT_REF_NAME"
+
+    - TAG="$(git describe --tags --abbrev=0 2>/dev/null || echo "")"
+    - |
+      if [ -n "$TAG" ]; then
+        # Сообщение тэга берём напрямую из аннотированного тэга, созданного в version:auto
+        TAG_MESSAGE="$(git tag -l --format='%(contents)' "$TAG" || echo "")"
+      else
+        echo "No tag found in spec repo; will update SDK master without creating a tag."
+      fi
+
+    - cd ..
+
+    - SDK_REPO_URL="https://oauth2:${CICD_PAT_JAVA}@git.company.lognex/moysklad/misc/remap-1.2-java-sdk.git"
+
+    - echo "Cloning internal SDK repo ${SDK_REPO_URL}"
+    - git clone --depth=1 --filter=blob:none --single-branch --branch master "$SDK_REPO_URL" sdk-repo
+    - cd sdk-repo
+
+    - git checkout master
+
+    - rsync -a --delete --exclude ".git" ../clients/java/ ./
+    - |
+      if [ -f "../CHANGELOG.md" ]; then
+        cp ../CHANGELOG.md ./CHANGELOG.md
+      else
+        echo "CHANGELOG.md not found in spec repo; skipping copy."
+      fi
+
+    - git add -A
+    - |
+      if git diff --staged --quiet; then
+        echo "No changes to commit in internal SDK repository. Proceeding to tag (if any)."
+      else
+        git commit -m "Update Java SDK from OpenAPI specification for $TAG"
+        git push origin master
+      fi
+    - |
+      if [ -n "$TAG" ]; then
+        printf '%s' "$TAG" > java-release-tag.txt
+        echo "Saved release tag $TAG for downstream jobs."
+      else
+        echo "No release tag found in spec repo; downstream Maven deploy will fail if started."
+      fi
+    - |
+      if [ -n "$TAG" ]; then
+        echo "Creating tag $TAG in internal SDK repository"
+        if [ -z "$TAG_MESSAGE" ]; then
+          TAG_MESSAGE="Release $TAG"
+        fi
+        git tag -a "$TAG" -m "$TAG_MESSAGE" || echo "Tag $TAG already exists in SDK repo, skipping creation."
+        git push origin "$TAG" || echo "Failed to push tag $TAG (it may already exist)."
+      fi
+  artifacts:
+    paths:
+      - sdk-repo/
+    expire_in: 3 day

@@ -1,5 +1,16 @@
 type: object
 description: Неснижаемый остаток по складу
+x-entity-static-builder:
+  methodParams:
+    - "parentId"
+    - "id"
+  href:
+    - path: "entity"
+    - path: "product"
+    - param: "parentId"
+    - path: "storebalances"
+    - param: "id"
+  type: "minimumstock"
 properties:
   id:
     type: string
@@ -17,6 +28,6 @@ properties:
     $ref: '../../../openapi.yaml#/components/schemas/Store'
   quantity:
     type: number
-    format: float
+    format: double
     minimum: 0
     description: Количество неснижаемого остатка для склада

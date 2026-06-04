@@ -23,8 +23,10 @@ properties:
     description: ID учетной записи
     readOnly: true
   agent:
-    description: Метаданные контрагента
-    $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
+    description: Метаданные контрагента или юрлица
+    x-agent-reference: true
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Agent'
   agentAccount:
     description: Метаданные счета контрагента
     nullable: true
@@ -37,6 +39,7 @@ properties:
   attributes:
     type: array
     description: Коллекция метаданных доп. полей
+    nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
   code:
@@ -192,6 +195,7 @@ properties:
   payments:
     type: array
     description: Массив ссылок на связанные платежи
+    nullable: true
     items:
       anyOf:
         - $ref: '../../../openapi.yaml#/components/schemas/PaymentIn'

@@ -1,4 +1,12 @@
 type: object
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "service"
+    - param: "id"
+  type: "service"
 x-entitytype-service: true
 properties:
   meta:
@@ -83,6 +91,7 @@ properties:
   salePrices:
     type: array
     description: Цены продажи
+    nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/SalePrice'
   uom:
@@ -106,6 +115,7 @@ properties:
   barcodes:
     type: array
     description: Штрихкоды услуги
+    nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/Barcode'
   paymentItemType:
@@ -117,6 +127,7 @@ properties:
   attributes:
     type: array
     description: Дополнительные поля
+    nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
   minPrice:

@@ -1,5 +1,13 @@
 type: object
 description: Сотрудник
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "employee"
+    - param: "id"
+  type: "employee"
 properties:
   meta:
     $ref: '../common/meta.yaml'
@@ -115,5 +123,6 @@ properties:
   attributes:
     type: array
     description: Дополнительные поля
+    nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'

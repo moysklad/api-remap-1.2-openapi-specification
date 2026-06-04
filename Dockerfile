@@ -1,6 +1,5 @@
-# Локальная среда для проверки SDK pipeline (lint, bundle, generate, smoke, golden)
-# Поддерживаемые языки: php, python, java, javascript
-# В CI используется образ docker.infra.lognex/docker-openapitools
+# Локальная dev-среда для lint, bundle, generate, smoke, golden (docker compose).
+# CI использует отдельные образы — см. gitlab/common/ci-images.yml и ci/*.Dockerfile.
 FROM node:22-alpine
 
 # PHP: расширения для PHPUnit — dom, xmlwriter, ctype и др.
@@ -27,3 +26,9 @@ RUN npm install -g npm@10 && \
   npm i -g @openapitools/openapi-generator-cli@2.12.1
 
 WORKDIR /workspace
+
+# Локально docker compose запускает контейнер под UID/GID пользователя хоста.
+# Подготавливаем writable-директории для cache/volume paths, чтобы файлы в bind mount
+# не создавались от root.
+RUN mkdir -p /workspace/node_modules /tmp/.composer /tmp/.npm && \
+  chown -R 1000:1000 /workspace /tmp/.composer /tmp/.npm

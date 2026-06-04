@@ -17,6 +17,7 @@
 #   по умолчанию export'ятся из deploy-contract-env/create-contract-user
 
 include:
+  - local: 'gitlab/common/ci-images.yml'
   - local: 'gitlab/sdk/lint-openapi.yml'
   - local: 'gitlab/sdk/generate-sdk.yml'
   - local: 'gitlab/sdk/sdk-tests-golden.yml'

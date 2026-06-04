@@ -7,6 +7,7 @@ alwaysApply: false
 
 - When changing project structure, local development workflow, CI stages/jobs, release behavior, repositories, variables, or testing flow, update the relevant documentation in the same task.
 - Keep these documents aligned with the actual implementation:
+  - `README.md` for quick-start and high-level workflow
   - `README_LOCAL.md` for project structure and local workflow
   - `README_GITLAB_CI.md` for GitLab CI/CD pipeline behavior
   - `.cursor/PROJECT.md` for the agent-facing project overview

@@ -11,6 +11,7 @@ Modular OpenAPI 3.0.3 specification for MoySklad JSON API 1.2 with automated SDK
 | `github.com/moysklad/php-remap-1.2-sdk` | Public PHP SDK (pushed via `push-sdk-php` job) |
 | `github.com/moysklad/java-remap-1.2-sdk` | Public Java SDK repository (generated/tested from this spec) |
 | `git.company.lognex/moysklad/misc/php-remap-1.2-sdk` | Internal GitLab PHP SDK (managed by `prep-branch-and-mr-php` / `merge-branch-php`) |
+| `git.company.lognex/moysklad/misc/remap-1.2-java-sdk` | Internal GitLab Java SDK (managed by `prep-branch-and-mr-java` / `merge-branch-java`) |
 
 ## Tech Stack
 
@@ -18,6 +19,7 @@ Modular OpenAPI 3.0.3 specification for MoySklad JSON API 1.2 with automated SDK
 - **Linting:** Redocly CLI (`npm run validate`)
 - **Bundling:** Redocly CLI → `dist/openapi.yaml` / `dist/openapi.json`
 - **SDK generation:** OpenAPI Generator CLI (PHP + Java with custom templates in `customtemplates/php/` and `customtemplates/java/`)
+- **Custom schema helper generation:** `x-entity-static-builder` is consumed by both PHP and Java custom templates to generate `createWithMeta(...)` helpers on referenceable models with top-level `meta`
 - **Testing:** PHPUnit (PHP golden + smoke via openapi-mock), Maven Surefire (Java golden), Schemathesis (contract)
 - **Versioning:** `standard-version` + `oasdiff` (breaking change detection); tag format `MAJOR.MINOR.PATCH` (semver)
 - **Runtime:** Node.js v24.0.1, npm; Docker + Docker Compose for local reproducibility
@@ -43,6 +45,8 @@ gitlab/
   .gitlab-ci-sdk-validate.yml          # Includes lint, bundle, generate (php/java), golden, smoke, contract jobs
   .gitlab-ci-sdk-php-gen.yml           # push-sdk-php (to GitHub, PUSH_TO_REMOTE=true)
   .gitlab-ci-prepare-sdk-php.yml       # prep-branch-and-mr-php + merge-branch-php (internal GitLab SDK repo)
+  .gitlab-ci-prepare-sdk-java.yml      # prep-branch-and-mr-java + merge-branch-java (internal GitLab Java SDK repo)
+  .gitlab-ci-deploy-sdk-java.yml       # deploy-to-artifactory + deploy-to-maven (Java artifact publishing)
   .gitlab-ci-github-mirror.yml         # mirror-to-github + create-github-release
   version.gitlab-ci.yml                # version:auto (CHANGELOG, tag, push)
   .gitlab-ci-java-sdk.yml              # Legacy Java SDK (USE_OLD_SDK=true)
@@ -56,13 +60,14 @@ gitlab/
 src/openapi.yaml                       # Root spec file
 customtemplates/php/                   # Mustache templates for PHP SDK
 customtemplates/java/                  # Mustache templates for Java SDK
+tests/fixtures/                        # Shared golden fixtures for PHP and Java SDK assertions
 tests/php/                             # PHPUnit golden + smoke tests
 tests/java/assertions/                 # Maven golden tests for Java SDK
 java.Dockerfile                        # Java local test image (Maven + JDK)
 pom.xml                                # Root Maven config for Java golden tests
 clients/                               # Generated SDK output (gitignored)
 dist/                                  # Bundled spec output (gitignored)
-Makefile                               # Local build targets (lint, bundle, generate, test)
+Makefile                               # Local build targets (lint, bundle, light-bundle, generate, test)
 docker-compose.yml                     # Docker environment for local runs
 docker-compose.override.example.yml    # Optional external network for sdk (copy to docker-compose.override.yml)
 package.json                           # npm scripts: validate, bundle, generate-php, etc.
@@ -75,14 +80,15 @@ CHANGELOG.md                           # Auto-generated changelog (prepended by 
 | Stage | Key jobs | When |
 |-------|----------|------|
 | `changes-check` | `check-openapi-changes` | master push |
-| `verify` | `lint-openapi`, `bundle-openapi` on push / web / master; `deploy-contract-env`, `create-contract-user` on web only | push / web / master |
+| `verify` | `lint-openapi`, `bundle-openapi` on push / web / master; `bundle-smoke-openapi`, `deploy-contract-env`, `create-contract-user` on web only | push / web / master |
 | `contract-test` | `sdk-contract` | web |
 | `generate-sdk` | `generate-sdk-php`, `generate-sdk-java` (python/js remain stubs) | push / web / master |
 | `test` | `sdk-golden-php`, `sdk-golden-java`, `sdk-smoke` (php) | push / web / master |
 | `version` | `version:auto` | master push |
 | `push-sdk` | `push-sdk-php` | web + PUSH_TO_REMOTE=true |
 | `mirror` | `mirror-to-github`, `create-github-release` | master push |
-| `prepare-sdk-repository` | `prep-branch-and-mr-php`, `merge-branch-php` (manual) | push/web (branch) / master push |
+| `prepare-sdk-repository` | `prep-branch-and-mr-php`, `prep-branch-and-mr-java`, `merge-branch-php`, `merge-branch-java` | push/web (branch) / master push |
+| `deploy-sdk` | `deploy-to-artifactory`, `deploy-to-maven` | branch push/web (Artifactory) / master push (Maven Central) |
 
 Legacy stages (`prepare`, `deploy-for-space`, `create-user`, `build`, `delete-space`) exist for backward-compatible Java SDK pipeline (USE_OLD_SDK=true).
 
@@ -90,9 +96,9 @@ Legacy stages (`prepare`, `deploy-for-space`, `create-user`, `build`, `delete-sp
 
 ## Pipeline Scenarios (summary)
 
-1. **Push to branch** — lint, bundle, generate PHP+Java SDK, run golden (PHP+Java) and smoke (PHP), prep-branch-and-mr-php (internal GitLab SDK repo).
-2. **Manual (web) on branch** — same as push + contract test flow (`deploy-contract-env` → `create-contract-user` → `sdk-contract`, optional `remove-contract-env`) + optional `push-sdk-php` (PUSH_TO_REMOTE=true) + prep-branch-and-mr-php.
-3. **Master merge/push** — checks, SDK generation + tests, `version:auto` (CHANGELOG + tag), `mirror-to-github` + `create-github-release`, `merge-branch-php` (manual, pushes SDK + tag to internal GitLab repo). Contract tests and their environment setup are not included in master pipelines.
+1. **Push to branch** — lint, bundle, light-bundle, generate PHP+Java SDK, run golden (PHP+Java) and smoke (PHP), prep branch sync for both internal SDK repos, then publish a branch-scoped Java artifact to Artifactory.
+2. **Manual (web) on branch** — same as push + contract test flow (`deploy-contract-env` → `create-contract-user` → `sdk-contract`, optional `remove-contract-env`) + optional `push-sdk-php` (PUSH_TO_REMOTE=true) + the same PHP/Java internal SDK sync and Java Artifactory publish steps.
+3. **Master merge/push** — checks, SDK generation + tests, `version:auto` (CHANGELOG + tag), `mirror-to-github` + `create-github-release`, manual internal SDK release sync for PHP+Java, then Java publish to Maven Central. Contract tests and their environment setup are not included in master pipelines.
 
 ## Key CI Variables
 
@@ -102,10 +108,13 @@ Legacy stages (`prepare`, `deploy-for-space`, `create-user`, `build`, `delete-sp
 | `PUSH_TO_REMOTE` | Push SDK to GitHub remote repos (`"true"` / `"false"`, default `"false"`) |
 | `GIT_PASSWORD` | GitHub token (mirror, push-sdk, GitHub release) |
 | `CICD_PAT_PHP` | GitLab token for internal PHP SDK repo (`git.company.lognex/.../php-remap-1.2-sdk`) |
+| `CICD_PAT_JAVA` | GitLab token for internal Java SDK repo (`git.company.lognex/.../remap-1.2-java-sdk`) |
 | `GIT_USER` / `GIT_MAIL` | Git identity for CI commits |
 | `SCHEMATHESIS_HOST` / `_LOGIN` / `_PASSWORD` | Optional overrides for contract tests; by default exported by `deploy-contract-env` / `create-contract-user` in web pipelines |
 | `SCHEMATHESIS_WORKERS` | Schemathesis parallel workers inside `sdk-contract`; default **auto** |
 | `ENV_TTL_MINUTES` | DMS auto-clean delay after `env_prepare` (minutes); default **20** in `utils_python/client.py`; `deploy-contract-env` sets **60** for OpenAPI contract tests unless overridden — see `README_GITLAB_CI.md` |
+| `ARTIFACTORY_REPO_URL` | Target Artifactory repository for branch Java artifact deploys |
+| `CENTRAL_USER` / `CENTRAL_PASSWORD` / `GPG_SECRET_KEY` | Credentials and signing key for Java release publishing to Maven Central |
 
 ## Versioning
 
@@ -114,7 +123,7 @@ Legacy stages (`prepare`, `deploy-for-space`, `create-user`, `build`, `delete-sp
 - CHANGELOG block is generated from Conventional Commits (`feat`, `fix`, `docs`, `feat!`); if none found, `* технические изменения` is used.
 - Annotated tag message = CHANGELOG block for that version.
 - Release commit includes `[skip ci]` to avoid retriggering.
-- After `version:auto`, the pipeline SHA is stale; downstream jobs (e.g. `merge-branch-php`, `mirror-to-github`) must re-clone the repo and fetch tags to see the new commit/tag.
+- After `version:auto`, the pipeline SHA is stale; downstream jobs (e.g. `merge-branch-php`, `merge-branch-java`, `mirror-to-github`) must re-clone the repo and fetch tags to see the new commit/tag.
 
 ## Mock Server for Smoke Tests
 
@@ -122,7 +131,7 @@ Smoke tests use [muonsoft/openapi-mock](https://github.com/muonsoft/openapi-mock
 
 Key differences from Prism: openapi-mock serves endpoints under the `servers.url` base path (`/api/remap/1.2`), and returns HTTP 500 for deeply recursive schemas (`max recursion level reached`). Both behaviors are accounted for in test code.
 
-**Critical caveat:** openapi-mock loads `dist/openapi.yaml` **once on startup** and caches it in memory — it does **not** watch for file changes. After `make bundle` produces an updated `dist/openapi.yaml`, the mock container must be restarted (`docker compose restart mock`) before running smoke tests. Otherwise newly added endpoints return 404.
+**Critical caveat:** openapi-mock loads `dist/openapi.yaml` **once on startup** and caches it in memory — it does **not** watch for file changes. After `make light-bundle` produces an updated smoke bundle, the mock container must be restarted (`docker compose restart mock`) before running smoke tests. Otherwise newly added endpoints return 404.
 
 ## Local Development
 
@@ -130,10 +139,11 @@ Key differences from Prism: openapi-mock serves endpoints under the `servers.url
 - `npm run validate` / `npm run generate-php` / `npm run generate-java` / `npm run bundle` for quick local checks.
 - `docker compose run --rm sdk make <target>` for Docker-based runs (see `make help`).
 - Java golden tests locally: `docker compose run --rm java-sdk make test-golden-java` (or `make test-golden LANGUAGES=java`).
+- Golden fixtures live in `tests/fixtures/` and are shared by PHP and Java golden tests.
 - PHP tests require PHP 8.1+ with extensions: dom, json, mbstring, curl, Composer.
-- Smoke tests are run via `docker compose run --rm sdk make test-smoke`; `test-smoke-php` also exists as a PHP-only shortcut.
-- After `make bundle`, always `docker compose restart mock` before running smoke tests (see Mock Server section above).
-- After modifying any YAML schema, always `make generate-php` before running golden tests — the PHP SDK models are generated code and won't reflect new properties until regenerated.
+- After `make light-bundle`, always `docker compose restart mock` before running smoke tests (see Fast Smoke Bundle and Mock Server section above).
+- Smoke tests are run via `docker compose run --rm sdk make test-smoke`.
+- After modifying any YAML schema, regenerate both SDKs before golden tests: `make generate-php` and `make generate-java`.
 
 For detailed local setup and Docker usage see `README_LOCAL.md`.
 For detailed CI/CD pipeline docs see `README_GITLAB_CI.md`.

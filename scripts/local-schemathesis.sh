@@ -22,23 +22,11 @@ case "$SCHEMATHESIS_HOST" in
   *) SCHEMATHESIS_BASE_URL="${SCHEMATHESIS_HOST%/}/api/remap/1.2" ;;
 esac
 # Используем venv, чтобы не упираться в externally-managed-environment (PEP 668) в Docker/Alpine
-SCHEMATHESIS_VENV_DEFAULT="$ROOT_DIR/.venv-schemathesis"
-SCHEMATHESIS_VENV="${SCHEMATHESIS_VENV:-$SCHEMATHESIS_VENV_DEFAULT}"
-SCHEMATHESIS_VERSION_PIN="${SCHEMATHESIS_VERSION:-4.17.0}"
-if [ -e "$SCHEMATHESIS_VENV" ] && [ ! -w "$SCHEMATHESIS_VENV" ]; then
-  SCHEMATHESIS_VENV="/tmp/remap-api-specification-schemathesis-venv-$(id -u)"
-  echo "Existing Schemathesis venv is not writable; using $SCHEMATHESIS_VENV"
-fi
-
-INSTALLED_SCHEMATHESIS_VERSION=""
-if [ -x "$SCHEMATHESIS_VENV/bin/schemathesis" ]; then
-  INSTALLED_SCHEMATHESIS_VERSION=$("$SCHEMATHESIS_VENV/bin/schemathesis" --version 2>/dev/null | sed -n 's/^schemathesis, version //p')
-fi
-
-if [ ! -d "$SCHEMATHESIS_VENV" ] || [ ! -x "$SCHEMATHESIS_VENV/bin/schemathesis" ] || [ "$INSTALLED_SCHEMATHESIS_VERSION" != "$SCHEMATHESIS_VERSION_PIN" ]; then
+SCHEMATHESIS_VENV="${SCHEMATHESIS_VENV:-$ROOT_DIR/.venv-schemathesis}"
+if [ ! -d "$SCHEMATHESIS_VENV" ] || [ ! -x "$SCHEMATHESIS_VENV/bin/schemathesis" ]; then
   echo "Creating Schemathesis venv at $SCHEMATHESIS_VENV..."
-  python3 -m venv --clear "$SCHEMATHESIS_VENV"
-  "$SCHEMATHESIS_VENV/bin/pip" install -q "schemathesis==$SCHEMATHESIS_VERSION_PIN"
+  python3 -m venv "$SCHEMATHESIS_VENV"
+  "$SCHEMATHESIS_VENV/bin/pip" install -q "schemathesis==4.20.3"
 fi
 
 # Режимы тестирования:

@@ -29,7 +29,5 @@ post:
               oneOf:
                 - $ref: '../../../openapi.yaml#/components/schemas/DeleteInfo'
                 - $ref: '../../../openapi.yaml#/components/schemas/Error'
-            minItems: 1
-            maxItems: 1000
     default:
       $ref: '../../../components/responses.yaml#/CommonError'

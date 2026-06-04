@@ -1,5 +1,13 @@
 type: object
 description: Счет-фактура выданный (factureout)
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "factureout"
+    - param: "id"
+  type: "factureout"
 properties:
   meta:
     description: Метаданные Счета-фактуры выданного
@@ -15,14 +23,17 @@ properties:
     description: ID учетной записи
     readOnly: true
   agent:
-    description: Метаданные контрагента
-    $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
+    description: Метаданные контрагента или юрлица
+    x-agent-reference: true
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Agent'
   applicable:
     type: boolean
     description: Отметка о проведении
   attributes:
     type: array
     description: Коллекция метаданных доп. полей
+    nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
   code:
@@ -129,24 +140,28 @@ properties:
   demands:
     type: array
     description: Связанные отгрузки (метаданные)
+    nullable: true
     items:
-      $ref: '../common/meta.yaml'
+      $ref: '../../../openapi.yaml#/components/schemas/Demand'
   payments:
     type: array
+    nullable: true
     description: Связанные входящие платежи (метаданные)
     items:
-      $ref: '../common/meta.yaml'
+      $ref: '../../../openapi.yaml#/components/schemas/PaymentIn'
   returns:
     type: array
     description: Связанные возвраты поставщикам (метаданные)
+    nullable: true
     items:
-      $ref: '../common/meta.yaml'
+      $ref: '../../../openapi.yaml#/components/schemas/PurchaseReturn'
   consignee:
     description: Грузополучатель (контрагент или юрлицо)
     nullable: true
     type: object
+    x-agent-reference: true
     allOf:
-      - $ref: '../common/meta.yaml'
+      - $ref: '../../../openapi.yaml#/components/schemas/Agent'
   paymentNumber:
     type: string
     maxLength: 255

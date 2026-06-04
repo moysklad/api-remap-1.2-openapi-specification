@@ -35,6 +35,7 @@ class SerializationTest extends TestCase
         'counterparty_legal' => 'Counterparty',
         'counterparty_metadata' => 'CounterpartyMetadata',
         'counterparty_metadata_expanded' => 'CounterpartyMetadata',
+        'counterparty_metadata_minimum' => 'CounterpartyMetadata',
         'document_metadata' => 'DocumentMetadata',
         'document_metadata_expanded' => 'DocumentMetadata',
         'product_metadata' => 'Metadata',
@@ -42,30 +43,49 @@ class SerializationTest extends TestCase
         'counterparty_account' => 'Account',
         'counterparty_contactperson' => 'ContactPerson',
         'counterparty_note' => 'Note',
+        'event_note' => 'EventNote',
         'counterparty_file' => 'File',
         'currency' => 'Currency',
         'employee' => 'Employee',
         'employee_security' => 'EmployeeSecurity',
         'employee_role' => 'EmployeeRole',
         'group' => 'Group',
+        'entity_with_extra_field' => 'Group',
         'country' => 'Country',
+        'region' => 'Region',
+        'tax_rate' => 'TaxRate',
         'product_folder' => 'ProductFolder',
+        'processing_stage' => 'ProcessingStage',
+        'processing_process' => 'ProcessingProcess',
+        'processing_plan' => 'ProcessingPlan',
+        'processing_plan_expanded' => 'ProcessingPlan',
         'service' => 'Service',
         'uom' => 'Uom',
         'price_type' => 'PriceType',
+        'sale_platform' => 'SalePlatform',
         'store' => 'Store',
         'retail_store' => 'RetailStore',
         'cashier' => 'Cashier',
         'bundle' => 'Bundle',
         'bundle_component' => 'BundleComponent',
         'variant' => 'Variant',
+        'webhook' => 'Webhook',
+        'webhookstock' => 'WebhookStock',
         'thing' => 'Thing',
         'internal_order' => 'InternalOrder',
         'customer_order' => 'CustomerOrder',
+        'demand' => 'Demand',
         'purchase_order' => 'PurchaseOrder',
+        'emission_order' => 'EmissionOrder',
         'variantcharacteristic' => 'VariantCharacteristic',
         'contract' => 'Contract',
+        'task' => 'Task',
+        'sales_channel' => 'SalesChannel',
+        'project' => 'Project',
+        'consignment' => 'Consignment',
+        'expense_item' => 'ExpenseItem',
         'cash_in' => 'CashIn',
+        'retail_drawer_cash_in' => 'RetailDrawerCashIn',
         'cash_in_operation' => 'CashInOperation',
         'cash_out' => 'CashOut',
         'cash_out_operation' => 'CashOutOperation',
@@ -73,6 +93,8 @@ class SerializationTest extends TestCase
         'facture_out' => 'FactureOut',
         'company_settings' => 'CompanySettings',
         'company_settings_metadata' => 'CompanySettingsMetadata',
+        'user_settings' => 'UserSettings',
+        'subscription' => 'Subscription',
         'assortment_settings' => 'AssortmentSettings',
         'assortment' => 'Assortment',
         'discount' => 'Discount',
@@ -84,6 +106,9 @@ class SerializationTest extends TestCase
         'custom_entity' => 'CustomEntity',
         'custom_entity_element' => 'CustomEntityElement',
         'commission_report_in' => 'CommissionReportIn',
+        'processing_plan_folder' => 'ProcessingPlanFolder',
+        'organization' => 'Organization',
+        'organization_account' => 'Account',
     ];
 
     /**
@@ -103,7 +128,27 @@ class SerializationTest extends TestCase
         'tobacco',
         'salesAmount',
         'bonusPoints',
+        'extra_field'
     ];
+
+    /**
+     * Тест на конситентность существующих fixture-файлов и маппинга FIXTURE_MODEL_MAP .
+     */
+    public function testMappingAndFixtureConsistency(): void
+    {
+        $fixturesPath = $this->getFixturesPath();
+        $this->assertDirectoryExists($fixturesPath);
+
+        $files = glob($fixturesPath . DIRECTORY_SEPARATOR . '*.json') ?: [];
+        foreach ($files as $file) {
+            $base = basename($file, '.json');
+            $this->assertArrayHasKey(
+                $base,
+                self::FIXTURE_MODEL_MAP,
+                'Model mapping not found for ' . basename($file)
+            );
+        }
+    }
 
     /**
      * @dataProvider fixtureProvider
@@ -239,7 +284,7 @@ class SerializationTest extends TestCase
 
     /**
      * Нормализует данные для сравнения:
-     * - удаляет игнорируемые поля и поля со значением null (отсутствие ключа и null считаются эквивалентными);
+     * - удаляет игнорируемые поля;
      * - для attributes[].value приводит скаляр и объект/массив к одному виду;
      * - числа 1.0 и 1 приводятся к одному виду;
      * - пустые объекты и объекты только с meta считаются одинаковыми (нормализуются в []).
@@ -252,9 +297,6 @@ class SerializationTest extends TestCase
         foreach (self::IGNORED_FIELDS as $field) {
             unset($data[$field]);
         }
-
-        // Удаляем ключи со значением null (сравнение: отсутствие ключа = null)
-        $data = array_filter($data, static fn ($v) => $v !== null);
 
         foreach ($data as $key => $value) {
             if (is_array($value)) {
@@ -274,7 +316,7 @@ class SerializationTest extends TestCase
         }
 
         // Пустой объект или только meta — нормализуем в [] для совпадения с выводом SDK
-        if (self::isEmptyOrMetaOnly($data)) {
+        if ($data === []) {
             return [];
         }
 
@@ -305,18 +347,6 @@ class SerializationTest extends TestCase
             }
         }
         return $value;
-    }
-
-    /**
-     * Проверяет, что массив пустой или содержит только ключ 'meta'.
-     */
-    private static function isEmptyOrMetaOnly(array $data): bool
-    {
-        if ($data === []) {
-            return true;
-        }
-        $keys = array_keys($data);
-        return count($keys) === 1 && $keys[0] === 'meta';
     }
 
     /**

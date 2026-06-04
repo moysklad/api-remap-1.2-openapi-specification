@@ -1,5 +1,15 @@
 type: object
 description: Характеристики модификаций
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "variant"
+    - path: "metadata"
+    - path: "characteristics"
+    - param: "id"
+  type: "attributemetadata"
 properties:
   meta:
     description: Метаданные характеристики

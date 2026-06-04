@@ -1,0 +1,7 @@
+type: string
+description: Распределение накладных расходов между позициями Отгрузки. Известные значения поля overhead.distribution
+enum:
+  - weight
+  - volume
+  - price
+example: "weight"

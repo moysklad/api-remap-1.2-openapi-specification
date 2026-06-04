@@ -40,9 +40,10 @@ Follow this order. Read [reference.md](reference.md) for templates and edge-case
    For mass delete endpoints (`/entity/<keyword>/delete` and `/entity/<keyword>/{id}/positions/delete`), prefer arrays of `EntityRef` when the MD says the request body contains JSON metadata / meta-objects to delete; do not point delete request bodies at the full entity schema unless the MD explicitly requires the full payload.
 7. **Register in `src/openapi.yaml`** — paths, `components.schemas`, and tags in the local style used nearby.
 8. **Plan Schemathesis checks** — default contract tests run only `examples`; add OpenAPI examples only with explicit user confirmation, and document the manual targeted coverage command for the changed entity (see "Schemathesis examples and targeted coverage" below).
-9. **Add test data** — create a rich `tests/php/fixtures/<snake_case>.json`, add `FIXTURE_MODEL_MAP`, and update `IGNORED_FIELDS` only when required.
+9. **Add test data** — create a rich shared fixture in `tests/fixtures/<snake_case>.json`, register it in both PHP and Java `FIXTURE_MODEL_MAP`, and update `IGNORED_FIELDS` only when required.
 10. **Add smoke coverage** — one test method per endpoint+method from the endpoint matrix.
 11. **Cross-check** — re-read the MD and verify fields, endpoints, refs, nullable values, enums, fixtures, smoke tests, examples added with confirmation, and `x-entity-static-builder` presence on every schema with `meta`.
+    If the entity introduces query parameters beyond the common set (`limit`, `offset`, `search`, `filter`, `expand`, `order`, `fields`), decide whether `customtemplates/java/*Options.mustache` needs a typed helper or whether raw `RequestOptions.queryParam(...)` is enough.
 12. **Verify** — run the Docker make sequence below. If the entity was added or materially changed, also run targeted Schemathesis `coverage` for its paths (locally or GitLab `web` pipeline with `SCHEMATHESIS_PHASES=coverage` and `SCHEMATHESIS_INCLUDE_PATH_REGEX`; CI defaults to `examples` only).
 13. **Report** — mention any stubs created or left unexpanded, intentionally skipped MD fields, example decisions, targeted coverage command (and whether it was run), and checks run.
 
@@ -53,12 +54,24 @@ Before creating paths, produce and keep an internal matrix like this:
 | MD section | API path | HTTP | Path file | Smoke test |
 |------------|----------|------|-----------|------------|
 | `### Получить ...` | `/entity/<keyword>` | GET | `<entities>.yaml` | `testList<PascalPlural>` |
-| `### Создать ...` | `/entity/<keyword>` | POST | `<entities>.yaml` | `testCreate<PascalSingular>` |
+| `### Создать ...` (одна сущность) | `/entity/<keyword>` | POST | `<entities>.yaml` | `testCreate<PascalSingular>` |
+| `### Массовое создание и обновление ...` | `/entity/<keyword>/batch` | POST | `<entities>-batch.yaml` | `testCreate<PascalPlural>Batch` |
 | `### Получить ... по ID` | `/entity/<keyword>/{id}` | GET | `<entity>-by-id.yaml` | `testGet<PascalSingular>ById` |
 | `### Изменить ...` | `/entity/<keyword>/{id}` | PUT | `<entity>-by-id.yaml` | `testUpdate<PascalSingular>` |
 | `### Удалить ...` | `/entity/<keyword>/{id}` | DELETE | `<entity>-by-id.yaml` | `testDelete<PascalSingular>` |
 
 Add rows for batch, metadata, attributes, states, positions, files/images, accounts, notes, storebalances, or other MD-specific endpoint groups. Detailed extraction and classification rules are in [reference.md](reference.md).
+
+## Bulk create/update endpoint rule (top-level entities)
+
+For every top-level entity (dictionary or document) keep two separate endpoints:
+
+- `POST /entity/<keyword>` — **single object only**. Request body must be a single `<Entity>` schema; response is a single `<Entity>`. Do not allow array requests, do not use `oneOf: [object, array]`.
+- `POST /entity/<keyword>/batch` — **mass create/update**. Request body is an array of `<Entity>` with `minItems: 1` and `maxItems: 1000`; response is an array of `oneOf: [<Entity>, Error]` (per-item result) **without** `minItems`/`maxItems` on the response schema.
+
+This applies even when the MD `### Массовое создание и обновление ...` section uses the same example URL as create. The MD groups operations by behavior, not by URL — Remap exposes them as separate paths (`/batch` for arrays).
+
+Exception — **document positions**: the existing peer pattern is a single `POST /entity/<keyword>/{id}/positions` with `oneOf: [<Position>, array of <Position>]` (no `/positions/batch`). Keep that pattern for new document position endpoints unless the source MD explicitly defines a separate positions batch URL.
 
 ## Missing dependency entities
 
@@ -85,11 +98,14 @@ Before verification, re-read the MD and confirm:
 
 - Every `#### Атрибуты сущности` row has a schema property, unless explicitly skipped and reported.
 - `+Только для чтения`, nullable values, enum/open string choices, `String(N)`, and money/weight numeric formats are represented correctly.
+- `+Обязательное при ответе` is treated as informational only and never converted to `readOnly: true` unless the same field also has `+Только для чтения`.
 - Nested object structures match MD JSON examples exactly.
 - Every API operation section maps to a path + method and a smoke test.
 - For every new `/entity/<keyword>` or non-entity API path, report the manual `SCHEMATHESIS_INCLUDE_PATH_REGEX` to use if targeted coverage is needed.
 - Batch delete request bodies use `EntityRef[]` when the MD describes deletion by metadata / meta-objects; the same default applies to `positions-delete` unless the MD shows a richer payload.
 - Metadata attributes and `metadata/states/{id}` exist when the MD metadata section requires them.
+- Non-standard query parameters are either intentionally left as raw `RequestOptions.queryParam(...)` values or covered by a typed Java options helper.
+- Metadata attributes, `metadata/states`, and `metadata/states/{id}` exist when the MD metadata section requires them.
 - Every schema with a top-level `meta` field carries `x-entity-static-builder` (entity → keyword + `id`; position → `parentId` + `id` + `<keyword>position` type).
 - The fixture uses the richest single-entity GET response, not a minimal create request.
 
@@ -137,7 +153,7 @@ make schemathesis
 
 ## Static builder extension (`x-entity-static-builder`)
 
-Custom OpenAPI vendor extension consumed by `customtemplates/php/model_entity_static_builder.mustache` to generate a static `createWithMeta(...)` helper on PHP SDK models. Required on **every** schema that has a top-level `meta`, including stubs.
+Custom OpenAPI vendor extension consumed by `customtemplates/php/model_entity_static_builder.mustache` and `customtemplates/java/model_entity_static_builder.mustache` to generate a static `createWithMeta(...)` helper on PHP and Java SDK models. Required on **every** schema that has a top-level `meta`, including stubs.
 
 Conventions for this project:
 
@@ -146,7 +162,7 @@ Conventions for this project:
 | Entity (dictionary or document) | `["id"]` | `path: "entity"` → `path: "<keyword>"` → `param: "id"` | `"<keyword>"` |
 | Position (document) | `["parentId", "id"]` | `path: "entity"` → `path: "<keyword>"` → `param: "parentId"` → `path: "positions"` → `param: "id"` | `"<keyword>position"` |
 
-`<keyword>` is the lowercase URL keyword from MD (matches `meta.type` returned by the API). Place the block at the top of the schema, between `description` and `properties`. Detailed template and rules are in [reference.md](reference.md); peer references: `src/components/schemas/dictionary/customerOrder.yaml`, `src/components/schemas/dictionary/customerOrderPosition.yaml`. Background documentation lives in `src/custom-extension-readme.md` and `customtemplates/php/readme.md`.
+`<keyword>` is the lowercase URL keyword from MD (matches `meta.type` returned by the API). Place the block at the top of the schema, between `description` and `properties`. Detailed template and rules are in [reference.md](reference.md); peer references: `src/components/schemas/dictionary/customerOrder.yaml`, `src/components/schemas/dictionary/customerOrderPosition.yaml`. Background documentation lives in `src/custom-extension-readme.md`, `customtemplates/php/readme.md`, and `customtemplates/java/readme.md`.
 
 ## Enum fields and SDK compatibility
 
@@ -168,12 +184,15 @@ Use Docker make targets for verification. Do not use `npm run` directly for the 
 docker compose run --rm sdk make lint           # Redocly lint
 docker compose run --rm sdk make bundle         # produces dist/openapi.yaml + dist/openapi.json
 docker compose run --rm sdk make generate-php   # generates PHP SDK in clients/php/
-docker compose restart mock                     # CRITICAL: reload bundled spec in mock server
+docker compose run --rm sdk make generate-java  # generates Java SDK in clients/java/
 docker compose run --rm sdk make test-golden-php
+docker compose run --rm java-sdk make test-golden-java
+docker compose run --rm sdk make light-bundle    # produces filtered dist/openapi.yaml for fast smoke
+docker compose restart mock                     # CRITICAL: reload smoke bundle in mock server
 docker compose run --rm sdk make test-smoke
 ```
 
-`test-smoke` is the canonical local smoke target. `test-smoke-php` exists as a PHP-only shortcut, but prefer the generic target unless the user asks for a narrower check.
+`test-smoke` is the canonical local smoke target.
 
 ## Naming conventions
 

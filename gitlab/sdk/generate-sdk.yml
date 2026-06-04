@@ -1,7 +1,9 @@
 # Сборка bundled OpenAPI спецификации (нужна для smoke тестов и schemathesis)
 bundle-openapi:
+  extends:
+    - .openapitools-image
+    - .npm-cache
   stage: verify
-  image: docker.infra.lognex/docker-openapitools:1.2-release
   needs:
     - job: lint-openapi
       optional: true
@@ -14,19 +16,29 @@ bundle-openapi:
       - dist/
     expire_in: 2 hours
 
+bundle-smoke-openapi:
+  stage: verify
+  image: docker.infra.lognex/docker-openapitools:1.2-release
+  needs:
+    - job: lint-openapi
+      optional: true
+  script:
+    - npm ci
+    - npm run light-bundle
+  artifacts:
+    paths:
+      - dist/
+    expire_in: 2 hours
+
 # Базовый шаблон для генерации SDK
 .generate-sdk-base:
+  extends:
+    - .openapitools-image
+    - .npm-cache
   stage: generate-sdk
-  image: docker.infra.lognex/docker-openapitools:1.2-release
   needs:
     - job: bundle-openapi
       artifacts: true
-  cache:
-    key:
-      files:
-        - package-lock.json
-    paths:
-      - /root/.npm/
   artifacts:
     paths:
       - clients/

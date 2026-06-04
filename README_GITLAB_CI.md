@@ -15,13 +15,13 @@
 | Job                      | Описание                                                                 |
 |--------------------------|--------------------------------------------------------------------------|
 | `lint-openapi`           | Проверка OpenAPI спецификации с помощью Redocly                          |
-| `bundle-openapi`         | Сборка bundled версии спецификации                                       |
+| `bundle-openapi`         | Сборка полной bundled версии спецификации для SDK/docs/contract          |
+| `bundle-smoke-openapi`   | Сборка облегчённой bundled версии спецификации для быстрых smoke-тестов  |
 | `generate-sdk-php`       | Генерация PHP SDK                                                        |
 | `generate-sdk-java`      | Генерация Java SDK (заглушка)                                            |
 | `sdk-golden-php`         | Golden тесты для PHP (сериализация/десериализация)                       |
-| `sdk-smoke-php`          | Smoke тесты для PHP с openapi-mock сервером                              |
-| `sdk-golden-java`        | Golden тесты для Java (заглушка)                                         |
-| `sdk-smoke-java`         | Smoke тесты для Java (заглушка)                                          |
+| `sdk-golden-java`        | Golden тесты для Java                                                    |
+| `sdk-smoke`              | Smoke тесты для PHP с openapi-mock сервером                              |
 | `prep-branch-and-mr-php` | Cоздание/обновление ветки и mr по сгенерированному sdk в репозитории sdk |
 
 #### 2. Ручной запуск (web) на ветке
@@ -30,9 +30,11 @@
 
 | Job                               | Описание                                                                 |
 |-----------------------------------|--------------------------------------------------------------------------|
-| `lint-openapi` / `bundle-openapi` | Проверка и сборка спецификации                                           |
+| `lint-openapi` / `bundle-openapi` | Проверка и сборка полной спецификации                                    |
+| `bundle-smoke-openapi`            | Сборка облегчённой спецификации для smoke-тестов                         |
 | `generate-sdk-*`                  | Генерация SDK                                                            |
-| `sdk-golden-*` / `sdk-smoke-*`    | Golden и smoke тесты SDK                                                 |
+| `sdk-golden-*`                    | Golden тесты SDK                                                         |
+| `sdk-smoke`                       | Smoke тесты SDK                                                          |
 | `deploy-contract-env`             | Подготовка окружения для schemathesis (ветка **stable** сервиса)         |
 | `create-contract-user`            | Создание пользователя для contract‑тестов, экспорт кредов                |
 | `sdk-contract`                    | Schemathesis контрактные тесты (стадия `contract-test`)                  |
@@ -47,14 +49,20 @@
 |-------------------------|---------------------------------------------------------------------------------------------------|
 | `check-openapi-changes` | Проверка изменений OpenAPI относительно последнего тега в текущем репо                            |
 | `lint-openapi`          | Проверка спецификации                                                                             |
-| `bundle-openapi`        | Сборка bundled версии                                                                             |
+| `bundle-openapi`        | Сборка полной bundled версии для SDK/docs/contract                                                 |
+| `bundle-smoke-openapi`  | Сборка облегчённой bundled версии для smoke-тестов                                                 |
 | `generate-sdk-*`        | Генерация SDK                                                                                     |
 | `sdk-golden-*`          | Golden тесты                                                                                      |
-| `sdk-smoke-*`           | Smoke тесты                                                                                       |
+| `sdk-smoke`             | Smoke тесты                                                                                       |
 | `version:auto`          | Автоматическое версионирование и выпуск тега                                                      |
 | `mirror-to-github`      | Зеркалирование в GitHub без internal CI/release tooling (`gitlab`, `.gitlab-ci.yml`, CI README, `.versionrc.json`, `scripts/generate-diff-changelog.js` и др.) |
 | `create-github-release` | Создание GitHub Release на основе CHANGELOG                                                       |
 | `merge-branch-php`      | Обновление ветки master на удаленном gitlab sdk репозитории по сгенерированному sdk и выпуск тэга |
+| `merge-branch-java`     | Обновление master во внутреннем Java SDK репозитории и сохранение релизного semver-тега           |
+| `deploy-to-maven`       | Публикация Java SDK в Maven Central                                                               |
+| `deploy-to-artifactory` | Публикация Java SDK в Artyfactory                                                                 |
+
+Java release jobs (`deploy-to-artifactory`, `deploy-to-maven`) описаны в `gitlab/.gitlab-ci-deploy-sdk-java.yml` и выполняются на стадии `deploy-sdk`.
 
 ---
 
@@ -174,13 +182,14 @@ SCHEMATHESIS_INCLUDE_OPERATION_ID=createProduct
 | Стадия                   | Описание                                                                                                                           |
 |--------------------------|------------------------------------------------------------------------------------------------------------------------------------|
 | `changes-check`          | Проверка изменений OpenAPI в `src/` относительно последнего тега (теги из текущего репо)                                           |
-| `verify`                 | Проверка спецификации, bundling; в ручном pipeline `web` сюда также входят `deploy-contract-env` и `create-contract-user` |
+| `verify`                 | Проверка спецификации, полный bundling, отдельный smoke bundling; в ручном pipeline `web` сюда также входят `deploy-contract-env` и `create-contract-user` |
 | `contract-test`          | Контрактные тесты Schemathesis (`sdk-contract`) — только в ручном pipeline `web`, после verify, до generate-sdk                    |
 | `generate-sdk`           | Генерация SDK                                                                                                                      |
 | `test`                   | Тестирование (golden, smoke)                                                                                                       |
 | `version`                | Автоматическое версионирование и подготовка CHANGELOG/тегов                                                                        |
 | `mirror`                 | Зеркалирование в GitHub и GitHub Release                                                                                           |
-| `prepare-sdk-repository` | Подготовка внутреннего репозитория PHP SDK (ветки и релиз мастер‑ветки по текущим изменениям)                                      |
+| `prepare-sdk-repository` | Подготовка внутренних репозиториев SDK (PHP/Java: ветки и релиз master по текущим изменениям)                                      |
+| `deploy-sdk`             | Публикация Java SDK артефактов (`deploy-to-artifactory`, `deploy-to-maven`)                                                        |
 
 ### Стадии для обратной совместимости (старый Java SDK)
 

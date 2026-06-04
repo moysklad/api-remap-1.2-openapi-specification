@@ -1,7 +1,19 @@
 type: object
 description: Статус
+x-entity-static-builder:
+  methodParams:
+    - "entityType"
+    - "id"
+  href:
+    - path: "entity"
+    - param: "entityType"
+    - path: "metadata"
+    - path: "states"
+    - param: "id"
+  type: "state"
 properties:
   meta:
+    description: Метаданные Статуса
     $ref: '../common/meta.yaml'
   id:
     type: string
@@ -22,6 +34,7 @@ properties:
     description: Цвет Статуса
   entityType:
     type: string
+    maxLength: 255
     description: Тип сущности, к которой относится Статус (ключевое слово в рамках JSON API)
     readOnly: true
   stateType:

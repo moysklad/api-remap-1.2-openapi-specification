@@ -1,32 +1,16 @@
-# Базовый шаблон для smoke тестов (для языков с отдельным mock-сервисом openapi-mock)
-.sdk-smoke-base:
-  stage: test
-  services:
-    - name: muonsoft/openapi-mock:latest
-      alias: mock
-      variables:
-        OPENAPI_MOCK_SPECIFICATION_URL: /builds/$CI_PROJECT_PATH/dist/openapi.yaml
-  variables:
-    SMOKE_BASE_URL: http://mock:8080
-
-# PHP Smoke тесты: openapi-mock запускается в том же контейнере
+# Smoke тесты: openapi-mock запускается в том же контейнере
 # (GitLab CI service не имеет доступа к артефакту dist/openapi.yaml)
-sdk-smoke-php:
+sdk-smoke:
+  extends: .php-test-base
   stage: test
-  image: php:8.2-cli
   needs:
-    - job: bundle-openapi
-      artifacts: true
-    - job: generate-sdk-php
+    - job: bundle-smoke-openapi
       artifacts: true
   rules:
     - if: '$SDK_LANGUAGES == "" || $SDK_LANGUAGES =~ /php/'
       when: on_success
   variables:
     SMOKE_BASE_URL: http://localhost:8080
-  before_script:
-    - apt-get update && apt-get install -y git unzip curl
-    - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
   script:
     - |
       set -e
@@ -35,25 +19,10 @@ sdk-smoke-php:
         exit 1
       fi
 
-      # Install openapi-mock (Go binary, no Node required)
-      MOCK_VERSION="0.3.9"
-      ARCH=$(uname -m)
-      case "$ARCH" in
-        x86_64)  MOCK_ARCH="amd64" ;;
-        aarch64) MOCK_ARCH="arm64" ;;
-        *)       MOCK_ARCH="$ARCH" ;;
-      esac
-      MOCK_URL="https://github.com/muonsoft/openapi-mock/releases/download/v${MOCK_VERSION}/openapi-mock-v${MOCK_VERSION}-linux-${MOCK_ARCH}.tar.gz"
-      echo "Downloading openapi-mock from ${MOCK_URL}..."
-      curl -fsSL "$MOCK_URL" | tar -xz -C /usr/local/bin openapi-mock || {
-        echo "ERROR: Failed to download openapi-mock binary from ${MOCK_URL}"
-        exit 1
-      }
-      chmod +x /usr/local/bin/openapi-mock
-
       echo "Starting openapi-mock server on port 8080..."
       MOCK_LOG=$(mktemp)
       OPENAPI_MOCK_SPECIFICATION_URL=dist/openapi.yaml \
+      OPENAPI_MOCK_RESPONSE_TIMEOUT=30 \
         nohup openapi-mock serve >"$MOCK_LOG" 2>&1 &
       MOCK_PID=$!
       disown $MOCK_PID 2>/dev/null || true
@@ -93,69 +62,3 @@ sdk-smoke-php:
         echo "WARNING: tests/php directory not found"
         exit 1
       fi
-
-# Python Smoke тесты с openapi-mock (заглушка)
-#sdk-smoke-python:
-#  extends: .sdk-smoke-base
-#  image: python:3.11
-#  needs:
-#    - job: bundle-openapi
-#      artifacts: true
-#    - job: generate-sdk-python
-#      artifacts: true
-#      optional: true
-#  rules:
-#    - if: '$SDK_LANGUAGES =~ /python/'
-#      when: on_success
-#  script:
-#    - |
-#      if [ -d "tests/python" ] && [ -f "tests/python/requirements.txt" ]; then
-#        cd tests/python
-#        pip install -r requirements.txt
-#        pytest smoke/ -v
-#      else
-#        echo "WARNING: tests/python directory not configured, skipping Python smoke tests"
-#        echo "Create tests/python directory with pytest tests to enable"
-#        exit 1
-#      fi
-
-sdk-smoke-java:
-  extends: .sdk-smoke-base
-  image: maven:3.9-eclipse-temurin-17
-  needs:
-    - job: bundle-openapi
-      artifacts: true
-    - job: generate-sdk-java
-      artifacts: true
-      optional: true
-  rules:
-    - if: '$SDK_LANGUAGES == "" || $SDK_LANGUAGES =~ /java/'
-      when: on_success
-  script:
-    - |
-      echo "Java smoke tests placeholder. No real Java tests configured yet."
-
-# JavaScript Smoke тесты с openapi-mock (заглушка)
-#sdk-smoke-javascript:
-#  extends: .sdk-smoke-base
-#  image: node:20
-#  needs:
-#    - job: bundle-openapi
-#      artifacts: true
-#    - job: generate-sdk-javascript
-#      artifacts: true
-#      optional: true
-#  rules:
-#    - if: '$SDK_LANGUAGES =~ /javascript/'
-#      when: on_success
-#  script:
-#    - |
-#      if [ -d "tests/javascript" ] && [ -f "tests/javascript/package.json" ]; then
-#        cd tests/javascript
-#        npm ci
-#        npm run test:smoke
-#      else
-#        echo "WARNING: tests/javascript directory not configured, skipping JavaScript smoke tests"
-#        echo "Create tests/javascript directory with npm project to enable"
-#        exit 1
-#      fi

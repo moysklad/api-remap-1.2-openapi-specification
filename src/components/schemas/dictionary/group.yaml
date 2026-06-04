@@ -1,5 +1,13 @@
 type: object
 description: Группа/отдел
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "group"
+    - param: "id"
+  type: "group"
 properties:
   meta:
     $ref: '../common/meta.yaml'

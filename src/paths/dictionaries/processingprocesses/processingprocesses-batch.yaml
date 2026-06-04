@@ -1,0 +1,34 @@
+post:
+  operationId: createProcessingProcessesBatch
+  tags:
+    - ProcessingProcesses
+  summary: Создать или изменить Техпроцессы
+  description: Создание или изменение нескольких Техпроцессов.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            $ref: '../../../openapi.yaml#/components/schemas/ProcessingProcess'
+          minItems: 1
+          maxItems: 1000
+  responses:
+    '200':
+      description: Техпроцессы созданы или изменены (элемент - сущность или объект ошибки)
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              oneOf:
+                - $ref: '../../../openapi.yaml#/components/schemas/ProcessingProcess'
+                - $ref: '../../../openapi.yaml#/components/schemas/Error'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

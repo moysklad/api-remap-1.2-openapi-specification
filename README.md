@@ -1,6 +1,6 @@
 # МойСклад OpenAPI Спецификация
 
-Модульная OpenAPI 3.0.3 спецификация для МойСклад JSON API 1.2
+Модульная OpenAPI 3.0.3 спецификация для МойСклад JSON API 1.2 
 
 ## Быстрый старт
 
@@ -48,9 +48,12 @@ npm run generate-php
 docker compose run --rm sdk make help          # список целей
 docker compose run --rm sdk make lint         # проверка OpenAPI
 docker compose run --rm sdk make bundle       # сборка dist/openapi.yaml
+docker compose run --rm sdk make light-bundle  # сборка dist/openapi.yaml для быстрых smoke-тестов
 docker compose run --rm sdk make generate-php # генерация PHP SDK
+docker compose run --rm sdk make generate-java # генерация Java SDK
 docker compose run --rm sdk make test-golden-php  # golden-тесты
-docker compose run --rm sdk make test-smoke-php  # smoke-тесты (openapi-mock поднимается автоматически)
+docker compose run --rm java-sdk make test-golden-java  # golden-тесты
+docker compose run --rm sdk make test-smoke  # smoke-тесты (openapi-mock поднимается автоматически)
 docker compose run --rm -e SCHEMATHESIS_HOST=host -e SCHEMATHESIS_LOGIN=login -e SCHEMATHESIS_PASSWORD=pass sdk make schemathesis # schemathesis-тесты на реальном окружении
 docker compose run --rm sdk make all          # lint + bundle + generate-php + test-golden + test-smoke
 ```
@@ -66,9 +69,10 @@ docker compose run --rm sdk make all          # lint + bundle + generate-php + t
 make help
 make lint
 make bundle
+make light-bundle
 make generate-php
 make test-golden-php   # из корня репо; в tests/php нужен composer install
-make test-smoke-php    # нужен запущенный openapi-mock (например на http://localhost:8080)
+make test-smoke    # нужен запущенный openapi-mock (например на http://localhost:8080)
 make schemathesis # в скрипте нужно также задать переменные SCHEMATHESIS_HOST, SCHEMATHESIS_LOGIN, SCHEMATHESIS_PASSWORD
 ```
 

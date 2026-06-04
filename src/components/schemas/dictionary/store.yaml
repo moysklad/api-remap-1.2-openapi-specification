@@ -1,5 +1,13 @@
 type: object
 description: Склад
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "store"
+    - param: "id"
+  type: "store"
 properties:
   meta:
     description: Метаданные Склада
@@ -74,6 +82,7 @@ properties:
   attributes:
     type: array
     description: Дополнительные поля
+    nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
   zones:

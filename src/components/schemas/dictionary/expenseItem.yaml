@@ -1,11 +1,44 @@
 type: object
-description: Статья расхода
+description: Статья расходов
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "expenseitem"
+    - param: "id"
+  type: "expenseitem"
 properties:
   meta:
-    description: Метаданные статьи расхода
+    description: Метаданные Статьи расходов
     $ref: '../common/meta.yaml'
   id:
     type: string
     format: uuid
-    description: ID статьи расхода
+    description: ID Статьи расходов
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  code:
+    type: string
+    maxLength: 255
+    description: Код Статьи расходов
+  description:
+    type: string
+    maxLength: 4096
+    description: Описание Статьи расходов
+  externalCode:
+    type: string
+    maxLength: 255
+    description: Внешний код Статьи расходов
+  name:
+    type: string
+    maxLength: 255
+    description: Наименование Статьи расходов
+  updated:
+    type: string
+    description: Момент последнего обновления сущности
     readOnly: true

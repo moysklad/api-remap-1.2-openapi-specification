@@ -1,0 +1,93 @@
+# Deploy Java SDK on Maven/Artifactory
+
+variables:
+  MAVEN_CLI_OPTS: "--batch-mode"
+
+.deploy-sdk-java-base:
+  extends: .maven-3.4-image
+  stage: deploy-sdk
+  before_script:
+    - git config --global user.name "$GIT_USER"
+    - git config --global user.email "$GIT_MAIL"
+
+deploy-to-artifactory:
+  extends: .deploy-sdk-java-base
+  needs:
+    - job: prep-branch-and-mr-java
+      artifacts: true
+  rules:
+    # Автоматически при push в ветку (кроме master/release)
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH != "master" && $CI_COMMIT_BRANCH != "release" && $CI_COMMIT_TAG == null'
+      when: on_success
+    # В пайплайне, запущенном вручную на ветке (кроме master/release)
+    - if: '$CI_PIPELINE_SOURCE == "web" && $CI_COMMIT_BRANCH != "master" && $CI_COMMIT_BRANCH != "release" && $CI_COMMIT_TAG == null'
+      when: on_success
+    - when: never
+  before_script:
+    - rm -f /etc/apt/sources.list.d/*pgdg*.list || true
+    - cd sdk-repo
+    - export TZ='Europe/Moscow'
+  script:
+    - ARTEFACT_VERSION="${CI_COMMIT_REF_NAME}-${CI_PIPELINE_ID}"
+    - mvn versions:set -DnewVersion=$ARTEFACT_VERSION -DgenerateBackupPoms=false;
+    - mvn $MAVEN_CLI_OPTS -Ppublishing-artifactory clean deploy -DartifactoryRepo=${ARTIFACTORY_REPO_URL};
+    - echo "Complete. Version $ARTEFACT_VERSION"
+
+deploy-to-maven:
+  extends: .deploy-sdk-java-base
+  needs:
+    - job: merge-branch-java
+      artifacts: true
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "master" && $CI_PIPELINE_SOURCE == "push"'
+      when: on_success
+  before_script:
+    - rm -f /etc/apt/sources.list.d/*pgdg*.list || true
+    - echo "$GPG_SECRET_KEY" | gpg --import
+    - |
+      if [ ! -d "sdk-repo" ]; then
+        echo "Release artifact expired. Restore release artefact..."
+
+        if [ -z "$CICD_PAT_JAVA" ]; then
+          echo "CICD_PAT_JAVA is not set. Cannot access internal Java SDK repository."
+          exit 1
+        fi
+      
+        echo "Getting tag from spec repo."
+        git clone "${CI_REPOSITORY_URL}" spec-repo
+        git -C spec-repo fetch origin "$CI_COMMIT_REF_NAME" --tags
+        git -C spec-repo checkout "$CI_COMMIT_REF_NAME"
+        TAG="$(git -C spec-repo describe --tags --abbrev=0 2>/dev/null || true)"
+        if [ -z "$TAG" ]; then
+          echo "No release tag found in spec repo. Stop maven release"
+          exit 1
+        fi
+      
+        echo "Cloning SDK repository to sdk-repo."
+        SDK_REPO_URL="https://oauth2:${CICD_PAT_JAVA}@git.company.lognex/moysklad/misc/remap-1.2-java-sdk.git"
+        git clone --depth=1 --filter=blob:none --single-branch --branch master "$SDK_REPO_URL" sdk-repo
+      else
+        echo "Using sdk-repo from upstream artifacts."
+        TAG_FILE="sdk-repo/java-release-tag.txt"
+        if [ -s "$TAG_FILE" ]; then
+          TAG="$(tr -d '\r\n' < "$TAG_FILE")"
+        else 
+          echo "No release tag found. Stop maven release"
+          exit 1
+        fi
+      fi
+    - cd sdk-repo
+    - export TZ='Europe/Moscow'
+  script:
+    - echo "Using release tag $TAG as Maven version"
+    - |
+      echo "Adding the ossrh server inside <servers> section"
+        sed -i '/<servers>/a \
+        <server>\
+          <id>central</id>\
+          <username>${CENTRAL_USER}</username>\
+          <password>${CENTRAL_PASSWORD}</password>\
+        </server>' ~/.m2/settings.xml
+
+    - mvn versions:set -DnewVersion="$TAG" -DgenerateBackupPoms=false
+    - mvn $MAVEN_CLI_OPTS -Ppublishing-central clean deploy

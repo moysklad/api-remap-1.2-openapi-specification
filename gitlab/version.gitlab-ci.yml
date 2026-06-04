@@ -1,5 +1,7 @@
 version:auto:
-  image: docker.infra.lognex/docker-openapitools:1.2-release
+  extends:
+    - .openapitools-image
+    - .npm-cache
   stage: version
   needs:
     - job: bundle-openapi
@@ -10,11 +12,9 @@ version:auto:
       optional: true
     - job: sdk-golden-php
       optional: true
-    - job: sdk-smoke-php
+    - job: sdk-smoke
       optional: true
     - job: sdk-golden-java
-      optional: true
-    - job: sdk-smoke-java
       optional: true
     - job: sdk-contract
       optional: true
@@ -68,7 +68,6 @@ version:auto:
       else
         echo "No existing tag or could not build prev spec from tag, starting from 0.y.0 (MINOR)."
       fi
-    - npm install -g standard-version
     - standard-version --release-as "$RELEASE_TYPE"
     - |
       # Формируем новый тег в формате semver (X.Y.Z) на основе версии в package.json

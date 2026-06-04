@@ -1,0 +1,99 @@
+type: object
+description: Заказ кодов маркировки
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "emissionorder"
+    - param: "id"
+  type: "emissionorder"
+properties:
+  meta:
+    description: Метаданные Заказа кодов маркировки
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID Заказа кодов маркировки
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  created:
+    type: string
+    description: Момент создания Заказа кодов маркировки
+    readOnly: true
+  description:
+    type: string
+    maxLength: 255
+    description: Комментарий
+  documentState:
+    type: string
+    description: Состояние документов маркировки. Известные значения описаны в EmissionOrderDocumentState
+    example: "CREATED"
+    readOnly: true
+  emissionType:
+    type: string
+    description: Способ ввода в оборот. Известные значения описаны в EmissionOrderEmissionType
+    example: "LOCAL"
+  externalCode:
+    type: string
+    maxLength: 255
+    description: Внешний код Заказа кодов маркировки
+  group:
+    description: Отдел сотрудника
+    $ref: '../../../openapi.yaml#/components/schemas/Group'
+  moment:
+    type: string
+    description: Дата документа
+  name:
+    type: string
+    maxLength: 255
+    description: Наименование Заказа кодов маркировки
+  organization:
+    description: Метаданные юрлица
+    $ref: '../../../openapi.yaml#/components/schemas/Organization'
+  owner:
+    description: Владелец (Сотрудник)
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Employee'
+  positions:
+    type: object
+    description: Метаданные позиций Заказа кодов маркировки
+    $ref: '../../../openapi.yaml#/components/schemas/EmissionOrderPositionList'
+  printed:
+    type: boolean
+    description: Напечатан ли документ
+    readOnly: true
+  productionTasks:
+    type: array
+    description: Массив ссылок на связанные производственные задания
+    nullable: true
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/ProductionTask'
+  published:
+    type: boolean
+    description: Опубликован ли документ
+    readOnly: true
+  shared:
+    type: boolean
+    description: Общий доступ
+  state:
+    description: Метаданные статуса Заказа кодов маркировки
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/State'
+  trackingType:
+    type: string
+    description: Тип маркируемой продукции. Известные значения описаны в TrackingType
+    example: "MILK"
+  updated:
+    type: string
+    description: Момент последнего обновления
+    readOnly: true

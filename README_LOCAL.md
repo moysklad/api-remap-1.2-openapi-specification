@@ -38,6 +38,12 @@ npm run bundle-json
 
 Docker-среда поддерживает несколько языков SDK (php, python, java, javascript). Сейчас реализованы генерация и тесты для PHP; для остальных языков нужно добавить скрипты в `package.json` и тесты в `tests/<language>/`.
 
+Контейнеры `sdk` и `java-sdk` запускаются под UID/GID пользователя хоста (`${UID:-1000}:${GID:-1000}`), поэтому сгенерированные файлы в `clients/` остаются доступными текущему пользователю. Если ранее SDK уже генерировались контейнером от root, один раз исправьте владельца:
+
+```bash
+sudo chown -R "$(id -u):$(id -g)" clients
+```
+
 ```bash
 # Сборка образа
 docker compose build
@@ -48,19 +54,23 @@ docker compose run --rm sdk make lint
 # Сборка bundled спецификации
 docker compose run --rm sdk make bundle
 
+# Сборка облегчённой спецификации для быстрых smoke-тестов
+docker compose run --rm sdk make light-bundle
+
 # Генерация SDK (по умолчанию PHP; можно несколько: LANGUAGES=php,python)
 docker compose run --rm sdk make generate
 docker compose run --rm sdk make generate-php
+docker compose run --rm sdk make generate-java
 
 # Golden тесты (по умолчанию php)
 docker compose run --rm sdk make test-golden
 docker compose run --rm sdk make test-golden-php
+docker compose run --rm java-sdk make test-golden-java
 
 # Smoke тесты (openapi-mock + тесты по языкам)
-# ВАЖНО: после make bundle перезапустите mock — он кэширует спецификацию при старте
+# ВАЖНО: после make bundle/light-bundle перезапустите mock — он кэширует спецификацию при старте
 docker compose restart mock
 docker compose run --rm sdk make test-smoke
-docker compose run --rm sdk make test-smoke-php
 
 # Контрактные тесты Schemathesis (один для всех языков)
 docker compose run --rm -e SCHEMATHESIS_HOST=host -e SCHEMATHESIS_LOGIN=login -e SCHEMATHESIS_PASSWORD=pass sdk make schemathesis
@@ -104,20 +114,24 @@ api-sdk-builder/
 │   ├── .gitlab-ci-sdk-validate.yml   # Валидация SDK (lint, tests)
 │   ├── .gitlab-ci-github-mirror.yml  # Зеркалирование в GitHub
 │   ├── .gitlab-ci-prepare-sdk-php.yml# Подготовка внутреннего репозитория PHP SDK (ветки и релиз мастер‑ветки)
+│   ├── .gitlab-ci-prepare-sdk-java.yml# Подготовка внутреннего репозитория Java SDK (ветки и релиз мастер‑ветки)
+│   ├── .gitlab-ci-deploy-sdk-java.yml# Публикация Java SDK в Artifactory/Maven
 │   ├── .gitlab-ci-java-sdk.yml       # Старый Java SDK (обратная совместимость)
 │   ├── .gitlab-ci-spec-gen.yml       # Старый PHP через OpenAPI (обратная совместимость)
 │   ├── version.gitlab-ci.yml         # Версионирование спецификации
 │   └── sdk/
 │       ├── lint-openapi.yml          # Job для lint спецификации
-│       ├── generate-sdk.yml          # Job'ы для генерации SDK
+│       ├── generate-sdk.yml          # Job'ы для bundle-openapi, bundle-smoke-openapi и генерации SDK
 │       ├── sdk-tests-golden.yml      # Golden тесты
 │       ├── sdk-tests-smoke.yml       # Smoke тесты с openapi-mock
 │       └── sdk-contract.yml          # Schemathesis контрактные тесты
 ├── src/
 │   └── openapi.yaml                  # Главный файл OpenAPI спецификации
 ├── customtemplates/
+|   ├── java/                         # Кастомные шаблоны для Java SDK
 │   └── php/                          # Кастомные шаблоны для PHP SDK
 ├── tests/
+│   ├── java/                         # Java тесты (golden)
 │   └── php/                          # PHP тесты (golden + smoke)
 └── clients/                          # Сгенерированные SDK (создаётся при генерации)
 ```
@@ -143,10 +157,9 @@ api-sdk-builder/
 Создайте папку `tests/<language>/` со структурой:
 
 ```
+fixtures/             # Эталонные JSON файлы
 tests/<language>/
 ├── golden/           # Golden тесты (сериализация/десериализация)
-├── smoke/            # Smoke тесты (проверка эндпоинтов)
-├── fixtures/         # Эталонные JSON файлы
 └── README.md         # Инструкции
 ```
 
@@ -191,14 +204,14 @@ $this->assertEquals($jsonData['name'], $product->getName());
 Проверяют доступность эндпоинтов через openapi-mock сервер ([muonsoft/openapi-mock](https://github.com/muonsoft/openapi-mock)):
 
 ```php
-// Пример PHP smoke теста
+// Пример smoke теста
 $response = $client->get('/api/remap/1.2/entity/product');
 $this->assertContains($response->getStatusCode(), [200, 401, 500]);
 ```
 
 > **Примечание:** openapi-mock может возвращать HTTP 500 для эндпоинтов с рекурсивными/глубоко вложенными схемами — это ожидаемое поведение mock-сервера, а не ошибка спецификации.
 
-> **Важно:** openapi-mock загружает `dist/openapi.yaml` **один раз при старте** и кэширует в памяти. После `make bundle` необходимо перезапустить mock-сервер: `docker compose restart mock`. Без перезапуска новые эндпоинты будут возвращать 404. Если `restart` не помогает, пересоздайте контейнер: `docker compose rm -sf mock && docker compose up -d mock`.
+> **Важно:** openapi-mock загружает `dist/openapi.yaml` **один раз при старте** и кэширует в памяти. После `make light-bundle` необходимо перезапустить mock-сервер: `docker compose restart mock`. Без перезапуска новые эндпоинты будут возвращать 404. Если `restart` не помогает, пересоздайте контейнер: `docker compose rm -sf mock && docker compose up -d mock`.
 
 #### Contract тесты (Schemathesis)
 

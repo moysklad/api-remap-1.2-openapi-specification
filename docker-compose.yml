@@ -22,6 +22,7 @@ services:
       - .:/workspace:ro
     environment:
       - OPENAPI_MOCK_SPECIFICATION_URL=/workspace/dist/openapi.yaml
+      - OPENAPI_MOCK_RESPONSE_TIMEOUT=30
     networks:
       - default
 
@@ -29,19 +30,22 @@ services:
     build: .
     image: api-sdk-builder:local
     working_dir: /workspace
+    user: "${UID:-1000}:${GID:-1000}"
     depends_on:
       - mock
     volumes:
       - .:/workspace
       - sdk_node_modules:/workspace/node_modules
-      # Кэш Composer — чтобы при повторных запусках (test-golden-php, test-smoke-php) не качать пакеты заново
-      - sdk_composer_cache:/root/.composer
     environment:
       - CI=true
+      - HOME=/tmp
+      - JAVA_TOOL_OPTIONS=-Duser.home=/tmp
       # В Docker используем публичный registry, чтобы не было UNABLE_TO_VERIFY_LEAF_SIGNATURE к Nexus
       - USE_PUBLIC_NPM_REGISTRY=true
       - SMOKE_BASE_URL=http://mock:8080
       - SDK_PATH=/workspace/clients/php
+      - COMPOSER_CACHE_DIR=/tmp/.composer
+      - NPM_CONFIG_CACHE=/tmp/.npm
       - NPM_CONFIG_PROGRESS=true
       - NPM_CONFIG_LOGLEVEL=info
     stdin_open: true
@@ -54,9 +58,37 @@ services:
       - default
       - moysklad-all_default
 
+  java-sdk:
+    build:
+      dockerfile: java.Dockerfile
+    image: api-sdk-builder-java:local
+    working_dir: /workspace
+    user: "${UID:-1000}:${GID:-1000}"
+    depends_on:
+      - mock
+    volumes:
+      - .:/workspace
+      - sdk_m2_cache:/tmp/.m2/repository
+    environment:
+      - CI=true
+      - HOME=/tmp
+      - JAVA_TOOL_OPTIONS=-Duser.home=/tmp
+      - MAVEN_CONFIG=/tmp/.m2
+      - MAVEN_OPTS=-Dmaven.repo.local=/tmp/.m2/repository
+      - SMOKE_BASE_URL=http://mock:8080
+    stdin_open: true
+    tty: true
+    # Образ node по умолчанию передаёт аргументы в Maven, а не в shell. Запускаем команду через sh,
+    # чтобы выполнялся make (и любой другой бинарник) внутри контейнера с нужным Node.
+    entrypoint: ["/bin/sh", "-c", "exec \"$$@\"", "sh"]
+    command: ["make", "help"]
+    networks:
+      - default
+      - moysklad-all_default
+
 volumes:
   sdk_node_modules:
-  sdk_composer_cache:
+  sdk_m2_cache:
 
 networks:
   moysklad-all_default:

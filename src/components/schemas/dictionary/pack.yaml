@@ -1,6 +1,9 @@
 type: object
 description: Упаковка
 properties:
+  meta:
+    description: Метаданные Упаковки
+    $ref: '../common/meta.yaml'
   id:
     type: string
     format: uuid
@@ -17,5 +20,6 @@ properties:
   barcodes:
     type: array
     description: Штрихкоды упаковки
+    nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/Barcode'

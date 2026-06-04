@@ -25,6 +25,12 @@
 
 Skills лежат в `.cursor/skills/`.
 
+## Slash commands
+
+Команды для Cursor Chat лежат в `.cursor/commands/` и вызываются через `/`.
+
+- `/php-sdk-full-audit` — запускает полный QA-аудит PHP SDK по заранее зафиксированному промпту из `.cursor/commands/php-sdk-full-audit.md`.
+
 ### `add-entity`
 
 Этот skill используется при добавлении новой API-сущности, ресурса или endpoint в OpenAPI-спецификацию, особенно если источником является файл `api-remap-1.2-doc/md/**/_*.md`.
@@ -34,7 +40,8 @@ Skills лежат в `.cursor/skills/`.
 - разбирать MD-документацию на схемы и endpoints;
 - создавать entity, list, position, metadata, batch и delete schemas/paths;
 - регистрировать новые paths и schemas в `src/openapi.yaml`;
-- добавлять PHP fixtures и golden/smoke тесты;
+- добавлять общие fixtures в `tests/fixtures/`, обновлять PHP/Java golden-тесты и PHP smoke-тесты;
+- правильно использовать `x-entity-static-builder`, который теперь генерирует `createWithMeta(...)` helper и для PHP, и для Java SDK через custom templates;
 - соблюдать текущие соглашения по `$ref` (`../../../openapi.yaml#/components/schemas/<SchemaName>` в request/response body path-файлов);
 - запускать правильную последовательность Docker-проверок.
 

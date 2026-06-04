@@ -1,5 +1,13 @@
 type: object
 description: Отгрузка
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "demand"
+    - param: "id"
+  type: "demand"
 properties:
   meta:
     description: Метаданные Отгрузки
@@ -50,3 +58,218 @@ properties:
   moment:
     type: string
     description: Дата документа
+  applicable:
+    type: boolean
+    description: Отметка о проведении
+  printed:
+    type: boolean
+    description: Напечатан ли документ
+    readOnly: true
+  published:
+    type: boolean
+    description: Опубликован ли документ
+    readOnly: true
+  shared:
+    type: boolean
+    description: Общий доступ
+  vatEnabled:
+    type: boolean
+    description: Учитывается ли НДС
+  vatIncluded:
+    type: boolean
+    description: Включён ли НДС в цену
+  vatSum:
+    type: number
+    format: double
+    description: Сумма НДС
+    readOnly: true
+  sum:
+    type: number
+    format: double
+    description: Сумма Отгрузки в копейках
+    readOnly: true
+  payedSum:
+    type: number
+    format: double
+    description: Сумма входящих платежей по Отгрузке
+    readOnly: true
+  organization:
+    description: Метаданные юрлица
+    $ref: '../../../openapi.yaml#/components/schemas/Organization'
+  organizationAccount:
+    description: Метаданные счета юрлица
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Account'
+  agent:
+    description: Метаданные контрагента или юрлица
+    x-agent-reference: true
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Agent'
+  agentAccount:
+    description: Метаданные счета контрагента
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Account'
+  store:
+    description: Метаданные склада
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Store'
+  state:
+    description: Метаданные статуса Отгрузки
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/State'
+  contract:
+    description: Метаданные договора
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Contract'
+  project:
+    description: Метаданные проекта
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Project'
+  owner:
+    description: Владелец (сотрудник)
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Employee'
+  group:
+    description: Отдел сотрудника
+    $ref: '../../../openapi.yaml#/components/schemas/Group'
+  attributes:
+    type: array
+    description: Коллекция метаданных доп. полей
+    nullable: true
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
+  files:
+    description: Метаданные массива файлов
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/FileList'
+  rate:
+    $ref: '../common/currencyRate.yaml'
+  positions:
+    type: object
+    description: Метаданные позиций Отгрузки
+    $ref: '../../../openapi.yaml#/components/schemas/DemandPositionList'
+  salesChannel:
+    description: Метаданные канала продаж
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/SalesChannel'
+  shipmentAddress:
+    type: string
+    maxLength: 255
+    description: |
+      Адрес доставки Отгрузки (строка).
+      Для удаления адреса передайте пустую строку. Не поддерживается значение `null` для сброса — см. документацию по адресу доставки.
+  shipmentAddressFull:
+    description: Адрес доставки Отгрузки с детализацией по отдельным полям
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Address'
+  overhead:
+    type: object
+    nullable: true
+    description: |
+      Накладные расходы на уровне документа.
+      Если позиции Отгрузки не заданы, накладные расходы задать нельзя.
+    properties:
+      sum:
+        type: number
+        format: double
+        description: Сумма в копейках
+      distribution:
+        type: string
+        description: |
+          Распределение накладных расходов между позициями.
+          Известные значения описаны в DemandOverheadDistribution
+        example: "weight"
+  customerOrder:
+    description: Заказ покупателя, с которым связана Отгрузка
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/CustomerOrder'
+  factureOut:
+    description: Счёт-фактура выданный, с которым связана Отгрузка
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/FactureOut'
+  returns:
+    type: array
+    description: Связанные возвраты
+    nullable: true
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/SalesReturn'
+  payments:
+    type: array
+    description: Связанные платежи
+    nullable: true
+    items:
+      anyOf:
+        - $ref: '../../../openapi.yaml#/components/schemas/PaymentIn'
+        - $ref: '../../../openapi.yaml#/components/schemas/CashIn'
+  productionTasks:
+    type: array
+    description: Связанные производственные задания
+    nullable: true
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/ProductionTask'
+  invoicesOut:
+    type: array
+    description: Связанные счета покупателям
+    nullable: true
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/InvoiceOut'
+  cargoName:
+    type: string
+    maxLength: 255
+    description: Наименование груза
+  carrier:
+    description: Перевозчик (контрагент или юрлицо)
+    nullable: true
+    type: object
+    anyOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
+      - $ref: '../../../openapi.yaml#/components/schemas/Organization'
+  consignee:
+    description: Грузополучатель (контрагент или юрлицо)
+    nullable: true
+    type: object
+    anyOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
+      - $ref: '../../../openapi.yaml#/components/schemas/Organization'
+  goodPackQuantity:
+    type: integer
+    description: Всего мест
+  shippingInstructions:
+    type: string
+    maxLength: 255
+    description: Указания грузоотправителя
+  stateContractId:
+    type: string
+    maxLength: 255
+    description: Идентификатор государственного контракта, договора (соглашения)
+  transportFacility:
+    type: string
+    maxLength: 255
+    description: Транспортное средство
+  transportFacilityNumber:
+    type: string
+    maxLength: 255
+    description: Номер автомобиля

@@ -1,16 +1,13 @@
 # PHP Golden JSON тесты (сериализация/десериализация)
 sdk-golden-php:
+  extends: .php-test-base
   stage: test
-  image: php:8.2-cli
   needs:
     - job: generate-sdk-php
       artifacts: true
   rules:
     - if: '$SDK_LANGUAGES == "" || $SDK_LANGUAGES =~ /php/'
       when: on_success
-  before_script:
-    - apt-get update && apt-get install -y git unzip curl
-    - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
   script:
     - |
       if [ -d "tests/php" ]; then
@@ -51,8 +48,8 @@ sdk-golden-php:
 #      fi
 
 sdk-golden-java:
+  extends: .maven-jdk11-image
   stage: test
-  image: maven:3.9-eclipse-temurin-17
   needs:
     - job: generate-sdk-java
       artifacts: true
@@ -62,7 +59,13 @@ sdk-golden-java:
       when: on_success
   script:
     - |
-      echo "Java golden tests placeholder. No real Java tests configured yet."
+      if [ -d "tests/java/assertions" ]; then
+        echo "=== Golden tests (Java) ==="
+        mvn test -Dtest=**/golden/** -Dsurefire.failIfNoSpecifiedTests=false
+      else
+        echo "WARNING: tests/java/assertions directory not found"
+        exit 1
+      fi
 
 # JavaScript Golden JSON тесты (заглушка)
 #sdk-golden-javascript:

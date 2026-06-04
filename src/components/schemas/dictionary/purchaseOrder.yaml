@@ -1,5 +1,13 @@
 type: object
 description: Заказ поставщику
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "purchaseorder"
+    - param: "id"
+  type: "purchaseorder"
 properties:
   meta:
     description: Метаданные Заказа поставщику
@@ -113,8 +121,10 @@ properties:
     allOf:
       - $ref: '../../../openapi.yaml#/components/schemas/Account'
   agent:
-    description: Метаданные контрагента
-    $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
+    description: Метаданные контрагента или юрлица
+    x-agent-reference: true
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Agent'
   agentAccount:
     description: Метаданные счета контрагента
     nullable: true
@@ -156,6 +166,7 @@ properties:
     $ref: '../../../openapi.yaml#/components/schemas/Group'
   attributes:
     type: array
+    nullable: true
     description: Коллекция метаданных доп. полей
     items:
       $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
@@ -189,21 +200,25 @@ properties:
   customerOrders:
     type: array
     description: Массив ссылок на связанные заказы покупателей
+    nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/CustomerOrder'
   invoicesIn:
     type: array
     description: Массив ссылок на связанные счета поставщиков
+    nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/InvoiceIn'
   supplies:
     type: array
     description: Массив ссылок на связанные приемки
+    nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/Supply'
   payments:
     type: array
     description: Массив ссылок на связанные платежи
+    nullable: true
     items:
       anyOf:
         - $ref: '../../../openapi.yaml#/components/schemas/PaymentOut'
@@ -211,5 +226,6 @@ properties:
   productionTasks:
     type: array
     description: Массив ссылок на связанные производственные задания
+    nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/ProductionTask'

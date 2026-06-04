@@ -52,6 +52,82 @@ paths:
   /entity/contract/metadata/states/{id}:
     $ref: './paths/dictionaries/contracts/contract-metadata-state-by-id.yaml'
 
+  # Tasks
+  /entity/task:
+    $ref: './paths/dictionaries/tasks/tasks.yaml'
+  /entity/task/{id}:
+    $ref: './paths/dictionaries/tasks/task-by-id.yaml'
+  /entity/task/delete:
+    $ref: './paths/dictionaries/tasks/tasks-delete.yaml'
+  /entity/task/batch:
+    $ref: './paths/dictionaries/tasks/tasks-batch.yaml'
+  /entity/task/{id}/notes:
+    $ref: './paths/dictionaries/tasks/task-notes.yaml'
+  /entity/task/{id}/notes/batch:
+    $ref: './paths/dictionaries/tasks/task-notes-batch.yaml'
+  /entity/task/{id}/notes/{noteId}:
+    $ref: './paths/dictionaries/tasks/task-note-by-id.yaml'
+  /entity/task/{id}/notes/delete:
+    $ref: './paths/dictionaries/tasks/task-notes-delete.yaml'
+  /entity/task/metadata:
+    $ref: './paths/dictionaries/tasks/task-metadata.yaml'
+  /entity/task/metadata/states:
+    $ref: './paths/dictionaries/tasks/task-metadata-states.yaml'
+  /entity/task/metadata/states/{id}:
+    $ref: './paths/dictionaries/tasks/task-metadata-state-by-id.yaml'
+
+  # SalesChannels
+  /entity/saleschannel:
+    $ref: './paths/dictionaries/saleschannels/saleschannels.yaml'
+  /entity/saleschannel/{id}:
+    $ref: './paths/dictionaries/saleschannels/saleschannel-by-id.yaml'
+  /entity/saleschannel/delete:
+    $ref: './paths/dictionaries/saleschannels/saleschannels-delete.yaml'
+  /entity/saleschannel/batch:
+    $ref: './paths/dictionaries/saleschannels/saleschannels-batch.yaml'
+
+  # Projects
+  /entity/project:
+    $ref: './paths/dictionaries/projects/projects.yaml'
+  /entity/project/{id}:
+    $ref: './paths/dictionaries/projects/project-by-id.yaml'
+  /entity/project/delete:
+    $ref: './paths/dictionaries/projects/projects-delete.yaml'
+  /entity/project/batch:
+    $ref: './paths/dictionaries/projects/projects-batch.yaml'
+  /entity/project/metadata:
+    $ref: './paths/dictionaries/projects/project-metadata.yaml'
+  /entity/project/metadata/attributes:
+    $ref: './paths/dictionaries/projects/project-metadata-attribute.yaml'
+  /entity/project/metadata/attributes/{id}:
+    $ref: './paths/dictionaries/projects/project-metadata-attribute-by-id.yaml'
+
+  # Consignments
+  /entity/consignment:
+    $ref: './paths/dictionaries/consignments/consignments.yaml'
+  /entity/consignment/{id}:
+    $ref: './paths/dictionaries/consignments/consignment-by-id.yaml'
+  /entity/consignment/delete:
+    $ref: './paths/dictionaries/consignments/consignments-delete.yaml'
+  /entity/consignment/batch:
+    $ref: './paths/dictionaries/consignments/consignments-batch.yaml'
+  /entity/consignment/metadata:
+    $ref: './paths/dictionaries/consignments/consignment-metadata.yaml'
+  /entity/consignment/metadata/attributes:
+    $ref: './paths/dictionaries/consignments/consignment-metadata-attribute.yaml'
+  /entity/consignment/metadata/attributes/{id}:
+    $ref: './paths/dictionaries/consignments/consignment-metadata-attribute-by-id.yaml'
+
+  # ExpenseItems
+  /entity/expenseitem:
+    $ref: './paths/dictionaries/expenseitems/expenseitems.yaml'
+  /entity/expenseitem/{id}:
+    $ref: './paths/dictionaries/expenseitems/expenseitem-by-id.yaml'
+  /entity/expenseitem/delete:
+    $ref: './paths/dictionaries/expenseitems/expenseitems-delete.yaml'
+  /entity/expenseitem/batch:
+    $ref: './paths/dictionaries/expenseitems/expenseitems-batch.yaml'
+
   # Products
   /entity/product:
     $ref: './paths/dictionaries/products/products.yaml'
@@ -96,6 +172,24 @@ paths:
   /entity/country/batch:
     $ref: './paths/dictionaries/countries/countries-batch.yaml'
   #
+  # Regions
+  /entity/region:
+    $ref: './paths/dictionaries/regions/regions.yaml'
+  /entity/region/{id}:
+    $ref: './paths/dictionaries/regions/region-by-id.yaml'
+  #
+  # ProcessingPlanFolders
+  /entity/processingplanfolder:
+    $ref: './paths/dictionaries/processingPlanFolders/processingplanfolders.yaml'
+  /entity/processingplanfolder/{id}:
+    $ref: './paths/dictionaries/processingPlanFolders/processingplanfolders-by-id.yaml'
+  /entity/processingplanfolder/delete:
+    $ref: './paths/dictionaries/processingPlanFolders/processingplanfolders-delete.yaml'
+  /entity/processingplanfolder/batch:
+    $ref: './paths/dictionaries/processingPlanFolders/processingplanfolders-batch.yaml'
+  /entity/processingplanfolder/metadata:
+    $ref: './paths/dictionaries/processingPlanFolders/processingplanfolder-metadata.yaml'
+  #
   # ProductFolders
   /entity/productfolder:
     $ref: './paths/dictionaries/productFolders/productFolders.yaml'
@@ -116,6 +210,64 @@ paths:
   /entity/uom/batch:
     $ref: './paths/dictionaries/uoms/uoms-batch.yaml'
   #
+  # ProcessingStages
+  /entity/processingstage:
+    $ref: './paths/dictionaries/processingstages/processingstages.yaml'
+  /entity/processingstage/{id}:
+    $ref: './paths/dictionaries/processingstages/processingstage-by-id.yaml'
+  /entity/processingstage/delete:
+    $ref: './paths/dictionaries/processingstages/processingstages-delete.yaml'
+  /entity/processingstage/batch:
+    $ref: './paths/dictionaries/processingstages/processingstages-batch.yaml'
+  #
+  # ProcessingProcesses
+  /entity/processingprocess:
+    $ref: './paths/dictionaries/processingprocesses/processingprocesses.yaml'
+  /entity/processingprocess/{id}:
+    $ref: './paths/dictionaries/processingprocesses/processingprocess-by-id.yaml'
+  /entity/processingprocess/delete:
+    $ref: './paths/dictionaries/processingprocesses/processingprocesses-delete.yaml'
+  /entity/processingprocess/batch:
+    $ref: './paths/dictionaries/processingprocesses/processingprocesses-batch.yaml'
+  /entity/processingprocess/{id}/positions:
+    $ref: './paths/dictionaries/processingprocesses/processingprocess-positions.yaml'
+  /entity/processingprocess/{id}/positions/{positionId}:
+    $ref: './paths/dictionaries/processingprocesses/processingprocess-position-by-id.yaml'
+  /entity/processingprocess/{id}/positions/delete:
+    $ref: './paths/dictionaries/processingprocesses/processingprocess-positions-delete.yaml'
+  #
+  # ProcessingPlans
+  /entity/processingplan:
+    $ref: './paths/dictionaries/processingplans/processingplans.yaml'
+  /entity/processingplan/metadata:
+    $ref: './paths/dictionaries/processingplans/processingplan-metadata.yaml'
+  /entity/processingplan/metadata/attributes:
+    $ref: './paths/dictionaries/processingplans/processingplan-metadata-attribute.yaml'
+  /entity/processingplan/metadata/attributes/{id}:
+    $ref: './paths/dictionaries/processingplans/processingplan-metadata-attribute-by-id.yaml'
+  /entity/processingplan/{id}:
+    $ref: './paths/dictionaries/processingplans/processingplan-by-id.yaml'
+  /entity/processingplan/delete:
+    $ref: './paths/dictionaries/processingplans/processingplans-delete.yaml'
+  /entity/processingplan/batch:
+    $ref: './paths/dictionaries/processingplans/processingplans-batch.yaml'
+  /entity/processingplan/{id}/stages:
+    $ref: './paths/dictionaries/processingplans/processingplan-stages.yaml'
+  /entity/processingplan/{id}/stages/{positionId}:
+    $ref: './paths/dictionaries/processingplans/processingplan-stage-by-id.yaml'
+  /entity/processingplan/{id}/materials:
+    $ref: './paths/dictionaries/processingplans/processingplan-materials.yaml'
+  /entity/processingplan/{id}/materials/{positionId}:
+    $ref: './paths/dictionaries/processingplans/processingplan-material-by-id.yaml'
+  /entity/processingplan/{id}/materials/delete:
+    $ref: './paths/dictionaries/processingplans/processingplan-materials-delete.yaml'
+  /entity/processingplan/{id}/products:
+    $ref: './paths/dictionaries/processingplans/processingplan-products.yaml'
+  /entity/processingplan/{id}/products/{positionId}:
+    $ref: './paths/dictionaries/processingplans/processingplan-product-by-id.yaml'
+  /entity/processingplan/{id}/products/delete:
+    $ref: './paths/dictionaries/processingplans/processingplan-products-delete.yaml'
+  #
   # Currencies
   /entity/currency:
     $ref: './paths/dictionaries/currencies/currencies.yaml'
@@ -125,6 +277,16 @@ paths:
     $ref: './paths/dictionaries/currencies/currencies-delete.yaml'
   /entity/currency/batch:
     $ref: './paths/dictionaries/currencies/currencies-batch.yaml'
+  #
+  # TaxRates
+  /entity/taxrate:
+    $ref: './paths/dictionaries/taxrates/taxrates.yaml'
+  /entity/taxrate/{id}:
+    $ref: './paths/dictionaries/taxrates/taxrate-by-id.yaml'
+  /entity/taxrate/delete:
+    $ref: './paths/dictionaries/taxrates/taxrates-delete.yaml'
+  /entity/taxrate/batch:
+    $ref: './paths/dictionaries/taxrates/taxrates-batch.yaml'
   #
   # Employees
   /entity/employee:
@@ -184,6 +346,28 @@ paths:
   /entity/counterparty/{id}/files/{fileId}:
     $ref: './paths/dictionaries/counterparties/counterparty-file-by-id.yaml'
   #
+  # Organizations
+  /entity/organization:
+    $ref: './paths/dictionaries/organizations/organizations.yaml'
+  /entity/organization/{id}:
+    $ref: './paths/dictionaries/organizations/organization-by-id.yaml'
+  /entity/organization/delete:
+    $ref: './paths/dictionaries/organizations/organizations-delete.yaml'
+  /entity/organization/batch:
+    $ref: './paths/dictionaries/organizations/organizations-batch.yaml'
+  /entity/organization/metadata:
+    $ref: './paths/dictionaries/organizations/organization-metadata.yaml'
+  /entity/organization/metadata/attributes:
+    $ref: './paths/dictionaries/organizations/organization-metadata-attribute.yaml'
+  /entity/organization/metadata/attributes/{id}:
+    $ref: './paths/dictionaries/organizations/organization-metadata-attribute-by-id.yaml'
+  /entity/organization/{id}/accounts:
+    $ref: './paths/dictionaries/organizations/organization-accounts.yaml'
+  /entity/organization/{id}/accounts/delete:
+    $ref: './paths/dictionaries/organizations/organization-accounts-delete.yaml'
+  /entity/organization/{id}/accounts/{accountId}:
+    $ref: './paths/dictionaries/organizations/organization-account-by-id.yaml'
+  #
   # Services
   /entity/service:
     $ref: './paths/dictionaries/services/services.yaml'
@@ -198,6 +382,12 @@ paths:
   /entity/service/{id}/files/{fileId}:
     $ref: './paths/dictionaries/services/service-file-by-id.yaml'
   #
+  # SalePlatforms
+  /entity/saleplatform:
+    $ref: './paths/dictionaries/saleplatforms/saleplatforms.yaml'
+  /entity/saleplatform/{id}:
+    $ref: './paths/dictionaries/saleplatforms/saleplatform-by-id.yaml'
+  #
   # PriceTypes
   /context/companysettings/pricetype:
     $ref: './paths/dictionaries/pricetypes/pricetypes.yaml'
@@ -211,6 +401,12 @@ paths:
     $ref: './paths/dictionaries/companysettings/companysettings.yaml'
   /context/companysettings/metadata:
     $ref: './paths/dictionaries/companysettings/companysettings-metadata.yaml'
+  /accountSettings/subscription:
+    $ref: './paths/dictionaries/companysettings/companysubscription.yaml'
+
+  # UserSettings
+  /context/usersettings:
+    $ref: './paths/dictionaries/usersettings/usersettings.yaml'
 
   # Discounts
   /entity/discount:
@@ -337,6 +533,27 @@ paths:
     $ref: './paths/dictionaries/variants/variantcharacteristics.yaml'
   /entity/variant/metadata/characteristics/{id}:
     $ref: './paths/dictionaries/variants/variantcharacteristics-by-id.yaml'
+  # Labels
+  /entity/{type}/{id}/export:
+    $ref: './paths/dictionaries/labels/labels-print.yaml'
+  # Webhooks
+  /entity/webhook:
+    $ref: './paths/dictionaries/webhooks/webhooks.yaml'
+  /entity/webhook/batch:
+    $ref: './paths/dictionaries/webhooks/webhooks-batch.yaml'
+  /entity/webhook/{id}:
+    $ref: './paths/dictionaries/webhooks/webhook-by-id.yaml'
+  /entity/webhook/delete:
+    $ref: './paths/dictionaries/webhooks/webhooks-delete.yaml'
+  # WebhookStock
+  /entity/webhookstock:
+    $ref: './paths/dictionaries/webhookstocks/webhookstocks.yaml'
+  /entity/webhookstock/batch:
+    $ref: './paths/dictionaries/webhookstocks/webhookstocks-batch.yaml'
+  /entity/webhookstock/{id}:
+    $ref: './paths/dictionaries/webhookstocks/webhookstock-by-id.yaml'
+  /entity/webhookstock/delete:
+    $ref: './paths/dictionaries/webhookstocks/webhookstocks-delete.yaml'
   # Things
   /entity/thing:
     $ref: './paths/dictionaries/things/things.yaml'
@@ -358,6 +575,8 @@ paths:
     $ref: './paths/documents/internalorders/internalorder-metadata-attribute.yaml'
   /entity/internalorder/metadata/attributes/{id}:
     $ref: './paths/documents/internalorders/internalorder-metadata-attribute-by-id.yaml'
+  /entity/internalorder/metadata/states:
+    $ref: './paths/documents/internalorders/internalorder-metadata-states.yaml'
   /entity/internalorder/metadata/states/{id}:
     $ref: './paths/documents/internalorders/internalorder-metadata-state-by-id.yaml'
   /entity/internalorder/new:
@@ -383,6 +602,8 @@ paths:
     $ref: './paths/documents/customerorders/customerorder-metadata-attribute.yaml'
   /entity/customerorder/metadata/attributes/{id}:
     $ref: './paths/documents/customerorders/customerorder-metadata-attribute-by-id.yaml'
+  /entity/customerorder/metadata/states:
+    $ref: './paths/documents/customerorders/customerorder-metadata-states.yaml'
   /entity/customerorder/metadata/states/{id}:
     $ref: './paths/documents/customerorders/customerorder-metadata-state-by-id.yaml'
   /entity/customerorder/new:
@@ -393,6 +614,35 @@ paths:
     $ref: './paths/documents/customerorders/customerorder-position-by-id.yaml'
   /entity/customerorder/{id}/positions/delete:
     $ref: './paths/documents/customerorders/customerorder-positions-delete.yaml'
+  /entity/customerorder/{id}/notes:
+    $ref: './paths/documents/customerorders/customerorder-notes.yaml'
+  /entity/customerorder/{id}/notes/{noteId}:
+    $ref: './paths/documents/customerorders/customerorder-note-by-id.yaml'
+  # Documents - Demands
+  /entity/demand:
+    $ref: './paths/documents/demands/demands.yaml'
+  /entity/demand/{id}:
+    $ref: './paths/documents/demands/demand-by-id.yaml'
+  /entity/demand/delete:
+    $ref: './paths/documents/demands/demands-delete.yaml'
+  /entity/demand/batch:
+    $ref: './paths/documents/demands/demands-batch.yaml'
+  /entity/demand/metadata:
+    $ref: './paths/documents/demands/demand-metadata.yaml'
+  /entity/demand/metadata/attributes:
+    $ref: './paths/documents/demands/demand-metadata-attribute.yaml'
+  /entity/demand/metadata/attributes/{id}:
+    $ref: './paths/documents/demands/demand-metadata-attribute-by-id.yaml'
+  /entity/demand/metadata/states/{id}:
+    $ref: './paths/documents/demands/demand-metadata-state-by-id.yaml'
+  /entity/demand/new:
+    $ref: './paths/documents/demands/demand-new.yaml'
+  /entity/demand/{id}/positions:
+    $ref: './paths/documents/demands/demand-positions.yaml'
+  /entity/demand/{id}/positions/{positionId}:
+    $ref: './paths/documents/demands/demand-position-by-id.yaml'
+  /entity/demand/{id}/positions/delete:
+    $ref: './paths/documents/demands/demand-positions-delete.yaml'
   # Documents - Purchase Orders
   /entity/purchaseorder:
     $ref: './paths/documents/purchaseorders/purchaseorders.yaml'
@@ -408,6 +658,8 @@ paths:
     $ref: './paths/documents/purchaseorders/purchaseorder-metadata-attribute.yaml'
   /entity/purchaseorder/metadata/attributes/{id}:
     $ref: './paths/documents/purchaseorders/purchaseorder-metadata-attribute-by-id.yaml'
+  /entity/purchaseorder/metadata/states:
+    $ref: './paths/documents/purchaseorders/purchaseorder-metadata-states.yaml'
   /entity/purchaseorder/metadata/states/{id}:
     $ref: './paths/documents/purchaseorders/purchaseorder-metadata-state-by-id.yaml'
   /entity/purchaseorder/new:
@@ -418,6 +670,27 @@ paths:
     $ref: './paths/documents/purchaseorders/purchaseorder-position-by-id.yaml'
   /entity/purchaseorder/{id}/positions/delete:
     $ref: './paths/documents/purchaseorders/purchaseorder-positions-delete.yaml'
+  /entity/purchaseorder/{id}/notes:
+    $ref: './paths/documents/purchaseorders/purchaseorder-notes.yaml'
+  /entity/purchaseorder/{id}/notes/{noteId}:
+    $ref: './paths/documents/purchaseorders/purchaseorder-note-by-id.yaml'
+  # Documents - Emission Orders
+  /entity/emissionorder:
+    $ref: './paths/documents/emissionorders/emissionorders.yaml'
+  /entity/emissionorder/{id}:
+    $ref: './paths/documents/emissionorders/emissionorder-by-id.yaml'
+  /entity/emissionorder/batch:
+    $ref: './paths/documents/emissionorders/emissionorders-batch.yaml'
+  /entity/emissionorder/metadata:
+    $ref: './paths/documents/emissionorders/emissionorder-metadata.yaml'
+  /entity/emissionorder/metadata/states/{id}:
+    $ref: './paths/documents/emissionorders/emissionorder-metadata-state-by-id.yaml'
+  /entity/emissionorder/{id}/positions:
+    $ref: './paths/documents/emissionorders/emissionorder-positions.yaml'
+  /entity/emissionorder/{id}/positions/batch:
+    $ref: './paths/documents/emissionorders/emissionorder-positions-batch.yaml'
+  /entity/emissionorder/{id}/positions/{positionId}:
+    $ref: './paths/documents/emissionorders/emissionorder-position-by-id.yaml'
 
   # Documents - CommissionReportIns
   /entity/commissionreportin:
@@ -434,6 +707,8 @@ paths:
     $ref: './paths/documents/commissionreportins/commissionreportin-metadata-attribute.yaml'
   /entity/commissionreportin/metadata/attributes/{id}:
     $ref: './paths/documents/commissionreportins/commissionreportin-metadata-attribute-by-id.yaml'
+  /entity/commissionreportin/metadata/states:
+    $ref: './paths/documents/commissionreportins/commissionreportin-metadata-states.yaml'
   /entity/commissionreportin/metadata/states/{id}:
     $ref: './paths/documents/commissionreportins/commissionreportin-metadata-state-by-id.yaml'
   /entity/commissionreportin/{id}/positions:
@@ -464,10 +739,38 @@ paths:
     $ref: './paths/documents/cashins/cashin-metadata-attribute.yaml'
   /entity/cashin/metadata/attributes/{id}:
     $ref: './paths/documents/cashins/cashin-metadata-attribute-by-id.yaml'
+  /entity/cashin/metadata/states:
+    $ref: './paths/documents/cashins/cashin-metadata-states.yaml'
   /entity/cashin/metadata/states/{id}:
     $ref: './paths/documents/cashins/cashin-metadata-state-by-id.yaml'
   /entity/cashin/new:
     $ref: './paths/documents/cashins/cashin-new.yaml'
+
+  # Documents - Retail Drawer Cash In
+  /entity/retaildrawercashin:
+    $ref: './paths/documents/retaildrawercashins/retaildrawercashins.yaml'
+  /entity/retaildrawercashin/{id}:
+    $ref: './paths/documents/retaildrawercashins/retaildrawercashin-by-id.yaml'
+  /entity/retaildrawercashin/{id}/files:
+    $ref: './paths/documents/retaildrawercashins/retaildrawercashin-files.yaml'
+  /entity/retaildrawercashin/{id}/files/{fileId}:
+    $ref: './paths/documents/retaildrawercashins/retaildrawercashin-file-by-id.yaml'
+  /entity/retaildrawercashin/delete:
+    $ref: './paths/documents/retaildrawercashins/retaildrawercashins-delete.yaml'
+  /entity/retaildrawercashin/batch:
+    $ref: './paths/documents/retaildrawercashins/retaildrawercashins-batch.yaml'
+  /entity/retaildrawercashin/metadata:
+    $ref: './paths/documents/retaildrawercashins/retaildrawercashin-metadata.yaml'
+  /entity/retaildrawercashin/metadata/attributes:
+    $ref: './paths/documents/retaildrawercashins/retaildrawercashin-metadata-attribute.yaml'
+  /entity/retaildrawercashin/metadata/attributes/{id}:
+    $ref: './paths/documents/retaildrawercashins/retaildrawercashin-metadata-attribute-by-id.yaml'
+  /entity/retaildrawercashin/metadata/states:
+    $ref: './paths/documents/retaildrawercashins/retaildrawercashin-metadata-states.yaml'
+  /entity/retaildrawercashin/metadata/states/{id}:
+    $ref: './paths/documents/retaildrawercashins/retaildrawercashin-metadata-state-by-id.yaml'
+  /entity/retaildrawercashin/new:
+    $ref: './paths/documents/retaildrawercashins/retaildrawercashin-new.yaml'
 
   # Documents - Cash Out Orders
   /entity/cashout:
@@ -484,6 +787,8 @@ paths:
     $ref: './paths/documents/cashouts/cashout-metadata-attribute.yaml'
   /entity/cashout/metadata/attributes/{id}:
     $ref: './paths/documents/cashouts/cashout-metadata-attribute-by-id.yaml'
+  /entity/cashout/metadata/states:
+    $ref: './paths/documents/cashouts/cashout-metadata-states.yaml'
   /entity/cashout/metadata/states/{id}:
     $ref: './paths/documents/cashouts/cashout-metadata-state-by-id.yaml'
   /entity/cashout/new:
@@ -510,9 +815,36 @@ components:
     AssortmentSettings:
       $ref: './components/schemas/dictionary/assortmentSettings.yaml'
     AttributeAbstract:
-      $ref: './components/schemas/common/attributeAbstract.yaml'
-    AttributeBase:
-      $ref: './components/schemas/common/attributeBase.yaml'
+      type: object
+      required:
+        - type
+      discriminator:
+        propertyName: type
+        mapping:
+          file: '#/components/schemas/AttributeFile'
+          string: '#/components/schemas/AttributeString'
+          text: '#/components/schemas/AttributeText'
+          link: '#/components/schemas/AttributeLink'
+          time: '#/components/schemas/AttributeDateTime'
+          double: '#/components/schemas/AttributeDouble'
+          long: '#/components/schemas/AttributeLong'
+          boolean: '#/components/schemas/AttributeBool'
+          customentity: '#/components/schemas/AttributeCustomEntity'
+          undefined: '#/components/schemas/AttributeObject'
+      allOf:
+        - $ref: '#/components/schemas/AttributeMetaField'
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: ID дополнительного поля
+        name:
+          type: string
+          description: Наименование дополнительного поля
+        type:
+          type: string
+    AttributeMetaField:
+      $ref: './components/schemas/common/attributeMetaField.yaml'
     AttributeBool:
       $ref: './components/schemas/common/attributeBool.yaml'
     AttributeCustomEntity:
@@ -555,6 +887,8 @@ components:
       $ref: './components/schemas/dictionary/companyType.yaml'
     ContractType:
       $ref: './components/schemas/dictionary/contractType.yaml'
+    SalesChannelType:
+      $ref: './components/schemas/dictionary/salesChannelType.yaml'
     Error:
       $ref: './components/schemas/common/error.yaml'
     DiscountBase:
@@ -567,6 +901,8 @@ components:
       $ref: './components/schemas/dictionary/cashier.yaml'
     ContactPerson:
       $ref: './components/schemas/dictionary/contactPerson.yaml'
+    Agent:
+      $ref: './components/schemas/dictionary/agent.yaml'
     Counterparty:
       $ref: './components/schemas/dictionary/counterparty.yaml'
     CounterpartyList:
@@ -591,6 +927,8 @@ components:
       $ref: './components/schemas/dictionary/employeeSecurity.yaml'
     EmployeeRole:
       $ref: './components/schemas/dictionary/employeeRole.yaml'
+    EmbeddedTemplate:
+      $ref: './components/schemas/dictionary/embeddedTemplate.yaml'
     EntityRef:
       $ref: './components/schemas/common/entityRef.yaml'
     File:
@@ -611,6 +949,8 @@ components:
       $ref: './components/schemas/dictionary/group.yaml'
     GroupList:
       $ref: './components/schemas/dictionary/groupList.yaml'
+    LabelPrintRequest:
+      $ref: './components/schemas/dictionary/labelPrintRequest.yaml'
     Image:
       $ref: './components/schemas/common/image.yaml'
     ImageList:
@@ -621,8 +961,31 @@ components:
       $ref: './components/schemas/common/metaList.yaml'
     Metadata:
       $ref: './components/schemas/common/metadata.yaml'
+    Context:
+      $ref: './components/schemas/common/context.yaml'
     MinimumStockAbstract:
-      $ref: './components/schemas/dictionary/minimumStockAbstract.yaml'
+      type: object
+      required:
+        - type
+      discriminator:
+        propertyName: type
+        mapping:
+          ALL_WAREHOUSE_SUM: '#/components/schemas/MinimumStockAllWarehouseSum'
+          ALL_WAREHOUSE_SAME: '#/components/schemas/MinimumStockAllWarehouseSame'
+          WAREHOUSE_VARIED: '#/components/schemas/MinimumStockWarehouseVaried'
+      properties:
+        type:
+          type: string
+          readOnly: true
+          enum:
+            - ALL_WAREHOUSE_SUM
+            - ALL_WAREHOUSE_SAME
+            - WAREHOUSE_VARIED
+          description: Тип неснижаемого остатка
+        inherited:
+          type: boolean
+          nullable: true
+          description: Признак наследуемости
     MinimumStockAllWarehouseSame:
       $ref: './components/schemas/dictionary/minimumStockAllWarehouseSame.yaml'
     MinimumStockAllWarehouseSum:
@@ -633,6 +996,10 @@ components:
       $ref: './components/schemas/dictionary/minPrice.yaml'
     Note:
       $ref: './components/schemas/dictionary/note.yaml'
+    EventNote:
+      $ref: './components/schemas/dictionary/eventNote.yaml'
+    EventNoteList:
+      $ref: './components/schemas/dictionary/eventNoteList.yaml'
     Pack:
       $ref: './components/schemas/dictionary/pack.yaml'
     PaymentItemType:
@@ -653,14 +1020,54 @@ components:
       $ref: './components/schemas/dictionary/productFolder.yaml'
     ProductFolderList:
       $ref: './components/schemas/dictionary/productFolderList.yaml'
+    ProcessingStage:
+      $ref: './components/schemas/dictionary/processingStage.yaml'
+    ProcessingStageList:
+      $ref: './components/schemas/dictionary/processingStageList.yaml'
+    ProcessingProcess:
+      $ref: './components/schemas/dictionary/processingProcess.yaml'
+    ProcessingProcessList:
+      $ref: './components/schemas/dictionary/processingProcessList.yaml'
+    ProcessingProcessPosition:
+      $ref: './components/schemas/dictionary/processingProcessPosition.yaml'
+    ProcessingProcessPositionList:
+      $ref: './components/schemas/dictionary/processingProcessPositionList.yaml'
+    CostDistributionType:
+      $ref: './components/schemas/dictionary/costDistributionType.yaml'
+    ProcessingPlan:
+      $ref: './components/schemas/dictionary/processingPlan.yaml'
+    ProcessingPlanList:
+      $ref: './components/schemas/dictionary/processingPlanList.yaml'
+    ProcessingPlanStage:
+      $ref: './components/schemas/dictionary/processingPlanStage.yaml'
+    ProcessingPlanStageList:
+      $ref: './components/schemas/dictionary/processingPlanStageList.yaml'
+    ProcessingPlanMaterial:
+      $ref: './components/schemas/dictionary/processingPlanMaterial.yaml'
+    ProcessingPlanMaterialList:
+      $ref: './components/schemas/dictionary/processingPlanMaterialList.yaml'
+    ProcessingPlanProduct:
+      $ref: './components/schemas/dictionary/processingPlanProduct.yaml'
+    ProcessingPlanProductList:
+      $ref: './components/schemas/dictionary/processingPlanProductList.yaml'
+    ProcessingPlanMetadata:
+      $ref: './components/schemas/dictionary/processingPlanMetadata.yaml'
     Region:
       $ref: './components/schemas/dictionary/region.yaml'
+    RegionList:
+      $ref: './components/schemas/dictionary/regionList.yaml'
     RewardType:
       $ref: './components/schemas/dictionary/rewardType.yaml'
     RetailStore:
       $ref: './components/schemas/dictionary/retailStore.yaml'
     SalePrice:
       $ref: './components/schemas/dictionary/salePrice.yaml'
+    SalePlatform:
+      $ref: './components/schemas/dictionary/salePlatform.yaml'
+    SalePlatformList:
+      $ref: './components/schemas/dictionary/salePlatformList.yaml'
+    SalePlatformGroup:
+      $ref: './components/schemas/dictionary/salePlatformGroup.yaml'
     SalesReturn:
       $ref: './components/schemas/dictionary/salesReturn.yaml'
     Service:
@@ -687,6 +1094,10 @@ components:
       $ref: './components/schemas/dictionary/storeBalance.yaml'
     StoreBalanceList:
       $ref: './components/schemas/dictionary/storeBalanceList.yaml'
+    TaxRate:
+      $ref: './components/schemas/dictionary/taxRate.yaml'
+    TaxRateList:
+      $ref: './components/schemas/dictionary/taxRateList.yaml'
     TaxSystem:
       $ref: './components/schemas/dictionary/taxSystem.yaml'
     TrackingType:
@@ -705,6 +1116,8 @@ components:
       $ref: './components/schemas/common/documentMetadata.yaml'
     Organization:
       $ref: './components/schemas/dictionary/organization.yaml'
+    OrganizationList:
+      $ref: './components/schemas/dictionary/organizationList.yaml'
 
     Bundle:
       $ref: './components/schemas/dictionary/bundle.yaml'
@@ -716,6 +1129,8 @@ components:
       $ref: './components/schemas/dictionary/bundleComponentList.yaml'
     Consignment:
       $ref: './components/schemas/dictionary/consignment.yaml'
+    ConsignmentList:
+      $ref: './components/schemas/dictionary/consignmentList.yaml'
     Variant:
       $ref: './components/schemas/dictionary/variant.yaml'
     VariantList:
@@ -734,6 +1149,32 @@ components:
       $ref: './components/schemas/dictionary/thing.yaml'
     ThingList:
       $ref: './components/schemas/dictionary/thingList.yaml'
+    Webhook:
+      $ref: './components/schemas/dictionary/webhook.yaml'
+    WebhookAction:
+      $ref: './components/schemas/dictionary/webhookAction.yaml'
+    WebhookAuditContext:
+      $ref: './components/schemas/dictionary/webhookAuditContext.yaml'
+    WebhookDiffType:
+      $ref: './components/schemas/dictionary/webhookDiffType.yaml'
+    WebhookEvent:
+      $ref: './components/schemas/dictionary/webhookEvent.yaml'
+    WebhookList:
+      $ref: './components/schemas/dictionary/webhookList.yaml'
+    WebhookMethod:
+      $ref: './components/schemas/dictionary/webhookMethod.yaml'
+    WebhookNotificationPayload:
+      $ref: './components/schemas/dictionary/webhookNotificationPayload.yaml'
+    WebhookStock:
+      $ref: './components/schemas/dictionary/webhookStock.yaml'
+    WebhookStockList:
+      $ref: './components/schemas/dictionary/webhookStockList.yaml'
+    WebhookStockNotificationPayload:
+      $ref: './components/schemas/dictionary/webhookStockNotificationPayload.yaml'
+    WebhookStockReportType:
+      $ref: './components/schemas/dictionary/webhookStockReportType.yaml'
+    WebhookStockStockType:
+      $ref: './components/schemas/dictionary/webhookStockStockType.yaml'
     StoreList:
       $ref: './components/schemas/dictionary/storeList.yaml'
     RetailStoreList:
@@ -755,10 +1196,26 @@ components:
       $ref: './components/schemas/dictionary/contract.yaml'
     ContractList:
       $ref: './components/schemas/dictionary/contractList.yaml'
+    Task:
+      $ref: './components/schemas/dictionary/task.yaml'
+    TaskList:
+      $ref: './components/schemas/dictionary/taskList.yaml'
+    TaskNote:
+      $ref: './components/schemas/dictionary/taskNote.yaml'
+    TaskNoteList:
+      $ref: './components/schemas/dictionary/taskNoteList.yaml'
+    TaskNoteFile:
+      $ref: './components/schemas/dictionary/taskNoteFile.yaml'
+    TaskNoteFileList:
+      $ref: './components/schemas/dictionary/taskNoteFileList.yaml'
     Project:
       $ref: './components/schemas/dictionary/project.yaml'
+    ProjectList:
+      $ref: './components/schemas/dictionary/projectList.yaml'
     SalesChannel:
       $ref: './components/schemas/dictionary/salesChannel.yaml'
+    SalesChannelList:
+      $ref: './components/schemas/dictionary/salesChannelList.yaml'
     CustomerOrder:
       $ref: './components/schemas/dictionary/customerOrder.yaml'
     CustomerOrderPosition:
@@ -767,6 +1224,20 @@ components:
       $ref: './components/schemas/dictionary/customerOrderPositionList.yaml'
     CustomerOrderList:
       $ref: './components/schemas/dictionary/customerOrderList.yaml'
+    EmissionOrder:
+      $ref: './components/schemas/dictionary/emissionOrder.yaml'
+    EmissionOrderPosition:
+      $ref: './components/schemas/dictionary/emissionOrderPosition.yaml'
+    EmissionOrderPositionList:
+      $ref: './components/schemas/dictionary/emissionOrderPositionList.yaml'
+    EmissionOrderList:
+      $ref: './components/schemas/dictionary/emissionOrderList.yaml'
+    EmissionOrderEmissionType:
+      $ref: './components/schemas/dictionary/emissionOrderEmissionType.yaml'
+    EmissionOrderDocumentState:
+      $ref: './components/schemas/dictionary/emissionOrderDocumentState.yaml'
+    EmissionOrderPositionStatus:
+      $ref: './components/schemas/dictionary/emissionOrderPositionStatus.yaml'
     PurchaseOrder:
       $ref: './components/schemas/dictionary/purchaseOrder.yaml'
     PurchaseOrderPosition:
@@ -801,20 +1272,44 @@ components:
       $ref: './components/schemas/dictionary/cashInOperation.yaml'
     CashInOperationLinkedSum:
       $ref: './components/schemas/dictionary/cashInOperationLinkedSum.yaml'
+    RetailDrawerCashIn:
+      $ref: './components/schemas/dictionary/retailDrawerCashIn.yaml'
+    RetailDrawerCashInList:
+      $ref: './components/schemas/dictionary/retailDrawerCashInList.yaml'
     CashOutList:
       $ref: './components/schemas/dictionary/cashOutList.yaml'
     CashInList:
       $ref: './components/schemas/dictionary/cashInList.yaml'
     ExpenseItem:
       $ref: './components/schemas/dictionary/expenseItem.yaml'
+    ExpenseItemList:
+      $ref: './components/schemas/dictionary/expenseItemList.yaml'
     ProductionTask:
       $ref: './components/schemas/dictionary/productionTask.yaml'
     Move:
       $ref: './components/schemas/dictionary/move.yaml'
+    ProcessingPlanFolder:
+      $ref: './components/schemas/dictionary/processingPlanFolder.yaml'
+    ProcessingPlanFolderList:
+      $ref: './components/schemas/dictionary/processingPlanFolderList.yaml'
     ProcessingOrder:
       $ref: './components/schemas/dictionary/processingOrder.yaml'
     Demand:
       $ref: './components/schemas/dictionary/demand.yaml'
+    DemandList:
+      $ref: './components/schemas/dictionary/demandList.yaml'
+    DemandOverheadDistribution:
+      $ref: './components/schemas/dictionary/demandOverheadDistribution.yaml'
+    DemandPosition:
+      $ref: './components/schemas/dictionary/demandPosition.yaml'
+    DemandPositionList:
+      $ref: './components/schemas/dictionary/demandPositionList.yaml'
+    DemandPositionTrackingCode:
+      $ref: './components/schemas/dictionary/demandPositionTrackingCode.yaml'
+    DemandPositionTrackingCode1162:
+      $ref: './components/schemas/dictionary/demandPositionTrackingCode1162.yaml'
+    DemandPositionTrackingCodeType:
+      $ref: './components/schemas/dictionary/demandPositionTrackingCodeType.yaml'
 
     CommissionReportIn:
       $ref: './components/schemas/dictionary/commissionReportIn.yaml'
@@ -835,6 +1330,18 @@ components:
       $ref: './components/schemas/dictionary/companySettings.yaml'
     CompanySettingsMetadata:
       $ref: './components/schemas/dictionary/companySettingsMetadata.yaml'
+    UserSettings:
+      $ref: './components/schemas/dictionary/userSettings.yaml'
+    DefaultScreen:
+      $ref: './components/schemas/dictionary/defaultScreen.yaml'
+    Locale:
+      $ref: './components/schemas/dictionary/locale.yaml'
+    PrintFormat:
+      $ref: './components/schemas/dictionary/printFormat.yaml'
+    Subscription:
+      $ref: './components/schemas/dictionary/subscription.yaml'
+    SubscriptionTariff:
+      $ref: './components/schemas/dictionary/subscriptionTariff.yaml'
     MarkingSellingMode:
       $ref: './components/schemas/dictionary/markingSellingMode.yaml'
     MarksCheckMode:
@@ -884,22 +1391,48 @@ tags:
     description: Операции с группами
   - name: Countries
     description: Операции со странами
+  - name: Regions
+    description: Операции с регионами
+  - name: ProcessingPlanFolders
+    description: Операции с группами техкарт
   - name: ProductFolders
     description: Операции с группами товаров
   - name: Uoms
     description: Операции с единицами измерений
+  - name: ProcessingStages
+    description: Операции с Этапами производства
+  - name: ProcessingProcesses
+    description: Операции с Техпроцессами
+  - name: ProcessingPlans
+    description: Операции с Техкартами
   - name: Currencies
     description: Операции с валютами
+  - name: TaxRates
+    description: Операции со ставками НДС
   - name: Employees
     description: Операции с сотрудниками
   - name: Contracts
     description: Операции с договорами
+  - name: Tasks
+    description: Операции с задачами
+  - name: SalesChannels
+    description: Операции с каналами продаж
+  - name: Projects
+    description: Операции с проектами
+  - name: Consignments
+    description: Операции с партиями
+  - name: ExpenseItems
+    description: Операции со статьями расходов
   - name: Counterparties
     description: Операции с контрагентами
+  - name: Organizations
+    description: Операции с юрлицами
   - name: Services
     description: Операции с услугами
   - name: PriceTypes
     description: Операции с типами цен
+  - name: SalePlatforms
+    description: Операции с площадками для продаж
   - name: RetailStores
     description: Операции с точками продаж
   - name: Cashiers
@@ -910,22 +1443,38 @@ tags:
     description: Операции с комплектами
   - name: Variants
     description: Операции с модификациями
+  - name: Labels
+    description: Операции с печатью этикеток и ценников
+  - name: Webhooks
+    description: Операции с вебхуками
+  - name: WebhookStocks
+    description: Операции с вебхуками на изменение остатков
   - name: Things
     description: Операции с серийными номерами
   - name: Stores
     description: Операции со складами
   - name: CustomerOrders
     description: Операции с заказами покупателя
+  - name: Demands
+    description: Операции с отгрузками
   - name: PurchaseOrders
     description: Операции с заказами поставщика
+  - name: EmissionOrders
+    description: Операции с заказами кодов маркировки
   - name: CashIns
     description: Операции с приходными ордерами
+  - name: RetailDrawerCashIns
+    description: Операции с внесениями денег
   - name: CashOuts
     description: Операции с расходными ордерами
   - name: CommissionReportIns
     description: Операции с полученными отчетами комиссионера
   - name: CompanySettings
     description: Операции с настройками компании
+  - name: UserSettings
+    description: Операции с настройками пользователя
+  - name: Subscriptions
+    description: Операции с подпиской компании
   - name: Discounts
     description: Операции со скидками
   - name: Assortment

@@ -27,6 +27,7 @@ properties:
     description: Для всех ли агентов скидка
   agentTags:
     type: array
+    nullable: true
     description: Тэги агентов
     items:
       type: string

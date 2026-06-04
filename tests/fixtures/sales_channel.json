@@ -1,0 +1,36 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/saleschannel/53d1ff92-202b-11ec-0a82-050800000007",
+    "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/saleschannel/metadata",
+    "type": "saleschannel",
+    "mediaType": "application/json",
+    "uuidHref": "https://online.moysklad.ru/app/#saleschannel/edit?id=53d1ff92-202b-11ec-0a82-050800000007"
+  },
+  "id": "53d1ff92-202b-11ec-0a82-050800000007",
+  "accountId": "4fcbb42c-1d41-11ec-0a82-06530000009e",
+  "owner": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/employee/4fe1932a-1d41-11ec-0a81-04b600001980",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/employee/metadata",
+      "type": "employee",
+      "mediaType": "application/json",
+      "uuidHref": "https://online.moysklad.ru/app/#employee/edit?id=4fe1932a-1d41-11ec-0a81-04b600001980"
+    }
+  },
+  "shared": false,
+  "group": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/group/4fcbe1f2-1d41-11ec-0a82-06530000009f",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/group/metadata",
+      "type": "group",
+      "mediaType": "application/json"
+    }
+  },
+  "updated": "2021-09-28 10:11:40.322",
+  "name": "Телефонный звонок",
+  "code": "PHONE_CALL",
+  "description": "Позвонить клиенту",
+  "type": "OTHER",
+  "externalCode": "mZ9phAmxjBs5OgEvelcw20",
+  "archived": false
+}

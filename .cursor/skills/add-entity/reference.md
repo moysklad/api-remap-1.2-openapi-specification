@@ -47,25 +47,73 @@ Track these columns while implementing:
 | MD signal | API path | HTTP | Path file |
 |-----------|----------|------|-----------|
 | list section | `/entity/<keyword>` | GET | `<entities>.yaml` |
-| create section | `/entity/<keyword>` | POST | `<entities>.yaml` |
+| create section (single object) | `/entity/<keyword>` | POST | `<entities>.yaml` |
+| mass create/update section | `/entity/<keyword>/batch` | POST | `<entities>-batch.yaml` |
 | get by ID section | `/entity/<keyword>/{id}` | GET | `<entity>-by-id.yaml` |
 | update section | `/entity/<keyword>/{id}` | PUT | `<entity>-by-id.yaml` |
 | delete by ID section | `/entity/<keyword>/{id}` | DELETE | `<entity>-by-id.yaml` |
-| mass create/update | `/entity/<keyword>/batch` | POST | `<entities>-batch.yaml` |
 | mass delete | `/entity/<keyword>/delete` | POST | `<entities>-delete.yaml` |
 | metadata | `/entity/<keyword>/metadata` | GET | `<entity>-metadata.yaml` or shared metadata path |
 | metadata attributes list/create | `/entity/<keyword>/metadata/attributes` | GET/POST | `<entity>-metadata-attribute.yaml` |
 | metadata attribute by ID | `/entity/<keyword>/metadata/attributes/{id}` | GET/PUT/DELETE | `<entity>-metadata-attribute-by-id.yaml` |
+| metadata states create/batch | `/entity/<keyword>/metadata/states` | POST | `<entity>-metadata-states.yaml` |
 | metadata states by ID | `/entity/<keyword>/metadata/states/{id}` | GET/PUT/DELETE | `<entity>-metadata-state-by-id.yaml` |
 | positions list/create | `/entity/<keyword>/{id}/positions` | GET/POST | `<entity>-positions.yaml` |
 | position by ID | `/entity/<keyword>/{id}/positions/{positionId}` | GET/PUT/DELETE | `<entity>-position-by-id.yaml` |
 | positions batch delete | `/entity/<keyword>/{id}/positions/delete` | POST | `<entity>-positions-delete.yaml` |
 
+### Top-level POST vs `/batch` (mandatory split)
+
+- `POST /entity/<keyword>` — single object only.
+  - Request body schema: `$ref: <Entity>`.
+  - Response schema: `$ref: <Entity>`.
+  - Do **not** accept arrays. Do **not** use `oneOf: [<Entity>, array of <Entity>]`.
+- `POST /entity/<keyword>/batch` — mass create/update.
+  - Request body schema: `type: array, items: <Entity>, minItems: 1, maxItems: 1000`.
+  - Response schema: `type: array, items: oneOf: [<Entity>, Error]` (per-item result). Do **not** add `minItems`/`maxItems` to the response array — keep limits on request only.
+- Add a separate path file `<entities>-batch.yaml` and register the `.../batch` URL in `src/openapi.yaml` even when the MD `### Массовое создание и обновление ...` example reuses the create URL — Remap models it as a distinct `/batch` path.
+- Smoke test must hit `.../batch` for the mass operation and `.../<keyword>` (object body) for single create — never collapse them into one call.
+
+Reference good/bad examples (for the same reason):
+
+```yaml
+# Good — POST /entity/<keyword>
+post:
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../../../openapi.yaml#/components/schemas/<Entity>'
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/<Entity>'
+```
+
+```yaml
+# Bad — combined single+mass on one POST (do not do this)
+post:
+  requestBody:
+    content:
+      application/json:
+        schema:
+          oneOf:
+            - $ref: '../../../openapi.yaml#/components/schemas/<Entity>'
+            - type: array
+              items:
+                $ref: '../../../openapi.yaml#/components/schemas/<Entity>'
+```
+
+Exception — document positions. The existing peer pattern keeps a single `POST /entity/<keyword>/{id}/positions` with `oneOf: [<Position>, array of <Position>]` and no `/positions/batch`. Follow that peer pattern for new positions endpoints unless the source MD explicitly defines a separate positions batch URL.
+
 ### Remap-specific traps
 
 - Do not infer metadata states from the word "статус" alone; require `states` in metadata response/examples or a peer-backed pattern.
 - Some dictionaries/documents have extra groups (`files`, `images`, `accounts`, `notes`, `storebalances`, security/access actions). Add matrix rows from the exact MD headings and copy the closest peer's file split.
-- Batch operation names in MD may say "Массовое создание и обновление"; model it as `/batch` POST with array response.
+- MD may show `### Массовое создание и обновление ...` with the same example URL as create; still expose it as a separate `POST /batch` path with array body — see "Top-level POST vs `/batch`" above.
+- State creation and mass state creation may share one endpoint: `POST /entity/<keyword>/metadata/states`. Model this as one operation with `oneOf` request/response (`State` or array of `State`). Do not add per-item `Error` unless the MD or a peer explicitly shows state batch item errors.
 - DELETE metadata state endpoints should include explicit `404: NotFoundEmpty` when the backend can return empty 404.
 - If a path exists in MD but is intentionally skipped, record the reason in the final report.
 
@@ -104,6 +152,12 @@ Before verification, every matrix row must have:
 | `+Только для чтения` | `readOnly: true` |
 | `+Обязательное при ответе` | (informational, no YAML effect) |
 | `+Необходимо при создании` | (informational, no YAML effect — `required` is rarely set at object level in this spec) |
+
+Important:
+
+- Do **not** infer `readOnly: true` from `+Обязательное при ответе`.
+- Only the explicit marker `+Только для чтения` should become `readOnly: true`.
+- Fields such as `externalCode` often appear as `+Обязательное при ответе` in MD while still being writable; treat them as normal fields unless the MD explicitly says `+Только для чтения`.
 
 ### Nullable fields
 
@@ -345,9 +399,9 @@ The position `meta.type` returned by the API uses the suffix `position` glued to
 
 ## 5a. Static builder extension — `x-entity-static-builder`
 
-The custom OpenAPI vendor extension `x-entity-static-builder` drives the PHP custom template `customtemplates/php/model_entity_static_builder.mustache`, which generates a `public static function createWithMeta(...)` helper that returns a model with `meta.href`, `meta.type`, and `id` already populated. This removes the boilerplate of manually constructing `Meta` and stitching it into a model when callers only need a reference object.
+The custom OpenAPI vendor extension `x-entity-static-builder` drives both `customtemplates/php/model_entity_static_builder.mustache` and `customtemplates/java/model_entity_static_builder.mustache`. They generate a static `createWithMeta(...)` helper that returns a model with `meta.href`, `meta.type`, and `id` already populated. This removes the boilerplate of manually constructing `Meta` and stitching it into a model when callers only need a reference object.
 
-Background: `src/custom-extension-readme.md` and `customtemplates/php/readme.md`.
+Background: `src/custom-extension-readme.md`, `customtemplates/php/readme.md`, and `customtemplates/java/readme.md`.
 
 ### When to add
 
@@ -371,12 +425,12 @@ x-entity-static-builder:
   type: "<keyword>"           # value written into Meta.type
 ```
 
-The mustache template joins `href` segments with `' . '/' . '`, prepends `Configuration::getDefaultConfiguration()->getHost()`, calls `setMeta`/`setId` on the model, and returns it.
+The templates join `href` segments, prepend the SDK base URL, call `setMeta`/`setId` on the model, and return it.
 
-Hard requirements (template will break or produce wrong output otherwise):
+Hard requirements (either template will break or produce wrong output otherwise):
 
-- `methodParams` **must include `"id"`** literally — the generated body ends with `$o->setId($id);`, which references the PHP `$id` variable. A different name will cause a generation/compile error.
-- Every `param` value in `href` **must exist in `methodParams`** — the template emits `$<param>` without checking; an unknown name produces an undefined-variable PHP file.
+- `methodParams` **must include `"id"`** literally — both generated bodies end with `setId(id)` / `setId($id)`. A different name will cause a generation/compile error.
+- Every `param` value in `href` **must exist in `methodParams`** — the templates emit the parameter name directly (`id` in Java, `$id` in PHP) without checking; an unknown name produces invalid generated code.
 
 Project convention (not enforced by the template, follow for consistency with peers):
 
@@ -445,11 +499,27 @@ public static function createWithMeta(string $parentId, string $id): CustomerOrd
 }
 ```
 
+### Generated Java (illustrative)
+
+```java
+public static CustomerOrderPosition createWithMeta(String parentId, String id) {
+    CustomerOrderPosition o = new CustomerOrderPosition();
+    Meta meta = new Meta();
+    meta.setType("customerorderposition");
+    String href = org.openapitools.client.Configuration.getDefaultApiClient().getBaseURL()
+        + "/" + "entity" + "/" + "customerorder" + "/" + parentId + "/" + "positions" + "/" + id;
+    meta.setHref(href);
+    o.setMeta(meta);
+    o.setId(id);
+    return o;
+}
+```
+
 ### Validation rules
 
 1. Keep `methodParams` and `href` values as quoted strings (`"id"`, not `id`) to match peers and avoid YAML boolean/null coercion surprises.
 2. `type` must match the exact `meta.type` from the MD JSON example — Redocly lint will not catch a typo here, but golden tests and SDK consumers will surface a mismatch.
-3. Re-generate PHP after adding/changing the block: `docker compose run --rm sdk make generate-php`. The new method appears at the top of the model class, right after the `DISCRIMINATOR` constant (see `customtemplates/php/model_generic.mustache`).
+3. Re-generate both SDKs after adding/changing the block: `docker compose run --rm sdk make generate-php` and `docker compose run --rm sdk make generate-java`. The helper appears near the top of the generated model class; PHP injects it via `customtemplates/php/model_generic.mustache`, Java via `customtemplates/java/pojo.mustache`.
 4. If the schema is a stub today and you expand it later, keep the existing `x-entity-static-builder` block — it does not need to change when properties are added.
 
 ## 6. Path file templates
@@ -613,8 +683,6 @@ post:
               oneOf:
                 - $ref: '../../../openapi.yaml#/components/schemas/DeleteInfo'
                 - $ref: '../../../openapi.yaml#/components/schemas/Error'
-            minItems: 1
-            maxItems: 1000
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
 ```
@@ -656,11 +724,52 @@ post:
               oneOf:
                 - $ref: '../../../openapi.yaml#/components/schemas/<PascalSingular>'
                 - $ref: '../../../openapi.yaml#/components/schemas/Error'
-            minItems: 1
-            maxItems: 1000
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
 ```
+
+### Metadata states create/batch (POST) — `<entity>-metadata-states.yaml`
+
+**When to create:** if the MD state section describes `Создать статус` or `Массовое создание и обновление Статусов`, and the URL is `/entity/<keyword>/metadata/states`. In this API both single creation and mass create/update can share the same `POST` endpoint, so model them as one OpenAPI operation.
+
+Peer pattern: `src/paths/documents/cashins/cashin-metadata-states.yaml`.
+
+```yaml
+post:
+  operationId: create<PascalSingular>MetadataState
+  tags:
+    - <PascalPlural>
+  summary: Создать статус <PascalSingular>
+  parameters:
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          oneOf:
+            - $ref: '../../../openapi.yaml#/components/schemas/State'
+            - type: array
+              items:
+                $ref: '../../../openapi.yaml#/components/schemas/State'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '../../../openapi.yaml#/components/schemas/State'
+              - type: array
+                items:
+                  $ref: '../../../openapi.yaml#/components/schemas/State'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+```
+
+Do not include `Error` inside the successful array response unless the MD or a peer shows partial per-item errors. For `_states.md`, the successful mass response is an array of status objects only; request-level errors remain covered by `default: CommonError`.
 
 ### Metadata state by ID (GET/PUT/DELETE) — `<entity>-metadata-state-by-id.yaml`
 
@@ -792,7 +901,7 @@ Add to `tags:` array:
 
 ## 8. Fixture file
 
-Create `tests/php/fixtures/<snake_case>.json` using a JSON example from the MD file.
+Create `tests/fixtures/<snake_case>.json` using a JSON example from the MD file.
 
 ### Choosing the right JSON example
 
@@ -812,21 +921,25 @@ Pick the **richest** single-entity JSON response from the MD — typically from 
 
 ### Why this matters
 
-Golden tests (`SerializationTest.php`) verify JSON→Model→JSON roundtrip. If the fixture is too sparse, roundtrip will pass trivially — missing fields become `null` in both directions, hiding schema/SDK mismatches. A rich fixture catches:
-- Fields present in schema but missing in generated SDK model (forgotten `generate-php`)
+Golden tests (`tests/php/golden/SerializationTest.php` and `tests/java/assertions/src/test/java/com/lognex/test/golden/SerializationTest.java`) verify JSON→Model→JSON roundtrip. If the fixture is too sparse, roundtrip will pass trivially — missing fields become `null` in both directions, hiding schema/SDK mismatches. A rich fixture catches:
+- Fields present in schema but missing in generated SDK model (forgotten `generate-php` or `generate-java`)
 - Incorrect nested object structure (e.g. `$ref` to wrong schema)
 - Type mismatches (integer vs float, string vs object)
 
 ## 9. Golden test registration
 
-In `tests/php/golden/SerializationTest.php`:
+Update both golden test registries:
+
+- `tests/php/golden/SerializationTest.php`
+- `tests/java/assertions/src/test/java/com/lognex/test/golden/SerializationTest.java`
 
 1. Add to `FIXTURE_MODEL_MAP`:
 ```php
 'contract' => 'Contract',
 ```
 
-2. Add any readOnly fields unique to this entity to `IGNORED_FIELDS` if needed.
+2. Use the Java model name if it differs from PHP (for example, `File` becomes `ModelFile` in Java).
+3. Add any readOnly fields unique to this entity to `IGNORED_FIELDS` if needed.
 
 ## 10. Smoke tests
 
@@ -867,6 +980,7 @@ Re-read the source `_<entity>.md` file and verify completeness:
 2. For each row, confirm a matching property exists in the YAML schema
 3. Verify:
    - `+Только для чтения` → `readOnly: true`
+   - `+Обязательное при ответе` alone does **not** imply `readOnly: true`
    - `[Meta]` type → correct `$ref` pattern (`allOf` for nullable, direct for non-nullable)
    - `Enum` → open string field + separate PascalCase enum component; use **JSON values** from the mapping table, not Russian labels
    - `String(N)` → `maxLength: N`
@@ -877,7 +991,7 @@ Re-read the source `_<entity>.md` file and verify completeness:
 1. Scan all `### ` headers in the MD that describe API operations
 2. For each one, confirm a matching path file and HTTP method exist
 3. Common set: list, create, get by id, update, delete, batch create, batch delete
-4. If MD has `### Метаданные` → add metadata + attributes (+ if the MD describes statuses, add `metadata/states/{id}` GET/PUT/DELETE; for DELETE with empty 404 from the API, add `404` → `NotFoundEmpty` — see **DELETE `404` with empty body** under §6)
+4. If MD has `### Метаданные` → add metadata + attributes (+ if the MD describes statuses, add `metadata/states` POST when create/mass-create state operations exist, and `metadata/states/{id}` GET/PUT/DELETE; for DELETE with empty 404 from the API, add `404` → `NotFoundEmpty` — see **DELETE `404` with empty body** under §6)
 5. If MD has `### Позиции` (documents) → add positions + position-by-id + positions-delete
 
 ### Fixture check
@@ -886,7 +1000,7 @@ Re-read the source `_<entity>.md` file and verify completeness:
 3. For document entities, verify `positions` and similar MetaArray fields are included as objects with `meta.size/limit/offset`
 4. For entities with computed fields (assortment: `stock/reserve/inTransit/quantity`), verify they are present in the fixture
 5. For entities with `operations` arrays (cashin/cashout), verify items include both `meta` and `linkedSum`
-6. After any schema change, regenerate the SDK (`make generate-php`) **before** running golden tests — otherwise the SDK models won't have the new fields
+6. After any schema change, regenerate both SDKs (`make generate-php`, `make generate-java`) **before** running golden tests — otherwise the generated models won't have the new fields
 
 ### Smoke test check
 1. Count test methods = count of distinct endpoint+method combinations
@@ -900,16 +1014,19 @@ Re-read the source `_<entity>.md` file and verify completeness:
 docker compose run --rm sdk make lint           # Redocly lint — must say "valid"
 docker compose run --rm sdk make bundle         # produces dist/openapi.yaml + dist/openapi.json
 docker compose run --rm sdk make generate-php   # generates PHP SDK in clients/php/
-docker compose restart mock                     # CRITICAL: reload bundled spec in mock server
+docker compose run --rm sdk make generate-java  # generates Java SDK in clients/java/
 docker compose run --rm sdk make test-golden-php  # roundtrip JSON ↔ SDK model
+docker compose run --rm java-sdk make test-golden-java  # Java roundtrip against the same shared fixtures
+docker compose run --rm sdk make light-bundle    # produces filtered dist/openapi.yaml for fast smoke
+docker compose restart mock                     # CRITICAL: reload smoke bundle in mock server
 docker compose run --rm sdk make test-smoke       # HTTP smoke against openapi-mock
 ```
 
-`test-smoke` is the canonical local smoke target. `test-smoke-php` exists as a PHP-only shortcut and may be used for narrower reruns.
+`test-smoke` is the canonical local smoke target, but it should run against the `light-bundle` output.
 
-### Mock server restart — required after every `make bundle`
+### Mock server restart — required after every `make light-bundle`
 
-The openapi-mock container loads `dist/openapi.yaml` **once on startup** and caches it in memory. It does **not** watch for file changes. If you skip the restart, smoke tests will return **404 for any newly added endpoints**.
+The openapi-mock container loads `dist/openapi.yaml` **once on startup** and caches it in memory. It does **not** watch for file changes. If you skip the restart after `make light-bundle`, smoke tests will return **404 for any newly added endpoints**.
 
 ```bash
 docker compose restart mock
@@ -922,17 +1039,20 @@ docker compose rm -sf mock && docker compose up -d mock
 
 ### Schema change → SDK regeneration — required before golden tests
 
-After modifying any YAML schema, **always run `make generate-php`** before golden tests. The PHP SDK models are generated code — they won't reflect new/changed properties until regenerated. Golden tests will silently pass with null values for missing fields, giving a false sense of correctness.
+After modifying any YAML schema, **always run `make generate-php` and `make generate-java`** before golden tests. The SDK models are generated code — they won't reflect new/changed properties until regenerated. Golden tests can otherwise give a false sense of correctness.
 
 ### Verification order matters
 
 The correct sequence is:
 1. `lint` — catch YAML/OpenAPI syntax issues
-2. `bundle` — produce `dist/openapi.yaml`
-3. `generate-php` — regenerate SDK models from the updated spec
-4. `restart mock` — reload the bundled spec in the mock server
-5. `test-golden-php` — verify roundtrip serialization with rich fixtures
-6. `test-smoke` — verify endpoint reachability against the mock
+2. `bundle` — produce the full `dist/openapi.yaml`
+3. `generate-php` — regenerate PHP SDK models from the updated spec
+4. `generate-java` — regenerate Java SDK models from the updated spec
+5. `test-golden-php` — verify PHP roundtrip serialization with rich fixtures
+6. `test-golden-java` — verify Java roundtrip serialization with the same fixtures
+7. `light-bundle` — produce the filtered `dist/openapi.yaml` for fast smoke
+8. `restart mock` — reload the smoke bundle in the mock server
+9. `test-smoke` — verify endpoint reachability against the mock
 
-Skipping step 3 after schema changes → golden tests pass falsely.
-Skipping step 4 after adding endpoints → smoke tests fail with 404.
+Skipping steps 3-4 after schema changes → golden tests pass falsely or only one SDK is actually covered.
+Skipping step 8 after adding endpoints → smoke tests fail with 404.

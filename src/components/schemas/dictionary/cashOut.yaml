@@ -1,5 +1,13 @@
 type: object
 description: Расходный ордер
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "cashout"
+    - param: "id"
+  type: "cashout"
 properties:
   meta:
     description: Метаданные Расходного ордера
@@ -76,8 +84,10 @@ properties:
     description: Метаданные юрлица
     $ref: '../../../openapi.yaml#/components/schemas/Organization'
   agent:
-    description: Метаданные контрагента
-    $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
+    description: Метаданные контрагента или юрлица
+    x-agent-reference: true
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Agent'
   expenseItem:
     description: Метаданные статьи расхода
     nullable: true
@@ -87,6 +97,7 @@ properties:
   attributes:
     type: array
     description: Коллекция метаданных доп. полей
+    nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
   contract:
@@ -148,6 +159,7 @@ properties:
       - $ref: '../../../openapi.yaml#/components/schemas/FactureIn'
   operations:
     type: array
+    nullable: true
     description: |
       Связанные операции: полное тело документа плюс `linkedSum`. Допустимые типы по `meta.type`:
       salesreturn, supply, invoicein, purchaseorder, commissionreportout. См. `CashOutOperation`.
