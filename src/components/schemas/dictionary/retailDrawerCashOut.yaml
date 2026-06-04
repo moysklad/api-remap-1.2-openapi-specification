@@ -1,21 +1,21 @@
 type: object
-description: Внесение денег
+description: Выплата денег
 x-entity-static-builder:
   methodParams:
     - "id"
   href:
     - path: "entity"
-    - path: "retaildrawercashin"
+    - path: "retaildrawercashout"
     - param: "id"
-  type: "retaildrawercashin"
+  type: "retaildrawercashout"
 properties:
   meta:
-    description: Метаданные Внесения денег
+    description: Метаданные Выплаты денег
     $ref: '../common/meta.yaml'
   id:
     type: string
     format: uuid
-    description: ID Внесения денег
+    description: ID Выплаты денег
     readOnly: true
   accountId:
     type: string
@@ -23,7 +23,7 @@ properties:
     description: ID учетной записи
     readOnly: true
   agent:
-    description: Метаданные сотрудника, совершившего Внесение
+    description: Метаданные сотрудника
     x-agent-reference: false
     $ref: '../../../openapi.yaml#/components/schemas/Employee'
   applicable:
@@ -35,23 +35,28 @@ properties:
     nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
+  code:
+    type: string
+    maxLength: 255
+    nullable: true
+    description: Код Выплаты денег
   created:
     type: string
     description: Дата создания
     readOnly: true
   deleted:
     type: string
-    description: Момент последнего удаления Внесения денег
+    description: Момент последнего удаления Выплаты денег
     readOnly: true
   description:
     type: string
     maxLength: 4096
     nullable: true
-    description: Комментарий Внесения денег
+    description: Комментарий Выплаты денег
   externalCode:
     type: string
     maxLength: 255
-    description: Внешний код Внесения денег
+    description: Внешний код Выплаты денег
   files:
     description: Метаданные массива файлов
     nullable: true
@@ -67,7 +72,7 @@ properties:
   name:
     type: string
     maxLength: 255
-    description: Наименование Внесения денег
+    description: Наименование Выплаты денег
   organization:
     description: Метаданные юрлица
     $ref: '../../../openapi.yaml#/components/schemas/Organization'
@@ -95,7 +100,7 @@ properties:
     type: boolean
     description: Общий доступ
   state:
-    description: Метаданные статуса Внесения денег
+    description: Метаданные статуса Выплаты денег
     nullable: true
     type: object
     allOf:
@@ -103,7 +108,7 @@ properties:
   sum:
     type: number
     format: double
-    description: Сумма Внесения денег в копейках
+    description: Сумма Выплаты денег в установленной валюте
     minimum: 1
   syncId:
     type: string
@@ -111,5 +116,5 @@ properties:
     description: ID синхронизации
   updated:
     type: string
-    description: Момент последнего обновления Внесения денег
+    description: Момент последнего обновления Выплаты денег
     readOnly: true

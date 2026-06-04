@@ -102,6 +102,7 @@ class SerializationTest extends BaseTestCase {
         FIXTURE_MODEL_MAP.put("expense_item", "ExpenseItem");
         FIXTURE_MODEL_MAP.put("cash_in", "CashIn");
         FIXTURE_MODEL_MAP.put("retail_drawer_cash_in", "RetailDrawerCashIn");
+        FIXTURE_MODEL_MAP.put("retail_drawer_cash_out", "RetailDrawerCashOut");
         FIXTURE_MODEL_MAP.put("cash_in_operation", "CashInOperation");
         FIXTURE_MODEL_MAP.put("cash_out", "CashOut");
         FIXTURE_MODEL_MAP.put("cash_out_operation", "CashOutOperation");
