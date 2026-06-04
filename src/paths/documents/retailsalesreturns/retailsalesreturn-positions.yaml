@@ -1,0 +1,59 @@
+get:
+  operationId: getRetailSalesReturnPositions
+  tags:
+    - RetailSalesReturns
+  summary: Получить позиции Розничного возврата
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/parameters.yaml#/limit'
+    - $ref: '../../../components/parameters.yaml#/offset'
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/parameters.yaml#/fields'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/RetailSalesReturnPositionList'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+post:
+  operationId: createRetailSalesReturnPositions
+  tags:
+    - RetailSalesReturns
+  summary: Создать позиции Розничного возврата
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          oneOf:
+            - $ref: '../../../openapi.yaml#/components/schemas/RetailSalesReturnPosition'
+            - type: array
+              items:
+                $ref: '../../../openapi.yaml#/components/schemas/RetailSalesReturnPosition'
+          minItems: 1
+          maxItems: 1000
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              oneOf:
+                - $ref: '../../../openapi.yaml#/components/schemas/RetailSalesReturnPosition'
+                - $ref: '../../../openapi.yaml#/components/schemas/Error'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

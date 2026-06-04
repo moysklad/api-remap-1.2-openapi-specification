@@ -740,6 +740,29 @@ paths:
     $ref: './paths/documents/retaildemands/retaildemand-position-by-id.yaml'
   /entity/retaildemand/{id}/positions/delete:
     $ref: './paths/documents/retaildemands/retaildemand-positions-delete.yaml'
+  # Documents - Retail Sales Returns
+  /entity/retailsalesreturn:
+    $ref: './paths/documents/retailsalesreturns/retailsalesreturns.yaml'
+  /entity/retailsalesreturn/{id}:
+    $ref: './paths/documents/retailsalesreturns/retailsalesreturn-by-id.yaml'
+  /entity/retailsalesreturn/batch:
+    $ref: './paths/documents/retailsalesreturns/retailsalesreturns-batch.yaml'
+  /entity/retailsalesreturn/metadata:
+    $ref: './paths/documents/retailsalesreturns/retailsalesreturn-metadata.yaml'
+  /entity/retailsalesreturn/metadata/attributes:
+    $ref: './paths/documents/retailsalesreturns/retailsalesreturn-metadata-attribute.yaml'
+  /entity/retailsalesreturn/metadata/attributes/{id}:
+    $ref: './paths/documents/retailsalesreturns/retailsalesreturn-metadata-attribute-by-id.yaml'
+  /entity/retailsalesreturn/metadata/states/{id}:
+    $ref: './paths/documents/retailsalesreturns/retailsalesreturn-metadata-state-by-id.yaml'
+  /entity/retailsalesreturn/new:
+    $ref: './paths/documents/retailsalesreturns/retailsalesreturn-new.yaml'
+  /entity/retailsalesreturn/{id}/positions:
+    $ref: './paths/documents/retailsalesreturns/retailsalesreturn-positions.yaml'
+  /entity/retailsalesreturn/{id}/positions/{positionId}:
+    $ref: './paths/documents/retailsalesreturns/retailsalesreturn-position-by-id.yaml'
+  /entity/retailsalesreturn/{id}/positions/delete:
+    $ref: './paths/documents/retailsalesreturns/retailsalesreturn-positions-delete.yaml'
   # Documents - Enters
   /entity/enter:
     $ref: './paths/documents/enters/enters.yaml'
@@ -1861,6 +1884,16 @@ components:
       $ref: './components/schemas/dictionary/retailDemandPosition.yaml'
     RetailDemandPositionList:
       $ref: './components/schemas/dictionary/retailDemandPositionList.yaml'
+    RetailDemandDeclaration:
+      $ref: './components/schemas/dictionary/retailDemandDeclaration.yaml'
+    RetailSalesReturn:
+      $ref: './components/schemas/dictionary/retailSalesReturn.yaml'
+    RetailSalesReturnList:
+      $ref: './components/schemas/dictionary/retailSalesReturnList.yaml'
+    RetailSalesReturnPosition:
+      $ref: './components/schemas/dictionary/retailSalesReturnPosition.yaml'
+    RetailSalesReturnPositionList:
+      $ref: './components/schemas/dictionary/retailSalesReturnPositionList.yaml'
     Enter:
       $ref: './components/schemas/dictionary/enter.yaml'
     EnterList:
@@ -2030,6 +2063,8 @@ tags:
     description: Операции с перемещениями
   - name: RetailDemands
     description: Операции с розничными продажами
+  - name: RetailSalesReturns
+    description: Операции с розничными возвратами
   - name: Enters
     description: Операции с оприходованиями
   - name: SalesReturns
