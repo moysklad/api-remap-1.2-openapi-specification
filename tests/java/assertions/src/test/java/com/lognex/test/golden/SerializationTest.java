@@ -86,6 +86,8 @@ class SerializationTest extends BaseTestCase {
         FIXTURE_MODEL_MAP.put("processing_order", "ProcessingOrder");
         FIXTURE_MODEL_MAP.put("processing", "Processing");
         FIXTURE_MODEL_MAP.put("customer_order", "CustomerOrder");
+        FIXTURE_MODEL_MAP.put("invoice_out", "InvoiceOut");
+        FIXTURE_MODEL_MAP.put("invoice_in", "InvoiceIn");
         FIXTURE_MODEL_MAP.put("demand", "Demand");
         FIXTURE_MODEL_MAP.put("move", "Move");
         FIXTURE_MODEL_MAP.put("retail_demand", "RetailDemand");
@@ -108,6 +110,7 @@ class SerializationTest extends BaseTestCase {
         FIXTURE_MODEL_MAP.put("cash_in", "CashIn");
         FIXTURE_MODEL_MAP.put("retail_drawer_cash_in", "RetailDrawerCashIn");
         FIXTURE_MODEL_MAP.put("retail_drawer_cash_out", "RetailDrawerCashOut");
+        FIXTURE_MODEL_MAP.put("inventory", "Inventory");
         FIXTURE_MODEL_MAP.put("cash_in_operation", "CashInOperation");
         FIXTURE_MODEL_MAP.put("cash_out", "CashOut");
         FIXTURE_MODEL_MAP.put("cash_out_operation", "CashOutOperation");
@@ -130,6 +133,7 @@ class SerializationTest extends BaseTestCase {
         FIXTURE_MODEL_MAP.put("custom_entity", "CustomEntity");
         FIXTURE_MODEL_MAP.put("custom_entity_element", "CustomEntityElement");
         FIXTURE_MODEL_MAP.put("commission_report_in", "CommissionReportIn");
+        FIXTURE_MODEL_MAP.put("commission_report_out", "CommissionReportOut");
         FIXTURE_MODEL_MAP.put("organization", "Organization");
         FIXTURE_MODEL_MAP.put("organization_account", "Account");
     }

@@ -42,6 +42,8 @@ properties:
   vat:
     type: integer
     description: НДС для позиции
+    minimum: 0
+    maximum: 100
   vatEnabled:
     type: boolean
     description: Включен ли НДС для позиции
