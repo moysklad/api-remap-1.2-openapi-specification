@@ -903,6 +903,32 @@ paths:
   /entity/paymentin/new:
     $ref: './paths/documents/paymentins/paymentin-new.yaml'
 
+  # Documents - Payment Out
+  /entity/paymentout:
+    $ref: './paths/documents/paymentouts/paymentouts.yaml'
+  /entity/paymentout/{id}:
+    $ref: './paths/documents/paymentouts/paymentout-by-id.yaml'
+  /entity/paymentout/{id}/files:
+    $ref: './paths/documents/paymentouts/paymentout-files.yaml'
+  /entity/paymentout/{id}/files/{fileId}:
+    $ref: './paths/documents/paymentouts/paymentout-file-by-id.yaml'
+  /entity/paymentout/delete:
+    $ref: './paths/documents/paymentouts/paymentouts-delete.yaml'
+  /entity/paymentout/batch:
+    $ref: './paths/documents/paymentouts/paymentouts-batch.yaml'
+  /entity/paymentout/metadata:
+    $ref: './paths/documents/paymentouts/paymentout-metadata.yaml'
+  /entity/paymentout/metadata/attributes:
+    $ref: './paths/documents/paymentouts/paymentout-metadata-attribute.yaml'
+  /entity/paymentout/metadata/attributes/{id}:
+    $ref: './paths/documents/paymentouts/paymentout-metadata-attribute-by-id.yaml'
+  /entity/paymentout/metadata/states:
+    $ref: './paths/documents/paymentouts/paymentout-metadata-states.yaml'
+  /entity/paymentout/metadata/states/{id}:
+    $ref: './paths/documents/paymentouts/paymentout-metadata-state-by-id.yaml'
+  /entity/paymentout/new:
+    $ref: './paths/documents/paymentouts/paymentout-new.yaml'
+
   # Documents - Retail Drawer Cash In
   /entity/retaildrawercashin:
     $ref: './paths/documents/retaildrawercashins/retaildrawercashins.yaml'
@@ -1461,6 +1487,10 @@ components:
       $ref: './components/schemas/dictionary/supply.yaml'
     PaymentOut:
       $ref: './components/schemas/dictionary/paymentOut.yaml'
+    PaymentOutList:
+      $ref: './components/schemas/dictionary/paymentOutList.yaml'
+    PaymentOutOperation:
+      $ref: './components/schemas/dictionary/paymentOutOperation.yaml'
     PaymentIn:
       $ref: './components/schemas/dictionary/paymentIn.yaml'
     PaymentInList:
@@ -1708,6 +1738,8 @@ tags:
     description: Операции с приходными ордерами
   - name: PaymentIns
     description: Операции с входящими платежами
+  - name: PaymentOuts
+    description: Операции с исходящими платежами
   - name: RetailDrawerCashIns
     description: Операции с внесениями денег
   - name: RetailDrawerCashOuts
