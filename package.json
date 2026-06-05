@@ -29,7 +29,7 @@
     "author": "МойСклад API Team",
     "license": "MIT",
     "devDependencies": {
-        "@openapitools/openapi-generator-cli": "^2.7.0",
+        "@openapitools/openapi-generator-cli": "^2.34.0",
         "@redocly/cli": "^1.0.0",
         "@stoplight/spectral-cli": "^6.11.0"
     },
