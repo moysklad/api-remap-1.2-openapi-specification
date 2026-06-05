@@ -1,0 +1,49 @@
+type: object
+description: Комментарий к Задаче
+x-entity-static-builder:
+  methodParams:
+    - "parentId"
+    - "id"
+  href:
+    - path: "entity"
+    - path: "task"
+    - param: "parentId"
+    - path: "notes"
+    - param: "id"
+  type: "tasknote"
+properties:
+  meta:
+    description: Метаданные комментария к Задаче
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID комментария к Задаче
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  author:
+    description: Метаданные Сотрудника, создавшего комментарий
+    $ref: '../../../openapi.yaml#/components/schemas/Employee'
+    readOnly: true
+  authorApplication:
+    description: Метаданные Решения, создавшего комментарий
+    $ref: '../../../openapi.yaml#/components/schemas/Application'
+    readOnly: true
+  moment:
+    type: string
+    description: Момент создания комментария
+    readOnly: true
+  text:
+    type: string
+    maxLength: 4096
+    description: Текст комментария
+  files:
+    description: Метаданные массива Файлов
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/TaskNoteFileList'

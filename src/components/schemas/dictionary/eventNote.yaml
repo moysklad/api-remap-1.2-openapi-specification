@@ -1,0 +1,46 @@
+type: object
+description: Событие в Ленте документа
+x-entity-static-builder:
+  methodParams:
+    - "documentType"
+    - "parentId"
+    - "id"
+  href:
+    - path: "entity"
+    - param: "documentType"
+    - param: "parentId"
+    - path: "notes"
+    - param: "id"
+  type: "eventnote"
+properties:
+  meta:
+    description: Метаданные События
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID События
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  created:
+    type: string
+    description: Момент создания События
+    readOnly: true
+  description:
+    type: string
+    maxLength: 4096
+    description: Текст События
+  author:
+    description: Метаданные Сотрудника - создателя События
+    $ref: '../../../openapi.yaml#/components/schemas/Employee'
+    readOnly: true
+  authorApplication:
+    description: Метаданные Решения - создателя События
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Application'
+    readOnly: true

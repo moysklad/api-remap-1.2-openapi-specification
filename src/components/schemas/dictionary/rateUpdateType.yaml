@@ -1,0 +1,4 @@
+type: string
+description: Известные значения способа обновления курса валюты
+enum: [manual, auto]
+example: "manual"

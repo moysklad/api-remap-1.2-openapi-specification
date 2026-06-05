@@ -1,0 +1,48 @@
+get:
+  operationId: getVariantCharacteristics
+  tags:
+  - VariantCharacteristics
+  summary: Получить список Характеристики модификаций
+  parameters:
+  - $ref: '../../../components/headers.yaml#/AcceptHeader'
+  - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              meta:
+                $ref: '../../../openapi.yaml#/components/schemas/Meta'
+              rows:
+                type: array
+                items:
+                  $ref: '../../../openapi.yaml#/components/schemas/VariantCharacteristic'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+post:
+  operationId: createVariantCharacteristic
+  tags:
+  - VariantCharacteristics
+  summary: Создать Характеристику модификаций
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../openapi.yaml#/components/schemas/VariantCharacteristic'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/VariantCharacteristic'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+  parameters:
+  - $ref: '../../../components/headers.yaml#/AcceptHeader'
+  - $ref: '../../../components/headers.yaml#/AcceptEncoding'

@@ -1,0 +1,34 @@
+type: object
+description: Компонент комплекта
+x-entity-static-builder:
+  methodParams:
+    - "parentId"
+    - "id"
+  href:
+    - path: "entity"
+    - path: "bundle"
+    - param: "parentId"
+    - path: "components"
+    - param: "id"
+  type: "bundlecomponent"
+properties:
+  meta:
+    description: Метаданные компонента комплекта
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID компонента комплекта
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  quantity:
+    type: number
+    format: float
+    description: Количество товаров/услуг/модификаций данного вида в компоненте
+  assortment:
+    description: Метаданные товара/услуги/модификации, которую представляет собой компонент
+    $ref: '../../../openapi.yaml#/components/schemas/AssortmentWithoutBundle'

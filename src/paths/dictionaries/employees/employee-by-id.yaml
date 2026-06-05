@@ -1,0 +1,74 @@
+get:
+  operationId: getEmployeeById
+  tags:
+    - Employees
+  summary: Получить сотрудника по ID
+  description: Запрос на получение отдельного сотрудника с указанным id
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/Employee'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+    
+    
+    
+    
+
+put:
+  operationId: updateEmployee
+  tags:
+    - Employees
+  summary: Обновить сотрудника
+  description: Обновление сотрудника с указанным id
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../openapi.yaml#/components/schemas/Employee'
+  responses:
+    '200':
+      description: Сотрудник успешно обновлен
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/Employee'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+delete:
+  operationId: deleteEmployee
+  tags:
+    - Employees
+  summary: Удалить сотрудника
+  description: Удаление сотрудника с указанным id
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Сотрудник успешно удален
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+    
+    
+    
+    
+    
+    

@@ -1,0 +1,97 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/store/b733c216-2783-11f1-0a83-1f2500000237?expand=slots,zones",
+    "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/store/metadata",
+    "type": "store",
+    "mediaType": "application/json",
+    "uuidHref": "https://api.moysklad.ru/app/#warehouse/edit?id=b733c216-2783-11f1-0a83-1f2500000237"
+  },
+  "id": "b733c216-2783-11f1-0a83-1f2500000237",
+  "code": "test",
+  "accountId": "c229f794-26ae-11f1-0a83-1f2100000002",
+  "owner": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/employee/c2f12a89-26ae-11f1-0a83-1f2500000055",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/employee/metadata",
+      "type": "employee",
+      "mediaType": "application/json",
+      "uuidHref": "https://api.moysklad.ru/app/#employee/edit?id=c2f12a89-26ae-11f1-0a83-1f2500000055"
+    }
+  },
+  "shared": false,
+  "group": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/group/c22b8a8c-26ae-11f1-0a83-1f2100000003",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/group/metadata",
+      "type": "group",
+      "mediaType": "application/json"
+    }
+  },
+  "updated": "2026-03-24 16:16:49.289",
+  "name": "poi",
+  "description": "ytr",
+  "externalCode": "3QBF3WwfjHymwAVx-YSBU3",
+  "archived": false,
+  "pathName": "Основной склад",
+  "parent": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/store/c34a3943-26ae-11f1-0a83-1f25000000a4",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/store/metadata",
+      "type": "store",
+      "mediaType": "application/json",
+      "uuidHref": "https://api.moysklad.ru/app/#warehouse/edit?id=c34a3943-26ae-11f1-0a83-1f25000000a4"
+    }
+  },
+  "address": "",
+  "addressFull": {
+    "comment": "try"
+  },
+  "zones": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/store/b733c216-2783-11f1-0a83-1f2500000237/zones",
+      "type": "storezone",
+      "mediaType": "application/json",
+      "size": 1,
+      "limit": 1000,
+      "offset": 0
+    },
+    "rows": [
+      {
+        "meta": {
+          "href": "https://api.moysklad.ru/api/remap/1.2/entity/store/b733c216-2783-11f1-0a83-1f2500000237/zones/b733ce21-2783-11f1-0a83-1f2500000239",
+          "type": "storezone",
+          "mediaType": "application/json"
+        },
+        "id": "b733ce21-2783-11f1-0a83-1f2500000239",
+        "accountId": "c229f794-26ae-11f1-0a83-1f2100000002",
+        "updated": "2026-03-24 16:16:49.290",
+        "name": "lkjl",
+        "externalCode": "IPVWfjQ1gbaRyAKeyEizU0"
+      }
+    ]
+  },
+  "slots": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/store/b733c216-2783-11f1-0a83-1f2500000237/slots",
+      "type": "slot",
+      "mediaType": "application/json",
+      "size": 1,
+      "limit": 1000,
+      "offset": 0
+    },
+    "rows": [
+      {
+        "meta": {
+          "href": "https://api.moysklad.ru/api/remap/1.2/entity/store/b733c216-2783-11f1-0a83-1f2500000237/slots/b733cab9-2783-11f1-0a83-1f2500000238",
+          "type": "slot",
+          "mediaType": "application/json"
+        },
+        "id": "b733cab9-2783-11f1-0a83-1f2500000238",
+        "accountId": "c229f794-26ae-11f1-0a83-1f2100000002",
+        "updated": "2026-03-24 16:16:49.293",
+        "name": "ljkkjllll",
+        "externalCode": "vDq5DQ7nj54xfTVGMqtE10"
+      }
+    ]
+  }
+}

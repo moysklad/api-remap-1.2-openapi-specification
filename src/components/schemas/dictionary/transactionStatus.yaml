@@ -1,0 +1,4 @@
+type: string
+description: Известные значения статуса бонусной операции
+enum: [WAIT_PROCESSING, COMPLETED, CANCELED]
+example: "WAIT_PROCESSING"

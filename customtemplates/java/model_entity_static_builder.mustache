@@ -1,0 +1,18 @@
+{{#vendorExtensions}}
+{{#x-entity-static-builder}}
+  public static {{classname}} createWithMeta({{#methodParams}}{{#.}}UUID {{.}}{{^-last}}, {{/-last}}{{/.}}{{/methodParams}}) {
+    {{classname}} o = new {{classname}}();
+    Meta meta = new Meta();
+    meta.setType("{{type}}");
+    String href = {{invokerPackage}}.Configuration.getDefaultApiClient().getBaseURL() + "/" + {{#href}}{{#path}}"{{.}}"{{/path}}{{#param}}{{.}}{{/param}}{{^-last}} + "/" + {{/-last}}{{/href}};
+    try {
+        meta.setHref(new java.net.URI(href));
+    } catch (java.net.URISyntaxException e) {
+        throw new RuntimeException(e);
+    }
+    o.meta = meta;
+    o.id = id;
+    return o;
+  }
+{{/x-entity-static-builder}}
+{{/vendorExtensions}}

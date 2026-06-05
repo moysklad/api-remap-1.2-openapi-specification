@@ -1,0 +1,60 @@
+type: object
+description: Техпроцесс
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "processingprocess"
+    - param: "id"
+  type: "processingprocess"
+properties:
+  meta:
+    description: Метаданные Техпроцесса
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID Техпроцесса
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  owner:
+    description: Метаданные владельца (Сотрудника)
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Employee'
+  shared:
+    type: boolean
+    description: Общий доступ
+  group:
+    description: Метаданные отдела сотрудника
+    $ref: '../../../openapi.yaml#/components/schemas/Group'
+  updated:
+    type: string
+    description: Момент последнего обновления Техпроцесса
+    readOnly: true
+  name:
+    type: string
+    maxLength: 255
+    description: Наименование Техпроцесса
+  description:
+    type: string
+    maxLength: 4096
+    nullable: true
+    description: Комментарий Техпроцесса
+  externalCode:
+    type: string
+    maxLength: 255
+    description: Внешний код Техпроцесса
+  archived:
+    type: boolean
+    description: Добавлен ли Техпроцесс в архив
+  positions:
+    type: object
+    description: Метаданные позиций Техпроцесса
+    $ref: '../../../openapi.yaml#/components/schemas/ProcessingProcessPositionList'

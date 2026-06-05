@@ -1,0 +1,12 @@
+type: string
+description: Известные значения действующего тарифа аккаунта
+enum:
+  - BASIC
+  - CORPORATE
+  - FREE
+  - MINIMAL
+  - PROFESSIONAL
+  - RETAIL
+  - START
+  - TRIAL
+example: "CORPORATE"

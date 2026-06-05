@@ -1,0 +1,321 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/12a8b923-692c-11e6-8a84-bae500000056",
+    "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/metadata",
+    "type": "counterparty",
+    "mediaType": "application/json"
+  },
+  "id": "12a8b923-692c-11e6-8a84-bae500000056",
+  "syncId": "12a8b923-692c-11e6-8a84-bae500000056",
+  "accountId": "abcdef12-1234-1234-1234-123456789012",
+  "owner": {
+    "meta": {
+      "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/employee/b2c670fa-01b5-11f1-0a81-072700000055",
+      "metadataHref": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/employee/metadata",
+      "type": "employee",
+      "mediaType": "application/json",
+      "uuidHref": "https://online-api-2.testms-test.lognex.ru/app/#employee/edit?id=b2c670fa-01b5-11f1-0a81-072700000055"
+    }
+  },
+  "shared": true,
+  "group": {
+    "meta": {
+      "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/group/b205f9b3-01b5-11f1-0a81-181d00000003",
+      "metadataHref": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/group/metadata",
+      "type": "group",
+      "mediaType": "application/json"
+    }
+  },
+  "updated": "2024-01-15T10:30:00.000+03:00",
+  "name": "ООО Тестовый контрагент",
+  "description": "testDescirption",
+  "code": "CP-001",
+  "externalCode": "EXT-CP-001",
+  "archived": false,
+  "created": "2024-01-10T09:00:00.000+03:00",
+  "companyType": "legal",
+  "legalTitle": "Индивидуальный предприниматель Чекамеев Алексей Петрович",
+  "legalAddress": "430008, Россия, Респ Мордовия, г Саранск, рп Луховка",
+  "legalAddressFull": {
+    "postalCode": "430008",
+    "country": {
+      "meta": {
+        "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/country/9df7c2c3-7782-4c5c-a8ed-1102af611608",
+        "metadataHref": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/country/metadata",
+        "type": "country",
+        "mediaType": "application/json",
+        "uuidHref": "https://online-api-2.testms-test.lognex.ru/app/#country/edit?id=9df7c2c3-7782-4c5c-a8ed-1102af611608"
+      }
+    },
+    "region": {
+      "meta": {
+        "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/region/00000000-0000-0000-0000-000000000013",
+        "metadataHref": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/region/metadata",
+        "type": "region",
+        "mediaType": "application/json"
+      }
+    },
+    "city": "г Саранск, рп Луховка",
+    "comment": "выыфвы"
+  },
+  "actualAddress": "430008, Россия, Респ Мордовия, г Саранск, рп Луховка",
+  "actualAddressFull": {
+    "postalCode": "430008",
+    "country": {
+      "meta": {
+        "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/country/9df7c2c3-7782-4c5c-a8ed-1102af611608",
+        "metadataHref": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/country/metadata",
+        "type": "country",
+        "mediaType": "application/json",
+        "uuidHref": "https://online-api-2.testms-test.lognex.ru/app/#country/edit?id=9df7c2c3-7782-4c5c-a8ed-1102af611608"
+      }
+    },
+    "region": {
+      "meta": {
+        "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/region/00000000-0000-0000-0000-000000000013",
+        "metadataHref": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/region/metadata",
+        "type": "region",
+        "mediaType": "application/json"
+      }
+    },
+    "city": "г Саранск, рп Луховка",
+    "comment": "выыфвы"
+  },
+  "attributes":[
+    {
+      "meta":{
+        "href":"https://api.moysklad.ru/api/remap/1.2/entity/counterparty/metadata/attributes/0d129ff5-2c8c-11e6-8a84-bae5000000f3",
+        "type":"attributemetadata",
+        "mediaType":"application/json"
+      },
+      "id":"0d129ff5-2c8c-11e6-8a84-bae5000000f3",
+      "name":"AttributeName1",
+      "type":"double",
+      "value":0.75
+    },
+    {
+      "meta":{
+        "href":"https://api.moysklad.ru/api/remap/1.2/entity/counterparty/metadata/attributes/0d12a9a5-2c8c-11e6-8a84-bae5000000f4",
+        "type":"attributemetadata",
+        "mediaType":"application/json"
+      },
+      "id":"0d12a9a5-2c8c-11e6-8a84-bae5000000f4",
+      "name":"AttributeName2",
+      "type":"time",
+      "value":"2016-06-07 12:52:33"
+    },
+    {
+      "meta":{
+        "href":"https://api.moysklad.ru/api/remap/1.2/entity/counterparty/metadata/attributes/0d12b1e7-2c8c-11e6-8a84-bae5000000f5",
+        "type":"attributemetadata",
+        "mediaType":"application/json"
+      },
+      "id":"0d12b1e7-2c8c-11e6-8a84-bae5000000f5",
+      "name":"AttributeName3",
+      "type":"boolean",
+      "value":false
+    }
+  ],
+  "legalLastName": "Чекамеев",
+  "legalFirstName": "Алексей",
+  "legalMiddleName": "Петрович",
+  "inn": "132808730606",
+  "okpo": "122121",
+  "ogrnip": "313132804400022",
+  "certificateNumber": "12121212",
+  "certificateDate": "2026-02-04 00:00:00.000",
+  "email": "888888888@mail.ru",
+  "phone": "888888888",
+  "fax": "8888888",
+  "accounts": {
+    "meta": {
+      "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/counterparty/b3922fc3-01b5-11f1-0a81-0727000000bf/accounts",
+      "type": "account",
+      "mediaType": "application/json",
+      "size": 0,
+      "limit": 1000,
+      "offset": 0
+    }
+  },
+  "tags": [
+    "uyiuuiy"
+  ],
+  "contactpersons": {
+    "meta": {
+      "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/counterparty/b3922fc3-01b5-11f1-0a81-0727000000bf/contactpersons",
+      "type": "contactperson",
+      "mediaType": "application/json",
+      "size": 1,
+      "limit": 1000,
+      "offset": 0
+    },
+    "rows": [
+      {
+        "meta": {
+          "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/counterparty/b3922fc3-01b5-11f1-0a81-0727000000bf/contactpersons/097ed025-025c-11f1-0a81-072700000158",
+          "type": "contactperson",
+          "mediaType": "application/json"
+        },
+        "id": "097ed025-025c-11f1-0a81-072700000158",
+        "accountId": "b2040544-01b5-11f1-0a81-181d00000002",
+        "updated": "2026-02-05 09:29:34.457",
+        "name": "Test Test Test",
+        "description": "fsdfdsfdsfsd",
+        "externalCode": "771Yyo1Ng0GlrY8HLIIlF0",
+        "email": "9999999@mail.ru",
+        "phone": "999999999",
+        "position": "123",
+        "agent": {
+          "meta": {
+            "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/counterparty/b3922fc3-01b5-11f1-0a81-0727000000bf",
+            "metadataHref": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/counterparty/metadata",
+            "type": "counterparty",
+            "mediaType": "application/json",
+            "uuidHref": "https://online-api-2.testms-test.lognex.ru/app/#company/edit?id=b3922fc3-01b5-11f1-0a81-0727000000bf"
+          }
+        }
+      }
+    ]
+  },
+  "notes": {
+    "meta": {
+      "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/counterparty/b3922fc3-01b5-11f1-0a81-0727000000bf/notes",
+      "type": "note",
+      "mediaType": "application/json",
+      "size": 1,
+      "limit": 1000,
+      "offset": 0
+    },
+    "rows": [
+      {
+        "meta": {
+          "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/counterparty/b3922fc3-01b5-11f1-0a81-0727000000bf/notes/3665cc2b-028c-11f1-0a81-0727000001af",
+          "type": "note",
+          "mediaType": "application/json"
+        },
+        "id": "3665cc2b-028c-11f1-0a81-0727000001af",
+        "accountId": "b2040544-01b5-11f1-0a81-181d00000002",
+        "created": "2026-02-05 15:14:25.634",
+        "description": "1",
+        "agent": {
+          "meta": {
+            "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/counterparty/b3922fc3-01b5-11f1-0a81-0727000000bf",
+            "metadataHref": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/counterparty/metadata",
+            "type": "counterparty",
+            "mediaType": "application/json",
+            "uuidHref": "https://online-api-2.testms-test.lognex.ru/app/#company/edit?id=b3922fc3-01b5-11f1-0a81-0727000000bf"
+          }
+        },
+        "author": {
+          "meta": {
+            "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/employee/b2c670fa-01b5-11f1-0a81-072700000055",
+            "metadataHref": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/employee/metadata",
+            "type": "employee",
+            "mediaType": "application/json",
+            "uuidHref": "https://online-api-2.testms-test.lognex.ru/app/#employee/edit?id=b2c670fa-01b5-11f1-0a81-072700000055"
+          }
+        }
+      }
+    ]
+  },
+  "discountCardNumber": "1111",
+  "discounts": [
+    {
+      "discount": {
+        "meta": {
+          "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/personaldiscount/83077b71-025e-11f1-0a81-07270000016d",
+          "metadataHref": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/personaldiscount/metadata",
+          "type": "personaldiscount",
+          "mediaType": "application/json",
+          "uuidHref": "https://online-api-2.testms-test.lognex.ru/app/#discount/edit?id=83077b71-025e-11f1-0a81-07270000016d"
+        }
+      },
+      "personalDiscount": 10.0
+    },
+    {
+      "discount": {
+        "meta": {
+          "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/accumulationdiscount/a851332c-025e-11f1-0a81-072700000173",
+          "metadataHref": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/accumulationdiscount/metadata",
+          "type": "accumulationdiscount",
+          "mediaType": "application/json",
+          "uuidHref": "https://online-api-2.testms-test.lognex.ru/app/#discount/edit?id=a851332c-025e-11f1-0a81-072700000173"
+        }
+      },
+      "demandSumCorrection": 1100.0
+    }
+  ],
+  "state": {
+    "meta": {
+      "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/counterparty/metadata/states/b3b37a9b-01b5-11f1-0a81-0727000000d2",
+      "metadataHref": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/counterparty/metadata",
+      "type": "state",
+      "mediaType": "application/json"
+    }
+  },
+  "priceType": {
+    "meta": {
+      "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/context/companysettings/pricetype/b35e9728-01b5-11f1-0a81-0727000000aa",
+      "type": "pricetype",
+      "mediaType": "application/json"
+    },
+    "id": "b35e9728-01b5-11f1-0a81-0727000000aa",
+    "name": "Цена продажи",
+    "externalCode": "cbcf493b-55bc-11d9-848a-00112f43529a"
+  },
+  "salesAmount": 0.0,
+  "files": {
+    "meta": {
+      "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/counterparty/b3922fc3-01b5-11f1-0a81-0727000000bf/files",
+      "type": "files",
+      "mediaType": "application/json",
+      "size": 0,
+      "limit": 1000,
+      "offset": 0
+    },
+    "rows": [
+      {
+        "meta": {
+          "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/counterparty/b3922fc3-01b5-11f1-0a81-0727000000bf/files/678498fb-05ca-40d1-8460-fecb7ff3d29f",
+          "type": "files",
+          "mediaType": "application/json",
+          "downloadHref": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/download/678498fb-05ca-40d1-8460-fecb7ff3d29f"
+        },
+        "title": "cursor_icon",
+        "filename": "cursor_icon.png",
+        "size": 2444,
+        "created": "2026-02-05 15:10:02.306",
+        "createdBy": {
+          "meta": {
+            "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/employee/b2c670fa-01b5-11f1-0a81-072700000055",
+            "metadataHref": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/employee/metadata",
+            "type": "employee",
+            "mediaType": "application/json",
+            "uuidHref": "https://online-api-2.testms-test.lognex.ru/app/#employee/edit?id=b2c670fa-01b5-11f1-0a81-072700000055"
+          }
+        },
+        "miniature": {
+          "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/download/678498fb-05ca-40d1-8460-fecb7ff3d29f?miniature=true",
+          "type": "files",
+          "mediaType": "image/png",
+          "downloadHref": "https://miniature-test-v3.moysklad.ru/miniature-test/miniature/b2040544-01b5-11f1-0a81-181d00000002/documentminiature/6fb0df91-b057-4130-8ab0-8662abfb5d09"
+        },
+        "tiny": {
+          "href": "https://static-test-v3.moysklad.ru/static-test/static/tinyimage/b2040544-01b5-11f1-0a81-181d00000002/tinyimage/336b889d-0546-462c-ab69-9d11a5b6c26b/t.png",
+          "type": "files",
+          "mediaType": "image/png"
+        }
+      }
+    ]
+  },
+  "bonusPoints": 5,
+  "bonusProgram": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/bonusprogram/1223d051-ba76-11e8-3353-995e0000005a",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/bonusprogram/metadata",
+      "type": "bonusprogram",
+      "mediaType": "application/json",
+      "uuidHref": "https://online.moysklad.ru/app/#discount/edit?id=1223d051-ba76-11e8-3353-995e0000005a"
+    }
+  }
+}
