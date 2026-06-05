@@ -24,6 +24,7 @@ properties:
     readOnly: true
   agent:
     description: Метаданные сотрудника, совершившего Внесение
+    x-agent-reference: false
     $ref: '../../../openapi.yaml#/components/schemas/Employee'
   applicable:
     type: boolean
@@ -85,7 +86,8 @@ properties:
     description: Опубликован ли документ
     readOnly: true
   rate:
-    $ref: '../common/currencyRate.yaml'
+    description: Валюта
+    $ref: '../../../openapi.yaml#/components/schemas/CurrencyRate'
   retailShift:
     description: Метаданные розничной смены
     $ref: '../../../openapi.yaml#/components/schemas/RetailShift'
@@ -102,7 +104,7 @@ properties:
     type: number
     format: double
     description: Сумма Внесения денег в копейках
-    minimum: 0.5
+    minimum: 1
   syncId:
     type: string
     format: uuid

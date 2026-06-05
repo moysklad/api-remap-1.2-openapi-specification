@@ -1,0 +1,15 @@
+type: object
+description: Список позиций Розничной продажи
+properties:
+  context:
+    description: Метаданные о сотруднике, выполнившем запрос
+    $ref: '../../../openapi.yaml#/components/schemas/Context'
+  meta:
+    allOf:
+      - $ref: '../common/metaList.yaml'
+    description: Метаданные о выдаче
+  rows:
+    type: array
+    description: Массив позиций Розничной продажи
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/RetailDemandPosition'

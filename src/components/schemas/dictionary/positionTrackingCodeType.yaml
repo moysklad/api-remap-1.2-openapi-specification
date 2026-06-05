@@ -1,0 +1,7 @@
+type: string
+description: Известные значения типа кода маркировки в позиции документа
+enum:
+  - trackingcode
+  - consumerpack
+  - transportpack
+example: "trackingcode"
