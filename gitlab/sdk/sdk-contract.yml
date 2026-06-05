@@ -61,11 +61,6 @@ create-contract-user:
     - when: never
   script:
     - |
-      if [ "$CI_PIPELINE_SOURCE" = "push" ] && [ "$CI_COMMIT_REF_NAME" = "master" ]; then
-        echo "Skipping contract user creation on master push; marking create-contract-user as passed."
-        exit 0
-      fi
-    - |
       RESPONSE=$(curl --location -X POST "$API_HOST/api/remap/1.2/register" \
         --header 'Content-Type: application/x-www-form-urlencoded' \
         --header 'Accept-Encoding: gzip' \
@@ -100,12 +95,6 @@ remove-contract-env:
 sdk-contract:
   extends: .schemathesis-image
   stage: contract-test
-  parallel:
-    matrix:
-      - CONTRACT_SHARD: dictionaries-1
-      - CONTRACT_SHARD: dictionaries-2
-      - CONTRACT_SHARD: dictionaries-3
-      - CONTRACT_SHARD: dictionaries-4
   needs:
     - job: bundle-openapi
       artifacts: true
@@ -117,11 +106,6 @@ sdk-contract:
       when: on_success
     - when: never
   script:
-    - |
-      if [ "$CI_PIPELINE_SOURCE" = "push" ] && [ "$CI_COMMIT_REF_NAME" = "master" ]; then
-        echo "Skipping Schemathesis execution on master push; marking sdk-contract as passed."
-        exit 0
-      fi
     - |
       if [ -z "$SCHEMATHESIS_HOST" ] || [ -z "$SCHEMATHESIS_LOGIN" ] || [ -z "$SCHEMATHESIS_PASSWORD" ]; then
         echo "ERROR: SCHEMATHESIS_* variables are not set. Environment was not prepared (create-contract-user did not run)."
