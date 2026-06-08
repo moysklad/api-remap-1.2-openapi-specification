@@ -1192,6 +1192,28 @@ paths:
   /entity/paymentin/new:
     $ref: './paths/documents/paymentins/paymentin-new.yaml'
 
+  # Documents - Facture In
+  /entity/facturein:
+    $ref: './paths/documents/factureins/factureins.yaml'
+  /entity/facturein/{id}:
+    $ref: './paths/documents/factureins/facturein-by-id.yaml'
+  /entity/facturein/delete:
+    $ref: './paths/documents/factureins/factureins-delete.yaml'
+  /entity/facturein/batch:
+    $ref: './paths/documents/factureins/factureins-batch.yaml'
+  /entity/facturein/metadata:
+    $ref: './paths/documents/factureins/facturein-metadata.yaml'
+  /entity/facturein/metadata/attributes:
+    $ref: './paths/documents/factureins/facturein-metadata-attribute.yaml'
+  /entity/facturein/metadata/attributes/{id}:
+    $ref: './paths/documents/factureins/facturein-metadata-attribute-by-id.yaml'
+  /entity/facturein/metadata/states:
+    $ref: './paths/documents/factureins/facturein-metadata-states.yaml'
+  /entity/facturein/metadata/states/{id}:
+    $ref: './paths/documents/factureins/facturein-metadata-state-by-id.yaml'
+  /entity/facturein/new:
+    $ref: './paths/documents/factureins/facturein-new.yaml'
+
   # Documents - Facture Out
   /entity/factureout:
     $ref: './paths/documents/factureouts/factureouts.yaml'
@@ -1461,6 +1483,8 @@ components:
       $ref: './components/schemas/dictionary/factureOutList.yaml'
     FactureIn:
       $ref: './components/schemas/dictionary/factureIn.yaml'
+    FactureInList:
+      $ref: './components/schemas/dictionary/factureInList.yaml'
     FiscalType:
       $ref: './components/schemas/dictionary/fiscalType.yaml'
     Gender:
@@ -2131,6 +2155,8 @@ tags:
     description: Операции с приходными ордерами
   - name: PaymentIns
     description: Операции с входящими платежами
+  - name: FactureIns
+    description: Операции со Счетами-фактурами полученными
   - name: FactureOuts
     description: Операции со Счетами-фактурами выданными
   - name: PaymentOuts
