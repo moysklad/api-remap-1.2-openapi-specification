@@ -10,7 +10,7 @@ put:
     - $ref: '../../../components/headers.yaml#/AcceptEncoding'
     - $ref: '../../../components/headers.yaml#/ContentTypeJson'
   requestBody:
-    required: false
+    required: true
     content:
       application/json:
         schema:
