@@ -1,0 +1,13 @@
+description: |
+  Элемент массива `paymentOperations` розничной смены.
+
+  Допустимые `meta.type`: cashin, paymentin.
+type: object
+properties:
+  meta:
+    description: Метаданные платежной операции
+    $ref: '../common/meta.yaml'
+  linkedSum:
+    type: number
+    format: double
+    description: Связанная сумма платежной операции

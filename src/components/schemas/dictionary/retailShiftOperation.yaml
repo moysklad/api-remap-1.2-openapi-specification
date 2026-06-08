@@ -1,0 +1,10 @@
+description: |
+  Элемент массива `operations` розничной смены.
+
+  Допустимые `meta.type`: retaildemand, retailsalesreturn, retaildrawercashin,
+  retaildrawercashout.
+type: object
+properties:
+  meta:
+    description: Метаданные связанной операции
+    $ref: '../common/meta.yaml'

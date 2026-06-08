@@ -1652,6 +1652,8 @@ components:
       $ref: './components/schemas/dictionary/retailStoreList.yaml'
     RetailShift:
       $ref: './components/schemas/dictionary/retailShift.yaml'
+    RetailShiftCheque:
+      $ref: './components/schemas/dictionary/retailShiftCheque.yaml'
     RetailShiftList:
       $ref: './components/schemas/dictionary/retailShiftList.yaml'
     CashierList:
@@ -1775,6 +1777,10 @@ components:
       $ref: './components/schemas/dictionary/cashIn.yaml'
     CashInOperation:
       $ref: './components/schemas/dictionary/cashInOperation.yaml'
+    RetailShiftOperation:
+      $ref: './components/schemas/dictionary/retailShiftOperation.yaml'
+    RetailShiftPaymentOperation:
+      $ref: './components/schemas/dictionary/retailShiftPaymentOperation.yaml'
     PaymentInOperation:
       $ref: './components/schemas/dictionary/paymentInOperation.yaml'
     OperationLinkedSum:

@@ -54,59 +54,8 @@ properties:
     type: object
     description: Информация о смене ККТ
     nullable: true
-    properties:
-      start:
-        type: object
-        nullable: true
-        description: Информация об открытии смены ККТ
-        properties:
-          fnNumber:
-            type: string
-            description: Номер фискального накопителя
-          kktRegNumber:
-            type: string
-            description: Регистрационный номер ККТ
-          fiscalDocSign:
-            type: string
-            description: Фискальный признак документа
-          shiftNumber:
-            type: string
-            description: Номер смены ККТ
-          fiscalDocNumber:
-            type: string
-            description: Номер фискального документа
-          time:
-            type: string
-            description: Дата и время открытия смены
-      end:
-        type: object
-        nullable: true
-        description: Информация о закрытии смены ККТ
-        properties:
-          chequesTotal:
-            type: integer
-            description: Количество чеков за смену
-          fiscalDocNumber:
-            type: string
-            description: Номер фискального документа
-          fiscalDocSign:
-            type: string
-            description: Фискальный признак документа
-          fiscalDocsTotal:
-            type: integer
-            description: Количество фискальных документов за смену
-          fnNumber:
-            type: string
-            description: Номер фискального накопителя
-          kktRegNumber:
-            type: string
-            description: Регистрационный номер ККТ
-          shiftNumber:
-            type: string
-            description: Номер смены ККТ
-          time:
-            type: string
-            description: Дата и время закрытия смены
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/RetailShiftCheque'
   closeDate:
     type: string
     nullable: true
@@ -156,15 +105,13 @@ properties:
     description: Наименование Розничной смены
   operations:
     type: array
-    description: Коллекция метаданных связанных операций
+    description: |
+      Связанные операции. Допустимые типы по `meta.type`: retaildemand, retailsalesreturn,
+      retaildrawercashin, retaildrawercashout.
     nullable: true
     readOnly: true
     items:
-      type: object
-      properties:
-        meta:
-          description: Метаданные связанной операции
-          $ref: '../common/meta.yaml'
+      $ref: '../../../openapi.yaml#/components/schemas/RetailShiftOperation'
   organization:
     description: Метаданные юрлица
     $ref: '../../../openapi.yaml#/components/schemas/Organization'
@@ -186,15 +133,7 @@ properties:
     nullable: true
     readOnly: true
     items:
-      type: object
-      properties:
-        meta:
-          description: Метаданные платежной операции
-          $ref: '../common/meta.yaml'
-        linkedSum:
-          type: number
-          format: double
-          description: Связанная сумма платежной операции
+      $ref: '../../../openapi.yaml#/components/schemas/RetailShiftPaymentOperation'
   printed:
     type: boolean
     description: Напечатан ли документ
