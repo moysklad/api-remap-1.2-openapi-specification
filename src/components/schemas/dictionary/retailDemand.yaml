@@ -97,45 +97,56 @@ properties:
     type: number
     format: double
     description: Оплачено наличными
+    minimum: 0
+    exclusiveMinimum: true
   noCashSum:
     type: number
     format: double
     description: Оплачено картой
+    minimum: 0
+    exclusiveMinimum: true
   qrSum:
     type: number
     format: double
     description: Оплачено по QR-коду
+    minimum: 0
+    exclusiveMinimum: true
   prepaymentCashSum:
     type: number
     format: double
     description: Предоплата наличными
+    minimum: 0
+    exclusiveMinimum: true
   prepaymentNoCashSum:
     type: number
     format: double
     description: Предоплата картой
+    minimum: 0
+    exclusiveMinimum: true
   prepaymentQrSum:
     type: number
     format: double
     description: Предоплата по QR-коду
+    minimum: 0
+    exclusiveMinimum: true
   advancePaymentSum:
     type: number
     format: double
     description: Оплачено из аванса
+    minimum: 0
+    exclusiveMinimum: true
   checkNumber:
-    type: string
-    maxLength: 255
+    type: integer
     description: Номер чека
   checkSum:
     type: number
     format: double
     description: Сумма чека
   documentNumber:
-    type: string
-    maxLength: 255
+    type: integer
     description: Номер документа
   sessionNumber:
-    type: string
-    maxLength: 255
+    type: integer
     description: Номер сессии
   taxSystem:
     type: string
