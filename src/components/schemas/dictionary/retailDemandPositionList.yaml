@@ -10,6 +10,7 @@ properties:
     description: Метаданные о выдаче
   rows:
     type: array
+    nullable: true
     description: Массив позиций Розничной продажи
     items:
       $ref: '../../../openapi.yaml#/components/schemas/RetailDemandPosition'

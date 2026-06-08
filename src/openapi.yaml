@@ -726,6 +726,8 @@ paths:
     $ref: './paths/documents/retaildemands/retaildemand-metadata-attribute.yaml'
   /entity/retaildemand/metadata/attributes/{id}:
     $ref: './paths/documents/retaildemands/retaildemand-metadata-attribute-by-id.yaml'
+  /entity/retaildemand/metadata/states:
+    $ref: './paths/documents/retaildemands/retaildemand-metadata-states.yaml'
   /entity/retaildemand/metadata/states/{id}:
     $ref: './paths/documents/retaildemands/retaildemand-metadata-state-by-id.yaml'
   /entity/retaildemand/new:
