@@ -77,10 +77,7 @@ properties:
     description: |
       Накладные расходы на уровне документа.
       Если позиции Оприходования не заданы, накладные расходы задать нельзя.
-    nullable: true
-    type: object
-    allOf:
-      - $ref: '../../../openapi.yaml#/components/schemas/EnterOverhead'
+    $ref: '../common/overhead.yaml'
   owner:
     description: Владелец (Сотрудник)
     nullable: true

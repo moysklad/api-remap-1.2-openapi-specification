@@ -182,13 +182,10 @@ properties:
     allOf:
       - $ref: '../../../openapi.yaml#/components/schemas/Address'
   overhead:
-    type: object
-    nullable: true
     description: |
       Накладные расходы на уровне документа.
       Если позиции Отгрузки не заданы, накладные расходы задать нельзя.
-    allOf:
-      - $ref: '../../../openapi.yaml#/components/schemas/DemandOverhead'
+    $ref: '../common/overhead.yaml'
   customerOrder:
     description: Заказ покупателя, с которым связана Отгрузка
     nullable: true

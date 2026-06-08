@@ -1,0 +1,70 @@
+type: object
+description: Позиция Инвентаризации
+x-entity-static-builder:
+  methodParams:
+    - "parentId"
+    - "id"
+  href:
+    - path: "entity"
+    - path: "inventory"
+    - param: "parentId"
+    - path: "positions"
+    - param: "id"
+  type: "inventoryposition"
+properties:
+  meta:
+    description: Метаданные позиции
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID позиции
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  assortment:
+    type: object
+    description: Метаданные товара/услуги/партии/модификации, которую представляет собой позиция
+    $ref: '../../../openapi.yaml#/components/schemas/Assortment'
+  calculatedQuantity:
+    type: number
+    format: double
+    description: Расчетный остаток
+  correctionAmount:
+    type: number
+    format: double
+    description: Разница между расчетным остатком и фактическим
+    readOnly: true
+  correctionSum:
+    type: number
+    format: double
+    description: Избыток/недостача
+    readOnly: true
+  pack:
+    description: Упаковка Товара
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Pack'
+  price:
+    type: number
+    format: double
+    description: Цена товара/услуги в копейках
+  things:
+    type: array
+    description: |
+      Серийные номера. Игнорируется, если товар позиции не на серийном учёте;
+      иначе количество единиц в позиции совпадает с числом переданных серийных номеров.
+    items:
+      type: string
+  quantity:
+    type: number
+    format: double
+    description: |
+      Количество товаров/услуг данного вида в позиции. Если позиция - товар, 
+      у которого включен учет по серийным номерам, то значение в этом поле всегда 
+      будет равно количеству серийных номеров для данной позиции в документе.
+

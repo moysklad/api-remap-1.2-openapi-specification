@@ -37,11 +37,8 @@ properties:
   gtd:
     type: object
     nullable: true
-    description: Грузовая таможенная декларация
-    properties:
-      name:
-        type: string
-        description: Номер ГТД
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Gtd'
   overhead:
     type: integer
     description: Накладные расходы
