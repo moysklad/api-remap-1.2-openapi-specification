@@ -28,6 +28,8 @@ properties:
   quantity:
     type: number
     format: double
+    minimum: 0
+    exclusiveMinimum: true
     description: Количество товаров/услуг данного вида в позиции
   price:
     type: number
