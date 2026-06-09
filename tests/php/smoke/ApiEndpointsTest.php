@@ -1507,6 +1507,7 @@ class ApiEndpointsTest extends TestCase
         $this->assertReachable($this->client->post(self::API_BASE_PATH . '/entity/processingorder/batch', ['json' => [['name' => 'processingorder Z']]]));
 
         $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/processingorder/' . self::TEST_UUID . '/positions'));
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . '/entity/processingorder/' . self::TEST_UUID . '/positions/batch', ['json' => [['quantity' => 1]]]));
 
         $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/processingorder/' . self::TEST_UUID . '/positions/' . self::TEST_UUID));
         $this->assertReachable($this->client->put(self::API_BASE_PATH . '/entity/processingorder/' . self::TEST_UUID . '/positions/' . self::TEST_UUID, ['json' => ['quantity' => 2]]));
@@ -2178,7 +2179,6 @@ class ApiEndpointsTest extends TestCase
     public function testDocumentEndpointsInternalCustomerPurchase(): void
     {
         $this->assertDocumentEndpoints('/entity/internalorder');
-        $this->assertDocumentEndpoints('/entity/processingorder');
         $this->assertDocumentEndpoints('/entity/customerorder');
         $this->assertDocumentEndpoints('/entity/purchaseorder');
     }
@@ -2350,9 +2350,7 @@ class ApiEndpointsTest extends TestCase
 
         $this->assertReachable($this->client->put(self::API_BASE_PATH . $base . '/new', ['json' => new \stdClass()]));
 
-        if ($base !== '/entity/processingorder') {
-            $this->assertReachable($this->client->post(self::API_BASE_PATH . $base . '/' . self::TEST_UUID . '/positions', ['json' => ['quantity' => 1]]));
-        }
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . $base . '/' . self::TEST_UUID . '/positions', ['json' => ['quantity' => 1]]));
         $this->assertReachable($this->client->post(self::API_BASE_PATH . $base . '/' . self::TEST_UUID . '/positions/batch', ['json' => [['quantity' => 1]]]));
 
         $this->assertReachable($this->client->get(self::API_BASE_PATH . $base . '/' . self::TEST_UUID . '/positions/' . self::TEST_UUID));
