@@ -1884,8 +1884,6 @@ components:
       $ref: './components/schemas/dictionary/retailDemandPosition.yaml'
     RetailDemandPositionList:
       $ref: './components/schemas/dictionary/retailDemandPositionList.yaml'
-    RetailDemandDeclaration:
-      $ref: './components/schemas/dictionary/retailDemandDeclaration.yaml'
     RetailSalesReturn:
       $ref: './components/schemas/dictionary/retailSalesReturn.yaml'
     RetailSalesReturnList:
