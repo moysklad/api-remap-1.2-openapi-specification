@@ -74,5 +74,39 @@
       "type": "state",
       "mediaType": "application/json"
     }
-  }
+  },
+  "attributes": [
+    {
+      "meta": {
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/factureout/metadata/attributes/8b0b6c1d-aa6f-11e6-8a84-bc520000008a",
+        "type": "attributemetadata",
+        "mediaType": "application/json"
+      },
+      "id": "8b0b6c1d-aa6f-11e6-8a84-bc520000008a",
+      "name": "доп поле",
+      "type": "string",
+      "value": "значение доп.поля"
+    }
+  ],
+  "paymentNumber": "платежный д-т",
+  "paymentDate": "2016-11-14 00:00:00",
+  "stateContractId": "005674",
+  "consignee": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/organization/c4dee133-99bb-11e6-8a84-bc5200000051",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/organization/metadata",
+      "type": "organization",
+      "mediaType": "application/json"
+    }
+  },
+  "demands": [
+    {
+      "meta": {
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/demand/f2570f6a-aa6d-11e6-8a84-bc520000006f",
+        "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/demand/metadata",
+        "type": "demand",
+        "mediaType": "application/json"
+      }
+    }
+  ]
 }
