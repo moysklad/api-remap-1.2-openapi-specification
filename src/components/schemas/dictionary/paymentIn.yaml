@@ -179,4 +179,4 @@ properties:
       invoiceout, commissionreportin, retailshift.
     nullable: true
     items:
-      $ref: '../../../openapi.yaml#/components/schemas/PaymentInOperation'
+      $ref: '../../../openapi.yaml#/components/schemas/FinanceInOperationAbstract'

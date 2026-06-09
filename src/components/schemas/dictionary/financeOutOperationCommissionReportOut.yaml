@@ -1,0 +1,5 @@
+type: object
+description: Выданный отчет комиссионера + linkedSum
+allOf:
+  - $ref: '../../../openapi.yaml#/components/schemas/FinanceOutOperationAbstract'
+  - $ref: '../../../openapi.yaml#/components/schemas/CommissionReportOut'

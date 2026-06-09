@@ -1,0 +1,5 @@
+type: object
+description: Счет поставщика + linkedSum
+allOf:
+  - $ref: '../../../openapi.yaml#/components/schemas/FinanceOutOperationAbstract'
+  - $ref: '../../../openapi.yaml#/components/schemas/InvoiceIn'

@@ -1,0 +1,5 @@
+type: object
+description: Приемка + linkedSum
+allOf:
+  - $ref: '../../../openapi.yaml#/components/schemas/FinanceOutOperationAbstract'
+  - $ref: '../../../openapi.yaml#/components/schemas/Supply'

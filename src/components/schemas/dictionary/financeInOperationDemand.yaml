@@ -1,0 +1,5 @@
+type: object
+description: Отгрузка + linkedSum
+allOf:
+  - $ref: '../../../openapi.yaml#/components/schemas/FinanceInOperationAbstract'
+  - $ref: '../../../openapi.yaml#/components/schemas/Demand'

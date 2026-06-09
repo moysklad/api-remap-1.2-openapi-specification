@@ -1,0 +1,5 @@
+type: object
+description: Заказ поставщику + linkedSum
+allOf:
+  - $ref: '../../../openapi.yaml#/components/schemas/FinanceOutOperationAbstract'
+  - $ref: '../../../openapi.yaml#/components/schemas/PurchaseOrder'
