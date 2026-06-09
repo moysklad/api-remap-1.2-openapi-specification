@@ -2,7 +2,7 @@ post:
   operationId: createEnterPositions
   tags:
     - Enters
-  summary: Создать позиции Оприходования
+  summary: Массовое создание и обновление позиций Оприходования
   parameters:
     - $ref: '../../../components/parameters.yaml#/entityId'
     - $ref: '../../../components/parameters.yaml#/expand'

@@ -2,7 +2,7 @@ post:
   operationId: createDemandPositions
   tags:
     - Demands
-  summary: Создать позиции Отгрузки
+  summary: Массовое создание и обновление позиций Отгрузки
   parameters:
     - $ref: '../../../components/parameters.yaml#/entityId'
     - $ref: '../../../components/parameters.yaml#/expand'

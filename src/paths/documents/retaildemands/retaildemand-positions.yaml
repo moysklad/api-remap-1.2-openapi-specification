@@ -25,7 +25,7 @@ post:
   operationId: createRetailDemandPosition
   tags:
     - RetailDemands
-  summary: Создать позицию Розничной продажи
+  summary: Создать и обновить позицию Розничной продажи
   parameters:
     - $ref: '../../../components/parameters.yaml#/entityId'
     - $ref: '../../../components/parameters.yaml#/expand'

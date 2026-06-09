@@ -26,7 +26,7 @@ post:
   operationId: createProcessingOrderPosition
   tags:
     - ProcessingOrders
-  summary: Изменить позицию ProcessingOrder
+  summary: Обновить позицию ProcessingOrder
   parameters:
     - $ref: '../../../components/parameters.yaml#/entityId'
     - $ref: '../../../components/parameters.yaml#/expand'

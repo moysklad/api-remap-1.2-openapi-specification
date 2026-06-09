@@ -25,7 +25,7 @@ post:
   operationId: createProcessingProcessPosition
   tags:
     - ProcessingProcesses
-  summary: Создать позицию Техпроцесса
+  summary: Создать и обновить позицию Техпроцесса
   description: Создание позиции Техпроцесса
   parameters:
     - $ref: '../../../components/parameters.yaml#/entityId'

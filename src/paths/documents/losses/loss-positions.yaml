@@ -25,7 +25,7 @@ post:
   operationId: createLossPosition
   tags:
     - Losses
-  summary: Создать позицию Списания
+  summary: Создать и обновить позицию Списания
   parameters:
     - $ref: '../../../components/parameters.yaml#/entityId'
     - $ref: '../../../components/parameters.yaml#/expand'

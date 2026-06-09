@@ -27,7 +27,7 @@ post:
   operationId: createMovePosition
   tags:
     - Moves
-  summary: Создать позицию Перемещения
+  summary: Создать и обновить позицию Перемещения
   parameters:
     - $ref: '../../../components/parameters.yaml#/entityId'
     - $ref: '../../../components/parameters.yaml#/expand'

@@ -2,7 +2,7 @@ post:
   operationId: createProcessingOrderPositions
   tags:
   - ProcessingOrders
-  summary: Массовое изменение позиций ProcessingOrder
+  summary: Массовое изменение позиций Заказа на производство
   parameters:
   - $ref: '../../../components/parameters.yaml#/entityId'
   - $ref: '../../../components/parameters.yaml#/expand'

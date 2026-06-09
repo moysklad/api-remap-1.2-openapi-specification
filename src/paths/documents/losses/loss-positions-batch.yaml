@@ -2,7 +2,7 @@ post:
   operationId: createLossPositions
   tags:
     - Losses
-  summary: Создать позиции Списания
+  summary: Массовое создание и обновление позиций Списания
   parameters:
     - $ref: '../../../components/parameters.yaml#/entityId'
     - $ref: '../../../components/parameters.yaml#/expand'

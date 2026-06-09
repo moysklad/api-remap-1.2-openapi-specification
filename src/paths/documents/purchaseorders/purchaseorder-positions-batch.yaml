@@ -2,7 +2,7 @@ post:
   operationId: createPurchaseOrderPositions
   tags:
   - PurchaseOrders
-  summary: Создать позиции PurchaseOrder
+  summary: Массовое создание и обновление позиций Заказа поставщику
   parameters:
   - $ref: '../../../components/parameters.yaml#/entityId'
   - $ref: '../../../components/parameters.yaml#/expand'

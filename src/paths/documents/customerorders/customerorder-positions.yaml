@@ -25,7 +25,7 @@ post:
   operationId: createCustomerOrderPosition
   tags:
   - CustomerOrders
-  summary: Создать позицию CustomerOrders
+  summary: Создать и обновить позицию Заказа покупателя
   parameters:
   - $ref: '../../../components/parameters.yaml#/entityId'
   - $ref: '../../../components/parameters.yaml#/expand'

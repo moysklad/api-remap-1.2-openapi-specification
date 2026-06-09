@@ -2,7 +2,7 @@ post:
   operationId: createSalesReturnPositions
   tags:
     - SalesReturns
-  summary: Создать позиции Возврата покупателя
+  summary: Массовое создание и обновление позиций Возврата покупателя
   parameters:
     - $ref: '../../../components/parameters.yaml#/entityId'
     - $ref: '../../../components/parameters.yaml#/expand'

@@ -24,7 +24,7 @@ post:
   operationId: createCommissionReportInPosition
   tags:
     - CommissionReportIns
-  summary: Создать позицию CommissionReportIn
+  summary: Создать и обновить позицию Полученного отчета комиссионера
   parameters:
     - $ref: '../../../components/parameters.yaml#/entityId'
     - $ref: '../../../components/parameters.yaml#/expand'

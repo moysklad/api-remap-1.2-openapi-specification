@@ -26,7 +26,7 @@ post:
   operationId: createSupplyPosition
   tags:
     - Supplies
-  summary: Создать позицию Приемки
+  summary: Создать и обновить позицию Приемки
   parameters:
     - $ref: '../../../components/parameters.yaml#/entityId'
     - $ref: '../../../components/parameters.yaml#/expand'

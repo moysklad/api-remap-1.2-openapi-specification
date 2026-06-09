@@ -2,7 +2,7 @@ post:
   operationId: createInventoryPositions
   tags:
     - Inventories
-  summary: Создать позиции Инвентаризации
+  summary: Массовое создание и обновление позиций Инвентаризации
   parameters:
     - $ref: '../../../components/parameters.yaml#/entityId'
     - $ref: '../../../components/parameters.yaml#/expand'

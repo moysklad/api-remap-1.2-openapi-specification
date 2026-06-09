@@ -24,7 +24,7 @@ post:
   operationId: createInternalOrderPosition
   tags:
   - InternalOrders
-  summary: Создать позицию InternalOrder
+  summary: Создать и обновить позицию Внутреннего заказа
   parameters:
   - $ref: '../../../components/parameters.yaml#/entityId'
   - $ref: '../../../components/parameters.yaml#/expand'
