@@ -15,14 +15,43 @@
 
 **Пример**
 
-x-entity-static-builder
-* methodParams:
-  * "parentId"
-  * "id"
-* href:
-  * path: "entity"
-  * path: "customerorder"
-  * param: "parentId"
-  * path: "positions"
-  * param: "id"
-* type: "customerorderposition"
+```yaml
+x-entity-static-builder:
+  methodParams:
+    - "parentId"
+    - "id"
+  href:
+    - path: "entity"
+    - path: "customerorder"
+    - param: "parentId"
+    - path: "positions"
+    - param: "id"
+  type: "customerorderposition"
+```
+
+
+## x-agent-reference
+
+**Предназначение**: явно пометить свойства `agent` и указать, что это поле является ссылкой на `Counterparty/Organization` 
+(через `Agent`) или обычной ссылкой другого типа.
+
+Используется для свойств с именем `agent` и задается как булевый флаг `true` или `false`.
+Расширение обязательно: для таких полей отсутствие `x-agent-reference` считается ошибкой валидации спецификации.
+
+**Структура**:
+* x-agent-reference - boolean
+  * true - поле трактуется как ссылка на `agent` (`anyOf` из `Counterparty` и `Organization`):
+    * в схеме поле задается через `allOf` с `$ref` на `#/components/schemas/Agent`;
+    * `Agent` в спецификации описан как `anyOf` из `Counterparty` и `Organization`.
+  * false - поле `agent` не является ссылкой на `Agent`:
+    * для него используется обычный `$ref` на фактический тип (например, `Employee`).
+
+**Пример**
+
+```yaml
+agent:
+  description: Метаданные контрагента или юрлица
+  x-agent-reference: true
+  allOf:
+    - $ref: '../../../openapi.yaml#/components/schemas/Agent'
+```
