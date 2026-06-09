@@ -1,5 +1,5 @@
 post:
-  operationId: createDemandPositionsBatch
+  operationId: createDemandPositions
   tags:
     - Demands
   summary: Создать позиции Отгрузки

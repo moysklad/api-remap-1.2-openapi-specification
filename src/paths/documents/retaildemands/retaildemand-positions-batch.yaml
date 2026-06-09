@@ -1,5 +1,5 @@
 post:
-  operationId: createRetailDemandPositionsBatch
+  operationId: createRetailDemandPositions
   tags:
     - RetailDemands
   summary: Создать позиции Розничной продажи

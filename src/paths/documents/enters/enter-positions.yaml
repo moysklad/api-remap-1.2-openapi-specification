@@ -21,7 +21,7 @@ get:
       $ref: '../../../components/responses.yaml#/CommonError'
 
 post:
-  operationId: createEnterPositions
+  operationId: createEnterPosition
   tags:
     - Enters
   summary: Создать позицию Оприходования

@@ -2353,6 +2353,7 @@ class ApiEndpointsTest extends TestCase
         if ($base !== '/entity/processingorder') {
             $this->assertReachable($this->client->post(self::API_BASE_PATH . $base . '/' . self::TEST_UUID . '/positions', ['json' => ['quantity' => 1]]));
         }
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . $base . '/' . self::TEST_UUID . '/positions/batch', ['json' => [['quantity' => 1]]]));
 
         $this->assertReachable($this->client->get(self::API_BASE_PATH . $base . '/' . self::TEST_UUID . '/positions/' . self::TEST_UUID));
         $this->assertReachable($this->client->put(self::API_BASE_PATH . $base . '/' . self::TEST_UUID . '/positions/' . self::TEST_UUID, ['json' => ['quantity' => 2]]));

@@ -1,5 +1,5 @@
 post:
-  operationId: createInternalOrderPositionsBatch
+  operationId: createInternalOrderPositions
   tags:
   - InternalOrders
   summary: Создать позиции InternalOrder

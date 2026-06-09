@@ -1,5 +1,5 @@
 post:
-  operationId: createProcessingProcessPositionsBatch
+  operationId: createProcessingProcessPositions
   tags:
     - ProcessingProcesses
   summary: Создать позиции Техпроцесса

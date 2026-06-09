@@ -22,7 +22,7 @@ get:
       $ref: '../../../components/responses.yaml#/CommonError'
 
 post:
-  operationId: createRetailDemandPositions
+  operationId: createRetailDemandPosition
   tags:
     - RetailDemands
   summary: Создать позицию Розничной продажи

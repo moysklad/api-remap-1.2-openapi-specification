@@ -1,5 +1,5 @@
 post:
-  operationId: createSupplyPositionsBatch
+  operationId: createSupplyPositions
   tags:
     - Supplies
   summary: Создать позиции Приемки

@@ -1,5 +1,5 @@
 post:
-  operationId: createEnterPositionsBatch
+  operationId: createEnterPositions
   tags:
     - Enters
   summary: Создать позиции Оприходования

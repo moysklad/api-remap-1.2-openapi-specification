@@ -1,8 +1,8 @@
 post:
-  operationId: createEmissionOrderPositions
+  operationId: createProcessingOrderPositions
   tags:
-  - EmissionOrders
-  summary: Создать позиции Заказа кодов маркировки
+  - ProcessingOrders
+  summary: Массовое изменение позиций ProcessingOrder
   parameters:
   - $ref: '../../../components/parameters.yaml#/entityId'
   - $ref: '../../../components/parameters.yaml#/expand'
@@ -16,19 +16,19 @@ post:
         schema:
           type: array
           items:
-            $ref: '../../../openapi.yaml#/components/schemas/EmissionOrderPosition'
+            $ref: '../../../openapi.yaml#/components/schemas/ProcessingOrderPosition'
           minItems: 1
           maxItems: 1000
   responses:
     '200':
-      description: Успешный запрос
+      description: Результат по каждому элементу (успех или объект ошибки)
       content:
         application/json:
           schema:
             type: array
             items:
               oneOf:
-                - $ref: '../../../openapi.yaml#/components/schemas/EmissionOrderPosition'
+                - $ref: '../../../openapi.yaml#/components/schemas/ProcessingOrderPosition'
                 - $ref: '../../../openapi.yaml#/components/schemas/Error'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'

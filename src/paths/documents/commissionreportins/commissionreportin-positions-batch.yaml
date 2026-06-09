@@ -1,5 +1,5 @@
 post:
-  operationId: createCommissionReportInPositionsBatch
+  operationId: createCommissionReportInPositions
   tags:
     - CommissionReportIns
   summary: Создать позиции CommissionReportIn

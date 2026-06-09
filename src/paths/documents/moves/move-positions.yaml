@@ -24,7 +24,7 @@ get:
       $ref: '../../../components/responses.yaml#/CommonError'
 
 post:
-  operationId: createMovePositions
+  operationId: createMovePosition
   tags:
     - Moves
   summary: Создать позицию Перемещения

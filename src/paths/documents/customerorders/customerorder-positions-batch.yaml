@@ -1,5 +1,5 @@
 post:
-  operationId: createCustomerOrderPositionsBatch
+  operationId: createCustomerOrderPositions
   tags:
   - CustomerOrders
   summary: Создать позиции CustomerOrders

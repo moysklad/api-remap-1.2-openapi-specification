@@ -23,7 +23,7 @@ get:
       $ref: '../../../components/responses.yaml#/CommonError'
 
 post:
-  operationId: createDemandPositions
+  operationId: createDemandPosition
   tags:
     - Demands
   summary: Создать позицию Отгрузки

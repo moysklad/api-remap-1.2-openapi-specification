@@ -1,5 +1,5 @@
 post:
-  operationId: createPurchaseOrderPositionsBatch
+  operationId: createPurchaseOrderPositions
   tags:
   - PurchaseOrders
   summary: Создать позиции PurchaseOrder

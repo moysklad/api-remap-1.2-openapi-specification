@@ -1,5 +1,5 @@
 post:
-  operationId: createPurchaseReturnPositionsBatch
+  operationId: createPurchaseReturnPositions
   tags:
     - PurchaseReturns
   summary: Создать позиции Возврата поставщику

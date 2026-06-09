@@ -1,5 +1,5 @@
 post:
-  operationId: createCommissionReportOutPositionsBatch
+  operationId: createCommissionReportOutPositions
   tags:
     - CommissionReportOuts
   summary: Массовое создание позиций CommissionReportOut

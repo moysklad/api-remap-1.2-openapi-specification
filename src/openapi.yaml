@@ -614,6 +614,8 @@ paths:
     $ref: './paths/documents/processingorders/processingorder-new.yaml'
   /entity/processingorder/{id}/positions:
     $ref: './paths/documents/processingorders/processingorder-positions.yaml'
+  /entity/processingorder/{id}/positions/batch:
+    $ref: './paths/documents/processingorders/processingorder-positions-batch.yaml'
   /entity/processingorder/{id}/positions/{positionId}:
     $ref: './paths/documents/processingorders/processingorder-position-by-id.yaml'
   /entity/processingorder/{id}/positions/delete:

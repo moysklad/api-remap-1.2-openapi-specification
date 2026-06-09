@@ -1,5 +1,5 @@
 post:
-  operationId: createMovePositionsBatch
+  operationId: createMovePositions
   tags:
     - Moves
   summary: Создать позиции Перемещения

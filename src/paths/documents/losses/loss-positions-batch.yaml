@@ -1,5 +1,5 @@
 post:
-  operationId: createLossPositionsBatch
+  operationId: createLossPositions
   tags:
     - Losses
   summary: Создать позиции Списания

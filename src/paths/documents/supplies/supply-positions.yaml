@@ -23,7 +23,7 @@ get:
       $ref: '../../../components/responses.yaml#/CommonError'
 
 post:
-  operationId: createSupplyPositions
+  operationId: createSupplyPosition
   tags:
     - Supplies
   summary: Создать позицию Приемки

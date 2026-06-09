@@ -1,5 +1,5 @@
 post:
-  operationId: createInventoryPositionsBatch
+  operationId: createInventoryPositions
   tags:
     - Inventories
   summary: Создать позиции Инвентаризации
