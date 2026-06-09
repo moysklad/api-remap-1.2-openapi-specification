@@ -3,7 +3,6 @@ post:
   tags:
     - ProcessingProcesses
   summary: Массовое создание и обновление позиций Техпроцесса
-  description: Создание позиций Техпроцесса
   parameters:
     - $ref: '../../../components/parameters.yaml#/entityId'
     - $ref: '../../../components/parameters.yaml#/expand'
