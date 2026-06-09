@@ -1,6 +1,5 @@
-# Локальная среда для проверки SDK pipeline (lint, bundle, generate, smoke, golden)
-# Поддерживаемые языки: php, python, javascript
-# В CI используется образ docker.infra.lognex/docker-openapitools
+# Локальная dev-среда для lint, bundle, generate, smoke, golden (docker compose).
+# CI использует отдельные образы — см. gitlab/common/ci-images.yml и ci/*.Dockerfile.
 FROM node:22-alpine
 
 # PHP: расширения для PHPUnit — dom, xmlwriter, ctype и др.

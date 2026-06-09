@@ -4,7 +4,7 @@ variables:
   MAVEN_CLI_OPTS: "--batch-mode"
 
 .deploy-sdk-java-base:
-  image: $GLOBAL_DOCKER_URL/maven:3.4-release
+  extends: .maven-3.4-image
   stage: deploy-sdk
   before_script:
     - git config --global user.name "$GIT_USER"
@@ -44,7 +44,6 @@ deploy-to-maven:
   before_script:
     - rm -f /etc/apt/sources.list.d/*pgdg*.list || true
     - echo "$GPG_SECRET_KEY" | gpg --import
-    - apt-get update && apt-get install -y --no-install-recommends git
     - |
       if [ ! -d "sdk-repo" ]; then
         echo "Release artifact expired. Restore release artefact..."
