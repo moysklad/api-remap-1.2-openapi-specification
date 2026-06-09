@@ -41,7 +41,7 @@ post:
           $ref: '../../../openapi.yaml#/components/schemas/ProcessingProcessPosition'
   responses:
     '200':
-      description: Позиция Техпроцесса успешно созданы
+      description: Позиция Техпроцесса успешно создана
       content:
         application/json:
           schema:
