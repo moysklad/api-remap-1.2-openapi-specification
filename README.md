@@ -62,7 +62,7 @@ docker compose run --rm sdk make all          # lint + bundle + generate-php + t
 При повторных запусках зависимости npm не перекачиваются (пропуск `npm ci`, если `package-lock.json` не менялся). Принудительная переустановка:  
 `docker compose run --rm -e NPM_CI_FORCE=1 sdk make lint`
 
-Java SDK собирается как self-contained shaded-артефакт: внешние зависимости (Jackson/HttpClient и связанные модули) затеняются и релокируются внутрь артефакта.
+Java SDK собирается как self-contained shaded-артефакт: внешние зависимости Jackson (включая nullable-модуль) затеняются и релокируются внутрь артефакта.
 
 ### Локально (без Docker)
 
