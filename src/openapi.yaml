@@ -1781,9 +1781,9 @@ components:
         commissionreportin, retailshift.
       required:
         - linkedSum
+        - meta
       allOf:
         - $ref: '#/components/schemas/OperationLinkedSum'
-        - $ref: '#/components/schemas/Meta'
     FinanceInOperationCustomerOrder:
       $ref: './components/schemas/dictionary/financeInOperationCustomerOrder.yaml'
     FinanceInOperationPurchaseReturn:
