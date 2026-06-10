@@ -10,8 +10,8 @@
         "bundle-json": "redocly bundle --skip-decorator=filter-out src/openapi.yaml -o dist/openapi.json --ext json",
         "docs": "redocly build-docs src/openapi.yaml -o docs/index.html",
         "serve-docs": "redocly preview-docs src/openapi.yaml",
-        "generate-php": "node scripts/polymorphic-discriminator.js prepare && openapi-generator-cli generate -i dist/openapi-codegen.json -g php --additional-properties=phpVersion=8.1 -o clients/php -t customtemplates/php",
-        "generate-java": "node scripts/polymorphic-discriminator.js prepare && openapi-generator-cli generate --skip-operation-example -i dist/openapi-codegen.json -g java --additional-properties=library=apache-httpclient,dateLibrary=java8-localdatetime,useDateTimeOffset=false,discriminatorCaseSensitive=false,legacyDiscriminatorBehavior=false --global-property apiTests=false,modelTests=false -o clients/java -c java-sdk-config.yaml -t customtemplates/java",
+        "generate-php": "node scripts/polymorphic-discriminator.js validate prepare && openapi-generator-cli generate -i dist/openapi-codegen.json -g php --additional-properties=phpVersion=8.1 -o clients/php -t customtemplates/php",
+        "generate-java": "node scripts/polymorphic-discriminator.js validate prepare && openapi-generator-cli generate --skip-operation-example -i dist/openapi-codegen.json -g java --additional-properties=library=apache-httpclient,dateLibrary=java8-localdatetime,useDateTimeOffset=false,discriminatorCaseSensitive=false,legacyDiscriminatorBehavior=false --global-property apiTests=false,modelTests=false -o clients/java -c java-sdk-config.yaml -t customtemplates/java",
         "build": "npm run validate && npm run bundle && npm run bundle-json && npm run docs",
         "clean": "rm -rf dist clients docs"
     },
