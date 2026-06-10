@@ -51,6 +51,7 @@ docker compose run --rm sdk make bundle       # сборка dist/openapi.yaml
 docker compose run --rm sdk make light-bundle  # сборка dist/openapi.yaml для быстрых smoke-тестов
 docker compose run --rm sdk make generate-php # генерация PHP SDK
 docker compose run --rm sdk make generate-java # генерация Java SDK
+docker compose run --rm java-sdk bash -lc "cd clients/java && mvn clean package" # сборка shaded Java SDK
 docker compose run --rm sdk make test-golden-php  # golden-тесты
 docker compose run --rm java-sdk make test-golden-java  # golden-тесты
 docker compose run --rm sdk make test-smoke  # smoke-тесты (openapi-mock поднимается автоматически)
@@ -60,6 +61,8 @@ docker compose run --rm sdk make all          # lint + bundle + generate-php + t
 
 При повторных запусках зависимости npm не перекачиваются (пропуск `npm ci`, если `package-lock.json` не менялся). Принудительная переустановка:  
 `docker compose run --rm -e NPM_CI_FORCE=1 sdk make lint`
+
+Java SDK собирается как self-contained shaded-артефакт: внешние зависимости (Jackson/HttpClient и связанные модули) затеняются и релокируются внутрь артефакта.
 
 ### Локально (без Docker)
 
