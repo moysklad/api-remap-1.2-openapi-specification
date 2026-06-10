@@ -20,3 +20,6 @@ files:
   Orders.mustache:
     templateType: SupportingFiles
     destinationFilename: src/main/java/ru/moysklad/remap_1_2/api/Orders.java
+  PolymorphicMetaTypeDeserializer.mustache:
+    templateType: SupportingFiles
+    destinationFilename: src/main/java/ru/moysklad/remap_1_2/PolymorphicMetaTypeDeserializer.java

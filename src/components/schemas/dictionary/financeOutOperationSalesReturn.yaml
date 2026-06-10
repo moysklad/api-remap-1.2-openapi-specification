@@ -1,5 +1,7 @@
 type: object
 description: Возврат покупателя + linkedSum
+x-polymorphic-parent:
+  $ref: '../../../openapi.yaml#/components/schemas/FinanceOutOperationAbstract'
 allOf:
   - $ref: '../../../openapi.yaml#/components/schemas/FinanceOutOperationAbstract'
   - $ref: '../../../openapi.yaml#/components/schemas/SalesReturn'

@@ -55,3 +55,53 @@ agent:
   allOf:
     - $ref: '../../../openapi.yaml#/components/schemas/Agent'
 ```
+
+
+## x-polymorphic-discriminator
+
+**Предназначение**: описать полиморфную десериализацию, когда тип объекта лежит не в поле
+верхнего уровня, а во вложенном пути JSON, например `meta.type`.
+
+Стандартный OpenAPI `discriminator` поддерживает только имя свойства схемы, поэтому для API, где
+дискриминатор находится во вложенной ноде, используется это расширение.
+
+**Важно**:
+* `x-polymorphic-discriminator` и стандартный `discriminator` взаимоисключающие.
+  На одной схеме нельзя объявлять оба механизма. Проверка выполняется при `npm run validate`.
+* расширение работает в связке с `x-polymorphic-parent` на concrete-схемах из `mappings`.
+
+**Структура**:
+* path - строка в dot-нотации вложенности. Пример формата `meta.type`.
+* mappings - объект «значение дискриминатора → ссылка на схему». Пример: `$ref: '#/components/schemas/<Name>'`.
+
+**Пример**
+
+```yaml
+x-polymorphic-discriminator:
+  path: meta.type
+  mappings:
+    customerorder:
+      $ref: '#/components/schemas/FinanceInOperationCustomerOrder'
+```
+
+
+## x-polymorphic-parent
+
+**Предназначение**: явно связать конкретную схему с абстрактной полиморфной базой
+
+Расширение используется на concrete-схемах, перечисленных в `x-polymorphic-discriminator.mappings`.
+
+**Структура**:
+* x-polymorphic-parent - ссылка на компонент в схеме. Пример: `$ref: '#/components/schemas/<Name>'`.
+
+**Пример**
+
+```yaml
+type: object
+description: Отгрузка + linkedSum
+x-polymorphic-parent:
+  $ref: '../../../openapi.yaml#/components/schemas/FinanceInOperationAbstract'
+allOf:
+  - $ref: '../../../openapi.yaml#/components/schemas/FinanceInOperationAbstract'
+  - $ref: '../../../openapi.yaml#/components/schemas/Demand'
+```

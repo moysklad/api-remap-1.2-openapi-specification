@@ -1,5 +1,7 @@
 type: object
 description: Счет покупателю + linkedSum
+x-polymorphic-parent:
+  $ref: '../../../openapi.yaml#/components/schemas/FinanceInOperationAbstract'
 allOf:
   - $ref: '../../../openapi.yaml#/components/schemas/FinanceInOperationAbstract'
   - $ref: '../../../openapi.yaml#/components/schemas/InvoiceOut'

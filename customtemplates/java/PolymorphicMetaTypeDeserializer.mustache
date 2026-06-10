@@ -1,0 +1,160 @@
+{{>licenseInfo}}
+package {{invokerPackage}};
+
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.deser.ContextualDeserializer;
+
+import java.io.IOException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.util.Map;
+
+{{>generatedAnnotation}}
+public class PolymorphicMetaTypeDeserializer extends JsonDeserializer<Object> implements ContextualDeserializer {
+  private final JavaType targetType;
+
+  public PolymorphicMetaTypeDeserializer() {
+    this(null);
+  }
+
+  private PolymorphicMetaTypeDeserializer(JavaType targetType) {
+    this.targetType = targetType;
+  }
+
+  @Override
+  public JsonDeserializer<?> createContextual(DeserializationContext ctxt, com.fasterxml.jackson.databind.BeanProperty property) {
+    JavaType contextualType = property != null ? property.getType() : ctxt.getContextualType();
+    return new PolymorphicMetaTypeDeserializer(unwrapContainer(contextualType));
+  }
+
+  @Override
+  public Object deserialize(JsonParser parser, DeserializationContext ctxt) throws IOException {
+    if (targetType == null) {
+      return ctxt.readValue(parser, Object.class);
+    }
+
+    ObjectMapper mapper = (ObjectMapper) parser.getCodec();
+    JsonNode node = mapper.readTree(parser);
+    Class<?> targetClass = targetType.getRawClass();
+    Class<?> resolvedClass = resolveClass(targetClass, node);
+
+    if (resolvedClass == null) {
+      resolvedClass = targetClass;
+    }
+
+    return readWithoutPolymorphicDeserializer(mapper, node, resolvedClass);
+  }
+
+  private Class<?> resolveClass(Class<?> targetClass, JsonNode node) throws IOException {
+    String path = discriminatorPath(targetClass);
+    if (path == null || path.isEmpty()) {
+      return null;
+    }
+
+    JsonNode discriminatorNode = readPath(node, path);
+    if (discriminatorNode == null || !discriminatorNode.isTextual()) {
+      return null;
+    }
+
+    Map<String, Class<?>> mappings = discriminatorMappings(targetClass);
+    if (mappings == null) {
+      return null;
+    }
+
+    Class<?> resolvedClass = mappings.get(discriminatorNode.asText());
+    if (resolvedClass == null) {
+      resolvedClass = mappings.get("undefined");
+    }
+
+    if (resolvedClass != null && !targetClass.isAssignableFrom(resolvedClass)) {
+      throw new IOException("Polymorphic discriminator for " + targetClass.getName()
+          + " points to incompatible class " + resolvedClass.getName());
+    }
+
+    return resolvedClass;
+  }
+
+  private String discriminatorPath(Class<?> targetClass) throws IOException {
+    try {
+      Method method = targetClass.getDeclaredMethod("openAPIPolymorphicDiscriminatorPath");
+      if (!Modifier.isStatic(method.getModifiers())) {
+        return null;
+      }
+      Object value = method.invoke(null);
+      return value instanceof String ? (String) value : null;
+    } catch (NoSuchMethodException e) {
+      return null;
+    } catch (ReflectiveOperationException e) {
+      throw new IOException("Cannot read polymorphic discriminator path for " + targetClass.getName(), e);
+    }
+  }
+
+  @SuppressWarnings("unchecked")
+  private Map<String, Class<?>> discriminatorMappings(Class<?> targetClass) throws IOException {
+    try {
+      Method method = targetClass.getDeclaredMethod("openAPIPolymorphicDiscriminatorMappings");
+      if (!Modifier.isStatic(method.getModifiers())) {
+        return null;
+      }
+      Object value = method.invoke(null);
+      return value instanceof Map ? (Map<String, Class<?>>) value : null;
+    } catch (NoSuchMethodException e) {
+      return null;
+    } catch (ReflectiveOperationException e) {
+      throw new IOException("Cannot read polymorphic discriminator mappings for " + targetClass.getName(), e);
+    }
+  }
+
+  private JsonNode readPath(JsonNode node, String path) {
+    JsonNode current = node;
+    for (String segment : normalizePath(path).split("\\.")) {
+      if (segment.isEmpty()) {
+        continue;
+      }
+      current = current.get(segment);
+      if (current == null || current.isMissingNode()) {
+        return null;
+      }
+    }
+    return current;
+  }
+
+  private String normalizePath(String path) {
+    return path.startsWith("/") ? path.substring(1).replace('/', '.') : path;
+  }
+
+  private static JavaType unwrapContainer(JavaType javaType) {
+    JavaType current = javaType;
+    while (current != null) {
+      if ("org.openapitools.jackson.nullable.JsonNullable".equals(current.getRawClass().getName())
+          && current.containedTypeCount() == 1) {
+        current = current.containedType(0);
+        continue;
+      }
+      if ((current.isCollectionLikeType() || current.isArrayType()) && current.containedTypeCount() == 1) {
+        current = current.containedType(0);
+        continue;
+      }
+      break;
+    }
+    return current;
+  }
+
+  private Object readWithoutPolymorphicDeserializer(ObjectMapper mapper, JsonNode node, Class<?> targetClass) throws IOException {
+    ObjectMapper mapperCopy = mapper.copy();
+    for (Class<?> current = targetClass; current != null && current != Object.class; current = current.getSuperclass()) {
+      mapperCopy.addMixIn(current, DisablePolymorphicDeserializer.class);
+    }
+    return mapperCopy.treeToValue(node, targetClass);
+  }
+
+  @JsonDeserialize(using = JsonDeserializer.None.class)
+  private abstract static class DisablePolymorphicDeserializer {
+  }
+}

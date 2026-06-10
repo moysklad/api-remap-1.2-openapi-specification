@@ -1757,6 +1757,19 @@ components:
         допустимых типов плюс обязательное поле `linkedSum`.
 
         Допустимые `meta.type`: salesreturn, supply, invoicein, purchaseorder, commissionreportout.
+      x-polymorphic-discriminator:
+        path: meta.type
+        mappings:
+          salesreturn:
+            $ref: '#/components/schemas/FinanceOutOperationSalesReturn'
+          supply:
+            $ref: '#/components/schemas/FinanceOutOperationSupply'
+          invoicein:
+            $ref: '#/components/schemas/FinanceOutOperationInvoiceIn'
+          purchaseorder:
+            $ref: '#/components/schemas/FinanceOutOperationPurchaseOrder'
+          commissionreportout:
+            $ref: '#/components/schemas/FinanceOutOperationCommissionReportOut'
       required:
         - linkedSum
         - meta
@@ -1779,6 +1792,21 @@ components:
 
         Допустимые `meta.type`: customerorder, purchasereturn, demand, invoiceout,
         commissionreportin, retailshift.
+      x-polymorphic-discriminator:
+        path: meta.type
+        mappings:
+          customerorder:
+            $ref: '#/components/schemas/FinanceInOperationCustomerOrder'
+          purchasereturn:
+            $ref: '#/components/schemas/FinanceInOperationPurchaseReturn'
+          demand:
+            $ref: '#/components/schemas/FinanceInOperationDemand'
+          invoiceout:
+            $ref: '#/components/schemas/FinanceInOperationInvoiceOut'
+          commissionreportin:
+            $ref: '#/components/schemas/FinanceInOperationCommissionReportIn'
+          retailshift:
+            $ref: '#/components/schemas/FinanceInOperationRetailShift'
       required:
         - linkedSum
         - meta
