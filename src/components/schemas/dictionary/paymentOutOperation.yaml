@@ -1,0 +1,27 @@
+description: |
+  Элемент массива `operations` исходящего платежа: **полноценный документ** одного из допустимых типов
+  плюс обязательное поле `linkedSum`.
+
+  Допустимые `meta.type`: salesreturn, supply, invoicein, purchaseorder, commissionreportout
+type: object
+anyOf:
+  - description: Возврат покупателя + linkedSum
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/SalesReturn'
+      - $ref: '../../../openapi.yaml#/components/schemas/OperationLinkedSum'
+  - description: Приемка + linkedSum
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Supply'
+      - $ref: '../../../openapi.yaml#/components/schemas/OperationLinkedSum'
+  - description: Счет поставщика + linkedSum
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/InvoiceIn'
+      - $ref: '../../../openapi.yaml#/components/schemas/OperationLinkedSum'
+  - description: Заказ поставщику + linkedSum
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/PurchaseOrder'
+      - $ref: '../../../openapi.yaml#/components/schemas/OperationLinkedSum'
+  - description: Выданный отчет комиссионера + linkedSum
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/CommissionReportOut'
+      - $ref: '../../../openapi.yaml#/components/schemas/OperationLinkedSum'

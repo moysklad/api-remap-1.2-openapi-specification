@@ -1,0 +1,42 @@
+type: object
+description: Настройки пользователя
+properties:
+  meta:
+    description: Метаданные настроек пользователя
+    $ref: '../common/meta.yaml'
+  autoShowReports:
+    type: boolean
+    description: Строить ли отчеты автоматически при переходе на вкладку с отчетом
+  defaultCompany:
+    description: Метаданные Организации, которая будет использоваться по умолчанию в документах
+    $ref: '../../../openapi.yaml#/components/schemas/Organization'
+  defaultCustomerCounterparty:
+    description: Метаданные Покупателя, который будет использоваться по умолчанию в документах раздела "Продажи"
+    $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
+  defaultPlace:
+    description: Метаданные Склада, который будет использоваться по умолчанию в документах
+    $ref: '../../../openapi.yaml#/components/schemas/Store'
+  defaultProject:
+    description: Метаданные Проекта, который будет использоваться по умолчанию в документах
+    $ref: '../../../openapi.yaml#/components/schemas/Project'
+  defaultPurchaseCounterparty:
+    description: Метаданные Поставщика, который будет использоваться по умолчанию в документах раздела "Закупки"
+    $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
+  defaultScreen:
+    type: string
+    description: Стартовый экран пользователя. Известные значения описаны в DefaultScreen
+    example: "audit"
+  fieldsPerRow:
+    type: integer
+    description: Количество столбцов, в которых будут располагаться дополнительные поля в документах
+  locale:
+    type: string
+    description: Язык системы. Известные значения описаны в Locale
+    example: "ru_RU"
+  mailFooter:
+    type: string
+    description: Подставляется в подпись в письмах, отправляемых из МС
+  printFormat:
+    type: string
+    description: Правила печати документов. Известные значения описаны в PrintFormat
+    example: "pdf"

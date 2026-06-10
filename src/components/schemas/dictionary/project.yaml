@@ -1,0 +1,65 @@
+type: object
+description: Проект
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "project"
+    - param: "id"
+  type: "project"
+properties:
+  meta:
+    description: Метаданные Проекта
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID проекта
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  archived:
+    type: boolean
+    description: Добавлен ли Проект в архив
+  attributes:
+    type: array
+    description: Коллекция доп. полей
+    nullable: true
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
+  code:
+    type: string
+    maxLength: 255
+    description: Код Проекта
+  description:
+    type: string
+    maxLength: 4096
+    description: Описание Проекта
+  externalCode:
+    type: string
+    maxLength: 255
+    description: Внешний код Проекта
+  group:
+    description: Метаданные отдела сотрудника
+    $ref: '../../../openapi.yaml#/components/schemas/Group'
+  name:
+    type: string
+    maxLength: 255
+    description: Наименование Проекта
+  owner:
+    description: Метаданные владельца (Сотрудника)
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Employee'
+  shared:
+    type: boolean
+    description: Общий доступ
+  updated:
+    type: string
+    description: Момент последнего обновления сущности
+    readOnly: true

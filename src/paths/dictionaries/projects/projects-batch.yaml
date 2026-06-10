@@ -1,0 +1,34 @@
+post:
+  operationId: createProjectsBatch
+  tags:
+    - Projects
+  summary: Создать или изменить проекты
+  description: Создание или изменение нескольких проектов.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            $ref: '../../../openapi.yaml#/components/schemas/Project'
+          minItems: 1
+          maxItems: 1000
+  responses:
+    '200':
+      description: Проекты успешно созданы или изменены
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              oneOf:
+                - $ref: '../../../openapi.yaml#/components/schemas/Project'
+                - $ref: '../../../openapi.yaml#/components/schemas/Error'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

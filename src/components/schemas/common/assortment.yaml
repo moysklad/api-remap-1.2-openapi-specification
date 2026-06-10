@@ -1,0 +1,28 @@
+type: object
+deprecated: true
+description: Товар/услуга/модификация/комплект, данная модель уже не поддерживается
+allOf:
+  - oneOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Product'
+      - $ref: '../../../openapi.yaml#/components/schemas/Service'
+      - $ref: '../../../openapi.yaml#/components/schemas/Variant'
+      - $ref: '../../../openapi.yaml#/components/schemas/Bundle'
+      - $ref: '../../../openapi.yaml#/components/schemas/Consignment'
+  - type: object
+    properties:
+      stock:
+        type: number
+        format: double
+        description: Остаток
+      reserve:
+        type: number
+        format: double
+        description: Резерв
+      inTransit:
+        type: number
+        format: double
+        description: Ожидание
+      quantity:
+        type: number
+        format: double
+        description: Доступно

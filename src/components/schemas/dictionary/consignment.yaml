@@ -1,0 +1,78 @@
+type: object
+description: Партия
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "consignment"
+    - param: "id"
+  type: "consignment"
+properties:
+  meta:
+    description: Метаданные Партии
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID Партии
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  archived:
+    type: boolean
+    description: Добавлена ли Партия в архив
+  attributes:
+    type: array
+    description: Коллекция доп. полей Партии
+    nullable: true
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
+  assortment:
+    type: object
+    description: Метаданные товара/услуги/комплекта/модификации, к которой относится Партия
+    $ref: '../../../openapi.yaml#/components/schemas/Assortment'
+  barcodes:
+    type: array
+    description: Штрихкоды Партии
+    nullable: true
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/Barcode'
+  code:
+    type: string
+    maxLength: 255
+    description: Код Партии
+  description:
+    type: string
+    maxLength: 4096
+    nullable: true
+    description: Описание Партии
+  expiryDate:
+    type: string
+    description: Срок годности Партии
+  externalCode:
+    type: string
+    maxLength: 255
+    description: Внешний код Партии
+  images:
+    description: Массив метаданных Изображений товара, к которому относится данная партия
+    type: object
+    readOnly: true
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/ImageList'
+  label:
+    type: string
+    maxLength: 255
+    description: Метка Партии
+  name:
+    type: string
+    maxLength: 255
+    description: Наименование Партии
+    readOnly: true
+  updated:
+    type: string
+    description: Момент последнего обновления сущности
+    readOnly: true

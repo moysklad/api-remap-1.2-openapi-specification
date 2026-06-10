@@ -1,0 +1,39 @@
+type: object
+description: Позиция Техпроцесса
+x-entity-static-builder:
+  methodParams:
+    - "parentId"
+    - "id"
+  href:
+    - path: "entity"
+    - path: "processingprocess"
+    - param: "parentId"
+    - path: "positions"
+    - param: "id"
+  type: "processingprocessposition"
+properties:
+  meta:
+    description: Метаданные позиции Техпроцесса
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID позиции
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  processingstage:
+    description: Метаданные этапа, который представляет собой позиция
+    $ref: '../../../openapi.yaml#/components/schemas/ProcessingStage'
+  nextPositions:
+    type: array
+    description: Метаданные следующих позиций позиции Техпроцесса
+    nullable: true
+    items:
+      type: object
+      properties:
+        processingstage:
+          $ref: '../../../openapi.yaml#/components/schemas/ProcessingStage'

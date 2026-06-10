@@ -1,0 +1,11 @@
+type: object
+description: Минимальная цена
+properties:
+  value:
+    type: number
+    minimum: 0
+    format: float
+    description: Значение цены
+  currency:
+    description: Ссылка на валюту в формате Метаданных
+    $ref: '../../../openapi.yaml#/components/schemas/Currency'

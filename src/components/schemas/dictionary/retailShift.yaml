@@ -1,0 +1,26 @@
+type: object
+description: |
+  Смена (retailshift). Заглушка: в спецификации нет полного описания сущности;
+  при развёртывании в ответе API возможны дополнительные поля.
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "retailshift"
+    - param: "id"
+  type: "retailshift"
+properties:
+  meta:
+    description: Метаданные смены
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID смены
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true

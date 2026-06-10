@@ -1,0 +1,4 @@
+type: string
+description: Известные значения ограничения связи касс-слуг с кассами-мастерами
+enum: [ANY, SAME_GROUP, CHOSEN]
+example: "ANY"
