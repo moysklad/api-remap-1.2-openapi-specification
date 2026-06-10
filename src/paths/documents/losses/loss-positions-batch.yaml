@@ -1,8 +1,8 @@
 post:
-  operationId: createSupplyPositions
+  operationId: createLossPositions
   tags:
-    - Supplies
-  summary: Массовое создание и обновление позиций Приемки
+    - Losses
+  summary: Массовое создание и обновление позиций Списания
   parameters:
     - $ref: '../../../components/parameters.yaml#/entityId'
     - $ref: '../../../components/parameters.yaml#/expand'
@@ -16,7 +16,7 @@ post:
         schema:
           type: array
           items:
-            $ref: '../../../openapi.yaml#/components/schemas/SupplyPosition'
+            $ref: '../../../openapi.yaml#/components/schemas/LossPosition'
           minItems: 1
           maxItems: 1000
   responses:
@@ -28,7 +28,7 @@ post:
             type: array
             items:
               oneOf:
-                - $ref: '../../../openapi.yaml#/components/schemas/SupplyPosition'
+                - $ref: '../../../openapi.yaml#/components/schemas/LossPosition'
                 - $ref: '../../../openapi.yaml#/components/schemas/Error'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'

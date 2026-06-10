@@ -1309,6 +1309,7 @@ class ApiEndpointsTest extends TestCase
 
         $this->assertReachable($this->client->get($base . '/' . self::TEST_UUID . '/positions'));
         $this->assertReachable($this->client->post($base . '/' . self::TEST_UUID . '/positions', ['name' => 'PPF test']));
+        $this->assertReachable($this->client->post($base . '/' . self::TEST_UUID . '/positions/batch', ['json' => [['name' => 'PPF test']]]));
 
         $this->assertReachable($this->client->get($base . '/' . self::TEST_UUID . '/positions/' . self::TEST_UUID));
         $this->assertReachable($this->client->put($base . '/' . self::TEST_UUID . '/positions/' . self::TEST_UUID, ['name' => 'PPF test']));
@@ -1507,7 +1508,7 @@ class ApiEndpointsTest extends TestCase
         $this->assertReachable($this->client->post(self::API_BASE_PATH . '/entity/processingorder/batch', ['json' => [['name' => 'processingorder Z']]]));
 
         $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/processingorder/' . self::TEST_UUID . '/positions'));
-        $this->assertReachable($this->client->post(self::API_BASE_PATH . '/entity/processingorder/' . self::TEST_UUID . '/positions', ['json' => ['quantity' => 1]]));
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . '/entity/processingorder/' . self::TEST_UUID . '/positions/batch', ['json' => [['quantity' => 1]]]));
 
         $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/processingorder/' . self::TEST_UUID . '/positions/' . self::TEST_UUID));
         $this->assertReachable($this->client->put(self::API_BASE_PATH . '/entity/processingorder/' . self::TEST_UUID . '/positions/' . self::TEST_UUID, ['json' => ['quantity' => 2]]));
@@ -1718,6 +1719,7 @@ class ApiEndpointsTest extends TestCase
         $base = self::API_BASE_PATH . '/entity/demand/' . self::TEST_UUID;
         $this->assertReachable($this->client->get($base . '/positions'));
         $this->assertReachable($this->client->post($base . '/positions', ['json' => ['quantity' => 1]]));
+        $this->assertReachable($this->client->post($base . '/positions/batch', ['json' => [['quantity' => 1]]]));
         $this->assertReachable($this->client->get($base . '/positions/' . self::TEST_UUID));
         $this->assertReachable($this->client->put($base . '/positions/' . self::TEST_UUID, ['json' => ['quantity' => 2]]));
         $this->assertReachable($this->client->delete($base . '/positions/' . self::TEST_UUID));
@@ -1943,6 +1945,7 @@ class ApiEndpointsTest extends TestCase
         $docBase = $base . '/' . self::TEST_UUID;
         $this->assertReachable($this->client->get($docBase . '/positions'));
         $this->assertReachable($this->client->post($docBase . '/positions', ['json' => ['quantity' => 1]]));
+        $this->assertReachable($this->client->post($docBase . '/positions/batch', ['json' => [['quantity' => 1]]]));
         $this->assertReachable($this->client->get($docBase . '/positions/' . self::TEST_UUID));
         $this->assertReachable($this->client->put($docBase . '/positions/' . self::TEST_UUID, ['json' => ['quantity' => 2]]));
         $this->assertReachable($this->client->delete($docBase . '/positions/' . self::TEST_UUID));
@@ -2028,6 +2031,7 @@ class ApiEndpointsTest extends TestCase
 
         $this->assertReachable($this->client->get($base . '/' . self::TEST_UUID . '/positions'));
         $this->assertReachable($this->client->post($base . '/' . self::TEST_UUID . '/positions', ['json' => ['quantity' => 1]]));
+        $this->assertReachable($this->client->post($base . '/' . self::TEST_UUID . '/positions/batch', ['json' => [['quantity' => 1]]]));
         $this->assertReachable($this->client->get($base . '/' . self::TEST_UUID . '/positions/' . self::TEST_UUID));
         $this->assertReachable($this->client->put($base . '/' . self::TEST_UUID . '/positions/' . self::TEST_UUID, ['json' => ['quantity' => 2]]));
         $this->assertReachable($this->client->delete($base . '/' . self::TEST_UUID . '/positions/' . self::TEST_UUID));
@@ -2104,6 +2108,7 @@ class ApiEndpointsTest extends TestCase
         $base = self::API_BASE_PATH . '/entity/retaildemand/' . self::TEST_UUID;
         $this->assertReachable($this->client->get($base . '/positions'));
         $this->assertReachable($this->client->post($base . '/positions', ['json' => ['quantity' => 1]]));
+        $this->assertReachable($this->client->post($base . '/positions/batch', ['json' => [['quantity' => 1]]]));
         $this->assertReachable($this->client->get($base . '/positions/' . self::TEST_UUID));
         $this->assertReachable($this->client->put($base . '/positions/' . self::TEST_UUID, ['json' => ['quantity' => 2]]));
         $this->assertReachable($this->client->delete($base . '/positions/' . self::TEST_UUID));
@@ -2253,7 +2258,6 @@ class ApiEndpointsTest extends TestCase
     public function testDocumentEndpointsInternalCustomerPurchase(): void
     {
         $this->assertDocumentEndpoints('/entity/internalorder');
-        $this->assertDocumentEndpoints('/entity/processingorder');
         $this->assertDocumentEndpoints('/entity/customerorder');
         $this->assertDocumentEndpoints('/entity/purchaseorder');
     }
@@ -2392,6 +2396,7 @@ class ApiEndpointsTest extends TestCase
                 'assortment' => ['meta' => ['href' => 'https://api.moysklad.ru/api/remap/1.2/entity/product/' . self::TEST_UUID, 'type' => 'product', 'mediaType' => 'application/json']],
             ],
         ]));
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . $base . '/' . self::TEST_UUID . '/positions/batch', ['json' => [['quantity' => 1]]]));
         $this->assertReachable($this->client->get(self::API_BASE_PATH . $base . '/' . self::TEST_UUID . '/positions/' . self::TEST_UUID));
         $this->assertReachable($this->client->put(self::API_BASE_PATH . $base . '/' . self::TEST_UUID . '/positions/' . self::TEST_UUID, [
             'json' => ['quantity' => 2],
@@ -2426,6 +2431,7 @@ class ApiEndpointsTest extends TestCase
         $this->assertReachable($this->client->put(self::API_BASE_PATH . $base . '/new', ['json' => new \stdClass()]));
 
         $this->assertReachable($this->client->post(self::API_BASE_PATH . $base . '/' . self::TEST_UUID . '/positions', ['json' => ['quantity' => 1]]));
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . $base . '/' . self::TEST_UUID . '/positions/batch', ['json' => [['quantity' => 1]]]));
 
         $this->assertReachable($this->client->get(self::API_BASE_PATH . $base . '/' . self::TEST_UUID . '/positions/' . self::TEST_UUID));
         $this->assertReachable($this->client->put(self::API_BASE_PATH . $base . '/' . self::TEST_UUID . '/positions/' . self::TEST_UUID, ['json' => ['quantity' => 2]]));
@@ -3850,6 +3856,7 @@ class ApiEndpointsTest extends TestCase
         $positionsBase = $idBase . '/positions';
         $this->assertReachable($this->client->get($positionsBase));
         $this->assertReachable($this->client->post($positionsBase, ['json' => ['quantity' => 1]]));
+        $this->assertReachable($this->client->post($positionsBase . '/batch', ['json' => [['quantity' => 1]]]));
         $this->assertReachable($this->client->get($positionsBase . '/' . self::TEST_UUID));
         $this->assertReachable($this->client->put($positionsBase . '/' . self::TEST_UUID, ['json' => ['quantity' => 2]]));
         $this->assertReachable($this->client->delete($positionsBase . '/' . self::TEST_UUID));
@@ -4437,6 +4444,7 @@ class ApiEndpointsTest extends TestCase
 
         $this->assertReachable($this->client->get($base . '/' . self::TEST_UUID . '/positions'));
         $this->assertReachable($this->client->post($base . '/' . self::TEST_UUID . '/positions', ['json' => [['name' => 'X']]]));
+        $this->assertReachable($this->client->post($base . '/' . self::TEST_UUID . '/positions/batch', ['json' => [['name' => 'X']]]));
         $this->assertReachable($this->client->get($base . '/' . self::TEST_UUID . '/positions/' . self::TEST_UUID));
         $this->assertReachable($this->client->put($base . '/' . self::TEST_UUID . '/positions/' . self::TEST_UUID, ['json' => ['name' => 'X']]));
         $this->assertReachable($this->client->delete($base . '/' . self::TEST_UUID . '/positions/' . self::TEST_UUID));
@@ -4505,6 +4513,7 @@ class ApiEndpointsTest extends TestCase
 
         $this->assertReachable($this->client->get($base . '/' . self::TEST_UUID . '/positions'));
         $this->assertReachable($this->client->post($base . '/' . self::TEST_UUID . '/positions', ['json' => [['quantity' => 1, 'price' => 1000, 'assortment' => $assortment]]]));
+        $this->assertReachable($this->client->post($base . '/' . self::TEST_UUID . '/positions/batch', ['json' => [['quantity' => 1, 'price' => 1000, 'assortment' => $assortment]]]));
         $this->assertReachable($this->client->get($base . '/' . self::TEST_UUID . '/positions/' . self::TEST_UUID));
         $this->assertReachable($this->client->put($base . '/' . self::TEST_UUID . '/positions/' . self::TEST_UUID, ['json' => ['quantity' => 1, 'price' => 1000, 'assortment' => $assortment]]));
         $this->assertReachable($this->client->delete($base . '/' . self::TEST_UUID . '/positions/' . self::TEST_UUID));
@@ -5004,6 +5013,17 @@ class ApiEndpointsTest extends TestCase
     {
         $this->assertReachable($this->client->post(self::API_BASE_PATH . '/entity/loss/' . self::TEST_UUID . '/positions', [
             'json' => $this->lossPositionPayload(),
+        ]));
+    }
+
+    /**
+     * Проверяет доступность endpoint'а массового создания/обновления позиций Списания.
+     * POST /entity/loss/{id}/positions/batch
+     */
+    public function testCreateLossPositionsBatch(): void
+    {
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . '/entity/loss/' . self::TEST_UUID . '/positions/batch', [
+            'json' => [$this->lossPositionPayload()],
         ]));
     }
 

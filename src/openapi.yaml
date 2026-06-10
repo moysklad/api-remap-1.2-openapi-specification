@@ -231,6 +231,8 @@ paths:
     $ref: './paths/dictionaries/processingprocesses/processingprocesses-batch.yaml'
   /entity/processingprocess/{id}/positions:
     $ref: './paths/dictionaries/processingprocesses/processingprocess-positions.yaml'
+  /entity/processingprocess/{id}/positions/batch:
+    $ref: './paths/dictionaries/processingprocesses/processingprocess-positions-batch.yaml'
   /entity/processingprocess/{id}/positions/{positionId}:
     $ref: './paths/dictionaries/processingprocesses/processingprocess-position-by-id.yaml'
   /entity/processingprocess/{id}/positions/delete:
@@ -583,6 +585,8 @@ paths:
     $ref: './paths/documents/internalorders/internalorder-new.yaml'
   /entity/internalorder/{id}/positions:
     $ref: './paths/documents/internalorders/internalorder-positions.yaml'
+  /entity/internalorder/{id}/positions/batch:
+    $ref: './paths/documents/internalorders/internalorder-positions-batch.yaml'
   /entity/internalorder/{id}/positions/{positionId}:
     $ref: './paths/documents/internalorders/internalorder-position-by-id.yaml'
   /entity/internalorder/{id}/positions/delete:
@@ -610,6 +614,8 @@ paths:
     $ref: './paths/documents/processingorders/processingorder-new.yaml'
   /entity/processingorder/{id}/positions:
     $ref: './paths/documents/processingorders/processingorder-positions.yaml'
+  /entity/processingorder/{id}/positions/batch:
+    $ref: './paths/documents/processingorders/processingorder-positions-batch.yaml'
   /entity/processingorder/{id}/positions/{positionId}:
     $ref: './paths/documents/processingorders/processingorder-position-by-id.yaml'
   /entity/processingorder/{id}/positions/delete:
@@ -678,6 +684,8 @@ paths:
     $ref: './paths/documents/customerorders/customerorder-new.yaml'
   /entity/customerorder/{id}/positions:
     $ref: './paths/documents/customerorders/customerorder-positions.yaml'
+  /entity/customerorder/{id}/positions/batch:
+    $ref: './paths/documents/customerorders/customerorder-positions-batch.yaml'
   /entity/customerorder/{id}/positions/{positionId}:
     $ref: './paths/documents/customerorders/customerorder-position-by-id.yaml'
   /entity/customerorder/{id}/positions/delete:
@@ -769,6 +777,8 @@ paths:
     $ref: './paths/documents/demands/demand-new.yaml'
   /entity/demand/{id}/positions:
     $ref: './paths/documents/demands/demand-positions.yaml'
+  /entity/demand/{id}/positions/batch:
+    $ref: './paths/documents/demands/demand-positions-batch.yaml'
   /entity/demand/{id}/positions/{positionId}:
     $ref: './paths/documents/demands/demand-position-by-id.yaml'
   /entity/demand/{id}/positions/delete:
@@ -827,6 +837,8 @@ paths:
     $ref: './paths/documents/enters/enter-new.yaml'
   /entity/enter/{id}/positions:
     $ref: './paths/documents/enters/enter-positions.yaml'
+  /entity/enter/{id}/positions/batch:
+    $ref: './paths/documents/enters/enter-positions-batch.yaml'
   /entity/enter/{id}/positions/{positionId}:
     $ref: './paths/documents/enters/enter-position-by-id.yaml'
   /entity/enter/{id}/positions/delete:
@@ -852,6 +864,8 @@ paths:
     $ref: './paths/documents/salesreturns/salesreturn-new.yaml'
   /entity/salesreturn/{id}/positions:
     $ref: './paths/documents/salesreturns/salesreturn-positions.yaml'
+  /entity/salesreturn/{id}/positions/batch:
+    $ref: './paths/documents/salesreturns/salesreturn-positions-batch.yaml'
   /entity/salesreturn/{id}/positions/{positionId}:
     $ref: './paths/documents/salesreturns/salesreturn-position-by-id.yaml'
   /entity/salesreturn/{id}/positions/delete:
@@ -877,6 +891,8 @@ paths:
     $ref: './paths/documents/losses/loss-new.yaml'
   /entity/loss/{id}/positions:
     $ref: './paths/documents/losses/loss-positions.yaml'
+  /entity/loss/{id}/positions/batch:
+    $ref: './paths/documents/losses/loss-positions-batch.yaml'
   /entity/loss/{id}/positions/{positionId}:
     $ref: './paths/documents/losses/loss-position-by-id.yaml'
   /entity/loss/{id}/positions/delete:
@@ -908,6 +924,8 @@ paths:
     $ref: './paths/documents/inventories/inventory-new.yaml'
   /entity/inventory/{id}/positions:
     $ref: './paths/documents/inventories/inventory-positions.yaml'
+  /entity/inventory/{id}/positions/batch:
+    $ref: './paths/documents/inventories/inventory-positions-batch.yaml'
   /entity/inventory/{id}/positions/{positionId}:
     $ref: './paths/documents/inventories/inventory-position-by-id.yaml'
   /entity/inventory/{id}/positions/delete:
@@ -941,6 +959,8 @@ paths:
     $ref: './paths/documents/purchasereturns/purchasereturn-new.yaml'
   /entity/purchasereturn/{id}/positions:
     $ref: './paths/documents/purchasereturns/purchasereturn-positions.yaml'
+  /entity/purchasereturn/{id}/positions/batch:
+    $ref: './paths/documents/purchasereturns/purchasereturn-positions-batch.yaml'
   /entity/purchasereturn/{id}/positions/{positionId}:
     $ref: './paths/documents/purchasereturns/purchasereturn-position-by-id.yaml'
   /entity/purchasereturn/{id}/positions/delete:
@@ -1054,6 +1074,8 @@ paths:
     $ref: './paths/documents/purchaseorders/purchaseorder-new.yaml'
   /entity/purchaseorder/{id}/positions:
     $ref: './paths/documents/purchaseorders/purchaseorder-positions.yaml'
+  /entity/purchaseorder/{id}/positions/batch:
+    $ref: './paths/documents/purchaseorders/purchaseorder-positions-batch.yaml'
   /entity/purchaseorder/{id}/positions/{positionId}:
     $ref: './paths/documents/purchaseorders/purchaseorder-position-by-id.yaml'
   /entity/purchaseorder/{id}/positions/delete:
@@ -1101,6 +1123,8 @@ paths:
     $ref: './paths/documents/commissionreportins/commissionreportin-metadata-state-by-id.yaml'
   /entity/commissionreportin/{id}/positions:
     $ref: './paths/documents/commissionreportins/commissionreportin-positions.yaml'
+  /entity/commissionreportin/{id}/positions/batch:
+    $ref: './paths/documents/commissionreportins/commissionreportin-positions-batch.yaml'
   /entity/commissionreportin/{id}/positions/{positionId}:
     $ref: './paths/documents/commissionreportins/commissionreportin-position-by-id.yaml'
   /entity/commissionreportin/{id}/positions/delete:

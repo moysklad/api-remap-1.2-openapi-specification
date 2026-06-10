@@ -1,8 +1,8 @@
 post:
-  operationId: createMovePositionsBatch
+  operationId: createMovePositions
   tags:
     - Moves
-  summary: Создать позиции Перемещения
+  summary: Массовое создание и обновление позиций Перемещения
   parameters:
     - $ref: '../../../components/parameters.yaml#/entityId'
     - $ref: '../../../components/parameters.yaml#/expand'
