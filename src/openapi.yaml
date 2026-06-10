@@ -1759,9 +1759,9 @@ components:
         Допустимые `meta.type`: salesreturn, supply, invoicein, purchaseorder, commissionreportout.
       required:
         - linkedSum
+        - meta
       allOf:
         - $ref: '#/components/schemas/OperationLinkedSum'
-        - $ref: '#/components/schemas/Meta'
     FinanceOutOperationSalesReturn:
       $ref: './components/schemas/dictionary/financeOutOperationSalesReturn.yaml'
     FinanceOutOperationSupply:
