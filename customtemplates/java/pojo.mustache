@@ -1,3 +1,10 @@
+{{#vendorExtensions.x-polymorphic-discriminator}}
+import {{polymorphicPackage}}.OpenApiPolymorphicTypeInfo;
+import {{polymorphicPackage}}.OpenApiPolymorphicSubTypes;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import {{polymorphicPackage}}.PolymorphicMetaTypeDeserializer;
+
+{{/vendorExtensions.x-polymorphic-discriminator}}
 /**
  * {{description}}{{^description}}{{classname}}{{/description}}{{#isDeprecated}}
  * @deprecated{{/isDeprecated}}
@@ -30,27 +37,19 @@
 {{{vendorExtensions.x-class-extra-annotation}}}
 {{/vendorExtensions.x-class-extra-annotation}}
 {{#vendorExtensions.x-polymorphic-discriminator}}
-@com.fasterxml.jackson.databind.annotation.JsonDeserialize(using = {{invokerPackage}}.PolymorphicMetaTypeDeserializer.class)
+@OpenApiPolymorphicTypeInfo(path = "{{vendorExtensions.x-polymorphic-discriminator.path}}")
+@OpenApiPolymorphicSubTypes({
+{{#vendorExtensions.x-polymorphic-discriminator.mappings}}
+  @OpenApiPolymorphicSubTypes.Type(value = {{className}}.class, name = "{{value}}"){{^-last}},
+{{/-last}}{{/vendorExtensions.x-polymorphic-discriminator.mappings}}
+})
+@JsonDeserialize(using = PolymorphicMetaTypeDeserializer.class)
 {{/vendorExtensions.x-polymorphic-discriminator}}
 public class {{classname}} {{#parent}}extends {{{.}}} {{/parent}}{{^parent}}{{#vendorExtensions.x-polymorphic-parent}}extends {{{.}}} {{/vendorExtensions.x-polymorphic-parent}}{{/parent}}{{#vendorExtensions.x-implements}}{{#-first}}implements {{{.}}}{{/-first}}{{^-first}}, {{{.}}}{{/-first}}{{#-last}} {{/-last}}{{/vendorExtensions.x-implements}}{
 {{#serializableModel}}
   private static final long serialVersionUID = 1L;
 
 {{/serializableModel}}
-{{#vendorExtensions.x-polymorphic-discriminator}}
-  public static String openAPIPolymorphicDiscriminatorPath() {
-    return "{{vendorExtensions.x-polymorphic-discriminator.path}}";
-  }
-
-  public static java.util.Map<String, Class<?>> openAPIPolymorphicDiscriminatorMappings() {
-    java.util.Map<String, Class<?>> mappings = new java.util.LinkedHashMap<>();
-{{#vendorExtensions.x-polymorphic-discriminator.mappings}}
-    mappings.put("{{value}}", {{className}}.class);
-{{/vendorExtensions.x-polymorphic-discriminator.mappings}}
-    return java.util.Collections.unmodifiableMap(mappings);
-  }
-
-{{/vendorExtensions.x-polymorphic-discriminator}}
 {{>model_entity_static_builder}}
   {{#vars}}
     {{#isEnum}}

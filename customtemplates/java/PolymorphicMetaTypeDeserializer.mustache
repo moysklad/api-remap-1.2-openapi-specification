@@ -1,5 +1,5 @@
 {{>licenseInfo}}
-package {{invokerPackage}};
+package {{polymorphicPackage}};
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
@@ -11,8 +11,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.deser.ContextualDeserializer;
 
 import java.io.IOException;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 {{>generatedAnnotation}}
@@ -80,35 +79,28 @@ public class PolymorphicMetaTypeDeserializer extends JsonDeserializer<Object> im
     return resolvedClass;
   }
 
-  private String discriminatorPath(Class<?> targetClass) throws IOException {
-    try {
-      Method method = targetClass.getDeclaredMethod("openAPIPolymorphicDiscriminatorPath");
-      if (!Modifier.isStatic(method.getModifiers())) {
-        return null;
+  private String discriminatorPath(Class<?> targetClass) {
+    for (Class<?> current = targetClass; current != null && current != Object.class; current = current.getSuperclass()) {
+      OpenApiPolymorphicTypeInfo typeInfo = current.getAnnotation(OpenApiPolymorphicTypeInfo.class);
+      if (typeInfo != null) {
+        return typeInfo.path();
       }
-      Object value = method.invoke(null);
-      return value instanceof String ? (String) value : null;
-    } catch (NoSuchMethodException e) {
-      return null;
-    } catch (ReflectiveOperationException e) {
-      throw new IOException("Cannot read polymorphic discriminator path for " + targetClass.getName(), e);
     }
+    return null;
   }
 
-  @SuppressWarnings("unchecked")
-  private Map<String, Class<?>> discriminatorMappings(Class<?> targetClass) throws IOException {
-    try {
-      Method method = targetClass.getDeclaredMethod("openAPIPolymorphicDiscriminatorMappings");
-      if (!Modifier.isStatic(method.getModifiers())) {
-        return null;
+  private Map<String, Class<?>> discriminatorMappings(Class<?> targetClass) {
+    for (Class<?> current = targetClass; current != null && current != Object.class; current = current.getSuperclass()) {
+      OpenApiPolymorphicSubTypes subTypes = current.getAnnotation(OpenApiPolymorphicSubTypes.class);
+      if (subTypes != null) {
+        Map<String, Class<?>> mappings = new LinkedHashMap<>();
+        for (OpenApiPolymorphicSubTypes.Type type : subTypes.value()) {
+          mappings.put(type.name(), type.value());
+        }
+        return mappings;
       }
-      Object value = method.invoke(null);
-      return value instanceof Map ? (Map<String, Class<?>>) value : null;
-    } catch (NoSuchMethodException e) {
-      return null;
-    } catch (ReflectiveOperationException e) {
-      throw new IOException("Cannot read polymorphic discriminator mappings for " + targetClass.getName(), e);
     }
+    return null;
   }
 
   private JsonNode readPath(JsonNode node, String path) {
