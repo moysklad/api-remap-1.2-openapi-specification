@@ -231,6 +231,8 @@ paths:
     $ref: './paths/dictionaries/processingprocesses/processingprocesses-batch.yaml'
   /entity/processingprocess/{id}/positions:
     $ref: './paths/dictionaries/processingprocesses/processingprocess-positions.yaml'
+  /entity/processingprocess/{id}/positions/batch:
+    $ref: './paths/dictionaries/processingprocesses/processingprocess-positions-batch.yaml'
   /entity/processingprocess/{id}/positions/{positionId}:
     $ref: './paths/dictionaries/processingprocesses/processingprocess-position-by-id.yaml'
   /entity/processingprocess/{id}/positions/delete:
@@ -583,6 +585,8 @@ paths:
     $ref: './paths/documents/internalorders/internalorder-new.yaml'
   /entity/internalorder/{id}/positions:
     $ref: './paths/documents/internalorders/internalorder-positions.yaml'
+  /entity/internalorder/{id}/positions/batch:
+    $ref: './paths/documents/internalorders/internalorder-positions-batch.yaml'
   /entity/internalorder/{id}/positions/{positionId}:
     $ref: './paths/documents/internalorders/internalorder-position-by-id.yaml'
   /entity/internalorder/{id}/positions/delete:
@@ -610,6 +614,8 @@ paths:
     $ref: './paths/documents/processingorders/processingorder-new.yaml'
   /entity/processingorder/{id}/positions:
     $ref: './paths/documents/processingorders/processingorder-positions.yaml'
+  /entity/processingorder/{id}/positions/batch:
+    $ref: './paths/documents/processingorders/processingorder-positions-batch.yaml'
   /entity/processingorder/{id}/positions/{positionId}:
     $ref: './paths/documents/processingorders/processingorder-position-by-id.yaml'
   /entity/processingorder/{id}/positions/delete:
@@ -678,6 +684,8 @@ paths:
     $ref: './paths/documents/customerorders/customerorder-new.yaml'
   /entity/customerorder/{id}/positions:
     $ref: './paths/documents/customerorders/customerorder-positions.yaml'
+  /entity/customerorder/{id}/positions/batch:
+    $ref: './paths/documents/customerorders/customerorder-positions-batch.yaml'
   /entity/customerorder/{id}/positions/{positionId}:
     $ref: './paths/documents/customerorders/customerorder-position-by-id.yaml'
   /entity/customerorder/{id}/positions/delete:
@@ -686,6 +694,68 @@ paths:
     $ref: './paths/documents/customerorders/customerorder-notes.yaml'
   /entity/customerorder/{id}/notes/{noteId}:
     $ref: './paths/documents/customerorders/customerorder-note-by-id.yaml'
+  # Documents - Invoices Out
+  /entity/invoiceout:
+    $ref: './paths/documents/invoiceouts/invoiceouts.yaml'
+  /entity/invoiceout/{id}:
+    $ref: './paths/documents/invoiceouts/invoiceout-by-id.yaml'
+  /entity/invoiceout/delete:
+    $ref: './paths/documents/invoiceouts/invoiceouts-delete.yaml'
+  /entity/invoiceout/batch:
+    $ref: './paths/documents/invoiceouts/invoiceouts-batch.yaml'
+  /entity/invoiceout/metadata:
+    $ref: './paths/documents/invoiceouts/invoiceout-metadata.yaml'
+  /entity/invoiceout/metadata/attributes:
+    $ref: './paths/documents/invoiceouts/invoiceout-metadata-attribute.yaml'
+  /entity/invoiceout/metadata/attributes/{id}:
+    $ref: './paths/documents/invoiceouts/invoiceout-metadata-attribute-by-id.yaml'
+  /entity/invoiceout/metadata/states/{id}:
+    $ref: './paths/documents/invoiceouts/invoiceout-metadata-state-by-id.yaml'
+  /entity/invoiceout/new:
+    $ref: './paths/documents/invoiceouts/invoiceout-new.yaml'
+  /entity/invoiceout/{id}/positions:
+    $ref: './paths/documents/invoiceouts/invoiceout-positions.yaml'
+  /entity/invoiceout/{id}/positions/batch:
+    $ref: './paths/documents/invoiceouts/invoiceout-positions-batch.yaml'
+  /entity/invoiceout/{id}/positions/{positionId}:
+    $ref: './paths/documents/invoiceouts/invoiceout-position-by-id.yaml'
+  /entity/invoiceout/{id}/positions/delete:
+    $ref: './paths/documents/invoiceouts/invoiceout-positions-delete.yaml'
+  /entity/invoiceout/{id}/files:
+    $ref: './paths/documents/invoiceouts/invoiceout-files.yaml'
+  /entity/invoiceout/{id}/files/{fileId}:
+    $ref: './paths/documents/invoiceouts/invoiceout-file-by-id.yaml'
+  # Documents - Invoices In
+  /entity/invoicein:
+    $ref: './paths/documents/invoiceins/invoiceins.yaml'
+  /entity/invoicein/{id}:
+    $ref: './paths/documents/invoiceins/invoicein-by-id.yaml'
+  /entity/invoicein/delete:
+    $ref: './paths/documents/invoiceins/invoiceins-delete.yaml'
+  /entity/invoicein/batch:
+    $ref: './paths/documents/invoiceins/invoiceins-batch.yaml'
+  /entity/invoicein/metadata:
+    $ref: './paths/documents/invoiceins/invoicein-metadata.yaml'
+  /entity/invoicein/metadata/attributes:
+    $ref: './paths/documents/invoiceins/invoicein-metadata-attribute.yaml'
+  /entity/invoicein/metadata/attributes/{id}:
+    $ref: './paths/documents/invoiceins/invoicein-metadata-attribute-by-id.yaml'
+  /entity/invoicein/metadata/states/{id}:
+    $ref: './paths/documents/invoiceins/invoicein-metadata-state-by-id.yaml'
+  /entity/invoicein/new:
+    $ref: './paths/documents/invoiceins/invoicein-new.yaml'
+  /entity/invoicein/{id}/positions:
+    $ref: './paths/documents/invoiceins/invoicein-positions.yaml'
+  /entity/invoicein/{id}/positions/batch:
+    $ref: './paths/documents/invoiceins/invoicein-positions-batch.yaml'
+  /entity/invoicein/{id}/positions/{positionId}:
+    $ref: './paths/documents/invoiceins/invoicein-position-by-id.yaml'
+  /entity/invoicein/{id}/positions/delete:
+    $ref: './paths/documents/invoiceins/invoicein-positions-delete.yaml'
+  /entity/invoicein/{id}/files:
+    $ref: './paths/documents/invoiceins/invoicein-files.yaml'
+  /entity/invoicein/{id}/files/{fileId}:
+    $ref: './paths/documents/invoiceins/invoicein-file-by-id.yaml'
   # Documents - Demands
   /entity/demand:
     $ref: './paths/documents/demands/demands.yaml'
@@ -707,6 +777,8 @@ paths:
     $ref: './paths/documents/demands/demand-new.yaml'
   /entity/demand/{id}/positions:
     $ref: './paths/documents/demands/demand-positions.yaml'
+  /entity/demand/{id}/positions/batch:
+    $ref: './paths/documents/demands/demand-positions-batch.yaml'
   /entity/demand/{id}/positions/{positionId}:
     $ref: './paths/documents/demands/demand-position-by-id.yaml'
   /entity/demand/{id}/positions/delete:
@@ -767,6 +839,8 @@ paths:
     $ref: './paths/documents/enters/enter-new.yaml'
   /entity/enter/{id}/positions:
     $ref: './paths/documents/enters/enter-positions.yaml'
+  /entity/enter/{id}/positions/batch:
+    $ref: './paths/documents/enters/enter-positions-batch.yaml'
   /entity/enter/{id}/positions/{positionId}:
     $ref: './paths/documents/enters/enter-position-by-id.yaml'
   /entity/enter/{id}/positions/delete:
@@ -792,6 +866,8 @@ paths:
     $ref: './paths/documents/salesreturns/salesreturn-new.yaml'
   /entity/salesreturn/{id}/positions:
     $ref: './paths/documents/salesreturns/salesreturn-positions.yaml'
+  /entity/salesreturn/{id}/positions/batch:
+    $ref: './paths/documents/salesreturns/salesreturn-positions-batch.yaml'
   /entity/salesreturn/{id}/positions/{positionId}:
     $ref: './paths/documents/salesreturns/salesreturn-position-by-id.yaml'
   /entity/salesreturn/{id}/positions/delete:
@@ -817,6 +893,8 @@ paths:
     $ref: './paths/documents/losses/loss-new.yaml'
   /entity/loss/{id}/positions:
     $ref: './paths/documents/losses/loss-positions.yaml'
+  /entity/loss/{id}/positions/batch:
+    $ref: './paths/documents/losses/loss-positions-batch.yaml'
   /entity/loss/{id}/positions/{positionId}:
     $ref: './paths/documents/losses/loss-position-by-id.yaml'
   /entity/loss/{id}/positions/delete:
@@ -848,6 +926,8 @@ paths:
     $ref: './paths/documents/inventories/inventory-new.yaml'
   /entity/inventory/{id}/positions:
     $ref: './paths/documents/inventories/inventory-positions.yaml'
+  /entity/inventory/{id}/positions/batch:
+    $ref: './paths/documents/inventories/inventory-positions-batch.yaml'
   /entity/inventory/{id}/positions/{positionId}:
     $ref: './paths/documents/inventories/inventory-position-by-id.yaml'
   /entity/inventory/{id}/positions/delete:
@@ -881,6 +961,8 @@ paths:
     $ref: './paths/documents/purchasereturns/purchasereturn-new.yaml'
   /entity/purchasereturn/{id}/positions:
     $ref: './paths/documents/purchasereturns/purchasereturn-positions.yaml'
+  /entity/purchasereturn/{id}/positions/batch:
+    $ref: './paths/documents/purchasereturns/purchasereturn-positions-batch.yaml'
   /entity/purchasereturn/{id}/positions/{positionId}:
     $ref: './paths/documents/purchasereturns/purchasereturn-position-by-id.yaml'
   /entity/purchasereturn/{id}/positions/delete:
@@ -994,6 +1076,8 @@ paths:
     $ref: './paths/documents/purchaseorders/purchaseorder-new.yaml'
   /entity/purchaseorder/{id}/positions:
     $ref: './paths/documents/purchaseorders/purchaseorder-positions.yaml'
+  /entity/purchaseorder/{id}/positions/batch:
+    $ref: './paths/documents/purchaseorders/purchaseorder-positions-batch.yaml'
   /entity/purchaseorder/{id}/positions/{positionId}:
     $ref: './paths/documents/purchaseorders/purchaseorder-position-by-id.yaml'
   /entity/purchaseorder/{id}/positions/delete:
@@ -1044,6 +1128,8 @@ paths:
     $ref: './paths/documents/commissionreportins/commissionreportin-metadata-state-by-id.yaml'
   /entity/commissionreportin/{id}/positions:
     $ref: './paths/documents/commissionreportins/commissionreportin-positions.yaml'
+  /entity/commissionreportin/{id}/positions/batch:
+    $ref: './paths/documents/commissionreportins/commissionreportin-positions-batch.yaml'
   /entity/commissionreportin/{id}/positions/{positionId}:
     $ref: './paths/documents/commissionreportins/commissionreportin-position-by-id.yaml'
   /entity/commissionreportin/{id}/positions/delete:
@@ -1134,6 +1220,50 @@ paths:
     $ref: './paths/documents/paymentins/paymentin-metadata-state-by-id.yaml'
   /entity/paymentin/new:
     $ref: './paths/documents/paymentins/paymentin-new.yaml'
+
+  # Documents - Facture In
+  /entity/facturein:
+    $ref: './paths/documents/factureins/factureins.yaml'
+  /entity/facturein/{id}:
+    $ref: './paths/documents/factureins/facturein-by-id.yaml'
+  /entity/facturein/delete:
+    $ref: './paths/documents/factureins/factureins-delete.yaml'
+  /entity/facturein/batch:
+    $ref: './paths/documents/factureins/factureins-batch.yaml'
+  /entity/facturein/metadata:
+    $ref: './paths/documents/factureins/facturein-metadata.yaml'
+  /entity/facturein/metadata/attributes:
+    $ref: './paths/documents/factureins/facturein-metadata-attribute.yaml'
+  /entity/facturein/metadata/attributes/{id}:
+    $ref: './paths/documents/factureins/facturein-metadata-attribute-by-id.yaml'
+  /entity/facturein/metadata/states:
+    $ref: './paths/documents/factureins/facturein-metadata-states.yaml'
+  /entity/facturein/metadata/states/{id}:
+    $ref: './paths/documents/factureins/facturein-metadata-state-by-id.yaml'
+  /entity/facturein/new:
+    $ref: './paths/documents/factureins/facturein-new.yaml'
+
+  # Documents - Facture Out
+  /entity/factureout:
+    $ref: './paths/documents/factureouts/factureouts.yaml'
+  /entity/factureout/{id}:
+    $ref: './paths/documents/factureouts/factureout-by-id.yaml'
+  /entity/factureout/delete:
+    $ref: './paths/documents/factureouts/factureouts-delete.yaml'
+  /entity/factureout/batch:
+    $ref: './paths/documents/factureouts/factureouts-batch.yaml'
+  /entity/factureout/metadata:
+    $ref: './paths/documents/factureouts/factureout-metadata.yaml'
+  /entity/factureout/metadata/attributes:
+    $ref: './paths/documents/factureouts/factureout-metadata-attribute.yaml'
+  /entity/factureout/metadata/attributes/{id}:
+    $ref: './paths/documents/factureouts/factureout-metadata-attribute-by-id.yaml'
+  /entity/factureout/metadata/states:
+    $ref: './paths/documents/factureouts/factureout-metadata-states.yaml'
+  /entity/factureout/metadata/states/{id}:
+    $ref: './paths/documents/factureouts/factureout-metadata-state-by-id.yaml'
+  /entity/factureout/new:
+    $ref: './paths/documents/factureouts/factureout-new.yaml'
 
   # Documents - Payment Out
   /entity/paymentout:
@@ -1394,8 +1524,12 @@ components:
       $ref: './components/schemas/common/fileList.yaml'
     FactureOut:
       $ref: './components/schemas/dictionary/factureOut.yaml'
+    FactureOutList:
+      $ref: './components/schemas/dictionary/factureOutList.yaml'
     FactureIn:
       $ref: './components/schemas/dictionary/factureIn.yaml'
+    FactureInList:
+      $ref: './components/schemas/dictionary/factureInList.yaml'
     FiscalType:
       $ref: './components/schemas/dictionary/fiscalType.yaml'
     Gender:
@@ -1743,8 +1877,20 @@ components:
       $ref: './components/schemas/dictionary/purchaseReturnPositionList.yaml'
     InvoiceIn:
       $ref: './components/schemas/dictionary/invoiceIn.yaml'
+    InvoiceInList:
+      $ref: './components/schemas/dictionary/invoiceInList.yaml'
+    InvoiceInPosition:
+      $ref: './components/schemas/dictionary/invoiceInPosition.yaml'
+    InvoiceInPositionList:
+      $ref: './components/schemas/dictionary/invoiceInPositionList.yaml'
     InvoiceOut:
       $ref: './components/schemas/dictionary/invoiceOut.yaml'
+    InvoiceOutList:
+      $ref: './components/schemas/dictionary/invoiceOutList.yaml'
+    InvoiceOutPosition:
+      $ref: './components/schemas/dictionary/invoiceOutPosition.yaml'
+    InvoiceOutPositionList:
+      $ref: './components/schemas/dictionary/invoiceOutPositionList.yaml'
     Supply:
       $ref: './components/schemas/dictionary/supply.yaml'
     SupplyList:
@@ -2028,6 +2174,10 @@ tags:
     description: Операции со складами
   - name: CustomerOrders
     description: Операции с заказами покупателя
+  - name: InvoiceIns
+    description: Операции со счетами поставщику
+  - name: InvoiceOuts
+    description: Операции со счетами покупателю
   - name: Demands
     description: Операции с отгрузками
   - name: Moves
@@ -2060,6 +2210,10 @@ tags:
     description: Операции с приходными ордерами
   - name: PaymentIns
     description: Операции с входящими платежами
+  - name: FactureIns
+    description: Операции со Счетами-фактурами полученными
+  - name: FactureOuts
+    description: Операции со Счетами-фактурами выданными
   - name: PaymentOuts
     description: Операции с исходящими платежами
   - name: RetailDrawerCashIns

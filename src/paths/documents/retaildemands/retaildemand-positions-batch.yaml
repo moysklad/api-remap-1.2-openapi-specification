@@ -1,8 +1,8 @@
 post:
-  operationId: createRetailDemandPositionsBatch
+  operationId: createRetailDemandPositions
   tags:
     - RetailDemands
-  summary: Создать позиции Розничной продажи
+  summary: Массовое создание и обновление позиций Розничной продажи
   parameters:
     - $ref: '../../../components/parameters.yaml#/entityId'
     - $ref: '../../../components/parameters.yaml#/expand'

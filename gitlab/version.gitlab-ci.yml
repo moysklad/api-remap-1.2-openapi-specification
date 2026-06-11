@@ -88,8 +88,7 @@ version:auto:
     - TAG_MSG_FILE=$(mktemp)
     - |
       CHANGELOG_LINES=$(git log $RANGE --pretty=format:"%s" \
-        | grep -E '^(feat|fix|docs)(:|!)' \
-        | while read -r line; do echo "* $line"; done)
+        | awk '/^(feat|fix|docs)(:|!)/ { print "* " $0 }')
       if [ -z "$CHANGELOG_LINES" ]; then
         CHANGELOG_LINES="* технические изменения"
       fi
