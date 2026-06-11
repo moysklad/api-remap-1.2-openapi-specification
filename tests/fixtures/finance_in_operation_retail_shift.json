@@ -1,0 +1,9 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/retailshift/90ba347d-6b8b-11e6-8a84-bae5000000bd",
+    "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/retailshift/metadata",
+    "type": "retailshift",
+    "mediaType": "application/json"
+  },
+  "linkedSum": 80000
+}
