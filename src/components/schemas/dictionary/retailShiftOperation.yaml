@@ -1,10 +1,14 @@
 description: |
   Элемент массива `operations` розничной смены.
-
   Допустимые `meta.type`: retaildemand, retailsalesreturn, retaildrawercashin,
   retaildrawercashout.
 type: object
-properties:
-  meta:
-    description: Метаданные связанной операции
-    $ref: '../common/meta.yaml'
+anyOf:
+  - description: Розничная продажа
+    $ref: '../../../openapi.yaml#/components/schemas/RetailDemand'
+  - description: Возврат покупателя в рознице
+    $ref: '../../../openapi.yaml#/components/schemas/SalesReturn'
+  - description: Внесение денег
+    $ref: '../../../openapi.yaml#/components/schemas/RetailDrawerCashIn'
+  - description: Выплата денег
+    $ref: '../../../openapi.yaml#/components/schemas/RetailDrawerCashOut'

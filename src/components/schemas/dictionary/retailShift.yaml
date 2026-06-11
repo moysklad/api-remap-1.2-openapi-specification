@@ -49,6 +49,8 @@ properties:
   bankPercent:
     type: number
     format: double
+    minimum: 0
+    maximum: 100
     description: Комиссия банка-эквайера по операциям по карте (в процентах)
   cheque:
     type: object
@@ -166,6 +168,8 @@ properties:
   qrBankPercent:
     type: number
     format: double
+    minimum: 0
+    maximum: 100
     description: Комиссия банка-эквайера по операция по QR-коду (в процентах)
   receivedCash:
     type: number
