@@ -35,6 +35,7 @@ properties:
   discount:
     type: number
     format: double
+    maximum: 100
     description: Процент скидки или наценки. Наценка указывается отрицательным числом, например `-10` задает наценку 10%.
   pack:
     description: Упаковка Товара
@@ -50,6 +51,7 @@ properties:
   quantity:
     type: number
     format: double
+    minimum: 0.0001
     description: Количество товаров/услуг данного вида в позиции. Если позиция - товар с учетом по серийным номерам, значение всегда равно количеству серийных номеров для данной позиции в документе.
   things:
     type: array

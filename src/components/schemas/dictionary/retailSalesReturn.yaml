@@ -45,6 +45,7 @@ properties:
   cashSum:
     type: number
     format: double
+    minimum: 0
     description: Оплачено наличными
   code:
     type: string
