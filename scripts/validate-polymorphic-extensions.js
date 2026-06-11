@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 
 const fs = require("fs");
+const os = require("os");
 const path = require("path");
-const yaml = require("js-yaml");
+const { spawnSync } = require("child_process");
 
 const ROOT_DIR = path.resolve(__dirname, "..");
 const SPEC_PATH = path.join(ROOT_DIR, "src", "openapi.yaml");
@@ -10,19 +11,7 @@ const SPEC_PATH = path.join(ROOT_DIR, "src", "openapi.yaml");
 const POLYMORPHIC_DISCRIMINATOR = "x-polymorphic-discriminator";
 const POLYMORPHIC_PARENT = "x-polymorphic-parent";
 
-const parsedFiles = new Map();
 const errors = [];
-
-function readYaml(filePath) {
-    const absolutePath = path.resolve(filePath);
-
-    if (!parsedFiles.has(absolutePath)) {
-        const content = fs.readFileSync(absolutePath, "utf8");
-        parsedFiles.set(absolutePath, yaml.load(content));
-    }
-
-    return parsedFiles.get(absolutePath);
-}
 
 function isObject(value) {
     return value !== null && typeof value === "object" && !Array.isArray(value);
@@ -30,6 +19,43 @@ function isObject(value) {
 
 function isNonEmptyString(value) {
     return typeof value === "string" && value.trim().length > 0;
+}
+
+function createBundledSpec() {
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "remap-polymorphic-"));
+    const bundledSpecPath = path.join(tempDir, "openapi.json");
+
+    try {
+        const result = spawnSync(
+            "redocly",
+            [
+                "bundle",
+                "--skip-decorator=filter-out",
+                SPEC_PATH,
+                "-o",
+                bundledSpecPath,
+                "--ext",
+                "json",
+            ],
+            {
+                cwd: ROOT_DIR,
+                encoding: "utf8",
+            }
+        );
+
+        if (result.error) {
+            throw result.error;
+        }
+
+        if (result.status !== 0) {
+            const output = [result.stdout, result.stderr].filter(Boolean).join("\n").trim();
+            throw new Error(output || "redocly bundle завершился с ошибкой");
+        }
+
+        return JSON.parse(fs.readFileSync(bundledSpecPath, "utf8"));
+    } finally {
+        fs.rmSync(tempDir, { recursive: true, force: true });
+    }
 }
 
 function resolveJsonPointer(document, pointer) {
@@ -48,25 +74,66 @@ function resolveJsonPointer(document, pointer) {
         .reduce((current, part) => (current === undefined ? undefined : current[part]), document);
 }
 
-function resolveRef(ref, currentFilePath, rootDocument) {
+function resolveRef(ref, rootDocument) {
     const [fileRef, pointer = ""] = ref.split("#");
-    const normalizedPointer = pointer ? `#${pointer}` : "#";
 
-    if (fileRef === "") {
-        return resolveJsonPointer(rootDocument, normalizedPointer);
+    if (fileRef !== "") {
+        return undefined;
     }
 
-    const referencedFilePath = path.resolve(path.dirname(currentFilePath), fileRef);
-    const referencedDocument = readYaml(referencedFilePath);
+    return resolveJsonPointer(rootDocument, pointer ? `#${pointer}` : "#");
+}
 
-    return resolveJsonPointer(referencedDocument, normalizedPointer);
+function getSchemaNameFromRef(ref) {
+    const refPrefix = "#/components/schemas/";
+
+    if (!ref.startsWith(refPrefix)) {
+        return undefined;
+    }
+
+    return ref
+        .slice(refPrefix.length)
+        .replace(/~1/g, "/")
+        .replace(/~0/g, "~");
+}
+
+function getPublicSchemaNames(schemas) {
+    const internalSchemaNames = new Set();
+
+    // Redocly keeps public component names as aliases and adds internal targets
+    // for schemas from external files. componentName must match the public name.
+    Object.values(schemas).forEach((schema) => {
+        if (!isObject(schema) || !isNonEmptyString(schema.$ref)) {
+            return;
+        }
+
+        const referencedSchemaName = getSchemaNameFromRef(schema.$ref);
+
+        if (
+            referencedSchemaName !== undefined &&
+            Object.prototype.hasOwnProperty.call(schemas, referencedSchemaName)
+        ) {
+            internalSchemaNames.add(referencedSchemaName);
+        }
+    });
+
+    return new Set(
+        Object.keys(schemas).filter((schemaName) => !internalSchemaNames.has(schemaName))
+    );
 }
 
 function getComponentSchema(componentName, schemas, rootDocument) {
-    const schema = schemas[componentName];
+    return resolveSchema(schemas[componentName], rootDocument);
+}
 
+function resolveSchema(schema, rootDocument, seenRefs = new Set()) {
     if (isObject(schema) && isNonEmptyString(schema.$ref)) {
-        return resolveRef(schema.$ref, SPEC_PATH, rootDocument);
+        if (seenRefs.has(schema.$ref)) {
+            return schema;
+        }
+
+        seenRefs.add(schema.$ref);
+        return resolveSchema(resolveRef(schema.$ref, rootDocument), rootDocument, seenRefs);
     }
 
     return schema;
@@ -177,16 +244,16 @@ function validatePolymorphicDiscriminator(componentName, schema, schemas, schema
 }
 
 function validate() {
-    const rootDocument = readYaml(SPEC_PATH);
+    const rootDocument = createBundledSpec();
     const schemas = rootDocument && rootDocument.components && rootDocument.components.schemas;
 
     if (!isObject(schemas)) {
         throw new Error("components.schemas не найден в src/openapi.yaml");
     }
 
-    const schemaNames = new Set(Object.keys(schemas));
+    const schemaNames = getPublicSchemaNames(schemas);
 
-    Object.keys(schemas).forEach((componentName) => {
+    schemaNames.forEach((componentName) => {
         const schema = getComponentSchema(componentName, schemas, rootDocument);
 
         if (!isObject(schema)) {
@@ -203,7 +270,7 @@ try {
 
     if (errors.length > 0) {
         console.error("Ошибки валидации x-polymorphic-* расширений:");
-        errors.forEach((error) => console.error(`- ${error}`));
+        errors.forEach((error) => console.error(`* ${error}`));
         process.exit(1);
     }
 
