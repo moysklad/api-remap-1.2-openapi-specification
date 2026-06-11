@@ -120,7 +120,7 @@ api-sdk-builder/
 │   ├── .gitlab-ci-spec-gen.yml       # Старый PHP через OpenAPI (обратная совместимость)
 │   ├── version.gitlab-ci.yml         # Версионирование спецификации
 │   └── sdk/
-│       ├── lint-openapi.yml          # Job для lint спецификации
+│       ├── validate.yml          # Job для lint спецификации и проверки кастомных расширений
 │       ├── generate-sdk.yml          # Job'ы для bundle-openapi, bundle-smoke-openapi и генерации SDK
 │       ├── sdk-tests-golden.yml      # Golden тесты
 │       ├── sdk-tests-smoke.yml       # Smoke тесты с openapi-mock
