@@ -71,8 +71,10 @@ agent:
 * расширение работает в связке с `x-polymorphic-parent` на concrete-схемах из `mappings`.
 
 **Структура**:
-* path - строка в dot-нотации вложенности. Пример формата `meta.type`.
-* mappings - объект «значение дискриминатора → ссылка на схему». Пример: `$ref: '#/components/schemas/<Name>'`.
+* path - строка в dot-нотации вложенности. Пример формата `meta.type`
+* mappings - массив соответствий `{type, componentName}` для генерации SDK 
+  * `type` — значение дискриминатора 
+  * `componentName` — имя компонента из `components.schemas`.
 
 **Пример**
 
@@ -80,8 +82,8 @@ agent:
 x-polymorphic-discriminator:
   path: meta.type
   mappings:
-    customerorder:
-      $ref: '#/components/schemas/FinanceInOperationCustomerOrder'
+    - type: customerorder
+      componentName: FinanceInOperationCustomerOrder
 ```
 
 
@@ -92,16 +94,19 @@ x-polymorphic-discriminator:
 Расширение используется на concrete-схемах, перечисленных в `x-polymorphic-discriminator.mappings`.
 
 **Структура**:
-* x-polymorphic-parent - ссылка на компонент в схеме. Пример: `$ref: '#/components/schemas/<Name>'`.
+* x-polymorphic-parent - имя абстрактной родительской схемы из `components.schemas`.
+
+**Особенности**
+
+Перечислять проперти или ссылку на родителя в блоке `allOf` не треубется, при указании родителя в `x-polymorphic-parent`
+в шаблоне автоматически будут связаны и добавлены все наследуемые проперти, методы от родителя 
 
 **Пример**
 
 ```yaml
 type: object
 description: Отгрузка + linkedSum
-x-polymorphic-parent:
-  $ref: '../../../openapi.yaml#/components/schemas/FinanceInOperationAbstract'
+x-polymorphic-parent: FinanceInOperationAbstract
 allOf:
-  - $ref: '../../../openapi.yaml#/components/schemas/FinanceInOperationAbstract'
   - $ref: '../../../openapi.yaml#/components/schemas/Demand'
 ```

@@ -1,7 +1,5 @@
 type: object
 description: Приемка + linkedSum
-x-polymorphic-parent:
-  $ref: '../../../openapi.yaml#/components/schemas/FinanceOutOperationAbstract'
+x-polymorphic-parent: FinanceOutOperationAbstract
 allOf:
-  - $ref: '../../../openapi.yaml#/components/schemas/FinanceOutOperationAbstract'
   - $ref: '../../../openapi.yaml#/components/schemas/Supply'

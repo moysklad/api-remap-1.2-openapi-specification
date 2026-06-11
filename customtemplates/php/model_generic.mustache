@@ -9,7 +9,7 @@ class {{classname}} {{#parentSchema}}extends {{{parent}}} {{/parentSchema}}{{^pa
       * @var string[]
       */
     protected static array $openAPIPolymorphicDiscriminatorMappings = [
-        {{#vendorExtensions.x-polymorphic-discriminator.mappings}}'{{value}}' => '{{className}}'{{^-last}},
+        {{#vendorExtensions.x-polymorphic-discriminator.mappings}}'{{type}}' => '{{componentName}}'{{^-last}},
         {{/-last}}{{/vendorExtensions.x-polymorphic-discriminator.mappings}}
     ];
 {{>model_entity_static_builder}}

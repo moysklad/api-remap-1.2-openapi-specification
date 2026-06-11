@@ -1,7 +1,5 @@
 type: object
 description: Заказ покупателя + linkedSum
-x-polymorphic-parent:
-  $ref: '../../../openapi.yaml#/components/schemas/FinanceInOperationAbstract'
+x-polymorphic-parent: FinanceInOperationAbstract
 allOf:
-  - $ref: '../../../openapi.yaml#/components/schemas/FinanceInOperationAbstract'
   - $ref: '../../../openapi.yaml#/components/schemas/CustomerOrder'

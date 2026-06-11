@@ -40,7 +40,7 @@ import {{polymorphicPackage}}.PolymorphicMetaTypeDeserializer;
 @OpenApiPolymorphicTypeInfo(path = "{{vendorExtensions.x-polymorphic-discriminator.path}}")
 @OpenApiPolymorphicSubTypes({
 {{#vendorExtensions.x-polymorphic-discriminator.mappings}}
-  @OpenApiPolymorphicSubTypes.Type(value = {{className}}.class, name = "{{value}}"){{^-last}},
+  @OpenApiPolymorphicSubTypes.Type(value = {{componentName}}.class, name = "{{type}}"){{^-last}},
 {{/-last}}{{/vendorExtensions.x-polymorphic-discriminator.mappings}}
 })
 @JsonDeserialize(using = PolymorphicMetaTypeDeserializer.class)
