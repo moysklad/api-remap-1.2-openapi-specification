@@ -1216,6 +1216,10 @@ paths:
   # Documents - Retail Shifts
   /entity/retailshift:
     $ref: './paths/documents/retailshifts/retailshifts.yaml'
+  /entity/retailshift/delete:
+    $ref: './paths/documents/retailshifts/retailshifts-delete.yaml'
+  /entity/retailshift/batch:
+    $ref: './paths/documents/retailshifts/retailshifts-batch.yaml'
   /entity/retailshift/{id}:
     $ref: './paths/documents/retailshifts/retailshift-by-id.yaml'
   /entity/retailshift/metadata:

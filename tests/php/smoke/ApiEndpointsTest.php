@@ -2059,6 +2059,32 @@ class ApiEndpointsTest extends TestCase
         ]));
     }
 
+    /**
+     * RetailShift проверяется отдельно, потому что общий assertDocumentEndpoints()
+     * предполагает наличие /new, /positions и metadata/states, которых у этой сущности нет.
+     */
+    public function testRetailShiftCrudAndMetadataEndpoints(): void
+    {
+        $base = self::API_BASE_PATH . '/entity/retailshift';
+
+        $this->assertReachable($this->client->get($base));
+        $this->assertReachable($this->client->post($base, ['json' => ['name' => 'Retail Shift X']]));
+
+        $this->assertReachable($this->client->get($base . '/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put($base . '/' . self::TEST_UUID, ['json' => ['name' => 'Retail Shift Y']]));
+        $this->assertReachable($this->client->delete($base . '/' . self::TEST_UUID));
+
+        $this->assertReachable($this->client->post($base . '/delete', ['json' => [['meta' => ['href' => 'x']]]]));
+        $this->assertReachable($this->client->post($base . '/batch', ['json' => [['name' => 'Retail Shift Z']]]));
+
+        $this->assertReachable($this->client->get($base . '/metadata'));
+        $this->assertReachable($this->client->get($base . '/metadata/attributes'));
+        $this->assertReachable($this->client->post($base . '/metadata/attributes', ['json' => ['name' => 'attr1']]));
+        $this->assertReachable($this->client->get($base . '/metadata/attributes/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put($base . '/metadata/attributes/' . self::TEST_UUID, ['json' => ['name' => 'attr1']]));
+        $this->assertReachable($this->client->delete($base . '/metadata/attributes/' . self::TEST_UUID));
+    }
+
     public function testListPurchaseOrders(): void
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/purchaseorder');
