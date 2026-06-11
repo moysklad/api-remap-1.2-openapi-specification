@@ -22,11 +22,10 @@ get:
       $ref: '../../../components/responses.yaml#/CommonError'
 
 post:
-  operationId: createProcessingProcessPositions
+  operationId: createProcessingProcessPosition
   tags:
     - ProcessingProcesses
-  summary: Создать позицию Техпроцесса
-  description: Создание позиции Техпроцесса
+  summary: Создать и обновить позицию Техпроцесса
   parameters:
     - $ref: '../../../components/parameters.yaml#/entityId'
     - $ref: '../../../components/parameters.yaml#/expand'
@@ -41,7 +40,7 @@ post:
           $ref: '../../../openapi.yaml#/components/schemas/ProcessingProcessPosition'
   responses:
     '200':
-      description: Позиция Техпроцесса успешно созданы
+      description: Позиция Техпроцесса успешно создана
       content:
         application/json:
           schema:

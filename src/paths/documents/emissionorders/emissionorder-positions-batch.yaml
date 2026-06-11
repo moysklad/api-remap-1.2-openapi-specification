@@ -1,8 +1,8 @@
 post:
-  operationId: createEmissionOrderPositionsBatch
+  operationId: createEmissionOrderPositions
   tags:
   - EmissionOrders
-  summary: Создать позиции Заказа кодов маркировки
+  summary: Массовое создание и обновление позиций Заказа кодов маркировки
   parameters:
   - $ref: '../../../components/parameters.yaml#/entityId'
   - $ref: '../../../components/parameters.yaml#/expand'
