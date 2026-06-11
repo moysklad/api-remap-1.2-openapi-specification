@@ -831,6 +831,8 @@ paths:
     $ref: './paths/documents/retailsalesreturns/retailsalesreturn-new.yaml'
   /entity/retailsalesreturn/{id}/positions:
     $ref: './paths/documents/retailsalesreturns/retailsalesreturn-positions.yaml'
+  /entity/retailsalesreturn/{id}/positions/batch:
+    $ref: './paths/documents/retailsalesreturns/retailsalesreturn-positions-batch.yaml'
   /entity/retailsalesreturn/{id}/positions/{positionId}:
     $ref: './paths/documents/retailsalesreturns/retailsalesreturn-position-by-id.yaml'
   /entity/retailsalesreturn/{id}/positions/delete:

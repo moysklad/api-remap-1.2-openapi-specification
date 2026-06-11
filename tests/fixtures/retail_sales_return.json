@@ -9,6 +9,7 @@
   "accountId": "305f25aa-137a-11e6-9464-e4de00000001",
   "updated": "2016-05-06 15:02:27",
   "created": "2016-08-25 19:55:00",
+  "deleted": "2016-08-26 10:00:00",
   "name": "newName",
   "code": "3033",
   "externalCode": "2250005aas-cszsz",
@@ -56,6 +57,14 @@
       "mediaType": "application/json"
     }
   },
+  "organizationAccount": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/agentaccount/30f01af0-137a-11e6-9464-e4de0000004e",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/agentaccount/metadata",
+      "type": "agentaccount",
+      "mediaType": "application/json"
+    }
+  },
   "store": {
     "meta": {
       "href": "https://api.moysklad.ru/api/remap/1.2/entity/store/30fe30a0-137a-11e6-9464-e4de00000050",
@@ -69,6 +78,30 @@
       "href": "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/31ace095-137a-11e6-9464-e4de0000005b",
       "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/metadata",
       "type": "counterparty",
+      "mediaType": "application/json"
+    }
+  },
+  "agentAccount": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/agentaccount/31ace095-137a-11e6-9464-e4de0000005b",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/agentaccount/metadata",
+      "type": "agentaccount",
+      "mediaType": "application/json"
+    }
+  },
+  "contract": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/contract/0696d9aa-2859-11f1-0a83-1f250000023d",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/contract/metadata",
+      "type": "contract",
+      "mediaType": "application/json"
+    }
+  },
+  "state": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/retailsalesreturn/metadata/states/fb56c504-2e58-11e6-8a84-bae500000069",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/retailsalesreturn/metadata",
+      "type": "state",
       "mediaType": "application/json"
     }
   },
