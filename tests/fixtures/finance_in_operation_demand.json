@@ -10,5 +10,41 @@
   "name": "00001",
   "moment": "2019-01-15 12:00:00",
   "applicable": true,
+  "positions": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/demand/7944ef04-047e-11e9-ac12-000a00000002/positions",
+      "type": "demandposition",
+      "mediaType": "application/json",
+      "size": 1,
+      "limit": 1000,
+      "offset": 0
+    }
+  },
+  "customerOrder": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/customerorder/22591b08-2859-11f1-0a83-1f2500000247",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/customerorder/metadata",
+      "type": "customerorder",
+      "mediaType": "application/json"
+    }
+  },
+  "payments": [
+    {
+      "meta": {
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/paymentin/ad1ffc02-3f8e-11e6-8a84-bae5000000fa",
+        "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/paymentin/metadata",
+        "type": "paymentin",
+        "mediaType": "application/json"
+      }
+    },
+    {
+      "meta": {
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/cashin/4b4552e8-3f7f-11e6-8a84-bae500000075",
+        "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/cashin/metadata",
+        "type": "cashin",
+        "mediaType": "application/json"
+      }
+    }
+  ],
   "linkedSum": 150000
 }
