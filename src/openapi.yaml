@@ -1319,6 +1319,8 @@ components:
       $ref: './components/schemas/dictionary/categoryType.yaml'
     DeleteInfo:
       $ref: './components/schemas/common/deleteInfo.yaml'
+    DeleteRowResult:
+      $ref: './components/schemas/common/deleteRowResult.yaml'
     CompanyType:
       $ref: './components/schemas/dictionary/companyType.yaml'
     ContractType:
@@ -1345,6 +1347,138 @@ components:
       $ref: './components/schemas/dictionary/counterpartyList.yaml'
     CountryList:
       $ref: './components/schemas/dictionary/countryList.yaml'
+    BatchEntity:
+      type: object
+      description: |
+        Элемент ответа массовой операции: либо сущность (конкретный тип определяется
+        по `meta.type`), либо объект ошибки по элементу (поле `errors`).
+        Конкретные сущности и позиции массовых операций наследуют этот тип.
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        errors:
+          type: array
+          nullable: true
+          description: |
+            Ошибки по данному элементу массовой операции. Присутствует только для
+            элементов, которые не удалось обработать (у таких элементов нет `meta.type`).
+          items:
+            $ref: '#/components/schemas/ErrorElement'
+      x-polymorphic-discriminator:
+        path: meta.type
+        mappings:
+          - type: bundle
+            componentName: Bundle
+          - type: cashin
+            componentName: CashIn
+          - type: cashout
+            componentName: CashOut
+          - type: commissionreportin
+            componentName: CommissionReportIn
+          - type: commissionreportout
+            componentName: CommissionReportOut
+          - type: commissionreportoutposition
+            componentName: CommissionReportOutPosition
+          - type: consignment
+            componentName: Consignment
+          - type: contract
+            componentName: Contract
+          - type: counterparty
+            componentName: Counterparty
+          - type: country
+            componentName: Country
+          - type: currency
+            componentName: Currency
+          - type: customerorder
+            componentName: CustomerOrder
+          - type: demand
+            componentName: Demand
+          - type: emissionorder
+            componentName: EmissionOrder
+          - type: emissionorderposition
+            componentName: EmissionOrderPosition
+          - type: employee
+            componentName: Employee
+          - type: enter
+            componentName: Enter
+          - type: expenseitem
+            componentName: ExpenseItem
+          - type: internalorder
+            componentName: InternalOrder
+          - type: inventory
+            componentName: Inventory
+          - type: loss
+            componentName: Loss
+          - type: move
+            componentName: Move
+          - type: moveposition
+            componentName: MovePosition
+          - type: organization
+            componentName: Organization
+          - type: paymentin
+            componentName: PaymentIn
+          - type: paymentout
+            componentName: PaymentOut
+          - type: pricetype
+            componentName: PriceType
+          - type: processing
+            componentName: Processing
+          - type: processingorder
+            componentName: ProcessingOrder
+          - type: processingplan
+            componentName: ProcessingPlan
+          - type: processingplanfolder
+            componentName: ProcessingPlanFolder
+          - type: processingprocess
+            componentName: ProcessingProcess
+          - type: processingstage
+            componentName: ProcessingStage
+          - type: product
+            componentName: Product
+          - type: productfolder
+            componentName: ProductFolder
+          - type: project
+            componentName: Project
+          - type: purchaseorder
+            componentName: PurchaseOrder
+          - type: purchasereturn
+            componentName: PurchaseReturn
+          - type: retaildemand
+            componentName: RetailDemand
+          - type: retaildrawercashin
+            componentName: RetailDrawerCashIn
+          - type: retaildrawercashout
+            componentName: RetailDrawerCashOut
+          - type: retailstore
+            componentName: RetailStore
+          - type: saleschannel
+            componentName: SalesChannel
+          - type: salesreturn
+            componentName: SalesReturn
+          - type: service
+            componentName: Service
+          - type: store
+            componentName: Store
+          - type: supply
+            componentName: Supply
+          - type: supplyposition
+            componentName: SupplyPosition
+          - type: task
+            componentName: Task
+          - type: tasknote
+            componentName: TaskNote
+          - type: taxrate
+            componentName: TaxRate
+          - type: uom
+            componentName: Uom
+          - type: variant
+            componentName: Variant
+          - type: webhook
+            componentName: Webhook
+          - type: webhookstock
+            componentName: WebhookStock
+    ErrorElement:
+      $ref: './components/schemas/common/errorElement.yaml'
     Country:
       $ref: './components/schemas/dictionary/country.yaml'
     Currency:
@@ -1528,6 +1662,12 @@ components:
       $ref: './components/schemas/dictionary/serviceList.yaml'
     State:
       $ref: './components/schemas/dictionary/state.yaml'
+    StateRowResult:
+      $ref: './components/schemas/common/stateRowResult.yaml'
+    StatesUpsert:
+      $ref: './components/schemas/common/statesUpsert.yaml'
+    StatesUpsertResult:
+      $ref: './components/schemas/common/statesUpsertResult.yaml'
     StateType:
       $ref: './components/schemas/dictionary/stateType.yaml'
     Store:

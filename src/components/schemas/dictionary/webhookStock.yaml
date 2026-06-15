@@ -1,5 +1,6 @@
 type: object
 description: Вебхук на изменение остатков
+x-polymorphic-parent: BatchEntity
 x-entity-static-builder:
   methodParams:
     - "id"

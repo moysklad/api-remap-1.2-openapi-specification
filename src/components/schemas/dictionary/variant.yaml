@@ -1,5 +1,6 @@
 type: object
 description: Модификация
+x-polymorphic-parent: BatchEntity
 x-entity-static-builder:
   methodParams:
     - "id"

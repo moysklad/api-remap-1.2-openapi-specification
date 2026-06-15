@@ -1,5 +1,6 @@
 type: object
 description: Группа техкарт
+x-polymorphic-parent: BatchEntity
 x-entity-static-builder:
   methodParams:
     - "id"

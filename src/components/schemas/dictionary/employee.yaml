@@ -1,5 +1,6 @@
 type: object
 description: Сотрудник
+x-polymorphic-parent: BatchEntity
 x-entity-static-builder:
   methodParams:
     - "id"

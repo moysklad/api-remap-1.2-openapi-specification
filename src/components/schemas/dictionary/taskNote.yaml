@@ -1,5 +1,6 @@
 type: object
 description: Комментарий к Задаче
+x-polymorphic-parent: BatchEntity
 x-entity-static-builder:
   methodParams:
     - "parentId"

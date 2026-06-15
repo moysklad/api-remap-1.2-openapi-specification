@@ -27,8 +27,6 @@ post:
           schema:
             type: array
             items:
-              oneOf:
-                - $ref: '../../../openapi.yaml#/components/schemas/SalesChannel'
-                - $ref: '../../../openapi.yaml#/components/schemas/Error'
+              $ref: '../../../openapi.yaml#/components/schemas/BatchEntity'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'

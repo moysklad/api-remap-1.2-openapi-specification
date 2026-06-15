@@ -1,5 +1,6 @@
 type: object
 description: Внесение денег
+x-polymorphic-parent: BatchEntity
 x-entity-static-builder:
   methodParams:
     - "id"

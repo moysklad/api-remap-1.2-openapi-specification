@@ -46,9 +46,7 @@ post:
           schema:
             type: array
             items:
-              oneOf:
-                - $ref: '../../../openapi.yaml#/components/schemas/PriceType'
-                - $ref: '../../../openapi.yaml#/components/schemas/Error'
+              $ref: '../../../openapi.yaml#/components/schemas/BatchEntity'
             minItems: 1
     default:
       $ref: '../../../components/responses.yaml#/CommonError'

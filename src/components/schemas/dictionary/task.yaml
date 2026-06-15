@@ -1,5 +1,6 @@
 type: object
 description: Задача
+x-polymorphic-parent: BatchEntity
 x-entity-static-builder:
   methodParams:
     - "id"

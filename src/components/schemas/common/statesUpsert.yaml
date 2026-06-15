@@ -1,0 +1,6 @@
+# Один Статус или массив Статусов (одиночное и массовое создание/обновление)
+oneOf:
+  - $ref: '../dictionary/state.yaml'
+  - type: array
+    items:
+      $ref: '../dictionary/state.yaml'
