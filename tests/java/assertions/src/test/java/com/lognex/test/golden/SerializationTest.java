@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
-import ru.moysklad.remap_1_2.ApiClient;
+import ru.moysklad.remap_1_2.beta.ApiClient;
 
 import java.io.File;
 import java.lang.reflect.Constructor;
@@ -207,7 +207,7 @@ class SerializationTest extends BaseTestCase {
     }
 
     private String getModelClass(String shortName) {
-        return "ru.moysklad.remap_1_2.model." + shortName;
+        return "ru.moysklad.remap_1_2.beta.model." + shortName;
     }
 
     private Class<?> loadClass(String className) {
