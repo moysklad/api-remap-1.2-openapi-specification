@@ -20,3 +20,9 @@ files:
   Orders.mustache:
     templateType: SupportingFiles
     destinationFilename: src/main/java/ru/moysklad/remap_1_2.beta/api/Orders.java
+  MetaEntity.mustache:
+    templateType: SupportingFiles
+    destinationFilename: src/main/java/ru/moysklad/remap_1_2/beta/model/MetaEntity.java
+  IAttribute.mustache:
+    templateType: SupportingFiles
+    destinationFilename: src/main/java/ru/moysklad/remap_1_2/beta/model/IAttribute.java

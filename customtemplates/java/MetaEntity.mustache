@@ -1,0 +1,16 @@
+{{>licenseInfo}}
+package {{modelPackage}};
+
+import java.util.UUID;
+
+/**
+ * Interface for common entities.
+ */
+public interface MetaEntity {
+
+    public UUID getId();
+
+    public Meta getMeta();
+
+    public void setMeta(Meta meta);
+}
