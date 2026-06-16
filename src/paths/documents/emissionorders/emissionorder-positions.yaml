@@ -22,10 +22,10 @@ get:
       $ref: '../../../components/responses.yaml#/CommonError'
 
 post:
-  operationId: createEmissionOrderPositions
+  operationId: createEmissionOrderPosition
   tags:
   - EmissionOrders
-  summary: Создать позицию Заказа кодов маркировки
+  summary: Создать и обновить позицию Заказа кодов маркировки
   parameters:
   - $ref: '../../../components/parameters.yaml#/entityId'
   - $ref: '../../../components/parameters.yaml#/expand'

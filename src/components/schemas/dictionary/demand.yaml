@@ -182,22 +182,10 @@ properties:
     allOf:
       - $ref: '../../../openapi.yaml#/components/schemas/Address'
   overhead:
-    type: object
-    nullable: true
     description: |
       Накладные расходы на уровне документа.
       Если позиции Отгрузки не заданы, накладные расходы задать нельзя.
-    properties:
-      sum:
-        type: number
-        format: double
-        description: Сумма в копейках
-      distribution:
-        type: string
-        description: |
-          Распределение накладных расходов между позициями.
-          Известные значения описаны в DemandOverheadDistribution
-        example: "weight"
+    $ref: '../common/overhead.yaml'
   customerOrder:
     description: Заказ покупателя, с которым связана Отгрузка
     nullable: true
@@ -244,16 +232,16 @@ properties:
     description: Перевозчик (контрагент или юрлицо)
     nullable: true
     type: object
-    anyOf:
-      - $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
-      - $ref: '../../../openapi.yaml#/components/schemas/Organization'
+    x-agent-reference: true
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Agent'
   consignee:
     description: Грузополучатель (контрагент или юрлицо)
     nullable: true
     type: object
-    anyOf:
-      - $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
-      - $ref: '../../../openapi.yaml#/components/schemas/Organization'
+    x-agent-reference: true
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Agent'
   goodPackQuantity:
     type: integer
     description: Всего мест

@@ -1,0 +1,120 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/invoiceout/6afee657-0888-11e6-9464-e4de00000037",
+    "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/invoiceout/metadata",
+    "type": "invoiceout",
+    "mediaType": "application/json"
+  },
+  "id": "6afee657-0888-11e6-9464-e4de00000037",
+  "accountId": "84e60e93-f504-11e5-8a84-bae500000008",
+  "syncId": "734a9e26-45a2-4ead-849c-e144daeb854d",
+  "updated": "2016-04-22 16:21:19",
+  "name": "change name",
+  "description": "Комментарий к счету",
+  "code": "change_code",
+  "externalCode": "666777666",
+  "owner": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/employee/faba7f37-2e58-11e6-8a84-bae500000028",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/employee/metadata",
+      "type": "employee",
+      "mediaType": "application/json"
+    }
+  },
+  "shared": false,
+  "group": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/group/f97aa1fb-2e58-11e6-8a84-bae500000002",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/group/metadata",
+      "type": "group",
+      "mediaType": "application/json"
+    }
+  },
+  "moment": "2016-04-19 13:50:24",
+  "applicable": false,
+  "rate": {
+    "currency": {
+      "meta": {
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/currency/baac25f0-50ac-11e5-300d-c79b00000055",
+        "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/currency/metadata",
+        "type": "currency",
+        "mediaType": "application/json"
+      }
+    }
+  },
+  "sum": 5840,
+  "organization": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/organization/850c8195-f504-11e5-8a84-bae50000015e",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/organization/metadata",
+      "type": "organization",
+      "mediaType": "application/json"
+    }
+  },
+  "store": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/store/850ee995-f504-11e5-8a84-bae500000160",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/store/metadata",
+      "type": "store",
+      "mediaType": "application/json"
+    }
+  },
+  "agent": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/850f1667-f504-11e5-8a84-bae500000163",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/metadata",
+      "type": "counterparty",
+      "mediaType": "application/json"
+    }
+  },
+  "organizationAccount": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/account/850c8af2-f504-11e5-8a84-bae50000015f",
+      "type": "account",
+      "mediaType": "application/json"
+    }
+  },
+  "agentAccount": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/account/850f1eab-f504-11e5-8a84-bae500000164",
+      "type": "account",
+      "mediaType": "application/json"
+    }
+  },
+  "attributes": [
+    {
+      "meta": {
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/invoiceout/metadata/attributes/0cd74e1e-2e59-11e6-8a84-bae50000008a",
+        "type": "attributemetadata",
+        "mediaType": "application/json"
+      },
+      "id": "51d191f4-0887-11e6-9464-e4de00000079",
+      "name": "AttributeName1",
+      "type": "string",
+      "value": "new_val"
+    }
+  ],
+  "created": "2016-08-25 19:55:00",
+  "printed": true,
+  "published": true,
+  "positions": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/invoiceout/6afee657-0888-11e6-9464-e4de00000037/positions",
+      "type": "invoiceposition",
+      "mediaType": "application/json",
+      "size": 2,
+      "limit": 1000,
+      "offset": 0
+    },
+    "rows": []
+  },
+  "payedSum": 0,
+  "shippedSum": 0,
+  "salesChannel": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/saleschannel/56446e7f-3633-11ec-ac13-000d00000000",
+      "type": "saleschannel",
+      "mediaType": "application/json"
+    }
+  }
+}

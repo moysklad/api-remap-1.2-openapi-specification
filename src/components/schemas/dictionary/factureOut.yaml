@@ -23,6 +23,7 @@ properties:
     description: ID учетной записи
     readOnly: true
   agent:
+    type: object
     description: Метаданные контрагента или юрлица
     x-agent-reference: true
     allOf:
@@ -70,6 +71,7 @@ properties:
     allOf:
       - $ref: '../../../openapi.yaml#/components/schemas/FileList'
   group:
+    type: object
     description: Отдел сотрудника
     $ref: '../../../openapi.yaml#/components/schemas/Group'
   moment:
@@ -80,6 +82,7 @@ properties:
     maxLength: 255
     description: Наименование Счета-фактуры выданного
   organization:
+    type: object
     description: Метаданные юрлица
     $ref: '../../../openapi.yaml#/components/schemas/Organization'
   owner:
@@ -96,8 +99,11 @@ properties:
     type: boolean
     description: Опубликован ли документ
     readOnly: true
-  rate:
-    $ref: '../common/currencyRate.yaml'
+  rate: 
+    type: object
+    description: |
+     Валюта документа. Если значение курса валюты не указано, используется курс из справочника валют.
+    $ref: '../../../openapi.yaml#/components/schemas/CurrencyRate'
   shared:
     type: boolean
     description: Общий доступ
@@ -127,16 +133,22 @@ properties:
   advancePaymentVat:
     type: integer
     format: int32
-    description: Ставка НДС для авансового платежа (в процентах)
+    description: |
+      Ставка НДС для авансового платежа (в процентах).
+      Доступно только для счетов-фактур с основаниями-платежами.
   paymentPurpose:
     type: string
     maxLength: 255
-    description: Назначение платежа
+    description: |
+      Назначение платежа.
+      Доступно только для счетов-фактур с основаниями-платежами.
   vatSum:
     type: number
     format: double
-    description: Сумма включая НДС
-    readOnly: true
+    description: |
+      Сумма включая НДС.
+      Доступно только для счетов-фактур с основаниями-платежами.
+    readOnly: true  
   demands:
     type: array
     description: Связанные отгрузки (метаданные)

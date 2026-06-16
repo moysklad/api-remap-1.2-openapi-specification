@@ -18,7 +18,7 @@ Modular OpenAPI 3.0.3 specification for MoySklad JSON API 1.2 with automated SDK
 - **Spec format:** OpenAPI 3.0.3 (YAML, modular: `src/openapi.yaml` is the root)
 - **Linting:** Redocly CLI (`npm run validate`)
 - **Bundling:** Redocly CLI → `dist/openapi.yaml` / `dist/openapi.json`
-- **SDK generation:** OpenAPI Generator CLI (PHP + Java with custom templates in `customtemplates/php/` and `customtemplates/java/`)
+- **SDK generation:** OpenAPI Generator CLI (PHP + Java with custom templates in `customtemplates/php/` and `customtemplates/java/`); Java SDK runtime artifact is a self-contained shaded JAR with dependency relocation
 - **Custom schema helper generation:** `x-entity-static-builder` is consumed by both PHP and Java custom templates to generate `createWithMeta(...)` helpers on referenceable models with top-level `meta`
 - **Testing:** PHPUnit (PHP golden + smoke via openapi-mock), Maven Surefire (Java golden), Schemathesis (contract)
 - **Versioning:** `standard-version` + `oasdiff` (breaking change detection); tag format `MAJOR.MINOR.PATCH` (semver)

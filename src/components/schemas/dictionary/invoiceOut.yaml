@@ -58,3 +58,143 @@ properties:
   moment:
     type: string
     description: Дата документа
+  paymentPlannedMoment:
+    type: string
+    description: Планируемая дата оплаты
+  applicable:
+    type: boolean
+    description: Отметка о проведении
+  printed:
+    type: boolean
+    description: Напечатан ли документ
+    readOnly: true
+  published:
+    type: boolean
+    description: Опубликован ли документ
+    readOnly: true
+  shared:
+    type: boolean
+    description: Общий доступ
+  vatEnabled:
+    type: boolean
+    description: Учитывается ли НДС
+  vatIncluded:
+    type: boolean
+    description: Включен ли НДС в цену
+  vatSum:
+    type: number
+    format: double
+    description: Сумма НДС
+    readOnly: true
+  sum:
+    type: number
+    format: double
+    description: Сумма Счета в установленной валюте
+    readOnly: true
+  payedSum:
+    type: number
+    format: double
+    description: Сумма входящих платежей по Счету покупателя
+    readOnly: true
+  shippedSum:
+    type: number
+    format: double
+    description: Сумма отгруженного
+    readOnly: true
+  organization:
+    description: Метаданные юрлица
+    $ref: '../../../openapi.yaml#/components/schemas/Organization'
+  organizationAccount:
+    description: Метаданные счета юрлица
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Account'
+  agent:
+    description: Метаданные контрагента
+    x-agent-reference: true
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Agent'
+  agentAccount:
+    description: Метаданные счета контрагента
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Account'
+  store:
+    description: Метаданные склада
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Store'
+  state:
+    description: Метаданные статуса счета
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/State'
+  contract:
+    description: Метаданные договора
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Contract'
+  project:
+    description: Метаданные проекта
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Project'
+  owner:
+    description: Владелец (Сотрудник)
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Employee'
+  group:
+    description: Отдел сотрудника
+    $ref: '../../../openapi.yaml#/components/schemas/Group'
+  attributes:
+    type: array
+    description: Коллекция метаданных доп. полей
+    nullable: true
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
+  files:
+    description: Метаданные массива Файлов
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/FileList'
+  rate:
+    $ref: '../common/currencyRate.yaml'
+  positions:
+    type: object
+    description: Метаданные позиций Счета покупателю
+    $ref: '../../../openapi.yaml#/components/schemas/InvoiceOutPositionList'
+  salesChannel:
+    description: Метаданные канала продаж
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/SalesChannel'
+  customerOrder:
+    description: Заказ покупателя, с которым связан Счет покупателю
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/CustomerOrder'
+  demands:
+    type: array
+    description: Массив ссылок на связанные отгрузки
+    nullable: true
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/Demand'
+  payments:
+    type: array
+    description: Массив ссылок на связанные операции
+    nullable: true
+    items:
+      anyOf:
+        - $ref: '../../../openapi.yaml#/components/schemas/PaymentIn'
+        - $ref: '../../../openapi.yaml#/components/schemas/CashIn'

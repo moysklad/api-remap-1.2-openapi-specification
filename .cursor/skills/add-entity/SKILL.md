@@ -70,7 +70,12 @@ For every top-level entity (dictionary or document) keep two separate endpoints:
 
 This applies even when the MD `### Массовое создание и обновление ...` section uses the same example URL as create. The MD groups operations by behavior, not by URL — Remap exposes them as separate paths (`/batch` for arrays).
 
-Exception — **document positions**: the existing peer pattern is a single `POST /entity/<keyword>/{id}/positions` with `oneOf: [<Position>, array of <Position>]` (no `/positions/batch`). Keep that pattern for new document position endpoints unless the source MD explicitly defines a separate positions batch URL.
+**Document positions** follow split create semantics:
+
+- `POST /entity/<keyword>/{id}/positions` — **single position create/update** via one `<Position>` object.
+- `POST /entity/<keyword>/{id}/positions/batch` — **mass create/update** via array of `<Position>` (`minItems: 1`, `maxItems: 1000`) with per-item result array (`oneOf: [<Position>, Error]`).
+
+This applies even when the MD `### Массовое создание и обновление ...` section uses the same example URL as create. The MD groups operations by behavior, not by URL — Remap exposes document position mass operations as a separate `.../positions/batch` path.
 
 ## Missing dependency entities
 

@@ -106,7 +106,12 @@ post:
                 $ref: '../../../openapi.yaml#/components/schemas/<Entity>'
 ```
 
-Exception — document positions. The existing peer pattern keeps a single `POST /entity/<keyword>/{id}/positions` with `oneOf: [<Position>, array of <Position>]` and no `/positions/batch`. Follow that peer pattern for new positions endpoints unless the source MD explicitly defines a separate positions batch URL.
+Document positions follow split create semantics:
+
+- `POST /entity/<keyword>/{id}/positions` — single `<Position>` create/update.
+- `POST /entity/<keyword>/{id}/positions/batch` — mass create/update with array request and per-item `oneOf: [<Position>, Error]` response.
+
+Do not combine single+array payloads on the `.../positions` endpoint.
 
 ### Remap-specific traps
 
