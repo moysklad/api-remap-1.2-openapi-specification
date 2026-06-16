@@ -9,4 +9,3 @@ enum:
   - DIRECT_SALES
   - RETAIL_SALES
   - OTHER
-example: "OTHER"

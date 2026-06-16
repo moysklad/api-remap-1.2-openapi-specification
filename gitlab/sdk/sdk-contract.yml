@@ -8,17 +8,41 @@
 # SCHEMATHESIS_PHASES=coverage и опциональные SCHEMATHESIS_INCLUDE_PATH_REGEX /
 # SCHEMATHESIS_INCLUDE_METHOD / SCHEMATHESIS_INCLUDE_OPERATION_ID.
 
+.contract-test-job:
+  rules:
+    # Ручной прогон на ветке
+    - if: '$CI_PIPELINE_SOURCE == "web"'
+      when: on_success
+    # Релизный прогон после merge/push в master
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME == "master"'
+      when: on_success
+    # Прогон на tag pipeline
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_TAG'
+      when: on_success
+    - when: never
+
+.contract-env-cleanup-job:
+  rules:
+    # Окружение живёт по TTL; ручная очистка доступна во всех contract-пайплайнах.
+    - if: '$CI_PIPELINE_SOURCE == "web"'
+      when: manual
+      allow_failure: true
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME == "master"'
+      when: manual
+      allow_failure: true
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_TAG'
+      when: manual
+      allow_failure: true
+    - when: never
+
 deploy-contract-env:
-  extends: .maven-7.8-image
+  extends:
+    - .maven-7.8-image
+    - .contract-test-job
   stage: before-contract-test
   needs:
     - job: bundle-openapi
       artifacts: false
-  rules:
-    # Контрактные тесты запускаются только вручную на ветке (web)
-    - if: '$CI_PIPELINE_SOURCE == "web"'
-      when: on_success
-    - when: never
   before_script:
     - rm -f /etc/apt/sources.list.d/*pgdg*.list || true
     # По умолчанию берём последний тег репозитория moysklad без клонирования (только ls-remote)
@@ -49,16 +73,13 @@ deploy-contract-env:
       dotenv: variable.env
 
 create-contract-user:
-  extends: .openapitools-image
+  extends:
+    - .openapitools-image
+    - .contract-test-job
   stage: before-contract-test
   needs:
     - job: deploy-contract-env
       artifacts: true
-  rules:
-    # Контрактные тесты запускаются только вручную на ветке (web)
-    - if: '$CI_PIPELINE_SOURCE == "web"'
-      when: on_success
-    - when: never
   script:
     - |
       RESPONSE=$(curl --location -X POST "$API_HOST/api/remap/1.2/register" \
@@ -78,33 +99,26 @@ create-contract-user:
       dotenv: user.env
 
 remove-contract-env:
-  extends: .maven-7.8-image
+  extends:
+    - .maven-7.8-image
+    - .contract-env-cleanup-job
   stage: after-contract-test
   needs:
     - job: deploy-contract-env
       artifacts: true
-  rules:
-    # Очистка contract-окружения доступна только для ручного запуска на ветке (web)
-    - if: '$CI_PIPELINE_SOURCE == "web"'
-      when: manual
-      allow_failure: true
-    - when: never
   script:
     - python3 env_clean.py $NAMESPACE $CI_PIPELINE_ID $CI_JOB_ID
 
 sdk-contract:
-  extends: .schemathesis-image
+  extends:
+    - .schemathesis-image
+    - .contract-test-job
   stage: contract-test
   needs:
     - job: bundle-openapi
       artifacts: true
     - job: create-contract-user
       artifacts: true
-  rules:
-    # Контрактные тесты запускаются только вручную на ветке (web)
-    - if: '$CI_PIPELINE_SOURCE == "web"'
-      when: on_success
-    - when: never
   script:
     - |
       if [ -z "$SCHEMATHESIS_HOST" ] || [ -z "$SCHEMATHESIS_LOGIN" ] || [ -z "$SCHEMATHESIS_PASSWORD" ]; then

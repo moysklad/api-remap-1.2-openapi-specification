@@ -106,6 +106,8 @@ docker compose run --rm \
 
 Список целей: `docker compose run --rm sdk make help`.
 
+`make lint` через Redocly запрещает `example` внутри `Schema`. Для фазы Schemathesis `examples` оставляйте примеры только в `src/paths/**` в request-секциях (`requestBody.content.<media-type>.example`); component schema, parameter schema и header schema examples должны отсутствовать.
+
 ---
 
 ## Структура проекта

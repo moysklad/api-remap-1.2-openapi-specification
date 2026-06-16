@@ -25,12 +25,18 @@
 # 3. Merge/push в master:
 #    - check-openapi-changes: проверка изменений OpenAPI относительно последнего тега
 #    - lint-openapi и bundle-openapi
+#    - deploy-contract-env/create-contract-user/sdk-contract: schemathesis examples
 #    - generate-sdk-*, sdk-golden-*, sdk-smoke-*
 #    - version:auto: автоматическое версионирование и CHANGELOG/тег
 #    - mirror-to-github и create-github-release: зеркалирование и GitHub Release
 #    - merge-branch-*: обновление ветки master на удаленном gitlab sdk репозитории по сгенерированному sdk и выпуск тэга
 #
-# 4. Старый Java SDK пайплайн ($USE_OLD_SDK == "true"'):
+# 4. Push тэга:
+#    - lint-openapi и bundle-openapi
+#    - deploy-contract-env/create-contract-user/sdk-contract: schemathesis examples
+#    - generate-sdk-*, sdk-golden-*, sdk-smoke-*
+#
+# 5. Старый Java SDK пайплайн ($USE_OLD_SDK == "true"'):
 #    - Сохранён для обратной совместимости
 #
 # ПЕРЕМЕННЫЕ:

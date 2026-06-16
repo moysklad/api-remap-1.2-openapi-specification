@@ -43,7 +43,7 @@
 
 #### 3. Merge/push в master
 
-При push/merge в `master` запускается полный релизный flow: проверки, версионирование и зеркалирование. Contract-тесты Schemathesis и их обвязка в master pipeline не включаются.
+При push/merge в `master` запускается полный релизный flow: проверки, contract-тесты Schemathesis, версионирование и зеркалирование.
 
 | Job                     | Описание                                                                                          |
 |-------------------------|---------------------------------------------------------------------------------------------------|
@@ -51,6 +51,10 @@
 | `lint-openapi`          | Проверка спецификации                                                                             |
 | `bundle-openapi`        | Сборка полной bundled версии для SDK/docs/contract                                                 |
 | `bundle-smoke-openapi`  | Сборка облегчённой bundled версии для smoke-тестов                                                 |
+| `deploy-contract-env`   | Подготовка окружения для Schemathesis                                                             |
+| `create-contract-user`  | Создание пользователя для contract‑тестов                                                         |
+| `sdk-contract`          | Schemathesis `examples` по текущим request examples                                                |
+| `remove-contract-env`   | Ручная очистка окружения после contract‑тестов (manual, allow_failure; также есть TTL)             |
 | `generate-sdk-*`        | Генерация SDK                                                                                     |
 | `sdk-golden-*`          | Golden тесты                                                                                      |
 | `sdk-smoke`             | Smoke тесты                                                                                       |
@@ -65,9 +69,13 @@
 Java release jobs (`deploy-to-artifactory`, `deploy-to-maven`) описаны в `gitlab/.gitlab-ci-deploy-sdk-java.yml` и выполняются на стадии `deploy-sdk`.
 Публикуемый Java runtime-артефакт собирается как self-contained shaded JAR с relocation зависимостей Jackson (включая nullable-модуль) внутрь SDK.
 
+#### 4. Push тэга
+
+При push тэга SDK-validate pipeline запускает те же проверки спецификации, сборку, SDK-тесты и Schemathesis `examples`. Автоматические релизные job'ы (`version:auto`, mirror/release) остаются привязаны к push в `master`.
+
 ---
 
-#### 4. Сборка ветки на облегчённом окружении для тестирования java-remap-1.2-sdk
+#### 5. Сборка ветки на облегчённом окружении для тестирования java-remap-1.2-sdk
 * запустить новый пайплайн Remap 1.2 SDK deployer, указав:
   1. ветку пайплайна master - проект нужен только для сборки;
   2. параметр **BRANCH** - имя ветки в репозитории SDK;
@@ -101,7 +109,7 @@ Java release jobs (`deploy-to-artifactory`, `deploy-to-maven`) описаны в
 
 ### Переменные для Schemathesis тестов
 
-Используются для ручных contract-тестов в pipeline `web`. По умолчанию `SCHEMATHESIS_HOST`, `SCHEMATHESIS_LOGIN` и `SCHEMATHESIS_PASSWORD` экспортируются из `deploy-contract-env` / `create-contract-user`; при необходимости их можно переопределить вручную:
+Используются для contract-тестов в pipeline `web`, при push в `master` и при push тэга. По умолчанию `SCHEMATHESIS_HOST`, `SCHEMATHESIS_LOGIN` и `SCHEMATHESIS_PASSWORD` экспортируются из `deploy-contract-env` / `create-contract-user`; при необходимости их можно переопределить вручную:
 
 | Переменная                    | Описание                      | Пример               |
 |-------------------------------|-------------------------------|----------------------|
@@ -125,6 +133,8 @@ Java release jobs (`deploy-to-artifactory`, `deploy-to-maven`) описаны в
 - `stateful` - изменение данных
 
 **По умолчанию:** `examples`, `--mode positive`, `positive_data_acceptance` (example → **2XX**).
+
+Redocly запрещает `example` внутри `Schema`. Для регулярного Schemathesis `examples` используйте только request examples в `src/paths/**` (`requestBody.content.<media-type>.example`). Parameter/header/schema examples и component schema examples должны отсутствовать.
 
 `sdk-contract` запускается одной job. Полный `coverage` не входит в общий pipeline,
 потому что на сложных схемах документов он генерирует слишком много комбинаций и
@@ -183,8 +193,8 @@ SCHEMATHESIS_INCLUDE_OPERATION_ID=createProduct
 | Стадия                   | Описание                                                                                                                           |
 |--------------------------|------------------------------------------------------------------------------------------------------------------------------------|
 | `changes-check`          | Проверка изменений OpenAPI в `src/` относительно последнего тега (теги из текущего репо)                                           |
-| `verify`                 | Проверка спецификации, полный bundling, отдельный smoke bundling; в ручном pipeline `web` сюда также входят `deploy-contract-env` и `create-contract-user` |
-| `contract-test`          | Контрактные тесты Schemathesis (`sdk-contract`) — только в ручном pipeline `web`, после verify, до generate-sdk                    |
+| `verify`                 | Проверка спецификации, полный bundling, отдельный smoke bundling; в contract-пайплайнах сюда также входят `deploy-contract-env` и `create-contract-user` |
+| `contract-test`          | Контрактные тесты Schemathesis (`sdk-contract`) в `web`, `master` и tag pipeline, после verify, до generate-sdk                    |
 | `generate-sdk`           | Генерация SDK                                                                                                                      |
 | `test`                   | Тестирование (golden, smoke)                                                                                                       |
 | `version`                | Автоматическое версионирование и подготовка CHANGELOG/тегов                                                                        |

@@ -80,8 +80,8 @@ CHANGELOG.md                           # Auto-generated changelog (prepended by 
 | Stage | Key jobs | When |
 |-------|----------|------|
 | `changes-check` | `check-openapi-changes` | master push |
-| `verify` | `lint-openapi`, `bundle-openapi` on push / web / master; `bundle-smoke-openapi`, `deploy-contract-env`, `create-contract-user` on web only | push / web / master |
-| `contract-test` | `sdk-contract` | web |
+| `verify` | `lint-openapi`, `bundle-openapi`, `bundle-smoke-openapi`; `deploy-contract-env`, `create-contract-user` for web / master / tag contract pipelines | push / web / master / tags |
+| `contract-test` | `sdk-contract` | web / master / tags |
 | `generate-sdk` | `generate-sdk-php`, `generate-sdk-java` (python/js remain stubs) | push / web / master |
 | `test` | `sdk-golden-php`, `sdk-golden-java`, `sdk-smoke` (php) | push / web / master |
 | `version` | `version:auto` | master push |
@@ -98,7 +98,8 @@ Legacy stages (`prepare`, `deploy-for-space`, `create-user`, `build`, `delete-sp
 
 1. **Push to branch** — lint, bundle, light-bundle, generate PHP+Java SDK, run golden (PHP+Java) and smoke (PHP), prep branch sync for both internal SDK repos, then publish a branch-scoped Java artifact to Artifactory.
 2. **Manual (web) on branch** — same as push + contract test flow (`deploy-contract-env` → `create-contract-user` → `sdk-contract`, optional `remove-contract-env`) + optional `push-sdk-php` (PUSH_TO_REMOTE=true) + the same PHP/Java internal SDK sync and Java Artifactory publish steps.
-3. **Master merge/push** — checks, SDK generation + tests, `version:auto` (CHANGELOG + tag), `mirror-to-github` + `create-github-release`, manual internal SDK release sync for PHP+Java, then Java publish to Maven Central. Contract tests and their environment setup are not included in master pipelines.
+3. **Master merge/push** — checks, contract test flow, SDK generation + tests, `version:auto` (CHANGELOG + tag), `mirror-to-github` + `create-github-release`, manual internal SDK release sync for PHP+Java, then Java publish to Maven Central.
+4. **Tag push** — SDK validate flow including Schemathesis `examples`; release/mirror jobs remain tied to master pushes.
 
 ## Key CI Variables
 
@@ -110,7 +111,7 @@ Legacy stages (`prepare`, `deploy-for-space`, `create-user`, `build`, `delete-sp
 | `CICD_PAT_PHP` | GitLab token for internal PHP SDK repo (`git.company.lognex/.../php-remap-1.2-sdk`) |
 | `CICD_PAT_JAVA` | GitLab token for internal Java SDK repo (`git.company.lognex/.../remap-1.2-java-sdk`) |
 | `GIT_USER` / `GIT_MAIL` | Git identity for CI commits |
-| `SCHEMATHESIS_HOST` / `_LOGIN` / `_PASSWORD` | Optional overrides for contract tests; by default exported by `deploy-contract-env` / `create-contract-user` in web pipelines |
+| `SCHEMATHESIS_HOST` / `_LOGIN` / `_PASSWORD` | Optional overrides for contract tests; by default exported by `deploy-contract-env` / `create-contract-user` in web, master, and tag contract pipelines |
 | `SCHEMATHESIS_WORKERS` | Schemathesis parallel workers inside `sdk-contract`; default **auto** |
 | `ENV_TTL_MINUTES` | DMS auto-clean delay after `env_prepare` (minutes); default **20** in `utils_python/client.py`; `deploy-contract-env` sets **60** for OpenAPI contract tests unless overridden — see `README_GITLAB_CI.md` |
 | `ARTIFACTORY_REPO_URL` | Target Artifactory repository for branch Java artifact deploys |

@@ -4,4 +4,3 @@ enum:
   - weight
   - volume
   - price
-example: "weight"

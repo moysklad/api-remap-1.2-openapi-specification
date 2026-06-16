@@ -122,7 +122,7 @@ When adding or changing an entity:
 
 1. Check the source MD file for realistic request/response JSON examples.
 2. Do not add OpenAPI `examples` silently. Ask for explicit confirmation per entity and explain what the example will validate.
-3. If examples are confirmed, prefer a minimal valid create/update payload plus one representative response example from MD rather than copying every sample.
+3. Never add `example` inside `Schema` objects; Redocly rejects schema-level examples. If examples are confirmed, add only path request examples under `requestBody.content.<media-type>.example`, preferring a minimal valid create/update payload from MD rather than copying every sample.
 4. Report the targeted examples command by `operationId`, then verify the whole `examples` suite twice on the same environment to catch conflicts / non-idempotent creates, and report the targeted coverage command for the changed path instead of editing CI shards.
 
 Manual coverage examples:

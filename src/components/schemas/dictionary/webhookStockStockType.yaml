@@ -2,4 +2,3 @@ type: string
 description: Тип остатков для вебхука на изменение остатков. Известные значения поля stockType
 enum:
   - stock
-example: "stock"

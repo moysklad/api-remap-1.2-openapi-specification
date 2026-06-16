@@ -16,7 +16,6 @@ properties:
     format: uuid
     description: ID вебхука на изменение остатков
     readOnly: true
-    example: "7944ef04-f831-11e5-7a69-971500188b19"
   accountId:
     type: string
     format: uuid
@@ -25,17 +24,14 @@ properties:
   stockType:
     type: string
     description: Тип остатков. Известные значения описаны в WebhookStockStockType
-    example: "stock"
   reportType:
     type: string
     description: Тип отчёта остатков. Известные значения описаны в WebhookStockReportType
-    example: "all"
   url:
     type: string
     format: uri
     maxLength: 255
     description: URL, по которому будет происходить обработка вебхука
-    example: "http://www.example.com"
   enabled:
     type: boolean
     description: Вебхук включён или отключён
