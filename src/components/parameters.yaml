@@ -70,9 +70,9 @@ order:
   example: "name"
 
 entityType:
-  name: entityType
-  in: query
-  description: Тип сущности
+  name: type
+  in: path
+  required: true
   schema:
     type: string
 

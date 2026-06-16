@@ -2214,3 +2214,5 @@ tags:
     description: Операции с бонусными операциями
   - name: CustomEntities
     description: Операции с пользовательскими справочниками
+  - name: Metadata
+    description: Операции c мета-датой сущности

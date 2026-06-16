@@ -1,5 +1,5 @@
 get:
-  operationId: getMetadata
+  operationId: getMetadataForType
   tags:
     - Metadata
   summary: Получить Комплект
