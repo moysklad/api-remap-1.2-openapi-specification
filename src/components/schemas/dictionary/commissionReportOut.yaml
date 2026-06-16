@@ -1,6 +1,6 @@
 type: object
 description: Выданный отчет комиссионера (commissionreportout)
-x-polymorphic-parent: BatchEntity
+x-polymorphic-parent: EntityWithMeta
 x-entity-static-builder:
   methodParams:
     - "id"

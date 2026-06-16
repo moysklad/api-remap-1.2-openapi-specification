@@ -46,7 +46,7 @@ post:
           schema:
             type: array
             items:
-              $ref: '../../../openapi.yaml#/components/schemas/BatchEntity'
+              $ref: '../../../openapi.yaml#/components/schemas/BatchResponseEntity'
             minItems: 1
     default:
       $ref: '../../../components/responses.yaml#/CommonError'

@@ -70,7 +70,7 @@ Track these columns while implementing:
   - Do **not** accept arrays. Do **not** use `oneOf: [<Entity>, array of <Entity>]`.
 - `POST /entity/<keyword>/batch` — mass create/update.
   - Request body schema: `type: array, items: <Entity>, minItems: 1, maxItems: 1000`.
-  - Response schema: `type: array, items: $ref: BatchEntity` (per-item success entity resolved by `meta.type`, or per-item error via `errors`). Do **not** add `minItems`/`maxItems` to the response array — keep limits on request only.
+  - Response schema: `type: array, items: $ref: EntityWithMeta` (per-item success entity resolved by `meta.type`, or per-item error via `errors`). Do **not** add `minItems`/`maxItems` to the response array — keep limits on request only.
 - Add a separate path file `<entities>-batch.yaml` and register the `.../batch` URL in `src/openapi.yaml` even when the MD `### Массовое создание и обновление ...` example reuses the create URL — Remap models it as a distinct `/batch` path.
 - Smoke test must hit `.../batch` for the mass operation and `.../<keyword>` (object body) for single create — never collapse them into one call.
 
@@ -112,22 +112,22 @@ Exception — document positions. The existing peer pattern keeps a single `POST
 
 Use shared components instead of inline reusable `oneOf` blocks:
 
-- Top-level batch create/update response item: `BatchEntity`.
+- Top-level batch create/update response item: `EntityWithMeta`.
 - Mass delete response item: `DeleteRowResult`.
 - Metadata states create/update request and normal response: `StatesUpsert`.
 - Metadata states response with per-item errors: `StatesUpsertResult`.
 
-When adding a new top-level batch entity to `BatchEntity`, the entity schema must inherit from `BatchEntity` and the discriminator mapping must be registered:
+When adding a new top-level batch entity to `EntityWithMeta`, the entity schema must inherit from `EntityWithMeta` and the discriminator mapping must be registered:
 
 ```yaml
-x-polymorphic-parent: BatchEntity
+x-polymorphic-parent: EntityWithMeta
 properties:
   meta:
     $ref: '../common/meta.yaml'
   # entity fields...
 ```
 
-Also add the `meta.type` value to `BatchEntity.x-polymorphic-discriminator.mappings` in `src/openapi.yaml`:
+Also add the `meta.type` value to `EntityWithMeta.x-polymorphic-discriminator.mappings` in `src/openapi.yaml`:
 
 ```yaml
 - type: <meta.type>

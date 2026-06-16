@@ -65,17 +65,17 @@ Add rows for batch, metadata, attributes, states, positions, files/images, accou
 For every top-level entity (dictionary or document) keep two separate endpoints:
 
 - `POST /entity/<keyword>` — **single object only**. Request body must be a single `<Entity>` schema; response is a single `<Entity>`. Do not allow array requests, do not use `oneOf: [object, array]`.
-- `POST /entity/<keyword>/batch` — **mass create/update**. Request body is an array of `<Entity>` with `minItems: 1` and `maxItems: 1000`; response is an array of `BatchEntity` (per-item success entity resolved by `meta.type`, or per-item error via `errors`) **without** `minItems`/`maxItems` on the response schema.
+- `POST /entity/<keyword>/batch` — **mass create/update**. Request body is an array of `<Entity>` with `minItems: 1` and `maxItems: 1000`; response is an array of `BatchResponseEntity` (per-item success entity resolved by `meta.type`, or per-item error via `errors`) **without** `minItems`/`maxItems` on the response schema.
 
 This applies even when the MD `### Массовое создание и обновление ...` section uses the same example URL as create. The MD groups operations by behavior, not by URL — Remap exposes them as separate paths (`/batch` for arrays).
 
 Exception — **document positions**: the existing peer pattern is a single `POST /entity/<keyword>/{id}/positions` with `oneOf: [<Position>, array of <Position>]` (no `/positions/batch`). Keep that pattern for new document position endpoints unless the source MD explicitly defines a separate positions batch URL.
 
-For top-level batch entities, add the entity schema to `BatchEntity` polymorphism:
+For top-level batch entities, add the entity schema to `EntityWithMeta` polymorphism:
 
-- Add `x-polymorphic-parent: BatchEntity` near the top of the entity schema.
-- Keep the schema body as ordinary top-level `properties`; the SDK templates add inherited fields/methods from `BatchEntity`.
-- Add `{ type: <meta.type>, componentName: <SchemaName> }` under `BatchEntity.x-polymorphic-discriminator.mappings` in `src/openapi.yaml`.
+- Add `x-polymorphic-parent: EntityWithMeta` near the top of the entity schema.
+- Keep the schema body as ordinary top-level `properties`; the SDK templates add inherited fields/methods from `EntityWithMeta`.
+- Add `{ type: <meta.type>, componentName: <SchemaName> }` under `EntityWithMeta.x-polymorphic-discriminator.mappings` in `src/openapi.yaml`.
 - Do not map schemas when the same `meta.type` is already used by multiple schema classes (for example `demandposition`).
 
 For mass delete responses, use `DeleteRowResult` as the array item schema instead of inline `oneOf: [DeleteInfo, Error]`.

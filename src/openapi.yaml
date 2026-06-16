@@ -1347,23 +1347,14 @@ components:
       $ref: './components/schemas/dictionary/counterpartyList.yaml'
     CountryList:
       $ref: './components/schemas/dictionary/countryList.yaml'
-    BatchEntity:
+    EntityWithMeta:
       type: object
       description: |
-        Элемент ответа массовой операции: либо сущность (конкретный тип определяется
-        по `meta.type`), либо объект ошибки по элементу (поле `errors`).
-        Конкретные сущности и позиции массовых операций наследуют этот тип.
+        Базовый полиморфный тип для сущностей с `meta`.
+        Конкретный тип определяется по `meta.type`.
       properties:
         meta:
           $ref: '#/components/schemas/Meta'
-        errors:
-          type: array
-          nullable: true
-          description: |
-            Ошибки по данному элементу массовой операции. Присутствует только для
-            элементов, которые не удалось обработать (у таких элементов нет `meta.type`).
-          items:
-            $ref: '#/components/schemas/ErrorElement'
       x-polymorphic-discriminator:
         path: meta.type
         mappings:
@@ -1477,8 +1468,12 @@ components:
             componentName: Webhook
           - type: webhookstock
             componentName: WebhookStock
-    ErrorElement:
-      $ref: './components/schemas/common/errorElement.yaml'
+    BatchResponseEntity:
+      description: |
+        Элемент ответа массовой операции: объект ошибки или сущность с meta.
+      oneOf:
+        - $ref: '#/components/schemas/Error'
+        - $ref: '#/components/schemas/EntityWithMeta'
     Country:
       $ref: './components/schemas/dictionary/country.yaml'
     Currency:

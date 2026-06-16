@@ -1,6 +1,6 @@
 type: object
 description: Этап производства
-x-polymorphic-parent: BatchEntity
+x-polymorphic-parent: EntityWithMeta
 x-entity-static-builder:
   methodParams:
     - "id"

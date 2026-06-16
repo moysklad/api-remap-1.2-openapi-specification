@@ -1,6 +1,6 @@
 type: object
 description: Единица измерения
-x-polymorphic-parent: BatchEntity
+x-polymorphic-parent: EntityWithMeta
 x-entity-static-builder:
   methodParams:
     - "id"
