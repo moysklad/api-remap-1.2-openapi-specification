@@ -69,6 +69,13 @@ order:
     type: string
   example: "name"
 
+entityType:
+  name: entityType
+  in: query
+  description: Тип сущности
+  schema:
+    type: string
+
 fields:
   name: fields
   in: query

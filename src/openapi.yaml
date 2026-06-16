@@ -1360,6 +1360,9 @@ paths:
   /entity/cashout/new:
     $ref: './paths/documents/cashouts/cashout-new.yaml'
 
+  /entity/{type}/metadata:
+    $ref: './paths/common/metadata/entity-metadata.yaml'
+
 components:
   schemas:
     Account:
