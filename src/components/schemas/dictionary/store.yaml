@@ -1,5 +1,6 @@
 type: object
 description: Склад
+x-implements: INamed
 x-entity-static-builder:
   methodParams:
     - "id"

@@ -1,5 +1,6 @@
 type: object
 description: Сотрудник
+x-implements: INamed
 x-entity-static-builder:
   methodParams:
     - "id"

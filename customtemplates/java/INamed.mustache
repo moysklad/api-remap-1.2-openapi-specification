@@ -3,14 +3,11 @@ package {{modelPackage}};
 
 import java.util.UUID;
 
-
 /**
  * Interface for common entities.
  */
-public interface IAttribute<T> {
+public interface INamed {
 
-    void setValue(T obj);
-
-    T getValue();
+    String getName();
 
 }

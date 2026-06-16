@@ -1,5 +1,6 @@
 type: object
 description: Группа товаров
+x-implements: INamed
 x-entity-static-builder:
   methodParams:
     - "id"

@@ -1,5 +1,6 @@
 type: object
 description: Модификация
+x-implements: INamed
 x-entity-static-builder:
   methodParams:
     - "id"

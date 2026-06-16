@@ -1,5 +1,6 @@
 type: object
 description: Договор
+x-implements: INamed
 x-entity-static-builder:
   methodParams:
     - "id"

@@ -29,7 +29,7 @@
 {{#vendorExtensions.x-class-extra-annotation}}
 {{{vendorExtensions.x-class-extra-annotation}}}
 {{/vendorExtensions.x-class-extra-annotation}}
-public class {{classname}} {{#parent}}extends {{{.}}} {{/parent}}{{#vendorExtensions.x-implements}}{{#-first}}implements {{{.}}}{{/-first}}{{^-first}}, {{{.}}}{{/-first}}{{#-last}} {{/-last}}{{/vendorExtensions.x-implements}}{{#vendorExtensions.x-entity-static-builder}}implements MetaEntity{{/vendorExtensions.x-entity-static-builder}} {
+public class {{classname}} {{#parent}}extends {{{.}}} {{/parent}}{{#vendorExtensions.x-implements}}{{#-first}}implements {{{.}}}{{/-first}}{{^-first}}, {{{.}}}{{/-first}}{{#-last}}{{#vendorExtensions.x-entity-static-builder}}, MetaEntity{{/vendorExtensions.x-entity-static-builder}} {{/-last}}{{/vendorExtensions.x-implements}}{{^vendorExtensions.x-implements}}{{#vendorExtensions.x-entity-static-builder}}implements MetaEntity {{/vendorExtensions.x-entity-static-builder}}{{/vendorExtensions.x-implements}}{
 {{#serializableModel}}
   private static final long serialVersionUID = 1L;
 

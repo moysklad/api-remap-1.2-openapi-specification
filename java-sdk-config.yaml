@@ -26,3 +26,6 @@ files:
   IAttribute.mustache:
     templateType: SupportingFiles
     destinationFilename: src/main/java/ru/moysklad/remap_1_2/beta/model/IAttribute.java
+  INamed.mustache:
+    templateType: SupportingFiles
+    destinationFilename: src/main/java/ru/moysklad/remap_1_2/beta/model/INamed.java
