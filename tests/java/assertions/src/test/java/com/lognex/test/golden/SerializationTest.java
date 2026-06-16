@@ -86,6 +86,8 @@ class SerializationTest extends BaseTestCase {
         FIXTURE_MODEL_MAP.put("processing_order", "ProcessingOrder");
         FIXTURE_MODEL_MAP.put("processing", "Processing");
         FIXTURE_MODEL_MAP.put("customer_order", "CustomerOrder");
+        FIXTURE_MODEL_MAP.put("invoice_out", "InvoiceOut");
+        FIXTURE_MODEL_MAP.put("invoice_in", "InvoiceIn");
         FIXTURE_MODEL_MAP.put("demand", "Demand");
         FIXTURE_MODEL_MAP.put("move", "Move");
         FIXTURE_MODEL_MAP.put("retail_demand", "RetailDemand");

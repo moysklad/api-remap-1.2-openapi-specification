@@ -1,8 +1,8 @@
 post:
-  operationId: createSupplyPositionsBatch
+  operationId: createSupplyPositions
   tags:
     - Supplies
-  summary: Создать позиции Приемки
+  summary: Массовое создание и обновление позиций Приемки
   parameters:
     - $ref: '../../../components/parameters.yaml#/entityId'
     - $ref: '../../../components/parameters.yaml#/expand'

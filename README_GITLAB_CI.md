@@ -67,6 +67,7 @@
 | `deploy-to-artifactory` | Публикация Java SDK в Artyfactory                                                                 |
 
 Java release jobs (`deploy-to-artifactory`, `deploy-to-maven`) описаны в `gitlab/.gitlab-ci-deploy-sdk-java.yml` и выполняются на стадии `deploy-sdk`.
+Публикуемый Java runtime-артефакт собирается как self-contained shaded JAR с relocation зависимостей Jackson (включая nullable-модуль) внутрь SDK.
 
 ---
 

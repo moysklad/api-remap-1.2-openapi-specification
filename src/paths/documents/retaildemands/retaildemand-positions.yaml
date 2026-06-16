@@ -11,7 +11,6 @@ get:
     - $ref: '../../../components/parameters.yaml#/fields'
     - $ref: '../../../components/headers.yaml#/AcceptHeader'
     - $ref: '../../../components/headers.yaml#/AcceptEncoding'
-    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
   responses:
     '200':
       description: Успешный запрос
@@ -23,10 +22,10 @@ get:
       $ref: '../../../components/responses.yaml#/CommonError'
 
 post:
-  operationId: createRetailDemandPositions
+  operationId: createRetailDemandPosition
   tags:
     - RetailDemands
-  summary: Создать позиции Розничной продажи
+  summary: Создать и обновить позицию Розничной продажи
   parameters:
     - $ref: '../../../components/parameters.yaml#/entityId'
     - $ref: '../../../components/parameters.yaml#/expand'
