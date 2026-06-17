@@ -8,3 +8,301 @@ properties:
     description: Список пермиссий (только для индивидуальной роли)
     nullable: true
     additionalProperties: true
+    properties:
+      apiRequest:
+        type: boolean
+        description: Доступ по АПИ
+      accountDelete:
+        type: boolean
+        description: Удалять аккаунт
+      deleteFromRecycleBin:
+        type: boolean
+        description: Очищать корзину
+      editCurrencyRateOfDocument:
+        type: boolean
+        description: Редактировать курс валюты документа
+      editDocumentTemplates:
+        type: boolean
+        description: Редактировать шаблоны документов и отчетов
+      editDocumentsOfRestrictedPeriod:
+        type: boolean
+        description: Редактировать документы закрытого периода
+      exportData:
+        type: boolean
+        description: Экспортировать данные
+      importData:
+        type: boolean
+        description: Импортировать данные
+      listenCalls:
+        type: boolean
+        description: Прослушивание звонков
+      onlineShops:
+        type: boolean
+        description: Интернет магазины
+      ownerAssign:
+        type: boolean
+        description: Передавать владение аккаунтом
+      ownerDataUpdate:
+        type: boolean
+        description: Редактировать данные владельца
+      purchaseControl:
+        type: boolean
+        description: Управление закупками
+      resto$refromRecycleBin:
+        type: boolean
+        description: Восстанавливать документы
+      sendEmail:
+        type: boolean
+        description: Отправлять почту
+      subscriptionControl:
+        type: boolean
+        description: Управление подпиской
+      viewAudit:
+        type: boolean
+        description: Просматривать аудит
+      viewCashFlow:
+        type: boolean
+        description: Просматривать движение денежных средств
+      viewCommissionGoods:
+        type: boolean
+        description: Просматривать товары на реализации
+      viewCompanyCRM:
+        type: boolean
+        description: Просматривать показатели
+      viewCustomerBalanceList:
+        type: boolean
+        description: Просматривать взаиморасчеты
+      viewDashboard:
+        type: boolean
+        description: Просматривать показатели
+      viewMoneyDashboard:
+        type: boolean
+        description: Видеть остатки денег
+      viewProductCostAndProfit:
+        type: boolean
+        description: Видеть себестоимость, цену закупки и прибыль товаров
+      viewProfitAndLoss:
+        type: boolean
+        description: Просматривать прибыль и убытки
+      viewPurchaseFunnel:
+        type: boolean
+        description: Просматривать воронку продаж
+      viewRecycleBin:
+        type: boolean
+        description: Просматривать корзину
+      viewSaleProfit:
+        type: boolean
+        description: Просматривать прибыльность
+      viewSerialNumbers:
+        type: boolean
+        description: Просматривать серийные номера
+      viewStockReport:
+        type: boolean
+        description: Просматривать остатки по товарам
+      viewTurnover:
+        type: boolean
+        description: Просматривать обороты
+      GTINList:
+        description: Список GTIN
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      accountAdjustment:
+        description: Корректировка остатков на счете
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      bonusTransaction:
+        description: Бонусные баллы
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      cashIn:
+        description: Приходной ордер
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      cashOut:
+        description: Расходной ордер
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      cashboxAdjustment:
+        description: Корректировка остатков в кассе
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      commissionReportIn:
+        description: Полученный отчет комиссионера
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      commissionReportOut:
+        description: Выданный отчет комиссионера
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      company:
+        description: Контрагенты
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      contract:
+        description: Договоры
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      counterpartyAdjustment:
+        description: Корректировка взаиморасчетов
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      country:
+        description: Страны
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      crptCancellation:
+        description: Списание кодов маркировки
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      crptPackageCreation:
+        description: Формирование упаковки
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      crptPackageDisaggregation:
+        description: Расформирование упаковки
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      crptPackageItemRemoval:
+        description: Изъятие из упаковки
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      currency:
+        description: Валюты
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      customEntity:
+        description: Элементы пользовательских справочников
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      customerOrder:
+        description: Заказ покупателям
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      demand:
+        description: Отгрузка
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      emissionOrder:
+        description: Заказ кодов маркировки
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      utilizationReport:
+        description: Отчет об использовании
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      atkAggregation:
+        description: Формирование АТК
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      retireOrderOSU:
+        description: Вывод из оборота ОСУ
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      employee:
+        description: Сотрудники
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      enrollOrder:
+        description: Ввод в оборот кодов маркировки
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      enter:
+        description: Оприходование
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      factureIn:
+        description: Счета-фактуры полученные
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      factureOut:
+        description: Счета-фактуры выданные
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      good:
+        description: Товары и Услуги
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      internalOrder:
+        description: Внутренние заказы
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      inventory:
+        description: Инвентаризация
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      invoiceIn:
+        description: Счет поставщику
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      invoiceOut:
+        description: Счет покупателям
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      loss:
+        description: Списание
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      move:
+        description: Перемещение
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      myCompany:
+        description: Юр. Лица
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      paymentIn:
+        description: Входящий платеж
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      paymentOut:
+        description: Исходящий платеж
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      prepayment:
+        description: Предоплаты
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      prepaymentReturn:
+        description: Возврат предоплаты
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      priceList:
+        description: Прайс-лист
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      processing:
+        description: Техоперации
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      processingOrder:
+        description: Заказ на производство
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      processingPlan:
+        description: Техкарты
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      processingStage:
+        description: Этапы производства
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      processingProcess:
+        description: Техпроцессы
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      productionTask:
+        description: Производственные задания
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      productionStageCompletion:
+        description: Выполнение этапов
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      project:
+        description: Проекты
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      purchaseOrder:
+        description: Заказ поставщикам
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      purchaseReturn:
+        description: Возврат поставщику
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      remainsOrder:
+        description: Описание остатков
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      remarkingOrder:
+        description: Перемаркировка
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      retailDemand:
+        description: Продажи
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      retailDrawerCashIn:
+        description: Внесения
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      retailDrawerCashOut:
+        description: Выплаты
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      retailSalesReturn:
+        description: Возвраты
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      retailShift:
+        description: Смены
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      retailStore:
+        description: Точка продаж
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      retireOrder:
+        description: Вывод из оборота
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      salesReturn:
+        description: Возврат покупателя
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      supply:
+        description: Приемки
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      taxrate:
+        description: Ставки НДС
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      trackingCodeList:
+        description: Коды маркировки
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      uom:
+        description: Единицы измерения
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      warehouse:
+        description: Склады
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'
+      salesChannel:
+        description: Канал продаж
+        $ref: '../../../openapi.yaml#/components/schemas/Permission'

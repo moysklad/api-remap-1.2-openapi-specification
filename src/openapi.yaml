@@ -1496,6 +1496,10 @@ components:
       $ref: './components/schemas/dictionary/employeeSecurity.yaml'
     EmployeeRole:
       $ref: './components/schemas/dictionary/employeeRole.yaml'
+    Permission:
+      $ref: './components/schemas/common/permission.yaml'
+    PermissionValue:
+      $ref: './components/schemas/common/permissionValue.yaml'
     EmbeddedTemplate:
       $ref: './components/schemas/dictionary/embeddedTemplate.yaml'
     File:
