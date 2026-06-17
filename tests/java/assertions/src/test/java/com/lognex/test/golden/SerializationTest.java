@@ -241,17 +241,7 @@ class SerializationTest extends BaseTestCase {
         }
     }
 
-    @SuppressWarnings("unchecked")
     private Map<String, Object> serialize(Object model) {
-        try {
-            Method m = model.getClass().getMethod("toMap");
-            Object out = m.invoke(model);
-            if (out instanceof Map) {
-                return (Map<String, Object>) out;
-            }
-        } catch (Exception ignored) {
-            // Fall back to Jackson conversion if SDK-specific API is absent.
-        }
         return (Map<String, Object>) MAPPER.convertValue(model, new TypeReference<Object>() {});
     }
 
