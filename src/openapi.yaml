@@ -2011,6 +2011,8 @@ components:
       $ref: './components/schemas/dictionary/retailDemandPosition.yaml'
     RetailDemandPositionList:
       $ref: './components/schemas/dictionary/retailDemandPositionList.yaml'
+    RetailSalesReturn:
+      $ref: './components/schemas/dictionary/retailSalesReturn.yaml'
     Enter:
       $ref: './components/schemas/dictionary/enter.yaml'
     EnterList:
