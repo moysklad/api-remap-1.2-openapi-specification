@@ -587,6 +587,15 @@ class ApiEndpointsTest extends TestCase
         $this->assertContains($response->getStatusCode(), self::DELETE_CODES);
     }
 
+    /**
+     * Проверяет доступность endpoint'а создания статуса контрагента.
+     * POST /entity/counterparty/metadata/states/
+     */
+    public function testCreateCounterpartyMetadataState(): void
+    {
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . '/entity/counterparty/metadata/states', ['json' => ['name' => 'state1', 'color' => 15106326, 'stateType' => 'Regular']]));
+    }
+
     // ==================== CURRENCIES ====================
 
     /**

@@ -331,6 +331,8 @@ paths:
     $ref: './paths/dictionaries/counterparties/counterparties-batch.yaml'
   /entity/counterparty/metadata:
     $ref: './paths/dictionaries/counterparties/counterparty-metadata.yaml'
+  /entity/counterparty/metadata/states/:
+    $ref: './paths/dictionaries/counterparties/counterparty-metadata-states.yaml'
   /entity/counterparty/metadata/states/{id}:
     $ref: './paths/dictionaries/counterparties/counterparty-metadata-state-by-id.yaml'
   /entity/counterparty/{id}/accounts:
