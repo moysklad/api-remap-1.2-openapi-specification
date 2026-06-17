@@ -109,7 +109,7 @@ properties:
     type: array
     description: |
       Связанные операции. Допустимые типы по `meta.type`: retaildemand, retailsalesreturn,
-      retaildrawercashin, retaildrawercashout.
+      retaildrawercashin, retaildrawercashout, prepayment, prepaymentreturn.
     nullable: true
     readOnly: true
     items:
