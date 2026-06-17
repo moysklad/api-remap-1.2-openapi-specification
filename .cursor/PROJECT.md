@@ -52,7 +52,7 @@ gitlab/
   .gitlab-ci-java-sdk.yml              # Legacy Java SDK (USE_OLD_SDK=true)
   .gitlab-ci-spec-gen.yml              # Legacy PHP via openapi (SPEC_SDK_GENERATION=true)
   sdk/
-    lint-openapi.yml
+    validate.yml
     generate-sdk.yml
     sdk-tests-golden.yml
     sdk-tests-smoke.yml
@@ -80,7 +80,7 @@ CHANGELOG.md                           # Auto-generated changelog (prepended by 
 | Stage | Key jobs | When |
 |-------|----------|------|
 | `changes-check` | `check-openapi-changes` | master push |
-| `verify` | `lint-openapi`, `bundle-openapi`, `bundle-smoke-openapi`, `deploy-contract-env`, `create-contract-user` (contract prep jobs short-circuit green on `master`) | push / web / master |
+| `verify` | `validate`, `bundle-openapi`, `bundle-smoke-openapi`, `deploy-contract-env`, `create-contract-user` (contract prep jobs short-circuit green on `master`) | push / web / master |
 | `contract-test` | `sdk-contract` (4 parallel path-shards; on `master` exits successfully without running Schemathesis) | web / master |
 | `generate-sdk` | `generate-sdk-php`, `generate-sdk-java` (python/js remain stubs) | push / web / master |
 | `test` | `sdk-golden-php`, `sdk-golden-java`, `sdk-smoke` (php) | push / web / master |

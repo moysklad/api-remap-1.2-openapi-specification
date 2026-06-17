@@ -1,0 +1,5 @@
+type: object
+description: Возврат поставщику + linkedSum
+x-polymorphic-parent: FinanceInOperationAbstract
+allOf:
+  - $ref: '../../../openapi.yaml#/components/schemas/PurchaseReturn'

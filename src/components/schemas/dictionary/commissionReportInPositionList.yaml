@@ -10,5 +10,6 @@ properties:
   rows:
     type: array
     description: Массив позиций Полученного отчета комиссионера
+    nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/CommissionReportInPosition'

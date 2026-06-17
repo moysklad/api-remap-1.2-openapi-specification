@@ -7,7 +7,7 @@
 # СЦЕНАРИИ ЗАПУСКА:
 #
 # 1. Push в ветку (кроме master/release):
-#    - lint-openapi: проверка OpenAPI спецификации
+#    - validate: проверка OpenAPI спецификации и кастомных расширений
 #    - bundle-openapi: сборка bundled версии
 #    - generate-sdk-*: генерация SDK для выбранных языков
 #    - sdk-golden-*: golden тесты (сериализация/десериализация)
@@ -15,7 +15,7 @@
 #    - prep-branch-and-mr-*: создание/обновление ветки и mr по сгенерированному sdk в репозитории sdk
 #
 # 2. Ручной запуск (web) на ветке (без тэга):
-#    - lint-openapi и bundle-openapi
+#    - validate и bundle-openapi
 #    - generate-sdk-*: генерация SDK
 #    - sdk-golden-*/sdk-smoke-*: тесты SDK
 #    - sdk-contract: schemathesis контрактные тесты
@@ -24,7 +24,7 @@
 #
 # 3. Merge/push в master:
 #    - check-openapi-changes: проверка изменений OpenAPI относительно последнего тега
-#    - lint-openapi и bundle-openapi
+#    - validate и bundle-openapi
 #    - deploy-contract-env/create-contract-user/remove-contract-env и sdk-contract
 #    - generate-sdk-*, sdk-golden-*, sdk-smoke-*
 #    - version:auto: автоматическое версионирование и CHANGELOG/тег

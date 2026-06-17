@@ -1,7 +1,7 @@
 # SDK Validation Pipeline
 # 
 # Включает все необходимые job'ы для валидации SDK:
-# - lint-openapi: проверка OpenAPI спецификации
+# - validate: проверка OpenAPI спецификации
 # - bundle-openapi: сборка bundled версии спецификации
 # - generate-sdk-*: генерация SDK для различных языков
 # - sdk-golden-*: golden тесты (сериализация/десериализация)
@@ -18,7 +18,7 @@
 
 include:
   - local: 'gitlab/common/ci-images.yml'
-  - local: 'gitlab/sdk/lint-openapi.yml'
+  - local: 'gitlab/sdk/validate.yml'
   - local: 'gitlab/sdk/generate-sdk.yml'
   - local: 'gitlab/sdk/sdk-tests-golden.yml'
   - local: 'gitlab/sdk/sdk-tests-smoke.yml'

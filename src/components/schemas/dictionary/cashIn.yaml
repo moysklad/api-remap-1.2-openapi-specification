@@ -152,7 +152,7 @@ properties:
     type: array
     description: |
       Связанные операции. Допустимые типы по `meta.type`: customerorder, purchasereturn, demand,
-      invoiceout, commissionreportin, retailshift.
+      invoiceout, commissionreportin, retailshift
     nullable: true
     items:
-      $ref: '../../../openapi.yaml#/components/schemas/CashInOperation'
+      $ref: '../../../openapi.yaml#/components/schemas/FinanceInOperationAbstract'

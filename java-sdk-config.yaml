@@ -1,6 +1,7 @@
 invokerPackage: "ru.moysklad.remap_1_2.beta"
 apiPackage: "ru.moysklad.remap_1_2.beta.api"
 modelPackage: "ru.moysklad.remap_1_2.beta.model"
+polymorphicPackage: "ru.moysklad.remap_1_2.beta.deserialize"
 files:
   RequestOptions.mustache:
     templateType: SupportingFiles
@@ -20,6 +21,15 @@ files:
   Orders.mustache:
     templateType: SupportingFiles
     destinationFilename: src/main/java/ru/moysklad/remap_1_2.beta/api/Orders.java
+  OpenApiPolymorphicTypeInfo.mustache:
+    templateType: SupportingFiles
+    destinationFilename: src/main/java/ru/moysklad/remap_1_2.beta/deserialize/OpenApiPolymorphicTypeInfo.java
+  OpenApiPolymorphicSubTypes.mustache:
+    templateType: SupportingFiles
+    destinationFilename: src/main/java/ru/moysklad/remap_1_2.beta/deserialize/OpenApiPolymorphicSubTypes.java
+  PolymorphicMetaTypeDeserializer.mustache:
+    templateType: SupportingFiles
+    destinationFilename: src/main/java/ru/moysklad/remap_1_2.beta/deserialize/PolymorphicMetaTypeDeserializer.java
   MetaEntity.mustache:
     templateType: SupportingFiles
     destinationFilename: src/main/java/ru/moysklad/remap_1_2/beta/model/MetaEntity.java
