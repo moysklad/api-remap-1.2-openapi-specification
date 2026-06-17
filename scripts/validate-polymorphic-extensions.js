@@ -9,6 +9,7 @@ const ROOT_DIR = path.resolve(__dirname, "..");
 const SPEC_PATH = path.join(ROOT_DIR, "src", "openapi.yaml");
 
 const POLYMORPHIC_DISCRIMINATOR = "x-polymorphic-discriminator";
+const POLYMORPHIC_MISSING_DISCRIMINATOR_COMPONENT = "x-polymorphic-missing-discriminator-component";
 const POLYMORPHIC_PARENT = "x-polymorphic-parent";
 
 const errors = [];
@@ -163,6 +164,39 @@ function validatePolymorphicParent(componentName, schema, schemaNames) {
     }
 }
 
+function getPolymorphicParentName(componentName, schemas, rootDocument) {
+    const schema = getComponentSchema(componentName, schemas, rootDocument);
+
+    if (!isObject(schema)) {
+        return undefined;
+    }
+
+    const parent = schema[POLYMORPHIC_PARENT];
+    return isNonEmptyString(parent) ? parent : undefined;
+}
+
+function hasPolymorphicAncestor(componentName, parentName, schemas, rootDocument) {
+    const seenComponents = new Set();
+    let currentName = componentName;
+
+    while (isNonEmptyString(currentName) && !seenComponents.has(currentName)) {
+        seenComponents.add(currentName);
+
+        const currentParent = getPolymorphicParentName(currentName, schemas, rootDocument);
+        if (currentParent === undefined) {
+            return false;
+        }
+
+        if (currentParent === parentName) {
+            return true;
+        }
+
+        currentName = currentParent;
+    }
+
+    return false;
+}
+
 function validateMappingParent(parentName, mapping, mappingIndex, schemas, schemaNames, rootDocument) {
     const componentName = mapping.componentName;
 
@@ -170,12 +204,10 @@ function validateMappingParent(parentName, mapping, mappingIndex, schemas, schem
         return;
     }
 
-    const childSchema = getComponentSchema(componentName, schemas, rootDocument);
-
-    if (!isObject(childSchema) || childSchema[POLYMORPHIC_PARENT] !== parentName) {
+    if (!hasPolymorphicAncestor(componentName, parentName, schemas, rootDocument)) {
         addError(
             parentName,
-            `${POLYMORPHIC_DISCRIMINATOR}.mappings[${mappingIndex}].componentName="${componentName}" требует ${POLYMORPHIC_PARENT}: ${parentName} в дочернем компоненте`
+            `${POLYMORPHIC_DISCRIMINATOR}.mappings[${mappingIndex}].componentName="${componentName}" требует ${POLYMORPHIC_PARENT}: ${parentName} в дочернем компоненте или его родительской цепочке`
         );
     }
 }
@@ -243,6 +275,34 @@ function validatePolymorphicDiscriminator(componentName, schema, schemas, schema
     validateDiscriminatorMappings(componentName, discriminator, schemas, schemaNames, rootDocument);
 }
 
+function validateMissingDiscriminatorComponent(componentName, schema, schemas, schemaNames, rootDocument) {
+    const missingComponent = schema[POLYMORPHIC_MISSING_DISCRIMINATOR_COMPONENT];
+
+    if (missingComponent === undefined) {
+        return;
+    }
+
+    if (!isNonEmptyString(missingComponent)) {
+        addError(componentName, `${POLYMORPHIC_MISSING_DISCRIMINATOR_COMPONENT} должен быть непустой строкой`);
+        return;
+    }
+
+    if (!schemaNames.has(missingComponent)) {
+        addError(
+            componentName,
+            `${POLYMORPHIC_MISSING_DISCRIMINATOR_COMPONENT} ссылается на несуществующий компонент "${missingComponent}"`
+        );
+        return;
+    }
+
+    if (!hasPolymorphicAncestor(missingComponent, componentName, schemas, rootDocument)) {
+        addError(
+            componentName,
+            `${POLYMORPHIC_MISSING_DISCRIMINATOR_COMPONENT}="${missingComponent}" требует ${POLYMORPHIC_PARENT}: ${componentName} в дочернем компоненте или его родительской цепочке`
+        );
+    }
+}
+
 function validate() {
     const rootDocument = createBundledSpec();
     const schemas = rootDocument && rootDocument.components && rootDocument.components.schemas;
@@ -262,6 +322,7 @@ function validate() {
 
         validatePolymorphicParent(componentName, schema, schemaNames);
         validatePolymorphicDiscriminator(componentName, schema, schemas, schemaNames, rootDocument);
+        validateMissingDiscriminatorComponent(componentName, schema, schemas, schemaNames, rootDocument);
     });
 }
 

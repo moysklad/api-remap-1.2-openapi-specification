@@ -75,6 +75,9 @@ agent:
 * mappings - массив соответствий `{type, componentName}` для генерации SDK 
   * `type` — значение дискриминатора 
   * `componentName` — имя компонента из `components.schemas`.
+* x-polymorphic-missing-discriminator-component - опциональное имя компонента, который
+  используется, когда значение по `path` отсутствует или не является строкой.
+  Компонент должен быть наследником схемы, на которой указано расширение.
 
 **Пример**
 
@@ -92,6 +95,8 @@ x-polymorphic-discriminator:
 **Предназначение**: явно связать конкретную схему с абстрактной полиморфной базой
 
 Расширение используется на concrete-схемах, перечисленных в `x-polymorphic-discriminator.mappings`.
+Если mapping указывает на вложенного наследника, у схемы должна существовать цепочка
+`x-polymorphic-parent` до базовой схемы с `x-polymorphic-discriminator`.
 
 **Структура**:
 * x-polymorphic-parent - имя абстрактной родительской схемы из `components.schemas`.

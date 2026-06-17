@@ -546,6 +546,18 @@ class ObjectSerializer
                             $class = $subclass;
                         }
                     }
+                } else {
+                    // Batch errors do not have meta.type, so resolve them through
+                    // the optional fallback model declared on the current base class.
+                    $missingDiscriminatorModel = is_callable([$class, 'openAPIPolymorphicMissingDiscriminatorModel'])
+                        ? $class::openAPIPolymorphicMissingDiscriminatorModel()
+                        : null;
+                    if ($missingDiscriminatorModel !== null) {
+                        $subclass = '\{{invokerPackage}}\Model\\' . $missingDiscriminatorModel;
+                        if (class_exists($subclass) && is_subclass_of($subclass, $class)) {
+                            $class = $subclass;
+                        }
+                    }
                 }
             }
 

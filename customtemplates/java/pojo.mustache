@@ -1,6 +1,9 @@
 {{#vendorExtensions.x-polymorphic-discriminator}}
 import {{polymorphicPackage}}.OpenApiPolymorphicTypeInfo;
 import {{polymorphicPackage}}.OpenApiPolymorphicSubTypes;
+{{#vendorExtensions.x-polymorphic-missing-discriminator-component}}
+import {{polymorphicPackage}}.OpenApiPolymorphicMissingType;
+{{/vendorExtensions.x-polymorphic-missing-discriminator-component}}
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import {{polymorphicPackage}}.PolymorphicMetaTypeDeserializer;
 
@@ -43,6 +46,9 @@ import {{polymorphicPackage}}.PolymorphicMetaTypeDeserializer;
   @OpenApiPolymorphicSubTypes.Type(value = {{componentName}}.class, name = "{{type}}"){{^-last}},
 {{/-last}}{{/vendorExtensions.x-polymorphic-discriminator.mappings}}
 })
+{{#vendorExtensions.x-polymorphic-missing-discriminator-component}}
+@OpenApiPolymorphicMissingType({{{vendorExtensions.x-polymorphic-missing-discriminator-component}}}.class)
+{{/vendorExtensions.x-polymorphic-missing-discriminator-component}}
 @JsonDeserialize(using = PolymorphicMetaTypeDeserializer.class)
 {{/vendorExtensions.x-polymorphic-discriminator}}
 public class {{classname}} {{#parent}}extends {{{.}}} {{/parent}}{{^parent}}{{#vendorExtensions.x-polymorphic-parent}}extends {{{.}}} {{/vendorExtensions.x-polymorphic-parent}}{{/parent}}{{#vendorExtensions.x-implements}}{{#-first}}implements {{{.}}}{{/-first}}{{^-first}}, {{{.}}}{{/-first}}{{#-last}} {{/-last}}{{/vendorExtensions.x-implements}}{

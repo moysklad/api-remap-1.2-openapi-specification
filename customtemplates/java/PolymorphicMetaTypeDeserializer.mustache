@@ -58,7 +58,7 @@ public class PolymorphicMetaTypeDeserializer extends JsonDeserializer<Object> im
 
     JsonNode discriminatorNode = readPath(node, path);
     if (discriminatorNode == null || !discriminatorNode.isTextual()) {
-      return null;
+      return missingDiscriminatorClass(targetClass);
     }
 
     Map<String, Class<?>> mappings = discriminatorMappings(targetClass);
@@ -77,6 +77,25 @@ public class PolymorphicMetaTypeDeserializer extends JsonDeserializer<Object> im
     }
 
     return resolvedClass;
+  }
+
+  private Class<?> missingDiscriminatorClass(Class<?> targetClass) throws IOException {
+    for (Class<?> current = targetClass; current != null && current != Object.class; current = current.getSuperclass()) {
+      OpenApiPolymorphicMissingType missingType = current.getAnnotation(OpenApiPolymorphicMissingType.class);
+      if (missingType == null) {
+        continue;
+      }
+
+      Class<?> resolvedClass = missingType.value();
+      if (!targetClass.isAssignableFrom(resolvedClass)) {
+        throw new IOException("Missing polymorphic discriminator for " + targetClass.getName()
+            + " points to incompatible class " + resolvedClass.getName());
+      }
+
+      return resolvedClass;
+    }
+
+    return null;
   }
 
   private String discriminatorPath(Class<?> targetClass) {

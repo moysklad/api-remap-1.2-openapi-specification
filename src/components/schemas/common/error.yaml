@@ -1,4 +1,5 @@
 type: object
+x-polymorphic-parent: BatchResponseEntity
 required:
   - errors
 properties:

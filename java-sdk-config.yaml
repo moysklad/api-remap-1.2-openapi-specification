@@ -27,6 +27,9 @@ files:
   OpenApiPolymorphicSubTypes.mustache:
     templateType: SupportingFiles
     destinationFilename: src/main/java/ru/moysklad/remap_1_2/deserialize/OpenApiPolymorphicSubTypes.java
+  OpenApiPolymorphicMissingType.mustache:
+    templateType: SupportingFiles
+    destinationFilename: src/main/java/ru/moysklad/remap_1_2/deserialize/OpenApiPolymorphicMissingType.java
   PolymorphicMetaTypeDeserializer.mustache:
     templateType: SupportingFiles
     destinationFilename: src/main/java/ru/moysklad/remap_1_2/deserialize/PolymorphicMetaTypeDeserializer.java

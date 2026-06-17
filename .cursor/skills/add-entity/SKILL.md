@@ -75,7 +75,7 @@ For top-level batch entities, add the entity schema to `EntityWithMeta` polymorp
 
 - Add `x-polymorphic-parent: EntityWithMeta` near the top of the entity schema.
 - Keep the schema body as ordinary top-level `properties`; the SDK templates add inherited fields/methods from `EntityWithMeta`.
-- Add `{ type: <meta.type>, componentName: <SchemaName> }` under `EntityWithMeta.x-polymorphic-discriminator.mappings` in `src/openapi.yaml`.
+- Add `{ type: <meta.type>, componentName: <SchemaName> }` under the shared `meta.type` mapping in `src/openapi.yaml` so both `BatchResponseEntity` and `EntityWithMeta` can resolve the entity.
 - Do not map schemas when the same `meta.type` is already used by multiple schema classes (for example `demandposition`).
 
 For mass delete responses, use `DeleteRowResult` as the array item schema instead of inline `oneOf: [DeleteInfo, Error]`.
