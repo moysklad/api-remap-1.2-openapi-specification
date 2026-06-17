@@ -2375,9 +2375,7 @@ class ApiEndpointsTest extends TestCase
      */
     public function testCreateProductionTaskMetadataAttribute(): void
     {
-        $response = $this->client->post(self::API_BASE_PATH . '/entity/productiontask/metadata/attributes', [
-            'json' => ['name' => 'productionTaskAttribute'],
-        ]);
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/productiontask/metadata/attributes', ['json' => ['name' => 'productionTaskAttribute'],]);
         $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
     }
 
