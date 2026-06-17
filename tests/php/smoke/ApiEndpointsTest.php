@@ -555,6 +555,38 @@ class ApiEndpointsTest extends TestCase
         $this->assertContains($response->getStatusCode(), self::DELETE_CODES);
     }
 
+    /**
+     * Проверяет доступность endpoint'а получения статуса контрагента по ID.
+     * GET /entity/counterparty/metadata/states/{id}
+     */
+    public function testGetCounterpartyMetadataStateById(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/counterparty/metadata/states/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а обновления статуса контрагента.
+     * PUT /entity/counterparty/metadata/states/{id}
+     */
+    public function testUpdateCounterpartyMetadataStateById(): void
+    {
+        $response = $this->client->put(self::API_BASE_PATH . '/entity/counterparty/metadata/states/' . self::TEST_UUID, [
+            'json' => ['name' => 'Updated Counterparty State'],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а удаления статуса контрагента.
+     * DELETE /entity/counterparty/metadata/states/{id}
+     */
+    public function testDeleteCounterpartyMetadataStateById(): void
+    {
+        $response = $this->client->delete(self::API_BASE_PATH . '/entity/counterparty/metadata/states/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::DELETE_CODES);
+    }
+
     // ==================== CURRENCIES ====================
 
     /**
