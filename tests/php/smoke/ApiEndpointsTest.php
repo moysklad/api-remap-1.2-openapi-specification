@@ -2142,31 +2142,13 @@ class ApiEndpointsTest extends TestCase
     {
         $base = self::API_BASE_PATH . '/entity/retailsalesreturn';
 
-        $payload = [
-            'name' => 'RetailSalesReturn X',
-            'retailShift' => [
-                'meta' => [
-                    'href' => 'https://api.moysklad.ru/api/remap/1.2/entity/retailshift/' . self::TEST_UUID,
-                    'type' => 'retailshift',
-                    'mediaType' => 'application/json',
-                ],
-            ],
-            'demand' => [
-                'meta' => [
-                    'href' => 'https://api.moysklad.ru/api/remap/1.2/entity/retaildemand/' . self::TEST_UUID,
-                    'type' => 'retaildemand',
-                    'mediaType' => 'application/json',
-                ],
-            ],
-        ];
-
         $this->assertReachable($this->client->get($base));
-        $this->assertReachable($this->client->post($base, ['json' => $payload]));
+        $this->assertReachable($this->client->post($base, ['json' => ['name' => 'RetailSalesReturn Z']]));
 
         $this->assertReachable($this->client->get($base . '/' . self::TEST_UUID));
         $this->assertReachable($this->client->put($base . '/' . self::TEST_UUID, ['json' => ['name' => 'RetailSalesReturn Y']]));
         $this->assertReachable($this->client->delete($base . '/' . self::TEST_UUID));
-        $this->assertReachable($this->client->post($base . '/batch', ['json' => [$payload]]));
+        $this->assertReachable($this->client->post($base . '/batch', ['json' => [['name' => 'RetailSalesReturn Z']]]));
 
         $this->assertReachable($this->client->get($base . '/metadata'));
         $this->assertReachable($this->client->get($base . '/metadata/attributes'));
@@ -2178,7 +2160,7 @@ class ApiEndpointsTest extends TestCase
         $this->assertReachable($this->client->put($base . '/metadata/states/' . self::TEST_UUID, ['json' => ['name' => 'state1']]));
         $this->assertReachable($this->client->delete($base . '/metadata/states/' . self::TEST_UUID));
 
-        $this->assertReachable($this->client->put($base . '/new', ['json' => ['retailShift' => $payload['retailShift']]]));
+        $this->assertReachable($this->client->put($base . '/new', ['json' => ['name' => 'RetailSalesReturn Z']]));
 
         $docBase = $base . '/' . self::TEST_UUID;
         $this->assertReachable($this->client->get($docBase . '/positions'));
