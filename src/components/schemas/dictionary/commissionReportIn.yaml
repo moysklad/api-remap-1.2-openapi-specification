@@ -1,5 +1,6 @@
 type: object
 description: Полученный отчет комиссионера (commissionreportin)
+x-polymorphic-parent: EntityWithMeta
 x-entity-static-builder:
   methodParams:
     - "id"

@@ -65,7 +65,7 @@ Add rows for batch, metadata, attributes, states, positions, files/images, accou
 For every top-level entity (dictionary or document) keep two separate endpoints:
 
 - `POST /entity/<keyword>` — **single object only**. Request body must be a single `<Entity>` schema; response is a single `<Entity>`. Do not allow array requests, do not use `oneOf: [object, array]`.
-- `POST /entity/<keyword>/batch` — **mass create/update**. Request body is an array of `<Entity>` with `minItems: 1` and `maxItems: 1000`; response is an array of `oneOf: [<Entity>, Error]` (per-item result) **without** `minItems`/`maxItems` on the response schema.
+- `POST /entity/<keyword>/batch` — **mass create/update**. Request body is an array of `<Entity>` with `minItems: 1` and `maxItems: 1000`; response is an array of `BatchResponseEntity` (per-item success entity resolved by `meta.type`, or per-item error via `errors`) **without** `minItems`/`maxItems` on the response schema.
 
 This applies even when the MD `### Массовое создание и обновление ...` section uses the same example URL as create. The MD groups operations by behavior, not by URL — Remap exposes them as separate paths (`/batch` for arrays).
 
@@ -75,6 +75,16 @@ This applies even when the MD `### Массовое создание и обно
 - `POST /entity/<keyword>/{id}/positions/batch` — **mass create/update** via array of `<Position>` (`minItems: 1`, `maxItems: 1000`) with per-item result array (`oneOf: [<Position>, Error]`).
 
 This applies even when the MD `### Массовое создание и обновление ...` section uses the same example URL as create. The MD groups operations by behavior, not by URL — Remap exposes document position mass operations as a separate `.../positions/batch` path.
+
+For top-level batch entities, add the entity schema to `EntityWithMeta` polymorphism:
+
+- Add `x-polymorphic-parent: EntityWithMeta` near the top of the entity schema.
+- Keep the schema body as ordinary top-level `properties`; the SDK templates add inherited fields/methods from `EntityWithMeta`.
+- Add `{ type: <meta.type>, componentName: <SchemaName> }` under the shared `meta.type` mapping in `src/openapi.yaml` so both `BatchResponseEntity` and `EntityWithMeta` can resolve the entity.
+- Do not map schemas when the same `meta.type` is already used by multiple schema classes (for example `demandposition`).
+
+For mass delete responses, use `DeleteRowResult` as the array item schema instead of inline `oneOf: [DeleteInfo, Error]`.
+For metadata state upsert endpoints, use `StatesUpsert`; if the response allows per-item errors, use `StatesUpsertResult`.
 
 ## Missing dependency entities
 

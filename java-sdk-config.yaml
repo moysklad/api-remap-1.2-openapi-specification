@@ -1,6 +1,7 @@
 invokerPackage: "ru.moysklad.remap_1_2"
 apiPackage: "ru.moysklad.remap_1_2.api"
 modelPackage: "ru.moysklad.remap_1_2.model"
+polymorphicPackage: "ru.moysklad.remap_1_2.deserialize"
 files:
   RequestOptions.mustache:
     templateType: SupportingFiles
@@ -20,3 +21,15 @@ files:
   Orders.mustache:
     templateType: SupportingFiles
     destinationFilename: src/main/java/ru/moysklad/remap_1_2/api/Orders.java
+  OpenApiPolymorphicTypeInfo.mustache:
+    templateType: SupportingFiles
+    destinationFilename: src/main/java/ru/moysklad/remap_1_2/deserialize/OpenApiPolymorphicTypeInfo.java
+  OpenApiPolymorphicSubTypes.mustache:
+    templateType: SupportingFiles
+    destinationFilename: src/main/java/ru/moysklad/remap_1_2/deserialize/OpenApiPolymorphicSubTypes.java
+  OpenApiPolymorphicMissingType.mustache:
+    templateType: SupportingFiles
+    destinationFilename: src/main/java/ru/moysklad/remap_1_2/deserialize/OpenApiPolymorphicMissingType.java
+  PolymorphicMetaTypeDeserializer.mustache:
+    templateType: SupportingFiles
+    destinationFilename: src/main/java/ru/moysklad/remap_1_2/deserialize/PolymorphicMetaTypeDeserializer.java

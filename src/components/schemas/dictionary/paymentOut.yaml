@@ -1,5 +1,6 @@
 type: object
 description: Исходящий платеж
+x-polymorphic-parent: EntityWithMeta
 x-entity-static-builder:
   methodParams:
     - "id"
@@ -177,6 +178,6 @@ properties:
     nullable: true
     description: |
       Связанные операции: полное тело документа плюс `linkedSum`. Допустимые типы по `meta.type`:
-      salesreturn, supply, invoicein, purchaseorder, commissionreportout. См. `PaymentOutOperation`.
+      salesreturn, supply, invoicein, purchaseorder, commissionreportout
     items:
-      $ref: '../../../openapi.yaml#/components/schemas/PaymentOutOperation'
+      $ref: '../../../openapi.yaml#/components/schemas/FinanceOutOperationAbstract'

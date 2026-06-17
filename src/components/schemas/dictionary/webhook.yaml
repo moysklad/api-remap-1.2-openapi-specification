@@ -1,5 +1,6 @@
 type: object
 description: Вебхук
+x-polymorphic-parent: EntityWithMeta
 x-entity-static-builder:
   methodParams:
     - "id"

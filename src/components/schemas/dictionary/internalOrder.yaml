@@ -1,5 +1,6 @@
 type: object
 description: Внутренний заказ
+x-polymorphic-parent: EntityWithMeta
 x-entity-static-builder:
   methodParams:
     - "id"
