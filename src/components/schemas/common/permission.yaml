@@ -17,18 +17,4 @@ properties:
     description: Удалять. Известные значения описаны в PermissionValue.
   approve:
     type: string
-    description: Выполнять. Известные значения описаны в PermissionValue.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    description: Проводить. Известные значения описаны в PermissionValue.
