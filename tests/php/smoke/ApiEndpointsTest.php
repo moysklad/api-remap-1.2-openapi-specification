@@ -1693,6 +1693,11 @@ class ApiEndpointsTest extends TestCase
         $this->assertReachable($this->client->post($base . '/files', ['json' => [['filename' => 'X']]]));
         $this->assertReachable($this->client->get($base . '/files/' . self::TEST_UUID));
         $this->assertReachable($this->client->delete($base . '/files/' . self::TEST_UUID));
+        $this->assertReachable($this->client->get($base . '/notes'));
+        $this->assertReachable($this->client->post($base . '/notes', ['json' => ['description' => 'Привет, {{employee;730c1b3d-00ba-11ef-ac12-00120000000d}}!']]));
+        $this->assertReachable($this->client->get($base . '/notes/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put($base . '/notes/' . self::TEST_UUID, ['json' => ['description' => 'Обновленное событие']]));
+        $this->assertReachable($this->client->delete($base . '/notes/' . self::TEST_UUID));
 
         $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/invoiceout/metadata'));
         $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/invoiceout/metadata/attributes'));
@@ -2031,6 +2036,11 @@ class ApiEndpointsTest extends TestCase
         $this->assertReachable($this->client->put($base . '/' . self::TEST_UUID . '/positions/' . self::TEST_UUID, ['json' => ['quantity' => 2]]));
         $this->assertReachable($this->client->delete($base . '/' . self::TEST_UUID . '/positions/' . self::TEST_UUID));
         $this->assertReachable($this->client->post($base . '/' . self::TEST_UUID . '/positions/delete', ['json' => [['meta' => ['href' => 'x']]]]));
+        $this->assertReachable($this->client->get($base . '/' . self::TEST_UUID . '/notes'));
+        $this->assertReachable($this->client->post($base . '/' . self::TEST_UUID . '/notes', ['json' => ['description' => 'Привет, {{employee;730c1b3d-00ba-11ef-ac12-00120000000d}}!']]));
+        $this->assertReachable($this->client->get($base . '/' . self::TEST_UUID . '/notes/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put($base . '/' . self::TEST_UUID . '/notes/' . self::TEST_UUID, ['json' => ['description' => 'Обновленное событие']]));
+        $this->assertReachable($this->client->delete($base . '/' . self::TEST_UUID . '/notes/' . self::TEST_UUID));
 
         $this->assertReachable($this->client->get($base . '/metadata'));
         $this->assertReachable($this->client->get($base . '/metadata/attributes'));
@@ -2082,6 +2092,11 @@ class ApiEndpointsTest extends TestCase
         $this->assertReachable($this->client->put($base . '/' . self::TEST_UUID . '/positions/' . self::TEST_UUID, ['json' => ['quantity' => 2]]));
         $this->assertReachable($this->client->delete($base . '/' . self::TEST_UUID . '/positions/' . self::TEST_UUID));
         $this->assertReachable($this->client->post($base . '/' . self::TEST_UUID . '/positions/delete', ['json' => [['meta' => ['href' => 'x']]]]));
+        $this->assertReachable($this->client->get($base . '/' . self::TEST_UUID . '/notes'));
+        $this->assertReachable($this->client->post($base . '/' . self::TEST_UUID . '/notes', ['json' => ['description' => 'Привет, {{employee;730c1b3d-00ba-11ef-ac12-00120000000d}}!']]));
+        $this->assertReachable($this->client->get($base . '/' . self::TEST_UUID . '/notes/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put($base . '/' . self::TEST_UUID . '/notes/' . self::TEST_UUID, ['json' => ['description' => 'Обновленное событие']]));
+        $this->assertReachable($this->client->delete($base . '/' . self::TEST_UUID . '/notes/' . self::TEST_UUID));
 
         $this->assertReachable($this->client->get($base . '/metadata'));
         $this->assertReachable($this->client->get($base . '/metadata/attributes'));
@@ -3954,6 +3969,14 @@ class ApiEndpointsTest extends TestCase
         $this->assertReachable($this->client->get($filesBase));
         $this->assertReachable($this->client->post($filesBase, ['json' => [['filename' => 'test.pdf']]]));
         $this->assertReachable($this->client->delete($filesBase . '/' . self::TEST_UUID));
+
+        // Notes
+        $notesBase = $idBase . '/notes';
+        $this->assertReachable($this->client->get($notesBase));
+        $this->assertReachable($this->client->post($notesBase, ['json' => ['description' => 'Привет, {{employee;730c1b3d-00ba-11ef-ac12-00120000000d}}!']]));
+        $this->assertReachable($this->client->get($notesBase . '/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put($notesBase . '/' . self::TEST_UUID, ['json' => ['description' => 'Обновленное событие']]));
+        $this->assertReachable($this->client->delete($notesBase . '/' . self::TEST_UUID));
 
         // Positions
         $positionsBase = $idBase . '/positions';
