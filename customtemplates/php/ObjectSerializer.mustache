@@ -47,6 +47,40 @@ class ObjectSerializer
     }
 
     /**
+     * Read a nested value from decoded JSON data using dot or JSON-pointer-like path.
+     *
+     * @param mixed $data decoded JSON object or array
+     * @param string $path nested path, e.g. "meta.type" or "/meta/type"
+     *
+     * @return mixed|null
+     */
+    private static function readPath($data, string $path)
+    {
+        $path = ltrim(str_replace('/', '.', $path), '.');
+        $current = $data;
+
+        foreach (explode('.', $path) as $segment) {
+            if ($segment === '') {
+                continue;
+            }
+
+            if (is_object($current) && property_exists($current, $segment)) {
+                $current = $current->{$segment};
+                continue;
+            }
+
+            if (is_array($current) && array_key_exists($segment, $current)) {
+                $current = $current[$segment];
+                continue;
+            }
+
+            return null;
+        }
+
+        return $current;
+    }
+
+    /**
      * Serialize data
      *
      * @param mixed  $data   the data to serialize
@@ -490,6 +524,29 @@ class ObjectSerializer
 
             if (is_array($data)) {
                 $data = (object)$data;
+            }
+
+            $polymorphicDiscriminatorPath = is_callable([$class, 'openAPIPolymorphicDiscriminatorPath'])
+                ? $class::openAPIPolymorphicDiscriminatorPath()
+                : null;
+            if (!empty($polymorphicDiscriminatorPath)) {
+                $polymorphicDiscriminatorValue = self::readPath($data, $polymorphicDiscriminatorPath);
+                if (is_string($polymorphicDiscriminatorValue)) {
+                    $mappings = $class::openAPIPolymorphicDiscriminatorMappings();
+                    $discriminatorType = null;
+                    if (array_key_exists($polymorphicDiscriminatorValue, $mappings)) {
+                        $discriminatorType = $mappings[$polymorphicDiscriminatorValue];
+                    } elseif (array_key_exists('undefined', $mappings)) {
+                        $discriminatorType = $mappings['undefined'];
+                    }
+
+                    if ($discriminatorType !== null) {
+                        $subclass = '\{{invokerPackage}}\Model\\' . $discriminatorType;
+                        if (class_exists($subclass) && is_subclass_of($subclass, ModelInterface::class)) {
+                            $class = $subclass;
+                        }
+                    }
+                }
             }
 
             // If a discriminator is defined and points to a valid subclass, use it.
