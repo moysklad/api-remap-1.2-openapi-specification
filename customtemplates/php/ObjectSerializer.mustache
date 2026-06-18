@@ -81,6 +81,36 @@ class ObjectSerializer
     }
 
     /**
+     * Batch operation errors are represented as {"errors": [{"error": "..."}]}.
+     *
+     * @param mixed $data decoded JSON object or array
+     */
+    private static function isBatchErrorPayload($data): bool
+    {
+        $errors = null;
+        if (is_object($data) && property_exists($data, 'errors')) {
+            $errors = $data->errors;
+        } elseif (is_array($data) && array_key_exists('errors', $data)) {
+            $errors = $data['errors'];
+        }
+
+        if (!is_array($errors) || count($errors) === 0) {
+            return false;
+        }
+
+        foreach ($errors as $error) {
+            if (is_object($error) && property_exists($error, 'error') && is_string($error->error)) {
+                return true;
+            }
+            if (is_array($error) && array_key_exists('error', $error) && is_string($error['error'])) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Serialize data
      *
      * @param mixed  $data   the data to serialize
@@ -531,9 +561,9 @@ class ObjectSerializer
                 : null;
             if (!empty($polymorphicDiscriminatorPath)) {
                 $polymorphicDiscriminatorValue = self::readPath($data, $polymorphicDiscriminatorPath);
+                $discriminatorType = null;
                 if (is_string($polymorphicDiscriminatorValue)) {
                     $mappings = $class::openAPIPolymorphicDiscriminatorMappings();
-                    $discriminatorType = null;
                     if (array_key_exists($polymorphicDiscriminatorValue, $mappings)) {
                         $discriminatorType = $mappings[$polymorphicDiscriminatorValue];
                     } elseif (array_key_exists('undefined', $mappings)) {
@@ -546,17 +576,16 @@ class ObjectSerializer
                             $class = $subclass;
                         }
                     }
-                } else {
-                    // Batch errors do not have meta.type, so resolve them through
-                    // the optional fallback model declared on the current base class.
-                    $missingDiscriminatorModel = is_callable([$class, 'openAPIPolymorphicMissingDiscriminatorModel'])
-                        ? $class::openAPIPolymorphicMissingDiscriminatorModel()
-                        : null;
-                    if ($missingDiscriminatorModel !== null) {
-                        $subclass = '\{{invokerPackage}}\Model\\' . $missingDiscriminatorModel;
-                        if (class_exists($subclass) && is_subclass_of($subclass, $class)) {
-                            $class = $subclass;
-                        }
+                }
+
+                if ($discriminatorType === null
+                    && is_callable([$class, 'openAPIPolymorphicBatchErrorFallback'])
+                    && $class::openAPIPolymorphicBatchErrorFallback()
+                    && self::isBatchErrorPayload($data)
+                ) {
+                    $subclass = '\{{invokerPackage}}\Model\Error';
+                    if (class_exists($subclass) && is_subclass_of($subclass, $class)) {
+                        $class = $subclass;
                     }
                 }
             }

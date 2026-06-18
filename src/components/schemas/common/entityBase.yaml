@@ -9,10 +9,10 @@ BatchResponseEntity:
     meta:
       $ref: './meta.yaml'
   # Ошибка в batch-ответе не содержит meta.type, поэтому для нее нужен
-  # отдельный fallback вместо обычного resolve по x-polymorphic-discriminator.
-  x-polymorphic-missing-discriminator-component: Error
+  # fallback по маркерам ошибки вместо обычного resolve по mappings.
   x-polymorphic-discriminator:
     path: meta.type
+    batchErrorFallback: true
     mappings: &entityWithMetaPolymorphicMappings
       - type: bundle
         componentName: Bundle

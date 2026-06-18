@@ -72,18 +72,20 @@ agent:
 
 **Структура**:
 * path - строка в dot-нотации вложенности. Пример формата `meta.type`
+* batchErrorFallback - опциональный флаг. Если `true` и компонент не удалось
+  определить по `path` и `mappings`, SDK проверяет JSON на маркеры batch-ошибки
+  (`errors` - массив объектов, где есть строковое поле `error`) и десериализует
+  такой объект в компонент `Error`.
 * mappings - массив соответствий `{type, componentName}` для генерации SDK 
   * `type` — значение дискриминатора 
   * `componentName` — имя компонента из `components.schemas`.
-* x-polymorphic-missing-discriminator-component - опциональное имя компонента, который
-  используется, когда значение по `path` отсутствует или не является строкой.
-  Компонент должен быть наследником схемы, на которой указано расширение.
 
 **Пример**
 
 ```yaml
 x-polymorphic-discriminator:
   path: meta.type
+  batchErrorFallback: true
   mappings:
     - type: customerorder
       componentName: FinanceInOperationCustomerOrder

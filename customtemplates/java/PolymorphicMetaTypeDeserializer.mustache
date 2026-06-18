@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.deser.ContextualDeserializer;
+import {{modelPackage}}.Error;
 
 import java.io.IOException;
 import java.util.LinkedHashMap;
@@ -56,19 +57,19 @@ public class PolymorphicMetaTypeDeserializer extends JsonDeserializer<Object> im
       return null;
     }
 
-    JsonNode discriminatorNode = readPath(node, path);
-    if (discriminatorNode == null || !discriminatorNode.isTextual()) {
-      return missingDiscriminatorClass(targetClass);
-    }
-
     Map<String, Class<?>> mappings = discriminatorMappings(targetClass);
-    if (mappings == null) {
-      return null;
+    JsonNode discriminatorNode = readPath(node, path);
+    Class<?> resolvedClass = null;
+
+    if (discriminatorNode != null && discriminatorNode.isTextual() && mappings != null) {
+      resolvedClass = mappings.get(discriminatorNode.asText());
+      if (resolvedClass == null) {
+        resolvedClass = mappings.get("undefined");
+      }
     }
 
-    Class<?> resolvedClass = mappings.get(discriminatorNode.asText());
-    if (resolvedClass == null) {
-      resolvedClass = mappings.get("undefined");
+    if (resolvedClass == null && useBatchErrorFallback(targetClass) && isBatchErrorPayload(node)) {
+      resolvedClass = Error.class;
     }
 
     if (resolvedClass != null && !targetClass.isAssignableFrom(resolvedClass)) {
@@ -79,23 +80,31 @@ public class PolymorphicMetaTypeDeserializer extends JsonDeserializer<Object> im
     return resolvedClass;
   }
 
-  private Class<?> missingDiscriminatorClass(Class<?> targetClass) throws IOException {
+  private boolean useBatchErrorFallback(Class<?> targetClass) {
     for (Class<?> current = targetClass; current != null && current != Object.class; current = current.getSuperclass()) {
-      OpenApiPolymorphicMissingType missingType = current.getAnnotation(OpenApiPolymorphicMissingType.class);
-      if (missingType == null) {
-        continue;
+      OpenApiPolymorphicTypeInfo typeInfo = current.getAnnotation(OpenApiPolymorphicTypeInfo.class);
+      if (typeInfo != null) {
+        return typeInfo.batchErrorFallback();
       }
-
-      Class<?> resolvedClass = missingType.value();
-      if (!targetClass.isAssignableFrom(resolvedClass)) {
-        throw new IOException("Missing polymorphic discriminator for " + targetClass.getName()
-            + " points to incompatible class " + resolvedClass.getName());
-      }
-
-      return resolvedClass;
     }
 
-    return null;
+    return false;
+  }
+
+  private boolean isBatchErrorPayload(JsonNode node) {
+    JsonNode errors = node.get("errors");
+    if (errors == null || !errors.isArray() || errors.isEmpty()) {
+      return false;
+    }
+
+    for (JsonNode error : errors) {
+      JsonNode title = error.get("error");
+      if (title != null && title.isTextual()) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   private String discriminatorPath(Class<?> targetClass) {

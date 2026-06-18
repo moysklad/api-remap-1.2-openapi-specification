@@ -236,6 +236,40 @@ class SerializationTest extends TestCase
         );
     }
 
+    public function testBatchErrorFallbackResolvesUnknownDiscriminatorToError(): void
+    {
+        $model = $this->deserialize(
+            [
+                'meta' => ['type' => 'futuretype'],
+                'errors' => [
+                    [
+                        'error' => 'Ошибка в структуре JSON передаваемого запроса',
+                        'code' => 1000,
+                    ],
+                ],
+            ],
+            $this->getModelClass('BatchResponseEntity')
+        );
+
+        $this->assertInstanceOf($this->getModelClass('Error'), $model);
+    }
+
+    public function testBatchErrorFallbackRequiresErrorMarkers(): void
+    {
+        $model = $this->deserialize(
+            [
+                'meta' => ['type' => 'futuretype'],
+                'errors' => [
+                    ['error' => 1000],
+                ],
+            ],
+            $this->getModelClass('BatchResponseEntity')
+        );
+
+        $this->assertInstanceOf($this->getModelClass('BatchResponseEntity'), $model);
+        $this->assertNotInstanceOf($this->getModelClass('Error'), $model);
+    }
+
     /**
      * Провайдер данных для тестов.
      * Возвращает пары [fixture_name, model_name] для каждого fixture файла.

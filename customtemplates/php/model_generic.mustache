@@ -2,7 +2,7 @@ class {{classname}} {{#parentSchema}}extends {{{parent}}} {{/parentSchema}}{{^pa
 {
     public const DISCRIMINATOR = {{#discriminator}}'{{discriminatorName}}'{{/discriminator}}{{^discriminator}}null{{/discriminator}};
     protected static ?string $openAPIPolymorphicDiscriminatorPath = {{#vendorExtensions.x-polymorphic-discriminator}}'{{vendorExtensions.x-polymorphic-discriminator.path}}'{{/vendorExtensions.x-polymorphic-discriminator}}{{^vendorExtensions.x-polymorphic-discriminator}}null{{/vendorExtensions.x-polymorphic-discriminator}};
-    protected static ?string $openAPIPolymorphicMissingDiscriminatorModel = {{#vendorExtensions.x-polymorphic-missing-discriminator-component}}'{{vendorExtensions.x-polymorphic-missing-discriminator-component}}'{{/vendorExtensions.x-polymorphic-missing-discriminator-component}}{{^vendorExtensions.x-polymorphic-missing-discriminator-component}}null{{/vendorExtensions.x-polymorphic-missing-discriminator-component}};
+    protected static bool $openAPIPolymorphicBatchErrorFallback = {{#vendorExtensions.x-polymorphic-discriminator.batchErrorFallback}}true{{/vendorExtensions.x-polymorphic-discriminator.batchErrorFallback}}{{^vendorExtensions.x-polymorphic-discriminator.batchErrorFallback}}false{{/vendorExtensions.x-polymorphic-discriminator.batchErrorFallback}};
 
     /**
       * Array of nested discriminator mappings. Used for polymorphic deserialization
@@ -101,14 +101,14 @@ class {{classname}} {{#parentSchema}}extends {{{parent}}} {{/parentSchema}}{{^pa
     }
 
     /**
-     * Model used when nested discriminator is missing. This keeps batch errors
-     * compatible with the same response item type as successful entities.
+     * Whether batch-error-shaped payloads should resolve to Error when nested
+     * discriminator mappings do not match.
      *
-     * @return string|null
+     * @return bool
      */
-    public static function openAPIPolymorphicMissingDiscriminatorModel(): ?string
+    public static function openAPIPolymorphicBatchErrorFallback(): bool
     {
-        return self::$openAPIPolymorphicMissingDiscriminatorModel;
+        return self::$openAPIPolymorphicBatchErrorFallback;
     }
 
     /**

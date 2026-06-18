@@ -9,7 +9,9 @@ const ROOT_DIR = path.resolve(__dirname, "..");
 const SPEC_PATH = path.join(ROOT_DIR, "src", "openapi.yaml");
 
 const POLYMORPHIC_DISCRIMINATOR = "x-polymorphic-discriminator";
-const POLYMORPHIC_MISSING_DISCRIMINATOR_COMPONENT = "x-polymorphic-missing-discriminator-component";
+const LEGACY_POLYMORPHIC_MISSING_DISCRIMINATOR_COMPONENT = "x-polymorphic-missing-discriminator-component";
+const LEGACY_POLYMORPHIC_MISSING_COMPONENT_NAME = "missingComponentName";
+const POLYMORPHIC_BATCH_ERROR_FALLBACK = "batchErrorFallback";
 const POLYMORPHIC_PARENT = "x-polymorphic-parent";
 
 const errors = [];
@@ -144,7 +146,7 @@ function addError(componentName, message) {
     errors.push(`${componentName}: ${message}`);
 }
 
-function validatePolymorphicParent(componentName, schema, schemaNames) {
+function validatePolymorphicParent(componentName, schema, schemas, schemaNames, rootDocument) {
     const parent = schema[POLYMORPHIC_PARENT];
 
     if (parent === undefined) {
@@ -162,6 +164,30 @@ function validatePolymorphicParent(componentName, schema, schemaNames) {
             `${POLYMORPHIC_PARENT} ссылается на несуществующий компонент "${parent}"`
         );
     }
+
+    const { ancestors, cycleAt } = getPolymorphicAncestorChain(componentName, schemas, rootDocument);
+
+    if (cycleAt !== undefined) {
+        addError(
+            componentName,
+            `${POLYMORPHIC_PARENT} содержит цикл в родительской цепочке через "${cycleAt}"`
+        );
+    }
+
+    if (schema.discriminator !== undefined) {
+        addError(componentName, `${POLYMORPHIC_PARENT} конфликтует со стандартным discriminator`);
+    }
+
+    ancestors.forEach((ancestorName) => {
+        const ancestorSchema = getComponentSchema(ancestorName, schemas, rootDocument);
+
+        if (isObject(ancestorSchema) && ancestorSchema.discriminator !== undefined) {
+            addError(
+                componentName,
+                `${POLYMORPHIC_PARENT} цепочка конфликтует со стандартным discriminator в родительском компоненте "${ancestorName}"`
+            );
+        }
+    });
 }
 
 function getPolymorphicParentName(componentName, schemas, rootDocument) {
@@ -175,26 +201,33 @@ function getPolymorphicParentName(componentName, schemas, rootDocument) {
     return isNonEmptyString(parent) ? parent : undefined;
 }
 
-function hasPolymorphicAncestor(componentName, parentName, schemas, rootDocument) {
+function getPolymorphicAncestorChain(componentName, schemas, rootDocument) {
     const seenComponents = new Set();
     let currentName = componentName;
+    const ancestors = [];
 
-    while (isNonEmptyString(currentName) && !seenComponents.has(currentName)) {
+    while (isNonEmptyString(currentName)) {
         seenComponents.add(currentName);
 
         const currentParent = getPolymorphicParentName(currentName, schemas, rootDocument);
         if (currentParent === undefined) {
-            return false;
+            return { ancestors };
         }
 
-        if (currentParent === parentName) {
-            return true;
+        if (seenComponents.has(currentParent)) {
+            return { ancestors, cycleAt: currentParent };
         }
 
+        ancestors.push(currentParent);
         currentName = currentParent;
     }
 
-    return false;
+    return { ancestors };
+}
+
+function hasPolymorphicAncestor(componentName, parentName, schemas, rootDocument) {
+    return getPolymorphicAncestorChain(componentName, schemas, rootDocument)
+        .ancestors.includes(parentName);
 }
 
 function validateMappingParent(parentName, mapping, mappingIndex, schemas, schemaNames, rootDocument) {
@@ -252,8 +285,42 @@ function validateDiscriminatorMappings(componentName, discriminator, schemas, sc
     });
 }
 
+function validateDiscriminatorBatchErrorFallback(componentName, discriminator, schemas, schemaNames, rootDocument) {
+    const fallback = discriminator[POLYMORPHIC_BATCH_ERROR_FALLBACK];
+
+    if (fallback !== undefined && typeof fallback !== "boolean") {
+        addError(componentName, `${POLYMORPHIC_DISCRIMINATOR}.${POLYMORPHIC_BATCH_ERROR_FALLBACK} должен быть boolean`);
+        return;
+    }
+
+    if (fallback === true) {
+        if (!schemaNames.has("Error")) {
+            addError(componentName, `${POLYMORPHIC_DISCRIMINATOR}.${POLYMORPHIC_BATCH_ERROR_FALLBACK} требует компонент Error`);
+        } else if (!hasPolymorphicAncestor("Error", componentName, schemas, rootDocument)) {
+            addError(
+                componentName,
+                `${POLYMORPHIC_DISCRIMINATOR}.${POLYMORPHIC_BATCH_ERROR_FALLBACK} можно использовать только если Error наследуется от "${componentName}"`
+            );
+        }
+    }
+
+    if (discriminator[LEGACY_POLYMORPHIC_MISSING_COMPONENT_NAME] !== undefined) {
+        addError(
+            componentName,
+            `${POLYMORPHIC_DISCRIMINATOR}.${LEGACY_POLYMORPHIC_MISSING_COMPONENT_NAME} больше не поддерживается; используйте ${POLYMORPHIC_DISCRIMINATOR}.${POLYMORPHIC_BATCH_ERROR_FALLBACK}`
+        );
+    }
+}
+
 function validatePolymorphicDiscriminator(componentName, schema, schemas, schemaNames, rootDocument) {
     const discriminator = schema[POLYMORPHIC_DISCRIMINATOR];
+
+    if (schema[LEGACY_POLYMORPHIC_MISSING_DISCRIMINATOR_COMPONENT] !== undefined) {
+        addError(
+            componentName,
+            `${LEGACY_POLYMORPHIC_MISSING_DISCRIMINATOR_COMPONENT} больше не поддерживается; используйте ${POLYMORPHIC_DISCRIMINATOR}.${POLYMORPHIC_BATCH_ERROR_FALLBACK}`
+        );
+    }
 
     if (discriminator === undefined) {
         return;
@@ -273,34 +340,7 @@ function validatePolymorphicDiscriminator(componentName, schema, schemas, schema
     }
 
     validateDiscriminatorMappings(componentName, discriminator, schemas, schemaNames, rootDocument);
-}
-
-function validateMissingDiscriminatorComponent(componentName, schema, schemas, schemaNames, rootDocument) {
-    const missingComponent = schema[POLYMORPHIC_MISSING_DISCRIMINATOR_COMPONENT];
-
-    if (missingComponent === undefined) {
-        return;
-    }
-
-    if (!isNonEmptyString(missingComponent)) {
-        addError(componentName, `${POLYMORPHIC_MISSING_DISCRIMINATOR_COMPONENT} должен быть непустой строкой`);
-        return;
-    }
-
-    if (!schemaNames.has(missingComponent)) {
-        addError(
-            componentName,
-            `${POLYMORPHIC_MISSING_DISCRIMINATOR_COMPONENT} ссылается на несуществующий компонент "${missingComponent}"`
-        );
-        return;
-    }
-
-    if (!hasPolymorphicAncestor(missingComponent, componentName, schemas, rootDocument)) {
-        addError(
-            componentName,
-            `${POLYMORPHIC_MISSING_DISCRIMINATOR_COMPONENT}="${missingComponent}" требует ${POLYMORPHIC_PARENT}: ${componentName} в дочернем компоненте или его родительской цепочке`
-        );
-    }
+    validateDiscriminatorBatchErrorFallback(componentName, discriminator, schemas, schemaNames, rootDocument);
 }
 
 function validate() {
@@ -320,9 +360,8 @@ function validate() {
             return;
         }
 
-        validatePolymorphicParent(componentName, schema, schemaNames);
+        validatePolymorphicParent(componentName, schema, schemas, schemaNames, rootDocument);
         validatePolymorphicDiscriminator(componentName, schema, schemas, schemaNames, rootDocument);
-        validateMissingDiscriminatorComponent(componentName, schema, schemas, schemaNames, rootDocument);
     });
 }
 
