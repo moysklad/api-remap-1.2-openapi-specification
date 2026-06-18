@@ -13,6 +13,9 @@ properties:
     maxLength: 255
     description: Имя файла
     example: "instruction.pdf"
+  content:
+    type: string
+    description: Файл, закодированный в Base64
   size:
     type: integer
     description: Размер файла в байтах
