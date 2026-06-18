@@ -1730,6 +1730,11 @@ class ApiEndpointsTest extends TestCase
         $this->assertReachable($this->client->post($base . '/files', ['json' => [['filename' => 'X']]]));
         $this->assertReachable($this->client->get($base . '/files/' . self::TEST_UUID));
         $this->assertReachable($this->client->delete($base . '/files/' . self::TEST_UUID));
+        $this->assertReachable($this->client->get($base . '/notes'));
+        $this->assertReachable($this->client->post($base . '/notes', ['json' => ['description' => 'Привет, {{employee;730c1b3d-00ba-11ef-ac12-00120000000d}}!']]));
+        $this->assertReachable($this->client->get($base . '/notes/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put($base . '/notes/' . self::TEST_UUID, ['json' => ['description' => 'Обновленное событие']]));
+        $this->assertReachable($this->client->delete($base . '/notes/' . self::TEST_UUID));
 
         $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/invoicein/metadata'));
         $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/invoicein/metadata/attributes'));

@@ -760,6 +760,10 @@ paths:
     $ref: './paths/documents/invoiceins/invoicein-files.yaml'
   /entity/invoicein/{id}/files/{fileId}:
     $ref: './paths/documents/invoiceins/invoicein-file-by-id.yaml'
+  /entity/invoicein/{id}/notes:
+    $ref: './paths/documents/invoiceins/invoicein-notes.yaml'
+  /entity/invoicein/{id}/notes/{noteId}:
+    $ref: './paths/documents/invoiceins/invoicein-note-by-id.yaml'
   # Documents - Demands
   /entity/demand:
     $ref: './paths/documents/demands/demands.yaml'
