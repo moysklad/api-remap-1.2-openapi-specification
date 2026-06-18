@@ -1,0 +1,4 @@
+type: string
+description: Известные значения группы площадок для продаж
+enum: [MARKETPLACES, MESSENGERS, OFFLINE_STORES, ONLINE_STORES, SOCIAL_NETWORKS]
+example: "MARKETPLACES"

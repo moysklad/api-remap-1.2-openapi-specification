@@ -1,0 +1,4 @@
+type: string
+description: Известные значения условия начисления приветственных баллов
+enum: [REGISTRATION, FIRST_PURCHASE]
+example: "REGISTRATION"

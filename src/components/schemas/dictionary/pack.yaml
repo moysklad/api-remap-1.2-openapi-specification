@@ -1,0 +1,25 @@
+type: object
+description: Упаковка
+properties:
+  meta:
+    description: Метаданные Упаковки
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID упаковки
+    readOnly: true
+  uom:
+    description: Метаданные единиц измерения
+    $ref: '../../../openapi.yaml#/components/schemas/Uom'
+  quantity:
+    type: number
+    minimum: 0
+    format: float
+    description: Количество товаров в упаковке
+  barcodes:
+    type: array
+    description: Штрихкоды упаковки
+    nullable: true
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/Barcode'

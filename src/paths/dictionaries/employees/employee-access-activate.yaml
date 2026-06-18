@@ -1,0 +1,63 @@
+put:
+  operationId: activateEmployee
+  tags:
+    - Employees
+  summary: Активировать сотрудника
+  description: |
+    Запрос на активацию Сотрудника в сервисе МойСклад.
+    Если пользователь ранее не был активным, необходимо указать поле `login`.
+    Успешным результатом будет json с полем `mailActivationRequired`: если `true` — на почту сотрудника выслано письмо со ссылкой для входа.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: false
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            login:
+              type: string
+              maxLength: 255
+              description: Логин сотрудника (обязателен при первой активации)
+              example: "newcashier@lognex"
+            group:
+              type: object
+              description: Метаданные группы
+              properties:
+                meta:
+                  $ref: '../../../openapi.yaml#/components/schemas/Meta'
+            role:
+              $ref: '../../../openapi.yaml#/components/schemas/EmployeeRole'
+        example:
+          login: "newcashier@lognex"
+          group:
+            meta:
+              href: "https://api.moysklad.ru/api/remap/1.2/entity/group/f4b74c5e-443a-11eb-ac12-001000000003"
+              metadataHref: "https://api.moysklad.ru/api/remap/1.2/entity/group/metadata"
+              type: "group"
+              mediaType: "application/json"
+          role:
+            meta:
+              href: "https://api.moysklad.ru/api/remap/1.2/entity/role/cashier"
+              type: "systemrole"
+              mediaType: "application/json"
+  responses:
+    '200':
+      description: Сотрудник успешно активирован
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              mailActivationRequired:
+                type: boolean
+                description: Признак того, что на почту сотрудника выслано письмо для активации
+                example: true
+          example:
+            mailActivationRequired: true
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

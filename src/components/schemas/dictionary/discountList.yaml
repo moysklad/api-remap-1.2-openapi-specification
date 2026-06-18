@@ -1,0 +1,32 @@
+type: object
+description: Список Скидок
+properties:
+  context:
+    description: Метаданные о сотруднике, выполнившем запрос
+    $ref: '../common/context.yaml'
+  meta:
+    description: Метаданные о выдаче
+    $ref: '../common/metaList.yaml'
+  rows:
+    type: array
+    description: |
+      Массив скидок всех типов для учётной записи (см. `meta.type`: discount, personaldiscount,
+      specialpricediscount, accumulationdiscount, bonusprogram).
+    items:
+      description: |
+        Логический вид строки в JSON задаётся `meta.type` (см. описание массива `rows` выше).
+
+        Здесь `anyOf`, а не `oneOf`: у вариантов общий базис (`DiscountBase`), минимальный объект
+        одновременно удовлетворяет нескольким веткам, и строгие валидаторы (в т.ч. Schemathesis)
+        падают с ошибкой «валидно более чем по одной схеме `oneOf`».
+
+        Сгенерированный PHP SDK для такого `items` обычно выдаёт один **объединённый** тип строки
+        (все поля вариантов в одной модели), а не `Discount` / `PersonalDiscount` на элемент.
+        Отображение в доменные классы по `meta.type` — ответственность приложения (ручной разбор
+        или повторный decode в нужную модель).
+      anyOf:
+        - $ref: '../../../openapi.yaml#/components/schemas/Discount'
+        - $ref: '../../../openapi.yaml#/components/schemas/PersonalDiscount'
+        - $ref: '../../../openapi.yaml#/components/schemas/SpecialPriceDiscount'
+        - $ref: '../../../openapi.yaml#/components/schemas/AccumulationDiscount'
+        - $ref: '../../../openapi.yaml#/components/schemas/BonusProgram'

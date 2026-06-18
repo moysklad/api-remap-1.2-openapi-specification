@@ -1,0 +1,49 @@
+get:
+  operationId: getProcessingFile
+  tags:
+    - Processings
+  summary: Получить файл техоперации
+  description: Получение Файла Техоперации.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - name: fileId
+      in: path
+      required: true
+      description: ID файла
+      schema:
+        type: string
+        format: uuid
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/File'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+delete:
+  operationId: deleteProcessingFile
+  tags:
+    - Processings
+  summary: Удалить файл техоперации
+  description: Удаление Файла Техоперации.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - name: fileId
+      in: path
+      required: true
+      description: ID файла
+      schema:
+        type: string
+        format: uuid
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Файл успешно удалён
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

@@ -1,0 +1,70 @@
+type: object
+description: Группа техкарт
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "processingplanfolder"
+    - param: "id"
+  type: "processingplanfolder"
+properties:
+  meta:
+    description: Метаданные Группы техкарт
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID Группы техкарт
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  name:
+    type: string
+    maxLength: 255
+    description: Наименование Группы техкарт
+  code:
+    type: string
+    maxLength: 255
+    description: Код Группы техкарт
+  externalCode:
+    type: string
+    maxLength: 255
+    description: Внешний код Группы техкарт
+  description:
+    type: string
+    maxLength: 4096
+    nullable: true
+    description: Описание Группы техкарт
+  archived:
+    type: boolean
+    description: Добавлена ли Группа техкарт в архив
+  pathName:
+    type: string
+    description: Наименование группы техкарт, в которую входит данная группа (иерархия)
+    readOnly: true
+  shared:
+    type: boolean
+    description: Общий доступ
+  updated:
+    type: string
+    description: Момент последнего обновления сущности
+    readOnly: true
+  group:
+    description: Метаданные отдела сотрудника
+    $ref: '../../../openapi.yaml#/components/schemas/Group'
+  owner:
+    description: Метаданные владельца (сотрудника)
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Employee'
+  processingplanfolder:
+    description: Родительская Группа техкарт. Для смены иерархии и поля pathName обновите эту ссылку
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/ProcessingPlanFolder'

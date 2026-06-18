@@ -1,0 +1,15 @@
+type: object
+description: Объект для загрузки файла
+required:
+  - filename
+  - content
+properties:
+  filename:
+    type: string
+    maxLength: 255
+    description: Имя файла с расширением
+    example: "doc.pdf"
+  content:
+    type: string
+    description: Файл, закодированный в формате Base64
+    example: "SGVsbG8gV29ybGQ="

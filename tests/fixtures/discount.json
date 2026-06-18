@@ -1,0 +1,13 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/discount/8ae26646-b1aa-11ea-ac12-000b00000001",
+    "type": "discount",
+    "mediaType": "application/json"
+  },
+  "id": "8ae26646-b1aa-11ea-ac12-000b00000001",
+  "name": "Округление копеек",
+  "active": true,
+  "allAgents": true,
+  "agentTags": []
+}
+

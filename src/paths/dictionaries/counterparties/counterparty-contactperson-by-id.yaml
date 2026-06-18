@@ -1,0 +1,89 @@
+get:
+  operationId: getCounterpartyContactPersonById
+  tags:
+    - Counterparties
+  summary: Получить контактное лицо контрагента по ID
+  description: Запрос на получение отдельного контактного лица Контрагента с указанным id.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - name: contactPersonId
+      in: path
+      required: true
+      description: ID контактного лица
+      schema:
+        type: string
+        format: uuid
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/ContactPerson'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+put:
+  operationId: updateCounterpartyContactPerson
+  tags:
+    - Counterparties
+  summary: Обновить контактное лицо контрагента
+  description: Обновление контактного лица Контрагента с указанным id.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - name: contactPersonId
+      in: path
+      required: true
+      description: ID контактного лица
+      schema:
+        type: string
+        format: uuid
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../openapi.yaml#/components/schemas/ContactPerson'
+  responses:
+    '200':
+      description: Контактное лицо успешно обновлено
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/ContactPerson'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+    
+    
+    
+    
+
+delete:
+  operationId: deleteCounterpartyContactPerson
+  tags:
+    - Counterparties
+  summary: Удалить контактное лицо контрагента
+  description: Удаление контактного лица Контрагента с указанным id.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - name: contactPersonId
+      in: path
+      required: true
+      description: ID контактного лица
+      schema:
+        type: string
+        format: uuid
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Контактное лицо успешно удалено
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+    
+    

@@ -1,0 +1,10 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/context/companysettings/pricetype/88888888-8888-8888-8888-888888888888",
+    "type": "pricetype",
+    "mediaType": "application/json"
+  },
+  "id": "88888888-8888-8888-8888-888888888888",
+  "name": "Цена продажи",
+  "externalCode": "default"
+}

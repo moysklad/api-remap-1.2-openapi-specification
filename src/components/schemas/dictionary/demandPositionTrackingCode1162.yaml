@@ -1,0 +1,19 @@
+type: object
+description: Код маркировки в формате тега 1162 в позиции Отгрузки
+properties:
+  cis_1162:
+    type: string
+    description: Значение кода маркировки в формате тега 1162
+    readOnly: true
+  type:
+    type: string
+    description: Тип кода маркировки. Известные значения описаны в PositionTrackingCodeType
+    readOnly: true
+    example: "trackingcode"
+  trackingCodes_1162:
+    type: array
+    description: |
+      Вложенные коды маркировки в формате тега 1162. Может присутствовать только если type имеет значения `consumerpack` или `transportpack`.
+    readOnly: true
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/DemandPositionTrackingCode1162'

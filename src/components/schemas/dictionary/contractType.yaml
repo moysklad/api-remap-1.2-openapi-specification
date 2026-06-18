@@ -1,0 +1,4 @@
+type: string
+description: Известные значения типа договора
+enum: [Commission, Sales]
+example: "Commission"

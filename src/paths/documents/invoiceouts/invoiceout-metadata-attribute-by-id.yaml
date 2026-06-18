@@ -1,0 +1,61 @@
+get:
+  operationId: getInvoiceOutMetadataAttributeById
+  tags:
+    - InvoiceOuts
+  summary: Отдельное доп. поле InvoiceOut
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfo'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+put:
+  operationId: updateInvoiceOutMetadataAttributeById
+  tags:
+    - InvoiceOuts
+  summary: Обновить отдельное доп. поле InvoiceOut
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfo'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfo'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+delete:
+  operationId: deleteInvoiceOutMetadataAttributeById
+  tags:
+    - InvoiceOuts
+  summary: Удалить отдельное доп. поле InvoiceOut
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  responses:
+    '200':
+      description: Успешный запрос
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

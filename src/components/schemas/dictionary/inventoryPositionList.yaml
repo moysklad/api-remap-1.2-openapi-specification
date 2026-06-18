@@ -1,0 +1,15 @@
+type: object
+description: Список позиций Инвентаризации
+properties:
+  context:
+    description: Метаданные о сотруднике, выполнившем запрос
+    $ref: '../../../openapi.yaml#/components/schemas/Context'
+  meta:
+    description: Метаданные о выдаче
+    $ref: '../common/metaList.yaml'
+  rows:
+    type: array
+    description: Массив позиций Инвентаризации
+    nullable: true
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/InventoryPosition'
