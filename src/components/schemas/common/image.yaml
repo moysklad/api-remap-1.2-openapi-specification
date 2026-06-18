@@ -13,6 +13,9 @@ properties:
     maxLength: 255
     description: Имя файла
     example: "product_image.jpg"
+  content:
+    type: string
+    description: Изображение, закодированное в Base64
   size:
     type: integer
     description: Размер файла в байтах
