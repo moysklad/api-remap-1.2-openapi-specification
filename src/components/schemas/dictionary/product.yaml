@@ -138,7 +138,7 @@ properties:
     description: Объем
   buyPrice:
     description: Закупочная цена
-    $ref: '../../../openapi.yaml#/components/schemas/BuyPrice'
+    $ref: '../../../openapi.yaml#/components/schemas/Price'
   salePrices:
     type: array
     description: Цены продажи
@@ -224,7 +224,7 @@ properties:
       - $ref: '../../../openapi.yaml#/components/schemas/MinimumStockAbstract'
   minPrice:
     description: Минимальная цена
-    $ref: '../../../openapi.yaml#/components/schemas/MinPrice'
+    $ref: '../../../openapi.yaml#/components/schemas/Price'
   weighed:
     type: boolean
     description: Поле, показывающее является ли товар весовым

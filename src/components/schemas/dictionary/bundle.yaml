@@ -168,10 +168,10 @@ properties:
       $ref: '../../../openapi.yaml#/components/schemas/SalePrice'
   buyPrice:
     description: Закупочная цена
-    $ref: '../../../openapi.yaml#/components/schemas/BuyPrice'
+    $ref: '../../../openapi.yaml#/components/schemas/Price'
   minPrice:
     description: Минимальная цена
-    $ref: '../../../openapi.yaml#/components/schemas/MinPrice'
+    $ref: '../../../openapi.yaml#/components/schemas/Price'
   overhead:
     type: object
     description: Дополнительные расходы

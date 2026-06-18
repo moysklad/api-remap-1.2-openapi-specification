@@ -70,10 +70,10 @@ properties:
     description: Закупочная цена
     nullable: true
     allOf:
-      - $ref: '../../../openapi.yaml#/components/schemas/BuyPrice'
+      - $ref: '../../../openapi.yaml#/components/schemas/Price'
   minPrice:
     description: Минимальная цена
-    $ref: '../../../openapi.yaml#/components/schemas/MinPrice'
+    $ref: '../../../openapi.yaml#/components/schemas/Price'
   barcodes:
     type: array
     description: Штрихкоды Модификации

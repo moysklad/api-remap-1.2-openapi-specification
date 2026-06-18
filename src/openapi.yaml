@@ -1472,8 +1472,8 @@ components:
       $ref: './components/schemas/dictionary/discountBase.yaml'
     DiscountStrategy:
       $ref: './components/schemas/dictionary/discountStrategy.yaml'
-    BuyPrice:
-      $ref: './components/schemas/dictionary/buyPrice.yaml'
+    Price:
+      $ref: './components/schemas/dictionary/price.yaml'
     Cashier:
       $ref: './components/schemas/dictionary/cashier.yaml'
     ContactPerson:
@@ -1591,8 +1591,6 @@ components:
       $ref: './components/schemas/dictionary/minimumStockAllWarehouseSum.yaml'
     MinimumStockWarehouseVaried:
       $ref: './components/schemas/dictionary/minimumStockWarehouseVaried.yaml'
-    MinPrice:
-      $ref: './components/schemas/dictionary/minPrice.yaml'
     Note:
       $ref: './components/schemas/dictionary/note.yaml'
     EventNote:
