@@ -1591,7 +1591,9 @@ components:
     PermissionValue:
       $ref: './components/schemas/common/permissionValue.yaml'
     ScriptPermissions:
-      $ref: './components/schemas/common/scriptPermission.yaml'
+      $ref: './components/schemas/common/scriptPermissions.yaml'
+    ScriptTemplatePermissions:
+      $ref: './components/schemas/common/scriptTemplatePermissions.yaml'
     ScriptPermissionValue:
       $ref: './components/schemas/common/scriptPermissionValue.yaml'
     EmbeddedTemplate:

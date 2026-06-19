@@ -294,6 +294,9 @@ properties:
       script:
         description: Задачи
         $ref: '../../../openapi.yaml#/components/schemas/ScriptPermissions'
+      scriptTemplate:
+        description: Задачи
+        $ref: '../../../openapi.yaml#/components/schemas/ScriptTemplatePermissions'
       supply:
         description: Приемки
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
