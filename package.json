@@ -1,10 +1,10 @@
 {
     "name": "moysklad-openapi",
-    "version": "0.11.0",
+    "version": "0.12.0",
     "description": "OpenAPI спецификация для МойСклад JSON API 1.2",
     "main": "src/openapi.yaml",
     "scripts": {
-        "validate": "redocly lint src/openapi.yaml",
+        "validate": "redocly lint src/openapi.yaml && node scripts/validate-polymorphic-extensions.js",
         "bundle": "redocly bundle --skip-decorator=filter-out src/openapi.yaml -o dist/openapi.yaml --ext yaml",
         "light-bundle": "redocly bundle openapi -o dist/openapi.yaml --ext yaml",
         "bundle-json": "redocly bundle --skip-decorator=filter-out src/openapi.yaml -o dist/openapi.json --ext json",

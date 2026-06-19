@@ -27,11 +27,14 @@ check-openapi-changes:
         echo "OpenAPI changes detected in src/ relative to tag $LAST_TAG. Continuing pipeline."
       fi
 
-lint-openapi:
-  extends: .openapitools-image
+validate:
+  extends:
+    - .openapitools-image
+    - .npm-cache
   stage: verify
   needs:
     - job: check-openapi-changes
       optional: true
   script:
-    - redocly lint src/openapi.yaml
+    - npm ci
+    - npm run validate

@@ -11,5 +11,6 @@ properties:
   rows:
     type: array
     description: Массив позиций Заказа поставщику
+    nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/PurchaseOrderPosition'

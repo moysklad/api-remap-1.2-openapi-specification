@@ -5,7 +5,7 @@ bundle-openapi:
     - .npm-cache
   stage: verify
   needs:
-    - job: lint-openapi
+    - job: validate
       optional: true
   script:
     - npm ci
@@ -20,7 +20,7 @@ bundle-smoke-openapi:
   stage: verify
   image: docker.infra.lognex/docker-openapitools:1.2-release
   needs:
-    - job: lint-openapi
+    - job: validate
       optional: true
   script:
     - npm ci
