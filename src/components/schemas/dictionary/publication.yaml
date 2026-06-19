@@ -1,17 +1,5 @@
 type: object
 description: Публикация Заказа покупателя
-x-entity-static-builder:
-  methodParams:
-    - "type"
-    - "id"
-    - "publicationId"
-  href:
-    - path: "entity"
-    - param: "type"
-    - param: "id"
-    - path: "publication"
-    - param: "publicationId"
-  type: "operationpublication"
 properties:
   meta:
     description: Метаданные Публикации
