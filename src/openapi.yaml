@@ -2015,14 +2015,6 @@ components:
       $ref: './components/schemas/dictionary/cashOut.yaml'
     CashIn:
       $ref: './components/schemas/dictionary/cashIn.yaml'
-    CashInOperation:
-      $ref: './components/schemas/dictionary/cashInOperation.yaml'
-    RetailShiftOperation:
-      $ref: './components/schemas/dictionary/retailShiftOperation.yaml'
-    RetailShiftPaymentOperation:
-      $ref: './components/schemas/dictionary/retailShiftPaymentOperation.yaml'
-    PaymentInOperation:
-      $ref: './components/schemas/dictionary/paymentInOperation.yaml'
     FinanceOutOperationAbstract:
       type: object
       description: |
@@ -2097,6 +2089,10 @@ components:
       $ref: './components/schemas/dictionary/financeInOperationCommissionReportIn.yaml'
     FinanceInOperationRetailShift:
       $ref: './components/schemas/dictionary/financeInOperationRetailShift.yaml'
+    RetailShiftOperation:
+      $ref: './components/schemas/dictionary/retailShiftOperation.yaml'
+    RetailShiftPaymentOperation:
+      $ref: './components/schemas/dictionary/retailShiftPaymentOperation.yaml'
     OperationLinkedSum:
       $ref: './components/schemas/dictionary/operationLinkedSum.yaml'
     RetailDrawerCashIn:
