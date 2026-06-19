@@ -9,8 +9,6 @@ const ROOT_DIR = path.resolve(__dirname, "..");
 const SPEC_PATH = path.join(ROOT_DIR, "src", "openapi.yaml");
 
 const POLYMORPHIC_DISCRIMINATOR = "x-polymorphic-discriminator";
-const LEGACY_POLYMORPHIC_MISSING_DISCRIMINATOR_COMPONENT = "x-polymorphic-missing-discriminator-component";
-const LEGACY_POLYMORPHIC_MISSING_COMPONENT_NAME = "missingComponentName";
 const POLYMORPHIC_BATCH_ERROR_FALLBACK = "batchErrorFallback";
 const POLYMORPHIC_PARENT = "x-polymorphic-parent";
 
@@ -304,23 +302,10 @@ function validateDiscriminatorBatchErrorFallback(componentName, discriminator, s
         }
     }
 
-    if (discriminator[LEGACY_POLYMORPHIC_MISSING_COMPONENT_NAME] !== undefined) {
-        addError(
-            componentName,
-            `${POLYMORPHIC_DISCRIMINATOR}.${LEGACY_POLYMORPHIC_MISSING_COMPONENT_NAME} больше не поддерживается; используйте ${POLYMORPHIC_DISCRIMINATOR}.${POLYMORPHIC_BATCH_ERROR_FALLBACK}`
-        );
-    }
 }
 
 function validatePolymorphicDiscriminator(componentName, schema, schemas, schemaNames, rootDocument) {
     const discriminator = schema[POLYMORPHIC_DISCRIMINATOR];
-
-    if (schema[LEGACY_POLYMORPHIC_MISSING_DISCRIMINATOR_COMPONENT] !== undefined) {
-        addError(
-            componentName,
-            `${LEGACY_POLYMORPHIC_MISSING_DISCRIMINATOR_COMPONENT} больше не поддерживается; используйте ${POLYMORPHIC_DISCRIMINATOR}.${POLYMORPHIC_BATCH_ERROR_FALLBACK}`
-        );
-    }
 
     if (discriminator === undefined) {
         return;
