@@ -18,6 +18,16 @@ positionId:
     format: uuid
     example: "12a8b923-692c-11e6-8a84-bae500000054"
 
+publicationId:
+  name: publicationId
+  in: path
+  required: true
+  description: ID публикации
+  schema:
+    type: string
+    format: uuid
+    example: "a86708d2-f8d3-4e67-8f04-6101158da808"
+
 limit:
   name: limit
   in: query

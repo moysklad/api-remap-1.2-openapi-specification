@@ -1,0 +1,24 @@
+type: object
+description: Публикация Заказа покупателя
+x-entity-static-builder:
+  methodParams:
+    - "type"
+    - "id"
+    - "publicationId"
+  href:
+    - path: "entity"
+    - param: "type"
+    - param: "id"
+    - path: "publication"
+    - param: "publicationId"
+  type: "operationpublication"
+properties:
+  meta:
+    description: Метаданные Публикации
+    $ref: '../common/meta.yaml'
+  template:
+    $ref: '../../../openapi.yaml#/components/schemas/EmbeddedTemplate'
+  href:
+    type: string
+    format: uri
+    description: Ссылка на страницу Публикации

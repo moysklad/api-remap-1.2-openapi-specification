@@ -2373,6 +2373,33 @@ class ApiEndpointsTest extends TestCase
     }
 
     /**
+     * GET /entity/customerorder/{id}/publication
+     */
+    public function testGetCustomerOrderPublications(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/customerorder/' . self::TEST_UUID . '/publication');
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * GET /entity/customerorder/{id}/publication/{publicationId}
+     */
+    public function testGetCustomerOrderPublicationById(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/customerorder/' . self::TEST_UUID . '/publication/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
+    }
+
+    /**
+     * POST /entity/customerorder/{id}/export
+     */
+    public function testExportCustomerOrder(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/customerorder/' . self::TEST_UUID . '/export', ['json' => ['extension' => 'pdf',],]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
      * GET /entity/purchaseorder/{id}/notes
      */
     public function testGetPurchaseOrderNotes(): void
@@ -5225,5 +5252,23 @@ class ApiEndpointsTest extends TestCase
             $response = $this->client->get(self::API_BASE_PATH . $path);
             $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
         }
+    }
+
+    /**
+     * GET /entity/{type}/metadata/embeddedtemplate
+     */
+    public function testGetEmbeddedTemplatesForEntityTypeMetadata(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/customerorder/metadata/embeddedtemplate');
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * GET /entity/{type}/metadata/embeddedtemplate/{id}
+     */
+    public function testGetEmbeddedTemplateByEntityTypeAndIdMetadata(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/customerorder/metadata/embeddedtemplate/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 }

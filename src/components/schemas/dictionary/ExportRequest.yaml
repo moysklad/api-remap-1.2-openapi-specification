@@ -1,0 +1,40 @@
+type: object
+description: Запрос на печать
+oneOf:
+  - required:
+      - template
+      - extension
+  - required:
+      - templates
+properties:
+  template:
+    $ref: '../../../openapi.yaml#/components/schemas/EmbeddedTemplate'
+  extension:
+    type: string
+    description: |
+      Расширение, в котором нужно напечатать форму.
+      Допустимые значения: xls, pdf, html, ods.
+    enum:
+      - xls
+      - pdf
+      - html
+      - ods
+  templates:
+    type: array
+    description: |
+      Набор шаблонов для печати комплекта документов.
+      При использовании templates поле extension указывать не нужно.
+    minItems: 1
+    items:
+      type: object
+      required:
+        - template
+        - count
+      properties:
+        template:
+          $ref: '../../../openapi.yaml#/components/schemas/EmbeddedTemplate'
+        count:
+          type: integer
+          description: Количество копий печатной формы
+          minimum: 1
+          maximum: 10
