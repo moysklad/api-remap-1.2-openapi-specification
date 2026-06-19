@@ -1999,8 +1999,6 @@ components:
       $ref: './components/schemas/dictionary/retailShiftOperation.yaml'
     RetailShiftPaymentOperation:
       $ref: './components/schemas/dictionary/retailShiftPaymentOperation.yaml'
-    PaymentInOperation:
-      $ref: './components/schemas/dictionary/paymentInOperation.yaml'
     OperationLinkedSum:
       $ref: './components/schemas/dictionary/operationLinkedSum.yaml'
     RetailDrawerCashIn:
