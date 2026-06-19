@@ -98,13 +98,12 @@ class ObjectSerializer
             return false;
         }
 
-        foreach ($errors as $error) {
-            if (is_object($error) && property_exists($error, 'error') && is_string($error->error)) {
-                return true;
-            }
-            if (is_array($error) && array_key_exists('error', $error) && is_string($error['error'])) {
-                return true;
-            }
+        $error = reset($errors);
+        if (is_object($error) && property_exists($error, 'error') && is_string($error->error)) {
+            return true;
+        }
+        if (is_array($error) && array_key_exists('error', $error) && is_string($error['error'])) {
+            return true;
         }
 
         return false;

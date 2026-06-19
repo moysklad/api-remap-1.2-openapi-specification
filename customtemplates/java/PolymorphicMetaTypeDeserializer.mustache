@@ -97,14 +97,11 @@ public class PolymorphicMetaTypeDeserializer extends JsonDeserializer<Object> im
       return false;
     }
 
-    for (JsonNode error : errors) {
-      JsonNode title = error.get("error");
-      if (title != null && title.isTextual()) {
-        return true;
-      }
+    if (errors.isEmpty() || errors.get(0) == null) {
+        return false;
     }
-
-    return false;
+    JsonNode title = errors.get(0).get("error");
+    return title != null && title.isTextual();
   }
 
   private String discriminatorPath(Class<?> targetClass) {
