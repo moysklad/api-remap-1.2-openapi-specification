@@ -313,6 +313,56 @@ class ApiEndpointsTest extends TestCase
         $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
+    /**
+     * Проверяет доступность endpoint'а получения доп. полей товаров.
+     * GET /entity/product/metadata/attributes
+     */
+    public function testGetProductMetadataAttributes(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/product/metadata/attributes');
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * Проверяет доступность endpoint'а создания доп. поля товара.
+     * POST /entity/product/metadata/attributes
+     */
+    public function testCreateProductMetadataAttribute(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/product/metadata/attributes', ['json' => ['name' => 'attr1'],]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * Проверяет доступность endpoint'а получения доп. поля товара по ID.
+     * GET /entity/product/metadata/attributes/{id}
+     */
+    public function testGetProductMetadataAttributeById(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/product/metadata/attributes/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а обновления доп. поля товара по ID.
+     * PUT /entity/product/metadata/attributes/{id}
+     */
+    public function testUpdateProductMetadataAttributeById(): void
+    {
+        $response = $this->client->put(self::API_BASE_PATH . '/entity/product/metadata/attributes/' . self::TEST_UUID, ['json' => ['name' => 'attr1'],]);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а удаления доп. поля товара по ID.
+     * DELETE /entity/product/metadata/attributes/{id}
+     */
+    public function testDeleteProductMetadataAttributeById(): void
+    {
+        $response = $this->client->delete(self::API_BASE_PATH . '/entity/product/metadata/attributes/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::DELETE_CODES);
+    }
+
     // ==================== COUNTERPARTIES ====================
 
     /**

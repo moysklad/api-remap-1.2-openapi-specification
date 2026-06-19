@@ -139,6 +139,10 @@ paths:
     $ref: './paths/dictionaries/products/products-batch.yaml'
   /entity/product/metadata:
     $ref: './paths/common/metadata/metadata.yaml'
+  /entity/product/metadata/attributes:
+    $ref: './paths/dictionaries/products/product-metadata-attribute.yaml'
+  /entity/product/metadata/attributes/{id}:
+    $ref: './paths/dictionaries/products/product-metadata-attribute-by-id.yaml'
   /entity/product/{id}/images:
     $ref: './paths/dictionaries/products/product-images.yaml'
   /entity/product/{id}/images/{imageId}:
