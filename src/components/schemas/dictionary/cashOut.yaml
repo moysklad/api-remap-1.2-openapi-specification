@@ -162,6 +162,6 @@ properties:
     nullable: true
     description: |
       Связанные операции: полное тело документа плюс `linkedSum`. Допустимые типы по `meta.type`:
-      salesreturn, supply, invoicein, purchaseorder, commissionreportout. См. `CashOutOperation`.
+      salesreturn, supply, invoicein, purchaseorder, commissionreportout
     items:
-      $ref: '../../../openapi.yaml#/components/schemas/CashOutOperation'
+      $ref: '../../../openapi.yaml#/components/schemas/FinanceOutOperationAbstract'

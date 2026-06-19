@@ -101,9 +101,18 @@ class SerializationTest extends TestCase
         'retail_drawer_cash_in' => 'RetailDrawerCashIn',
         'retail_drawer_cash_out' => 'RetailDrawerCashOut',
         'inventory' => 'Inventory',
-        'cash_in_operation' => 'CashInOperation',
         'cash_out' => 'CashOut',
-        'cash_out_operation' => 'CashOutOperation',
+        'finance_in_operation_commission_report_in' => 'FinanceInOperationCommissionReportIn',
+        'finance_in_operation_customer_order' => 'FinanceInOperationCustomerOrder',
+        'finance_in_operation_demand' => 'FinanceInOperationDemand',
+        'finance_in_operation_invoice_out' => 'FinanceInOperationInvoiceOut',
+        'finance_in_operation_purchase_return' => 'FinanceInOperationPurchaseReturn',
+        'finance_in_operation_retail_shift' => 'FinanceInOperationRetailShift',
+        'finance_out_operation_commission_report_out' => 'FinanceOutOperationCommissionReportOut',
+        'finance_out_operation_invoice_in' => 'FinanceOutOperationInvoiceIn',
+        'finance_out_operation_purchase_order' => 'FinanceOutOperationPurchaseOrder',
+        'finance_out_operation_sales_return' => 'FinanceOutOperationSalesReturn',
+        'finance_out_operation_supply' => 'FinanceOutOperationSupply',
         'payment_in' => 'PaymentIn',
         'payment_out' => 'PaymentOut',
         'facture_in' => 'FactureIn',
@@ -150,7 +159,7 @@ class SerializationTest extends TestCase
     ];
 
     /**
-     * Тест на конситентность существующих fixture-файлов и маппинга FIXTURE_MODEL_MAP .
+     * Двусторонняя проверка консистентности fixture-файлов, маппинга и сгенерированного SDK.
      */
     public function testMappingAndFixtureConsistency(): void
     {
@@ -158,12 +167,28 @@ class SerializationTest extends TestCase
         $this->assertDirectoryExists($fixturesPath);
 
         $files = glob($fixturesPath . DIRECTORY_SEPARATOR . '*.json') ?: [];
+        $fixtureNames = [];
         foreach ($files as $file) {
             $base = basename($file, '.json');
+            $fixtureNames[$base] = true;
             $this->assertArrayHasKey(
                 $base,
                 self::FIXTURE_MODEL_MAP,
                 'Model mapping not found for ' . basename($file)
+            );
+        }
+
+        foreach (self::FIXTURE_MODEL_MAP as $fixtureName => $modelName) {
+            $this->assertArrayHasKey(
+                $fixtureName,
+                $fixtureNames,
+                "Fixture file not found for mapping entry: {$fixtureName}.json"
+            );
+
+            $modelClass = $this->getModelClass($modelName);
+            $this->assertTrue(
+                class_exists($modelClass),
+                "Model class not found for mapping entry {$fixtureName}: {$modelClass}. Run: make generate-php"
             );
         }
     }
@@ -181,26 +206,20 @@ class SerializationTest extends TestCase
     {
         $fixtureFile = $fixtureName . '.json';
         
-        // Проверяем наличие fixture файла
         $fixturePath = $this->getFixturesPath() . '/' . $fixtureFile;
-        if (!file_exists($fixturePath)) {
-            $this->markTestSkipped("Fixture file not found: {$fixtureFile}");
-        }
+        $this->assertFileExists(
+            $fixturePath,
+            "Fixture file not found: {$fixtureFile} (mapping entry: {$fixtureName})"
+        );
 
-        // Загружаем эталонный JSON
         $originalJson = $this->loadFixture($fixtureFile);
-        
-        // Получаем полное имя класса модели
         $modelClass = $this->getModelClass($modelName);
-        
-        // Проверяем существование класса модели
-        if (!class_exists($modelClass)) {
-            $this->markTestSkipped("Model class not found: {$modelClass}. SDK may not be generated.");
-        }
+        $this->assertTrue(
+            class_exists($modelClass),
+            "Model class not found: {$modelClass} for fixture {$fixtureName}. Run: make generate-php"
+        );
 
-        // Десериализуем JSON в объект модели
         $model = $this->deserialize($originalJson, $modelClass);
-        $this->assertNotNull($model, "Failed to deserialize {$fixtureFile} to {$modelName}");
 
         // Сериализуем модель обратно в массив
         $serializedJson = $this->serialize($model);
@@ -255,26 +274,24 @@ class SerializationTest extends TestCase
      * @param string $class Полное имя класса модели
      * @return object|null Объект модели или null при ошибке
      */
-    private function deserialize(array $data, string $class): ?object
+    private function deserialize(array $data, string $class): object
     {
         $serializerClass = "OpenAPI\\Client\\ObjectSerializer";
-        
-        if (class_exists($serializerClass) && method_exists($serializerClass, 'deserialize')) {
-            try {
-                // ObjectSerializer::deserialize ожидает JSON строку или stdClass
-                $jsonString = json_encode($data);
-                return $serializerClass::deserialize($jsonString, $class);
-            } catch (\Throwable $e) {
-                $this->fail("Deserialization failed: " . $e->getMessage());
-            }
+
+        $this->assertTrue(
+            class_exists($serializerClass) && method_exists($serializerClass, 'deserialize'),
+            'ObjectSerializer not found. Run: make generate-php'
+        );
+
+        try {
+            $jsonString = json_encode($data);
+            $model = $serializerClass::deserialize($jsonString, $class);
+        } catch (\Throwable $e) {
+            $this->fail('Deserialization failed: ' . $e->getMessage());
         }
 
-        // Fallback: попытка создать объект напрямую
-        try {
-            return new $class($data);
-        } catch (\Throwable $e) {
-            return null;
-        }
+        $this->assertIsObject($model, "Failed to deserialize data to {$class}");
+        return $model;
     }
 
     /**
@@ -286,18 +303,14 @@ class SerializationTest extends TestCase
     private function serialize(object $model): array
     {
         $serializerClass = "OpenAPI\\Client\\ObjectSerializer";
-        
-        if (class_exists($serializerClass) && method_exists($serializerClass, 'sanitizeForSerialization')) {
-            $sanitized = $serializerClass::sanitizeForSerialization($model);
-            return json_decode(json_encode($sanitized), true) ?? [];
-        }
 
-        if ($model instanceof \JsonSerializable) {
-            return $model->jsonSerialize();
-        }
+        $this->assertTrue(
+            class_exists($serializerClass) && method_exists($serializerClass, 'sanitizeForSerialization'),
+            'ObjectSerializer not found. Run: make generate-php'
+        );
 
-        // Fallback: преобразуем объект в массив через JSON
-        return json_decode(json_encode($model), true) ?? [];
+        $sanitized = $serializerClass::sanitizeForSerialization($model);
+        return json_decode(json_encode($sanitized), true) ?? [];
     }
 
     /**
