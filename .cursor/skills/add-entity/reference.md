@@ -70,7 +70,7 @@ Track these columns while implementing:
   - Do **not** accept arrays. Do **not** use `oneOf: [<Entity>, array of <Entity>]`.
 - `POST /entity/<keyword>/batch` — mass create/update.
   - Request body schema: `type: array, items: <Entity>, minItems: 1, maxItems: 1000`.
-  - Response schema: `type: array, items: oneOf: [<Entity>, Error]` (per-item result). Do **not** add `minItems`/`maxItems` to the response array — keep limits on request only.
+  - Response schema: `type: array, items: $ref: BatchResponseEntity` (per-item success entity resolved by `meta.type`, or per-item error via `errors`). Do **not** add `minItems`/`maxItems` to the response array — keep limits on request only.
 - Add a separate path file `<entities>-batch.yaml` and register the `.../batch` URL in `src/openapi.yaml` even when the MD `### Массовое создание и обновление ...` example reuses the create URL — Remap models it as a distinct `/batch` path.
 - Smoke test must hit `.../batch` for the mass operation and `.../<keyword>` (object body) for single create — never collapse them into one call.
 
@@ -113,12 +113,40 @@ Document positions follow split create semantics:
 
 Do not combine single+array payloads on the `.../positions` endpoint.
 
+### Shared result components (required)
+
+Use shared components instead of inline reusable `oneOf` blocks:
+
+- Top-level batch create/update response item: `BatchResponseEntity`.
+- Mass delete response item: `DeleteRowResult`.
+- Metadata states create/update request and normal response: `StatesUpsert`.
+- Metadata states response with per-item errors: `StatesUpsertResult`.
+
+When adding a new top-level batch entity to `EntityWithMeta`, the entity schema must inherit from `EntityWithMeta` and the discriminator mapping must be registered:
+
+```yaml
+x-polymorphic-parent: EntityWithMeta
+properties:
+  meta:
+    $ref: '../common/meta.yaml'
+  # entity fields...
+```
+
+Also add the `meta.type` value to the shared polymorphic mapping in `src/openapi.yaml`:
+
+```yaml
+- type: <meta.type>
+  componentName: <SchemaName>
+```
+
+Do not add a mapping if the same `meta.type` is shared by multiple schema classes (for example `demandposition`); keep that endpoint-specific shape explicit until a dedicated disambiguation strategy exists.
+
 ### Remap-specific traps
 
 - Do not infer metadata states from the word "статус" alone; require `states` in metadata response/examples or a peer-backed pattern.
 - Some dictionaries/documents have extra groups (`files`, `images`, `accounts`, `notes`, `storebalances`, security/access actions). Add matrix rows from the exact MD headings and copy the closest peer's file split.
 - MD may show `### Массовое создание и обновление ...` with the same example URL as create; still expose it as a separate `POST /batch` path with array body — see "Top-level POST vs `/batch`" above.
-- State creation and mass state creation may share one endpoint: `POST /entity/<keyword>/metadata/states`. Model this as one operation with `oneOf` request/response (`State` or array of `State`). Do not add per-item `Error` unless the MD or a peer explicitly shows state batch item errors.
+- State creation and mass state creation may share one endpoint: `POST /entity/<keyword>/metadata/states`. Model this as one operation using `StatesUpsert` (`State` or array of `State`). Use `StatesUpsertResult` only when the MD or a peer explicitly shows state batch item errors.
 - DELETE metadata state endpoints should include explicit `404: NotFoundEmpty` when the backend can return empty 404.
 - If a path exists in MD but is intentionally skipped, record the reason in the final report.
 

@@ -1,6 +1,7 @@
 type: object
 description: Контрагент
 x-implements: INamed
+x-polymorphic-parent: EntityWithMeta
 x-entity-static-builder:
   methodParams:
     - "id"

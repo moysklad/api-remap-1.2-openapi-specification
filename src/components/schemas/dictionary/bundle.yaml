@@ -1,6 +1,7 @@
 type: object
 description: Комплект
 x-implements: INamed
+x-polymorphic-parent: EntityWithMeta
 x-entity-static-builder:
   methodParams:
     - "id"

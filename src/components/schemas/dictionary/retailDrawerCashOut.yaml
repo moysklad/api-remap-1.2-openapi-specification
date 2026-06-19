@@ -1,5 +1,6 @@
 type: object
 description: Выплата денег
+x-polymorphic-parent: EntityWithMeta
 x-entity-static-builder:
   methodParams:
     - "id"

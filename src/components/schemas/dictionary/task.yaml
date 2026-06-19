@@ -1,5 +1,6 @@
 type: object
 description: Задача
+x-polymorphic-parent: EntityWithMeta
 x-entity-static-builder:
   methodParams:
     - "id"

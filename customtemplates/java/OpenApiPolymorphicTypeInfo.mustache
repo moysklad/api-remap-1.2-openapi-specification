@@ -19,4 +19,9 @@ public @interface OpenApiPolymorphicTypeInfo {
    * Dot-notation path to the discriminator value in the JSON payload.
    */
   String path();
+
+  /**
+   * Resolve payloads shaped like batch errors to the Error model when mappings do not match.
+   */
+  boolean batchErrorFallback() default false;
 }

@@ -13,25 +13,13 @@ post:
     content:
       application/json:
         schema:
-          oneOf:
-            - $ref: '../../../openapi.yaml#/components/schemas/State'
-            - type: array
-              items:
-                $ref: '../../../openapi.yaml#/components/schemas/State'
-              minItems: 1
-              maxItems: 1000
+          $ref: '../../../openapi.yaml#/components/schemas/StatesUpsert'
   responses:
     '200':
       description: Тип задачи или список типов задач успешно обработаны
       content:
         application/json:
           schema:
-            oneOf:
-              - $ref: '../../../openapi.yaml#/components/schemas/State'
-              - type: array
-                items:
-                  oneOf:
-                    - $ref: '../../../openapi.yaml#/components/schemas/State'
-                    - $ref: '../../../openapi.yaml#/components/schemas/Error'
+            $ref: '../../../openapi.yaml#/components/schemas/StatesUpsertResult'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'

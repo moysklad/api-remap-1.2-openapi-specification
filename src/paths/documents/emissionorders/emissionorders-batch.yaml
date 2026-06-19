@@ -21,9 +21,7 @@ post:
           schema:
             type: array
             items:
-              oneOf:
-                - $ref: '../../../openapi.yaml#/components/schemas/EmissionOrder'
-                - $ref: '../../../openapi.yaml#/components/schemas/Error'
+              $ref: '../../../openapi.yaml#/components/schemas/BatchResponseEntity'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
   parameters:
