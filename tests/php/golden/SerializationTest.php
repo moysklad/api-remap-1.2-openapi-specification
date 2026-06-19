@@ -65,6 +65,7 @@ class SerializationTest extends TestCase
         'sale_platform' => 'SalePlatform',
         'store' => 'Store',
         'retail_store' => 'RetailStore',
+        'retail_shift' => 'RetailShift',
         'cashier' => 'Cashier',
         'bundle' => 'Bundle',
         'bundle_component' => 'BundleComponent',

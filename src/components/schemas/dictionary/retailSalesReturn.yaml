@@ -1,0 +1,24 @@
+type: object
+description: Розничный возврат
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "retailsalesreturn"
+    - param: "id"
+  type: "retailsalesreturn"
+properties:
+  meta:
+    description: Метаданные Розничного возврата
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID Розничного возврата
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
