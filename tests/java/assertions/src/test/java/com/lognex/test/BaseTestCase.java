@@ -30,6 +30,14 @@ public abstract class BaseTestCase {
      * Возвращает путь к директории с fixture файлами.
      */
     protected Path getFixturesPath() throws URISyntaxException {
+        Path current = Paths.get("").toAbsolutePath().normalize();
+        while (current != null) {
+            Path sourceFixtures = current.resolve(Paths.get("tests", "fixtures"));
+            if (Files.isDirectory(sourceFixtures)) {
+                return sourceFixtures;
+            }
+            current = current.getParent();
+        }
         return Paths.get(getClass().getClassLoader().getResource("").toURI());
     }
 
