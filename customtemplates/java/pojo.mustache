@@ -1,3 +1,10 @@
+{{#vendorExtensions.x-polymorphic-discriminator}}
+import {{polymorphicPackage}}.OpenApiPolymorphicTypeInfo;
+import {{polymorphicPackage}}.OpenApiPolymorphicSubTypes;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import {{polymorphicPackage}}.PolymorphicMetaTypeDeserializer;
+
+{{/vendorExtensions.x-polymorphic-discriminator}}
 /**
  * {{description}}{{^description}}{{classname}}{{/description}}{{#isDeprecated}}
  * @deprecated{{/isDeprecated}}
@@ -29,7 +36,16 @@
 {{#vendorExtensions.x-class-extra-annotation}}
 {{{vendorExtensions.x-class-extra-annotation}}}
 {{/vendorExtensions.x-class-extra-annotation}}
-public class {{classname}} {{#parent}}extends {{{.}}} {{/parent}}{{#vendorExtensions.x-implements}}{{#-first}}implements {{{.}}}{{/-first}}{{^-first}}, {{{.}}}{{/-first}}{{#-last}} {{/-last}}{{/vendorExtensions.x-implements}}{
+{{#vendorExtensions.x-polymorphic-discriminator}}
+@OpenApiPolymorphicTypeInfo(path = "{{vendorExtensions.x-polymorphic-discriminator.path}}")
+@OpenApiPolymorphicSubTypes({
+{{#vendorExtensions.x-polymorphic-discriminator.mappings}}
+  @OpenApiPolymorphicSubTypes.Type(value = {{componentName}}.class, name = "{{type}}"){{^-last}},
+{{/-last}}{{/vendorExtensions.x-polymorphic-discriminator.mappings}}
+})
+@JsonDeserialize(using = PolymorphicMetaTypeDeserializer.class)
+{{/vendorExtensions.x-polymorphic-discriminator}}
+public class {{classname}} {{#parent}}extends {{{.}}} {{/parent}}{{^parent}}{{#vendorExtensions.x-polymorphic-parent}}extends {{{.}}} {{/vendorExtensions.x-polymorphic-parent}}{{/parent}}{{#vendorExtensions.x-implements}}{{#-first}}implements {{{.}}}{{/-first}}{{^-first}}, {{{.}}}{{/-first}}{{#-last}} {{/-last}}{{/vendorExtensions.x-implements}}{
 {{#serializableModel}}
   private static final long serialVersionUID = 1L;
 

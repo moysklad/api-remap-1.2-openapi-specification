@@ -12,5 +12,6 @@ properties:
     type: array
     nullable: true
     description: Массив позиций Розничной продажи
+    nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/RetailDemandPosition'

@@ -22,6 +22,27 @@ properties:
     format: uuid
     description: ID учетной записи
     readOnly: true
+  name:
+    type: string
+    maxLength: 255
+    description: Наименование смены
+  moment:
+    type: string
+    description: Дата смены
+  retailStore:
+    description: Метаданные точки продаж
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/RetailStore'
+  payments:
+    type: array
+    description: Связанные платежи
+    nullable: true
+    items:
+      anyOf:
+        - $ref: '../../../openapi.yaml#/components/schemas/PaymentIn'
+        - $ref: '../../../openapi.yaml#/components/schemas/CashIn'
   acquire:
     description: Метаданные Банка-эквайера по операциям по карте
     nullable: true
@@ -98,13 +119,6 @@ properties:
     type: object
     allOf:
       - $ref: '../../../openapi.yaml#/components/schemas/Group'
-  moment:
-    type: string
-    description: Дата смены
-  name:
-    type: string
-    maxLength: 255
-    description: Наименование Розничной смены
   operations:
     type: array
     description: |
@@ -181,9 +195,6 @@ properties:
     format: double
     description: Получено безнал
     readOnly: true
-  retailStore:
-    description: Метаданные точки продаж
-    $ref: '../../../openapi.yaml#/components/schemas/RetailStore'
   shared:
     type: boolean
     description: Общий доступ

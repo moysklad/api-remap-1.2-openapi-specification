@@ -1928,8 +1928,6 @@ components:
       $ref: './components/schemas/dictionary/paymentOut.yaml'
     PaymentOutList:
       $ref: './components/schemas/dictionary/paymentOutList.yaml'
-    PaymentOutOperation:
-      $ref: './components/schemas/dictionary/paymentOutOperation.yaml'
     PaymentIn:
       $ref: './components/schemas/dictionary/paymentIn.yaml'
     PaymentInList:
@@ -1946,12 +1944,82 @@ components:
       $ref: './components/schemas/dictionary/prepaymentReturnPositionList.yaml'
     CashOut:
       $ref: './components/schemas/dictionary/cashOut.yaml'
-    CashOutOperation:
-      $ref: './components/schemas/dictionary/cashOutOperation.yaml'
     CashIn:
       $ref: './components/schemas/dictionary/cashIn.yaml'
-    CashInOperation:
-      $ref: './components/schemas/dictionary/cashInOperation.yaml'
+    FinanceOutOperationAbstract:
+      type: object
+      description: |
+        Элемент массива `operations` расходного ордера / исходящего платежа: документ одного из
+        допустимых типов плюс обязательное поле `linkedSum`.
+
+        Допустимые `meta.type`: salesreturn, supply, invoicein, purchaseorder, commissionreportout.
+      x-polymorphic-discriminator:
+        path: meta.type
+        mappings:
+          - type: salesreturn
+            componentName: FinanceOutOperationSalesReturn
+          - type: supply
+            componentName: FinanceOutOperationSupply
+          - type: invoicein
+            componentName: FinanceOutOperationInvoiceIn
+          - type: purchaseorder
+            componentName: FinanceOutOperationPurchaseOrder
+          - type: commissionreportout
+            componentName: FinanceOutOperationCommissionReportOut
+      required:
+        - linkedSum
+        - meta
+      allOf:
+        - $ref: '#/components/schemas/OperationLinkedSum'
+    FinanceOutOperationSalesReturn:
+      $ref: './components/schemas/dictionary/financeOutOperationSalesReturn.yaml'
+    FinanceOutOperationSupply:
+      $ref: './components/schemas/dictionary/financeOutOperationSupply.yaml'
+    FinanceOutOperationInvoiceIn:
+      $ref: './components/schemas/dictionary/financeOutOperationInvoiceIn.yaml'
+    FinanceOutOperationPurchaseOrder:
+      $ref: './components/schemas/dictionary/financeOutOperationPurchaseOrder.yaml'
+    FinanceOutOperationCommissionReportOut:
+      $ref: './components/schemas/dictionary/financeOutOperationCommissionReportOut.yaml'
+    FinanceInOperationAbstract:
+      type: object
+      description: |
+        Элемент массива `operations` приходного ордера / входящего платежа.
+
+        Допустимые `meta.type`: customerorder, purchasereturn, demand, invoiceout,
+        commissionreportin, retailshift.
+      x-polymorphic-discriminator:
+        path: meta.type
+        mappings:
+          - type: customerorder
+            componentName: FinanceInOperationCustomerOrder
+          - type: purchasereturn
+            componentName: FinanceInOperationPurchaseReturn
+          - type: demand
+            componentName: FinanceInOperationDemand
+          - type: invoiceout
+            componentName: FinanceInOperationInvoiceOut
+          - type: commissionreportin
+            componentName: FinanceInOperationCommissionReportIn
+          - type: retailshift
+            componentName: FinanceInOperationRetailShift
+      required:
+        - linkedSum
+        - meta
+      allOf:
+        - $ref: '#/components/schemas/OperationLinkedSum'
+    FinanceInOperationCustomerOrder:
+      $ref: './components/schemas/dictionary/financeInOperationCustomerOrder.yaml'
+    FinanceInOperationPurchaseReturn:
+      $ref: './components/schemas/dictionary/financeInOperationPurchaseReturn.yaml'
+    FinanceInOperationDemand:
+      $ref: './components/schemas/dictionary/financeInOperationDemand.yaml'
+    FinanceInOperationInvoiceOut:
+      $ref: './components/schemas/dictionary/financeInOperationInvoiceOut.yaml'
+    FinanceInOperationCommissionReportIn:
+      $ref: './components/schemas/dictionary/financeInOperationCommissionReportIn.yaml'
+    FinanceInOperationRetailShift:
+      $ref: './components/schemas/dictionary/financeInOperationRetailShift.yaml'
     RetailShiftOperation:
       $ref: './components/schemas/dictionary/retailShiftOperation.yaml'
     RetailShiftPaymentOperation:

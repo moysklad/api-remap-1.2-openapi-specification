@@ -113,9 +113,18 @@ class SerializationTest extends BaseTestCase {
         FIXTURE_MODEL_MAP.put("retail_drawer_cash_in", "RetailDrawerCashIn");
         FIXTURE_MODEL_MAP.put("retail_drawer_cash_out", "RetailDrawerCashOut");
         FIXTURE_MODEL_MAP.put("inventory", "Inventory");
-        FIXTURE_MODEL_MAP.put("cash_in_operation", "CashInOperation");
         FIXTURE_MODEL_MAP.put("cash_out", "CashOut");
-        FIXTURE_MODEL_MAP.put("cash_out_operation", "CashOutOperation");
+        FIXTURE_MODEL_MAP.put("finance_in_operation_commission_report_in", "FinanceInOperationCommissionReportIn");
+        FIXTURE_MODEL_MAP.put("finance_in_operation_customer_order", "FinanceInOperationCustomerOrder");
+        FIXTURE_MODEL_MAP.put("finance_in_operation_demand", "FinanceInOperationDemand");
+        FIXTURE_MODEL_MAP.put("finance_in_operation_invoice_out", "FinanceInOperationInvoiceOut");
+        FIXTURE_MODEL_MAP.put("finance_in_operation_purchase_return", "FinanceInOperationPurchaseReturn");
+        FIXTURE_MODEL_MAP.put("finance_in_operation_retail_shift", "FinanceInOperationRetailShift");
+        FIXTURE_MODEL_MAP.put("finance_out_operation_commission_report_out", "FinanceOutOperationCommissionReportOut");
+        FIXTURE_MODEL_MAP.put("finance_out_operation_invoice_in", "FinanceOutOperationInvoiceIn");
+        FIXTURE_MODEL_MAP.put("finance_out_operation_purchase_order", "FinanceOutOperationPurchaseOrder");
+        FIXTURE_MODEL_MAP.put("finance_out_operation_sales_return", "FinanceOutOperationSalesReturn");
+        FIXTURE_MODEL_MAP.put("finance_out_operation_supply", "FinanceOutOperationSupply");
         FIXTURE_MODEL_MAP.put("payment_in", "PaymentIn");
         FIXTURE_MODEL_MAP.put("payment_out", "PaymentOut");
         FIXTURE_MODEL_MAP.put("facture_in", "FactureIn");
@@ -234,17 +243,7 @@ class SerializationTest extends BaseTestCase {
         }
     }
 
-    @SuppressWarnings("unchecked")
     private Map<String, Object> serialize(Object model) {
-        try {
-            Method m = model.getClass().getMethod("toMap");
-            Object out = m.invoke(model);
-            if (out instanceof Map) {
-                return (Map<String, Object>) out;
-            }
-        } catch (Exception ignored) {
-            // Fall back to Jackson conversion if SDK-specific API is absent.
-        }
         return (Map<String, Object>) MAPPER.convertValue(model, new TypeReference<Object>() {});
     }
 
