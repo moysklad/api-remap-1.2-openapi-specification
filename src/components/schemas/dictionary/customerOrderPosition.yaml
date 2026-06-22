@@ -60,7 +60,8 @@ properties:
     example: "GENERAL_TAX_SYSTEM"
   assortment:
     description: Метаданные товара/услуги/модификации/комплекта, которую представляет собой позиция
-    $ref: '../../../openapi.yaml#/components/schemas/Assortment'
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/ProductMarker'
   pack:
     description: Упаковка Товара
     nullable: true

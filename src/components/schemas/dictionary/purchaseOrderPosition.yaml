@@ -57,7 +57,8 @@ properties:
     description: Включен ли НДС для позиции
   assortment:
     description: Метаданные товара/услуги/модификации/партии, которую представляет собой позиция
-    $ref: '../../../openapi.yaml#/components/schemas/AssortmentWithoutBundle'
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/ProductMarker'
   pack:
     description: Упаковка Товара
     nullable: true

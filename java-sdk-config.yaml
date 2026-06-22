@@ -42,3 +42,6 @@ files:
   IEntityList.mustache:
     templateType: SupportingFiles
     destinationFilename: src/main/java/ru/moysklad/remap_1_2/beta/model/IEntityList.java
+  IDocumentPosition.mustache:
+    templateType: SupportingFiles
+    destinationFilename: src/main/java/ru/moysklad/remap_1_2/beta/model/IDocumentPosition.java

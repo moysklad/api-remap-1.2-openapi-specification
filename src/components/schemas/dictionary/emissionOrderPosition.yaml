@@ -28,7 +28,8 @@ properties:
     readOnly: true
   assortment:
     description: Метаданные товара/модификации/партии, которую представляет собой позиция
-    $ref: '../../../openapi.yaml#/components/schemas/Assortment'
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/ProductMarker'
   quantity:
     type: number
     format: float

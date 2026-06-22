@@ -1,6 +1,6 @@
 type: object
 description: Модификация
-x-polymorphic-parent: EntityWithMeta
+x-polymorphic-parent: ProductMarker
 x-implements: INamed
 x-entity-static-builder:
   methodParams:

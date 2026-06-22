@@ -1568,6 +1568,8 @@ components:
       $ref: './components/schemas/common/entityBase.yaml#/BatchResponseEntity'
     EntityWithMeta:
       $ref: './components/schemas/common/entityBase.yaml#/EntityWithMeta'
+    ProductMarker:
+      $ref: './components/schemas/common/entityBase.yaml#/ProductMarker'
     Country:
       $ref: './components/schemas/dictionary/country.yaml'
     Currency:

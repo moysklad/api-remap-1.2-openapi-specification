@@ -27,7 +27,8 @@ properties:
     readOnly: true
   assortment:
     description: Метаданные товара/услуги/партии/модификации, которую представляет собой позиция
-    $ref: '../../../openapi.yaml#/components/schemas/Assortment'
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/ProductMarker'
   discount:
     type: number
     format: double

@@ -1,6 +1,6 @@
 type: object
 x-implements: INamed
-x-polymorphic-parent: EntityWithMeta
+x-polymorphic-parent: ProductMarker
 x-entity-static-builder:
   methodParams:
     - "id"

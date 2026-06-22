@@ -1,0 +1,17 @@
+{{>licenseInfo}}
+package {{modelPackage}};
+
+/**
+ * Interface for common document positions.
+ */
+public interface IDocumentPosition {
+
+    ProductMarker getAssortment();
+    void setAssortment(ProductMarker assortment);
+    void setPack(Pack pack);
+    Pack getPack();
+    Double getPrice();
+    void setPrice(Double price);
+    Double getQuantity();
+    void setQuantity(Double quantity);
+}

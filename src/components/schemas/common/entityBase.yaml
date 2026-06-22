@@ -137,3 +137,29 @@ EntityWithMeta:
   x-polymorphic-discriminator:
     path: meta.type
     mappings: *entityWithMetaPolymorphicMappings
+
+ProductMarker:
+  type: object
+  description: |
+    Базовый полиморфный тип для сущностей номенклатуры.
+    Конкретный тип определяется по `meta.type`.
+  x-polymorphic-parent: EntityWithMeta
+  properties:
+    id:
+      type: string
+      format: uuid
+      description: ID товара
+      readOnly: true
+  x-polymorphic-discriminator:
+    path: meta.type
+    mappings:
+      - type: bundle
+        componentName: Bundle
+      - type: consignment
+        componentName: Consignment
+      - type: variant
+        componentName: Variant
+      - type: product
+        componentName: Product
+      - type: service
+        componentName: Service

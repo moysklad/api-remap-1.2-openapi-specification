@@ -37,7 +37,8 @@ properties:
     description: Резерв данной позиции
   assortment:
     description: Метаданные товара/услуги/партии/модификации позиции
-    $ref: '../../../openapi.yaml#/components/schemas/Assortment'
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/ProductMarker'
   pack:
     description: Упаковка Товара
     nullable: true
