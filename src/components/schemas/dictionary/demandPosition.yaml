@@ -1,6 +1,7 @@
 type: object
 description: Позиция Отгрузки
 x-implements: IDocumentPosition
+x-polymorphic-parent: EntityWithMeta
 x-entity-static-builder:
   methodParams:
     - "parentId"

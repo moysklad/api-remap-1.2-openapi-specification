@@ -1,6 +1,5 @@
 type: object
 description: Позиция Заказа кодов маркировки
-x-implements: IDocumentPosition
 x-polymorphic-parent: EntityWithMeta
 x-entity-static-builder:
   methodParams:
@@ -33,7 +32,7 @@ properties:
       - $ref: '../../../openapi.yaml#/components/schemas/ProductMarker'
   quantity:
     type: number
-    format: float
+    format: double
     description: Количество товаров данного вида в позиции
     minimum: 0
     maximum: 1000

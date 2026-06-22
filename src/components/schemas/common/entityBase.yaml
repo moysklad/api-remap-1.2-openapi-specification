@@ -22,6 +22,10 @@ BatchResponseEntity:
         componentName: CashOut
       - type: commissionreportin
         componentName: CommissionReportIn
+      - type: commissionreportinposition
+        componentName: CommissionReportInPosition
+      - type: commissionreportinreturnedposition
+        componentName: CommissionReportInReturnedPosition
       - type: commissionreportout
         componentName: CommissionReportOut
       - type: commissionreportoutposition
@@ -38,8 +42,12 @@ BatchResponseEntity:
         componentName: Currency
       - type: customerorder
         componentName: CustomerOrder
+      - type: customerorderposition
+        componentName: CustomerOrderPosition
       - type: demand
         componentName: Demand
+      - type: demandposition
+        componentName: DemandPosition
       - type: emissionorder
         componentName: EmissionOrder
       - type: emissionorderposition
@@ -48,14 +56,26 @@ BatchResponseEntity:
         componentName: Employee
       - type: enter
         componentName: Enter
+      - type: enterposition
+        componentName: EnterPosition
       - type: expenseitem
         componentName: ExpenseItem
       - type: internalorder
         componentName: InternalOrder
+      - type: internalorderposition
+        componentName: InternalOrderPosition
       - type: inventory
         componentName: Inventory
+      - type: inventoryposition
+        componentName: InventoryPosition
+      - type: invoiceposition
+        componentName: InvoiceInPosition
+      - type: invoiceposition
+        componentName: InvoiceOutPosition
       - type: loss
         componentName: Loss
+      - type: lossposition
+        componentName: LossPosition
       - type: move
         componentName: Move
       - type: moveposition
@@ -66,18 +86,24 @@ BatchResponseEntity:
         componentName: PaymentIn
       - type: paymentout
         componentName: PaymentOut
+      - type: prepaymentreturnposition
+        componentName: PrepaymentReturnPosition
       - type: pricetype
         componentName: PriceType
       - type: processing
         componentName: Processing
       - type: processingorder
         componentName: ProcessingOrder
+      - type: processingorderposition
+        componentName: ProcessingOrderPosition
       - type: processingplan
         componentName: ProcessingPlan
       - type: processingplanfolder
         componentName: ProcessingPlanFolder
       - type: processingprocess
         componentName: ProcessingProcess
+      - type: processingprocessposition
+        componentName: ProcessingProcessPosition
       - type: processingstage
         componentName: ProcessingStage
       - type: product
@@ -88,10 +114,16 @@ BatchResponseEntity:
         componentName: Project
       - type: purchaseorder
         componentName: PurchaseOrder
+      - type: purchaseorderposition
+        componentName: PurchaseOrderPosition
       - type: purchasereturn
         componentName: PurchaseReturn
+      - type: purchasereturnposition
+        componentName: PurchaseReturnPosition
       - type: retaildemand
         componentName: RetailDemand
+      - type: demandposition
+        componentName: RetailDemandPosition
       - type: retaildrawercashin
         componentName: RetailDrawerCashIn
       - type: retaildrawercashout
@@ -102,6 +134,10 @@ BatchResponseEntity:
         componentName: SalesChannel
       - type: salesreturn
         componentName: SalesReturn
+      - type: salesreturnposition
+        componentName: SalesReturnPosition
+      - type: salesreturnposition
+        componentName: RetailSalesReturnPosition
       - type: service
         componentName: Service
       - type: store

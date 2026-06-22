@@ -1,6 +1,6 @@
 type: object
 description: Позиция возврата на склад комиссионера Полученного отчета комиссионера
-x-implements: IDocumentPosition
+x-polymorphic-parent: EntityWithMeta
 x-entity-static-builder:
   methodParams:
     - "parentId"
