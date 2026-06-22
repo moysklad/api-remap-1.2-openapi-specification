@@ -39,3 +39,6 @@ files:
   INamed.mustache:
     templateType: SupportingFiles
     destinationFilename: src/main/java/ru/moysklad/remap_1_2/beta/model/INamed.java
+  IEntityList.mustache:
+    templateType: SupportingFiles
+    destinationFilename: src/main/java/ru/moysklad/remap_1_2/beta/model/IEntityList.java

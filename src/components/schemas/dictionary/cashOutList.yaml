@@ -1,5 +1,6 @@
 type: object
 description: Список Расходных ордеров
+x-implements: IEntityList
 properties:
   context:
     description: Метаданные о сотруднике, выполнившем запрос

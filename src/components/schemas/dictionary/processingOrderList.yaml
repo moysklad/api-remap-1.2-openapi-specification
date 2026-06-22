@@ -1,5 +1,6 @@
 type: object
 description: Список Заказов на производство
+x-implements: IEntityList
 properties:
   context:
     description: Метаданные о сотруднике, выполнившем запрос
