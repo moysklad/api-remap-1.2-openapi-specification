@@ -147,11 +147,10 @@ properties:
     items:
       $ref: '../../../openapi.yaml#/components/schemas/SalePrice'
   supplier:
-    description: Метаданные контрагента-поставщика
-    nullable: true
-    type: object
+    description: Метаданные контрагента или юрлица
+    x-agent-reference: true
     allOf:
-      - $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
+      - $ref: '../../../openapi.yaml#/components/schemas/Agent'
   country:
     description: Метаданные Страны
     nullable: true
