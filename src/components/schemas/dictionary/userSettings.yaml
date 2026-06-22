@@ -25,18 +25,15 @@ properties:
   defaultScreen:
     type: string
     description: Стартовый экран пользователя. Известные значения описаны в DefaultScreen
-    example: "audit"
   fieldsPerRow:
     type: integer
     description: Количество столбцов, в которых будут располагаться дополнительные поля в документах
   locale:
     type: string
     description: Язык системы. Известные значения описаны в Locale
-    example: "ru_RU"
   mailFooter:
     type: string
     description: Подставляется в подпись в письмах, отправляемых из МС
   printFormat:
     type: string
     description: Правила печати документов. Известные значения описаны в PrintFormat
-    example: "pdf"

@@ -6,4 +6,3 @@ enum:
   - ods
   - ""
   - pdf_open
-example: "pdf"

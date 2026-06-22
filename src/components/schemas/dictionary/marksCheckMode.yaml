@@ -1,4 +1,3 @@
 type: string
 description: Известные значения режима проверки кодов маркировки
 enum: [CORRECT_MARKS_ONLY, WITHOUT_ERRORS, ALL, ALL_CHECKED]
-example: "CORRECT_MARKS_ONLY"

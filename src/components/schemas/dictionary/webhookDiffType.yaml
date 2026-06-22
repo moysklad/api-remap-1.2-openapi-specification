@@ -3,4 +3,3 @@ description: Режим отображения изменения сущност
 enum:
   - NONE
   - FIELDS
-example: "NONE"

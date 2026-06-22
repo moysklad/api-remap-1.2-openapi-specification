@@ -15,7 +15,6 @@ properties:
   discountStrategy:
     type: string
     description: Совместное применение скидок. Известные значения описаны в DiscountStrategy
-    example: "bySum"
   globalOperationNumbering:
     type: boolean
     description: Использовать сквозную нумерацию документов

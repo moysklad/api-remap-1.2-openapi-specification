@@ -11,6 +11,15 @@ extends:
   - recommended
 
 rules:
+  rule/example:
+    severity: error
+    subject:
+      type: Schema
+      property: example
+    message: 'No example in schema'
+    assertions:
+      defined: false
+
   rule/agent:
     severity: error
     subject:

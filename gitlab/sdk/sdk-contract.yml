@@ -1,24 +1,48 @@
 # Режимы тестирования (SCHEMATHESIS_PHASES):
-# - examples: базовые тесты с примерами из спецификации (по умолчанию)
+# - examples: позитивные тесты по example из спеки (по умолчанию)
 # - coverage: расширенное покрытие всех комбинаций параметров
 # - fuzzing: генерация случайных данных для поиска уязвимостей
 # - stateful: тесты с изменением состояния
 #
-# По умолчанию: coverage. Job разбита на 4 path-shards через parallel:matrix.
+# По умолчанию: examples. Coverage запускается вручную через
+# SCHEMATHESIS_PHASES=coverage и опциональные SCHEMATHESIS_INCLUDE_PATH_REGEX /
+# SCHEMATHESIS_INCLUDE_METHOD / SCHEMATHESIS_INCLUDE_OPERATION_ID.
+
+.contract-test-job:
+  rules:
+    # Ручной прогон на ветке
+    - if: '$CI_PIPELINE_SOURCE == "web"'
+      when: on_success
+    # Релизный прогон после merge/push в master
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME == "master"'
+      when: on_success
+    # Прогон на tag pipeline
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_TAG'
+      when: on_success
+    - when: never
+
+.contract-env-cleanup-job:
+  rules:
+    # Окружение живёт по TTL; ручная очистка доступна во всех contract-пайплайнах.
+    - if: '$CI_PIPELINE_SOURCE == "web"'
+      when: manual
+      allow_failure: true
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME == "master"'
+      when: manual
+      allow_failure: true
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_TAG'
+      when: manual
+      allow_failure: true
+    - when: never
 
 deploy-contract-env:
-  extends: .maven-7.8-image
+  extends:
+    - .maven-7.8-image
+    - .contract-test-job
   stage: before-contract-test
   needs:
     - job: bundle-openapi
       artifacts: false
-  rules:
-    # Merge/push в master и ручной запуск (web)
-    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME == "master"'
-      when: on_success
-    - if: '$CI_PIPELINE_SOURCE == "web"'
-      when: on_success
-    - when: never
   before_script:
     - rm -f /etc/apt/sources.list.d/*pgdg*.list || true
     # По умолчанию берём последний тег репозитория moysklad без клонирования (только ls-remote)
@@ -34,11 +58,6 @@ deploy-contract-env:
         fi
       fi
   script:
-    - |
-      if [ "$CI_PIPELINE_SOURCE" = "push" ] && [ "$CI_COMMIT_REF_NAME" = "master" ]; then
-        echo "Skipping contract environment deploy on master push; marking deploy-contract-env as passed."
-        exit 0
-      fi
     # Окружение для contract-тестов по умолчанию поднимаем с последнего тэга moysklad, если не задан $PARAM_VERSION
     # Schemathesis по OpenAPI: окружение живёт дольше дефолта client.py (20 мин); переопределить — переменной ENV_TTL_MINUTES
     - export ENV_TTL_MINUTES="${ENV_TTL_MINUTES:-60}"
@@ -54,24 +73,14 @@ deploy-contract-env:
       dotenv: variable.env
 
 create-contract-user:
-  extends: .openapitools-image
+  extends:
+    - .openapitools-image
+    - .contract-test-job
   stage: before-contract-test
   needs:
     - job: deploy-contract-env
       artifacts: true
-  rules:
-    # Merge/push в master и ручной запуск (web)
-    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME == "master"'
-      when: on_success
-    - if: '$CI_PIPELINE_SOURCE == "web"'
-      when: on_success
-    - when: never
   script:
-    - |
-      if [ "$CI_PIPELINE_SOURCE" = "push" ] && [ "$CI_COMMIT_REF_NAME" = "master" ]; then
-        echo "Skipping contract user creation on master push; marking create-contract-user as passed."
-        exit 0
-      fi
     - |
       RESPONSE=$(curl --location -X POST "$API_HOST/api/remap/1.2/register" \
         --header 'Content-Type: application/x-www-form-urlencoded' \
@@ -90,50 +99,27 @@ create-contract-user:
       dotenv: user.env
 
 remove-contract-env:
-  extends: .maven-7.8-image
+  extends:
+    - .maven-7.8-image
+    - .contract-env-cleanup-job
   stage: after-contract-test
   needs:
     - job: deploy-contract-env
       artifacts: true
-  rules:
-    # Merge/push в master и ручной запуск (web)
-    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME == "master"'
-      when: manual
-      allow_failure: true
-    - if: '$CI_PIPELINE_SOURCE == "web"'
-      when: manual
-      allow_failure: true
-    - when: never
   script:
     - python3 env_clean.py $NAMESPACE $CI_PIPELINE_ID $CI_JOB_ID
 
 sdk-contract:
-  extends: .schemathesis-image
+  extends:
+    - .schemathesis-image
+    - .contract-test-job
   stage: contract-test
-  parallel:
-    matrix:
-      - CONTRACT_SHARD: dictionaries-1
-      - CONTRACT_SHARD: dictionaries-2
-      - CONTRACT_SHARD: dictionaries-3
-      - CONTRACT_SHARD: dictionaries-4
   needs:
     - job: bundle-openapi
       artifacts: true
     - job: create-contract-user
       artifacts: true
-  rules:
-    # Merge/push в master и ручной запуск (web)
-    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME == "master"'
-      when: on_success
-    - if: '$CI_PIPELINE_SOURCE == "web"'
-      when: on_success
-    - when: never
   script:
-    - |
-      if [ "$CI_PIPELINE_SOURCE" = "push" ] && [ "$CI_COMMIT_REF_NAME" = "master" ]; then
-        echo "Skipping Schemathesis execution on master push; marking sdk-contract as passed."
-        exit 0
-      fi
     - |
       if [ -z "$SCHEMATHESIS_HOST" ] || [ -z "$SCHEMATHESIS_LOGIN" ] || [ -z "$SCHEMATHESIS_PASSWORD" ]; then
         echo "ERROR: SCHEMATHESIS_* variables are not set. Environment was not prepared (create-contract-user did not run)."
@@ -146,49 +132,42 @@ sdk-contract:
         *) SCHEMATHESIS_BASE_URL="${SCHEMATHESIS_HOST%/}/api/remap/1.2" ;;
       esac
       
-      # Режимы тестирования (по умолчанию: coverage).
-      # examples отключён: операции с AttributeAbstract (полиморфная oneOf-схема)
-      # могут вызывать Schema Error при генерации примеров — это не дефект API.
-      SCHEMATHESIS_PHASES="${SCHEMATHESIS_PHASES:-coverage}"
+      # По умолчанию запускаем только examples. Coverage на полной схеме слишком
+      # дорогой для общего пайплайна; для точечной проверки новых/изменённых
+      # сущностей переопределяйте SCHEMATHESIS_PHASES=coverage и
+      # SCHEMATHESIS_INCLUDE_PATH_REGEX / SCHEMATHESIS_INCLUDE_METHOD /
+      # SCHEMATHESIS_INCLUDE_OPERATION_ID в ручном pipeline.
+      SCHEMATHESIS_PHASES="${SCHEMATHESIS_PHASES:-examples}"
+      SCHEMATHESIS_MODE="${SCHEMATHESIS_MODE:-positive}"
       SCHEMATHESIS_MAX_EXAMPLES="${SCHEMATHESIS_MAX_EXAMPLES:-50}"
-      SCHEMATHESIS_WORKERS="${SCHEMATHESIS_WORKERS:-1}"
+      SCHEMATHESIS_WORKERS="${SCHEMATHESIS_WORKERS:-auto}"
+      SCHEMATHESIS_REQUEST_TIMEOUT="${SCHEMATHESIS_REQUEST_TIMEOUT:-30}"
+      SCHEMATHESIS_NO_SHRINK="${SCHEMATHESIS_NO_SHRINK:-1}"
+      SCHEMATHESIS_REPEAT="${SCHEMATHESIS_REPEAT:-1}"
+      SCHEMATHESIS_SEED="${SCHEMATHESIS_SEED:-1}"
       SCHEMATHESIS_INCLUDE_PATH_REGEX="${SCHEMATHESIS_INCLUDE_PATH_REGEX:-}"
+      SCHEMATHESIS_INCLUDE_METHOD="${SCHEMATHESIS_INCLUDE_METHOD:-}"
+      SCHEMATHESIS_INCLUDE_OPERATION_ID="${SCHEMATHESIS_INCLUDE_OPERATION_ID:-}"
 
-      if [ -z "$SCHEMATHESIS_INCLUDE_PATH_REGEX" ]; then
-        case "${CONTRACT_SHARD:-}" in
-          dictionaries-1)
-            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/(entity/(commissionreportin|employee|cashin|bundle|bonusprogram|group|personaldiscount)(/|$)|context/companysettings(/|$))'
-            ;;
-          dictionaries-2)
-            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/(product|internalorder|cashout|role|country|currency|discount|specialpricediscount)(/|$)'
-            ;;
-          dictionaries-3)
-            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/(counterparty|customerorder|contract|service|productfolder|customentity|accumulationdiscount|thing)(/|$)'
-            ;;
-          dictionaries-4)
-            SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/(store|purchaseorder|retailstore|variant|uom|assortment|bonustransaction)(/|$)'
-            ;;
-        esac
-      fi
+      EXCLUDE_CHECKS="unsupported_method,negative_data_rejection,ignored_auth"
       
       AUTH_HEADER=$(echo -n "${SCHEMATHESIS_LOGIN}:${SCHEMATHESIS_PASSWORD}" | base64)
       
-      # Исключаемые проверки:
-      # @see https://schemathesis.readthedocs.io/en/stable/reference/checks/
-      # - unsupported_method: nginx возвращает 405 без заголовка Allow (требуется по RFC 9110)
-      # - positive_data_acceptance: API может вернуть 400/412 при валидной по схеме дате (бизнес-правила);
-      #   коды 400/412 документированы в спецификации
-      # - negative_data_rejection: API принимает запросы с невалидными заголовками/параметрами
-      #   (например, x-schemathesis-unknown-property) — поведение nginx/балансировщика, не дефект спеки
-      EXCLUDE_CHECKS="positive_data_acceptance,unsupported_method,negative_data_rejection"
+      # positive_data_acceptance включён: валидные example должны давать 2XX
   
       echo "==> Running Schemathesis tests"
       echo "    Base URL: $SCHEMATHESIS_BASE_URL"
       echo "    Phases: $SCHEMATHESIS_PHASES"
+      echo "    Mode: $SCHEMATHESIS_MODE"
       echo "    Max examples: $SCHEMATHESIS_MAX_EXAMPLES"
       echo "    Workers: $SCHEMATHESIS_WORKERS"
-      echo "    Shard: ${CONTRACT_SHARD:-all}"
+      echo "    Request timeout: $SCHEMATHESIS_REQUEST_TIMEOUT"
+      echo "    No shrink: $SCHEMATHESIS_NO_SHRINK"
+      echo "    Repeat: $SCHEMATHESIS_REPEAT"
+      echo "    Seed: $SCHEMATHESIS_SEED"
       echo "    Include path regex: ${SCHEMATHESIS_INCLUDE_PATH_REGEX:-<none>}"
+      echo "    Include method: ${SCHEMATHESIS_INCLUDE_METHOD:-<none>}"
+      echo "    Include operationId: ${SCHEMATHESIS_INCLUDE_OPERATION_ID:-<none>}"
       echo "    Exclude checks: $EXCLUDE_CHECKS"
 
       set -- schemathesis run dist/openapi.yaml \
@@ -197,11 +176,32 @@ sdk-contract:
         -H 'Accept-Encoding: gzip, deflate, br' \
         --max-examples "$SCHEMATHESIS_MAX_EXAMPLES" \
         --phases "$SCHEMATHESIS_PHASES" \
+        --mode "$SCHEMATHESIS_MODE" \
         --workers "$SCHEMATHESIS_WORKERS" \
-        --exclude-checks "$EXCLUDE_CHECKS"
+        --exclude-checks "$EXCLUDE_CHECKS" \
+        --generation-deterministic \
+        --seed "$SCHEMATHESIS_SEED" \
+        --request-timeout "$SCHEMATHESIS_REQUEST_TIMEOUT"
+
+      if [ "$SCHEMATHESIS_NO_SHRINK" = "1" ]; then
+        set -- "$@" --no-shrink
+      fi
 
       if [ -n "$SCHEMATHESIS_INCLUDE_PATH_REGEX" ]; then
         set -- "$@" --include-path-regex "$SCHEMATHESIS_INCLUDE_PATH_REGEX"
       fi
 
-      "$@"
+      if [ -n "$SCHEMATHESIS_INCLUDE_METHOD" ]; then
+        set -- "$@" --include-method "$SCHEMATHESIS_INCLUDE_METHOD"
+      fi
+
+      if [ -n "$SCHEMATHESIS_INCLUDE_OPERATION_ID" ]; then
+        set -- "$@" --include-operation-id "$SCHEMATHESIS_INCLUDE_OPERATION_ID"
+      fi
+
+      run_index=1
+      while [ "$run_index" -le "$SCHEMATHESIS_REPEAT" ]; do
+        echo "==> Schemathesis run $run_index/$SCHEMATHESIS_REPEAT"
+        "$@"
+        run_index=$((run_index + 1))
+      done

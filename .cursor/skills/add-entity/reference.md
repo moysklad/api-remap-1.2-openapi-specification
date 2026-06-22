@@ -716,9 +716,13 @@ post:
               oneOf:
                 - $ref: '../../../openapi.yaml#/components/schemas/DeleteInfo'
                 - $ref: '../../../openapi.yaml#/components/schemas/Error'
+            minItems: 1
+            maxItems: 1000
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
 ```
+
+For `<entity>-positions-delete.yaml`, use an array of `<PascalSingular>Position` (same pattern as `customerorder-positions-delete.yaml`).
 
 ### Batch create/update — `<entities>-batch.yaml`
 

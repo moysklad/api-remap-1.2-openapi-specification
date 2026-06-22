@@ -38,5 +38,4 @@ properties:
   status:
     type: string
     description: Статус кодов. Известные значения описаны в EmissionOrderPositionStatus
-    example: "EMISSION_NOT_SEND"
     readOnly: true

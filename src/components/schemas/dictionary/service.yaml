@@ -30,7 +30,6 @@ properties:
     type: string
     maxLength: 255
     description: Наименование услуги
-    example: "Услуга 1"
   code:
     type: string
     maxLength: 255
@@ -123,11 +122,9 @@ properties:
   paymentItemType:
     type: string
     description: Признак предмета расчета. Известные значения описаны в PaymentItemType
-    example: "WORK"
   taxSystem:
     type: string
     description: Код системы налогообложения. Известные значения описаны в TaxSystem
-    example: "GENERAL_TAX_SYSTEM"
   attributes:
     type: array
     description: Дополнительные поля

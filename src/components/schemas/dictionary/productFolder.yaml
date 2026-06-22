@@ -17,7 +17,6 @@ properties:
     format: uuid
     description: ID группы товаров
     readOnly: true
-    example: "12a8b923-692c-11e6-8a84-bae500000059"
   accountId:
     type: string
     format: uuid
@@ -27,7 +26,6 @@ properties:
     type: string
     maxLength: 255
     description: Наименование группы товаров
-    example: "Основная группа"
   code:
     type: string
     maxLength: 255
@@ -39,12 +37,10 @@ properties:
   archived:
     type: boolean
     description: Добавлена ли группа товаров в архив
-    example: false
   pathName:
     type: string
     description: Наименование родительской группы
     readOnly: true
-    example: "Основная группа"
   description:
     type: string
     maxLength: 4096
@@ -55,29 +51,23 @@ properties:
     minimum: 0
     maximum: 99
     description: НДС %
-    example: 20
   vatEnabled:
     type: boolean
     description: Включен ли НДС для группы
-    example: true
   effectiveVat:
     type: integer
     description: Реальный НДС %
     readOnly: true
-    example: 20
   effectiveVatEnabled:
     type: boolean
     description: Дополнительный признак для определения разграничения реального НДС
     readOnly: true
-    example: true
   useParentVat:
     type: boolean
     description: Используется ли ставка НДС родительской группы
-    example: true
   shared:
     type: boolean
     description: Общий доступ
-    example: true
   group:
     $ref: '../../../openapi.yaml#/components/schemas/Group'
   owner:
@@ -100,4 +90,3 @@ properties:
   taxSystem:
     type: string
     description: Код системы налогообложения. Известные значения описаны в TaxSystem
-    example: "GENERAL_TAX_SYSTEM"

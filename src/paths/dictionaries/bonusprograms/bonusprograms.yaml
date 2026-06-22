@@ -49,4 +49,3 @@ post:
             $ref: '../../../openapi.yaml#/components/schemas/BonusProgram'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
-
