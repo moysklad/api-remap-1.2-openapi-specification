@@ -1,5 +1,6 @@
 type: object
 description: Позиция Заказа на производство
+x-implements: IDocumentPosition
 x-entity-static-builder:
   methodParams:
     - "parentId"

@@ -1,5 +1,6 @@
 type: object
 description: Позиция Техпроцесса
+x-implements: IDocumentPosition
 x-entity-static-builder:
   methodParams:
     - "parentId"

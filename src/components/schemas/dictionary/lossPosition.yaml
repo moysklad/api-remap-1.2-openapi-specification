@@ -1,5 +1,6 @@
 type: object
 description: Позиция Списания
+x-implements: IDocumentPosition
 x-entity-static-builder:
   methodParams:
     - "parentId"

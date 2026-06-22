@@ -1,5 +1,6 @@
 type: object
 description: Позиция Возврата поставщику
+x-implements: IDocumentPosition
 x-entity-static-builder:
   methodParams:
     - "parentId"
