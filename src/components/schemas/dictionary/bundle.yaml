@@ -1,5 +1,6 @@
 type: object
 description: Комплект
+x-polymorphic-parent: EntityWithMeta
 x-entity-static-builder:
   methodParams:
     - "id"
@@ -87,15 +88,12 @@ properties:
   paymentItemType:
     type: string
     description: Признак предмета расчета. Известные значения описаны в PaymentItemType
-    example: "GOOD"
   taxSystem:
     type: string
     description: Код системы налогообложения. Известные значения описаны в TaxSystem
-    example: "GENERAL_TAX_SYSTEM"
   trackingType:
     type: string
     description: Тип маркируемой продукции. Известные значения описаны в TrackingType
-    example: "TOBACCO"
   tnved:
     type: string
     maxLength: 255

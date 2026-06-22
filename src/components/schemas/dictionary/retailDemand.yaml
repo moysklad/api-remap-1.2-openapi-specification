@@ -1,5 +1,6 @@
 type: object
 description: Розничная продажа
+x-polymorphic-parent: EntityWithMeta
 x-entity-static-builder:
   methodParams:
     - "id"
@@ -140,7 +141,6 @@ properties:
   taxSystem:
     type: string
     description: Код системы налогообложения. Известные значения описаны в TaxSystem
-    example: "GENERAL_TAX_SYSTEM"
   state:
     description: Метаданные статуса Розничной продажи
     nullable: true

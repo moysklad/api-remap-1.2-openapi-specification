@@ -1,5 +1,6 @@
 type: object
 description: Контрагент
+x-polymorphic-parent: EntityWithMeta
 x-entity-static-builder:
   methodParams:
     - "id"
@@ -16,12 +17,10 @@ properties:
     format: uuid
     description: ID контрагента
     readOnly: true
-    example: "12a8b923-692c-11e6-8a84-bae500000056"
   syncId:
     type: string
     format: uuid
     description: ID синхронизации
-    example: "12a8b923-692c-11e6-8a84-bae500000053"
   accountId:
     type: string
     format: uuid
@@ -31,7 +30,6 @@ properties:
     type: string
     maxLength: 255
     description: Наименование контрагента
-    example: "ООО Поставщик"
   code:
     type: string
     maxLength: 255
@@ -43,7 +41,6 @@ properties:
   archived:
     type: boolean
     description: Добавлен ли контрагент в архив
-    example: false
   created:
     type: string
     #    format: date-time  # API использует формат: YYYY-MM-DD HH:MM:SS.mmm
@@ -61,16 +58,13 @@ properties:
   companyType:
     type: string
     description: Тип контрагента. Известные значения описаны в CompanyType
-    example: "legal"
   email:
     type: string
     format: email
     description: Адрес электронной почты
-    example: "supplier@example.com"
   phone:
     type: string
     description: Номер телефона
-    example: "+7 (999) 987-65-43"
   fax:
     type: string
     description: Номер факса
@@ -98,12 +92,10 @@ properties:
     type: string
     maxLength: 255
     description: ИНН
-    example: "1234567890"
   kpp:
     type: string
     maxLength: 255
     description: КПП
-    example: "123456789"
   ogrn:
     type: string
     maxLength: 255
@@ -147,7 +139,6 @@ properties:
   sex:
     type: string
     description: Пол контрагента. Известные значения описаны в Sex
-    example: "MALE"
   discountCardNumber:
     type: string
     maxLength: 255
@@ -162,7 +153,6 @@ properties:
   shared:
     type: boolean
     description: Общий доступ
-    example: true
   group:
     description: Метаданные отдела сотрудника
     $ref: '../../../openapi.yaml#/components/schemas/Group'

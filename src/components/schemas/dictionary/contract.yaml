@@ -1,5 +1,6 @@
 type: object
 description: Договор
+x-polymorphic-parent: EntityWithMeta
 x-entity-static-builder:
   methodParams:
     - "id"
@@ -51,11 +52,9 @@ properties:
   contractType:
     type: string
     description: Тип Договора. Известные значения описаны в ContractType
-    example: "Commission"
   rewardType:
     type: string
     description: Тип Вознаграждения. Известные значения описаны в RewardType
-    example: "PercentOfSales"
   rewardPercent:
     type: integer
     minimum: 0

@@ -15,7 +15,6 @@ properties:
   mediaType:
     type: string
     description: Тип данных
-    example: "application/json"
   uuidHref:
     type: string
     format: uri

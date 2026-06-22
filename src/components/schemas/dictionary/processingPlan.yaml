@@ -1,5 +1,6 @@
 type: object
 description: Техкарта
+x-polymorphic-parent: EntityWithMeta
 x-entity-static-builder:
   methodParams:
     - "id"
@@ -37,7 +38,6 @@ properties:
     type: string
     description: Тип распределения себестоимости. Возможные значения описаны в CostDistributionType
     readOnly: true
-    example: "BY_PRICE"
   externalCode:
     type: string
     maxLength: 255

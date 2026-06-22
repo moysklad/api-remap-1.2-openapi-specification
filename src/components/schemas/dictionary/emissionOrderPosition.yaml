@@ -1,5 +1,6 @@
 type: object
 description: Позиция Заказа кодов маркировки
+x-polymorphic-parent: EntityWithMeta
 x-entity-static-builder:
   methodParams:
     - "parentId"
@@ -37,5 +38,4 @@ properties:
   status:
     type: string
     description: Статус кодов. Известные значения описаны в EmissionOrderPositionStatus
-    example: "EMISSION_NOT_SEND"
     readOnly: true

@@ -1,5 +1,6 @@
 type: object
 description: Сотрудник
+x-polymorphic-parent: EntityWithMeta
 x-entity-static-builder:
   methodParams:
     - "id"
@@ -16,7 +17,6 @@ properties:
     format: uuid
     description: ID сотрудника
     readOnly: true
-    example: "12a8b923-692c-11e6-8a84-bae500000054"
   accountId:
     type: string
     format: uuid
@@ -27,7 +27,6 @@ properties:
     maxLength: 255
     description: Наименование сотрудника
     readOnly: true
-    example: "Иванов И. И."
   externalCode:
     type: string
     maxLength: 255
@@ -35,7 +34,6 @@ properties:
   archived:
     type: boolean
     description: Добавлен ли сотрудник в архив
-    example: false
   created:
     type: string
     #    format: date-time  # API использует формат: YYYY-MM-DD HH:MM:SS.mmm
@@ -54,36 +52,29 @@ properties:
     type: string
     format: email
     description: Адрес электронной почты
-    example: "ivan@example.com"
   phone:
     type: string
     description: Номер телефона
-    example: "+7 (999) 123-45-67"
   firstName:
     type: string
     maxLength: 255
     description: Имя
-    example: "Иван"
   middleName:
     type: string
     maxLength: 255
     description: Отчество
-    example: "Иванович"
   lastName:
     type: string
     maxLength: 255
     description: Фамилия
-    example: "Иванов"
   fullName:
     type: string
     description: Полное имя сотрудника
     readOnly: true
-    example: "Иванов Иван Иванович"
   shortFio:
     type: string
     description: Краткое ФИО сотрудника
     readOnly: true
-    example: "Иванов И. И."
   shared:
     type: boolean
     description: Общий доступ

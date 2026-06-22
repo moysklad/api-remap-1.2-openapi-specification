@@ -1,0 +1,6 @@
+# Один Статус или массив результатов обработки Статусов
+oneOf:
+  - $ref: '../dictionary/state.yaml'
+  - type: array
+    items:
+      $ref: './stateRowResult.yaml'

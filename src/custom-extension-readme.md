@@ -72,6 +72,10 @@ agent:
 
 **Структура**:
 * path - строка в dot-нотации вложенности. Пример формата `meta.type`
+* batchErrorFallback - опциональный флаг. Если `true` и компонент не удалось
+  определить по `path` и `mappings`, SDK проверяет JSON на маркеры batch-ошибки
+  (`errors` - массив объектов, где есть строковое поле `error`) и десериализует
+  такой объект в компонент `Error`.
 * mappings - массив соответствий `{type, componentName}` для генерации SDK 
   * `type` — значение дискриминатора 
   * `componentName` — имя компонента из `components.schemas`.
@@ -81,6 +85,7 @@ agent:
 ```yaml
 x-polymorphic-discriminator:
   path: meta.type
+  batchErrorFallback: true
   mappings:
     - type: customerorder
       componentName: FinanceInOperationCustomerOrder
@@ -92,6 +97,8 @@ x-polymorphic-discriminator:
 **Предназначение**: явно связать конкретную схему с абстрактной полиморфной базой
 
 Расширение используется на неабстрактных компонентах и должно быть в списке в `x-polymorphic-discriminator.mappings` родительского компонента.
+Если mapping указывает на вложенного наследника, у схемы должна существовать цепочка
+`x-polymorphic-parent` до базовой схемы с `x-polymorphic-discriminator`.
 
 **Структура**:
 * x-polymorphic-parent - имя абстрактной родительской схемы из `components.schemas`. Допустимый формат записи - строка,

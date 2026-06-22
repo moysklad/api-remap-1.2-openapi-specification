@@ -1,5 +1,6 @@
 type: object
 description: Группа техкарт
+x-polymorphic-parent: EntityWithMeta
 x-entity-static-builder:
   methodParams:
     - "id"

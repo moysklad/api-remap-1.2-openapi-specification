@@ -1449,6 +1449,8 @@ components:
       $ref: './components/schemas/dictionary/categoryType.yaml'
     DeleteInfo:
       $ref: './components/schemas/common/deleteInfo.yaml'
+    DeleteRowResult:
+      $ref: './components/schemas/common/deleteRowResult.yaml'
     CompanyType:
       $ref: './components/schemas/dictionary/companyType.yaml'
     ContractType:
@@ -1475,6 +1477,10 @@ components:
       $ref: './components/schemas/dictionary/counterpartyList.yaml'
     CountryList:
       $ref: './components/schemas/dictionary/countryList.yaml'
+    BatchResponseEntity:
+      $ref: './components/schemas/common/entityBase.yaml#/BatchResponseEntity'
+    EntityWithMeta:
+      $ref: './components/schemas/common/entityBase.yaml#/EntityWithMeta'
     Country:
       $ref: './components/schemas/dictionary/country.yaml'
     Currency:
@@ -1662,6 +1668,12 @@ components:
       $ref: './components/schemas/dictionary/serviceList.yaml'
     State:
       $ref: './components/schemas/dictionary/state.yaml'
+    StateRowResult:
+      $ref: './components/schemas/common/stateRowResult.yaml'
+    StatesUpsert:
+      $ref: './components/schemas/common/statesUpsert.yaml'
+    StatesUpsertResult:
+      $ref: './components/schemas/common/statesUpsertResult.yaml'
     StateType:
       $ref: './components/schemas/dictionary/stateType.yaml'
     Store:

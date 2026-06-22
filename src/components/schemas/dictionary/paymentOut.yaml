@@ -1,5 +1,6 @@
 type: object
 description: Исходящий платеж
+x-polymorphic-parent: EntityWithMeta
 x-entity-static-builder:
   methodParams:
     - "id"
