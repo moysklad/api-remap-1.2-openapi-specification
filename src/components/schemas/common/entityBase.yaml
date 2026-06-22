@@ -68,10 +68,6 @@ BatchResponseEntity:
         componentName: Inventory
       - type: inventoryposition
         componentName: InventoryPosition
-      - type: invoiceposition
-        componentName: InvoiceInPosition
-      - type: invoiceposition
-        componentName: InvoiceOutPosition
       - type: loss
         componentName: Loss
       - type: lossposition
@@ -122,8 +118,6 @@ BatchResponseEntity:
         componentName: PurchaseReturnPosition
       - type: retaildemand
         componentName: RetailDemand
-      - type: demandposition
-        componentName: RetailDemandPosition
       - type: retaildrawercashin
         componentName: RetailDrawerCashIn
       - type: retaildrawercashout
@@ -134,10 +128,6 @@ BatchResponseEntity:
         componentName: SalesChannel
       - type: salesreturn
         componentName: SalesReturn
-      - type: salesreturnposition
-        componentName: SalesReturnPosition
-      - type: salesreturnposition
-        componentName: RetailSalesReturnPosition
       - type: service
         componentName: Service
       - type: store
