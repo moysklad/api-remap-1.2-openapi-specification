@@ -434,6 +434,7 @@ properties:
   qrAcquire:
     nullable: true
     type: object
+    x-agent-reference: true
     allOf:
-      - $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
+      - $ref: '../../../openapi.yaml#/components/schemas/Agent'
     description: Эквайер для QR-платежей
