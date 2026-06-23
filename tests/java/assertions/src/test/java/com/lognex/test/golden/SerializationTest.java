@@ -60,6 +60,7 @@ class SerializationTest extends BaseTestCase {
         FIXTURE_MODEL_MAP.put("employee", "Employee");
         FIXTURE_MODEL_MAP.put("employee_security", "EmployeeSecurity");
         FIXTURE_MODEL_MAP.put("employee_role", "EmployeeRole");
+        FIXTURE_MODEL_MAP.put("custom_role", "CustomRole");
         FIXTURE_MODEL_MAP.put("group", "Group");
         FIXTURE_MODEL_MAP.put("entity_with_extra_field", "Group");
         FIXTURE_MODEL_MAP.put("country", "Country");

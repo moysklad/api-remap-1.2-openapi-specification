@@ -49,6 +49,7 @@ class SerializationTest extends TestCase
         'employee' => 'Employee',
         'employee_security' => 'EmployeeSecurity',
         'employee_role' => 'EmployeeRole',
+        'custom_role' => 'CustomRole',
         'group' => 'Group',
         'entity_with_extra_field' => 'Group',
         'country' => 'Country',

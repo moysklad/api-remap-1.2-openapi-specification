@@ -810,6 +810,71 @@ class ApiEndpointsTest extends TestCase
         $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
     }
 
+    /**
+     * Проверяет доступность endpoint'а получения списка пользовательских ролей.
+     * GET /entity/role
+     */
+    public function testListCustomRoles(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/role');
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * Проверяет доступность endpoint'а получения пользовательской роли по ID.
+     * GET /entity/role/{id}
+     */
+    public function testGetCustomRoleById(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/role/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а создания пользовательской роли.
+     * POST /entity/role
+     */
+    public function testCreateCustomRole(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/role', [
+            'json' => [
+                'name' => 'Test Role',
+                'permissions' => [
+                    'importData' => false,
+                    'apiRequest' => false,
+                ],
+            ],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * Проверяет доступность endpoint'а обновления пользовательской роли.
+     * PUT /entity/role/{id}
+     */
+    public function testUpdateCustomRole(): void
+    {
+        $response = $this->client->put(self::API_BASE_PATH . '/entity/role/' . self::TEST_UUID, [
+            'json' => [
+                'name' => 'Updated Test Role',
+                'permissions' => [
+                    'importData' => true,
+                ],
+            ],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а удаления пользовательской роли.
+     * DELETE /entity/role/{id}
+     */
+    public function testDeleteCustomRole(): void
+    {
+        $response = $this->client->delete(self::API_BASE_PATH . '/entity/role/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::DELETE_CODES);
+    }
+
     // ==================== GROUPS ====================
 
     /**

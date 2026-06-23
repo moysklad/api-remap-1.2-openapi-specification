@@ -323,6 +323,10 @@ paths:
     $ref: './paths/dictionaries/employees/role-cashier.yaml'
   /entity/role/worker:
     $ref: './paths/dictionaries/employees/role-worker.yaml'
+  /entity/role:
+    $ref: './paths/dictionaries/customroles/customroles.yaml'
+  /entity/role/{id}:
+    $ref: './paths/dictionaries/customroles/custom-role-by-id.yaml'
   #
   # Counterparties
   /entity/counterparty:
@@ -1588,6 +1592,10 @@ components:
       $ref: './components/schemas/dictionary/employeeSecurity.yaml'
     EmployeeRole:
       $ref: './components/schemas/dictionary/employeeRole.yaml'
+    CustomRole:
+      $ref: './components/schemas/dictionary/customRole.yaml'
+    CustomRoleList:
+      $ref: './components/schemas/dictionary/customRoleList.yaml'
     Permissions:
       $ref: './components/schemas/common/permissions.yaml'
     PermissionValue:
@@ -2296,6 +2304,8 @@ tags:
     description: Операции со ставками НДС
   - name: Employees
     description: Операции с сотрудниками
+  - name: CustomRoles
+    description: Операции с пользовательскими ролями
   - name: Contracts
     description: Операции с договорами
   - name: Tasks
