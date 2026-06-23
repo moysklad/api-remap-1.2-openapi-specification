@@ -22,7 +22,6 @@ properties:
   system:
     type: boolean
     description: Системная валюта
-    readOnly: true
     example: true
   name:
     type: string
