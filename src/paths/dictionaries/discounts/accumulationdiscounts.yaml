@@ -14,6 +14,11 @@ post:
       application/json:
         schema:
           $ref: '../../../openapi.yaml#/components/schemas/AccumulationDiscount'
+        example:
+          name: "discountName"
+          active: true
+          allProducts: true
+          allAgents: true
   responses:
     '200':
       description: Накопительная скидка успешно создана

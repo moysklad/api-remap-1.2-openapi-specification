@@ -40,6 +40,8 @@ post:
       application/json:
         schema:
           $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
+        example:
+          name: "ООО Радуга"
   responses:
     '200':
       description: Контрагент успешно создан

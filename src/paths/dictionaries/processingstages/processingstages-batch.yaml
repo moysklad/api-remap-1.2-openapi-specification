@@ -19,6 +19,8 @@ post:
             $ref: '../../../openapi.yaml#/components/schemas/ProcessingStage'
           minItems: 1
           maxItems: 1000
+        example:
+          - name: "Этап 1"
   responses:
     '200':
       description: Этапы производства созданы или изменены (элемент - сущность или объект ошибки)

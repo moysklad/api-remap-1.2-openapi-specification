@@ -45,6 +45,11 @@ post:
       application/json:
         schema:
           $ref: '../../../openapi.yaml#/components/schemas/Service'
+        example:
+          name: "Услуга из примера OpenAPI"
+          archived: false
+          vatEnabled: false
+          shared: true
   responses:
     '200':
       description: Услуга успешно создана

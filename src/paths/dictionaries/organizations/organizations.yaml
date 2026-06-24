@@ -40,6 +40,8 @@ post:
       application/json:
         schema:
           $ref: '../../../openapi.yaml#/components/schemas/Organization'
+        example:
+          name: "ОАО СветПром"
   responses:
     '200':
       description: Юрлицо успешно создано

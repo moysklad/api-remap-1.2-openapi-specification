@@ -19,6 +19,9 @@ post:
             $ref: '../../../openapi.yaml#/components/schemas/SalesChannel'
           minItems: 1
           maxItems: 1000
+        example:
+          - name: "Телефонный звонок"
+            type: "OTHER"
   responses:
     '200':
       description: Каналы продаж созданы или изменены (элемент — сущность или объект ошибки)

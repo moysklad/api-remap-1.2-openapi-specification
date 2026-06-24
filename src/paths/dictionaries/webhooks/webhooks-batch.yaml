@@ -21,6 +21,10 @@ post:
             $ref: '../../../openapi.yaml#/components/schemas/Webhook'
           minItems: 1
           maxItems: 1000
+        example:
+          - url: "http://www.example.com"
+            action: "CREATE"
+            entityType: "supply"
   responses:
     '200':
       description: Вебхуки созданы или изменены (элемент — сущность или объект ошибки)

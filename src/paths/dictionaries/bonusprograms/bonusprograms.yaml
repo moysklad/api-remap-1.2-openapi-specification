@@ -40,6 +40,14 @@ post:
       application/json:
         schema:
           $ref: '../../../openapi.yaml#/components/schemas/BonusProgram'
+        example:
+          name: "bonusprogram"
+          active: true
+          allProducts: true
+          allAgents: true
+          earnRateRoublesToPoint: 7
+          spendRatePointsToRouble: 4
+          maxPaidRatePercents: 50
   responses:
     '200':
       description: Бонусная программа успешно создана

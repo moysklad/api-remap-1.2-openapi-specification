@@ -17,6 +17,8 @@ post:
             $ref: '../../../openapi.yaml#/components/schemas/ProcessingPlanFolder'
           minItems: 1
           maxItems: 1000
+        example:
+          - name: "Группа 1"
   responses:
     '200':
       description: Успешный запрос

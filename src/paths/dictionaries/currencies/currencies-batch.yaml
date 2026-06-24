@@ -19,6 +19,10 @@ post:
             $ref: '../../../openapi.yaml#/components/schemas/Currency'
           minItems: 1
           maxItems: 1000
+        example:
+          - name: "доллар"
+            code: "840"
+            isoCode: "USD"
   responses:
     '200':
       description: Валюты созданы или изменены (элемент — сущность или объект ошибки)

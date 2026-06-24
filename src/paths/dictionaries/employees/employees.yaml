@@ -45,6 +45,8 @@ post:
       application/json:
         schema:
           $ref: '../../../openapi.yaml#/components/schemas/Employee'
+        example:
+          lastName: "Мойскладкин"
   responses:
     '200':
       description: Сотрудник успешно создан

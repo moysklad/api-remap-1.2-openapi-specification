@@ -38,6 +38,8 @@ post:
           items:
             $ref: '../../../openapi.yaml#/components/schemas/PriceType'
           minItems: 1
+        example:
+          - name: "Цена для друзей"
   responses:
     '200':
       description: Типы цен созданы или изменены (элемент — сущность или объект ошибки)

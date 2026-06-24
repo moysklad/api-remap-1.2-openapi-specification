@@ -14,6 +14,8 @@ post:
       application/json:
         schema:
           $ref: '../../../openapi.yaml#/components/schemas/CustomEntity'
+        example:
+          name: "custom dictionary"
   responses:
     '200':
       description: Пользовательский справочник успешно создан

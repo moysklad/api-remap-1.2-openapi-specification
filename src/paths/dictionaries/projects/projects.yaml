@@ -40,6 +40,8 @@ post:
       application/json:
         schema:
           $ref: '../../../openapi.yaml#/components/schemas/Project'
+        example:
+          name: "Проект из примера OpenAPI"
   responses:
     '200':
       description: Проект успешно создан

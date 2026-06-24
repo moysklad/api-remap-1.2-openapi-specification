@@ -19,6 +19,8 @@ post:
             $ref: '../../../openapi.yaml#/components/schemas/Employee'
           minItems: 1
           maxItems: 1000
+        example:
+          - lastName: "Мойскладкин"
   responses:
     '200':
       description: Сотрудники созданы или изменены (элемент — сущность или объект ошибки)

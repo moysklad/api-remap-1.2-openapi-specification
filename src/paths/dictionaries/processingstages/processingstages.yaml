@@ -39,6 +39,8 @@ post:
       application/json:
         schema:
           $ref: '../../../openapi.yaml#/components/schemas/ProcessingStage'
+        example:
+          name: "Этап 1"
   responses:
     '200':
       description: Этап производства успешно создан

@@ -19,6 +19,8 @@ post:
             $ref: '../../../openapi.yaml#/components/schemas/Uom'
           minItems: 1
           maxItems: 1000
+        example:
+          - name: "Попугаи"
   responses:
     '200':
       description: Единицы измерения созданы или изменены (элемент — сущность или объект ошибки)

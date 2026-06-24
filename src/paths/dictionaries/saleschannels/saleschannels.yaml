@@ -40,6 +40,9 @@ post:
       application/json:
         schema:
           $ref: '../../../openapi.yaml#/components/schemas/SalesChannel'
+        example:
+          name: "Телефонный звонок"
+          type: "OTHER"
   responses:
     '200':
       description: Канал продаж успешно создан
