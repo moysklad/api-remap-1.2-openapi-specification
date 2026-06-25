@@ -42,6 +42,11 @@ post:
           $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
         example:
           name: "ООО Радуга"
+          companyType: "legal"
+          description: "Сеть стройматериалов Радуга ЭКСПО"
+          email: "raduga@stroi.ru"
+          phone: "+7 495 331 22 33"
+          inn: "125152124152"
   responses:
     '200':
       description: Контрагент успешно создан

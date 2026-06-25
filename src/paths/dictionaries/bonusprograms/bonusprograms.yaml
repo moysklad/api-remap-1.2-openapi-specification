@@ -48,6 +48,7 @@ post:
           earnRateRoublesToPoint: 7
           spendRatePointsToRouble: 4
           maxPaidRatePercents: 50
+          earnWhileRedeeming: false
   responses:
     '200':
       description: Бонусная программа успешно создана

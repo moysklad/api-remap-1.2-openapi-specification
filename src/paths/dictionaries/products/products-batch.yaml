@@ -20,7 +20,10 @@ post:
           minItems: 1
           maxItems: 1000
         example:
-          - name: "Товар из примера OpenAPI"
+          - name: "Товар batch из примера OpenAPI"
+            code: "openapi-product-batch"
+            article: "ART-002"
+            description: "Товар batch для примера OpenAPI"
             archived: false
             vatEnabled: false
             shared: true

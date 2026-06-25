@@ -20,7 +20,12 @@ post:
           minItems: 1
           maxItems: 1000
         example:
-          - name: "Панама 2"
+          - name: "Панама 3"
+            description: "Страна batch из примера OpenAPI"
+            code: "PanamaCode3"
+            shared: true
+            externalCode: "panamaCountry3"
+            archived: false
   responses:
     '200':
       description: Страны созданы или изменены (элемент — сущность или объект ошибки)

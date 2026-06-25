@@ -15,7 +15,7 @@ post:
         schema:
           $ref: '../../../openapi.yaml#/components/schemas/PersonalDiscount'
         example:
-          name: "discountName"
+          name: "personalDiscountExample"
           active: true
           allProducts: true
           allAgents: true

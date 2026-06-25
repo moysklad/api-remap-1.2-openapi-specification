@@ -20,7 +20,9 @@ post:
           minItems: 1
           maxItems: 1000
         example:
-          - name: "Услуга из примера OpenAPI"
+          - name: "Услуга batch из примера OpenAPI"
+            code: "openapi-service-batch"
+            description: "Услуга batch для примера OpenAPI"
             archived: false
             vatEnabled: false
             shared: true

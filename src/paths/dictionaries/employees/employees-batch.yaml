@@ -20,7 +20,12 @@ post:
           minItems: 1
           maxItems: 1000
         example:
-          - lastName: "Мойскладкин"
+          - lastName: "Петров"
+            firstName: "Иван"
+            middleName: "Сергеевич"
+            email: "petrov@example.ru"
+            phone: "+7(495)123-4567"
+            position: "Менеджер"
   responses:
     '200':
       description: Сотрудники созданы или изменены (элемент — сущность или объект ошибки)

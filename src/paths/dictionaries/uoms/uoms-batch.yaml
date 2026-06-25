@@ -20,7 +20,12 @@ post:
           minItems: 1
           maxItems: 1000
         example:
-          - name: "Попугаи"
+          - name: "Попугай"
+            description: "Для измерения попугаев"
+            code: "parrot"
+            shared: true
+            archived: false
+            externalCode: "parrotUnitOfMeasure"
   responses:
     '200':
       description: Единицы измерения созданы или изменены (элемент — сущность или объект ошибки)

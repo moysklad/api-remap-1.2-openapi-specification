@@ -14,7 +14,10 @@ post:
           minItems: 1
           maxItems: 1000
         example:
-          - name: "Склад2"
+          - name: "Склад3"
+            code: "code4"
+            address: "г Москва ул БаБилова 20 к 116"
+            description: "Склад batch из примера OpenAPI"
   responses:
     '200':
       description: Успешный запрос

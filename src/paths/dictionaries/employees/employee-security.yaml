@@ -38,20 +38,6 @@ put:
       application/json:
         schema:
           $ref: '../../../openapi.yaml#/components/schemas/EmployeeSecurity'
-        example:
-          group:
-            meta:
-              href: "https://api.moysklad.ru/api/remap/1.2/entity/group/f4b74c5e-443a-11eb-ac12-001000000003"
-              metadataHref: "https://api.moysklad.ru/api/remap/1.2/entity/group/metadata"
-              type: "group"
-              mediaType: "application/json"
-          authorizedHosts:
-            - "20.20.15.5"
-          role:
-            meta:
-              href: "https://api.moysklad.ru/api/remap/1.2/entity/role/admin"
-              type: "systemrole"
-              mediaType: "application/json"
   responses:
     '200':
       description: Права успешно обновлены

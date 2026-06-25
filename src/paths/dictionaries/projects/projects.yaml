@@ -42,6 +42,9 @@ post:
           $ref: '../../../openapi.yaml#/components/schemas/Project'
         example:
           name: "Проект из примера OpenAPI"
+          code: "openapi-project"
+          description: "Проект для примера OpenAPI"
+          shared: true
   responses:
     '200':
       description: Проект успешно создан

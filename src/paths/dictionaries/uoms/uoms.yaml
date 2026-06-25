@@ -47,6 +47,11 @@ post:
           $ref: '../../../openapi.yaml#/components/schemas/Uom'
         example:
           name: "Попугаи"
+          description: "Для измерения удавов"
+          code: "papagei"
+          shared: true
+          archived: false
+          externalCode: "parrotUnitOfMeasure"
   responses:
     '200':
       description: Единица измерения успешно создана

@@ -42,6 +42,11 @@ post:
           $ref: '../../../openapi.yaml#/components/schemas/ExpenseItem'
         example:
           name: "Налоги и не налоги"
+          description: "Статья расходов из примера OpenAPI"
+          code: "expense-openapi"
+          shared: true
+          archived: false
+          externalCode: "expenseItem123"
   responses:
     '200':
       description: Статья расходов успешно создана

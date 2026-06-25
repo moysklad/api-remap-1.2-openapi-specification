@@ -42,6 +42,10 @@ post:
           $ref: '../../../openapi.yaml#/components/schemas/Organization'
         example:
           name: "ОАО СветПром"
+          legalTitle: "ООО Великое Свет Пром"
+          inn: "87654321"
+          email: "svetprom@mail.svet"
+          phone: "22222222"
   responses:
     '200':
       description: Юрлицо успешно создано

@@ -20,7 +20,15 @@ post:
           minItems: 1
           maxItems: 1000
         example:
-          - name: "Этап 1"
+          - name: "Этап 2"
+            description: "Этап производства batch из примера OpenAPI"
+            shared: true
+            archived: false
+            externalCode: "processingStage123Batch"
+            allPerformers: true
+            distributionRequired: false
+            performers: []
+            standardHourCost: 100.0
   responses:
     '200':
       description: Этапы производства созданы или изменены (элемент - сущность или объект ошибки)

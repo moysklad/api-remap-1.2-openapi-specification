@@ -47,6 +47,8 @@ post:
           $ref: '../../../openapi.yaml#/components/schemas/Service'
         example:
           name: "Услуга из примера OpenAPI"
+          code: "openapi-service"
+          description: "Услуга для примера OpenAPI"
           archived: false
           vatEnabled: false
           shared: true

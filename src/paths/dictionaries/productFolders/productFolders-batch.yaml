@@ -20,7 +20,13 @@ post:
           minItems: 1
           maxItems: 1000
         example:
-          - name: "Овощи"
+          - name: "Фрукты"
+            description: "Группа фруктов"
+            vatEnabled: false
+            shared: true
+            archived: false
+            vat: 6
+            useParentVat: false
   responses:
     '200':
       description: Группы товаров созданы или изменены (элемент — сущность или объект ошибки)

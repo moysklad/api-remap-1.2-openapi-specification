@@ -20,7 +20,11 @@ post:
           minItems: 1
           maxItems: 1000
         example:
-          - name: "ОАО СветПром"
+          - name: "ООО Пример batch"
+            legalTitle: "ООО Пример"
+            inn: "1234567890"
+            email: "example-batch@mail.ru"
+            phone: "33333333"
   responses:
     '200':
       description: Юрлица созданы или изменены (элемент — сущность или объект ошибки)

@@ -40,7 +40,15 @@ post:
         schema:
           $ref: '../../../openapi.yaml#/components/schemas/ProcessingStage'
         example:
-          name: "Этап 1"
+          name: "Этап 1 из примера OpenAPI"
+          description: "Этап производства из примера OpenAPI"
+          shared: true
+          archived: false
+          externalCode: "processingStage123"
+          allPerformers: true
+          distributionRequired: false
+          performers: []
+          standardHourCost: 100.0
   responses:
     '200':
       description: Этап производства успешно создан

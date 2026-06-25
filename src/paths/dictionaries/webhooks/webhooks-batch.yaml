@@ -23,7 +23,9 @@ post:
           maxItems: 1000
         example:
           - url: "http://www.example.com"
-            action: "CREATE"
+            enabled: true
+            action: "UPDATE"
+            diffType: "FIELDS"
             entityType: "supply"
   responses:
     '200':
