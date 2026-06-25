@@ -25,6 +25,7 @@ properties:
       Набор шаблонов для печати комплекта документов.
       При использовании templates поле extension указывать не нужно.
     minItems: 1
+    nullable: true
     items:
       type: object
       required:
