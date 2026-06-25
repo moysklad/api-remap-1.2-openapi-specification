@@ -32,7 +32,7 @@ x-entity-static-builder:
 
 ## x-agent-reference
 
-**Предназначение**: явно пометить свойства `agent` и указать, что это поле является ссылкой на `Counterparty/Organization` 
+**Предназначение**: явно пометить свойства `agent` и указать, что это поле является ссылкой на `Counterparty/Organization/Employee`
 (через `Agent`) или обычной ссылкой другого типа.
 
 Используется для свойств с именем `agent` и задается как булевый флаг `true` или `false`.
@@ -40,9 +40,10 @@ x-entity-static-builder:
 
 **Структура**:
 * x-agent-reference - boolean
-  * true - поле трактуется как ссылка на `agent` (`anyOf` из `Counterparty` и `Organization`):
+  * true - поле трактуется как ссылка на `agent` (полиморфный тип `Agent`):
     * в схеме поле задается через `allOf` с `$ref` на `#/components/schemas/Agent`;
-    * `Agent` в спецификации описан как `anyOf` из `Counterparty` и `Organization`.
+    * `Agent` в спецификации описан как полиморфный родитель с дискриминатором `meta.type`
+      (`Counterparty`, `Organization`, `Employee`); конкретный набор допустимых типов зависит от сущности.
   * false - поле `agent` не является ссылкой на `Agent`:
     * для него используется обычный `$ref` на фактический тип (например, `Employee`).
 

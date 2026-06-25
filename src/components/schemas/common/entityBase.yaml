@@ -22,6 +22,10 @@ BatchResponseEntity:
         componentName: CashOut
       - type: commissionreportin
         componentName: CommissionReportIn
+      - type: commissionreportinposition
+        componentName: CommissionReportInPosition
+      - type: commissionreportinreturnedposition
+        componentName: CommissionReportInReturnedPosition
       - type: commissionreportout
         componentName: CommissionReportOut
       - type: commissionreportoutposition
@@ -38,8 +42,12 @@ BatchResponseEntity:
         componentName: Currency
       - type: customerorder
         componentName: CustomerOrder
+      - type: customerorderposition
+        componentName: CustomerOrderPosition
       - type: demand
         componentName: Demand
+      - type: demandposition
+        componentName: DemandPosition
       - type: emissionorder
         componentName: EmissionOrder
       - type: emissionorderposition
@@ -48,14 +56,22 @@ BatchResponseEntity:
         componentName: Employee
       - type: enter
         componentName: Enter
+      - type: enterposition
+        componentName: EnterPosition
       - type: expenseitem
         componentName: ExpenseItem
       - type: internalorder
         componentName: InternalOrder
+      - type: internalorderposition
+        componentName: InternalOrderPosition
       - type: inventory
         componentName: Inventory
+      - type: inventoryposition
+        componentName: InventoryPosition
       - type: loss
         componentName: Loss
+      - type: lossposition
+        componentName: LossPosition
       - type: move
         componentName: Move
       - type: moveposition
@@ -66,18 +82,24 @@ BatchResponseEntity:
         componentName: PaymentIn
       - type: paymentout
         componentName: PaymentOut
+      - type: prepaymentreturnposition
+        componentName: PrepaymentReturnPosition
       - type: pricetype
         componentName: PriceType
       - type: processing
         componentName: Processing
       - type: processingorder
         componentName: ProcessingOrder
+      - type: processingorderposition
+        componentName: ProcessingOrderPosition
       - type: processingplan
         componentName: ProcessingPlan
       - type: processingplanfolder
         componentName: ProcessingPlanFolder
       - type: processingprocess
         componentName: ProcessingProcess
+      - type: processingprocessposition
+        componentName: ProcessingProcessPosition
       - type: processingstage
         componentName: ProcessingStage
       - type: product
@@ -88,8 +110,12 @@ BatchResponseEntity:
         componentName: Project
       - type: purchaseorder
         componentName: PurchaseOrder
+      - type: purchaseorderposition
+        componentName: PurchaseOrderPosition
       - type: purchasereturn
         componentName: PurchaseReturn
+      - type: purchasereturnposition
+        componentName: PurchaseReturnPosition
       - type: retaildemand
         componentName: RetailDemand
       - type: retaildrawercashin
@@ -137,3 +163,85 @@ EntityWithMeta:
   x-polymorphic-discriminator:
     path: meta.type
     mappings: *entityWithMetaPolymorphicMappings
+
+ProductMarker:
+  type: object
+  description: |
+    Базовый полиморфный тип для сущностей номенклатуры.
+    Конкретный тип определяется по `meta.type`.
+  x-polymorphic-parent: EntityWithMeta
+  x-implements: MetaEntity
+  properties:
+    id:
+      type: string
+      format: uuid
+      description: ID товара
+      readOnly: true
+  x-polymorphic-discriminator:
+    path: meta.type
+    mappings:
+      - type: bundle
+        componentName: Bundle
+      - type: consignment
+        componentName: Consignment
+      - type: variant
+        componentName: Variant
+      - type: product
+        componentName: Product
+      - type: service
+        componentName: Service
+
+DiscountAbstract:
+  type: object
+  x-polymorphic-discriminator:
+    path: meta.type
+    mappings:
+      - type: accumulationdiscount
+        componentName: AccumulationDiscount
+      - type: personaldiscount
+        componentName: PersonalDiscount
+      - type: specialpricediscount
+        componentName: SpecialPriceDiscount
+      - type: discount
+        componentName: Discount
+      - type: bonusprogram
+        componentName: BonusProgram
+  properties:
+    id:
+      type: string
+      format: uuid
+      description: ID дополнительного поля
+      readOnly: true
+    meta:
+      description: Метаданные скидки
+      $ref: '../common/meta.yaml'
+    accountId:
+      type: string
+      format: uuid
+      description: ID учетной записи
+      readOnly: true
+    name:
+      type: string
+      maxLength: 255
+      description: Наименование товара
+    active:
+      type: boolean
+      description: Включена ли скидка
+    allAgents:
+      type: boolean
+      description: Для всех ли агентов скидка
+    agentTags:
+      type: array
+      nullable: true
+      description: Тэги агентов
+      items:
+        type: string
+    allProducts:
+      type: boolean
+      description: Действует ли скидка на все товары
+    assortment:
+      type: array
+      description: Массив метаданных товаров, услуг и модификаций
+      nullable: true
+      items:
+        $ref: '../../../openapi.yaml#/components/schemas/DiscountAssortmentItem'

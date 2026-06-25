@@ -20,7 +20,6 @@ properties:
     type: string
     format: uuid
     description: ID позиции
-    readOnly: true
   accountId:
     type: string
     format: uuid
@@ -28,7 +27,8 @@ properties:
     readOnly: true
   assortment:
     description: Метаданные товара/услуги/партии/модификации, которую представляет собой позиция
-    $ref: '../../../openapi.yaml#/components/schemas/Assortment'
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/ProductMarker'
   country:
     description: Метаданные страны
     nullable: true

@@ -137,12 +137,10 @@ properties:
     type: number
     format: double
     description: Сумма Приходного ордера в установленной валюте
-    readOnly: true
   vatSum:
     type: number
     format: double
     description: Сумма НДС
-    readOnly: true
   factureOut:
     description: Счет-фактура выданный, с которым связан этот платеж
     nullable: true
@@ -153,7 +151,7 @@ properties:
     type: array
     description: |
       Связанные операции. Допустимые типы по `meta.type`: customerorder, purchasereturn, demand,
-      invoiceout, commissionreportin, retailshift.
+      invoiceout, commissionreportin, retailshift
     nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/FinanceInOperationAbstract'

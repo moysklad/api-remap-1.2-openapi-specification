@@ -19,7 +19,6 @@ properties:
     type: string
     format: uuid
     description: ID позиции
-    readOnly: true
   accountId:
     type: string
     format: uuid
@@ -27,7 +26,7 @@ properties:
     readOnly: true
   assortment:
     description: Метаданные товара/услуги/партии/модификации/комплекта, которую представляет собой позиция
-    $ref: '../../../openapi.yaml#/components/schemas/Assortment'
+    $ref: '../../../openapi.yaml#/components/schemas/ProductMarker'
   cost:
     type: integer
     description: Себестоимость (только для услуг)

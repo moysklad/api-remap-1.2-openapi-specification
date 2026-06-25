@@ -21,7 +21,6 @@ properties:
   system:
     type: boolean
     description: Системная валюта
-    readOnly: true
   name:
     type: string
     description: Краткое наименование валюты

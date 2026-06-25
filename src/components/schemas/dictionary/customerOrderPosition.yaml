@@ -1,5 +1,6 @@
 type: object
 description: Позиция Заказа покупателя
+x-polymorphic-parent: EntityWithMeta
 x-entity-static-builder:
   methodParams:
     - "parentId"
@@ -19,7 +20,6 @@ properties:
     type: string
     format: uuid
     description: ID позиции
-    readOnly: true
   accountId:
     type: string
     format: uuid
@@ -59,7 +59,8 @@ properties:
     description: Код системы налогообложения. Известные значения описаны в TaxSystem
   assortment:
     description: Метаданные товара/услуги/модификации/комплекта, которую представляет собой позиция
-    $ref: '../../../openapi.yaml#/components/schemas/Assortment'
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/ProductMarker'
   pack:
     description: Упаковка Товара
     nullable: true

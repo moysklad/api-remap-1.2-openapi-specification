@@ -16,6 +16,15 @@ positionId:
     type: string
     format: uuid
 
+publicationId:
+  name: publicationId
+  in: path
+  required: true
+  description: ID публикации
+  schema:
+    type: string
+    format: uuid
+
 limit:
   name: limit
   in: query
@@ -60,6 +69,13 @@ order:
   name: order
   in: query
   description: Сортировка
+  schema:
+    type: string
+
+entityType:
+  name: type
+  in: path
+  required: true
   schema:
     type: string
 

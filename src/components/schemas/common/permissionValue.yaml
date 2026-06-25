@@ -1,0 +1,3 @@
+type: string
+description: Возможные значения пермиссий
+enum: ["NO", OWN, OWN_SHARED, OWN_GROUP, OWN_GROUP_SHARED, ALL]

@@ -236,7 +236,6 @@ properties:
     description: Признак разрешения создания новых товаров при продаже
   allowCustomPrice:
     type: boolean
-    readOnly: true
     description: Признак разрешения устанавливать произвольные цены
   allowDeleteReceiptPositions:
     type: boolean
@@ -413,7 +412,9 @@ properties:
     description: Идентификатор QR
   acquire:
     type: object
-    $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
+    x-agent-reference: true
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Agent'
     description: Эквайер
   cashiers:
     nullable: true
@@ -424,6 +425,7 @@ properties:
   qrAcquire:
     nullable: true
     type: object
+    x-agent-reference: true
     allOf:
-      - $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
+      - $ref: '../../../openapi.yaml#/components/schemas/Agent'
     description: Эквайер для QR-платежей

@@ -1,0 +1,22 @@
+get:
+  operationId: getCustomerOrderAuditEvents
+  tags:
+    - CustomerOrders
+  summary: Получить события аудита Заказа покупателя
+  description: |
+    Возвращает список событий аудита для Заказа покупателя по его ID.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/parameters.yaml#/limit'
+    - $ref: '../../../components/parameters.yaml#/offset'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            additionalProperties: true
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

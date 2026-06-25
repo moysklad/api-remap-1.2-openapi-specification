@@ -148,13 +148,11 @@ properties:
     format: double
     minimum: 0
     description: Сумма Исходящего платежа в установленной валюте
-    readOnly: true
   vatSum:
     type: number
     format: double
     minimum: 0
     description: Сумма НДС
-    readOnly: true
   factureIn:
     description: Счет-фактура полученный, с которым связан этот платеж
     nullable: true

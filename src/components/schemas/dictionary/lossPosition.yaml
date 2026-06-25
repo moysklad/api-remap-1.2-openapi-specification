@@ -1,5 +1,6 @@
 type: object
 description: Позиция Списания
+x-polymorphic-parent: EntityWithMeta
 x-entity-static-builder:
   methodParams:
     - "parentId"
@@ -19,7 +20,6 @@ properties:
     type: string
     format: uuid
     description: ID позиции
-    readOnly: true
   accountId:
     type: string
     format: uuid
@@ -27,7 +27,8 @@ properties:
     readOnly: true
   assortment:
     description: Метаданные товара/услуги/партии/модификации, которую представляет собой позиция
-    $ref: '../../../openapi.yaml#/components/schemas/Assortment'
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/ProductMarker'
   declaration:
     $ref: '../../../openapi.yaml#/components/schemas/Declaration'
   pack:

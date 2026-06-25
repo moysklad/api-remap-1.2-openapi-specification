@@ -7,9 +7,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
-import ru.moysklad.remap_1_2.ApiClient;
-import ru.moysklad.remap_1_2.model.BatchResponseEntity;
-import ru.moysklad.remap_1_2.model.Error;
+import ru.moysklad.remap_1_2.beta.ApiClient;
+import ru.moysklad.remap_1_2.beta.model.BatchResponseEntity;
+import ru.moysklad.remap_1_2.beta.model.Error;
 
 import java.io.File;
 import java.lang.reflect.Constructor;
@@ -59,6 +59,7 @@ class SerializationTest extends BaseTestCase {
         FIXTURE_MODEL_MAP.put("employee", "Employee");
         FIXTURE_MODEL_MAP.put("employee_security", "EmployeeSecurity");
         FIXTURE_MODEL_MAP.put("employee_role", "EmployeeRole");
+        FIXTURE_MODEL_MAP.put("custom_role", "CustomRole");
         FIXTURE_MODEL_MAP.put("group", "Group");
         FIXTURE_MODEL_MAP.put("entity_with_extra_field", "Group");
         FIXTURE_MODEL_MAP.put("country", "Country");
@@ -245,7 +246,7 @@ class SerializationTest extends BaseTestCase {
     }
 
     private String getModelClass(String shortName) {
-        return "ru.moysklad.remap_1_2.model." + shortName;
+        return "ru.moysklad.remap_1_2.beta.model." + shortName;
     }
 
     private Class<?> loadClass(String className) {

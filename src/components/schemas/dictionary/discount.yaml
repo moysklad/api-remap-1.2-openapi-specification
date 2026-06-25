@@ -8,18 +8,15 @@ x-entity-static-builder:
     - path: "discount"
     - param: "id"
   type: "discount"
-allOf:
-  - $ref: '../../../openapi.yaml#/components/schemas/DiscountBase'
 properties:
-  allProducts:
-    type: boolean
-    description: Действует ли скидка на все товары
-  assortment:
-    type: array
-    description: Массив метаданных товаров, услуг и модификаций
-    nullable: true
-    items:
-      $ref: '../../../openapi.yaml#/components/schemas/DiscountAssortmentItem'
+  id:
+    type: string
+    format: uuid
+    description: ID дополнительного поля
+    readOnly: true
+  meta:
+    description: Метаданные скидки
+    $ref: '../common/meta.yaml'
   productFolders:
     type: array
     description: Массив метаданных Групп товаров

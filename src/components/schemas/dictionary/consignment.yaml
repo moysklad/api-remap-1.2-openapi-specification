@@ -1,6 +1,6 @@
 type: object
 description: Партия
-x-polymorphic-parent: EntityWithMeta
+x-polymorphic-parent: ProductMarker
 x-entity-static-builder:
   methodParams:
     - "id"
@@ -35,7 +35,8 @@ properties:
   assortment:
     type: object
     description: Метаданные товара/услуги/комплекта/модификации, к которой относится Партия
-    $ref: '../../../openapi.yaml#/components/schemas/Assortment'
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/ProductMarker'
   barcodes:
     type: array
     description: Штрихкоды Партии
