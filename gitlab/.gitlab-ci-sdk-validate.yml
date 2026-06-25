@@ -12,9 +12,9 @@
 # - SDK_LANGUAGES: языки для генерации SDK (через запятую, пустая строка = все доступные)
 #   Примеры: "php", "php,python", "" (все)
 # - PUSH_TO_REMOTE: пушить изменения в удалённые репозитории (true/false, по умолчанию false)
-# - SCHEMATHESIS_HOST: URL API для schemathesis тестов (только при ручном запуске)
-# - SCHEMATHESIS_LOGIN: логин для schemathesis тестов
-# - SCHEMATHESIS_PASSWORD: пароль для schemathesis тестов
+# - SCHEMATHESIS_HOST / SCHEMATHESIS_LOGIN / SCHEMATHESIS_PASSWORD:
+#   необязательные override-переменные для ручных schemathesis тестов;
+#   по умолчанию export'ятся из deploy-contract-env/create-contract-user
 
 include:
   - local: 'gitlab/common/ci-images.yml'

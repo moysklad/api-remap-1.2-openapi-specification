@@ -19,7 +19,6 @@ post:
           - service
           - bundle
           - variant
-        example: product
     - $ref: '../../../components/headers.yaml#/AcceptHeader'
     - $ref: '../../../components/headers.yaml#/AcceptEncoding'
     - $ref: '../../../components/headers.yaml#/ContentTypeJson'
@@ -41,7 +40,6 @@ post:
           description: Тип содержимого ответа
           schema:
             type: string
-            example: application/json
     '303':
       description: Печатная форма готова, в Location передана ссылка на файл
       headers:
@@ -53,6 +51,5 @@ post:
           description: Тип содержимого ответа
           schema:
             type: string
-            example: application/json
     default:
       $ref: '../../../components/responses.yaml#/CommonError'

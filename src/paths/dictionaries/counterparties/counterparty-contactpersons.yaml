@@ -24,25 +24,6 @@ get:
                 type: array
                 items:
                   $ref: '../../../openapi.yaml#/components/schemas/ContactPerson'
-          example:
-            meta:
-              href: "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/12a8b923-692c-11e6-8a84-bae500000056/contactpersons"
-              type: "contactperson"
-              mediaType: "application/json"
-              size: 1
-              limit: 1000
-              offset: 0
-            rows:
-              - meta:
-                  href: "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/12a8b923-692c-11e6-8a84-bae500000056/contactpersons/097ed025-025c-11f1-0a81-072700000158"
-                  type: "contactperson"
-                  mediaType: "application/json"
-                id: "097ed025-025c-11f1-0a81-072700000158"
-                accountId: "f976ed28-2e58-11e6-8a84-bae500000001"
-                name: "Иванов Иван Иванович"
-                email: "ivanov@example.com"
-                phone: "+7 (999) 123-45-67"
-                position: "Директор"
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
 

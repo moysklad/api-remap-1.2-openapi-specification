@@ -34,12 +34,10 @@ properties:
   documentState:
     type: string
     description: Состояние документов маркировки. Известные значения описаны в EmissionOrderDocumentState
-    example: "CREATED"
     readOnly: true
   emissionType:
     type: string
     description: Способ ввода в оборот. Известные значения описаны в EmissionOrderEmissionType
-    example: "LOCAL"
   externalCode:
     type: string
     maxLength: 255
@@ -93,7 +91,6 @@ properties:
   trackingType:
     type: string
     description: Тип маркируемой продукции. Известные значения описаны в TrackingType
-    example: "MILK"
   updated:
     type: string
     description: Момент последнего обновления

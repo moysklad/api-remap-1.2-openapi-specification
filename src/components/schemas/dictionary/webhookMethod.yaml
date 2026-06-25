@@ -2,4 +2,3 @@ type: string
 description: HTTP-метод запроса к URL подписчика. Известные значения для поля method сущности Webhook
 enum:
   - POST
-example: "POST"

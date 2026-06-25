@@ -28,7 +28,6 @@ properties:
   welcomeBonusesMode:
     type: string
     description: Условие начисления приветственных баллов. Известные значения описаны в WelcomeBonusesMode
-    example: "REGISTRATION"
   maxPaidRatePercents:
     type: integer
     format: int32

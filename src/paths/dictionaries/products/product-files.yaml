@@ -24,24 +24,6 @@ get:
                 type: array
                 items:
                   $ref: '../../../openapi.yaml#/components/schemas/File'
-          example:
-            meta:
-              href: "https://api.moysklad.ru/api/remap/1.2/entity/product/7944ef04-f831-11e5-7a69-971500188b19/files"
-              type: "files"
-              mediaType: "application/json"
-              size: 1
-              limit: 1000
-              offset: 0
-            rows:
-              - meta:
-                  href: "https://api.moysklad.ru/api/remap/1.2/entity/product/7944ef04-f831-11e5-7a69-971500188b19/files/f2728180-6afd-4d37-8a13-f3b48069bbb6"
-                  type: "files"
-                  mediaType: "application/json"
-                  downloadHref: "https://api.moysklad.ru/api/remap/1.2/download/f2728180-6afd-4d37-8a13-f3b48069bbb6"
-                title: "doc"
-                filename: "doc.pdf"
-                size: 25000
-                created: "2019-01-25 17:30:25.021"
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
     

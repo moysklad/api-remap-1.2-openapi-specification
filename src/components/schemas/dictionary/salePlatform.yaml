@@ -24,4 +24,3 @@ properties:
   salePlatformGroup:
     type: string
     description: Группа площадок для продаж. Известные значения описаны в SalePlatformGroup
-    example: "MARKETPLACES"

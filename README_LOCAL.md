@@ -78,7 +78,7 @@ docker compose run --rm sdk make test-smoke
 # Контрактные тесты Schemathesis (один для всех языков)
 docker compose run --rm -e SCHEMATHESIS_HOST=host -e SCHEMATHESIS_LOGIN=login -e SCHEMATHESIS_PASSWORD=pass sdk make schemathesis
 
-# Полный прогон (lint, bundle, generate-php, test-golden, test-smoke, schemathesis)
+# Полный прогон (lint, bundle, generate-php, test-golden, test-smoke)
 docker compose run --rm sdk make all
 ```
 
@@ -105,6 +105,8 @@ docker compose run --rm \
 ```
 
 Список целей: `docker compose run --rm sdk make help`.
+
+`make lint` через Redocly запрещает `example` внутри `Schema`. Для фазы Schemathesis `examples` оставляйте примеры только в `src/paths/**` в request-секциях (`requestBody.content.<media-type>.example`); component schema, parameter schema и header schema examples должны отсутствовать.
 
 ---
 
@@ -218,6 +220,20 @@ $this->assertContains($response->getStatusCode(), [200, 401, 500]);
 
 #### Contract тесты (Schemathesis)
 
+**При добавлении или существенном изменении сущности** после локальных lint/bundle/golden/smoke рекомендуется дополнительно прогнать targeted `coverage` только по путям этой сущности. `<keyword>` — URL-ключ сущности из спецификации (например, `product`, `customerorder`).
+
+Локально (Docker):
+
+```bash
+docker compose run --rm \
+  -e SCHEMATHESIS_HOST=https://api.example.com \
+  -e SCHEMATHESIS_LOGIN=user \
+  -e SCHEMATHESIS_PASSWORD=pass \
+  -e SCHEMATHESIS_PHASES=coverage \
+  -e SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/<keyword>(/|$)' \
+  sdk make schemathesis
+```
+
 Автоматическое тестирование API на соответствие OpenAPI спецификации:
 
 ```bash
@@ -225,8 +241,29 @@ schemathesis run dist/openapi.yaml \
   --url "$SCHEMATHESIS_HOST" \
   -H "Authorization: Basic ${AUTH_HEADER}" \
   --max-examples=50 \
-  --phases examples,fuzzing,stateful
+  --phases examples
 ```
+
+Локальный `make schemathesis` по умолчанию: фаза `examples`, `--mode positive`, проверка `positive_data_acceptance` (валидные example → **2XX**). Без `requestBody.example` операция в examples не тестируется (у Schemathesis `fill-missing` выключен по умолчанию).
+
+Для ручного targeted coverage по конкретной изменённой сущности задайте фильтры:
+
+```bash
+SCHEMATHESIS_PHASES=coverage \
+SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/product(/|$)' \
+SCHEMATHESIS_INCLUDE_METHOD=POST \
+make schemathesis
+```
+
+Для точечной проверки добавленного example используйте `operationId`:
+
+```bash
+SCHEMATHESIS_PHASES=examples \
+SCHEMATHESIS_INCLUDE_OPERATION_ID=createProduct \
+make schemathesis
+```
+
+Отладка: `SCHEMATHESIS_REPEAT=2` — два прогона подряд; `SCHEMATHESIS_SEED` — другой seed (по умолчанию `1`).
 
 ## Ссылки
 

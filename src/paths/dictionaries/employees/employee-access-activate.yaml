@@ -23,7 +23,6 @@ put:
               type: string
               maxLength: 255
               description: Логин сотрудника (обязателен при первой активации)
-              example: "newcashier@lognex"
             group:
               $ref: '../../../openapi.yaml#/components/schemas/Group'
             role:
@@ -52,8 +51,5 @@ put:
               mailActivationRequired:
                 type: boolean
                 description: Признак того, что на почту сотрудника выслано письмо для активации
-                example: true
-          example:
-            mailActivationRequired: true
     default:
       $ref: '../../../components/responses.yaml#/CommonError'

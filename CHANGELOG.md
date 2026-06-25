@@ -1,3 +1,7 @@
+# Версия 0.13.0
+
+* технические изменения
+
 # Версия 0.12.0
 
 * feat: переведена сборка java sdk на self-contained shaded jar с relocation

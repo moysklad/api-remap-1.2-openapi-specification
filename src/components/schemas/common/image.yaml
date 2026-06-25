@@ -7,12 +7,10 @@ properties:
     type: string
     maxLength: 255
     description: Название изображения
-    example: "Фото товара"
   filename:
     type: string
     maxLength: 255
     description: Имя файла
-    example: "product_image.jpg"
   content:
     type: string
     description: Изображение, закодированное в Base64
@@ -20,7 +18,6 @@ properties:
     type: integer
     description: Размер файла в байтах
     readOnly: true
-    example: 102400
   updated:
     type: string
     #    format: date-time  # API использует формат: YYYY-MM-DD HH:MM:SS.mmm

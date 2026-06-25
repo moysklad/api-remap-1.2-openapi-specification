@@ -9,7 +9,6 @@ properties:
     type: string
     description: Тип кода маркировки. Известные значения описаны в PositionTrackingCodeType
     readOnly: true
-    example: "trackingcode"
   trackingCodes_1162:
     type: array
     description: |

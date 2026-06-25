@@ -6,7 +6,6 @@ entityId:
   schema:
     type: string
     format: uuid
-    example: "12a8b923-692c-11e6-8a84-bae500000053"
 
 positionId:
   name: positionId
@@ -16,7 +15,6 @@ positionId:
   schema:
     type: string
     format: uuid
-    example: "12a8b923-692c-11e6-8a84-bae500000054"
 
 publicationId:
   name: publicationId
@@ -53,7 +51,6 @@ search:
   description: Контекстный поиск по строковым полям сущностей
   schema:
     type: string
-    example: "name=123"
 
 filter:
   name: filter
@@ -61,7 +58,6 @@ filter:
   description: Фильтрация выборки
   schema:
     type: string
-  example: "archived=false"
 
 expand:
   name: expand
@@ -69,7 +65,6 @@ expand:
   description: Замена ссылок объектами с помощью expand
   schema:
     type: string
-  example: "agent,organization"
 
 order:
   name: order
@@ -77,7 +72,6 @@ order:
   description: Сортировка
   schema:
     type: string
-  example: "name"
 
 entityType:
   name: type
@@ -103,4 +97,3 @@ fields:
       - downloadPermanentHref
       - stock
       - declaration
-  example: "minimumStock"

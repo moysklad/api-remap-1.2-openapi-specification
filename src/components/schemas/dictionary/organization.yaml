@@ -16,12 +16,10 @@ properties:
     type: string
     format: uuid
     description: ID юрлица
-    example: "12a8b923-692c-11e6-8a84-bae500000056"
   syncId:
     type: string
     format: uuid
     description: ID синхронизации
-    example: "12a8b923-692c-11e6-8a84-bae500000053"
   accountId:
     type: string
     format: uuid
@@ -31,7 +29,6 @@ properties:
     type: string
     maxLength: 255
     description: Наименование юрлица
-    example: "ОАО СветПром"
   code:
     type: string
     maxLength: 255
@@ -43,7 +40,6 @@ properties:
   archived:
     type: boolean
     description: Добавлено ли юрлицо в архив
-    example: false
   created:
     type: string
     description: Дата создания
@@ -59,7 +55,6 @@ properties:
   companyType:
     type: string
     description: Тип юрлица. Известные значения описаны в CompanyType
-    example: "legal"
   email:
     type: string
     format: email
@@ -193,7 +188,6 @@ properties:
   shared:
     type: boolean
     description: Общий доступ
-    example: false
   group:
     description: Метаданные отдела сотрудника
     $ref: '../../../openapi.yaml#/components/schemas/Group'

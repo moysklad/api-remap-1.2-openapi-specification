@@ -17,7 +17,6 @@ properties:
     format: uuid
     description: ID вебхука
     readOnly: true
-    example: "aec51463-bbd2-11e6-8a84-bae500000003"
   accountId:
     type: string
     format: uuid
@@ -27,28 +26,23 @@ properties:
     type: string
     maxLength: 255
     description: Тип сущности, к которой привязан вебхук. Известные ограничения см. в документации (нельзя webhook, discount, notes)
-    example: "demand"
   url:
     type: string
     format: uri
     maxLength: 255
     description: URL, по которому отправляется уведомление
-    example: "http://www.example.com"
   method:
     type: string
     description: HTTP метод запроса к URL подписчика. Известные значения описаны в WebhookMethod
-    example: "POST"
   enabled:
     type: boolean
     description: Вебхук включен или отключен
   action:
     type: string
     description: Отслеживаемое действие. Известные значения описаны в WebhookAction. Значение PROCESSED допустимо только для асинхронных задач
-    example: "CREATE"
   diffType:
     type: string
     description: Режим для действия UPDATE. Известные значения описаны в WebhookDiffType
-    example: "NONE"
     nullable: true
   authorApplication:
     description: Метаданные решения, создавшего вебхук

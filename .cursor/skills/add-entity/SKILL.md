@@ -38,12 +38,13 @@ Follow this order. Read [reference.md](reference.md) for templates and edge-case
 5. **Create schemas** — entity + list schemas; for documents with positions also position + position list schemas. For every schema that has a top-level `meta`, add `x-entity-static-builder` (see "Static builder extension" below).
 6. **Create paths** — one YAML per endpoint group. Reference schemas through `../../../openapi.yaml#/components/schemas/<SchemaName>` from request/response bodies.
 7. **Register in `src/openapi.yaml`** — paths, `components.schemas`, and tags in the local style used nearby.
-8. **Add test data** — create a rich shared fixture in `tests/fixtures/<snake_case>.json`, register it in both PHP and Java `FIXTURE_MODEL_MAP`, and update `IGNORED_FIELDS` only when required.
-9. **Add smoke coverage** — one test method per endpoint+method from the endpoint matrix.
-10. **Cross-check** — re-read the MD and verify fields, endpoints, refs, nullable values, enums, fixtures, smoke tests, and `x-entity-static-builder` presence on every schema with `meta`.
+8. **Plan Schemathesis checks** — default contract tests run only `examples`; add OpenAPI examples only with explicit user confirmation, and document the manual targeted coverage command for the changed entity (see "Schemathesis examples and targeted coverage" below).
+9. **Add test data** — create a rich shared fixture in `tests/fixtures/<snake_case>.json`, register it in both PHP and Java `FIXTURE_MODEL_MAP`, and update `IGNORED_FIELDS` only when required.
+10. **Add smoke coverage** — one test method per endpoint+method from the endpoint matrix.
+11. **Cross-check** — re-read the MD and verify fields, endpoints, refs, nullable values, enums, fixtures, smoke tests, examples added with confirmation, and `x-entity-static-builder` presence on every schema with `meta`.
     If the entity introduces query parameters beyond the common set (`limit`, `offset`, `search`, `filter`, `expand`, `order`, `fields`), decide whether `customtemplates/java/*Options.mustache` needs a typed helper or whether raw `RequestOptions.queryParam(...)` is enough.
-11. **Verify** — run the Docker make sequence below.
-12. **Report** — mention any stubs created or left unexpanded, intentionally skipped MD fields, and checks run.
+12. **Verify** — run the Docker make sequence below. If the entity was added or materially changed, also run targeted Schemathesis `coverage` for its paths (locally or GitLab `web` pipeline with `SCHEMATHESIS_PHASES=coverage` and `SCHEMATHESIS_INCLUDE_PATH_REGEX`; CI defaults to `examples` only).
+13. **Report** — mention any stubs created or left unexpanded, intentionally skipped MD fields, example decisions, targeted coverage command (and whether it was run), and checks run.
 
 ## Endpoint matrix quick template
 
@@ -114,10 +115,54 @@ Before verification, re-read the MD and confirm:
 - `+Обязательное при ответе` is treated as informational only and never converted to `readOnly: true` unless the same field also has `+Только для чтения`.
 - Nested object structures match MD JSON examples exactly.
 - Every API operation section maps to a path + method and a smoke test.
+- For every new `/entity/<keyword>` or non-entity API path, report the manual `SCHEMATHESIS_INCLUDE_PATH_REGEX` to use if targeted coverage is needed.
+- Metadata attributes and `metadata/states/{id}` exist when the MD metadata section requires them.
 - Non-standard query parameters are either intentionally left as raw `RequestOptions.queryParam(...)` values or covered by a typed Java options helper.
 - Metadata attributes, `metadata/states`, and `metadata/states/{id}` exist when the MD metadata section requires them.
 - Every schema with a top-level `meta` field carries `x-entity-static-builder` (entity → keyword + `id`; position → `parentId` + `id` + `<keyword>position` type).
 - The fixture uses the richest single-entity GET response, not a minimal create request.
+
+## Schemathesis examples and targeted coverage
+
+Contract tests run from `sdk-contract` in `gitlab/sdk/sdk-contract.yml`. The default CI and local phase is `examples`; full `coverage` is intentionally not part of the regular pipeline because complex document schemas generate too many cases and can exceed CI timeout.
+
+**After adding or materially changing an entity, run targeted `coverage` for that entity** (not optional documentation-only advice): locally via `make schemathesis` / Docker, or GitLab manual pipeline (`web`) with `SCHEMATHESIS_PHASES=coverage` and path/method/operationId filters below. See `README_LOCAL.md` and `README_GITLAB_CI.md`.
+
+When adding or changing an entity:
+
+1. Check the source MD file for realistic request/response JSON examples.
+2. Do not add OpenAPI `examples` silently. Ask for explicit confirmation per entity and explain what the example will validate.
+3. Never add `example` inside `Schema` objects; Redocly rejects schema-level examples. If examples are confirmed, add only path request examples under `requestBody.content.<media-type>.example`, preferring a minimal valid create/update payload from MD rather than copying every sample.
+4. Report the targeted examples command by `operationId`, then verify the whole `examples` suite twice on the same environment to catch conflicts / non-idempotent creates, and report the targeted coverage command for the changed path instead of editing CI shards.
+
+Manual coverage examples:
+
+```bash
+SCHEMATHESIS_PHASES=coverage \
+SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/<keyword>(/|$)' \
+make schemathesis
+
+SCHEMATHESIS_PHASES=coverage \
+SCHEMATHESIS_INCLUDE_PATH_REGEX='^/entity/<keyword>$' \
+SCHEMATHESIS_INCLUDE_METHOD=POST \
+make schemathesis
+```
+
+Manual examples check for one added operation:
+
+```bash
+SCHEMATHESIS_PHASES=examples \
+SCHEMATHESIS_INCLUDE_OPERATION_ID=create<PascalSingular> \
+make schemathesis
+```
+
+Whole-suite repeatability check after adding an example:
+
+```bash
+SCHEMATHESIS_PHASES=examples \
+SCHEMATHESIS_REPEAT=2 \
+make schemathesis
+```
 
 ## Static builder extension (`x-entity-static-builder`)
 

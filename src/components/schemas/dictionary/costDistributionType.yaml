@@ -3,4 +3,3 @@ description: Известные значения типа распределен
 enum:
   - BY_PRICE
   - BY_PRODUCTION
-example: "BY_PRICE"

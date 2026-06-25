@@ -10,11 +10,9 @@ properties:
   stockType:
     type: string
     description: Тип остатков. Известные значения описаны в WebhookStockStockType
-    example: "stock"
   reportType:
     type: string
     description: Тип отчёта. Известные значения описаны в WebhookStockReportType
-    example: "all"
   reportUrl:
     type: string
     maxLength: 255

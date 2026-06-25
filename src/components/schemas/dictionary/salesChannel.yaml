@@ -58,7 +58,6 @@ properties:
   type:
     type: string
     description: Тип Канала продаж. Известные значения описаны в SalesChannelType
-    example: "DIRECT_SALES"
   updated:
     type: string
     description: Момент последнего обновления сущности

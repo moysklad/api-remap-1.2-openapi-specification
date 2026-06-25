@@ -59,6 +59,8 @@ docker compose run --rm -e SCHEMATHESIS_HOST=host -e SCHEMATHESIS_LOGIN=login -e
 docker compose run --rm sdk make all          # lint + bundle + generate-php + test-golden + test-smoke
 ```
 
+Redocly lint запрещает `example` внутри `Schema`. Для Schemathesis `examples` используйте только request examples в `src/paths/**` (`requestBody.content.<media-type>.example`).
+
 При повторных запусках зависимости npm не перекачиваются (пропуск `npm ci`, если `package-lock.json` не менялся). Принудительная переустановка:  
 `docker compose run --rm -e NPM_CI_FORCE=1 sdk make lint`
 

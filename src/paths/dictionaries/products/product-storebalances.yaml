@@ -17,22 +17,6 @@ get:
         application/json:
           schema:
             $ref: '../../../openapi.yaml#/components/schemas/StoreBalanceList'
-          example:
-            meta:
-              href: "https://api.moysklad.ru/api/remap/1.2/entity/product/88df2fc1-1065-11f0-ac15-000700000012/storebalances"
-              type: "minimumstock"
-              mediaType: "application/json"
-              size: 1
-              limit: 1000
-              offset: 0
-            rows:
-              - meta:
-                  href: "https://api.moysklad.ru/api/remap/1.2/entity/product/88df2fc1-1065-11f0-ac15-000700000012/storebalances/de922f92-113b-11f0-ac15-001000000009"
-                  type: "minimumstock"
-                  mediaType: "application/json"
-                id: "de922f92-113b-11f0-ac15-001000000009"
-                accountId: "762af84a-0ec6-11f0-ac15-001000000001"
-                quantity: 2.5
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
     

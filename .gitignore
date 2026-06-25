@@ -44,3 +44,4 @@ clients/*
 /.venv-schemathesis/
 /.schemathesis-venv/
 /.hypothesis/
+/reports/

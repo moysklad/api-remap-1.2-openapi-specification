@@ -5,13 +5,11 @@ properties:
     type: string
     maxLength: 255
     description: Роль авторизованного пользователя (USER/ADMIN)
-    example: "admin"
     readOnly: true
   tariff:
     type: string
     maxLength: 255
     description: Действующий тариф Аккаунта. Известные значения описаны в SubscriptionTariff
-    example: "CORPORATE"
     readOnly: true
   isSubscriptionChangeAvailable:
     type: boolean
@@ -22,5 +20,4 @@ properties:
     format: int64
     nullable: true
     description: Дата (в миллисекундах) окончания действия текущего тарифа, если тариф отличается от "Пробный" и "Бесплатный"
-    example: 1642520241922
     readOnly: true

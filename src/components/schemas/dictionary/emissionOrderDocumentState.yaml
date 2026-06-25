@@ -5,4 +5,3 @@ enum:
   - SUZ_CREATED
   - SUZ_SEND
   - SUZ_COMPLETED
-example: "CREATED"

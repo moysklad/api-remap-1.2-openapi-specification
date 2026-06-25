@@ -23,12 +23,6 @@ get:
             $ref: '../../../openapi.yaml#/components/schemas/ProductList'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
-    
-    
-    
-    
-    
-    
 
 post:
   operationId: createProduct
@@ -47,6 +41,11 @@ post:
       application/json:
         schema:
           $ref: '../../../openapi.yaml#/components/schemas/Product'
+        example:
+          name: "Товар из примера OpenAPI"
+          archived: false
+          vatEnabled: false
+          shared: true
   responses:
     '200':
       description: Товар успешно создан

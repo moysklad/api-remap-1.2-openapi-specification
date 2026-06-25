@@ -24,23 +24,6 @@ get:
                 type: array
                 items:
                   $ref: '../../../openapi.yaml#/components/schemas/Note'
-          example:
-            meta:
-              href: "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/12a8b923-692c-11e6-8a84-bae500000056/notes"
-              type: "note"
-              mediaType: "application/json"
-              size: 1
-              limit: 1000
-              offset: 0
-            rows:
-              - meta:
-                  href: "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/12a8b923-692c-11e6-8a84-bae500000056/notes/3665cc2b-028c-11f1-0a81-0727000001af"
-                  type: "note"
-                  mediaType: "application/json"
-                id: "3665cc2b-028c-11f1-0a81-0727000001af"
-                accountId: "f976ed28-2e58-11e6-8a84-bae500000001"
-                created: "2026-02-05 15:14:25.634"
-                description: "Важный клиент, скидка 10%"
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
 
