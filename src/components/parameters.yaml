@@ -24,7 +24,6 @@ publicationId:
   schema:
     type: string
     format: uuid
-    example: "a86708d2-f8d3-4e67-8f04-6101158da808"
 
 limit:
   name: limit
