@@ -151,7 +151,6 @@ properties:
     format: double
     minimum: 0
     description: Сумма Входящего платежа в установленной валюте
-    readOnly: true
   vatSum:
     type: number
     format: double

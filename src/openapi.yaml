@@ -716,6 +716,8 @@ paths:
     $ref: './paths/documents/customerorders/customerorder-publication-by-id.yaml'
   /entity/customerorder/{id}/export:
     $ref: './paths/documents/customerorders/customerorder-export.yaml'
+  /entity/customerorder/{id}/audit:
+    $ref: './paths/documents/customerorders/customerorder-audit.yaml'
   # Documents - Invoices Out
   /entity/invoiceout:
     $ref: './paths/documents/invoiceouts/invoiceouts.yaml'
@@ -1031,6 +1033,8 @@ paths:
     $ref: './paths/documents/supplies/supplies.yaml'
   /entity/supply/{id}:
     $ref: './paths/documents/supplies/supply-by-id.yaml'
+  /entity/supply/{id}/trash:
+    $ref: './paths/documents/supplies/supply-trash.yaml'
   /entity/supply/{id}/files:
     $ref: './paths/documents/supplies/supply-files.yaml'
   /entity/supply/{id}/files/{fileId}:
@@ -1612,6 +1616,8 @@ components:
       $ref: './components/schemas/common/scriptPermissionValue.yaml'
     EmbeddedTemplate:
       $ref: './components/schemas/dictionary/embeddedTemplate.yaml'
+    TemplateComposition:
+      $ref: './components/schemas/dictionary/templateComposition.yaml'
     EmbeddedTemplateList:
       $ref: './components/schemas/dictionary/embeddedTemplateList.yaml'
     File:

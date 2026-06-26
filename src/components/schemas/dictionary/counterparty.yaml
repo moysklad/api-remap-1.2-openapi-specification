@@ -142,7 +142,6 @@ properties:
   discountCardNumber:
     type: string
     maxLength: 255
-    nullable: true
     description: Номер дисконтной карты контрагента
   discounts:
     type: array

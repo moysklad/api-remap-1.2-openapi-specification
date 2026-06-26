@@ -27,15 +27,4 @@ properties:
     minItems: 1
     nullable: true
     items:
-      type: object
-      required:
-        - template
-        - count
-      properties:
-        template:
-          $ref: '../../../openapi.yaml#/components/schemas/EmbeddedTemplate'
-        count:
-          type: integer
-          description: Количество копий печатной формы
-          minimum: 1
-          maximum: 10
+      $ref: '../../../openapi.yaml#/components/schemas/TemplateComposition'
