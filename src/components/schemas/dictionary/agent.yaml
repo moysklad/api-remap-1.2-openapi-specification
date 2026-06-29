@@ -19,3 +19,5 @@ x-polymorphic-discriminator:
       componentName: Counterparty
     - type: organization
       componentName: Organization
+    - type: employee
+      componentName: Employee
