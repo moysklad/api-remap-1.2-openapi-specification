@@ -1,6 +1,8 @@
 {{>licenseInfo}}
 package {{modelPackage}};
 
+import java.util.UUID;
+
 /**
  * Interface for common document positions.
  */
@@ -14,4 +16,5 @@ public interface IDocumentPosition {
     void setPrice(Double price);
     Double getQuantity();
     void setQuantity(Double quantity);
+    void setId(UUID id);
 }

@@ -1,5 +1,6 @@
 type: object
 description: Скидка (discount)
+x-polymorphic-parent: DiscountAbstract
 x-entity-static-builder:
   methodParams:
     - "id"
@@ -8,9 +9,15 @@ x-entity-static-builder:
     - path: "discount"
     - param: "id"
   type: "discount"
-allOf:
-  - $ref: '../../../openapi.yaml#/components/schemas/DiscountBase'
 properties:
+  id:
+    type: string
+    format: uuid
+    description: ID дополнительного поля
+    readOnly: true
+  meta:
+    description: Метаданные скидки
+    $ref: '../common/meta.yaml'
   allProducts:
     type: boolean
     description: Действует ли скидка на все товары

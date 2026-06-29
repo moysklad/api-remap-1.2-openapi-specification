@@ -1,4 +1,5 @@
 type: object
+x-polymorphic-parent: DiscountAbstract
 description: Специальная цена (specialpricediscount)
 x-entity-static-builder:
   methodParams:
@@ -8,9 +9,15 @@ x-entity-static-builder:
     - path: "specialpricediscount"
     - param: "id"
   type: "specialpricediscount"
-allOf:
-  - $ref: '../../../openapi.yaml#/components/schemas/DiscountBase'
 properties:
+  id:
+    type: string
+    format: uuid
+    description: ID дополнительного поля
+    readOnly: true
+  meta:
+    description: Метаданные скидки
+    $ref: '../common/meta.yaml'
   assortment:
     type: array
     description: Товары, услуги и модификации со скидкой

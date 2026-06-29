@@ -1,4 +1,5 @@
 type: object
+x-polymorphic-parent: DiscountAbstract
 x-entity-static-builder:
   methodParams:
     - "id"
@@ -7,9 +8,15 @@ x-entity-static-builder:
     - path: "accumulationdiscount"
     - param: "id"
   type: "accumulationdiscount"
-allOf:
-  - $ref: '../../../openapi.yaml#/components/schemas/DiscountBase'
 properties:
+  id:
+    type: string
+    format: uuid
+    description: ID дополнительного поля
+    readOnly: true
+  meta:
+    description: Метаданные скидки
+    $ref: '../common/meta.yaml'
   assortment:
     type: array
     description: Товары, услуги и модификации со скидкой
