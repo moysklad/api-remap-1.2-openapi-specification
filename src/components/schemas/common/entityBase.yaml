@@ -193,7 +193,6 @@ ProductMarker:
 
 DiscountAbstract:
   type: object
-  hasChildren: true
   x-polymorphic-discriminator:
     path: meta.type
     mappings:
