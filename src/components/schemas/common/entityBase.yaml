@@ -236,3 +236,12 @@ DiscountAbstract:
       description: Тэги агентов
       items:
         type: string
+    allProducts:
+      type: boolean
+      description: Действует ли скидка на все товары
+    assortment:
+      type: array
+      description: Массив метаданных товаров, услуг и модификаций
+      nullable: true
+      items:
+        $ref: '../../../openapi.yaml#/components/schemas/DiscountAssortmentItem'
