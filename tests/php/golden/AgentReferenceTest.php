@@ -12,11 +12,13 @@ use OpenAPI\Client\Model\Employee;
 use OpenAPI\Client\Model\FactureOut;
 use OpenAPI\Client\Model\Meta;
 use OpenAPI\Client\Model\Organization;
+use OpenAPI\Client\Model\PaymentOut;
+use OpenAPI\Client\Model\Store;
 use OpenAPI\Client\ObjectSerializer;
 
 /**
  * Тесты на поля, помеченные `x-agent-reference: true`,
- * должны принимать Counterparty, Organization и Agent через один и тот же setter,
+ * должны принимать Counterparty, Organization, Employee и Agent через один и тот же setter,
  * отвергать произвольные типы, и корректно сериализоваться в meta-ссылку на проводе.
  *
  * @see src/components/schemas/dictionary/agent.yaml
@@ -56,14 +58,30 @@ class AgentReferenceTest extends TestCase
         $this->assertSame($expectedType, $serialized['agent']['meta']['type']);
     }
 
+    public function testSetAgentAcceptsEmployee(): void
+    {
+        $employee = new Employee();
+        $employee->setMeta(self::buildMeta('employee'));
+
+        $paymentOut = new PaymentOut();
+        $paymentOut->setAgent($employee);
+
+        $serialized = $this->serializeToArray($paymentOut);
+
+        $this->assertArrayHasKey('agent', $serialized);
+        $this->assertIsArray($serialized['agent']);
+        $this->assertArrayHasKey('meta', $serialized['agent']);
+        $this->assertSame('employee', $serialized['agent']['meta']['type']);
+    }
+
     public function testSetAgentRejectsArbitraryType(): void
     {
         $cashIn = new CashIn();
-        $foreign = new Employee();
-        $foreign->setMeta(self::buildMeta('employee'));
+        $foreign = new Store();
+        $foreign->setMeta(self::buildMeta('store'));
 
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage("must be one of Counterparty, Organization, or Agent");
+        $this->expectExceptionMessage("must be one of Counterparty, Organization, Employee, or Agent");
         $cashIn->setAgent($foreign);
     }
 
@@ -111,6 +129,26 @@ class AgentReferenceTest extends TestCase
         $this->assertSame('Acme LLC', $agent->getLegalTitle());
         $this->assertSame('7700000000', $agent->getInn());
         $this->assertSame('counterparty', $agent->getMeta()->getType());
+    }
+
+    public function testAgentDeserializesFromEmployeeJson(): void
+    {
+        $json = [
+            'meta' => [
+                'href' => 'https://api.moysklad.ru/api/remap/1.2/entity/employee/00000000-0000-0000-0000-000000000001',
+                'metadataHref' => 'https://api.moysklad.ru/api/remap/1.2/entity/employee/metadata',
+                'type' => 'employee',
+                'mediaType' => 'application/json',
+            ],
+            'name' => 'Ivan',
+        ];
+
+        /** @var Agent $agent */
+        $agent = ObjectSerializer::deserialize(json_encode($json), Agent::class);
+
+        $this->assertInstanceOf(Employee::class, $agent);
+        $this->assertSame('Ivan', $agent->getName());
+        $this->assertSame('employee', $agent->getMeta()->getType());
     }
 
     /** @return array<string, mixed> */
