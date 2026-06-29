@@ -156,7 +156,6 @@ properties:
     format: double
     minimum: 0
     description: Сумма НДС
-    readOnly: true
   incomingNumber:
     type: string
     maxLength: 255
