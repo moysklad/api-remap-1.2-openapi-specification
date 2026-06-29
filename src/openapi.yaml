@@ -2062,6 +2062,8 @@ components:
         - meta
       allOf:
         - $ref: '#/components/schemas/OperationLinkedSum'
+    DiscountAbstract:
+      $ref: './components/schemas/common/entityBase.yaml#/DiscountAbstract'
     FinanceOutOperationSalesReturn:
       $ref: './components/schemas/dictionary/financeOutOperationSalesReturn.yaml'
     FinanceOutOperationSupply:
