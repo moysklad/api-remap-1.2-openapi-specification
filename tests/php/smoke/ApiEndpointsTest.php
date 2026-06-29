@@ -606,6 +606,16 @@ class ApiEndpointsTest extends TestCase
     }
 
     /**
+     * Проверяет доступность endpoint'а получения событий аудита контрагента.
+     * GET /entity/counterparty/{id}/audit
+     */
+    public function testGetCounterpartyAudit(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/counterparty/' . self::TEST_UUID . '/audit');
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
      * Проверяет доступность endpoint'а получения статуса контрагента по ID.
      * GET /entity/counterparty/metadata/states/{id}
      */

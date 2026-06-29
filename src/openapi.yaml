@@ -363,6 +363,8 @@ paths:
     $ref: './paths/dictionaries/counterparties/counterparty-files.yaml'
   /entity/counterparty/{id}/files/{fileId}:
     $ref: './paths/dictionaries/counterparties/counterparty-file-by-id.yaml'
+  /entity/counterparty/{id}/audit:
+    $ref: './paths/dictionaries/counterparties/counterparty-audit.yaml'
   #
   # Organizations
   /entity/organization:
