@@ -204,6 +204,8 @@ DiscountAbstract:
         componentName: SpecialPriceDiscount
       - type: discount
         componentName: Discount
+      - type: bonusprogram
+        componentName: BonusProgram
   required:
     - meta
   properties:
