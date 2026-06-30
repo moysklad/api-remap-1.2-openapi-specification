@@ -1,11 +1,5 @@
 type: object
 description: Запрос на печать
-oneOf:
-  - required:
-      - template
-      - extension
-  - required:
-      - templates
 properties:
   template:
     $ref: '../../../openapi.yaml#/components/schemas/EmbeddedTemplate'
