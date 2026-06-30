@@ -66,7 +66,7 @@ npm-ci:
 
 # Требует dist/openapi.yaml (сделайте make bundle перед первым запуском)
 test-smoke:
-	sh scripts/local-test-smoke.sh php
+	sh scripts/local-test-smoke.sh java
 
 test-golden:
 	@for lang in $(LANGUAGES_LIST); do $(MAKE) test-golden-$$lang || true; done

@@ -26,6 +26,26 @@ run_php() {
   }
 }
 
+run_java() {
+  if [ ! -d "clients/java" ]; then
+    echo "ERROR: clients/java not found. Run: make generate-java" >&2
+    exit 1
+  fi
+  if [ ! -d "tests/java/assertions" ]; then
+    echo "ERROR: tests/java/assertions not configured" >&2
+    exit 1
+  fi
+
+  echo "Running JUnit smoke suite (timeout 180s)..." >&2
+  timeout 180 mvn -pl tests/java/assertions -am test -Dtest=com.lognex.test.smoke.ApiEndpointsTest -Dsurefire.failIfNoSpecifiedTests=false || {
+    r=$?
+    if [ $r -eq 124 ]; then
+      echo "ERROR: Smoke tests timed out after 180s" >&2
+    fi
+    return $r
+  }
+}
+
 SMOKE_URL="${SMOKE_BASE_URL:-http://mock:8080}"
 echo "Waiting for mock server at ${SMOKE_URL}..." >&2
 max=90
