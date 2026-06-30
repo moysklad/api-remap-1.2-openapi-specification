@@ -1,0 +1,82 @@
+{
+  "customerOrder": {
+    "enabled": true,
+    "channelsEnabled": {
+      "email": true,
+      "interface": true,
+      "push": true
+    }
+  },
+  "dataExchange": {
+    "enabled": true,
+    "channelsEnabled": {
+      "email": true,
+      "interface": true,
+      "push": true
+    }
+  },
+  "invoice": {
+    "enabled": true,
+    "channelsEnabled": {
+      "email": true,
+      "interface": true,
+      "push": true
+    }
+  },
+  "retail": {
+    "enabled": true,
+    "channelsEnabled": {
+      "email": true,
+      "interface": true,
+      "push": true
+    }
+  },
+  "scripts": {
+    "enabled": true,
+    "channelsEnabled": {
+      "email": true,
+      "interface": true,
+      "push": true
+    }
+  },
+  "stock": {
+    "enabled": true,
+    "channelsEnabled": {
+      "email": true,
+      "interface": true,
+      "push": true
+    }
+  },
+  "task": {
+    "enabled": true,
+    "channelsEnabled": {
+      "email": true,
+      "interface": true,
+      "push": true
+    }
+  },
+  "mentions": {
+    "enabled": true,
+    "channelsEnabled": {
+      "email": true,
+      "interface": true,
+      "push": true
+    }
+  },
+  "onlineStores": {
+    "enabled": true,
+    "channelsEnabled": {
+      "email": true,
+      "interface": true,
+      "push": true
+    }
+  },
+  "followedEvents": {
+    "enabled": true,
+    "channelsEnabled": {
+      "email": false,
+      "interface": true,
+      "push": true
+    }
+  }
+}
