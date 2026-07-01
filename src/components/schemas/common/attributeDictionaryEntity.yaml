@@ -4,11 +4,11 @@ allOf:
 properties:
   type:
     type: string
-    enum: [customentity]
+    enum: [customentity, contract, counterparty, project, store, employee, product]
   value:
     properties:
       meta:
         $ref: '../common/meta.yaml'
       name:
         type: string
-        description: Наименование элемента кастомного справочника
+        description: Наименование элемента справочника

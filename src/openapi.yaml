@@ -1396,7 +1396,12 @@ components:
           long: '#/components/schemas/AttributeLong'
           boolean: '#/components/schemas/AttributeBool'
           customentity: '#/components/schemas/AttributeCustomEntity'
-          undefined: '#/components/schemas/AttributeObject'
+          contract: '#/components/schemas/AttributeCustomEntity'
+          counterparty: '#/components/schemas/AttributeCustomEntity'
+          project: '#/components/schemas/AttributeCustomEntity'
+          store: '#/components/schemas/AttributeCustomEntity'
+          employee: '#/components/schemas/AttributeCustomEntity'
+          product: '#/components/schemas/AttributeCustomEntity'
       allOf:
         - $ref: '#/components/schemas/AttributeMetaField'
       properties:
@@ -1414,7 +1419,9 @@ components:
     AttributeBool:
       $ref: './components/schemas/common/attributeBool.yaml'
     AttributeCustomEntity:
-      $ref: './components/schemas/common/attributeCustomEntity.yaml'
+      $ref: './components/schemas/common/attributeDictionaryEntity.yaml'
+    AttributeType:
+      $ref: './components/schemas/common/attributeType.yaml'
     AttributeDateTime:
       $ref: './components/schemas/common/attributeDateTime.yaml'
     AttributeDouble:
