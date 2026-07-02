@@ -1,0 +1,9 @@
+type: object
+allOf:
+  - $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
+properties:
+  type:
+    type: string
+    enum: [product]
+  value:
+    $ref: '../../../openapi.yaml#/components/schemas/Product'

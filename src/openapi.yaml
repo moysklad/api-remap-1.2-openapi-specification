@@ -1396,12 +1396,12 @@ components:
           long: '#/components/schemas/AttributeLong'
           boolean: '#/components/schemas/AttributeBool'
           customentity: '#/components/schemas/AttributeCustomEntity'
-          contract: '#/components/schemas/AttributeCustomEntity'
-          counterparty: '#/components/schemas/AttributeCustomEntity'
-          project: '#/components/schemas/AttributeCustomEntity'
-          store: '#/components/schemas/AttributeCustomEntity'
-          employee: '#/components/schemas/AttributeCustomEntity'
-          product: '#/components/schemas/AttributeCustomEntity'
+          contract: '#/components/schemas/AttributeContractEntity'
+          counterparty: '#/components/schemas/AttributeCounterpartyEntity'
+          employee: '#/components/schemas/AttributeEmployeeEntity'
+          product: '#/components/schemas/AttributeProductEntity'
+          project: '#/components/schemas/AttributeProjectEntity'
+          store: '#/components/schemas/AttributeStoreEntity'
       allOf:
         - $ref: '#/components/schemas/AttributeMetaField'
       properties:
@@ -1419,7 +1419,19 @@ components:
     AttributeBool:
       $ref: './components/schemas/common/attributeBool.yaml'
     AttributeCustomEntity:
-      $ref: './components/schemas/common/attributeDictionaryEntity.yaml'
+      $ref: './components/schemas/common/attributeCustomEntity.yaml'
+    AttributeContractEntity:
+      $ref: './components/schemas/common/attributeContractEntity.yaml'
+    AttributeCounterpartyEntity:
+      $ref: './components/schemas/common/attributeCounterpartyEntity.yaml'
+    AttributeEmployeeEntity:
+      $ref: './components/schemas/common/attributeEmployeeEntity.yaml'
+    AttributeProductEntity:
+      $ref: './components/schemas/common/attributeProductEntity.yaml'
+    AttributeProjectEntity:
+      $ref: './components/schemas/common/attributeProjectEntity.yaml'
+    AttributeStoreEntity:
+      $ref: './components/schemas/common/attributeStoreEntity.yaml'
     AttributeType:
       $ref: './components/schemas/common/attributeType.yaml'
     AttributeDateTime:
