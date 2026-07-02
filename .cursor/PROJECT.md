@@ -83,7 +83,7 @@ CHANGELOG.md                           # Auto-generated changelog (prepended by 
 | `verify` | `validate`, `bundle-openapi`, `bundle-smoke-openapi`; `deploy-contract-env`, `create-contract-user` for web / master / tag contract pipelines | push / web / master / tags |
 | `contract-test` | `sdk-contract` | web / master / tags |
 | `generate-sdk` | `generate-sdk-php`, `generate-sdk-java` (python/js remain stubs) | push / web / master |
-| `test` | `sdk-golden-php`, `sdk-golden-java`, `sdk-smoke` (php) | push / web / master |
+| `test` | `sdk-golden-php`, `sdk-golden-java`, `sdk-smoke` (java) | push / web / master |
 | `version` | `version:auto` | master push |
 | `push-sdk` | `push-sdk-php` | web + PUSH_TO_REMOTE=true |
 | `mirror` | `mirror-to-github`, `create-github-release` | master push |
@@ -96,7 +96,7 @@ Legacy stages (`prepare`, `deploy-for-space`, `create-user`, `build`, `delete-sp
 
 ## Pipeline Scenarios (summary)
 
-1. **Push to branch** — lint, bundle, light-bundle, generate PHP+Java SDK, run golden (PHP+Java) and smoke (PHP), prep branch sync for both internal SDK repos, then publish a branch-scoped Java artifact to Artifactory.
+1. **Push to branch** — lint, bundle, light-bundle, generate PHP+Java SDK, run golden (PHP+Java) and smoke (Java), prep branch sync for both internal SDK repos, then publish a branch-scoped Java artifact to Artifactory.
 2. **Manual (web) on branch** — same as push + contract test flow (`deploy-contract-env` → `create-contract-user` → `sdk-contract`, optional `remove-contract-env`) + optional `push-sdk-php` (PUSH_TO_REMOTE=true) + the same PHP/Java internal SDK sync and Java Artifactory publish steps.
 3. **Master merge/push** — checks, contract test flow, SDK generation + tests, `version:auto` (CHANGELOG + tag), `mirror-to-github` + `create-github-release`, manual internal SDK release sync for PHP+Java, then Java publish to Maven Central.
 4. **Tag push** — SDK validate flow including Schemathesis `examples`; release/mirror jobs remain tied to master pushes.

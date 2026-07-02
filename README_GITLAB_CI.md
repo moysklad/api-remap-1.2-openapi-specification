@@ -21,7 +21,7 @@
 | `generate-sdk-java`      | Генерация Java SDK (заглушка)                                            |
 | `sdk-golden-php`         | Golden тесты для PHP (сериализация/десериализация)                       |
 | `sdk-golden-java`        | Golden тесты для Java                                                    |
-| `sdk-smoke`              | Smoke тесты для PHP с openapi-mock сервером                              |
+| `sdk-smoke`              | Smoke тесты для Java с openapi-mock сервером                             |
 | `prep-branch-and-mr-php` | Cоздание/обновление ветки и mr по сгенерированному sdk в репозитории sdk |
 
 #### 2. Ручной запуск (web) на ветке

@@ -11,5 +11,6 @@ alwaysApply: false
   - `README_LOCAL.md` for project structure and local workflow
   - `README_GITLAB_CI.md` for GitLab CI/CD pipeline behavior
   - `.cursor/PROJECT.md` for the agent-facing project overview
+  - `.cursor/README.md` and relevant `.cursor/skills/**` docs when agent workflow instructions change
 - Do not leave documentation updates as an optional follow-up when the change affects documented behavior.
 - When appropriate, mention in the final summary which documentation files were updated.
