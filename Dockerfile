@@ -12,8 +12,8 @@ RUN echo "https://dl-cdn.alpinelinux.org/alpine/v3.23/community" >> /etc/apk/rep
 # Python
 RUN apk add --no-cache python3 py3-pip
 
-# Java (JRE достаточно для запуска тестов; JDK/Maven — при добавлении Java SDK)
-RUN apk add --no-cache openjdk21-jre-headless
+# Java + Maven (для Java smoke/golden тестов)
+RUN apk add --no-cache openjdk21-jre-headless maven
 ENV JAVA_HOME=/usr/lib/jvm/java-21-openjdk
 
 # Утилиты (make для Makefile, curl для healthcheck mock-сервера)

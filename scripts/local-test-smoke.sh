@@ -1,9 +1,9 @@
 #!/bin/sh
 # Smoke тесты: ожидание mock-сервера + тесты для указанного языка
-# Использование: ./scripts/local-test-smoke.sh <php|python|java|javascript>
+# Использование: ./scripts/local-test-smoke.sh <java|php|python|javascript>
 # Mock-сервер (openapi-mock) запускается как sidecar через docker-compose.
 set -e
-LANG="${1:-php}"
+LANG="${1:-java}"
 SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
 ROOT_DIR=$(cd "$SCRIPT_DIR/.." && pwd)
 cd "$ROOT_DIR"
@@ -21,6 +21,18 @@ run_php() {
     r=$?
     if [ $r -eq 124 ]; then
       echo "ERROR: Smoke tests timed out after 120s" >&2
+    fi
+    return $r
+  }
+}
+
+run_java() {
+  echo "Running Java smoke suite (Maven)..." >&2
+  cd "$ROOT_DIR"
+  timeout 120 mvn -pl tests/java/assertions -am test -Dtest=**/smoke/ApiEndpointsTest -Dsurefire.failIfNoSpecifiedTests=false || {
+    r=$?
+    if [ $r -eq 124 ]; then
+      echo "ERROR: Java smoke tests timed out after 120s" >&2
     fi
     return $r
   }

@@ -1,13 +1,15 @@
 # Smoke тесты: openapi-mock запускается в том же контейнере
 # (GitLab CI service не имеет доступа к артефакту dist/openapi.yaml)
 sdk-smoke:
-  extends: .php-test-base
+  extends: .maven-jdk11-image
   stage: test
   needs:
     - job: bundle-smoke-openapi
       artifacts: true
+    - job: generate-sdk-java
+      artifacts: true
   rules:
-    - if: '$SDK_LANGUAGES == "" || $SDK_LANGUAGES =~ /php/'
+    - if: '$SDK_LANGUAGES == "" || $SDK_LANGUAGES =~ /java/'
       when: on_success
   variables:
     SMOKE_BASE_URL: http://localhost:8080
@@ -18,6 +20,11 @@ sdk-smoke:
         echo "ERROR: dist/openapi.yaml not found (bundle-openapi artifact?)"
         exit 1
       fi
+      if ! command -v openapi-mock >/dev/null 2>&1; then
+        echo "ERROR: openapi-mock binary is not available in current CI image"
+        exit 1
+      fi
+      echo "openapi-mock version: $(openapi-mock --version)"
 
       echo "Starting openapi-mock server on port 8080..."
       MOCK_LOG=$(mktemp)
@@ -43,22 +50,17 @@ sdk-smoke:
         sleep 1
       done
 
-      if [ -d "tests/php" ]; then
-        cd tests/php
-        if [ ! -f "bootstrap.php" ]; then
-          printf '%s\n' '<?php' '$b=dirname(__DIR__,2); require __DIR__."/vendor/autoload.php"; if(file_exists($b."/clients/php/autoload.php")) require $b."/clients/php/autoload.php";' > bootstrap.php
-        fi
-        composer install --no-interaction
+      if [ -d "tests/java/assertions" ]; then
         # Verify mock server is still responding
         code=$(curl -s -o /dev/null -w "%{http_code}" --connect-timeout 2 --max-time 5 http://localhost:8080/api/remap/1.2/entity/product 2>/dev/null || true)
         if [ -z "$code" ] || [ "$code" = "000" ]; then
-          echo "ERROR: openapi-mock no longer responding before PHPUnit. Log:"
+          echo "ERROR: openapi-mock no longer responding before Maven tests. Log:"
           cat "$MOCK_LOG" 2>/dev/null || true
           exit 1
         fi
-        echo "=== Smoke tests (PHP) vs openapi-mock ==="
-        vendor/bin/phpunit --testsuite smoke --testdox
+        echo "=== Smoke tests (Java) vs openapi-mock ==="
+        mvn -pl tests/java/assertions -am test -Dtest=**/smoke/ApiEndpointsTest -Dsurefire.failIfNoSpecifiedTests=false
       else
-        echo "WARNING: tests/php directory not found"
+        echo "WARNING: tests/java/assertions directory not found"
         exit 1
       fi
