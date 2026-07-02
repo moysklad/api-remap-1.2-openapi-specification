@@ -469,6 +469,8 @@ paths:
   # BonusTransactions
   /entity/bonustransaction:
     $ref: './paths/dictionaries/bonustransactions/bonustransactions.yaml'
+  /entity/bonustransaction/batch:
+    $ref: './paths/dictionaries/bonustransactions/bonustransactions-batch.yaml'
   /entity/bonustransaction/{id}:
     $ref: './paths/dictionaries/bonustransactions/bonustransaction-by-id.yaml'
   /entity/bonustransaction/delete:

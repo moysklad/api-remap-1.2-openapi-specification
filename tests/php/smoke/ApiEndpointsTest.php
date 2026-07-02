@@ -4072,6 +4072,15 @@ class ApiEndpointsTest extends TestCase
     }
 
     /**
+     * POST /entity/bonustransaction/batch
+     */
+    public function testCreateBonusTransactionsBatch(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/bonustransaction/batch', ['json' => [['name' => 'Test BonusTransaction Batch']],]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
      * GET /entity/bonustransaction/{id}
      */
     public function testGetBonusTransactionById(): void
