@@ -82,6 +82,7 @@ class SerializationTest extends TestCase
         'demand' => 'Demand',
         'move' => 'Move',
         'retail_demand' => 'RetailDemand',
+        'retail_sales_return' => 'RetailSalesReturn',
         'enter' => 'Enter',
         'sales_return' => 'SalesReturn',
         'loss' => 'Loss',
