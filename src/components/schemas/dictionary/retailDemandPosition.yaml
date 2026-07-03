@@ -1,7 +1,6 @@
 type: object
 description: Позиция Розничной продажи
 x-implements: IDocumentPosition
-x-polymorphic-parent: EntityWithMeta
 x-entity-static-builder:
   methodParams:
     - "parentId"
