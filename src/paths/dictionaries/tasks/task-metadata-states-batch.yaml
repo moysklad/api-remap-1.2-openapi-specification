@@ -1,9 +1,8 @@
 post:
-  operationId: createTaskMetadataStates
+  operationId: createTaskMetadataStatesBatch
   tags:
     - Tasks
-  summary: Создать или изменить типы задач
-  description: Создание одного или нескольких типов задач
+  summary: Массовое создание и обновление типов задач
   parameters:
     - $ref: '../../../components/headers.yaml#/AcceptHeader'
     - $ref: '../../../components/headers.yaml#/AcceptEncoding'
@@ -13,13 +12,19 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../../../openapi.yaml#/components/schemas/State'
+          type: array
+          items:
+            $ref: '../../../openapi.yaml#/components/schemas/State'
+          minItems: 1
+          maxItems: 1000
   responses:
     '200':
-      description: Тип задачи или список типов задач успешно обработаны
+      description: Успешный запрос
       content:
         application/json:
           schema:
-            $ref: '../../../openapi.yaml#/components/schemas/State'
+            type: array
+            items:
+              $ref: '../../../openapi.yaml#/components/schemas/StateRowResult'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'

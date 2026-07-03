@@ -75,6 +75,8 @@ paths:
     $ref: './paths/dictionaries/tasks/task-metadata-states.yaml'
   /entity/task/metadata/states/{id}:
     $ref: './paths/dictionaries/tasks/task-metadata-state-by-id.yaml'
+  /entity/task/metadata/states/batch:
+    $ref: './paths/dictionaries/tasks/task-metadata-states-batch.yaml'
 
   # SalesChannels
   /entity/saleschannel:
@@ -581,6 +583,8 @@ paths:
     $ref: './paths/documents/internalorders/internalorder-metadata-states.yaml'
   /entity/internalorder/metadata/states/{id}:
     $ref: './paths/documents/internalorders/internalorder-metadata-state-by-id.yaml'
+  /entity/internalorder/metadata/states/batch:
+    $ref: './paths/documents/internalorders/internalorder-metadata-states-batch.yaml'
   /entity/internalorder/new:
     $ref: './paths/documents/internalorders/internalorder-new.yaml'
   /entity/internalorder/{id}/positions:
@@ -610,6 +614,8 @@ paths:
     $ref: './paths/documents/processingorders/processingorder-metadata-states.yaml'
   /entity/processingorder/metadata/states/{id}:
     $ref: './paths/documents/processingorders/processingorder-metadata-state-by-id.yaml'
+  /entity/processingorder/metadata/states/batch:
+    $ref: './paths/documents/processingorders/processingorder-metadata-states-batch.yaml'
   /entity/processingorder/new:
     $ref: './paths/documents/processingorders/processingorder-new.yaml'
   /entity/processingorder/{id}/positions:
@@ -647,6 +653,8 @@ paths:
     $ref: './paths/documents/processings/processing-metadata-states.yaml'
   /entity/processing/metadata/states/{id}:
     $ref: './paths/documents/processings/processing-metadata-state-by-id.yaml'
+  /entity/processing/metadata/states/batch:
+    $ref: './paths/documents/processings/processing-metadata-states-batch.yaml'
   /entity/processing/new:
     $ref: './paths/documents/processings/processing-new.yaml'
   /entity/processing/{id}/materials:
@@ -680,6 +688,8 @@ paths:
     $ref: './paths/documents/customerorders/customerorder-metadata-states.yaml'
   /entity/customerorder/metadata/states/{id}:
     $ref: './paths/documents/customerorders/customerorder-metadata-state-by-id.yaml'
+  /entity/customerorder/metadata/states/batch:
+    $ref: './paths/documents/customerorders/customerorder-metadata-states-batch.yaml'
   /entity/customerorder/new:
     $ref: './paths/documents/customerorders/customerorder-new.yaml'
   /entity/customerorder/{id}/positions:
@@ -833,6 +843,8 @@ paths:
     $ref: './paths/documents/enters/enter-metadata-states.yaml'
   /entity/enter/metadata/states/{id}:
     $ref: './paths/documents/enters/enter-metadata-state-by-id.yaml'
+  /entity/enter/metadata/states/batch:
+    $ref: './paths/documents/enters/enter-metadata-states-batch.yaml'
   /entity/enter/new:
     $ref: './paths/documents/enters/enter-new.yaml'
   /entity/enter/{id}/positions:
@@ -920,6 +932,8 @@ paths:
     $ref: './paths/documents/inventories/inventory-metadata-states.yaml'
   /entity/inventory/metadata/states/{id}:
     $ref: './paths/documents/inventories/inventory-metadata-state-by-id.yaml'
+  /entity/inventory/metadata/states/batch:
+    $ref: './paths/documents/inventories/inventory-metadata-states-batch.yaml'
   /entity/inventory/new:
     $ref: './paths/documents/inventories/inventory-new.yaml'
   /entity/inventory/{id}/positions:
@@ -955,6 +969,8 @@ paths:
     $ref: './paths/documents/purchasereturns/purchasereturn-metadata-states.yaml'
   /entity/purchasereturn/metadata/states/{id}:
     $ref: './paths/documents/purchasereturns/purchasereturn-metadata-state-by-id.yaml'
+  /entity/purchasereturn/metadata/states/batch:
+    $ref: './paths/documents/purchasereturns/purchasereturn-metadata-states-batch.yaml'
   /entity/purchasereturn/new:
     $ref: './paths/documents/purchasereturns/purchasereturn-new.yaml'
   /entity/purchasereturn/{id}/positions:
@@ -988,6 +1004,8 @@ paths:
     $ref: './paths/documents/supplies/supply-metadata-states.yaml'
   /entity/supply/metadata/states/{id}:
     $ref: './paths/documents/supplies/supply-metadata-state-by-id.yaml'
+  /entity/supply/metadata/states/batch:
+    $ref: './paths/documents/supplies/supply-metadata-states-batch.yaml'
   /entity/supply/new:
     $ref: './paths/documents/supplies/supply-new.yaml'
   /entity/supply/{id}/positions:
@@ -1016,6 +1034,8 @@ paths:
     $ref: './paths/documents/prepaymentreturns/prepaymentreturn-metadata-states.yaml'
   /entity/prepaymentreturn/metadata/states/{id}:
     $ref: './paths/documents/prepaymentreturns/prepaymentreturn-metadata-state-by-id.yaml'
+  /entity/prepaymentreturn/metadata/states/batch:
+    $ref: './paths/documents/prepaymentreturns/prepaymentreturn-metadata-states-batch.yaml'
   /entity/prepaymentreturn/{id}/positions:
     $ref: './paths/documents/prepaymentreturns/prepaymentreturn-positions.yaml'
   /entity/prepaymentreturn/{id}/positions/{positionId}:
@@ -1070,6 +1090,8 @@ paths:
     $ref: './paths/documents/purchaseorders/purchaseorder-metadata-states.yaml'
   /entity/purchaseorder/metadata/states/{id}:
     $ref: './paths/documents/purchaseorders/purchaseorder-metadata-state-by-id.yaml'
+  /entity/purchaseorder/metadata/states/batch:
+    $ref: './paths/documents/purchaseorders/purchaseorder-metadata-states-batch.yaml'
   /entity/purchaseorder/new:
     $ref: './paths/documents/purchaseorders/purchaseorder-new.yaml'
   /entity/purchaseorder/{id}/positions:
@@ -1121,6 +1143,8 @@ paths:
     $ref: './paths/documents/commissionreportins/commissionreportin-metadata-states.yaml'
   /entity/commissionreportin/metadata/states/{id}:
     $ref: './paths/documents/commissionreportins/commissionreportin-metadata-state-by-id.yaml'
+  /entity/commissionreportin/metadata/states/batch:
+    $ref: './paths/documents/commissionreportins/commissionreportin-metadata-states-batch.yaml'
   /entity/commissionreportin/{id}/positions:
     $ref: './paths/documents/commissionreportins/commissionreportin-positions.yaml'
   /entity/commissionreportin/{id}/positions/batch:
@@ -1155,6 +1179,8 @@ paths:
     $ref: './paths/documents/commissionreportouts/commissionreportout-metadata-states.yaml'
   /entity/commissionreportout/metadata/states/{id}:
     $ref: './paths/documents/commissionreportouts/commissionreportout-metadata-state-by-id.yaml'
+  /entity/commissionreportout/metadata/states/batch:
+    $ref: './paths/documents/commissionreportouts/commissionreportout-metadata-states-batch.yaml'
   /entity/commissionreportout/{id}/positions:
     $ref: './paths/documents/commissionreportouts/commissionreportout-positions.yaml'
   /entity/commissionreportout/{id}/positions/batch:
@@ -1187,6 +1213,8 @@ paths:
     $ref: './paths/documents/cashins/cashin-metadata-states.yaml'
   /entity/cashin/metadata/states/{id}:
     $ref: './paths/documents/cashins/cashin-metadata-state-by-id.yaml'
+  /entity/cashin/metadata/states/batch:
+    $ref: './paths/documents/cashins/cashin-metadata-states-batch.yaml'
   /entity/cashin/new:
     $ref: './paths/documents/cashins/cashin-new.yaml'
 
@@ -1213,6 +1241,8 @@ paths:
     $ref: './paths/documents/paymentins/paymentin-metadata-states.yaml'
   /entity/paymentin/metadata/states/{id}:
     $ref: './paths/documents/paymentins/paymentin-metadata-state-by-id.yaml'
+  /entity/paymentin/metadata/states/batch:
+    $ref: './paths/documents/paymentins/paymentin-metadata-states-batch.yaml'
   /entity/paymentin/new:
     $ref: './paths/documents/paymentins/paymentin-new.yaml'
 
@@ -1235,6 +1265,8 @@ paths:
     $ref: './paths/documents/factureins/facturein-metadata-states.yaml'
   /entity/facturein/metadata/states/{id}:
     $ref: './paths/documents/factureins/facturein-metadata-state-by-id.yaml'
+  /entity/facturein/metadata/states/batch:
+    $ref: './paths/documents/factureins/facturein-metadata-states-batch.yaml'
   /entity/facturein/new:
     $ref: './paths/documents/factureins/facturein-new.yaml'
 
@@ -1257,6 +1289,8 @@ paths:
     $ref: './paths/documents/factureouts/factureout-metadata-states.yaml'
   /entity/factureout/metadata/states/{id}:
     $ref: './paths/documents/factureouts/factureout-metadata-state-by-id.yaml'
+  /entity/factureout/metadata/states/batch:
+    $ref: './paths/documents/factureouts/factureout-metadata-states-batch.yaml'
   /entity/factureout/new:
     $ref: './paths/documents/factureouts/factureout-new.yaml'
 
@@ -1283,6 +1317,8 @@ paths:
     $ref: './paths/documents/paymentouts/paymentout-metadata-states.yaml'
   /entity/paymentout/metadata/states/{id}:
     $ref: './paths/documents/paymentouts/paymentout-metadata-state-by-id.yaml'
+  /entity/paymentout/metadata/states/batch:
+    $ref: './paths/documents/paymentouts/paymentout-metadata-states-batch.yaml'
   /entity/paymentout/new:
     $ref: './paths/documents/paymentouts/paymentout-new.yaml'
 
@@ -1309,6 +1345,8 @@ paths:
     $ref: './paths/documents/retaildrawercashins/retaildrawercashin-metadata-states.yaml'
   /entity/retaildrawercashin/metadata/states/{id}:
     $ref: './paths/documents/retaildrawercashins/retaildrawercashin-metadata-state-by-id.yaml'
+  /entity/retaildrawercashin/metadata/states/batch:
+    $ref: './paths/documents/retaildrawercashins/retaildrawercashin-metadata-states-batch.yaml'
   /entity/retaildrawercashin/new:
     $ref: './paths/documents/retaildrawercashins/retaildrawercashin-new.yaml'
 
@@ -1335,6 +1373,8 @@ paths:
     $ref: './paths/documents/retaildrawercashouts/retaildrawercashout-metadata-states.yaml'
   /entity/retaildrawercashout/metadata/states/{id}:
     $ref: './paths/documents/retaildrawercashouts/retaildrawercashout-metadata-state-by-id.yaml'
+  /entity/retaildrawercashout/metadata/states/batch:
+    $ref: './paths/documents/retaildrawercashouts/retaildrawercashout-metadata-states-batch.yaml'
   /entity/retaildrawercashout/new:
     $ref: './paths/documents/retaildrawercashouts/retaildrawercashout-new.yaml'
 
@@ -1357,6 +1397,8 @@ paths:
     $ref: './paths/documents/cashouts/cashout-metadata-states.yaml'
   /entity/cashout/metadata/states/{id}:
     $ref: './paths/documents/cashouts/cashout-metadata-state-by-id.yaml'
+  /entity/cashout/metadata/states/batch:
+    $ref: './paths/documents/cashouts/cashout-metadata-states-batch.yaml'
   /entity/cashout/new:
     $ref: './paths/documents/cashouts/cashout-new.yaml'
 
@@ -1670,10 +1712,6 @@ components:
       $ref: './components/schemas/dictionary/state.yaml'
     StateRowResult:
       $ref: './components/schemas/common/stateRowResult.yaml'
-    StatesUpsert:
-      $ref: './components/schemas/common/statesUpsert.yaml'
-    StatesUpsertResult:
-      $ref: './components/schemas/common/statesUpsertResult.yaml'
     StateType:
       $ref: './components/schemas/dictionary/stateType.yaml'
     Store:
