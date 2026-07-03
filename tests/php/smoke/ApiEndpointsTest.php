@@ -5118,6 +5118,26 @@ class ApiEndpointsTest extends TestCase
         ]));
     }
 
+    // ==================== NOTIFICATIONS ====================
+
+    /**
+     * Проверяет доступность endpoint'а получения настроек уведомлений.
+     * GET /notification/settings
+     */
+    public function testGetNotificationSettings(): void
+    {
+        $this->assertReachable($this->client->get(self::API_BASE_PATH . '/notification/settings'));
+    }
+
+    /**
+     * Проверяет доступность endpoint'а обновления настроек уведомлений.
+     * PUT /notification/settings
+     */
+    public function testUpdateNotificationSettings(): void
+    {
+        $this->assertReachable($this->client->put(self::API_BASE_PATH . '/notification/settings', ['json' => ['task' => ['enable' => true]]]));
+    }
+
     private function lossDocumentPayload(): array
     {
         return [

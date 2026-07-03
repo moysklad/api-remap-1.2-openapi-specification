@@ -13,7 +13,6 @@ import ru.moysklad.remap_1_2.model.Error;
 
 import java.io.File;
 import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -132,6 +131,7 @@ class SerializationTest extends BaseTestCase {
         FIXTURE_MODEL_MAP.put("company_settings", "CompanySettings");
         FIXTURE_MODEL_MAP.put("company_settings_metadata", "CompanySettingsMetadata");
         FIXTURE_MODEL_MAP.put("user_settings", "UserSettings");
+        FIXTURE_MODEL_MAP.put("notification_settings", "NotificationSettings");
         FIXTURE_MODEL_MAP.put("subscription", "Subscription");
         FIXTURE_MODEL_MAP.put("assortment_settings", "AssortmentSettings");
         FIXTURE_MODEL_MAP.put("assortment", "Assortment");

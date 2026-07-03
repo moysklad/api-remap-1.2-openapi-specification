@@ -412,6 +412,10 @@ paths:
   /context/usersettings:
     $ref: './paths/dictionaries/usersettings/usersettings.yaml'
 
+  # Notifications
+  /notification/settings:
+    $ref: './paths/dictionaries/notifications/notification-settings.yaml'
+
   # Discounts
   /entity/discount:
     $ref: './paths/dictionaries/discounts/discounts.yaml'
@@ -2139,6 +2143,12 @@ components:
       $ref: './components/schemas/dictionary/companySettingsMetadata.yaml'
     UserSettings:
       $ref: './components/schemas/dictionary/userSettings.yaml'
+    NotificationSettings:
+      $ref: './components/schemas/dictionary/notificationSettings.yaml'
+    NotificationGroupSettings:
+      $ref: './components/schemas/dictionary/notificationGroupSettings.yaml'
+    NotificationChannelSettings:
+      $ref: './components/schemas/dictionary/notificationChannelSettings.yaml'
     DefaultScreen:
       $ref: './components/schemas/dictionary/defaultScreen.yaml'
     Locale:
@@ -2322,6 +2332,8 @@ tags:
     description: Операции с настройками компании
   - name: UserSettings
     description: Операции с настройками пользователя
+  - name: Notifications
+    description: Операции с уведомлениями
   - name: Subscriptions
     description: Операции с подпиской компании
   - name: Discounts
