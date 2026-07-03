@@ -808,6 +808,8 @@ paths:
     $ref: './paths/documents/retaildemands/retaildemand-metadata-attribute.yaml'
   /entity/retaildemand/metadata/attributes/{id}:
     $ref: './paths/documents/retaildemands/retaildemand-metadata-attribute-by-id.yaml'
+  /entity/retaildemand/metadata/states:
+    $ref: './paths/documents/retaildemands/retaildemand-metadata-states.yaml'
   /entity/retaildemand/metadata/states/{id}:
     $ref: './paths/documents/retaildemands/retaildemand-metadata-state-by-id.yaml'
   /entity/retaildemand/new:
@@ -1106,6 +1108,9 @@ paths:
     $ref: './paths/documents/purchaseorders/purchaseorder-notes.yaml'
   /entity/purchaseorder/{id}/notes/{noteId}:
     $ref: './paths/documents/purchaseorders/purchaseorder-note-by-id.yaml'
+  # Documents - Production Tasks
+  /entity/productiontask/metadata/attributes:
+    $ref: './paths/documents/productiontasks/productiontask-metadata-attribute.yaml'
   # Documents - Emission Orders
   /entity/emissionorder:
     $ref: './paths/documents/emissionorders/emissionorders.yaml'
@@ -2289,6 +2294,8 @@ tags:
     description: Операции с возвратами предоплаты
   - name: PurchaseOrders
     description: Операции с заказами поставщика
+  - name: ProductionTasks
+    description: Операции с производственными заданиями
   - name: EmissionOrders
     description: Операции с заказами кодов маркировки
   - name: CashIns

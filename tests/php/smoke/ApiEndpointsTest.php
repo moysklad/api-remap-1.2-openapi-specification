@@ -2127,6 +2127,7 @@ class ApiEndpointsTest extends TestCase
         $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/retaildemand/metadata/attributes/' . self::TEST_UUID));
         $this->assertReachable($this->client->put(self::API_BASE_PATH . '/entity/retaildemand/metadata/attributes/' . self::TEST_UUID, ['json' => ['name' => 'atr1']]));
         $this->assertReachable($this->client->delete(self::API_BASE_PATH . '/entity/retaildemand/metadata/attributes/' . self::TEST_UUID));
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . '/entity/retaildemand/metadata/states', ['json' => ['name' => 'state1', 'color' => 15106326, 'stateType' => 'Regular']]));
         $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/retaildemand/metadata/states/' . self::TEST_UUID));
         $this->assertReachable($this->client->put(self::API_BASE_PATH . '/entity/retaildemand/metadata/states/' . self::TEST_UUID, ['json' => ['name' => 'state1']]));
         $this->assertReachable($this->client->delete(self::API_BASE_PATH . '/entity/retaildemand/metadata/states/' . self::TEST_UUID));
@@ -2366,6 +2367,24 @@ class ApiEndpointsTest extends TestCase
     {
         $response = $this->client->delete(self::API_BASE_PATH . '/entity/purchaseorder/' . self::TEST_UUID . '/notes/' . self::TEST_UUID);
         $this->assertContains($response->getStatusCode(), self::DELETE_CODES);
+    }
+
+    /**
+     * GET /entity/productiontask/metadata/attributes
+     */
+    public function testGetProductionTaskMetadataAttributes(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/productiontask/metadata/attributes');
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * POST /entity/productiontask/metadata/attributes
+     */
+    public function testCreateProductionTaskMetadataAttribute(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/productiontask/metadata/attributes', ['json' => ['name' => 'productionTaskAttribute'],]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
     }
 
     public function testEmissionOrderEndpoints(): void
