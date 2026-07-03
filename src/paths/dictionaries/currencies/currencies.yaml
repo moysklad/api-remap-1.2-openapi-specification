@@ -40,6 +40,15 @@ post:
       application/json:
         schema:
           $ref: '../../../openapi.yaml#/components/schemas/Currency'
+        example:
+          name: "доллар"
+          fullName: "Доллар США"
+          code: "840"
+          isoCode: "USD"
+          rate: 75.0
+          shared: true
+          archived: false
+          externalCode: "dollarCurrency"
   responses:
     '200':
       description: Валюта успешно создана

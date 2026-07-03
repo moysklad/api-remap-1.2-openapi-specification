@@ -31,19 +31,6 @@ put:
                   $ref: '../../../openapi.yaml#/components/schemas/Meta'
             role:
               $ref: '../../../openapi.yaml#/components/schemas/EmployeeRole'
-        example:
-          login: "newcashier@lognex"
-          group:
-            meta:
-              href: "https://api.moysklad.ru/api/remap/1.2/entity/group/f4b74c5e-443a-11eb-ac12-001000000003"
-              metadataHref: "https://api.moysklad.ru/api/remap/1.2/entity/group/metadata"
-              type: "group"
-              mediaType: "application/json"
-          role:
-            meta:
-              href: "https://api.moysklad.ru/api/remap/1.2/entity/role/cashier"
-              type: "systemrole"
-              mediaType: "application/json"
   responses:
     '200':
       description: Сотрудник успешно активирован

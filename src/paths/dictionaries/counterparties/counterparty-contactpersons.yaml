@@ -44,6 +44,8 @@ post:
       application/json:
         schema:
           $ref: '../../../openapi.yaml#/components/schemas/ContactPerson'
+        example:
+          name: "Петр"
   responses:
     '200':
       description: Контактное лицо успешно создано

@@ -43,6 +43,9 @@ post:
           $ref: '../../../openapi.yaml#/components/schemas/Product'
         example:
           name: "Товар из примера OpenAPI"
+          code: "openapi-product"
+          article: "ART-001"
+          description: "Товар для примера OpenAPI"
           archived: false
           vatEnabled: false
           shared: true
