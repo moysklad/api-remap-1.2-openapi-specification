@@ -2,7 +2,7 @@
 
 Почему были добавлены кастомные шаблоны:
 
-* ApiClient.mustache - кастомный формат дат
+* ApiClient.mustache - кастомный формат дат, использование javax валидации для проверки ограничений property которые мы описываем в схеме
 * api.mustache - правильные заголовки Accept: application/json;charset=utf-8
 * RequestOptions.mustache, PageOptions.mustache, ListOptions.mustache, AssortmentListOptions.mustache, Filters.mustache, 
   Orders.mustache - удобные overload-методы для query-параметров без длинных позиционных сигнатур
