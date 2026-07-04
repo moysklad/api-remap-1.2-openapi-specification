@@ -12,6 +12,5 @@ properties:
   rows:
     type: array
     description: Массив позиций Возврата поставщику
-    nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/PurchaseReturnPosition'
