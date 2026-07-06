@@ -1,0 +1,28 @@
+type: object
+description: Тип цены
+x-polymorphic-parent: EntityWithMeta
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "context"
+    - path: "companysettings"
+    - path: "pricetype"
+    - param: "id"
+  type: "pricetype"
+properties:
+  meta:
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID типа цены
+    readOnly: true
+  name:
+    type: string
+    maxLength: 255
+    description: Наименование типа цены
+  externalCode:
+    type: string
+    maxLength: 255
+    description: Внешний код типа цены

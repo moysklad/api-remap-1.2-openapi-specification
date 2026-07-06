@@ -1,0 +1,8 @@
+description: |
+  Метаданные контрагента или юрлица. Используется как тип полей-ссылок,
+  которые принимают только meta-ссылку, а в ответе сервера могут вернуться
+  как Counterparty, так и Organization. На запись поля `meta` достаточно, остальные поля
+  Counterparty/Organization читаются сервером только при создании самих этих сущностей.
+anyOf:
+  - $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
+  - $ref: '../../../openapi.yaml#/components/schemas/Organization'

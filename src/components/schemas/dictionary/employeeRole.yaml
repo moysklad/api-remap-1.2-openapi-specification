@@ -1,0 +1,10 @@
+type: object
+description: Роль сотрудника
+properties:
+  meta:
+    $ref: '../common/meta.yaml'
+  permissions:
+    type: object
+    description: Список пермиссий (только для индивидуальной роли)
+    nullable: true
+    additionalProperties: true

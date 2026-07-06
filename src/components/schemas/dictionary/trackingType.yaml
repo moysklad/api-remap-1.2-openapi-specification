@@ -1,0 +1,26 @@
+type: string
+description: Известные значения типа маркируемой продукции
+enum:
+  - BEER_ALCOHOL
+  - BICYCLE
+  - ELECTRONICS
+  - FOOD_SUPPLEMENT
+  - LP_CLOTHES
+  - LP_LINENS
+  - MEDICAL_DEVICES
+  - MILK
+  - NABEER
+  - NCP
+  - NOT_TRACKED
+  - OTP
+  - PERFUMERY
+  - PET_FOOD
+  - SANITIZER
+  - SEAFOOD
+  - SHOES
+  - SOFT_DRINKS
+  - TIRES
+  - TOBACCO
+  - VEGETABLE_OIL
+  - VETPHARMA
+  - WATER

@@ -1,0 +1,28 @@
+type: object
+description: Изображение
+properties:
+  meta:
+    $ref: '../common/meta.yaml'
+  title:
+    type: string
+    maxLength: 255
+    description: Название изображения
+  filename:
+    type: string
+    maxLength: 255
+    description: Имя файла
+  size:
+    type: integer
+    description: Размер файла в байтах
+    readOnly: true
+  updated:
+    type: string
+    #    format: date-time  # API использует формат: YYYY-MM-DD HH:MM:SS.mmm
+    description: Время последнего изменения
+    readOnly: true
+  tiny:
+    description: Метаданные уменьшенного изображения
+    $ref: '../common/meta.yaml'
+  miniature:
+    description: Миниатюра изображения
+    $ref: '../common/meta.yaml'

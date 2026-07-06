@@ -1,0 +1,44 @@
+get:
+  operationId: getNotificationSettings
+  tags:
+    - Notifications
+  summary: Получить настройки уведомлений
+  description: Запрос на получение настроек уведомлений текущего пользователя
+  parameters:
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос. JSON представление настроек уведомлений
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/NotificationSettings'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+put:
+  operationId: updateNotificationSettings
+  tags:
+    - Notifications
+  summary: Изменить настройки уведомлений
+  description: Изменение настроек уведомлений текущего пользователя
+  parameters:
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../openapi.yaml#/components/schemas/NotificationSettings'
+  responses:
+    '200':
+      description: Настройки уведомлений успешно обновлены
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/NotificationSettings'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

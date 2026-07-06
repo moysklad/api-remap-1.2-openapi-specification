@@ -1,0 +1,41 @@
+type: object
+description: Позиция Заказа кодов маркировки
+x-polymorphic-parent: EntityWithMeta
+x-entity-static-builder:
+  methodParams:
+    - "parentId"
+    - "id"
+  href:
+    - path: "entity"
+    - path: "emissionorder"
+    - param: "parentId"
+    - path: "positions"
+    - param: "id"
+  type: "emissionorderposition"
+properties:
+  meta:
+    description: Метаданные позиции заказа кодов маркировки
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID позиции
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  assortment:
+    description: Метаданные товара/модификации/партии, которую представляет собой позиция
+    $ref: '../../../openapi.yaml#/components/schemas/Assortment'
+  quantity:
+    type: number
+    format: float
+    description: Количество товаров данного вида в позиции
+    minimum: 0
+    maximum: 1000
+  status:
+    type: string
+    description: Статус кодов. Известные значения описаны в EmissionOrderPositionStatus
+    readOnly: true

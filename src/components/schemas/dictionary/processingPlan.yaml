@@ -1,0 +1,95 @@
+type: object
+description: Техкарта
+x-polymorphic-parent: EntityWithMeta
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "processingplan"
+    - param: "id"
+  type: "processingplan"
+properties:
+  meta:
+    description: Метаданные Техкарты
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID Техкарты
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  archived:
+    type: boolean
+    description: Добавлена ли Техкарта в архив
+  code:
+    type: string
+    maxLength: 255
+    description: Код Техкарты
+  cost:
+    type: number
+    format: double
+    description: Стоимость производства
+  costDistributionType:
+    type: string
+    description: Тип распределения себестоимости. Возможные значения описаны в CostDistributionType
+    readOnly: true
+  externalCode:
+    type: string
+    maxLength: 255
+    description: Внешний код Техкарты
+  group:
+    description: Отдел сотрудника
+    $ref: '../../../openapi.yaml#/components/schemas/Group'
+  name:
+    type: string
+    maxLength: 255
+    description: Наименование Техкарты
+  owner:
+    description: Владелец (Сотрудник)
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Employee'
+  parent:
+    description: Метаданные группы Техкарты
+    $ref: '../../../openapi.yaml#/components/schemas/ProcessingPlanFolder'
+  pathName:
+    type: string
+    description: Наименование группы, в которую входит Техкарта
+    readOnly: true
+  processingProcess:
+    description: Метаданные Техпроцесса
+    $ref: '../../../openapi.yaml#/components/schemas/ProcessingProcess'
+  shared:
+    type: boolean
+    description: Общий доступ
+  updated:
+    type: string
+    description: Момент последнего обновления Техкарты
+    readOnly: true
+  stages:
+    description: Коллекция метаданных этапов Техкарты
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/ProcessingPlanStageList'
+  materials:
+    description: Коллекция метаданных материалов Техкарты
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/ProcessingPlanMaterialList'
+  products:
+    description: Коллекция метаданных готовых продуктов Техкарты
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/ProcessingPlanProductList'
+  attributes:
+    type: array
+    nullable: true
+    description: Коллекция метаданных доп. полей
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'

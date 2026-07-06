@@ -1,0 +1,49 @@
+get:
+  operationId: getPurchaseOrderNotes
+  tags:
+    - PurchaseOrders
+  summary: Получить список Событий Заказа поставщику
+  description: Запрос на получение всех Событий Заказа поставщику для данной учетной записи
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/parameters.yaml#/limit'
+    - $ref: '../../../components/parameters.yaml#/offset'
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/EventNoteList'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+post:
+  operationId: createPurchaseOrderNote
+  tags:
+    - PurchaseOrders
+  summary: Добавить Событие Заказа поставщику
+  description: Запрос на добавление одного События Заказа поставщику
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../openapi.yaml#/components/schemas/EventNote'
+  responses:
+    '200':
+      description: Событие успешно создано
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/EventNote'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

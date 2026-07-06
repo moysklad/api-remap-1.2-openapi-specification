@@ -1,0 +1,52 @@
+type: object
+description: Ставка НДС
+x-polymorphic-parent: EntityWithMeta
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "taxrate"
+    - param: "id"
+  type: "taxrate"
+properties:
+  meta:
+    description: Метаданные налоговой ставки
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID налоговой ставки
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  owner:
+    description: Метаданные владельца (Сотрудника)
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Employee'
+  shared:
+    type: boolean
+    description: Флаг общего доступа
+  group:
+    description: Метаданные отдела-владельца
+    $ref: '../../../openapi.yaml#/components/schemas/Group'
+  updated:
+    type: string
+    description: Момент последнего обновления сущности
+    readOnly: true
+  rate:
+    type: number
+    format: float
+    description: Значение налоговой ставки
+  archived:
+    type: boolean
+    description: Флаг принадлежности ставки к архивным ставкам
+  comment:
+    type: string
+    maxLength: 32
+    description: Комментарий к налоговой ставке

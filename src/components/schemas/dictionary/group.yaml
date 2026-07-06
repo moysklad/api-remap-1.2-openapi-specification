@@ -1,0 +1,31 @@
+type: object
+description: Группа/отдел
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "group"
+    - param: "id"
+  type: "group"
+properties:
+  meta:
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID группы
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  name:
+    type: string
+    maxLength: 255
+    description: Наименование группы
+  index:
+    type: integer
+    minimum: 0
+    description: Порядковый номер в списке групп

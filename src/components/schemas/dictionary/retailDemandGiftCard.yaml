@@ -1,0 +1,12 @@
+type: object
+description: Подарочный сертификат, используемый при оплате розничной продажи
+properties:
+  name:
+    type: string
+    maxLength: 255
+    description: Номер сертификата
+  paymentSum:
+    type: number
+    format: double
+    readOnly: true
+    description: Сумма сертификата

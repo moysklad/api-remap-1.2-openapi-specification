@@ -1,0 +1,14 @@
+description: |
+  Элемент массива `paymentOperations` розничной смены.
+
+  Допустимые `meta.type`: cashin, paymentin.
+type: object
+anyOf:
+  - description: Приходный ордер + linkedSum
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/CashIn'
+      - $ref: '../../../openapi.yaml#/components/schemas/OperationLinkedSum'
+  - description: Входящий платеж + linkedSum
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/PaymentIn'
+      - $ref: '../../../openapi.yaml#/components/schemas/OperationLinkedSum'
