@@ -10,6 +10,7 @@ properties:
     $ref: '../common/metaList.yaml'
   rows:
     type: array
+    nullable: true
     description: Массив Счетов покупателям
     items:
       $ref: '../../../openapi.yaml#/components/schemas/InvoiceOut'
