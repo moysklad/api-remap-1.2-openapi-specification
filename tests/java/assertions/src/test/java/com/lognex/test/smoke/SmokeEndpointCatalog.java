@@ -8,6 +8,7 @@ final class SmokeEndpointCatalog {
 
     static Stream<Arguments> cases() {
         return Stream.of(
+                // /entity/product
                 Arguments.of(new SmokeEndpointCase("testListProducts#1", "GET", "/entity/product", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testGetProductById#1", "GET", "/entity/product/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
                 Arguments.of(new SmokeEndpointCase("testCreateProduct#1", "POST", "/entity/product", SmokeEndpointCase.Expectation.NOT_404, true)),
@@ -30,6 +31,8 @@ final class SmokeEndpointCatalog {
                 Arguments.of(new SmokeEndpointCase("testBatchDeleteProductStoreBalances#1", "POST", "/entity/product/{id}/storebalances/delete", SmokeEndpointCase.Expectation.BY_ID, true)),
                 Arguments.of(new SmokeEndpointCase("testGetProductMetadata#1", "GET", "/entity/product/metadata", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testGetProductMetadataWithExpand#1", "GET", "/entity/product/metadata?expand=attributes", SmokeEndpointCase.Expectation.NOT_404, false)),
+
+                // /entity/counterparty
                 Arguments.of(new SmokeEndpointCase("testListCounterparties#1", "GET", "/entity/counterparty", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testGetCounterpartyById#1", "GET", "/entity/counterparty/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
                 Arguments.of(new SmokeEndpointCase("testCreateCounterparty#1", "POST", "/entity/counterparty", SmokeEndpointCase.Expectation.NOT_404, true)),
@@ -54,9 +57,13 @@ final class SmokeEndpointCatalog {
                 Arguments.of(new SmokeEndpointCase("testGetCounterpartyFiles#1", "GET", "/entity/counterparty/{id}/files", SmokeEndpointCase.Expectation.BY_ID, false)),
                 Arguments.of(new SmokeEndpointCase("testAddCounterpartyFiles#1", "POST", "/entity/counterparty/{id}/files", SmokeEndpointCase.Expectation.BY_ID, true)),
                 Arguments.of(new SmokeEndpointCase("testDeleteCounterpartyFile#1", "DELETE", "/entity/counterparty/{id}/files/{id}", SmokeEndpointCase.Expectation.DELETE, false)),
+
+                // /entity/currency
                 Arguments.of(new SmokeEndpointCase("testListCurrencies#1", "GET", "/entity/currency", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testGetCurrencyById#1", "GET", "/entity/currency/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
                 Arguments.of(new SmokeEndpointCase("testCreateCurrency#1", "POST", "/entity/currency", SmokeEndpointCase.Expectation.NOT_404, true)),
+
+                // /entity/employee
                 Arguments.of(new SmokeEndpointCase("testListEmployees#1", "GET", "/entity/employee", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testGetEmployeeById#1", "GET", "/entity/employee/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
                 Arguments.of(new SmokeEndpointCase("testGetEmployeeSecurity#1", "GET", "/entity/employee/{id}/security", SmokeEndpointCase.Expectation.BY_ID, false)),
@@ -66,17 +73,27 @@ final class SmokeEndpointCatalog {
                 Arguments.of(new SmokeEndpointCase("testActivateEmployee#1", "PUT", "/entity/employee/{id}/access/activate", SmokeEndpointCase.Expectation.BY_ID, true)),
                 Arguments.of(new SmokeEndpointCase("testDeactivateEmployee#1", "PUT", "/entity/employee/{id}/access/deactivate", SmokeEndpointCase.Expectation.BY_ID_OR_204, false)),
                 Arguments.of(new SmokeEndpointCase("testResetEmployeePassword#1", "PUT", "/entity/employee/{id}/access/resetpassword", SmokeEndpointCase.Expectation.BY_ID_OR_204, false)),
+
+                // /entity/role
                 Arguments.of(new SmokeEndpointCase("testGetRoleOwner#1", "GET", "/entity/role/owner", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testGetRoleAdmin#1", "GET", "/entity/role/admin", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testGetRoleIndividual#1", "GET", "/entity/role/individual", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testGetRoleCashier#1", "GET", "/entity/role/cashier", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testGetRoleWorker#1", "GET", "/entity/role/worker", SmokeEndpointCase.Expectation.NOT_404, false)),
+
+                // /entity/group
                 Arguments.of(new SmokeEndpointCase("testListGroups#1", "GET", "/entity/group", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testGetGroupById#1", "GET", "/entity/group/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
+
+                // /entity/country
                 Arguments.of(new SmokeEndpointCase("testListCountries#1", "GET", "/entity/country", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testGetCountryById#1", "GET", "/entity/country/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
+
+                // /entity/region
                 Arguments.of(new SmokeEndpointCase("testListRegions#1", "GET", "/entity/region", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testGetRegionById#1", "GET", "/entity/region/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
+
+                // /entity/taxrate
                 Arguments.of(new SmokeEndpointCase("testListTaxRates#1", "GET", "/entity/taxrate", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testGetTaxRateById#1", "GET", "/entity/taxrate/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
                 Arguments.of(new SmokeEndpointCase("testCreateTaxRate#1", "POST", "/entity/taxrate", SmokeEndpointCase.Expectation.NOT_404, true)),
@@ -84,17 +101,25 @@ final class SmokeEndpointCatalog {
                 Arguments.of(new SmokeEndpointCase("testDeleteTaxRate#1", "DELETE", "/entity/taxrate/{id}", SmokeEndpointCase.Expectation.DELETE, false)),
                 Arguments.of(new SmokeEndpointCase("testBatchCreateTaxRates#1", "POST", "/entity/taxrate/batch", SmokeEndpointCase.Expectation.NOT_404, true)),
                 Arguments.of(new SmokeEndpointCase("testBatchDeleteTaxRates#1", "POST", "/entity/taxrate/delete", SmokeEndpointCase.Expectation.NOT_404, true)),
+
+                // /entity/productfolder
                 Arguments.of(new SmokeEndpointCase("testListProductFolders#1", "GET", "/entity/productfolder", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testGetProductFolderById#1", "GET", "/entity/productfolder/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
                 Arguments.of(new SmokeEndpointCase("testCreateProductFolder#1", "POST", "/entity/productfolder", SmokeEndpointCase.Expectation.NOT_404, true)),
+
+                // /entity/service
                 Arguments.of(new SmokeEndpointCase("testListServices#1", "GET", "/entity/service", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testGetServiceById#1", "GET", "/entity/service/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
                 Arguments.of(new SmokeEndpointCase("testCreateService#1", "POST", "/entity/service", SmokeEndpointCase.Expectation.NOT_404, true)),
                 Arguments.of(new SmokeEndpointCase("testGetServiceFiles#1", "GET", "/entity/service/{id}/files", SmokeEndpointCase.Expectation.BY_ID, false)),
                 Arguments.of(new SmokeEndpointCase("testAddServiceFiles#1", "POST", "/entity/service/{id}/files", SmokeEndpointCase.Expectation.BY_ID, true)),
                 Arguments.of(new SmokeEndpointCase("testDeleteServiceFile#1", "DELETE", "/entity/service/{id}/files/{id}", SmokeEndpointCase.Expectation.DELETE, false)),
+
+                // /entity/uom
                 Arguments.of(new SmokeEndpointCase("testListUoms#1", "GET", "/entity/uom", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testGetUomById#1", "GET", "/entity/uom/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
+
+                // /entity/webhook
                 Arguments.of(new SmokeEndpointCase("testListWebhooks#1", "GET", "/entity/webhook", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testCreateWebhook#1", "POST", "/entity/webhook", SmokeEndpointCase.Expectation.NOT_404, true)),
                 Arguments.of(new SmokeEndpointCase("testGetWebhookById#1", "GET", "/entity/webhook/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
@@ -102,6 +127,8 @@ final class SmokeEndpointCatalog {
                 Arguments.of(new SmokeEndpointCase("testCreateOrUpdateWebhooksBatch#1", "POST", "/entity/webhook/batch", SmokeEndpointCase.Expectation.NOT_404, true)),
                 Arguments.of(new SmokeEndpointCase("testDeleteWebhook#1", "DELETE", "/entity/webhook/{id}", SmokeEndpointCase.Expectation.DELETE, false)),
                 Arguments.of(new SmokeEndpointCase("testBatchDeleteWebhooks#1", "POST", "/entity/webhook/delete", SmokeEndpointCase.Expectation.NOT_404, true)),
+
+                // /entity/webhookstock
                 Arguments.of(new SmokeEndpointCase("testListWebhookStocks#1", "GET", "/entity/webhookstock", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testCreateWebhookStock#1", "POST", "/entity/webhookstock", SmokeEndpointCase.Expectation.NOT_404, true)),
                 Arguments.of(new SmokeEndpointCase("testCreateOrUpdateWebhookStocksBatch#1", "POST", "/entity/webhookstock/batch", SmokeEndpointCase.Expectation.NOT_404, true)),
@@ -109,33 +136,57 @@ final class SmokeEndpointCatalog {
                 Arguments.of(new SmokeEndpointCase("testUpdateWebhookStock#1", "PUT", "/entity/webhookstock/{id}", SmokeEndpointCase.Expectation.BY_ID, true)),
                 Arguments.of(new SmokeEndpointCase("testDeleteWebhookStock#1", "DELETE", "/entity/webhookstock/{id}", SmokeEndpointCase.Expectation.DELETE, false)),
                 Arguments.of(new SmokeEndpointCase("testBatchDeleteWebhookStocks#1", "POST", "/entity/webhookstock/delete", SmokeEndpointCase.Expectation.NOT_404, true)),
+
+                // /context/companysettings
                 Arguments.of(new SmokeEndpointCase("testListPriceTypes#1", "GET", "/context/companysettings/pricetype", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testGetPriceTypeById#1", "GET", "/context/companysettings/pricetype/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
                 Arguments.of(new SmokeEndpointCase("testGetDefaultPriceType#1", "GET", "/context/companysettings/pricetype/default", SmokeEndpointCase.Expectation.NOT_404, false)),
+
+                // /accountSettings/subscription
                 Arguments.of(new SmokeEndpointCase("testGetSubscription#1", "GET", "/accountSettings/subscription", SmokeEndpointCase.Expectation.NOT_404, false)),
+
+                // /entity/saleplatform
                 Arguments.of(new SmokeEndpointCase("testListSalePlatforms#1", "GET", "/entity/saleplatform", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testGetSalePlatformById#1", "GET", "/entity/saleplatform/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
+
+                // /entity/store
                 Arguments.of(new SmokeEndpointCase("testListStores#1", "GET", "/entity/store", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testStoreById#1", "GET", "/entity/store/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
+
+                // /entity/retailstore
                 Arguments.of(new SmokeEndpointCase("testListRetailStores#1", "GET", "/entity/retailstore", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testListCashiers#1", "GET", "/entity/retailstore/{id}/cashiers", SmokeEndpointCase.Expectation.NOT_404, false)),
+
+                // /entity/bundle
                 Arguments.of(new SmokeEndpointCase("testListBundles#1", "GET", "/entity/bundle", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testBundleSubresources#1", "GET", "/entity/bundle/{id}/components", SmokeEndpointCase.Expectation.NOT_404, false)),
+
+                // /entity/variant
                 Arguments.of(new SmokeEndpointCase("testListVariants#1", "GET", "/entity/variant", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testVariantMetadata#1", "GET", "/entity/variant/metadata", SmokeEndpointCase.Expectation.NOT_404, false)),
+
+                // /entity/thing
                 Arguments.of(new SmokeEndpointCase("testListThings#1", "GET", "/entity/thing", SmokeEndpointCase.Expectation.NOT_404, false)),
+
+                // /entity/purchaseorder
                 Arguments.of(new SmokeEndpointCase("testListPurchaseOrders#1", "GET", "/entity/purchaseorder", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testCreatePurchaseOrderMetadataState#1", "POST", "/entity/purchaseorder/metadata/states", SmokeEndpointCase.Expectation.NOT_404, true)),
+
+                // /entity/customerorder
                 Arguments.of(new SmokeEndpointCase("testGetCustomerOrderNotes#1", "GET", "/entity/customerorder/{id}/notes", SmokeEndpointCase.Expectation.BY_ID, false)),
                 Arguments.of(new SmokeEndpointCase("testCreateCustomerOrderNote#1", "POST", "/entity/customerorder/{id}/notes", SmokeEndpointCase.Expectation.NOT_404, true)),
                 Arguments.of(new SmokeEndpointCase("testGetCustomerOrderNoteById#1", "GET", "/entity/customerorder/{id}/notes/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
                 Arguments.of(new SmokeEndpointCase("testUpdateCustomerOrderNote#1", "PUT", "/entity/customerorder/{id}/notes/{id}", SmokeEndpointCase.Expectation.BY_ID, true)),
                 Arguments.of(new SmokeEndpointCase("testDeleteCustomerOrderNote#1", "DELETE", "/entity/customerorder/{id}/notes/{id}", SmokeEndpointCase.Expectation.DELETE, false)),
+
+                // /entity/purchaseorder
                 Arguments.of(new SmokeEndpointCase("testGetPurchaseOrderNotes#1", "GET", "/entity/purchaseorder/{id}/notes", SmokeEndpointCase.Expectation.BY_ID, false)),
                 Arguments.of(new SmokeEndpointCase("testCreatePurchaseOrderNote#1", "POST", "/entity/purchaseorder/{id}/notes", SmokeEndpointCase.Expectation.NOT_404, true)),
                 Arguments.of(new SmokeEndpointCase("testGetPurchaseOrderNoteById#1", "GET", "/entity/purchaseorder/{id}/notes/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
                 Arguments.of(new SmokeEndpointCase("testUpdatePurchaseOrderNote#1", "PUT", "/entity/purchaseorder/{id}/notes/{id}", SmokeEndpointCase.Expectation.BY_ID, true)),
                 Arguments.of(new SmokeEndpointCase("testDeletePurchaseOrderNote#1", "DELETE", "/entity/purchaseorder/{id}/notes/{id}", SmokeEndpointCase.Expectation.DELETE, false)),
+
+                // /entity/contract
                 Arguments.of(new SmokeEndpointCase("testListContracts#1", "GET", "/entity/contract", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testGetContractById#1", "GET", "/entity/contract/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
                 Arguments.of(new SmokeEndpointCase("testCreateContract#1", "POST", "/entity/contract", SmokeEndpointCase.Expectation.NOT_404, true)),
@@ -146,6 +197,8 @@ final class SmokeEndpointCatalog {
                 Arguments.of(new SmokeEndpointCase("testGetContractMetadata#1", "GET", "/entity/contract/metadata", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testGetContractMetadataAttributes#1", "GET", "/entity/contract/metadata/attributes", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testGetContractMetadataAttributeById#1", "GET", "/entity/contract/metadata/attributes/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
+
+                // /entity/saleschannel
                 Arguments.of(new SmokeEndpointCase("testListSalesChannels#1", "GET", "/entity/saleschannel", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testGetSalesChannelById#1", "GET", "/entity/saleschannel/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
                 Arguments.of(new SmokeEndpointCase("testCreateSalesChannel#1", "POST", "/entity/saleschannel", SmokeEndpointCase.Expectation.NOT_404, true)),
@@ -153,6 +206,8 @@ final class SmokeEndpointCatalog {
                 Arguments.of(new SmokeEndpointCase("testUpdateSalesChannel#1", "PUT", "/entity/saleschannel/{id}", SmokeEndpointCase.Expectation.BY_ID, true)),
                 Arguments.of(new SmokeEndpointCase("testDeleteSalesChannel#1", "DELETE", "/entity/saleschannel/{id}", SmokeEndpointCase.Expectation.DELETE, false)),
                 Arguments.of(new SmokeEndpointCase("testDeleteSalesChannelsBatch#1", "POST", "/entity/saleschannel/delete", SmokeEndpointCase.Expectation.NOT_404, true)),
+
+                // /entity/task
                 Arguments.of(new SmokeEndpointCase("testListTasks#1", "GET", "/entity/task", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testCreateTask#1", "POST", "/entity/task", SmokeEndpointCase.Expectation.NOT_404, true)),
                 Arguments.of(new SmokeEndpointCase("testCreateTasksBatch#1", "POST", "/entity/task/batch", SmokeEndpointCase.Expectation.NOT_404, true)),
@@ -170,6 +225,8 @@ final class SmokeEndpointCatalog {
                 Arguments.of(new SmokeEndpointCase("testCreateTaskMetadataStates#1", "POST", "/entity/task/metadata/states", SmokeEndpointCase.Expectation.NOT_404, true)),
                 Arguments.of(new SmokeEndpointCase("testUpdateTaskMetadataStateById#1", "PUT", "/entity/task/metadata/states/{id}", SmokeEndpointCase.Expectation.BY_ID, true)),
                 Arguments.of(new SmokeEndpointCase("testDeleteTaskMetadataStateById#1", "DELETE", "/entity/task/metadata/states/{id}", SmokeEndpointCase.Expectation.DELETE, false)),
+
+                // /entity/project
                 Arguments.of(new SmokeEndpointCase("testListProjects#1", "GET", "/entity/project", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testGetProjectById#1", "GET", "/entity/project/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
                 Arguments.of(new SmokeEndpointCase("testCreateProject#1", "POST", "/entity/project", SmokeEndpointCase.Expectation.NOT_404, true)),
@@ -183,6 +240,8 @@ final class SmokeEndpointCatalog {
                 Arguments.of(new SmokeEndpointCase("testGetProjectMetadataAttributeById#1", "GET", "/entity/project/metadata/attributes/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
                 Arguments.of(new SmokeEndpointCase("testUpdateProjectMetadataAttribute#1", "PUT", "/entity/project/metadata/attributes/{id}", SmokeEndpointCase.Expectation.BY_ID, true)),
                 Arguments.of(new SmokeEndpointCase("testDeleteProjectMetadataAttribute#1", "DELETE", "/entity/project/metadata/attributes/{id}", SmokeEndpointCase.Expectation.DELETE, false)),
+
+                // /entity/consignment
                 Arguments.of(new SmokeEndpointCase("testListConsignments#1", "GET", "/entity/consignment", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testGetConsignmentById#1", "GET", "/entity/consignment/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
                 Arguments.of(new SmokeEndpointCase("testCreateConsignment#1", "POST", "/entity/consignment", SmokeEndpointCase.Expectation.NOT_404, true)),
@@ -196,6 +255,8 @@ final class SmokeEndpointCatalog {
                 Arguments.of(new SmokeEndpointCase("testGetConsignmentMetadataAttributeById#1", "GET", "/entity/consignment/metadata/attributes/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
                 Arguments.of(new SmokeEndpointCase("testUpdateConsignmentMetadataAttribute#1", "PUT", "/entity/consignment/metadata/attributes/{id}", SmokeEndpointCase.Expectation.BY_ID, true)),
                 Arguments.of(new SmokeEndpointCase("testDeleteConsignmentMetadataAttribute#1", "DELETE", "/entity/consignment/metadata/attributes/{id}", SmokeEndpointCase.Expectation.DELETE, false)),
+
+                // /entity/expenseitem
                 Arguments.of(new SmokeEndpointCase("testListExpenseItems#1", "GET", "/entity/expenseitem", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testGetExpenseItemById#1", "GET", "/entity/expenseitem/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
                 Arguments.of(new SmokeEndpointCase("testCreateExpenseItem#1", "POST", "/entity/expenseitem", SmokeEndpointCase.Expectation.NOT_404, true)),
@@ -203,41 +264,61 @@ final class SmokeEndpointCatalog {
                 Arguments.of(new SmokeEndpointCase("testDeleteExpenseItem#1", "DELETE", "/entity/expenseitem/{id}", SmokeEndpointCase.Expectation.DELETE, false)),
                 Arguments.of(new SmokeEndpointCase("testDeleteExpenseItemsBatch#1", "POST", "/entity/expenseitem/delete", SmokeEndpointCase.Expectation.NOT_404, true)),
                 Arguments.of(new SmokeEndpointCase("testCreateExpenseItemsBatch#1", "POST", "/entity/expenseitem/batch", SmokeEndpointCase.Expectation.NOT_404, true)),
+
+                // /context/companysettings
                 Arguments.of(new SmokeEndpointCase("testGetCompanySettings#1", "GET", "/context/companysettings", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testUpdateCompanySettings#1", "PUT", "/context/companysettings", SmokeEndpointCase.Expectation.BY_ID, true)),
                 Arguments.of(new SmokeEndpointCase("testGetCompanySettingsMetadata#1", "GET", "/context/companysettings/metadata", SmokeEndpointCase.Expectation.NOT_404, false)),
+
+                // /context/usersettings
                 Arguments.of(new SmokeEndpointCase("testGetUserSettings#1", "GET", "/context/usersettings", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testUpdateUserSettings#1", "PUT", "/context/usersettings", SmokeEndpointCase.Expectation.BY_ID, true)),
+
+                // /entity/discount
                 Arguments.of(new SmokeEndpointCase("testListDiscounts#1", "GET", "/entity/discount", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testUpdateDiscountRoundingById#1", "PUT", "/entity/discount/{id}", SmokeEndpointCase.Expectation.BY_ID, true)),
+
+                // /entity/accumulationdiscount
                 Arguments.of(new SmokeEndpointCase("testCreateAccumulationDiscount#1", "POST", "/entity/accumulationdiscount", SmokeEndpointCase.Expectation.NOT_404, true)),
                 Arguments.of(new SmokeEndpointCase("testGetAccumulationDiscountById#1", "GET", "/entity/accumulationdiscount/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
                 Arguments.of(new SmokeEndpointCase("testUpdateAccumulationDiscount#1", "PUT", "/entity/accumulationdiscount/{id}", SmokeEndpointCase.Expectation.BY_ID, true)),
                 Arguments.of(new SmokeEndpointCase("testDeleteAccumulationDiscount#1", "DELETE", "/entity/accumulationdiscount/{id}", SmokeEndpointCase.Expectation.DELETE, false)),
+
+                // /entity/personaldiscount
                 Arguments.of(new SmokeEndpointCase("testCreatePersonalDiscount#1", "POST", "/entity/personaldiscount", SmokeEndpointCase.Expectation.NOT_404, true)),
                 Arguments.of(new SmokeEndpointCase("testGetPersonalDiscountById#1", "GET", "/entity/personaldiscount/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
                 Arguments.of(new SmokeEndpointCase("testUpdatePersonalDiscount#1", "PUT", "/entity/personaldiscount/{id}", SmokeEndpointCase.Expectation.BY_ID, true)),
                 Arguments.of(new SmokeEndpointCase("testDeletePersonalDiscount#1", "DELETE", "/entity/personaldiscount/{id}", SmokeEndpointCase.Expectation.DELETE, false)),
+
+                // /entity/specialpricediscount
                 Arguments.of(new SmokeEndpointCase("testCreateSpecialPriceDiscount#1", "POST", "/entity/specialpricediscount", SmokeEndpointCase.Expectation.NOT_404, true)),
                 Arguments.of(new SmokeEndpointCase("testGetSpecialPriceDiscountById#1", "GET", "/entity/specialpricediscount/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
                 Arguments.of(new SmokeEndpointCase("testUpdateSpecialPriceDiscount#1", "PUT", "/entity/specialpricediscount/{id}", SmokeEndpointCase.Expectation.BY_ID, true)),
                 Arguments.of(new SmokeEndpointCase("testDeleteSpecialPriceDiscount#1", "DELETE", "/entity/specialpricediscount/{id}", SmokeEndpointCase.Expectation.DELETE, false)),
+
+                // /entity/assortment
                 Arguments.of(new SmokeEndpointCase("testListAssortment#1", "GET", "/entity/assortment", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testDeleteAssortmentPositionsBatch#1", "POST", "/entity/assortment/delete", SmokeEndpointCase.Expectation.NOT_404, true)),
                 Arguments.of(new SmokeEndpointCase("testGetAssortmentSettings#1", "GET", "/entity/assortment/settings", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testUpdateAssortmentSettings#1", "PUT", "/entity/assortment/settings", SmokeEndpointCase.Expectation.NOT_404, true)),
+
+                // /entity/bonusprogram
                 Arguments.of(new SmokeEndpointCase("testListBonusPrograms#1", "GET", "/entity/bonusprogram", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testCreateBonusProgram#1", "POST", "/entity/bonusprogram", SmokeEndpointCase.Expectation.NOT_404, true)),
                 Arguments.of(new SmokeEndpointCase("testGetBonusProgramById#1", "GET", "/entity/bonusprogram/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
                 Arguments.of(new SmokeEndpointCase("testUpdateBonusProgram#1", "PUT", "/entity/bonusprogram/{id}", SmokeEndpointCase.Expectation.BY_ID, true)),
                 Arguments.of(new SmokeEndpointCase("testDeleteBonusProgram#1", "DELETE", "/entity/bonusprogram/{id}", SmokeEndpointCase.Expectation.DELETE, false)),
                 Arguments.of(new SmokeEndpointCase("testDeleteBonusProgramsBatch#1", "POST", "/entity/bonusprogram/delete", SmokeEndpointCase.Expectation.NOT_404, true)),
+
+                // /entity/bonustransaction
                 Arguments.of(new SmokeEndpointCase("testListBonusTransactions#1", "GET", "/entity/bonustransaction", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testCreateBonusTransaction#1", "POST", "/entity/bonustransaction", SmokeEndpointCase.Expectation.NOT_404, true)),
                 Arguments.of(new SmokeEndpointCase("testGetBonusTransactionById#1", "GET", "/entity/bonustransaction/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
                 Arguments.of(new SmokeEndpointCase("testUpdateBonusTransaction#1", "PUT", "/entity/bonustransaction/{id}", SmokeEndpointCase.Expectation.BY_ID, true)),
                 Arguments.of(new SmokeEndpointCase("testDeleteBonusTransaction#1", "DELETE", "/entity/bonustransaction/{id}", SmokeEndpointCase.Expectation.DELETE, false)),
                 Arguments.of(new SmokeEndpointCase("testDeleteBonusTransactionsBatch#1", "POST", "/entity/bonustransaction/delete", SmokeEndpointCase.Expectation.NOT_404, true)),
+
+                // /entity/customentity
                 Arguments.of(new SmokeEndpointCase("testCreateCustomEntity#1", "POST", "/entity/customentity", SmokeEndpointCase.Expectation.NOT_404, true)),
                 Arguments.of(new SmokeEndpointCase("testGetCustomEntityElements#1", "GET", "/entity/customentity/{id}", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testCreateCustomEntityElement#1", "POST", "/entity/customentity/{id}", SmokeEndpointCase.Expectation.NOT_404, true)),
@@ -247,6 +328,8 @@ final class SmokeEndpointCatalog {
                 Arguments.of(new SmokeEndpointCase("testGetCustomEntityElementById#1", "GET", "/entity/customentity/{id}/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
                 Arguments.of(new SmokeEndpointCase("testUpdateCustomEntityElementById#1", "PUT", "/entity/customentity/{id}/{id}", SmokeEndpointCase.Expectation.BY_ID, true)),
                 Arguments.of(new SmokeEndpointCase("testDeleteCustomEntityElementById#1", "DELETE", "/entity/customentity/{id}/{id}", SmokeEndpointCase.Expectation.DELETE, false)),
+
+                // /entity/cashin
                 Arguments.of(new SmokeEndpointCase("testListCashIns#1", "GET", "/entity/cashin", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testGetCashInById#1", "GET", "/entity/cashin/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
                 Arguments.of(new SmokeEndpointCase("testCreateCashIn#1", "POST", "/entity/cashin", SmokeEndpointCase.Expectation.NOT_404, true)),
@@ -264,6 +347,8 @@ final class SmokeEndpointCatalog {
                 Arguments.of(new SmokeEndpointCase("testUpdateCashInMetadataStateById#1", "PUT", "/entity/cashin/metadata/states/{id}", SmokeEndpointCase.Expectation.NOT_404, true)),
                 Arguments.of(new SmokeEndpointCase("testDeleteCashInMetadataStateById#1", "DELETE", "/entity/cashin/metadata/states/{id}", SmokeEndpointCase.Expectation.DELETE, false)),
                 Arguments.of(new SmokeEndpointCase("testCashInTemplateNew#1", "PUT", "/entity/cashin/new", SmokeEndpointCase.Expectation.NOT_404, true)),
+
+                // /entity/cashout
                 Arguments.of(new SmokeEndpointCase("testListCashOuts#1", "GET", "/entity/cashout", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testGetCashOutById#1", "GET", "/entity/cashout/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
                 Arguments.of(new SmokeEndpointCase("testCreateCashOut#1", "POST", "/entity/cashout", SmokeEndpointCase.Expectation.NOT_404, true)),
@@ -282,6 +367,8 @@ final class SmokeEndpointCatalog {
                 Arguments.of(new SmokeEndpointCase("testUpdateCashOutMetadataStateById#1", "PUT", "/entity/cashout/metadata/states/{id}", SmokeEndpointCase.Expectation.NOT_404, true)),
                 Arguments.of(new SmokeEndpointCase("testDeleteCashOutMetadataStateById#1", "DELETE", "/entity/cashout/metadata/states/{id}", SmokeEndpointCase.Expectation.DELETE, false)),
                 Arguments.of(new SmokeEndpointCase("testCashOutTemplateNew#1", "PUT", "/entity/cashout/new", SmokeEndpointCase.Expectation.NOT_404, true)),
+
+                // /entity/move
                 Arguments.of(new SmokeEndpointCase("testListMoves#1", "GET", "/entity/move", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testCreateMove#1", "POST", "/entity/move", SmokeEndpointCase.Expectation.NOT_404, true)),
                 Arguments.of(new SmokeEndpointCase("testGetMoveById#1", "GET", "/entity/move/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
@@ -309,6 +396,8 @@ final class SmokeEndpointCatalog {
                 Arguments.of(new SmokeEndpointCase("testUpdateMovePosition#1", "PUT", "/entity/move/{id}/positions/{id}", SmokeEndpointCase.Expectation.BY_ID, true)),
                 Arguments.of(new SmokeEndpointCase("testDeleteMovePosition#1", "DELETE", "/entity/move/{id}/positions/{id}", SmokeEndpointCase.Expectation.DELETE, false)),
                 Arguments.of(new SmokeEndpointCase("testDeleteMovePositionsBatch#1", "POST", "/entity/move/{id}/positions/delete", SmokeEndpointCase.Expectation.NOT_404, true)),
+
+                // /entity/loss
                 Arguments.of(new SmokeEndpointCase("testListLosses#1", "GET", "/entity/loss", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testCreateLoss#1", "POST", "/entity/loss", SmokeEndpointCase.Expectation.NOT_404, true)),
                 Arguments.of(new SmokeEndpointCase("testCreateLossBatch#1", "POST", "/entity/loss/batch", SmokeEndpointCase.Expectation.NOT_404, true)),
@@ -332,6 +421,8 @@ final class SmokeEndpointCatalog {
                 Arguments.of(new SmokeEndpointCase("testUpdateLossPosition#1", "PUT", "/entity/loss/{id}/positions/{id}", SmokeEndpointCase.Expectation.BY_ID, true)),
                 Arguments.of(new SmokeEndpointCase("testDeleteLossPosition#1", "DELETE", "/entity/loss/{id}/positions/{id}", SmokeEndpointCase.Expectation.DELETE, false)),
                 Arguments.of(new SmokeEndpointCase("testDeleteLossPositionsBatch#1", "POST", "/entity/loss/{id}/positions/delete", SmokeEndpointCase.Expectation.NOT_404, true)),
+
+                // /entity/internalorder
                 Arguments.of(new SmokeEndpointCase("testListInternalOrders#1", "GET", "/entity/internalorder", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testCreateInternalOrder#1", "POST", "/entity/internalorder", SmokeEndpointCase.Expectation.NOT_404, true)),
                 Arguments.of(new SmokeEndpointCase("testGetInternalOrderById#1", "GET", "/entity/internalorder/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
@@ -356,6 +447,8 @@ final class SmokeEndpointCatalog {
                 Arguments.of(new SmokeEndpointCase("testUpdateInternalOrderMetadataStateById#1", "PUT", "/entity/internalorder/metadata/states/{id}", SmokeEndpointCase.Expectation.BY_ID, true)),
                 Arguments.of(new SmokeEndpointCase("testDeleteInternalOrderMetadataStateById#1", "DELETE", "/entity/internalorder/metadata/states/{id}", SmokeEndpointCase.Expectation.DELETE, false)),
                 Arguments.of(new SmokeEndpointCase("testInternalOrderTemplateNew#1", "PUT", "/entity/internalorder/new", SmokeEndpointCase.Expectation.NOT_404, true)),
+
+                // /entity/processingorder
                 Arguments.of(new SmokeEndpointCase("testListProcessingOrders#1", "GET", "/entity/processingorder", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testCreateProcessingOrder#1", "POST", "/entity/processingorder", SmokeEndpointCase.Expectation.NOT_404, true)),
                 Arguments.of(new SmokeEndpointCase("testGetProcessingOrderById#1", "GET", "/entity/processingorder/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
@@ -384,6 +477,8 @@ final class SmokeEndpointCatalog {
                 Arguments.of(new SmokeEndpointCase("testUpdateProcessingOrderMetadataStateById#1", "PUT", "/entity/processingorder/metadata/states/{id}", SmokeEndpointCase.Expectation.BY_ID, true)),
                 Arguments.of(new SmokeEndpointCase("testDeleteProcessingOrderMetadataStateById#1", "DELETE", "/entity/processingorder/metadata/states/{id}", SmokeEndpointCase.Expectation.DELETE, false)),
                 Arguments.of(new SmokeEndpointCase("testProcessingOrderTemplateNew#1", "PUT", "/entity/processingorder/new", SmokeEndpointCase.Expectation.NOT_404, true)),
+
+                // /entity/customerorder
                 Arguments.of(new SmokeEndpointCase("testListCustomerOrders#1", "GET", "/entity/customerorder", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testCreateCustomerOrder#1", "POST", "/entity/customerorder", SmokeEndpointCase.Expectation.NOT_404, true)),
                 Arguments.of(new SmokeEndpointCase("testGetCustomerOrderById#1", "GET", "/entity/customerorder/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
@@ -408,6 +503,8 @@ final class SmokeEndpointCatalog {
                 Arguments.of(new SmokeEndpointCase("testUpdateCustomerOrderMetadataStateById#1", "PUT", "/entity/customerorder/metadata/states/{id}", SmokeEndpointCase.Expectation.BY_ID, true)),
                 Arguments.of(new SmokeEndpointCase("testDeleteCustomerOrderMetadataStateById#1", "DELETE", "/entity/customerorder/metadata/states/{id}", SmokeEndpointCase.Expectation.DELETE, false)),
                 Arguments.of(new SmokeEndpointCase("testCustomerOrderTemplateNew#1", "PUT", "/entity/customerorder/new", SmokeEndpointCase.Expectation.NOT_404, true)),
+
+                // /entity/invoiceout
                 Arguments.of(new SmokeEndpointCase("testListInvoiceOuts#1", "GET", "/entity/invoiceout", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testCreateInvoiceOut#1", "POST", "/entity/invoiceout", SmokeEndpointCase.Expectation.NOT_404, true)),
                 Arguments.of(new SmokeEndpointCase("testGetInvoiceOutById#1", "GET", "/entity/invoiceout/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
@@ -435,6 +532,8 @@ final class SmokeEndpointCatalog {
                 Arguments.of(new SmokeEndpointCase("testUpdateInvoiceOutMetadataStateById#1", "PUT", "/entity/invoiceout/metadata/states/{id}", SmokeEndpointCase.Expectation.BY_ID, true)),
                 Arguments.of(new SmokeEndpointCase("testDeleteInvoiceOutMetadataStateById#1", "DELETE", "/entity/invoiceout/metadata/states/{id}", SmokeEndpointCase.Expectation.DELETE, false)),
                 Arguments.of(new SmokeEndpointCase("testInvoiceOutTemplateNew#1", "PUT", "/entity/invoiceout/new", SmokeEndpointCase.Expectation.NOT_404, true)),
+
+                // /entity/invoicein
                 Arguments.of(new SmokeEndpointCase("testListInvoiceIns#1", "GET", "/entity/invoicein", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testCreateInvoiceIn#1", "POST", "/entity/invoicein", SmokeEndpointCase.Expectation.NOT_404, true)),
                 Arguments.of(new SmokeEndpointCase("testGetInvoiceInById#1", "GET", "/entity/invoicein/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
@@ -462,6 +561,8 @@ final class SmokeEndpointCatalog {
                 Arguments.of(new SmokeEndpointCase("testUpdateInvoiceInMetadataStateById#1", "PUT", "/entity/invoicein/metadata/states/{id}", SmokeEndpointCase.Expectation.BY_ID, true)),
                 Arguments.of(new SmokeEndpointCase("testDeleteInvoiceInMetadataStateById#1", "DELETE", "/entity/invoicein/metadata/states/{id}", SmokeEndpointCase.Expectation.DELETE, false)),
                 Arguments.of(new SmokeEndpointCase("testInvoiceInTemplateNew#1", "PUT", "/entity/invoicein/new", SmokeEndpointCase.Expectation.NOT_404, true)),
+
+                // /entity/demand
                 Arguments.of(new SmokeEndpointCase("testListDemands#1", "GET", "/entity/demand", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testCreateDemand#1", "POST", "/entity/demand", SmokeEndpointCase.Expectation.NOT_404, true)),
                 Arguments.of(new SmokeEndpointCase("testGetDemandById#1", "GET", "/entity/demand/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
@@ -486,6 +587,8 @@ final class SmokeEndpointCatalog {
                 Arguments.of(new SmokeEndpointCase("testUpdateDemandMetadataStateById#1", "PUT", "/entity/demand/metadata/states/{id}", SmokeEndpointCase.Expectation.BY_ID, true)),
                 Arguments.of(new SmokeEndpointCase("testDeleteDemandMetadataStateById#1", "DELETE", "/entity/demand/metadata/states/{id}", SmokeEndpointCase.Expectation.DELETE, false)),
                 Arguments.of(new SmokeEndpointCase("testDemandTemplateNew#1", "PUT", "/entity/demand/new", SmokeEndpointCase.Expectation.NOT_404, true)),
+
+                // /entity/supply
                 Arguments.of(new SmokeEndpointCase("testListSupplies#1", "GET", "/entity/supply", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testCreateSupply#1", "POST", "/entity/supply", SmokeEndpointCase.Expectation.NOT_404, true)),
                 Arguments.of(new SmokeEndpointCase("testGetSupplyById#1", "GET", "/entity/supply/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
@@ -495,6 +598,8 @@ final class SmokeEndpointCatalog {
                 Arguments.of(new SmokeEndpointCase("testCreateSuppliesBatch#1", "POST", "/entity/supply/batch", SmokeEndpointCase.Expectation.NOT_404, true)),
                 Arguments.of(new SmokeEndpointCase("testGetSupplyMetadata#1", "GET", "/entity/supply/metadata", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testSupplyTemplateNew#1", "PUT", "/entity/supply/new", SmokeEndpointCase.Expectation.NOT_404, true)),
+
+                // /entity/salesreturn
                 Arguments.of(new SmokeEndpointCase("testListSalesReturns#1", "GET", "/entity/salesreturn", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testCreateSalesReturn#1", "POST", "/entity/salesreturn", SmokeEndpointCase.Expectation.NOT_404, true)),
                 Arguments.of(new SmokeEndpointCase("testGetSalesReturnById#1", "GET", "/entity/salesreturn/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
@@ -504,6 +609,8 @@ final class SmokeEndpointCatalog {
                 Arguments.of(new SmokeEndpointCase("testCreateSalesReturnsBatch#1", "POST", "/entity/salesreturn/batch", SmokeEndpointCase.Expectation.NOT_404, true)),
                 Arguments.of(new SmokeEndpointCase("testGetSalesReturnMetadata#1", "GET", "/entity/salesreturn/metadata", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testSalesReturnTemplateNew#1", "PUT", "/entity/salesreturn/new", SmokeEndpointCase.Expectation.NOT_404, true)),
+
+                // /entity/purchasereturn
                 Arguments.of(new SmokeEndpointCase("testListPurchaseReturns#1", "GET", "/entity/purchasereturn", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testCreatePurchaseReturn#1", "POST", "/entity/purchasereturn", SmokeEndpointCase.Expectation.NOT_404, true)),
                 Arguments.of(new SmokeEndpointCase("testGetPurchaseReturnById#1", "GET", "/entity/purchasereturn/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
@@ -513,6 +620,8 @@ final class SmokeEndpointCatalog {
                 Arguments.of(new SmokeEndpointCase("testCreatePurchaseReturnsBatch#1", "POST", "/entity/purchasereturn/batch", SmokeEndpointCase.Expectation.NOT_404, true)),
                 Arguments.of(new SmokeEndpointCase("testGetPurchaseReturnMetadata#1", "GET", "/entity/purchasereturn/metadata", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testPurchaseReturnTemplateNew#1", "PUT", "/entity/purchasereturn/new", SmokeEndpointCase.Expectation.NOT_404, true)),
+
+                // /entity/enter
                 Arguments.of(new SmokeEndpointCase("testListEnters#1", "GET", "/entity/enter", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testCreateEnter#1", "POST", "/entity/enter", SmokeEndpointCase.Expectation.NOT_404, true)),
                 Arguments.of(new SmokeEndpointCase("testGetEnterById#1", "GET", "/entity/enter/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
@@ -522,6 +631,8 @@ final class SmokeEndpointCatalog {
                 Arguments.of(new SmokeEndpointCase("testCreateEntersBatch#1", "POST", "/entity/enter/batch", SmokeEndpointCase.Expectation.NOT_404, true)),
                 Arguments.of(new SmokeEndpointCase("testGetEnterMetadata#1", "GET", "/entity/enter/metadata", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testEnterTemplateNew#1", "PUT", "/entity/enter/new", SmokeEndpointCase.Expectation.NOT_404, true)),
+
+                // /entity/commissionreportin
                 Arguments.of(new SmokeEndpointCase("testListCommissionReportIns#1", "GET", "/entity/commissionreportin", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testCreateCommissionReportIn#1", "POST", "/entity/commissionreportin", SmokeEndpointCase.Expectation.NOT_404, true)),
                 Arguments.of(new SmokeEndpointCase("testGetCommissionReportInById#1", "GET", "/entity/commissionreportin/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
@@ -530,6 +641,8 @@ final class SmokeEndpointCatalog {
                 Arguments.of(new SmokeEndpointCase("testDeleteCommissionReportInsBatch#1", "POST", "/entity/commissionreportin/delete", SmokeEndpointCase.Expectation.NOT_404, true)),
                 Arguments.of(new SmokeEndpointCase("testCreateCommissionReportInsBatch#1", "POST", "/entity/commissionreportin/batch", SmokeEndpointCase.Expectation.NOT_404, true)),
                 Arguments.of(new SmokeEndpointCase("testGetCommissionReportInMetadata#1", "GET", "/entity/commissionreportin/metadata", SmokeEndpointCase.Expectation.NOT_404, false)),
+
+                // /entity/commissionreportout
                 Arguments.of(new SmokeEndpointCase("testListCommissionReportOuts#1", "GET", "/entity/commissionreportout", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testCreateCommissionReportOut#1", "POST", "/entity/commissionreportout", SmokeEndpointCase.Expectation.NOT_404, true)),
                 Arguments.of(new SmokeEndpointCase("testGetCommissionReportOutById#1", "GET", "/entity/commissionreportout/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
@@ -538,6 +651,8 @@ final class SmokeEndpointCatalog {
                 Arguments.of(new SmokeEndpointCase("testDeleteCommissionReportOutsBatch#1", "POST", "/entity/commissionreportout/delete", SmokeEndpointCase.Expectation.NOT_404, true)),
                 Arguments.of(new SmokeEndpointCase("testCreateCommissionReportOutsBatch#1", "POST", "/entity/commissionreportout/batch", SmokeEndpointCase.Expectation.NOT_404, true)),
                 Arguments.of(new SmokeEndpointCase("testGetCommissionReportOutMetadata#1", "GET", "/entity/commissionreportout/metadata", SmokeEndpointCase.Expectation.NOT_404, false)),
+
+                // /entity/store
                 Arguments.of(new SmokeEndpointCase("testGetStoreZones#1", "GET", "/entity/store/{id}/zones", SmokeEndpointCase.Expectation.BY_ID, false)),
                 Arguments.of(new SmokeEndpointCase("testGetStoreSlots#1", "GET", "/entity/store/{id}/slots", SmokeEndpointCase.Expectation.BY_ID, false)),
                 Arguments.of(new SmokeEndpointCase("testCreateStore#1", "POST", "/entity/store", SmokeEndpointCase.Expectation.NOT_404, true)),
@@ -547,6 +662,8 @@ final class SmokeEndpointCatalog {
                 Arguments.of(new SmokeEndpointCase("testCreateStoresBatch#1", "POST", "/entity/store/batch", SmokeEndpointCase.Expectation.NOT_404, true)),
                 Arguments.of(new SmokeEndpointCase("testGetStoreMetadata#1", "GET", "/entity/store/metadata", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testGetStoreMetadataAttributeById#1", "GET", "/entity/store/metadata/attributes/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
+
+                // /entity/retailstore
                 Arguments.of(new SmokeEndpointCase("testCreateRetailStore#1", "POST", "/entity/retailstore", SmokeEndpointCase.Expectation.NOT_404, true)),
                 Arguments.of(new SmokeEndpointCase("testGetRetailStoreById#1", "GET", "/entity/retailstore/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
                 Arguments.of(new SmokeEndpointCase("testUpdateRetailStore#1", "PUT", "/entity/retailstore/{id}", SmokeEndpointCase.Expectation.BY_ID, true)),
@@ -554,6 +671,8 @@ final class SmokeEndpointCatalog {
                 Arguments.of(new SmokeEndpointCase("testDeleteRetailStoresBatch#1", "POST", "/entity/retailstore/delete", SmokeEndpointCase.Expectation.NOT_404, true)),
                 Arguments.of(new SmokeEndpointCase("testCreateRetailStoresBatch#1", "POST", "/entity/retailstore/batch", SmokeEndpointCase.Expectation.NOT_404, true)),
                 Arguments.of(new SmokeEndpointCase("testGetRetailStoreCashierById#1", "GET", "/entity/retailstore/{id}/cashiers/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
+
+                // /entity/variant
                 Arguments.of(new SmokeEndpointCase("testCreateVariant#1", "POST", "/entity/variant", SmokeEndpointCase.Expectation.NOT_404, true)),
                 Arguments.of(new SmokeEndpointCase("testGetVariantById#1", "GET", "/entity/variant/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
                 Arguments.of(new SmokeEndpointCase("testUpdateVariant#1", "PUT", "/entity/variant/{id}", SmokeEndpointCase.Expectation.BY_ID, true)),
@@ -563,6 +682,8 @@ final class SmokeEndpointCatalog {
                 Arguments.of(new SmokeEndpointCase("testCreateVariantCharacteristic#1", "POST", "/entity/variant/metadata/characteristics/", SmokeEndpointCase.Expectation.NOT_404, true)),
                 Arguments.of(new SmokeEndpointCase("testGetVariantCharacteristicById#1", "GET", "/entity/variant/metadata/characteristics/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
                 Arguments.of(new SmokeEndpointCase("testListVariantCharacteristics#1", "GET", "/entity/variant/metadata/characteristics/", SmokeEndpointCase.Expectation.NOT_404, false)),
+
+                // /entity/loss
                 Arguments.of(new SmokeEndpointCase("testDeleteLossMetadataStateById#1", "DELETE", "/entity/loss/metadata/states/{id}", SmokeEndpointCase.Expectation.DELETE, false))
         );
     }
