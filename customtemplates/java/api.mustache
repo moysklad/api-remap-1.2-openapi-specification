@@ -41,35 +41,6 @@ public class {{classname}} extends BaseApi {
     super(apiClient);
   }
 
-//  {{#operation}}
-//  /**
-//   * {{summary}}
-//   * {{notes}}
-//   {{#allParams}}
-//   * @param {{paramName}} {{description}}{{#required}} (required){{/required}}{{^required}} (optional{{^isContainer}}{{#defaultValue}}, default to {{.}}{{/defaultValue}}{{/isContainer}}){{/required}}
-//   {{/allParams}}
-//   {{#returnType}}
-//   * @return {{returnType}}
-//   {{/returnType}}
-//   * @throws ApiException if fails to make API call
-//   {{#isDeprecated}}
-//   * @deprecated
-//   {{/isDeprecated}}
-//   {{#externalDocs}}
-//   * {{description}}
-//   * @see <a href="{{url}}">{{summary}} Documentation</a>
-//   {{/externalDocs}}
-//   */
-//  {{#isDeprecated}}
-//  @Deprecated
-//  {{/isDeprecated}}
-//  public {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{operationId}}({{#allParams}}{{>nullable_var_annotations}} {{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/allParams}}) throws ApiException {
-//    {{#returnType}}return {{/returnType}}this.{{operationId}}({{#allParams}}{{paramName}}, {{/allParams}}Collections.emptyMap());
-//  }
-
-
-
-
   /**
    * {{summary}}
    * {{notes}}
