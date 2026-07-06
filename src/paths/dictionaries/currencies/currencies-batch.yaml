@@ -19,6 +19,15 @@ post:
             $ref: '../../../openapi.yaml#/components/schemas/Currency'
           minItems: 1
           maxItems: 1000
+        example:
+          - name: "евро"
+            fullName: "Евро"
+            code: "978"
+            isoCode: "EUR"
+            rate: 90.0
+            shared: true
+            archived: false
+            externalCode: "euroCurrency"
   responses:
     '200':
       description: Валюты созданы или изменены (элемент — сущность или объект ошибки)

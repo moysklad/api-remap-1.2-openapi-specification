@@ -41,6 +41,11 @@ post:
       application/json:
         schema:
           $ref: '../../../openapi.yaml#/components/schemas/Webhook'
+        example:
+          url: "http://www.example.com"
+          enabled: true
+          action: "CREATE"
+          entityType: "supply"
   responses:
     '200':
       description: Вебхук успешно создан

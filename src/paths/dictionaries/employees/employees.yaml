@@ -45,6 +45,13 @@ post:
       application/json:
         schema:
           $ref: '../../../openapi.yaml#/components/schemas/Employee'
+        example:
+          lastName: "Мойскладкин"
+          firstName: "Петр"
+          middleName: "Иванович"
+          email: "employee@example.ru"
+          phone: "+7(999)888-7766"
+          position: "Директор"
   responses:
     '200':
       description: Сотрудник успешно создан

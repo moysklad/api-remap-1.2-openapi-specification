@@ -1,3 +1,11 @@
+# Версия 0.14.0
+
+* feat: добавлена сущность - Настройки уведомлений (notification/settings)
+* feat: добавлена сущность - Розничный возврат (retailsalesreturn)
+* feat: добавлен эндпоинт entity/retaildemand/metadata/states
+* feat: добавлен эндпоинт entity/productiontask/metadata/attributes
+* feat: добавлена сущность - Розничная смена (retailshift)
+
 # Версия 0.13.0
 
 * технические изменения

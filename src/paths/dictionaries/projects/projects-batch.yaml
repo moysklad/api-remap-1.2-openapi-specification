@@ -19,6 +19,11 @@ post:
             $ref: '../../../openapi.yaml#/components/schemas/Project'
           minItems: 1
           maxItems: 1000
+        example:
+          - name: "Проект batch из примера OpenAPI"
+            code: "openapi-project-batch"
+            description: "Проект batch для примера OpenAPI"
+            shared: true
   responses:
     '200':
       description: Проекты успешно созданы или изменены

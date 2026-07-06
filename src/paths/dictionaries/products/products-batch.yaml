@@ -19,6 +19,14 @@ post:
             $ref: '../../../openapi.yaml#/components/schemas/Product'
           minItems: 1
           maxItems: 1000
+        example:
+          - name: "Товар batch из примера OpenAPI"
+            code: "openapi-product-batch"
+            article: "ART-002"
+            description: "Товар batch для примера OpenAPI"
+            archived: false
+            vatEnabled: false
+            shared: true
   responses:
     '200':
       description: Товары успешно созданы или изменены (элемент массива — сущность или объект ошибки)

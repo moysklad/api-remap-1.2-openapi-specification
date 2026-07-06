@@ -19,6 +19,12 @@ post:
             $ref: '../../../openapi.yaml#/components/schemas/TaxRate'
           minItems: 1
           maxItems: 1000
+        example:
+          - rate: 34.0
+            comment: "Ставка НДС batch из примера OpenAPI"
+            shared: false
+            archived: false
+            externalCode: "taxRate123"
   responses:
     '200':
       description: Ставки НДС успешно созданы или изменены

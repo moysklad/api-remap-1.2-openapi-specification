@@ -281,6 +281,18 @@
             <version>${jakarta-annotation-version}</version>
             <scope>provided</scope>
         </dependency>
+        {{#useBeanValidation}}
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>${javax-validation-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>${hibernate-validator-version}</version>
+        </dependency>
+        {{/useBeanValidation}}
     </dependencies>
 
     <properties>
@@ -294,6 +306,10 @@
         <artifactoryRepo />
         <jackson-databind-nullable-version>0.2.6</jackson-databind-nullable-version>
         <httpclient-version>5.2.1</httpclient-version>
+        {{#useBeanValidation}}
+        <javax-validation-version>2.0.1.Final</javax-validation-version>
+        <hibernate-validator-version>6.2.5.Final</hibernate-validator-version>
+        {{/useBeanValidation}}
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>

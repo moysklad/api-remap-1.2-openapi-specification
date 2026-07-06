@@ -42,6 +42,11 @@ post:
       application/json:
         schema:
           $ref: '../../../openapi.yaml#/components/schemas/WebhookStock'
+        example:
+          url: "http://www.example.com"
+          enabled: true
+          reportType: "all"
+          stockType: "stock"
   responses:
     '200':
       description: Один созданный вебхук или массив созданных/изменённых (элемент — сущность или ошибка)

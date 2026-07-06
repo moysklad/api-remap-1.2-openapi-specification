@@ -19,6 +19,13 @@ post:
             $ref: '../../../openapi.yaml#/components/schemas/SalesChannel'
           minItems: 1
           maxItems: 1000
+        example:
+          - name: "Заказы из ИМ"
+            type: "ECOMMERCE"
+            code: "ecommerce"
+            description: "Заказы с интернет-магазина"
+            shared: true
+            archived: true
   responses:
     '200':
       description: Каналы продаж созданы или изменены (элемент — сущность или объект ошибки)
