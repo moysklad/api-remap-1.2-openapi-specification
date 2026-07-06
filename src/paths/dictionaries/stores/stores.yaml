@@ -33,6 +33,11 @@ post:
       application/json:
         schema:
           $ref: '../../../openapi.yaml#/components/schemas/Store'
+        example:
+          name: "Склад2"
+          code: "code3"
+          address: "г Москва ул Вавилова 19 к 116"
+          description: "Склад из примера OpenAPI"
   responses:
     '200':
       description: Склад успешно создан

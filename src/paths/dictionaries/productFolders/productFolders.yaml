@@ -45,6 +45,14 @@ post:
       application/json:
         schema:
           $ref: '../../../openapi.yaml#/components/schemas/ProductFolder'
+        example:
+          name: "Овощи"
+          description: "Группа овощей"
+          vatEnabled: false
+          shared: true
+          archived: false
+          vat: 10
+          useParentVat: false
   responses:
     '200':
       description: Группа товаров успешно создана

@@ -14,6 +14,13 @@ import com.fasterxml.jackson.databind.JavaType;
 {{#openApiNullable}}
 import org.openapitools.jackson.nullable.JsonNullableModule;
 {{/openApiNullable}}
+{{#useBeanValidation}}
+import org.hibernate.validator.messageinterpolation.ParameterMessageInterpolator;
+
+import {{javaxPackage}}.validation.ConstraintViolation;
+import {{javaxPackage}}.validation.Validation;
+import {{javaxPackage}}.validation.Validator;
+{{/useBeanValidation}}
 
 import org.apache.hc.client5.http.cookie.BasicCookieStore;
 import org.apache.hc.client5.http.cookie.Cookie;
@@ -130,6 +137,9 @@ public class ApiClient{{#jsr310}} extends JavaTimeFormatter{{/jsr310}} {
   protected ThreadLocal<Map<String, List<String>>> lastResponseHeaders = new ThreadLocal<>();
 
   protected DateFormat dateFormat;
+  {{#useBeanValidation}}
+  protected final Validator beanValidator;
+  {{/useBeanValidation}}
 
   // Methods that can have a request body
   protected static List<String> bodyMethods = Arrays.asList("POST", "PUT", "DELETE", "PATCH");
@@ -159,6 +169,13 @@ public class ApiClient{{#jsr310}} extends JavaTimeFormatter{{/jsr310}} {
     objectMapper.setDateFormat(ApiClient.buildDefaultDateFormat());
 
     dateFormat = ApiClient.buildDefaultDateFormat();
+    {{#useBeanValidation}}
+    beanValidator = Validation.byDefaultProvider()
+        .configure()
+        .messageInterpolator(new ParameterMessageInterpolator())
+        .buildValidatorFactory()
+        .getValidator();
+    {{/useBeanValidation}}
 
     // Set default User-Agent.
     setUserAgent("{{#httpUserAgent}}{{{.}}}{{/httpUserAgent}}{{^httpUserAgent}}OpenAPI-Generator/{{{artifactVersion}}}/java{{/httpUserAgent}}");
@@ -1011,6 +1028,51 @@ public class ApiClient{{#jsr310}} extends JavaTimeFormatter{{/jsr310}} {
   protected boolean isBodyAllowed(String method) {
     return bodyMethods.contains(method);
   }
+  {{#useBeanValidation}}
+
+  private void validateRequestBody(Object requestBody) throws ApiException {
+    if (requestBody == null) {
+      return;
+    }
+
+    List<String> errors = new ArrayList<String>();
+    collectValidationErrors(requestBody, errors, "");
+    if (!errors.isEmpty()) {
+      throw new ApiException(400, "Request body validation failed: " + String.join("; ", errors));
+    }
+  }
+
+  private void collectValidationErrors(Object value, List<String> errors, String pathPrefix) {
+    if (value == null) {
+      return;
+    }
+    if (value instanceof Collection<?>) {
+      int index = 0;
+      for (Object item : (Collection<?>) value) {
+        collectValidationErrors(item, errors, pathPrefix + "[" + index + "]");
+        index++;
+      }
+      return;
+    }
+    if (value instanceof Map<?, ?>) {
+      for (Entry<?, ?> entry : ((Map<?, ?>) value).entrySet()) {
+        collectValidationErrors(entry.getValue(), errors, pathPrefix + "[" + entry.getKey() + "]");
+      }
+      return;
+    }
+
+    for (ConstraintViolation<Object> violation : beanValidator.validate(value)) {
+      String propertyPath = violation.getPropertyPath().toString();
+      if (pathPrefix == null || pathPrefix.isEmpty()) {
+        errors.add(propertyPath + ": " + violation.getMessage());
+      } else if (propertyPath == null || propertyPath.isEmpty()) {
+        errors.add(pathPrefix + ": " + violation.getMessage());
+      } else {
+        errors.add(pathPrefix + "." + propertyPath + ": " + violation.getMessage());
+      }
+    }
+  }
+  {{/useBeanValidation}}
 
   protected Cookie buildCookie(String key, String value, URI uri) {
     BasicClientCookie cookie = new BasicClientCookie(key, value);
@@ -1074,6 +1136,9 @@ public class ApiClient{{#jsr310}} extends JavaTimeFormatter{{/jsr310}} {
     if (body != null && !formParams.isEmpty()) {
       throw new ApiException("Cannot have body and form params");
     }
+    {{#useBeanValidation}}
+    validateRequestBody(body);
+    {{/useBeanValidation}}
 
     updateParamsForAuth(authNames, queryParams, headerParams, cookieParams);
     final String url = buildUrl(path, queryParams, collectionQueryParams, urlQueryDeepObject);
