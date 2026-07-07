@@ -2076,8 +2076,24 @@ components:
       $ref: './components/schemas/dictionary/financeInOperationRetailShift.yaml'
     RetailShiftOperation:
       $ref: './components/schemas/dictionary/retailShiftOperation.yaml'
+    RetailShiftOperationRetailDemand:
+      $ref: './components/schemas/dictionary/retailShiftOperationRetailDemand.yaml'
+    RetailShiftOperationRetailSalesReturn:
+      $ref: './components/schemas/dictionary/retailShiftOperationRetailSalesReturn.yaml'
+    RetailShiftOperationRetailDrawerCashIn:
+      $ref: './components/schemas/dictionary/retailShiftOperationRetailDrawerCashIn.yaml'
+    RetailShiftOperationRetailDrawerCashOut:
+      $ref: './components/schemas/dictionary/retailShiftOperationRetailDrawerCashOut.yaml'
+    RetailShiftOperationPrepayment:
+      $ref: './components/schemas/dictionary/retailShiftOperationPrepayment.yaml'
+    RetailShiftOperationPrepaymentReturn:
+      $ref: './components/schemas/dictionary/retailShiftOperationPrepaymentReturn.yaml'
     RetailShiftPaymentOperation:
       $ref: './components/schemas/dictionary/retailShiftPaymentOperation.yaml'
+    RetailShiftPaymentOperationCashIn:
+      $ref: './components/schemas/dictionary/retailShiftPaymentOperationCashIn.yaml'
+    RetailShiftPaymentOperationPaymentIn:
+      $ref: './components/schemas/dictionary/retailShiftPaymentOperationPaymentIn.yaml'
     OperationLinkedSum:
       $ref: './components/schemas/dictionary/operationLinkedSum.yaml'
     RetailDrawerCashIn:

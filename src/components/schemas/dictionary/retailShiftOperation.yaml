@@ -3,16 +3,23 @@ description: |
   Допустимые `meta.type`: retaildemand, retailsalesreturn, retaildrawercashin,
   retaildrawercashout, prepayment, prepaymentreturn.
 type: object
-anyOf:
-  - description: Розничная продажа
-    $ref: '../../../openapi.yaml#/components/schemas/RetailDemand'
-  - description: Розничный возврат
-    $ref: '../../../openapi.yaml#/components/schemas/RetailSalesReturn'
-  - description: Внесение денег
-    $ref: '../../../openapi.yaml#/components/schemas/RetailDrawerCashIn'
-  - description: Выплата денег
-    $ref: '../../../openapi.yaml#/components/schemas/RetailDrawerCashOut'
-  - description: Предоплата
-    $ref: '../../../openapi.yaml#/components/schemas/Prepayment'
-  - description: Возврат предоплаты
-    $ref: '../../../openapi.yaml#/components/schemas/PrepaymentReturn'
+properties:
+  meta:
+    $ref: '../../../openapi.yaml#/components/schemas/Meta'
+x-polymorphic-discriminator:
+  path: meta.type
+  mappings:
+    - type: retaildemand
+      componentName: RetailShiftOperationRetailDemand
+    - type: retailsalesreturn
+      componentName: RetailShiftOperationRetailSalesReturn
+    - type: retaildrawercashin
+      componentName: RetailShiftOperationRetailDrawerCashIn
+    - type: retaildrawercashout
+      componentName: RetailShiftOperationRetailDrawerCashOut
+    - type: prepayment
+      componentName: RetailShiftOperationPrepayment
+    - type: prepaymentreturn
+      componentName: RetailShiftOperationPrepaymentReturn
+required:
+  - meta
