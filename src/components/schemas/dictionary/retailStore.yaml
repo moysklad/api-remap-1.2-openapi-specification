@@ -236,7 +236,6 @@ properties:
     description: Признак разрешения создания новых товаров при продаже
   allowCustomPrice:
     type: boolean
-    readOnly: true
     description: Признак разрешения устанавливать произвольные цены
   allowDeleteReceiptPositions:
     type: boolean
