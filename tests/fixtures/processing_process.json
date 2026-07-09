@@ -54,7 +54,7 @@
             "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/product/metadata",
             "type": "processingstage",
             "mediaType": "application/json",
-            "uuidHref": "https://api.moysklad.ru/app/#processingstage/edit?id=d6877ac4-26ae-11f1-0a83-1f2500000149"
+            "uuidHref": "https://online.moysklad.ru/app/#processingstage/edit?id=d6877ac4-26ae-11f1-0a83-1f2500000149"
           }
         },
         "nextPositions": [
@@ -65,7 +65,7 @@
                 "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/product/metadata",
                 "type": "processingstage",
                 "mediaType": "application/json",
-                "uuidHref": "https://api.moysklad.ru/app/#processingstage/edit?id=d6877ac4-26ae-11f1-0a83-1f250000014a"
+                "uuidHref": "https://online.moysklad.ru/app/#processingstage/edit?id=d6877ac4-26ae-11f1-0a83-1f250000014a"
               }
             }
           }
@@ -85,7 +85,7 @@
             "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/product/metadata",
             "type": "processingstage",
             "mediaType": "application/json",
-            "uuidHref": "https://api.moysklad.ru/app/#processingstage/edit?id=d6877ac4-26ae-11f1-0a83-1f2500000149"
+            "uuidHref": "https://online.moysklad.ru/app/#processingstage/edit?id=d6877ac4-26ae-11f1-0a83-1f2500000149"
           }
         }
       }

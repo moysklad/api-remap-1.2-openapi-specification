@@ -4,7 +4,7 @@
     "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/move/metadata",
     "type": "move",
     "mediaType": "application/json",
-    "uuidHref": "https://api.moysklad.ru/app/#move/edit?id=5ac52c9a-4f67-11e6-8a84-bae500000084"
+    "uuidHref": "https://online.moysklad.ru/app/#move/edit?id=5ac52c9a-4f67-11e6-8a84-bae500000084"
   },
   "id": "5ac52c9a-4f67-11e6-8a84-bae500000084",
   "syncId": "5ac52c9a-4f67-11e6-8a84-bae500000084",

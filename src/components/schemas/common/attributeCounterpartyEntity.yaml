@@ -6,4 +6,4 @@ properties:
     type: string
     enum: [counterparty]
   value:
-    $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
+    $ref: '../../../openapi.yaml#/components/schemas/Agent'

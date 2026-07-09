@@ -12,7 +12,7 @@
       "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/product/metadata",
       "type": "product",
       "mediaType": "application/json",
-      "uuidHref": "https://api.moysklad.ru/app/#good/edit?id=d825f169-26ae-11f1-0a83-1f250000016b"
+      "uuidHref": "https://online.moysklad.ru/app/#good/edit?id=d825f169-26ae-11f1-0a83-1f250000016b"
     }
   },
   "quantity": 1.0

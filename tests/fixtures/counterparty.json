@@ -10,18 +10,18 @@
   "accountId": "abcdef12-1234-1234-1234-123456789012",
   "owner": {
     "meta": {
-      "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/employee/b2c670fa-01b5-11f1-0a81-072700000055",
-      "metadataHref": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/employee/metadata",
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/employee/b2c670fa-01b5-11f1-0a81-072700000055",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/employee/metadata",
       "type": "employee",
       "mediaType": "application/json",
-      "uuidHref": "https://online-api-2.testms-test.lognex.ru/app/#employee/edit?id=b2c670fa-01b5-11f1-0a81-072700000055"
+      "uuidHref": "https://online.moysklad.ru/app/#employee/edit?id=b2c670fa-01b5-11f1-0a81-072700000055"
     }
   },
   "shared": true,
   "group": {
     "meta": {
-      "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/group/b205f9b3-01b5-11f1-0a81-181d00000003",
-      "metadataHref": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/group/metadata",
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/group/b205f9b3-01b5-11f1-0a81-181d00000003",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/group/metadata",
       "type": "group",
       "mediaType": "application/json"
     }
@@ -40,17 +40,17 @@
     "postalCode": "430008",
     "country": {
       "meta": {
-        "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/country/9df7c2c3-7782-4c5c-a8ed-1102af611608",
-        "metadataHref": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/country/metadata",
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/country/9df7c2c3-7782-4c5c-a8ed-1102af611608",
+        "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/country/metadata",
         "type": "country",
         "mediaType": "application/json",
-        "uuidHref": "https://online-api-2.testms-test.lognex.ru/app/#country/edit?id=9df7c2c3-7782-4c5c-a8ed-1102af611608"
+        "uuidHref": "https://online.moysklad.ru/app/#country/edit?id=9df7c2c3-7782-4c5c-a8ed-1102af611608"
       }
     },
     "region": {
       "meta": {
-        "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/region/00000000-0000-0000-0000-000000000013",
-        "metadataHref": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/region/metadata",
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/region/00000000-0000-0000-0000-000000000013",
+        "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/region/metadata",
         "type": "region",
         "mediaType": "application/json"
       }
@@ -63,17 +63,17 @@
     "postalCode": "430008",
     "country": {
       "meta": {
-        "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/country/9df7c2c3-7782-4c5c-a8ed-1102af611608",
-        "metadataHref": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/country/metadata",
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/country/9df7c2c3-7782-4c5c-a8ed-1102af611608",
+        "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/country/metadata",
         "type": "country",
         "mediaType": "application/json",
-        "uuidHref": "https://online-api-2.testms-test.lognex.ru/app/#country/edit?id=9df7c2c3-7782-4c5c-a8ed-1102af611608"
+        "uuidHref": "https://online.moysklad.ru/app/#country/edit?id=9df7c2c3-7782-4c5c-a8ed-1102af611608"
       }
     },
     "region": {
       "meta": {
-        "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/region/00000000-0000-0000-0000-000000000013",
-        "metadataHref": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/region/metadata",
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/region/00000000-0000-0000-0000-000000000013",
+        "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/region/metadata",
         "type": "region",
         "mediaType": "application/json"
       }
@@ -129,7 +129,7 @@
   "fax": "8888888",
   "accounts": {
     "meta": {
-      "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/counterparty/b3922fc3-01b5-11f1-0a81-0727000000bf/accounts",
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/b3922fc3-01b5-11f1-0a81-0727000000bf/accounts",
       "type": "account",
       "mediaType": "application/json",
       "size": 0,
@@ -142,7 +142,7 @@
   ],
   "contactpersons": {
     "meta": {
-      "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/counterparty/b3922fc3-01b5-11f1-0a81-0727000000bf/contactpersons",
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/b3922fc3-01b5-11f1-0a81-0727000000bf/contactpersons",
       "type": "contactperson",
       "mediaType": "application/json",
       "size": 1,
@@ -152,7 +152,7 @@
     "rows": [
       {
         "meta": {
-          "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/counterparty/b3922fc3-01b5-11f1-0a81-0727000000bf/contactpersons/097ed025-025c-11f1-0a81-072700000158",
+          "href": "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/b3922fc3-01b5-11f1-0a81-0727000000bf/contactpersons/097ed025-025c-11f1-0a81-072700000158",
           "type": "contactperson",
           "mediaType": "application/json"
         },
@@ -167,11 +167,11 @@
         "position": "123",
         "agent": {
           "meta": {
-            "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/counterparty/b3922fc3-01b5-11f1-0a81-0727000000bf",
-            "metadataHref": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/counterparty/metadata",
+            "href": "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/b3922fc3-01b5-11f1-0a81-0727000000bf",
+            "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/metadata",
             "type": "counterparty",
             "mediaType": "application/json",
-            "uuidHref": "https://online-api-2.testms-test.lognex.ru/app/#company/edit?id=b3922fc3-01b5-11f1-0a81-0727000000bf"
+            "uuidHref": "https://online.moysklad.ru/app/#company/edit?id=b3922fc3-01b5-11f1-0a81-0727000000bf"
           }
         }
       }
@@ -179,7 +179,7 @@
   },
   "notes": {
     "meta": {
-      "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/counterparty/b3922fc3-01b5-11f1-0a81-0727000000bf/notes",
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/b3922fc3-01b5-11f1-0a81-0727000000bf/notes",
       "type": "note",
       "mediaType": "application/json",
       "size": 1,
@@ -189,7 +189,7 @@
     "rows": [
       {
         "meta": {
-          "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/counterparty/b3922fc3-01b5-11f1-0a81-0727000000bf/notes/3665cc2b-028c-11f1-0a81-0727000001af",
+          "href": "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/b3922fc3-01b5-11f1-0a81-0727000000bf/notes/3665cc2b-028c-11f1-0a81-0727000001af",
           "type": "note",
           "mediaType": "application/json"
         },
@@ -199,20 +199,20 @@
         "description": "1",
         "agent": {
           "meta": {
-            "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/counterparty/b3922fc3-01b5-11f1-0a81-0727000000bf",
-            "metadataHref": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/counterparty/metadata",
+            "href": "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/b3922fc3-01b5-11f1-0a81-0727000000bf",
+            "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/metadata",
             "type": "counterparty",
             "mediaType": "application/json",
-            "uuidHref": "https://online-api-2.testms-test.lognex.ru/app/#company/edit?id=b3922fc3-01b5-11f1-0a81-0727000000bf"
+            "uuidHref": "https://online.moysklad.ru/app/#company/edit?id=b3922fc3-01b5-11f1-0a81-0727000000bf"
           }
         },
         "author": {
           "meta": {
-            "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/employee/b2c670fa-01b5-11f1-0a81-072700000055",
-            "metadataHref": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/employee/metadata",
+            "href": "https://api.moysklad.ru/api/remap/1.2/entity/employee/b2c670fa-01b5-11f1-0a81-072700000055",
+            "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/employee/metadata",
             "type": "employee",
             "mediaType": "application/json",
-            "uuidHref": "https://online-api-2.testms-test.lognex.ru/app/#employee/edit?id=b2c670fa-01b5-11f1-0a81-072700000055"
+            "uuidHref": "https://online.moysklad.ru/app/#employee/edit?id=b2c670fa-01b5-11f1-0a81-072700000055"
           }
         }
       }
@@ -223,11 +223,11 @@
     {
       "discount": {
         "meta": {
-          "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/personaldiscount/83077b71-025e-11f1-0a81-07270000016d",
-          "metadataHref": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/personaldiscount/metadata",
+          "href": "https://api.moysklad.ru/api/remap/1.2/entity/personaldiscount/83077b71-025e-11f1-0a81-07270000016d",
+          "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/personaldiscount/metadata",
           "type": "personaldiscount",
           "mediaType": "application/json",
-          "uuidHref": "https://online-api-2.testms-test.lognex.ru/app/#discount/edit?id=83077b71-025e-11f1-0a81-07270000016d"
+          "uuidHref": "https://online.moysklad.ru/app/#discount/edit?id=83077b71-025e-11f1-0a81-07270000016d"
         }
       },
       "personalDiscount": 10.0
@@ -235,11 +235,11 @@
     {
       "discount": {
         "meta": {
-          "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/accumulationdiscount/a851332c-025e-11f1-0a81-072700000173",
-          "metadataHref": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/accumulationdiscount/metadata",
+          "href": "https://api.moysklad.ru/api/remap/1.2/entity/accumulationdiscount/a851332c-025e-11f1-0a81-072700000173",
+          "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/accumulationdiscount/metadata",
           "type": "accumulationdiscount",
           "mediaType": "application/json",
-          "uuidHref": "https://online-api-2.testms-test.lognex.ru/app/#discount/edit?id=a851332c-025e-11f1-0a81-072700000173"
+          "uuidHref": "https://online.moysklad.ru/app/#discount/edit?id=a851332c-025e-11f1-0a81-072700000173"
         }
       },
       "demandSumCorrection": 1100.0
@@ -247,15 +247,15 @@
   ],
   "state": {
     "meta": {
-      "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/counterparty/metadata/states/b3b37a9b-01b5-11f1-0a81-0727000000d2",
-      "metadataHref": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/counterparty/metadata",
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/metadata/states/b3b37a9b-01b5-11f1-0a81-0727000000d2",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/metadata",
       "type": "state",
       "mediaType": "application/json"
     }
   },
   "priceType": {
     "meta": {
-      "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/context/companysettings/pricetype/b35e9728-01b5-11f1-0a81-0727000000aa",
+      "href": "https://api.moysklad.ru/api/remap/1.2/context/companysettings/pricetype/b35e9728-01b5-11f1-0a81-0727000000aa",
       "type": "pricetype",
       "mediaType": "application/json"
     },
@@ -266,7 +266,7 @@
   "salesAmount": 0.0,
   "files": {
     "meta": {
-      "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/counterparty/b3922fc3-01b5-11f1-0a81-0727000000bf/files",
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/b3922fc3-01b5-11f1-0a81-0727000000bf/files",
       "type": "files",
       "mediaType": "application/json",
       "size": 0,
@@ -276,10 +276,10 @@
     "rows": [
       {
         "meta": {
-          "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/counterparty/b3922fc3-01b5-11f1-0a81-0727000000bf/files/678498fb-05ca-40d1-8460-fecb7ff3d29f",
+          "href": "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/b3922fc3-01b5-11f1-0a81-0727000000bf/files/678498fb-05ca-40d1-8460-fecb7ff3d29f",
           "type": "files",
           "mediaType": "application/json",
-          "downloadHref": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/download/678498fb-05ca-40d1-8460-fecb7ff3d29f"
+          "downloadHref": "https://api.moysklad.ru/api/remap/1.2/download/678498fb-05ca-40d1-8460-fecb7ff3d29f"
         },
         "title": "cursor_icon",
         "filename": "cursor_icon.png",
@@ -287,15 +287,15 @@
         "created": "2026-02-05 15:10:02.306",
         "createdBy": {
           "meta": {
-            "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/employee/b2c670fa-01b5-11f1-0a81-072700000055",
-            "metadataHref": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/employee/metadata",
+            "href": "https://api.moysklad.ru/api/remap/1.2/entity/employee/b2c670fa-01b5-11f1-0a81-072700000055",
+            "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/employee/metadata",
             "type": "employee",
             "mediaType": "application/json",
-            "uuidHref": "https://online-api-2.testms-test.lognex.ru/app/#employee/edit?id=b2c670fa-01b5-11f1-0a81-072700000055"
+            "uuidHref": "https://online.moysklad.ru/app/#employee/edit?id=b2c670fa-01b5-11f1-0a81-072700000055"
           }
         },
         "miniature": {
-          "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/download/678498fb-05ca-40d1-8460-fecb7ff3d29f?miniature=true",
+          "href": "https://api.moysklad.ru/api/remap/1.2/download/678498fb-05ca-40d1-8460-fecb7ff3d29f?miniature=true",
           "type": "files",
           "mediaType": "image/png",
           "downloadHref": "https://miniature-test-v3.moysklad.ru/miniature-test/miniature/b2040544-01b5-11f1-0a81-181d00000002/documentminiature/6fb0df91-b057-4130-8ab0-8662abfb5d09"

@@ -1590,8 +1590,6 @@ components:
       $ref: './components/schemas/common/attributeMetaInfo.yaml'
     AttributeMetaInfoList:
       $ref: './components/schemas/common/attributeMetaInfoList.yaml'
-    AttributeObject:
-      $ref: './components/schemas/common/attributeObject.yaml'
     AttributeString:
       $ref: './components/schemas/common/attributeString.yaml'
     AttributeText:

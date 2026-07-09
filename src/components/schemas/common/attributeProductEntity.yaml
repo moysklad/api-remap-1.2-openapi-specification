@@ -6,4 +6,4 @@ properties:
     type: string
     enum: [product]
   value:
-    $ref: '../../../openapi.yaml#/components/schemas/Product'
+    $ref: '../../../openapi.yaml#/components/schemas/ProductMarker'
