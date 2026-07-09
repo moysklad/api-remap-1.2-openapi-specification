@@ -45,9 +45,12 @@ public class {{classname}} extends BaseApi {
   /**
    * {{summary}}
    * {{notes}}
-   {{#allParams}}
+   {{#pathParams}}
    * @param {{paramName}} {{description}}{{#required}} (required){{/required}}{{^required}} (optional{{^isContainer}}{{#defaultValue}}, default to {{.}}{{/defaultValue}}{{/isContainer}}){{/required}}
-   {{/allParams}}
+   {{/pathParams}}
+   {{#bodyParam}}
+   * @param {{paramName}} {{description}}{{#required}} (required){{/required}}{{^required}} (optional{{^isContainer}}{{#defaultValue}}, default to {{.}}{{/defaultValue}}{{/isContainer}}){{/required}}
+   {{/bodyParam}}
    {{#returnType}}
    * @return {{returnType}}
    {{/returnType}}
@@ -63,12 +66,12 @@ public class {{classname}} extends BaseApi {
   {{#isDeprecated}}
   @Deprecated
   {{/isDeprecated}}
-  public {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{operationId}}({{#allParams}}{{>nullable_var_annotations}} {{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/allParams}}) throws ApiException {
-    {{#returnType}}return {{/returnType}}this.{{operationId}}({{#allParams}}{{paramName}}, {{/allParams}}Collections.emptyMap());
+  public {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{operationId}}({{#pathParams}}{{>nullable_var_annotations}} {{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/pathParams}}{{#bodyParam}}{{#pathParams.0}}, {{/pathParams.0}}{{>nullable_var_annotations}} {{{dataType}}} {{paramName}}{{/bodyParam}}) throws ApiException {
+    RequestOptions effectiveOptions = RequestOptions.empty();
+    {{#returnType}}return {{/returnType}}this.{{operationId}}({{#allParams}}{{#isQueryParam}}({{{dataType}}}) effectiveOptions.get("{{paramName}}"){{/isQueryParam}}{{#isHeaderParam}}null{{/isHeaderParam}}{{^isQueryParam}}{{^isHeaderParam}}{{paramName}}{{/isHeaderParam}}{{/isQueryParam}}, {{/allParams}}effectiveOptions.getAdditionalHeaders());
   }
 
-  {{#queryParams}}
-  {{#-first}}
+
   /**
    * {{summary}}
    * {{notes}}
@@ -98,9 +101,6 @@ public class {{classname}} extends BaseApi {
     {{#returnType}}return {{/returnType}}this.{{operationId}}({{#allParams}}{{#isQueryParam}}({{{dataType}}}) effectiveOptions.get("{{paramName}}"){{/isQueryParam}}{{#isHeaderParam}}null{{/isHeaderParam}}{{^isQueryParam}}{{^isHeaderParam}}{{paramName}}{{/isHeaderParam}}{{/isQueryParam}}, {{/allParams}}effectiveOptions.getAdditionalHeaders());
   }
 
-  {{/-first}}
-  {{/queryParams}}
-
   /**
    * {{summary}}
    * {{notes}}
@@ -123,7 +123,7 @@ public class {{classname}} extends BaseApi {
   {{#isDeprecated}}
   @Deprecated
   {{/isDeprecated}}
-  public {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{operationId}}({{#allParams}}{{>nullable_var_annotations}} {{{dataType}}} {{paramName}}, {{/allParams}}Map<String, String> additionalHeaders) throws ApiException {
+  protected {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{operationId}}({{#allParams}}{{>nullable_var_annotations}} {{{dataType}}} {{paramName}}, {{/allParams}}Map<String, String> additionalHeaders) throws ApiException {
     Object localVarPostBody = {{#bodyParam}}{{paramName}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}};
     {{#allParams}}{{#required}}
     // verify the required parameter '{{paramName}}' is set
