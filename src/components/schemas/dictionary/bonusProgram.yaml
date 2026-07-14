@@ -1,5 +1,6 @@
 type: object
 description: Бонусная программа
+x-polymorphic-parent: DiscountAbstract
 properties:
   earnRateRoublesToPoint:
     type: integer

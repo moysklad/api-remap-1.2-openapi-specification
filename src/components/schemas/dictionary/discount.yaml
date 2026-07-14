@@ -1,5 +1,6 @@
 type: object
 description: Скидка (discount)
+x-polymorphic-parent: DiscountAbstract
 x-entity-static-builder:
   methodParams:
     - "id"
