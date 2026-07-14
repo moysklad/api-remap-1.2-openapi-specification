@@ -66,7 +66,7 @@ properties:
     description: Метаданные возможных исполнителей
     nullable: true
     items:
-      $ref: '../../../openapi.yaml#/components/schemas/Employee'
+      $ref: '../../../openapi.yaml#/components/schemas/Agent'
   materialStore:
     description: Метаданные склада материалов
     nullable: true

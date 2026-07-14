@@ -30,6 +30,11 @@ properties:
     type: string
     maxLength: 255
     description: Код Техкарты
+  description:
+    type: string
+    maxLength: 4096
+    nullable: true
+    description: Описание Техкарт
   cost:
     type: number
     format: double
