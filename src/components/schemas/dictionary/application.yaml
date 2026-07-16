@@ -1,0 +1,31 @@
+type: object
+description: Решение
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "application"
+    - param: "id"
+  type: "application"
+properties:
+  meta:
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID решения
+    readOnly: true
+  account_id:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  name:
+    type: string
+    description: Наименование решения
+    readOnly: true
+  appUid:
+    type: string
+    description: Логин решения
+    readOnly: true

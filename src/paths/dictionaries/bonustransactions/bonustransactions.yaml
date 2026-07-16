@@ -1,0 +1,62 @@
+get:
+  operationId: getBonusTransactions
+  tags:
+    - BonusTransactions
+  summary: Получить список бонусных операций
+  description: Запрос всех бонусных операций для данной учетной записи
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/limit'
+    - $ref: '../../../components/parameters.yaml#/offset'
+    - $ref: '../../../components/parameters.yaml#/search'
+    - $ref: '../../../components/parameters.yaml#/filter'
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/parameters.yaml#/order'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/BonusTransaction'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+post:
+  operationId: createBonusTransaction
+  tags:
+    - BonusTransactions
+  summary: Создать бонусную операцию
+  description: Создание бонусной операции и массовое создание/обновление бонусных операций
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          oneOf:
+            - $ref: '../../../openapi.yaml#/components/schemas/BonusTransaction'
+            - type: array
+              items:
+                $ref: '../../../openapi.yaml#/components/schemas/BonusTransaction'
+              minItems: 1
+              maxItems: 1000
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '../../../openapi.yaml#/components/schemas/BonusTransaction'
+              - type: array
+                items:
+                  $ref: '../../../openapi.yaml#/components/schemas/BonusTransaction'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+

@@ -1,0 +1,104 @@
+type: object
+description: Бонусная операция (bonustransaction)
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "bonustransaction"
+    - param: "id"
+  type: "bonustransaction"
+properties:
+  meta:
+    description: Метаданные бонусной операции
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID бонусной операции
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  owner:
+    description: Владелец (Сотрудник)
+    $ref: '../../../openapi.yaml#/components/schemas/Employee'
+  agent:
+    description: Метаданные контрагента или юрлица, связанного с бонусной операцией
+    x-agent-reference: true
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Agent'
+  group:
+    description: Отдел сотрудника
+    $ref: '../../../openapi.yaml#/components/schemas/Group'
+  organization:
+    description: Метаданные юрлица
+    $ref: '../../../openapi.yaml#/components/schemas/Organization'
+  parentDocument:
+    description: Метаданные связанного документа бонусной операции
+#   todo retaildemand or retailsalesreturn
+    nullable: true
+    type: object
+    properties:
+      meta:
+        $ref: '../common/meta.yaml'
+  applicable:
+    type: boolean
+    description: Отметка о проведении
+  bonusProgram:
+    description: Метаданные бонусной программы
+    $ref: '../../../openapi.yaml#/components/schemas/BonusProgram'
+  bonusValue:
+    type: integer
+    format: int32
+    description: Количество бонусных баллов
+  transactionType:
+    type: string
+    description: Тип бонусной операции. Известные значения описаны в TransactionType
+  transactionStatus:
+    type: string
+    description: Статус бонусной операции. Известные значения описаны в TransactionStatus
+    readOnly: true
+  categoryType:
+    type: string
+    description: Категория бонусной операции. Известные значения описаны в CategoryType
+    readOnly: true
+  code:
+    type: string
+    maxLength: 255
+    description: Код бонусной операции
+  name:
+    type: string
+    maxLength: 255
+    description: Наименование бонусной операции
+  externalCode:
+    type: string
+    maxLength: 255
+    description: Внешний код бонусной операции
+  description:
+    type: string
+    maxLength: 4096
+    description: Комментарий к бонусной операции
+  moment:
+    type: string
+    description: Время проведения бонусной операции
+  created:
+    type: string
+    description: Момент создания бонусной операции
+    readOnly: true
+  updated:
+    type: string
+    description: Момент последнего обновления бонусной операции
+    readOnly: true
+  executionDate:
+    type: string
+    description: Дата начисления бонусной операции
+  shared:
+    type: boolean
+    description: Общий доступ
+  updatedBy:
+    type: string
+    description: Автор последнего обновления (uid, используется для фильтрации)
+

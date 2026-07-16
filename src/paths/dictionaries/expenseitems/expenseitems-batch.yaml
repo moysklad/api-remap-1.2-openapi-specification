@@ -1,0 +1,39 @@
+post:
+  operationId: createExpenseItemsBatch
+  tags:
+    - ExpenseItems
+  summary: Создать или изменить статьи расходов
+  description: Создание или изменение нескольких статей расходов.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            $ref: '../../../openapi.yaml#/components/schemas/ExpenseItem'
+          minItems: 1
+          maxItems: 1000
+        example:
+          - name: "Налоги и не налоги 2"
+            description: "Статья расходов batch из примера OpenAPI"
+            code: "expense-openapi-batch"
+            shared: true
+            archived: false
+            externalCode: "expenseItem123Batch"
+  responses:
+    '200':
+      description: Статьи расходов успешно созданы или изменены
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../../../openapi.yaml#/components/schemas/BatchResponseEntity'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

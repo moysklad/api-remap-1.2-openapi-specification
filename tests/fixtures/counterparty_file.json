@@ -1,0 +1,21 @@
+{
+  "meta": {
+    "href": "http://localhost/api/remap/1.2/entity/counterparty/5236f16d-d954-11ef-ac12-000f000000a2/files/f2728180-6afd-4d37-8a13-f3b48069bbb6",
+    "type": "files",
+    "mediaType": "application/json",
+    "downloadHref": "http://localhost/api/remap/1.2/download/f2728180-6afd-4d37-8a13-f3b48069bbb6"
+  },
+  "title": "doc",
+  "filename": "doc.pdf",
+  "size": 25000,
+  "created": "2019-01-25 17:30:25.021",
+  "createdBy": {
+    "meta": {
+      "href": "http://localhost/api/remap/1.2/entity/employee/69f5683e-a49b-11ea-ac15-000e000000cf",
+      "metadataHref": "http://localhost/api/remap/1.2/entity/employee/metadata",
+      "type": "employee",
+      "mediaType": "application/json",
+      "uuidHref": "http://localhost/app/#employee/edit?id=69f5683e-a49b-11ea-ac15-000e000000cf"
+    }
+  }
+}

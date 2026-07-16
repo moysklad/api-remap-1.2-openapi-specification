@@ -1,0 +1,169 @@
+type: object
+description: Перемещение
+x-polymorphic-parent: EntityWithMeta
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "move"
+    - param: "id"
+  type: "move"
+properties:
+  meta:
+    description: Метаданные Перемещения
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID Перемещения
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  name:
+    type: string
+    maxLength: 255
+    description: Наименование Перемещения
+  code:
+    type: string
+    maxLength: 255
+    description: Код Перемещения
+  externalCode:
+    type: string
+    maxLength: 255
+    description: Внешний код Перемещения
+  syncId:
+    type: string
+    format: uuid
+    description: ID синхронизации
+  description:
+    type: string
+    maxLength: 4096
+    nullable: true
+    description: Комментарий Перемещения
+  created:
+    type: string
+    description: Дата создания
+    readOnly: true
+  deleted:
+    type: string
+    description: Момент последнего удаления Перемещения
+    readOnly: true
+  updated:
+    type: string
+    description: Момент последнего обновления Перемещения
+    readOnly: true
+  moment:
+    type: string
+    description: Дата документа
+  applicable:
+    type: boolean
+    description: Отметка о проведении
+  printed:
+    type: boolean
+    description: Напечатан ли документ
+    readOnly: true
+  published:
+    type: boolean
+    description: Опубликован ли документ
+    readOnly: true
+  shared:
+    type: boolean
+    description: Общий доступ
+  sum:
+    type: number
+    format: double
+    description: Сумма Перемещения в копейках
+    readOnly: true
+  organization:
+    description: Метаданные юрлица
+    $ref: '../../../openapi.yaml#/components/schemas/Organization'
+  sourceStore:
+    description: Метаданные склада, с которого совершается перемещение
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Store'
+  targetStore:
+    description: Метаданные склада, на который совершается перемещение
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Store'
+  state:
+    description: Метаданные статуса Перемещения
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/State'
+  project:
+    description: Метаданные проекта
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Project'
+  owner:
+    description: Владелец (Сотрудник)
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Employee'
+  group:
+    description: Отдел сотрудника
+    $ref: '../../../openapi.yaml#/components/schemas/Group'
+  attributes:
+    type: array
+    description: Коллекция метаданных доп. полей
+    nullable: true
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
+  files:
+    description: Метаданные массива Файлов
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/FileList'
+  rate:
+    $ref: '../common/currencyRate.yaml'
+  positions:
+    type: object
+    description: Метаданные позиций Перемещения
+    $ref: '../../../openapi.yaml#/components/schemas/MovePositionList'
+  overhead:
+    description: |
+      Накладные расходы на уровне документа.
+      Если позиции Перемещения не заданы, накладные расходы задать нельзя.
+    $ref: '../common/overhead.yaml'
+  internalOrder:
+    description: Внутренний заказ, с которым связано Перемещение
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/InternalOrder'
+  customerOrder:
+    description: Заказ покупателя, с которым связано Перемещение
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/CustomerOrder'
+  demand:
+    description: Отгрузка, связанная с Перемещением
+    readOnly: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Demand'
+  supply:
+    description: Приемка, связанная с Перемещением
+    readOnly: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Supply'
+  productionTasks:
+    type: array
+    description: Связанные производственные задания
+    nullable: true
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/ProductionTask'

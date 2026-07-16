@@ -1,0 +1,17 @@
+description: |
+  Элемент массива `paymentOperations` розничной смены.
+
+  Допустимые `meta.type`: cashin, paymentin.
+type: object
+x-polymorphic-discriminator:
+  path: meta.type
+  mappings:
+    - type: cashin
+      componentName: RetailShiftPaymentOperationCashIn
+    - type: paymentin
+      componentName: RetailShiftPaymentOperationPaymentIn
+required:
+  - linkedSum
+  - meta
+allOf:
+  - $ref: '../../../openapi.yaml#/components/schemas/OperationLinkedSum'

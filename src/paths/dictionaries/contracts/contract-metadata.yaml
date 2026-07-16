@@ -1,0 +1,18 @@
+get:
+  operationId: getContractMetadata
+  tags:
+    - Contracts
+  summary: Получить метаданные договоров
+  description: Запрос на получение метаданных договоров
+  parameters:
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/DocumentMetadata'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

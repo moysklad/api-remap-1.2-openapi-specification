@@ -1,0 +1,39 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/retailshift/90ba347d-6b8b-11e6-8a84-bae5000000bd",
+    "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/retailshift/metadata",
+    "type": "retailshift",
+    "mediaType": "application/json"
+  },
+  "id": "90ba347d-6b8b-11e6-8a84-bae5000000bd",
+  "accountId": "f976ed28-2e58-11e6-8a84-bae500000001",
+  "name": "00001",
+  "moment": "2016-07-04 08:00:00",
+  "retailStore": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/retailstore/626a14f1-2a3b-11e6-8a84-bae500000053",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/retailstore/metadata",
+      "type": "retailstore",
+      "mediaType": "application/json"
+    }
+  },
+  "payments": [
+    {
+      "meta": {
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/paymentin/ad1ffc02-3f8e-11e6-8a84-bae5000000fa",
+        "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/paymentin/metadata",
+        "type": "paymentin",
+        "mediaType": "application/json"
+      }
+    },
+    {
+      "meta": {
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/cashin/4b4552e8-3f7f-11e6-8a84-bae500000075",
+        "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/cashin/metadata",
+        "type": "cashin",
+        "mediaType": "application/json"
+      }
+    }
+  ],
+  "linkedSum": 80000
+}

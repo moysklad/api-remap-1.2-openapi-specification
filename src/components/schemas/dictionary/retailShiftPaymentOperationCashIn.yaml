@@ -1,0 +1,5 @@
+type: object
+description: Приходный ордер + linkedSum
+x-polymorphic-parent: RetailShiftPaymentOperation
+allOf:
+  - $ref: '../../../openapi.yaml#/components/schemas/CashIn'

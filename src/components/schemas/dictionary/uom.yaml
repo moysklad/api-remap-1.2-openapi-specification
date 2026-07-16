@@ -1,0 +1,58 @@
+type: object
+description: Единица измерения
+x-polymorphic-parent: EntityWithMeta
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "uom"
+    - param: "id"
+  type: "uom"
+properties:
+  meta:
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID единицы измерения
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  name:
+    type: string
+    maxLength: 255
+    description: Наименование единицы измерения
+  description:
+    type: string
+    maxLength: 4096
+    nullable: true
+    description: Описание единицы измерения
+  code:
+    type: string
+    maxLength: 255
+    description: Код единицы измерения
+  group:
+    description: Метаданные отдела сотрудника
+    $ref: '../../../openapi.yaml#/components/schemas/Group'
+  owner:
+    description: Метаданные владельца (Сотрудника)
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Employee'
+  updated:
+    type: string
+#    format: date-time
+    description: Момент последнего обновления сущности
+    readOnly: true
+  shared:
+    type: boolean
+    description: Общий доступ
+  externalCode:
+    type: string
+    maxLength: 255
+    description: Внешний код единицы измерения

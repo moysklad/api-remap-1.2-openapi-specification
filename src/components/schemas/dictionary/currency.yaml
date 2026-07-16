@@ -1,0 +1,91 @@
+type: object
+description: Валюта
+x-polymorphic-parent: EntityWithMeta
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "currency"
+    - param: "id"
+  type: "currency"
+properties:
+  meta:
+    description: Метаданные Валюты
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID валюты
+    readOnly: true
+  system:
+    type: boolean
+    description: Системная валюта
+    readOnly: true
+  name:
+    type: string
+    description: Краткое наименование валюты
+  fullName:
+    type: string
+    description: Полное наименование валюты
+  code:
+    type: string
+    description: Цифровой код валюты
+  isoCode:
+    type: string
+    description: Буквенный код валюты
+  multiplicity:
+    type: integer
+    description: Кратность курса валюты
+  rate:
+    type: number
+    format: float
+    description: Курс валюты
+  margin:
+    type: number
+    format: float
+    description: Наценка при автоматическом обновлении курса
+  indirect:
+    type: boolean
+    description: Признак обратного курса валюты
+  rateUpdateType:
+    type: string
+    description: Способ обновления курса валюты. Известные значения описаны в RateUpdateType
+  archived:
+    type: boolean
+    description: Добавлена ли валюта в архив
+  default:
+    type: boolean
+    description: Валюта учета по умолчанию
+  majorUnit:
+    type: object
+    description: Формы единиц целой части Валюты
+    properties:
+      gender:
+        type: string
+        description: Пол. Известные значения описаны в Gender
+      s1:
+        type: string
+        description: Форма единицы, используемая при числительном 1
+      s2:
+        type: string
+        description: Форма единицы, используемая при числительном 2
+      s5:
+        type: string
+        description: Форма единицы, используемая при числительном 5
+  minorUnit:
+    type: object
+    description: Форма разменной единицы
+    properties:
+      gender:
+        type: string
+        description: Пол. Известные значения описаны в Gender
+      s1:
+        type: string
+        description: Форма единицы, используемая при числительном 1
+      s2:
+        type: string
+        description: Форма единицы, используемая при числительном 2
+      s5:
+        type: string
+        description: Форма единицы, используемая при числительном 5

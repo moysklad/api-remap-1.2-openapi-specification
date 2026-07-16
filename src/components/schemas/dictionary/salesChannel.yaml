@@ -1,0 +1,64 @@
+type: object
+description: Канал продаж
+x-polymorphic-parent: EntityWithMeta
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "saleschannel"
+    - param: "id"
+  type: "saleschannel"
+properties:
+  meta:
+    description: Метаданные Канала продаж
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID Канала продаж
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  archived:
+    type: boolean
+    description: Добавлен ли Канал продаж в архив
+  code:
+    type: string
+    maxLength: 255
+    description: Код Канала продаж
+  description:
+    type: string
+    maxLength: 4096
+    nullable: true
+    description: Описание Канала продаж
+  externalCode:
+    type: string
+    maxLength: 255
+    description: Внешний код Канала продаж
+  group:
+    description: Метаданные отдела сотрудника
+    $ref: '../../../openapi.yaml#/components/schemas/Group'
+  name:
+    type: string
+    maxLength: 255
+    description: Наименование Канала продаж
+  owner:
+    description: Метаданные владельца (Сотрудника)
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Employee'
+  shared:
+    type: boolean
+    description: Общий доступ
+  type:
+    type: string
+    description: Тип Канала продаж. Известные значения описаны в SalesChannelType
+  updated:
+    type: string
+    description: Момент последнего обновления сущности
+    readOnly: true

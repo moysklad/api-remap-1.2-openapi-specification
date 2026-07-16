@@ -1,0 +1,34 @@
+type: object
+description: Характеристики модификаций
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "variant"
+    - path: "metadata"
+    - path: "characteristics"
+    - param: "id"
+  type: "attributemetadata"
+properties:
+  meta:
+    description: Метаданные характеристики
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID соответствующей Характеристики
+    readOnly: true
+  name:
+    type: string
+    maxLength: 255
+    description: Наименование Характеристики
+  type:
+    type: string
+    maxLength: 255
+    readOnly: true
+    description: Тип значения Характеристики. Известные значения описаны в VariantCharacteristicType
+  required:
+    type: boolean
+    readOnly: true
+    description: Обязательность указания Характеристики в модификации
