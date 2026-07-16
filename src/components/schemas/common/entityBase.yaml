@@ -170,7 +170,6 @@ ProductMarker:
     Базовый полиморфный тип для сущностей номенклатуры.
     Конкретный тип определяется по `meta.type`.
   x-polymorphic-parent: EntityWithMeta
-  x-implements: MetaEntity
   properties:
     id:
       type: string
