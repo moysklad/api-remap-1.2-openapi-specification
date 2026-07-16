@@ -40,6 +40,12 @@ post:
       application/json:
         schema:
           $ref: '../../../openapi.yaml#/components/schemas/TaxRate'
+        example:
+          rate: 33.0
+          comment: "Ставка НДС из примера OpenAPI"
+          shared: true
+          archived: false
+          externalCode: "taxRate123"
   responses:
     '200':
       description: Ставка НДС успешно создана

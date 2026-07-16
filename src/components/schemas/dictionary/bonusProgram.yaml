@@ -1,7 +1,6 @@
 type: object
 description: Бонусная программа
-allOf:
-  - $ref: '../../../openapi.yaml#/components/schemas/DiscountBase'
+x-polymorphic-parent: DiscountAbstract
 properties:
   earnRateRoublesToPoint:
     type: integer
@@ -34,6 +33,3 @@ properties:
     minimum: 0
     maximum: 100
     description: Максимальный процент оплаты баллами
-  allProducts:
-    type: boolean
-    description: Для всех ли товаров скидка

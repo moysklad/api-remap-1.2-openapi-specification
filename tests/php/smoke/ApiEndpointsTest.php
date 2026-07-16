@@ -313,6 +313,56 @@ class ApiEndpointsTest extends TestCase
         $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
     }
 
+    /**
+     * Проверяет доступность endpoint'а получения доп. полей товаров.
+     * GET /entity/product/metadata/attributes
+     */
+    public function testGetProductMetadataAttributes(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/product/metadata/attributes');
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * Проверяет доступность endpoint'а создания доп. поля товара.
+     * POST /entity/product/metadata/attributes
+     */
+    public function testCreateProductMetadataAttribute(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/product/metadata/attributes', ['json' => ['name' => 'attr1'],]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * Проверяет доступность endpoint'а получения доп. поля товара по ID.
+     * GET /entity/product/metadata/attributes/{id}
+     */
+    public function testGetProductMetadataAttributeById(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/product/metadata/attributes/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а обновления доп. поля товара по ID.
+     * PUT /entity/product/metadata/attributes/{id}
+     */
+    public function testUpdateProductMetadataAttributeById(): void
+    {
+        $response = $this->client->put(self::API_BASE_PATH . '/entity/product/metadata/attributes/' . self::TEST_UUID, ['json' => ['name' => 'attr1'],]);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а удаления доп. поля товара по ID.
+     * DELETE /entity/product/metadata/attributes/{id}
+     */
+    public function testDeleteProductMetadataAttributeById(): void
+    {
+        $response = $this->client->delete(self::API_BASE_PATH . '/entity/product/metadata/attributes/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::DELETE_CODES);
+    }
+
     // ==================== COUNTERPARTIES ====================
 
     /**
@@ -555,6 +605,57 @@ class ApiEndpointsTest extends TestCase
         $this->assertContains($response->getStatusCode(), self::DELETE_CODES);
     }
 
+    /**
+     * Проверяет доступность endpoint'а получения событий аудита контрагента.
+     * GET /entity/counterparty/{id}/audit
+     */
+    public function testGetCounterpartyAudit(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/counterparty/' . self::TEST_UUID . '/audit');
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * Проверяет доступность endpoint'а получения статуса контрагента по ID.
+     * GET /entity/counterparty/metadata/states/{id}
+     */
+    public function testGetCounterpartyMetadataStateById(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/counterparty/metadata/states/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а обновления статуса контрагента.
+     * PUT /entity/counterparty/metadata/states/{id}
+     */
+    public function testUpdateCounterpartyMetadataStateById(): void
+    {
+        $response = $this->client->put(self::API_BASE_PATH . '/entity/counterparty/metadata/states/' . self::TEST_UUID, [
+            'json' => ['name' => 'Updated Counterparty State'],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а удаления статуса контрагента.
+     * DELETE /entity/counterparty/metadata/states/{id}
+     */
+    public function testDeleteCounterpartyMetadataStateById(): void
+    {
+        $response = $this->client->delete(self::API_BASE_PATH . '/entity/counterparty/metadata/states/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::DELETE_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а создания статуса контрагента.
+     * POST /entity/counterparty/metadata/states/
+     */
+    public function testCreateCounterpartyMetadataState(): void
+    {
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . '/entity/counterparty/metadata/states', ['json' => ['name' => 'state1', 'color' => 15106326, 'stateType' => 'Regular']]));
+    }
+
     // ==================== CURRENCIES ====================
 
     /**
@@ -717,6 +818,71 @@ class ApiEndpointsTest extends TestCase
     {
         $response = $this->client->get(self::API_BASE_PATH . '/entity/role/worker');
         $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * Проверяет доступность endpoint'а получения списка пользовательских ролей.
+     * GET /entity/role
+     */
+    public function testListCustomRoles(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/role');
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * Проверяет доступность endpoint'а получения пользовательской роли по ID.
+     * GET /entity/role/{id}
+     */
+    public function testGetCustomRoleById(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/role/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а создания пользовательской роли.
+     * POST /entity/role
+     */
+    public function testCreateCustomRole(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/role', [
+            'json' => [
+                'name' => 'Test Role',
+                'permissions' => [
+                    'importData' => false,
+                    'apiRequest' => false,
+                ],
+            ],
+        ]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * Проверяет доступность endpoint'а обновления пользовательской роли.
+     * PUT /entity/role/{id}
+     */
+    public function testUpdateCustomRole(): void
+    {
+        $response = $this->client->put(self::API_BASE_PATH . '/entity/role/' . self::TEST_UUID, [
+            'json' => [
+                'name' => 'Updated Test Role',
+                'permissions' => [
+                    'importData' => true,
+                ],
+            ],
+        ]);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
+    }
+
+    /**
+     * Проверяет доступность endpoint'а удаления пользовательской роли.
+     * DELETE /entity/role/{id}
+     */
+    public function testDeleteCustomRole(): void
+    {
+        $response = $this->client->delete(self::API_BASE_PATH . '/entity/role/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::DELETE_CODES);
     }
 
     // ==================== GROUPS ====================
@@ -1483,6 +1649,7 @@ class ApiEndpointsTest extends TestCase
         $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/internalorder/metadata/states/' . self::TEST_UUID));
         $this->assertReachable($this->client->put(self::API_BASE_PATH . '/entity/internalorder/metadata/states/' . self::TEST_UUID, ['json' => ['name' => 'state1']]));
         $this->assertReachable($this->client->delete(self::API_BASE_PATH . '/entity/internalorder/metadata/states/' . self::TEST_UUID));
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . '/entity/internalorder/metadata/states/batch', ['json' => [['name' => 'state1', 'color' => 15106326, 'stateType' => 'Regular']]]));
 
         $this->assertReachable($this->client->put(self::API_BASE_PATH . '/entity/internalorder/new'));
     }
@@ -1532,6 +1699,7 @@ class ApiEndpointsTest extends TestCase
         $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/processingorder/metadata/states/' . self::TEST_UUID));
         $this->assertReachable($this->client->put(self::API_BASE_PATH . '/entity/processingorder/metadata/states/' . self::TEST_UUID, ['json' => ['name' => 'state1']]));
         $this->assertReachable($this->client->delete(self::API_BASE_PATH . '/entity/processingorder/metadata/states/' . self::TEST_UUID));
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . '/entity/processingorder/metadata/states/batch', ['json' => [['name' => 'state1', 'color' => 15106326, 'stateType' => 'Regular']]]));
 
         $this->assertReachable($this->client->put(self::API_BASE_PATH . '/entity/processingorder/new'));
     }
@@ -1560,6 +1728,7 @@ class ApiEndpointsTest extends TestCase
         $this->assertReachable($this->client->get($base . '/metadata/states/' . self::TEST_UUID));
         $this->assertReachable($this->client->put($base . '/metadata/states/' . self::TEST_UUID, ['json' => ['name' => 'state1']]));
         $this->assertReachable($this->client->delete($base . '/metadata/states/' . self::TEST_UUID));
+        $this->assertReachable($this->client->post($base . '/metadata/states/batch', ['json' => [['name' => 'state1', 'color' => 15106326, 'stateType' => 'Regular']]]));
 
         $this->assertReachable($this->client->put($base . '/new'));
 
@@ -1617,6 +1786,7 @@ class ApiEndpointsTest extends TestCase
         $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/customerorder/metadata/states/' . self::TEST_UUID));
         $this->assertReachable($this->client->put(self::API_BASE_PATH . '/entity/customerorder/metadata/states/' . self::TEST_UUID, ['json' => ['name' => 'state1']]));
         $this->assertReachable($this->client->delete(self::API_BASE_PATH . '/entity/customerorder/metadata/states/' . self::TEST_UUID));
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . '/entity/customerorder/metadata/states/batch', ['json' => [['name' => 'state1', 'color' => 15106326, 'stateType' => 'Regular']]]));
 
         $this->assertReachable($this->client->put(self::API_BASE_PATH . '/entity/customerorder/new'));
     }
@@ -1652,6 +1822,11 @@ class ApiEndpointsTest extends TestCase
         $this->assertReachable($this->client->post($base . '/files', ['json' => [['filename' => 'X']]]));
         $this->assertReachable($this->client->get($base . '/files/' . self::TEST_UUID));
         $this->assertReachable($this->client->delete($base . '/files/' . self::TEST_UUID));
+        $this->assertReachable($this->client->get($base . '/notes'));
+        $this->assertReachable($this->client->post($base . '/notes', ['json' => ['description' => 'Привет, {{employee;730c1b3d-00ba-11ef-ac12-00120000000d}}!']]));
+        $this->assertReachable($this->client->get($base . '/notes/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put($base . '/notes/' . self::TEST_UUID, ['json' => ['description' => 'Обновленное событие']]));
+        $this->assertReachable($this->client->delete($base . '/notes/' . self::TEST_UUID));
 
         $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/invoiceout/metadata'));
         $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/invoiceout/metadata/attributes'));
@@ -1689,6 +1864,11 @@ class ApiEndpointsTest extends TestCase
         $this->assertReachable($this->client->post($base . '/files', ['json' => [['filename' => 'X']]]));
         $this->assertReachable($this->client->get($base . '/files/' . self::TEST_UUID));
         $this->assertReachable($this->client->delete($base . '/files/' . self::TEST_UUID));
+        $this->assertReachable($this->client->get($base . '/notes'));
+        $this->assertReachable($this->client->post($base . '/notes', ['json' => ['description' => 'Привет, {{employee;730c1b3d-00ba-11ef-ac12-00120000000d}}!']]));
+        $this->assertReachable($this->client->get($base . '/notes/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put($base . '/notes/' . self::TEST_UUID, ['json' => ['description' => 'Обновленное событие']]));
+        $this->assertReachable($this->client->delete($base . '/notes/' . self::TEST_UUID));
 
         $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/invoicein/metadata'));
         $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/invoicein/metadata/attributes'));
@@ -1974,6 +2154,7 @@ class ApiEndpointsTest extends TestCase
         $this->assertReachable($this->client->get($base . '/' . self::TEST_UUID));
         $this->assertReachable($this->client->put($base . '/' . self::TEST_UUID, ['json' => ['name' => 'X']]));
         $this->assertReachable($this->client->delete($base . '/' . self::TEST_UUID));
+        $this->assertReachable($this->client->post($base . '/' . self::TEST_UUID . '/trash', ['json' => []]));
 
         $this->assertReachable($this->client->post($base . '/delete', ['json' => [['meta' => ['href' => 'x']]]]));
         $this->assertReachable($this->client->post($base . '/batch', ['json' => [['meta' => ['href' => 'x']]]]));
@@ -1985,6 +2166,11 @@ class ApiEndpointsTest extends TestCase
         $this->assertReachable($this->client->put($base . '/' . self::TEST_UUID . '/positions/' . self::TEST_UUID, ['json' => ['quantity' => 2]]));
         $this->assertReachable($this->client->delete($base . '/' . self::TEST_UUID . '/positions/' . self::TEST_UUID));
         $this->assertReachable($this->client->post($base . '/' . self::TEST_UUID . '/positions/delete', ['json' => [['meta' => ['href' => 'x']]]]));
+        $this->assertReachable($this->client->get($base . '/' . self::TEST_UUID . '/notes'));
+        $this->assertReachable($this->client->post($base . '/' . self::TEST_UUID . '/notes', ['json' => ['description' => 'Привет, {{employee;730c1b3d-00ba-11ef-ac12-00120000000d}}!']]));
+        $this->assertReachable($this->client->get($base . '/' . self::TEST_UUID . '/notes/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put($base . '/' . self::TEST_UUID . '/notes/' . self::TEST_UUID, ['json' => ['description' => 'Обновленное событие']]));
+        $this->assertReachable($this->client->delete($base . '/' . self::TEST_UUID . '/notes/' . self::TEST_UUID));
 
         $this->assertReachable($this->client->get($base . '/metadata'));
         $this->assertReachable($this->client->get($base . '/metadata/attributes'));
@@ -1996,6 +2182,7 @@ class ApiEndpointsTest extends TestCase
         $this->assertReachable($this->client->get($base . '/metadata/states/' . self::TEST_UUID));
         $this->assertReachable($this->client->put($base . '/metadata/states/' . self::TEST_UUID, ['json' => ['name' => 'X']]));
         $this->assertReachable($this->client->delete($base . '/metadata/states/' . self::TEST_UUID));
+        $this->assertReachable($this->client->post($base . '/metadata/states/batch', ['json' => [['name' => 'X', 'color' => 15106326, 'stateType' => 'Regular']]]));
 
         $this->assertReachable($this->client->put($base . '/new', ['json' => []]));
         $this->assertReachable($this->client->put($base . '/new', [
@@ -2036,6 +2223,11 @@ class ApiEndpointsTest extends TestCase
         $this->assertReachable($this->client->put($base . '/' . self::TEST_UUID . '/positions/' . self::TEST_UUID, ['json' => ['quantity' => 2]]));
         $this->assertReachable($this->client->delete($base . '/' . self::TEST_UUID . '/positions/' . self::TEST_UUID));
         $this->assertReachable($this->client->post($base . '/' . self::TEST_UUID . '/positions/delete', ['json' => [['meta' => ['href' => 'x']]]]));
+        $this->assertReachable($this->client->get($base . '/' . self::TEST_UUID . '/notes'));
+        $this->assertReachable($this->client->post($base . '/' . self::TEST_UUID . '/notes', ['json' => ['description' => 'Привет, {{employee;730c1b3d-00ba-11ef-ac12-00120000000d}}!']]));
+        $this->assertReachable($this->client->get($base . '/' . self::TEST_UUID . '/notes/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put($base . '/' . self::TEST_UUID . '/notes/' . self::TEST_UUID, ['json' => ['description' => 'Обновленное событие']]));
+        $this->assertReachable($this->client->delete($base . '/' . self::TEST_UUID . '/notes/' . self::TEST_UUID));
 
         $this->assertReachable($this->client->get($base . '/metadata'));
         $this->assertReachable($this->client->get($base . '/metadata/attributes'));
@@ -2047,6 +2239,7 @@ class ApiEndpointsTest extends TestCase
         $this->assertReachable($this->client->get($base . '/metadata/states/' . self::TEST_UUID));
         $this->assertReachable($this->client->put($base . '/metadata/states/' . self::TEST_UUID, ['json' => ['name' => 'X']]));
         $this->assertReachable($this->client->delete($base . '/metadata/states/' . self::TEST_UUID));
+        $this->assertReachable($this->client->post($base . '/metadata/states/batch', ['json' => [['name' => 'X', 'color' => 15106326, 'stateType' => 'Regular']]]));
 
         $this->assertReachable($this->client->put($base . '/new', ['json' => [['name' => 'X']]]));
     }
@@ -2069,6 +2262,7 @@ class ApiEndpointsTest extends TestCase
         $this->assertReachable($this->client->get($base . '/metadata/states/' . self::TEST_UUID));
         $this->assertReachable($this->client->put($base . '/metadata/states/' . self::TEST_UUID, ['json' => ['name' => 'state1']]));
         $this->assertReachable($this->client->delete($base . '/metadata/states/' . self::TEST_UUID));
+        $this->assertReachable($this->client->post($base . '/metadata/states/batch', ['json' => [['name' => 'state1', 'color' => 15106326, 'stateType' => 'Regular']]]));
 
         $docBase = $base . '/' . self::TEST_UUID;
         $this->assertReachable($this->client->get($docBase . '/positions'));
@@ -2120,6 +2314,7 @@ class ApiEndpointsTest extends TestCase
         $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/retaildemand/metadata/attributes/' . self::TEST_UUID));
         $this->assertReachable($this->client->put(self::API_BASE_PATH . '/entity/retaildemand/metadata/attributes/' . self::TEST_UUID, ['json' => ['name' => 'atr1']]));
         $this->assertReachable($this->client->delete(self::API_BASE_PATH . '/entity/retaildemand/metadata/attributes/' . self::TEST_UUID));
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . '/entity/retaildemand/metadata/states', ['json' => ['name' => 'state1', 'color' => 15106326, 'stateType' => 'Regular']]));
         $this->assertReachable($this->client->get(self::API_BASE_PATH . '/entity/retaildemand/metadata/states/' . self::TEST_UUID));
         $this->assertReachable($this->client->put(self::API_BASE_PATH . '/entity/retaildemand/metadata/states/' . self::TEST_UUID, ['json' => ['name' => 'state1']]));
         $this->assertReachable($this->client->delete(self::API_BASE_PATH . '/entity/retaildemand/metadata/states/' . self::TEST_UUID));
@@ -2135,6 +2330,66 @@ class ApiEndpointsTest extends TestCase
                 ],
             ],
         ]));
+    }
+
+    public function testRetailSalesReturnCrudMetadataTemplateAndPositions(): void
+    {
+        $base = self::API_BASE_PATH . '/entity/retailsalesreturn';
+
+        $this->assertReachable($this->client->get($base));
+        $this->assertReachable($this->client->post($base, ['json' => ['name' => 'RetailSalesReturn Z']]));
+
+        $this->assertReachable($this->client->get($base . '/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put($base . '/' . self::TEST_UUID, ['json' => ['name' => 'RetailSalesReturn Y']]));
+        $this->assertReachable($this->client->delete($base . '/' . self::TEST_UUID));
+        $this->assertReachable($this->client->post($base . '/batch', ['json' => [['name' => 'RetailSalesReturn Z']]]));
+
+        $this->assertReachable($this->client->get($base . '/metadata'));
+        $this->assertReachable($this->client->get($base . '/metadata/attributes'));
+        $this->assertReachable($this->client->post($base . '/metadata/attributes', ['json' => ['name' => 'attr1']]));
+        $this->assertReachable($this->client->get($base . '/metadata/attributes/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put($base . '/metadata/attributes/' . self::TEST_UUID, ['json' => ['name' => 'attr1']]));
+        $this->assertReachable($this->client->delete($base . '/metadata/attributes/' . self::TEST_UUID));
+        $this->assertReachable($this->client->get($base . '/metadata/states/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put($base . '/metadata/states/' . self::TEST_UUID, ['json' => ['name' => 'state1']]));
+        $this->assertReachable($this->client->delete($base . '/metadata/states/' . self::TEST_UUID));
+
+        $this->assertReachable($this->client->put($base . '/new', ['json' => ['name' => 'RetailSalesReturn Z']]));
+
+        $docBase = $base . '/' . self::TEST_UUID;
+        $this->assertReachable($this->client->get($docBase . '/positions'));
+        $this->assertReachable($this->client->post($docBase . '/positions', ['json' => ['quantity' => 1]]));
+        $this->assertReachable($this->client->post($docBase . '/positions/batch', ['json' => [['quantity' => 1]]]));
+        $this->assertReachable($this->client->get($docBase . '/positions/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put($docBase . '/positions/' . self::TEST_UUID, ['json' => ['quantity' => 2]]));
+        $this->assertReachable($this->client->delete($docBase . '/positions/' . self::TEST_UUID));
+        $this->assertReachable($this->client->post($docBase . '/positions/delete', ['json' => [['meta' => ['href' => 'x']]]]));
+    }
+
+    /**
+     * RetailShift проверяется отдельно, потому что общий assertDocumentEndpoints()
+     * предполагает наличие /new, /positions и metadata/states, которых у этой сущности нет.
+     */
+    public function testRetailShiftCrudAndMetadataEndpoints(): void
+    {
+        $base = self::API_BASE_PATH . '/entity/retailshift';
+
+        $this->assertReachable($this->client->get($base));
+        $this->assertReachable($this->client->post($base, ['json' => ['name' => 'Retail Shift X']]));
+
+        $this->assertReachable($this->client->get($base . '/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put($base . '/' . self::TEST_UUID, ['json' => ['name' => 'Retail Shift Y']]));
+        $this->assertReachable($this->client->delete($base . '/' . self::TEST_UUID));
+
+        $this->assertReachable($this->client->post($base . '/delete', ['json' => [['meta' => ['href' => 'x']]]]));
+        $this->assertReachable($this->client->post($base . '/batch', ['json' => [['name' => 'Retail Shift Z']]]));
+
+        $this->assertReachable($this->client->get($base . '/metadata'));
+        $this->assertReachable($this->client->get($base . '/metadata/attributes'));
+        $this->assertReachable($this->client->post($base . '/metadata/attributes', ['json' => ['name' => 'attr1']]));
+        $this->assertReachable($this->client->get($base . '/metadata/attributes/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put($base . '/metadata/attributes/' . self::TEST_UUID, ['json' => ['name' => 'attr1']]));
+        $this->assertReachable($this->client->delete($base . '/metadata/attributes/' . self::TEST_UUID));
     }
 
     public function testListPurchaseOrders(): void
@@ -2157,6 +2412,7 @@ class ApiEndpointsTest extends TestCase
             'json' => ['name' => 'state1', 'color' => 15106326, 'stateType' => 'Regular'],
         ]);
         $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . '/entity/purchaseorder/metadata/states/batch', ['json' => [['name' => 'state1', 'color' => 15106326, 'stateType' => 'Regular']]]));
     }
 
     public function testStoreCrudAndMetaEndpoints(): void
@@ -2312,6 +2568,42 @@ class ApiEndpointsTest extends TestCase
     }
 
     /**
+     * GET /entity/customerorder/{id}/publication
+     */
+    public function testGetCustomerOrderPublications(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/customerorder/' . self::TEST_UUID . '/publication');
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * GET /entity/customerorder/{id}/publication/{publicationId}
+     */
+    public function testGetCustomerOrderPublicationById(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/customerorder/' . self::TEST_UUID . '/publication/' . self::TEST_UUID);
+        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
+    }
+
+    /**
+     * POST /entity/customerorder/{id}/export
+     */
+    public function testExportCustomerOrder(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/customerorder/' . self::TEST_UUID . '/export', ['json' => ['extension' => 'pdf',],]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * GET /entity/customerorder/{id}/audit
+     */
+    public function testGetCustomerOrderAudit(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/customerorder/' . self::TEST_UUID . '/audit');
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
      * GET /entity/purchaseorder/{id}/notes
      */
     public function testGetPurchaseOrderNotes(): void
@@ -2358,6 +2650,24 @@ class ApiEndpointsTest extends TestCase
     {
         $response = $this->client->delete(self::API_BASE_PATH . '/entity/purchaseorder/' . self::TEST_UUID . '/notes/' . self::TEST_UUID);
         $this->assertContains($response->getStatusCode(), self::DELETE_CODES);
+    }
+
+    /**
+     * GET /entity/productiontask/metadata/attributes
+     */
+    public function testGetProductionTaskMetadataAttributes(): void
+    {
+        $response = $this->client->get(self::API_BASE_PATH . '/entity/productiontask/metadata/attributes');
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
+     * POST /entity/productiontask/metadata/attributes
+     */
+    public function testCreateProductionTaskMetadataAttribute(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/productiontask/metadata/attributes', ['json' => ['name' => 'productionTaskAttribute'],]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
     }
 
     public function testEmissionOrderEndpoints(): void
@@ -2835,6 +3145,7 @@ class ApiEndpointsTest extends TestCase
             ],
         ]);
         $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . '/entity/task/metadata/states/batch', ['json' => [['name' => 'Встреча', 'color' => 69446]]]));
     }
 
     /**
@@ -3770,6 +4081,15 @@ class ApiEndpointsTest extends TestCase
     }
 
     /**
+     * POST /entity/bonustransaction/batch
+     */
+    public function testCreateBonusTransactionsBatch(): void
+    {
+        $response = $this->client->post(self::API_BASE_PATH . '/entity/bonustransaction/batch', ['json' => [['name' => 'Test BonusTransaction Batch']],]);
+        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+    }
+
+    /**
      * GET /entity/bonustransaction/{id}
      */
     public function testGetBonusTransactionById(): void
@@ -3851,6 +4171,7 @@ class ApiEndpointsTest extends TestCase
         $this->assertReachable($this->client->get($metaBase . '/states/' . self::TEST_UUID));
         $this->assertReachable($this->client->put($metaBase . '/states/' . self::TEST_UUID, ['json' => ['name' => 'state1']]));
         $this->assertReachable($this->client->delete($metaBase . '/states/' . self::TEST_UUID));
+        $this->assertReachable($this->client->post($metaBase . '/states/batch', ['json' => [['name' => 'state1', 'color' => 15106326, 'stateType' => 'Regular']]]));
 
         // Realized positions
         $positionsBase = $idBase . '/positions';
@@ -3902,12 +4223,21 @@ class ApiEndpointsTest extends TestCase
         $this->assertReachable($this->client->get($metaBase . '/states/' . self::TEST_UUID));
         $this->assertReachable($this->client->put($metaBase . '/states/' . self::TEST_UUID, ['json' => ['name' => 'state1']]));
         $this->assertReachable($this->client->delete($metaBase . '/states/' . self::TEST_UUID));
+        $this->assertReachable($this->client->post($metaBase . '/states/batch', ['json' => [['name' => 'state1', 'color' => 15106326, 'stateType' => 'Regular']]]));
 
         // Files
         $filesBase = $idBase . '/files';
         $this->assertReachable($this->client->get($filesBase));
         $this->assertReachable($this->client->post($filesBase, ['json' => [['filename' => 'test.pdf']]]));
         $this->assertReachable($this->client->delete($filesBase . '/' . self::TEST_UUID));
+
+        // Notes
+        $notesBase = $idBase . '/notes';
+        $this->assertReachable($this->client->get($notesBase));
+        $this->assertReachable($this->client->post($notesBase, ['json' => ['description' => 'Привет, {{employee;730c1b3d-00ba-11ef-ac12-00120000000d}}!']]));
+        $this->assertReachable($this->client->get($notesBase . '/' . self::TEST_UUID));
+        $this->assertReachable($this->client->put($notesBase . '/' . self::TEST_UUID, ['json' => ['description' => 'Обновленное событие']]));
+        $this->assertReachable($this->client->delete($notesBase . '/' . self::TEST_UUID));
 
         // Positions
         $positionsBase = $idBase . '/positions';
@@ -4210,6 +4540,12 @@ class ApiEndpointsTest extends TestCase
         $this->assertContains($response->getStatusCode(), self::DELETE_CODES);
     }
 
+    public function testCreateCashInMetadataState(): void
+    {
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . '/entity/cashin/metadata/states', ['json' => ['name' => 'state1', 'color' => 15106326, 'stateType' => 'Regular']]));
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . '/entity/cashin/metadata/states/batch', ['json' => [['name' => 'state1', 'color' => 15106326, 'stateType' => 'Regular']]]));
+    }
+
     /**
      * Проверяет доступность endpoint'а получения шаблона приходного ордера.
      * PUT /entity/cashin/new
@@ -4251,10 +4587,11 @@ class ApiEndpointsTest extends TestCase
         $this->assertReachable($this->client->put($base . '/metadata/attributes/' . self::TEST_UUID, ['json' => ['name' => 'X']]));
         $this->assertReachable($this->client->delete($base . '/metadata/attributes/' . self::TEST_UUID));
 
-        $this->assertReachable($this->client->post($base . '/metadata/states', ['json' => [['name' => 'X']]]));
+        $this->assertReachable($this->client->post($base . '/metadata/states', ['json' => ['name' => 'X']]));
         $this->assertReachable($this->client->get($base . '/metadata/states/' . self::TEST_UUID));
         $this->assertReachable($this->client->put($base . '/metadata/states/' . self::TEST_UUID, ['json' => ['name' => 'X']]));
         $this->assertReachable($this->client->delete($base . '/metadata/states/' . self::TEST_UUID));
+        $this->assertReachable($this->client->post($base . '/metadata/states/batch', ['json' => [['name' => 'X', 'color' => 15106326, 'stateType' => 'Regular']]]));
 
         $this->assertReachable($this->client->put($base . '/new', ['json' => [['name' => 'X']]]));
     }
@@ -4288,6 +4625,7 @@ class ApiEndpointsTest extends TestCase
         $this->assertReachable($this->client->get($base . '/metadata/states/' . self::TEST_UUID));
         $this->assertReachable($this->client->put($base . '/metadata/states/' . self::TEST_UUID, ['json' => ['name' => 'X']]));
         $this->assertReachable($this->client->delete($base . '/metadata/states/' . self::TEST_UUID));
+        $this->assertReachable($this->client->post($base . '/metadata/states/batch', ['json' => [['name' => 'X', 'color' => 15106326, 'stateType' => 'Regular']]]));
 
         $this->assertReachable($this->client->put($base . '/new', ['json' =>  ['name' => 'X']]));
     }
@@ -4330,6 +4668,7 @@ class ApiEndpointsTest extends TestCase
         $this->assertReachable($this->client->get($base . '/metadata/states/' . self::TEST_UUID));
         $this->assertReachable($this->client->put($base . '/metadata/states/' . self::TEST_UUID, ['json' => ['name' => 'X']]));
         $this->assertReachable($this->client->delete($base . '/metadata/states/' . self::TEST_UUID));
+        $this->assertReachable($this->client->post($base . '/metadata/states/batch', ['json' => [['name' => 'X', 'color' => 15106326, 'stateType' => 'Regular']]]));
 
         $this->assertReachable($this->client->put($base . '/new', ['json' => $payload]));
     }
@@ -4365,10 +4704,11 @@ class ApiEndpointsTest extends TestCase
         $this->assertReachable($this->client->put($base . '/metadata/attributes/' . self::TEST_UUID, ['json' => ['name' => 'X']]));
         $this->assertReachable($this->client->delete($base . '/metadata/attributes/' . self::TEST_UUID));
 
-        $this->assertReachable($this->client->post($base . '/metadata/states', ['json' => [['name' => 'X']]]));
+        $this->assertReachable($this->client->post($base . '/metadata/states', ['json' => ['name' => 'X']]));
         $this->assertReachable($this->client->get($base . '/metadata/states/' . self::TEST_UUID));
         $this->assertReachable($this->client->put($base . '/metadata/states/' . self::TEST_UUID, ['json' => ['name' => 'X']]));
         $this->assertReachable($this->client->delete($base . '/metadata/states/' . self::TEST_UUID));
+        $this->assertReachable($this->client->post($base . '/metadata/states/batch', ['json' => [['name' => 'X', 'color' => 15106326, 'stateType' => 'Regular']]]));
 
         $this->assertReachable($this->client->put($base . '/new', ['json' => [['name' => 'X']]]));
     }
@@ -4403,10 +4743,11 @@ class ApiEndpointsTest extends TestCase
         $this->assertReachable($this->client->put($base . '/metadata/attributes/' . self::TEST_UUID, ['json' => ['name' => 'X']]));
         $this->assertReachable($this->client->delete($base . '/metadata/attributes/' . self::TEST_UUID));
 
-        $this->assertReachable($this->client->post($base . '/metadata/states', ['json' => [['name' => 'X']]]));
+        $this->assertReachable($this->client->post($base . '/metadata/states', ['json' => ['name' => 'X']]));
         $this->assertReachable($this->client->get($base . '/metadata/states/' . self::TEST_UUID));
         $this->assertReachable($this->client->put($base . '/metadata/states/' . self::TEST_UUID, ['json' => ['name' => 'X']]));
         $this->assertReachable($this->client->delete($base . '/metadata/states/' . self::TEST_UUID));
+        $this->assertReachable($this->client->post($base . '/metadata/states/batch', ['json' => [['name' => 'X', 'color' => 15106326, 'stateType' => 'Regular']]]));
 
         $this->assertReachable($this->client->put($base . '/new', ['json' => [['name' => 'X']]]));
     }
@@ -4439,6 +4780,7 @@ class ApiEndpointsTest extends TestCase
         $this->assertReachable($this->client->get($base . '/metadata/states/' . self::TEST_UUID));
         $this->assertReachable($this->client->put($base . '/metadata/states/' . self::TEST_UUID, ['json' => ['name' => 'X']]));
         $this->assertReachable($this->client->delete($base . '/metadata/states/' . self::TEST_UUID));
+        $this->assertReachable($this->client->post($base . '/metadata/states/batch', ['json' => [['name' => 'X', 'color' => 15106326, 'stateType' => 'Regular']]]));
 
         $this->assertReachable($this->client->put($base . '/new'));
 
@@ -4508,6 +4850,7 @@ class ApiEndpointsTest extends TestCase
         $this->assertReachable($this->client->get($base . '/metadata/states/' . self::TEST_UUID));
         $this->assertReachable($this->client->put($base . '/metadata/states/' . self::TEST_UUID, ['json' => ['name' => 'X']]));
         $this->assertReachable($this->client->delete($base . '/metadata/states/' . self::TEST_UUID));
+        $this->assertReachable($this->client->post($base . '/metadata/states/batch', ['json' => [['name' => 'X', 'color' => 15106326, 'stateType' => 'Regular']]]));
 
         $this->assertReachable($this->client->put($base . '/new'));
 
@@ -4553,10 +4896,11 @@ class ApiEndpointsTest extends TestCase
         $this->assertReachable($this->client->put($base . '/metadata/attributes/' . self::TEST_UUID, ['json' => ['name' => 'X']]));
         $this->assertReachable($this->client->delete($base . '/metadata/attributes/' . self::TEST_UUID));
 
-        $this->assertReachable($this->client->post($base . '/metadata/states', ['json' => [['name' => 'X']]]));
+        $this->assertReachable($this->client->post($base . '/metadata/states', ['json' => ['name' => 'X']]));
         $this->assertReachable($this->client->get($base . '/metadata/states/' . self::TEST_UUID));
         $this->assertReachable($this->client->put($base . '/metadata/states/' . self::TEST_UUID, ['json' => ['name' => 'X']]));
         $this->assertReachable($this->client->delete($base . '/metadata/states/' . self::TEST_UUID));
+        $this->assertReachable($this->client->post($base . '/metadata/states/batch', ['json' => [['name' => 'X', 'color' => 15106326, 'stateType' => 'Regular']]]));
 
         $this->assertReachable($this->client->put($base . '/new', ['json' => [['name' => 'X']]]));
     }
@@ -4721,6 +5065,7 @@ class ApiEndpointsTest extends TestCase
             'json' => ['name' => 'state1', 'color' => 15106326, 'stateType' => 'Regular'],
         ]);
         $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
+        $this->assertReachable($this->client->post(self::API_BASE_PATH . '/entity/cashout/metadata/states/batch', ['json' => [['name' => 'state1', 'color' => 15106326, 'stateType' => 'Regular']]]));
     }
 
     /**
@@ -5071,6 +5416,26 @@ class ApiEndpointsTest extends TestCase
                 ],
             ]],
         ]));
+    }
+
+    // ==================== NOTIFICATIONS ====================
+
+    /**
+     * Проверяет доступность endpoint'а получения настроек уведомлений.
+     * GET /notification/settings
+     */
+    public function testGetNotificationSettings(): void
+    {
+        $this->assertReachable($this->client->get(self::API_BASE_PATH . '/notification/settings'));
+    }
+
+    /**
+     * Проверяет доступность endpoint'а обновления настроек уведомлений.
+     * PUT /notification/settings
+     */
+    public function testUpdateNotificationSettings(): void
+    {
+        $this->assertReachable($this->client->put(self::API_BASE_PATH . '/notification/settings', ['json' => ['task' => ['enable' => true]]]));
     }
 
     private function lossDocumentPayload(): array

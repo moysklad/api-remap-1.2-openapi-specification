@@ -44,13 +44,17 @@ post:
       application/json:
         schema:
           $ref: '../../../openapi.yaml#/components/schemas/ContactPerson'
+        example:
+          name: "Петр"
   responses:
     '200':
       description: Контактное лицо успешно создано
       content:
         application/json:
           schema:
-            $ref: '../../../openapi.yaml#/components/schemas/ContactPerson'
+            type: array
+            items:
+              $ref: '../../../openapi.yaml#/components/schemas/ContactPerson'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
     

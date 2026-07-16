@@ -61,6 +61,8 @@ post:
       content:
         application/json:
           schema:
-            $ref: '../../../openapi.yaml#/components/schemas/TaskNote'
+            type: array
+            items:
+              $ref: '../../../openapi.yaml#/components/schemas/TaskNote'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'

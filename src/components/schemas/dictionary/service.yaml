@@ -1,5 +1,5 @@
 type: object
-x-polymorphic-parent: EntityWithMeta
+x-polymorphic-parent: ProductMarker
 x-entity-static-builder:
   methodParams:
     - "id"
@@ -88,7 +88,7 @@ properties:
     readOnly: true
   buyPrice:
     description: Закупочная цена
-    $ref: '../../../openapi.yaml#/components/schemas/BuyPrice'
+    $ref: '../../../openapi.yaml#/components/schemas/Price'
   salePrices:
     type: array
     description: Цены продажи
@@ -133,7 +133,7 @@ properties:
       $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
   minPrice:
     description: Минимальная цена
-    $ref: '../../../openapi.yaml#/components/schemas/MinPrice'
+    $ref: '../../../openapi.yaml#/components/schemas/Price'
   syncId:
     type: string
     format: uuid

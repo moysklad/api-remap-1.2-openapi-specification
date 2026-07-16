@@ -1,5 +1,6 @@
 type: object
 description: Позиция возврата на склад комиссионера Полученного отчета комиссионера
+x-polymorphic-parent: EntityWithMeta
 x-entity-static-builder:
   methodParams:
     - "parentId"
@@ -47,5 +48,6 @@ properties:
     description: Включен ли НДС для позиции
   assortment:
     description: Метаданные товара/партии/модификации/комплекта, которую представляет позиция
-    $ref: '../../../openapi.yaml#/components/schemas/Assortment'
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/ProductMarker'
 

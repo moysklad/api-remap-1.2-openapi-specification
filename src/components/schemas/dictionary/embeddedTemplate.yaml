@@ -2,10 +2,11 @@ type: object
 description: Шаблон печатной формы
 x-entity-static-builder:
   methodParams:
+    - "type"
     - "id"
   href:
     - path: "entity"
-    - path: "assortment"
+    - param: "type"
     - path: "metadata"
     - path: "embeddedtemplate"
     - param: "id"
@@ -23,4 +24,19 @@ properties:
     type: string
     format: uuid
     description: ID учетной записи
+    readOnly: true
+  name:
+    type: string
+    maxLength: 255
+    description: Наименование шаблона
+    readOnly: true
+  type:
+    type: string
+    maxLength: 255
+    description: Тип шаблона
+    readOnly: true
+  content:
+    type: string
+    format: uri
+    description: Ссылка на скачивание шаблона
     readOnly: true

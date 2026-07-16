@@ -23,6 +23,11 @@ post:
             $ref: '../../../openapi.yaml#/components/schemas/WebhookStock'
           minItems: 1
           maxItems: 1000
+        example:
+          - url: "http://www.example.com"
+            enabled: true
+            stockType: "stock"
+            reportType: "bystore"
   responses:
     '200':
       description: Один созданный вебхук или массив созданных/изменённых (элемент — сущность или ошибка)

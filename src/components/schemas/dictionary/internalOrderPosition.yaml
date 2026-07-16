@@ -1,5 +1,6 @@
 type: object
 description: Позиция Внутреннего заказа
+x-polymorphic-parent: EntityWithMeta
 x-entity-static-builder:
   methodParams:
     - "parentId"
@@ -43,7 +44,8 @@ properties:
     description: Включен ли НДС для позиции
   assortment:
     description: Метаданные товара/услуги/модификации/комплекта, которую представляет собой позиция
-    $ref: '../../../openapi.yaml#/components/schemas/Assortment'
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/ProductMarker'
   pack:
     description: Упаковка Товара
     nullable: true

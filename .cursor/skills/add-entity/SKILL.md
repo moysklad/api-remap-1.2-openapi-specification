@@ -85,7 +85,7 @@ For top-level batch entities, add the entity schema to `EntityWithMeta` polymorp
 - Do not map schemas when the same `meta.type` is already used by multiple schema classes (for example `demandposition`).
 
 For mass delete responses, use `DeleteRowResult` as the array item schema instead of inline `oneOf: [DeleteInfo, Error]`.
-For metadata state upsert endpoints, use `StatesUpsert`; if the response allows per-item errors, use `StatesUpsertResult`.
+For metadata state endpoints: single create/update uses `State` for both request and response (`POST /metadata/states`). Batch uses `type: array, items: State` for request and `type: array, items: StateRowResult` for response (`POST /metadata/states/batch`). Never combine single and array in one endpoint with `oneOf`.
 
 ## Missing dependency entities
 

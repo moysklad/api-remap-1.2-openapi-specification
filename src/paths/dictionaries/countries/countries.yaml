@@ -40,6 +40,12 @@ post:
       application/json:
         schema:
           $ref: '../../../openapi.yaml#/components/schemas/Country'
+        example:
+          name: "Панама 2"
+          description: "Мы создали Панаму"
+          code: "PanamaCode"
+          shared: false
+          externalCode: "panamaCountry"
   responses:
     '200':
       description: Страна успешно создана

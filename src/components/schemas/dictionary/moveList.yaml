@@ -9,6 +9,7 @@ properties:
     $ref: '../common/metaList.yaml'
   rows:
     type: array
+    nullable: true
     description: Массив Перемещений
     items:
       $ref: '../../../openapi.yaml#/components/schemas/Move'
