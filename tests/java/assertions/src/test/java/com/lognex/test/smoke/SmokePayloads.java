@@ -34,6 +34,8 @@ final class SmokePayloads {
     private static final String STATE =
             obj(str("name", "state1"), field("color", "15106326"), str("stateType", "Regular"));
 
+    private static final String STATES_BATCH = array(STATE);
+
     private static final String ATTRIBUTE = obj(str("name", "attr1"));
 
     private static final String POSITIONS_BATCH = array(obj(field("quantity", "1")));
@@ -50,6 +52,11 @@ final class SmokePayloads {
             field("salePrice", obj(ref("priceType", "pricetype", "/context/companysettings/pricetype"))),
             ref("template", "embeddedtemplate", "/entity/assortment/metadata/embeddedtemplate"));
 
+    private static final String NOTIFICATION_SETTINGS =
+            obj(field("task", obj(field("enable", "true"))));
+
+    private static final String RETAIL_DOCUMENT_BATCH = array(obj(str("name", "Smoke Test")));
+
     private static final String DEFAULT_PAYLOAD = obj(str("name", "Smoke Test"));
 
     private static final List<Rule> RULES = Arrays.asList(
@@ -59,13 +66,16 @@ final class SmokePayloads {
             rule(methods("POST").and(pathIn("/entity/move")), MOVE),
             rule(methods("POST").and(pathIn("/entity/loss")), LOSS),
             rule(methods("POST").and(pathIn("/entity/salesreturn", "/entity/supply", "/entity/purchasereturn", "/entity/enter")), DOCUMENT_WITH_AGENT),
+            rule(methods("POST").and(pathEndsWith("/metadata/states/batch")), STATES_BATCH),
             rule(methods("POST").and(pathEndsWith("/metadata/states")), STATE),
             rule(methods("POST", "PUT").and(pathContains("/metadata/attributes")), ATTRIBUTE),
             rule(methods("POST").and(pathEndsWith("/positions/batch")), POSITIONS_BATCH),
             rule(methods("POST", "PUT").and(pathContains("/positions")), POSITION),
             rule(methods("POST").and(pathContains("/metadata/characteristics")), CHARACTERISTIC),
             rule(methods("PUT").and(pathEndsWith("/access/activate")), ACTIVATE),
-            rule(methods("POST").and(pathEndsWith("/export")), EXPORT));
+            rule(methods("POST").and(pathEndsWith("/export")), EXPORT),
+            rule(methods("PUT").and(pathIn("/notification/settings")), NOTIFICATION_SETTINGS),
+            rule(methods("POST").and(pathIn("/entity/retailshift/batch", "/entity/retailsalesreturn/batch")), RETAIL_DOCUMENT_BATCH));
 
     private SmokePayloads() {
     }
