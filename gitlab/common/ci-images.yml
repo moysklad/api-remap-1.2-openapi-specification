@@ -3,12 +3,12 @@
 # При новом релизе образов обновите тег во всех CI_IMAGE_* ниже.
 
 variables:
-  CI_IMAGE_OPENAPITOOLS: $GLOBAL_DOCKER_URL/docker-openapitools-common:1.3-release
-  CI_IMAGE_PHP_TEST: $GLOBAL_DOCKER_URL/docker-openapitools-php-test:1.3-release
-  CI_IMAGE_SCHEMATHESIS: $GLOBAL_DOCKER_URL/docker-openapitools-schemathesis:1.3-release
-  CI_IMAGE_MAVEN_JDK11: $GLOBAL_DOCKER_URL/docker-openapitools-java-maven-jdk11:ATK-174-454925
-  CI_IMAGE_MAVEN_7_8: $GLOBAL_DOCKER_URL/docker-openapitools-java-maven-7.8:1.3-release
-  CI_IMAGE_MAVEN_3_4: $GLOBAL_DOCKER_URL/docker-openapitools-java-maven-3.4:1.3-release
+  CI_IMAGE_OPENAPITOOLS: $GLOBAL_DOCKER_URL/docker-openapitools-common:1.4-release
+  CI_IMAGE_PHP_TEST: $GLOBAL_DOCKER_URL/docker-openapitools-php-test:1.4-release
+  CI_IMAGE_SCHEMATHESIS: $GLOBAL_DOCKER_URL/docker-openapitools-schemathesis:1.4-release
+  CI_IMAGE_MAVEN_JDK11: $GLOBAL_DOCKER_URL/docker-openapitools-java-maven-jdk11:1.4-release
+  CI_IMAGE_MAVEN_7_8: $GLOBAL_DOCKER_URL/docker-openapitools-java-maven-7.8:1.4-release
+  CI_IMAGE_MAVEN_3_4: $GLOBAL_DOCKER_URL/docker-openapitools-java-maven-3.4:1.4-release
 
 .openapitools-image:
   image: $CI_IMAGE_OPENAPITOOLS
