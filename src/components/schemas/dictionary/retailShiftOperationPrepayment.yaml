@@ -1,0 +1,5 @@
+type: object
+description: Предоплата
+x-polymorphic-parent: RetailShiftOperation
+allOf:
+  - $ref: '../../../openapi.yaml#/components/schemas/Prepayment'
