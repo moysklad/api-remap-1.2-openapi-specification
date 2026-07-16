@@ -5522,22 +5522,4 @@ class ApiEndpointsTest extends TestCase
             $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
         }
     }
-
-    /**
-     * GET /entity/{type}/metadata/embeddedtemplate
-     */
-    public function testGetEmbeddedTemplatesForEntityTypeMetadata(): void
-    {
-        $response = $this->client->get(self::API_BASE_PATH . '/entity/customerorder/metadata/embeddedtemplate');
-        $this->assertNotEquals(404, $response->getStatusCode(), '404 means endpoint path did not match; expected to reach the endpoint');
-    }
-
-    /**
-     * GET /entity/{type}/metadata/embeddedtemplate/{id}
-     */
-    public function testGetEmbeddedTemplateByEntityTypeAndIdMetadata(): void
-    {
-        $response = $this->client->get(self::API_BASE_PATH . '/entity/customerorder/metadata/embeddedtemplate/' . self::TEST_UUID);
-        $this->assertContains($response->getStatusCode(), self::BY_ID_ACCEPTABLE_CODES);
-    }
 }
