@@ -34,6 +34,12 @@ post:
       application/json:
         schema:
           $ref: '../../../openapi.yaml#/components/schemas/ProcessingPlanFolder'
+        example:
+          name: "Группа 1"
+          description: "Группа техкарт из примера OpenAPI"
+          shared: true
+          archived: false
+          externalCode: "ppf-openapi-1"
   responses:
     '200':
       description: Успешный запрос

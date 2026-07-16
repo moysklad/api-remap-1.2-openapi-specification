@@ -31,11 +31,14 @@ properties:
   cost:
     type: integer
     description: Себестоимость (только для услуг)
+    minimum: 0
   declaration:
+    nullable: true
     $ref: '../../../openapi.yaml#/components/schemas/Declaration'
   discount:
     type: number
     format: double
+    maximum: 100
     description: Процент скидки или наценки. Наценка указывается отрицательным числом (например, `-10` задаёт наценку 10%).
   pack:
     description: Упаковка товара
@@ -46,11 +49,12 @@ properties:
   price:
     type: number
     format: double
+    minimum: 0
     description: Цена товара/услуги в копейках
   quantity:
     type: number
     format: double
-    minimum: 0
+    minimum: 0.0001
     exclusiveMinimum: true
     description: |
       Количество товаров/услуг данного вида в позиции.

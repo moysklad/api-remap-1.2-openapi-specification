@@ -119,8 +119,8 @@ Use shared components instead of inline reusable `oneOf` blocks:
 
 - Top-level batch create/update response item: `BatchResponseEntity`.
 - Mass delete response item: `DeleteRowResult`.
-- Metadata states create/update request and normal response: `StatesUpsert`.
-- Metadata states response with per-item errors: `StatesUpsertResult`.
+- Metadata states single create/update request and response: `State`.
+- Metadata states batch response item (success or error): `StateRowResult`.
 
 When adding a new top-level batch entity to `EntityWithMeta`, the entity schema must inherit from `EntityWithMeta` and the discriminator mapping must be registered:
 
@@ -146,7 +146,7 @@ Do not add a mapping if the same `meta.type` is shared by multiple schema classe
 - Do not infer metadata states from the word "статус" alone; require `states` in metadata response/examples or a peer-backed pattern.
 - Some dictionaries/documents have extra groups (`files`, `images`, `accounts`, `notes`, `storebalances`, security/access actions). Add matrix rows from the exact MD headings and copy the closest peer's file split.
 - MD may show `### Массовое создание и обновление ...` with the same example URL as create; still expose it as a separate `POST /batch` path with array body — see "Top-level POST vs `/batch`" above.
-- State creation and mass state creation may share one endpoint: `POST /entity/<keyword>/metadata/states`. Model this as one operation using `StatesUpsert` (`State` or array of `State`). Use `StatesUpsertResult` only when the MD or a peer explicitly shows state batch item errors.
+- State creation and mass state creation use **separate endpoints**: `POST /entity/<keyword>/metadata/states` (single `State`) and `POST /entity/<keyword>/metadata/states/batch` (array of `State`, response: array of `StateRowResult`). Never use `oneOf` combining single and array on one endpoint.
 - DELETE metadata state endpoints should include explicit `404: NotFoundEmpty` when the backend can return empty 404.
 - If a path exists in MD but is intentionally skipped, record the reason in the final report.
 
