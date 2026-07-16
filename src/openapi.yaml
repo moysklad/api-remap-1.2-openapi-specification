@@ -1997,7 +1997,7 @@ components:
     PublicationList:
       $ref: './components/schemas/dictionary/publicationList.yaml'
     ExportRequest:
-      $ref: './components/schemas/dictionary/ExportRequest.yaml'
+      $ref: './components/schemas/dictionary/exportRequest.yaml'
     EmissionOrder:
       $ref: './components/schemas/dictionary/emissionOrder.yaml'
     EmissionOrderPosition:
