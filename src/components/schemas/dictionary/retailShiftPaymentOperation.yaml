@@ -3,12 +3,15 @@ description: |
 
   Допустимые `meta.type`: cashin, paymentin.
 type: object
-anyOf:
-  - description: Приходный ордер + linkedSum
-    allOf:
-      - $ref: '../../../openapi.yaml#/components/schemas/CashIn'
-      - $ref: '../../../openapi.yaml#/components/schemas/OperationLinkedSum'
-  - description: Входящий платеж + linkedSum
-    allOf:
-      - $ref: '../../../openapi.yaml#/components/schemas/PaymentIn'
-      - $ref: '../../../openapi.yaml#/components/schemas/OperationLinkedSum'
+x-polymorphic-discriminator:
+  path: meta.type
+  mappings:
+    - type: cashin
+      componentName: RetailShiftPaymentOperationCashIn
+    - type: paymentin
+      componentName: RetailShiftPaymentOperationPaymentIn
+required:
+  - linkedSum
+  - meta
+allOf:
+  - $ref: '../../../openapi.yaml#/components/schemas/OperationLinkedSum'

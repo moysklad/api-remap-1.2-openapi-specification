@@ -71,7 +71,7 @@ tests/fixtures/contract.json                             # shared golden fixture
 src/openapi.yaml                              # paths + ContractList in components.schemas + tag
 tests/php/golden/SerializationTest.php         # FIXTURE_MODEL_MAP += 'contract' => 'Contract'
 tests/java/assertions/src/test/java/com/lognex/test/golden/SerializationTest.java # FIXTURE_MODEL_MAP += "contract" -> "Contract"
-tests/php/smoke/ApiEndpointsTest.php           # 10 new test methods
+tests/java/assertions/src/test/java/com/lognex/test/smoke/ApiEndpointsTest.java # endpoint cases for smoke catalog
 ```
 
 ## Key decisions
