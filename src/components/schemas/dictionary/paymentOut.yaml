@@ -136,7 +136,6 @@ properties:
   shared:
     type: boolean
     description: Общий доступ
-    readOnly: true
   state:
     description: Метаданные статуса Исходящего платежа
     nullable: true
