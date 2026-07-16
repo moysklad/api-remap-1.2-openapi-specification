@@ -1,26 +1,24 @@
 #!/bin/sh
 # Smoke тесты: ожидание mock-сервера + тесты для указанного языка
-# Использование: ./scripts/local-test-smoke.sh <php|python|java|javascript>
+# Использование: ./scripts/local-test-smoke.sh <java|python|javascript>
 # Mock-сервер (openapi-mock) запускается как sidecar через docker-compose.
 set -e
-LANG="${1:-php}"
+LANG="${1:-java}"
 SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
 ROOT_DIR=$(cd "$SCRIPT_DIR/.." && pwd)
+SMOKE_TEST_TIMEOUT="${SMOKE_TEST_TIMEOUT:-120}"
 cd "$ROOT_DIR"
 if [ ! -f "dist/openapi.yaml" ]; then
   echo "ERROR: dist/openapi.yaml not found. Run: make bundle"
   exit 1
 fi
 
-run_php() {
-  echo "Installing PHP deps (composer)..." >&2
-  cd tests/php
-  composer install --no-interaction
-  echo "Running PHPUnit smoke suite (timeout 120s)..." >&2
-  timeout 120 php vendor/bin/phpunit --testsuite smoke || {
+run_java() {
+  echo "Running Java smoke suite (Maven)..." >&2
+  timeout "$SMOKE_TEST_TIMEOUT" mvn -pl tests/java/assertions -am test "-Dtest=**/smoke/ApiEndpointsTest" -Dsurefire.failIfNoSpecifiedTests=false || {
     r=$?
     if [ $r -eq 124 ]; then
-      echo "ERROR: Smoke tests timed out after 120s" >&2
+      echo "ERROR: Java smoke tests timed out after ${SMOKE_TEST_TIMEOUT}s" >&2
     fi
     return $r
   }
@@ -45,7 +43,6 @@ done
 
 EXIT=0
 case "$LANG" in
-  php) run_php || EXIT=$? ;;
   python) run_python || EXIT=$? ;;
   java) run_java || EXIT=$? ;;
   javascript) run_javascript || EXIT=$? ;;

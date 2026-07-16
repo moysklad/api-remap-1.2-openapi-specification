@@ -978,32 +978,29 @@ Update both golden test registries:
 
 ## 10. Smoke tests
 
-In `tests/php/smoke/ApiEndpointsTest.php`, add a section with test methods for each endpoint. One method per endpoint, covering all HTTP methods from the MD.
+In `tests/java/assertions/src/test/java/com/lognex/test/smoke/SmokeEndpointCatalog.java`, add one
+`Arguments.of(new SmokeEndpointCase(...))` per endpoint+method from the MD.
 
-For entities with required refs in create body, include them in the smoke test JSON:
+If an operation needs a non-default body, add/update a matching rule in
+`tests/java/assertions/src/test/java/com/lognex/test/smoke/SmokePayloads.java`.
 
-```php
-// ==================== CONTRACTS ====================
+```java
+// SmokeEndpointCatalog.java
+Arguments.of(new SmokeEndpointCase(
+        "testCreateContract#1",
+        "POST",
+        "/entity/contract",
+        SmokeEndpointCase.Expectation.NOT_404,
+        true
+));
 
-public function testListContracts(): void
-{
-    $response = $this->client->get(self::API_BASE_PATH . '/entity/contract');
-    $this->assertNotEquals(404, $response->getStatusCode(), '...');
-}
-
-public function testCreateContract(): void
-{
-    $response = $this->client->post(self::API_BASE_PATH . '/entity/contract', [
-        'json' => [
-            'name' => 'Test Contract',
-            'ownAgent' => ['meta' => ['href' => '...', 'type' => 'organization', 'mediaType' => 'application/json']],
-            'agent' => ['meta' => ['href' => '...', 'type' => 'counterparty', 'mediaType' => 'application/json']],
-        ],
-    ]);
-    $this->assertNotEquals(404, $response->getStatusCode(), '...');
-}
-
-// ... GET by id, PUT, DELETE, batch, metadata, attributes
+// SmokePayloads.java (only when default payload is insufficient)
+rule(methods("POST").and(pathIn("/entity/contract")),
+        obj(
+                str("name", "Test Contract"),
+                ref("ownAgent", "organization", "/entity/organization"),
+                ref("agent", "counterparty", "/entity/counterparty")
+        ));
 ```
 
 ## 11. Cross-check against MD
