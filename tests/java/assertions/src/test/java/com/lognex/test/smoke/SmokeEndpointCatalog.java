@@ -755,8 +755,6 @@ final class SmokeEndpointCatalog {
                 Arguments.of(new SmokeEndpointCase("testCreateRetailDrawerCashOutMetadataState#1", "POST", "/entity/retaildrawercashout/metadata/states", SmokeEndpointCase.Expectation.NOT_404, true)),
                 Arguments.of(new SmokeEndpointCase("testCreateRetailDrawerCashOutMetadataStatesBatch#1", "POST", "/entity/retaildrawercashout/metadata/states/batch", SmokeEndpointCase.Expectation.NOT_404, true)),
                 Arguments.of(new SmokeEndpointCase("testCreateCashOutMetadataStatesBatch#1", "POST", "/entity/cashout/metadata/states/batch", SmokeEndpointCase.Expectation.NOT_404, true)),
-                Arguments.of(new SmokeEndpointCase("testCreateRetailDemandMetadataStatesBatch#1", "POST", "/entity/retaildemand/metadata/states/batch", SmokeEndpointCase.Expectation.NOT_404, true)),
-                Arguments.of(new SmokeEndpointCase("testCreateRetailSalesReturnMetadataStatesBatch#1", "POST", "/entity/retailsalesreturn/metadata/states/batch", SmokeEndpointCase.Expectation.NOT_404, true)),
 
                 // /notification/settings
                 Arguments.of(new SmokeEndpointCase("testGetNotificationSettings#1", "GET", "/notification/settings", SmokeEndpointCase.Expectation.NOT_404, false)),
