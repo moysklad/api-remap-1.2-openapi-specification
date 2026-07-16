@@ -166,6 +166,7 @@ properties:
     $ref: '../../../openapi.yaml#/components/schemas/CurrencyRate'
   positions:
     type: object
+    nullable: true
     description: Позиции Возврата поставщику
     allOf:
       - $ref: '../../../openapi.yaml#/components/schemas/PurchaseReturnPositionList'

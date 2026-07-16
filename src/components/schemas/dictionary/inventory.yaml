@@ -80,6 +80,7 @@ properties:
   positions:
     type: object
     description: Метаданные позиций Инвентаризации
+    nullable: true
     allOf:
       - $ref: '../../../openapi.yaml#/components/schemas/InventoryPositionList'
   printed:

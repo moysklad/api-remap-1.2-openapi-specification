@@ -16,6 +16,7 @@ properties:
     type: string
     format: uuid
     description: ID юрлица
+    readOnly: true
   syncId:
     type: string
     format: uuid
