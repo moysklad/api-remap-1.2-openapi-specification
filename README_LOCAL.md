@@ -82,8 +82,8 @@ docker compose run --rm -e SCHEMATHESIS_HOST=host -e SCHEMATHESIS_LOGIN=login -e
 docker compose run --rm sdk make all
 ```
 
-**Языки:** целевой язык задаётся через `LANGUAGES`:  
-`docker compose run --rm sdk make test-smoke LANGUAGES=php,python` (когда появятся тесты для python).
+Smoke-тесты выполняются Java-набором (`tests/java/assertions/.../smoke/ApiEndpointsTest.java`) через:
+`docker compose run --rm sdk make test-smoke`.
 
 **Без сборки образа** (если есть образ из CI):
 
