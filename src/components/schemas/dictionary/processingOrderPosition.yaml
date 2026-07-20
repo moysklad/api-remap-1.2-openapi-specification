@@ -1,6 +1,7 @@
 type: object
 description: Позиция Заказа на производство
 x-polymorphic-parent: EntityWithMeta
+x-implements: IDocumentPosition
 x-entity-static-builder:
   methodParams:
     - "parentId"
@@ -20,7 +21,6 @@ properties:
     type: string
     format: uuid
     description: ID позиции
-    readOnly: true
   accountId:
     type: string
     format: uuid
