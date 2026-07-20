@@ -421,7 +421,7 @@ properties:
     description: Кассиры, работающие на точке продаж
     nullable: true
     items:
-      $ref: '../../../openapi.yaml#/components/schemas/Cashier'
+      $ref: '../../../openapi.yaml#/components/schemas/Employee'
   qrAcquire:
     nullable: true
     type: object
