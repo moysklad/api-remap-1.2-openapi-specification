@@ -1813,6 +1813,8 @@ components:
       $ref: './components/schemas/dictionary/rewardType.yaml'
     RetailStore:
       $ref: './components/schemas/dictionary/retailStore.yaml'
+    RetailStoreUpsert:
+      $ref: './components/schemas/dictionary/retailStoreUpsert.yaml'
     SalePrice:
       $ref: './components/schemas/dictionary/salePrice.yaml'
     SalePlatform:
