@@ -1215,8 +1215,12 @@ paths:
     $ref: './paths/documents/emissionorders/emissionorders-batch.yaml'
   /entity/emissionorder/metadata:
     $ref: './paths/documents/emissionorders/emissionorder-metadata.yaml'
+  /entity/emissionorder/metadata/states:
+    $ref: './paths/documents/emissionorders/emissionorder-metadata-states.yaml'
   /entity/emissionorder/metadata/states/{id}:
     $ref: './paths/documents/emissionorders/emissionorder-metadata-state-by-id.yaml'
+  /entity/emissionorder/metadata/states/batch:
+    $ref: './paths/documents/emissionorders/emissionorder-metadata-states-batch.yaml'
   /entity/emissionorder/{id}/positions:
     $ref: './paths/documents/emissionorders/emissionorder-positions.yaml'
   /entity/emissionorder/{id}/positions/batch:
