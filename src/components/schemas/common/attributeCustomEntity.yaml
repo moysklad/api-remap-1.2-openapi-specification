@@ -3,9 +3,6 @@ x-implements: IAttribute<Object>
 allOf:
   - $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
 properties:
-  type:
-    type: string
-    enum: [customentity]
   value:
     properties:
       meta:

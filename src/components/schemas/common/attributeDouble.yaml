@@ -3,9 +3,6 @@ x-implements: IAttribute<Float>
 allOf:
   - $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
 properties:
-  type:
-    type: string
-    enum: [double]
   value:
     type: number
     format: float

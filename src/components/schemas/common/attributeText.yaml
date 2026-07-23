@@ -3,8 +3,5 @@ x-implements: IAttribute<String>
 allOf:
   - $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
 properties:
-  type:
-    type: string
-    enum: [text]
   value:
     type: string
