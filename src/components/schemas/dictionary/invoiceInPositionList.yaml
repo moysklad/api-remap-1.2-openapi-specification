@@ -10,6 +10,7 @@ properties:
     description: Метаданные о выдаче
   rows:
     type: array
+    nullable: true
     description: Массив позиций Счета поставщику
     items:
       $ref: '../../../openapi.yaml#/components/schemas/InvoiceInPosition'

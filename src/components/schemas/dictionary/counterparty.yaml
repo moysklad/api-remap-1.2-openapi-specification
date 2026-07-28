@@ -1,6 +1,6 @@
 type: object
 description: Контрагент
-x-polymorphic-parent: EntityWithMeta
+x-polymorphic-parent: Agent
 x-entity-static-builder:
   methodParams:
     - "id"
@@ -142,7 +142,6 @@ properties:
   discountCardNumber:
     type: string
     maxLength: 255
-    nullable: true
     description: Номер дисконтной карты контрагента
   discounts:
     type: array

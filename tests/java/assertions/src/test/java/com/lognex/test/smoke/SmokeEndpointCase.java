@@ -49,7 +49,7 @@ final class SmokeEndpointCase {
         return path.replace("{id}", testUuid);
     }
 
-    void assertStatus(int statusCode) {
+    void assertStatus(int statusCode, String path) {
         switch (expectation) {
             case BY_ID:
                 assertTrue(contains(BY_ID_ACCEPTABLE_CODES, statusCode),
@@ -66,7 +66,7 @@ final class SmokeEndpointCase {
             case NOT_404:
             default:
                 assertNotEquals(404, statusCode,
-                        "404 means endpoint path did not match; expected to reach the endpoint");
+                        "404 means endpoint path did not match; expected to reach the endpoint: " + path);
                 break;
         }
     }

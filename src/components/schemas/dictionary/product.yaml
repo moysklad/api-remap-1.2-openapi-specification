@@ -1,5 +1,5 @@
 type: object
-x-polymorphic-parent: EntityWithMeta
+x-polymorphic-parent: ProductMarker
 x-entity-static-builder:
   methodParams:
     - "id"
@@ -137,7 +137,7 @@ properties:
     description: Объем
   buyPrice:
     description: Закупочная цена
-    $ref: '../../../openapi.yaml#/components/schemas/BuyPrice'
+    $ref: '../../../openapi.yaml#/components/schemas/Price'
   salePrices:
     type: array
     description: Цены продажи
@@ -145,11 +145,10 @@ properties:
     items:
       $ref: '../../../openapi.yaml#/components/schemas/SalePrice'
   supplier:
-    description: Метаданные контрагента-поставщика
-    nullable: true
-    type: object
+    description: Метаданные контрагента или юрлица
+    x-agent-reference: true
     allOf:
-      - $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
+      - $ref: '../../../openapi.yaml#/components/schemas/Agent'
   country:
     description: Метаданные Страны
     nullable: true
@@ -220,7 +219,7 @@ properties:
       - $ref: '../../../openapi.yaml#/components/schemas/MinimumStockAbstract'
   minPrice:
     description: Минимальная цена
-    $ref: '../../../openapi.yaml#/components/schemas/MinPrice'
+    $ref: '../../../openapi.yaml#/components/schemas/Price'
   weighed:
     type: boolean
     description: Поле, показывающее является ли товар весовым

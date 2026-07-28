@@ -16,5 +16,4 @@ properties:
   value:
     type: string
     maxLength: 255
-    readOnly: true
     description: Значение Характеристики

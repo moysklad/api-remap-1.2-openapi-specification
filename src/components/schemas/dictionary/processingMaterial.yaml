@@ -27,9 +27,16 @@ properties:
     readOnly: true
   assortment:
     description: Метаданные товара/партии/модификации позиции
-    $ref: '../../../openapi.yaml#/components/schemas/Assortment'
+    $ref: '../../../openapi.yaml#/components/schemas/ProductMarker'
   quantity:
     type: number
     format: double
     minimum: 0.0001
     description: Количество товаров данного вида в позиции
+  things:
+    type: array
+    description: |
+      Серийные номера. Игнорируется, если товар позиции не на серийном учёте;
+      иначе количество единиц в позиции совпадает с числом переданных серийных номеров.
+    items:
+      type: string

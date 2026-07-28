@@ -24,11 +24,7 @@ put:
               maxLength: 255
               description: Логин сотрудника (обязателен при первой активации)
             group:
-              type: object
-              description: Метаданные группы
-              properties:
-                meta:
-                  $ref: '../../../openapi.yaml#/components/schemas/Meta'
+              $ref: '../../../openapi.yaml#/components/schemas/Group'
             role:
               $ref: '../../../openapi.yaml#/components/schemas/EmployeeRole'
   responses:

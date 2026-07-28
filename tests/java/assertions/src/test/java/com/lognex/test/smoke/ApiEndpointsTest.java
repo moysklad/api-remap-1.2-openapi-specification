@@ -18,7 +18,7 @@ class ApiEndpointsTest extends BaseTestCase {
     @MethodSource("com.lognex.test.smoke.SmokeEndpointCatalog#cases")
     void endpointIsReachable(SmokeEndpointCase testCase) throws IOException {
         int statusCode = request(testCase);
-        testCase.assertStatus(statusCode);
+        testCase.assertStatus(statusCode, testCase.getPath());
     }
 
     private int request(SmokeEndpointCase testCase) throws IOException {

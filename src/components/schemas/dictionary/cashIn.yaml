@@ -137,12 +137,10 @@ properties:
     type: number
     format: double
     description: Сумма Приходного ордера в установленной валюте
-    readOnly: true
   vatSum:
     type: number
     format: double
     description: Сумма НДС
-    readOnly: true
   factureOut:
     description: Счет-фактура выданный, с которым связан этот платеж
     nullable: true

@@ -43,6 +43,15 @@
         "mediaType": "application/json",
         "uuidHref": "https://online.moysklad.ru/app/#employee/edit?id=83db6e80-761b-4e3d-aee8-641299ed0898"
       }
+    },
+    {
+      "meta": {
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/83db6e80-761b-4e3d-aee8-641299ed0899",
+        "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/metadata",
+        "type": "counterparty",
+        "mediaType": "application/json",
+        "uuidHref": "https://online.moysklad.ru/app/#counterparty/edit?id=83db6e80-761b-4e3d-aee8-641299ed0899"
+      }
     }
   ],
   "materialStore": {

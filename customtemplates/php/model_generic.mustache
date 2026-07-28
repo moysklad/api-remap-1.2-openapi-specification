@@ -429,7 +429,7 @@ class {{classname}} {{#parentSchema}}extends {{{parent}}} {{/parentSchema}}{{^pa
      * Sets {{name}}
      *
     {{#vendorExtensions.x-agent-reference}}
-     * Accepts a Counterparty, Organization, or Agent instance (or null when nullable).
+     * Accepts a Counterparty, Organization, Employee, or Agent instance (or null when nullable).
      * On the wire the server only reads `meta`; non-meta fields are kept locally for
      * type-safe access and serialized verbatim.
      *
@@ -531,9 +531,10 @@ class {{classname}} {{#parentSchema}}extends {{{parent}}} {{/parentSchema}}{{^pa
         if (!is_null(${{name}})
             && !(${{name}} instanceof \OpenAPI\Client\Model\Counterparty)
             && !(${{name}} instanceof \OpenAPI\Client\Model\Organization)
+            && !(${{name}} instanceof \OpenAPI\Client\Model\Employee)
             && !(${{name}} instanceof \OpenAPI\Client\Model\Agent)) {
             throw new \InvalidArgumentException(
-                "Argument for '{{name}}' must be one of Counterparty, Organization, or Agent; got "
+                "Argument for '{{name}}' must be one of Counterparty, Organization, Employee, or Agent; got "
                 . (is_object(${{name}}) ? get_class(${{name}}) : gettype(${{name}}))
             );
         }

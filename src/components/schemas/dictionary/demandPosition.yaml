@@ -1,5 +1,6 @@
 type: object
 description: Позиция Отгрузки
+x-polymorphic-parent: EntityWithMeta
 x-entity-static-builder:
   methodParams:
     - "parentId"
@@ -27,7 +28,8 @@ properties:
     readOnly: true
   assortment:
     description: Метаданные товара/услуги/партии/модификации/комплекта, которую представляет собой позиция
-    $ref: '../../../openapi.yaml#/components/schemas/Assortment'
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/ProductMarker'
   cost:
     type: integer
     description: Себестоимость (только для услуг)
