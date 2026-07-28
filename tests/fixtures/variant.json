@@ -1,0 +1,127 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/variant/c52d1e78-26b4-11f1-0a83-1f25000001bf",
+    "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/variant/metadata",
+    "type": "variant",
+    "mediaType": "application/json",
+    "uuidHref": "https://api.moysklad.ru/app/#feature/edit?id=c52d0209-26b4-11f1-0a83-1f25000001bd"
+  },
+  "id": "c52d1e78-26b4-11f1-0a83-1f25000001bf",
+  "accountId": "c229f794-26ae-11f1-0a83-1f2100000002",
+  "updated": "2026-03-23 15:35:26.911",
+  "name": "1 (v1)",
+  "description": "1 (v1)",
+  "code": "00002",
+  "externalCode": "ykSBkApejEfOmzDKAQfLa1",
+  "archived": false,
+  "characteristics": [
+    {
+      "meta": {
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/variant/metadata/characteristics/c524c518-26b4-11f1-0a83-1f25000001bc",
+        "type": "attributemetadata",
+        "mediaType": "application/json"
+      },
+      "id": "c524c518-26b4-11f1-0a83-1f25000001bc",
+      "name": "v1",
+      "value": "v1"
+    }
+  ],
+  "images": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/variant/c52d1e78-26b4-11f1-0a83-1f25000001bf/images",
+      "type": "image",
+      "mediaType": "application/json",
+      "size": 0,
+      "limit": 1000,
+      "offset": 0
+    }
+  },
+  "minPrice": {
+    "value": 300.0,
+    "currency": {
+      "meta": {
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/currency/c34f8b1f-26ae-11f1-0a83-1f25000000a9",
+        "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/currency/metadata",
+        "type": "currency",
+        "mediaType": "application/json",
+        "uuidHref": "https://api.moysklad.ru/app/#currency/edit?id=c34f8b1f-26ae-11f1-0a83-1f25000000a9"
+      }
+    }
+  },
+  "buyPrice": {
+    "value": 200.0,
+    "currency": {
+      "meta": {
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/currency/c34f8b1f-26ae-11f1-0a83-1f25000000a9",
+        "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/currency/metadata",
+        "type": "currency",
+        "mediaType": "application/json",
+        "uuidHref": "https://api.moysklad.ru/app/#currency/edit?id=c34f8b1f-26ae-11f1-0a83-1f25000000a9"
+      }
+    }
+  },
+  "salePrices": [
+    {
+      "value": 0.0,
+      "currency": {
+        "meta": {
+          "href": "https://api.moysklad.ru/api/remap/1.2/entity/currency/c34f8b1f-26ae-11f1-0a83-1f25000000a9",
+          "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/currency/metadata",
+          "type": "currency",
+          "mediaType": "application/json",
+          "uuidHref": "https://api.moysklad.ru/app/#currency/edit?id=c34f8b1f-26ae-11f1-0a83-1f25000000a9"
+        }
+      },
+      "priceType": {
+        "meta": {
+          "href": "https://api.moysklad.ru/api/remap/1.2/context/companysettings/pricetype/c398355c-26ae-11f1-0a83-1f25000000aa",
+          "type": "pricetype",
+          "mediaType": "application/json"
+        },
+        "id": "c398355c-26ae-11f1-0a83-1f25000000aa",
+        "name": "Цена продажи",
+        "externalCode": "cbcf493b-55bc-11d9-848a-00112f43529a"
+      }
+    }
+  ],
+  "barcodes": [
+    {
+      "ean13": "2000000000077"
+    }
+  ],
+  "packs": [
+    {
+      "id": "e82e7462-274f-11f1-0a83-1f2500000227",
+      "parentpack": {
+        "meta": {
+          "href": "https://api.moysklad.ru/api/remap/1.2/entity/product/d6877ac4-26ae-11f1-0a83-1f2500000149/packs/b566ecb1-274f-11f1-0a83-1f2500000210",
+          "type": "goodpack",
+          "mediaType": "application/json"
+        }
+      },
+      "barcodes": [
+        {
+          "ean13": "2000000000114"
+        }
+      ]
+    }
+  ],
+  "discountProhibited": false,
+  "minimumStock": {
+    "type": "ALL_WAREHOUSE_SAME",
+    "inherited": true,
+    "quantity": 5.0
+  },
+  "product": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/product/d6877ac4-26ae-11f1-0a83-1f2500000149",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/product/metadata",
+      "type": "product",
+      "mediaType": "application/json",
+      "uuidHref": "https://api.moysklad.ru/app/#good/edit?id=d686c1fc-26ae-11f1-0a83-1f2500000147"
+    }
+  },
+  "things": [
+    "test1"
+  ]
+}

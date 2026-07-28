@@ -1,0 +1,25 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/12a8b923-692c-11e6-8a84-bae500000056/contactpersons/097ed025-025c-11f1-0a81-072700000158",
+    "type": "contactperson",
+    "mediaType": "application/json"
+  },
+  "id": "097ed025-025c-11f1-0a81-072700000158",
+  "accountId": "f976ed28-2e58-11e6-8a84-bae500000001",
+  "updated": "2026-02-05 09:29:34.457",
+  "name": "Иванов Иван Иванович",
+  "description": "Основной контакт",
+  "externalCode": "771Yyo1Ng0GlrY8HLIIlF0",
+  "email": "ivanov@example.com",
+  "phone": "+7 (999) 123-45-67",
+  "position": "Директор",
+  "agent": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/12a8b923-692c-11e6-8a84-bae500000056",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/metadata",
+      "type": "counterparty",
+      "mediaType": "application/json",
+      "uuidHref": "https://online.moysklad.ru/app/#company/edit?id=12a8b923-692c-11e6-8a84-bae500000056"
+    }
+  }
+}

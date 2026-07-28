@@ -1,0 +1,49 @@
+get:
+  operationId: getRetailDrawerCashOutFile
+  tags:
+    - RetailDrawerCashOuts
+  summary: Получить файл выплаты денег
+  description: Получение Файла Выплаты денег.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - name: fileId
+      in: path
+      required: true
+      description: ID файла
+      schema:
+        type: string
+        format: uuid
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/File'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+delete:
+  operationId: deleteRetailDrawerCashOutFile
+  tags:
+    - RetailDrawerCashOuts
+  summary: Удалить файл выплаты денег
+  description: Удаление Файла Выплаты денег.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - name: fileId
+      in: path
+      required: true
+      description: ID файла
+      schema:
+        type: string
+        format: uuid
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Файл успешно удалён
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

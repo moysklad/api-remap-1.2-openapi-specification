@@ -1,0 +1,27 @@
+{{>licenseInfo}}
+package {{polymorphicPackage}};
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+/**
+ * Declares a nested JSON path used to resolve polymorphic subtypes during deserialization.
+ * Analogous to {@link com.fasterxml.jackson.annotation.JsonTypeInfo}, but supports dot-notation paths
+ * such as {@code meta.type} instead of a top-level property name.
+ */
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+{{>generatedAnnotation}}
+public @interface OpenApiPolymorphicTypeInfo {
+  /**
+   * Dot-notation path to the discriminator value in the JSON payload.
+   */
+  String path();
+
+  /**
+   * Resolve payloads shaped like batch errors to the Error model when mappings do not match.
+   */
+  boolean batchErrorFallback() default false;
+}

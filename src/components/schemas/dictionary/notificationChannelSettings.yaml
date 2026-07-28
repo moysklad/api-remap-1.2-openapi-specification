@@ -1,0 +1,12 @@
+type: object
+description: Настройки каналов доставки уведомлений
+properties:
+  email:
+    type: boolean
+    description: Признак активности доставки уведомлений по электронной почте
+  push:
+    type: boolean
+    description: Признак активности доставки уведомлений через мобильные push-уведомления
+  interface:
+    type: boolean
+    description: Признак активности доставки уведомлений в веб-интерфейсе

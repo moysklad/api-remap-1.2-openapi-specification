@@ -1,0 +1,205 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/task/cfe5a6ae-8b87-11e8-d9ce-84d900000000",
+    "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/task/metadata",
+    "type": "task",
+    "mediaType": "application/json"
+  },
+  "id": "cfe5a6ae-8b87-11e8-d9ce-84d900000000",
+  "accountId": "98182760-8aa1-11e8-7210-075e00000001",
+  "author": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/employee/98fa7086-8aa1-11e8-7210-075e0000002c",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/employee/metadata",
+      "type": "employee",
+      "mediaType": "application/json",
+      "uuidHref": "https://online.moysklad.ru/app/#employee/edit?id=98fa7086-8aa1-11e8-7210-075e0000002c"
+    }
+  },
+  "authorApplication": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/application/3abf0fca-8aa1-11e8-7210-075e00000011",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/application/metadata",
+      "type": "application",
+      "mediaType": "application/json"
+    }
+  },
+  "created": "2018-07-19 22:13:25",
+  "updated": "2018-07-19 22:24:50",
+  "description": "Уточнить контактные лица",
+  "dueToDate": "2018-07-20 22:09:00",
+  "implementer": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/employee/98fa7086-8aa1-11e8-7210-075e0000002c",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/employee/metadata",
+      "type": "employee",
+      "mediaType": "application/json",
+      "uuidHref": "https://online.moysklad.ru/app/#employee/edit?id=98fa7086-8aa1-11e8-7210-075e0000002c"
+    }
+  },
+  "completed": "2018-07-19 22:24:24",
+  "assignee": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/employee/98fa7086-8aa1-11e8-7210-075e0000002c",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/employee/metadata",
+      "type": "employee",
+      "mediaType": "application/json",
+      "uuidHref": "https://online.moysklad.ru/app/#employee/edit?id=98fa7086-8aa1-11e8-7210-075e0000002c"
+    }
+  },
+  "done": true,
+  "agent": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/992b6965-8aa1-11e8-7210-075e00000057",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/metadata",
+      "type": "counterparty",
+      "mediaType": "application/json",
+      "uuidHref": "https://online.moysklad.ru/app/#company/edit?id=992b6965-8aa1-11e8-7210-075e00000057"
+    }
+  },
+  "operation": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/supply/7eb5b552-8aa3-11e8-7210-075e000000f1",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/supply/metadata",
+      "type": "supply",
+      "mediaType": "application/json",
+      "uuidHref": "https://online.moysklad.ru/app/#supply/edit?id=7eb5b552-8aa3-11e8-7210-075e000000f1"
+    },
+    "states": [
+      {
+        "meta": {
+          "href": "https://api.moysklad.ru/api/remap/1.2/entity/supply/metadata/states/3cba1fb0-8aa3-11e8-7210-075e000000d4",
+          "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/supply/metadata",
+          "type": "state",
+          "mediaType": "application/json"
+        },
+        "id": "3cba1fb0-8aa3-11e8-7210-075e000000d4",
+        "accountId": "98182760-8aa1-11e8-7210-075e00000001",
+        "name": "Новый",
+        "color": 10066329,
+        "stateType": "Regular",
+        "entityType": "supply"
+      }
+    ]
+  },
+  "state": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/task/metadata/states/4f70c518-60a1-11e7-6adb-ede500000003",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/task/metadata",
+      "type": "state",
+      "mediaType": "application/json"
+    },
+    "id": "4f70c518-60a1-11e7-6adb-ede500000003",
+    "accountId": "0af94520-54f7-11e7-6adb-ede500000001",
+    "name": "Встреча",
+    "color": 15106326,
+    "stateType": "Regular",
+    "entityType": "task"
+  },
+  "notes": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/task/cfe5a6ae-8b87-11e8-d9ce-84d900000000/notes",
+      "type": "tasknote",
+      "mediaType": "application/json",
+      "size": 2,
+      "limit": 1000,
+      "offset": 0
+    },
+    "rows": [
+      {
+        "meta": {
+          "href": "https://api.moysklad.ru/api/remap/1.2/entity/task/cfe5a6ae-8b87-11e8-d9ce-84d900000000/notes/5eb5f69d-8b88-11e8-d9ce-84d900000001",
+          "type": "tasknote",
+          "mediaType": "application/json"
+        },
+        "id": "5eb5f69d-8b88-11e8-d9ce-84d900000001",
+        "accountId": "98182760-8aa1-11e8-7210-075e00000001",
+        "author": {
+          "meta": {
+            "href": "https://api.moysklad.ru/api/remap/1.2/entity/employee/98fa7086-8aa1-11e8-7210-075e0000002c",
+            "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/employee/metadata",
+            "type": "employee",
+            "mediaType": "application/json",
+            "uuidHref": "https://online.moysklad.ru/app/#employee/edit?id=98fa7086-8aa1-11e8-7210-075e0000002c"
+          }
+        },
+        "moment": "2018-07-19 22:20:10",
+        "text": "Связался с клиентом, ожидаем подтверждение.",
+        "files": {
+          "meta": {
+            "href": "https://api.moysklad.ru/api/remap/1.2/entity/task/cfe5a6ae-8b87-11e8-d9ce-84d900000000/notes/5eb5f69d-8b88-11e8-d9ce-84d900000001/files",
+            "type": "files",
+            "mediaType": "application/json",
+            "size": 1,
+            "limit": 1000,
+            "offset": 0
+          },
+          "rows": [
+            {
+              "meta": {
+                "href": "https://api.moysklad.ru/api/remap/1.2/entity/task/cfe5a6ae-8b87-11e8-d9ce-84d900000000/notes/5eb5f69d-8b88-11e8-d9ce-84d900000001/files/6c563f8d-8b88-11e8-d9ce-84d900000002",
+                "type": "files",
+                "mediaType": "application/json",
+                "downloadHref": "https://files.moysklad.ru/download/6c563f8d-8b88-11e8-d9ce-84d900000002"
+              },
+              "id": "6c563f8d-8b88-11e8-d9ce-84d900000002",
+              "title": "meeting-notes",
+              "filename": "meeting-notes.txt",
+              "size": 512,
+              "created": "2018-07-19 22:20:10",
+              "createdBy": {
+                "meta": {
+                  "href": "https://api.moysklad.ru/api/remap/1.2/entity/employee/98fa7086-8aa1-11e8-7210-075e0000002c",
+                  "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/employee/metadata",
+                  "type": "employee",
+                  "mediaType": "application/json",
+                  "uuidHref": "https://online.moysklad.ru/app/#employee/edit?id=98fa7086-8aa1-11e8-7210-075e0000002c"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "meta": {
+          "href": "https://api.moysklad.ru/api/remap/1.2/entity/task/cfe5a6ae-8b87-11e8-d9ce-84d900000000/notes/74f0a5a9-8b88-11e8-d9ce-84d900000003",
+          "type": "tasknote",
+          "mediaType": "application/json"
+        },
+        "id": "74f0a5a9-8b88-11e8-d9ce-84d900000003",
+        "accountId": "98182760-8aa1-11e8-7210-075e00000001",
+        "author": {
+          "meta": {
+            "href": "https://api.moysklad.ru/api/remap/1.2/entity/employee/98fa7086-8aa1-11e8-7210-075e0000002c",
+            "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/employee/metadata",
+            "type": "employee",
+            "mediaType": "application/json",
+            "uuidHref": "https://online.moysklad.ru/app/#employee/edit?id=98fa7086-8aa1-11e8-7210-075e0000002c"
+          }
+        },
+        "moment": "2018-07-19 22:24:24",
+        "text": "Задача закрыта.",
+        "files": {
+          "meta": {
+            "href": "https://api.moysklad.ru/api/remap/1.2/entity/task/cfe5a6ae-8b87-11e8-d9ce-84d900000000/notes/74f0a5a9-8b88-11e8-d9ce-84d900000003/files",
+            "type": "files",
+            "mediaType": "application/json",
+            "size": 0,
+            "limit": 1000,
+            "offset": 0
+          }
+        }
+      }
+    ]
+  },
+  "files": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/task/cfe5a6ae-8b87-11e8-d9ce-84d900000000/files",
+      "type": "files",
+      "mediaType": "application/json",
+      "size": 0,
+      "limit": 1000,
+      "offset": 0
+    }
+  }
+}

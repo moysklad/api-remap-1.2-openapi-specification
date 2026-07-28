@@ -1,0 +1,12 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/group/11111111-1111-1111-1111-111111111111",
+    "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/group/metadata",
+    "type": "group",
+    "mediaType": "application/json"
+  },
+  "id": "11111111-1111-1111-1111-111111111111",
+  "accountId": "abcdef12-1234-1234-1234-123456789012",
+  "name": "Основной",
+  "index": 0
+}

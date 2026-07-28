@@ -1,0 +1,9 @@
+type: object
+allOf:
+  - $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
+properties:
+  type:
+    type: string
+    enum: [boolean]
+  value:
+    type: boolean

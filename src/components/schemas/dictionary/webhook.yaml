@@ -1,0 +1,50 @@
+type: object
+description: Вебхук
+x-polymorphic-parent: EntityWithMeta
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "webhook"
+    - param: "id"
+  type: "webhook"
+properties:
+  meta:
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID вебхука
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  entityType:
+    type: string
+    maxLength: 255
+    description: Тип сущности, к которой привязан вебхук. Известные ограничения см. в документации (нельзя webhook, discount, notes)
+  url:
+    type: string
+    format: uri
+    maxLength: 255
+    description: URL, по которому отправляется уведомление
+  method:
+    type: string
+    description: HTTP метод запроса к URL подписчика. Известные значения описаны в WebhookMethod
+  enabled:
+    type: boolean
+    description: Вебхук включен или отключен
+  action:
+    type: string
+    description: Отслеживаемое действие. Известные значения описаны в WebhookAction. Значение PROCESSED допустимо только для асинхронных задач
+  diffType:
+    type: string
+    description: Режим для действия UPDATE. Известные значения описаны в WebhookDiffType
+    nullable: true
+  authorApplication:
+    description: Метаданные решения, создавшего вебхук
+    $ref: '../../../openapi.yaml#/components/schemas/Application'
+    readOnly: true
