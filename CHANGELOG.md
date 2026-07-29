@@ -1,3 +1,7 @@
+# Версия 0.18.0
+
+* feat: support entities in attributes
+
 # Версия 0.17.0
 
 * технические изменения
