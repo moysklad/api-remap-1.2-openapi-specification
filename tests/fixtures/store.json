@@ -4,7 +4,7 @@
     "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/store/metadata",
     "type": "store",
     "mediaType": "application/json",
-    "uuidHref": "https://api.moysklad.ru/app/#warehouse/edit?id=b733c216-2783-11f1-0a83-1f2500000237"
+    "uuidHref": "https://online.moysklad.ru/app/#warehouse/edit?id=b733c216-2783-11f1-0a83-1f2500000237"
   },
   "id": "b733c216-2783-11f1-0a83-1f2500000237",
   "code": "test",
@@ -15,7 +15,7 @@
       "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/employee/metadata",
       "type": "employee",
       "mediaType": "application/json",
-      "uuidHref": "https://api.moysklad.ru/app/#employee/edit?id=c2f12a89-26ae-11f1-0a83-1f2500000055"
+      "uuidHref": "https://online.moysklad.ru/app/#employee/edit?id=c2f12a89-26ae-11f1-0a83-1f2500000055"
     }
   },
   "shared": false,
@@ -39,7 +39,7 @@
       "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/store/metadata",
       "type": "store",
       "mediaType": "application/json",
-      "uuidHref": "https://api.moysklad.ru/app/#warehouse/edit?id=c34a3943-26ae-11f1-0a83-1f25000000a4"
+      "uuidHref": "https://online.moysklad.ru/app/#warehouse/edit?id=c34a3943-26ae-11f1-0a83-1f25000000a4"
     }
   },
   "address": "",

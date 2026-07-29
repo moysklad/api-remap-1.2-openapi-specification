@@ -4,5 +4,6 @@ allOf:
 properties:
   type:
     type: string
+    enum: [project]
   value:
-    type: object
+    $ref: '../../../openapi.yaml#/components/schemas/Project'

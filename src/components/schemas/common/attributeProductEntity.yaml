@@ -4,6 +4,6 @@ allOf:
 properties:
   type:
     type: string
-    enum: [customentity]
+    enum: [product]
   value:
-    $ref: '../../../openapi.yaml#/components/schemas/CustomEntityElement'
+    $ref: '../../../openapi.yaml#/components/schemas/ProductMarker'

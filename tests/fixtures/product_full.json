@@ -86,11 +86,11 @@
   "taxSystem": "GENERAL_TAX_SYSTEM",
   "owner": {
     "meta": {
-      "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/employee/b2c670fa-01b5-11f1-0a81-072700000055",
-      "metadataHref": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/employee/metadata",
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/employee/b2c670fa-01b5-11f1-0a81-072700000055",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/employee/metadata",
       "type": "employee",
       "mediaType": "application/json",
-      "uuidHref": "https://online-api-2.testms-test.lognex.ru/app/#employee/edit?id=b2c670fa-01b5-11f1-0a81-072700000055"
+      "uuidHref": "https://online.moysklad.ru/app/#employee/edit?id=b2c670fa-01b5-11f1-0a81-072700000055"
     }
   },
   "attributes":[
@@ -130,16 +130,16 @@
   ],
   "country": {
     "meta": {
-      "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/country/70c2bcc4-e7ef-4361-b673-68e1bea0edd0",
-      "metadataHref": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/country/metadata",
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/country/70c2bcc4-e7ef-4361-b673-68e1bea0edd0",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/country/metadata",
       "type": "country",
       "mediaType": "application/json",
-      "uuidHref": "https://online-api-2.testms-test.lognex.ru/app/#country/edit?id=70c2bcc4-e7ef-4361-b673-68e1bea0edd0"
+      "uuidHref": "https://online.moysklad.ru/app/#country/edit?id=70c2bcc4-e7ef-4361-b673-68e1bea0edd0"
     }
   },
   "files": {
     "meta": {
-      "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/counterparty/b3922fc3-01b5-11f1-0a81-0727000000bf/files",
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/b3922fc3-01b5-11f1-0a81-0727000000bf/files",
       "type": "files",
       "mediaType": "application/json",
       "size": 0,
@@ -149,10 +149,10 @@
     "rows": [
       {
         "meta": {
-          "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/counterparty/b3922fc3-01b5-11f1-0a81-0727000000bf/files/678498fb-05ca-40d1-8460-fecb7ff3d29f",
+          "href": "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/b3922fc3-01b5-11f1-0a81-0727000000bf/files/678498fb-05ca-40d1-8460-fecb7ff3d29f",
           "type": "files",
           "mediaType": "application/json",
-          "downloadHref": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/download/678498fb-05ca-40d1-8460-fecb7ff3d29f"
+          "downloadHref": "https://api.moysklad.ru/api/remap/1.2/download/678498fb-05ca-40d1-8460-fecb7ff3d29f"
         },
         "title": "cursor_icon",
         "filename": "cursor_icon.png",
@@ -160,15 +160,15 @@
         "created": "2026-02-05 15:10:02.306",
         "createdBy": {
           "meta": {
-            "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/employee/b2c670fa-01b5-11f1-0a81-072700000055",
-            "metadataHref": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/employee/metadata",
+            "href": "https://api.moysklad.ru/api/remap/1.2/entity/employee/b2c670fa-01b5-11f1-0a81-072700000055",
+            "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/employee/metadata",
             "type": "employee",
             "mediaType": "application/json",
-            "uuidHref": "https://online-api-2.testms-test.lognex.ru/app/#employee/edit?id=b2c670fa-01b5-11f1-0a81-072700000055"
+            "uuidHref": "https://online.moysklad.ru/app/#employee/edit?id=b2c670fa-01b5-11f1-0a81-072700000055"
           }
         },
         "miniature": {
-          "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/download/678498fb-05ca-40d1-8460-fecb7ff3d29f?miniature=true",
+          "href": "https://api.moysklad.ru/api/remap/1.2/download/678498fb-05ca-40d1-8460-fecb7ff3d29f?miniature=true",
           "type": "files",
           "mediaType": "image/png",
           "downloadHref": "https://miniature-test-v3.moysklad.ru/miniature-test/miniature/b2040544-01b5-11f1-0a81-181d00000002/documentminiature/6fb0df91-b057-4130-8ab0-8662abfb5d09"
@@ -183,7 +183,7 @@
   },
   "images": {
     "meta": {
-      "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/product/21715576-027a-11f1-0a81-072700000197/images",
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/product/21715576-027a-11f1-0a81-072700000197/images",
       "type": "image",
       "mediaType": "application/json",
       "size": 1,
@@ -193,17 +193,17 @@
     "rows": [
       {
         "meta": {
-          "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/product/21715576-027a-11f1-0a81-072700000197/images/9c96f54a-c24d-41aa-ab13-fd409d1491ed",
+          "href": "https://api.moysklad.ru/api/remap/1.2/entity/product/21715576-027a-11f1-0a81-072700000197/images/9c96f54a-c24d-41aa-ab13-fd409d1491ed",
           "type": "image",
           "mediaType": "application/json",
-          "downloadHref": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/download/9c96f54a-c24d-41aa-ab13-fd409d1491ed"
+          "downloadHref": "https://api.moysklad.ru/api/remap/1.2/download/9c96f54a-c24d-41aa-ab13-fd409d1491ed"
         },
         "title": "Снимок экрана от 2026-01-30 17-25-37",
         "filename": "Снимок экрана от 2026-01-30 17-25-37.png",
         "size": 73643,
         "updated": "2026-02-06 13:03:34.242",
         "miniature": {
-          "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/download/9c96f54a-c24d-41aa-ab13-fd409d1491ed?miniature=true",
+          "href": "https://api.moysklad.ru/api/remap/1.2/download/9c96f54a-c24d-41aa-ab13-fd409d1491ed?miniature=true",
           "type": "image",
           "mediaType": "image/png",
           "downloadHref": "https://miniature-test-v3.moysklad.ru/miniature-test/miniature/b2040544-01b5-11f1-0a81-181d00000002/documentminiature/7288afd0-6297-4da6-a6a2-af58d2f438c6"
@@ -220,11 +220,11 @@
     "value": 1000.0,
     "currency": {
       "meta": {
-        "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/currency/b31787dd-01b5-11f1-0a81-0727000000a9",
-        "metadataHref": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/currency/metadata",
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/currency/b31787dd-01b5-11f1-0a81-0727000000a9",
+        "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/currency/metadata",
         "type": "currency",
         "mediaType": "application/json",
-        "uuidHref": "https://online-api-2.testms-test.lognex.ru/app/#currency/edit?id=b31787dd-01b5-11f1-0a81-0727000000a9"
+        "uuidHref": "https://online.moysklad.ru/app/#currency/edit?id=b31787dd-01b5-11f1-0a81-0727000000a9"
       }
     }
   },
@@ -232,7 +232,7 @@
     "type": "WAREHOUSE_VARIED",
     "storeBalances": {
       "meta": {
-        "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/product/21715576-027a-11f1-0a81-072700000197/storebalances",
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/product/21715576-027a-11f1-0a81-072700000197/storebalances",
         "type": "minimumstock",
         "mediaType": "application/json",
         "size": 1,
@@ -246,8 +246,8 @@
       "id": "4511ceca-0347-11f1-0a81-072700000203",
       "uom": {
         "meta": {
-          "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/uom/89f7fa51-2271-4b87-baf8-c3fc2a3f5119",
-          "metadataHref": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/uom/metadata",
+          "href": "https://api.moysklad.ru/api/remap/1.2/entity/uom/89f7fa51-2271-4b87-baf8-c3fc2a3f5119",
+          "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/uom/metadata",
           "type": "uom",
           "mediaType": "application/json"
         }
@@ -264,20 +264,20 @@
   "ppeType": "2400001226405",
   "productFolder": {
     "meta": {
-      "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/productfolder/24fda66a-027a-11f1-0a81-07270000019c",
-      "metadataHref": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/productfolder/metadata",
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/productfolder/24fda66a-027a-11f1-0a81-07270000019c",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/productfolder/metadata",
       "type": "productfolder",
       "mediaType": "application/json",
-      "uuidHref": "https://online-api-2.testms-test.lognex.ru/app/#good/edit?id=24fda66a-027a-11f1-0a81-07270000019c"
+      "uuidHref": "https://online.moysklad.ru/app/#good/edit?id=24fda66a-027a-11f1-0a81-07270000019c"
     }
   },
   "supplier": {
     "meta": {
-      "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/organization/b30a3860-01b5-11f1-0a81-0727000000a1",
-      "metadataHref": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/organization/metadata",
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/organization/b30a3860-01b5-11f1-0a81-0727000000a1",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/organization/metadata",
       "type": "organization",
       "mediaType": "application/json",
-      "uuidHref": "https://online-api-2.testms-test.lognex.ru/app/#mycompany/edit?id=b30a3860-01b5-11f1-0a81-0727000000a1"
+      "uuidHref": "https://online.moysklad.ru/app/#mycompany/edit?id=b30a3860-01b5-11f1-0a81-0727000000a1"
     }
   },
   "things": [
@@ -287,8 +287,8 @@
   "trackingType": "MILK",
   "uom": {
     "meta": {
-      "href": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/uom/89f7fa51-2271-4b87-baf8-c3fc2a3f5119",
-      "metadataHref": "https://api-api-2.testms-test.lognex.ru/api/remap/1.2/entity/uom/metadata",
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/uom/89f7fa51-2271-4b87-baf8-c3fc2a3f5119",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/uom/metadata",
       "type": "uom",
       "mediaType": "application/json"
     }
