@@ -1,0 +1,17 @@
+get:
+  operationId: getProcessingOrderMetadata
+  tags:
+  - ProcessingOrders
+  summary: Метаданные ProcessingOrder
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/DocumentMetadata'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+  parameters:
+  - $ref: '../../../components/headers.yaml#/AcceptHeader'
+  - $ref: '../../../components/headers.yaml#/AcceptEncoding'

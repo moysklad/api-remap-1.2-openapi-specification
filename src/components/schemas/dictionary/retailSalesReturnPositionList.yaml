@@ -1,0 +1,16 @@
+type: object
+description: Список позиций Розничного возврата
+properties:
+  context:
+    description: Метаданные о сотруднике, выполнившем запрос
+    $ref: '../../../openapi.yaml#/components/schemas/Context'
+  meta:
+    allOf:
+      - $ref: '../common/metaList.yaml'
+    description: Метаданные о выдаче
+  rows:
+    type: array
+    nullable: true
+    description: Массив позиций Розничного возврата
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/RetailSalesReturnPosition'

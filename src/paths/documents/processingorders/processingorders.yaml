@@ -1,0 +1,47 @@
+get:
+  operationId: getProcessingOrderList
+  tags:
+  - ProcessingOrders
+  summary: Получить список ProcessingOrder
+  parameters:
+  - $ref: '../../../components/parameters.yaml#/limit'
+  - $ref: '../../../components/parameters.yaml#/offset'
+  - $ref: '../../../components/parameters.yaml#/search'
+  - $ref: '../../../components/parameters.yaml#/expand'
+  - $ref: '../../../components/headers.yaml#/AcceptHeader'
+  - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/ProcessingOrderList'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+post:
+  operationId: createProcessingOrder
+  tags:
+  - ProcessingOrders
+  summary: Создать ProcessingOrder
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../openapi.yaml#/components/schemas/ProcessingOrder'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/ProcessingOrder'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+  parameters:
+  - $ref: '../../../components/parameters.yaml#/expand'
+  - $ref: '../../../components/headers.yaml#/AcceptHeader'
+  - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  - $ref: '../../../components/headers.yaml#/ContentTypeJson'

@@ -1,0 +1,17 @@
+type: object
+properties:
+  view:
+    type: string
+    description: Смотреть. Известные значения описаны в ScriptPermissionValue.
+  create:
+    type: string
+    description: Создавать. Известные значения описаны в ScriptPermissionValue.
+  update:
+    type: string
+    description: Редактировать. Известные значения описаны в ScriptPermissionValue.
+  delete:
+    type: string
+    description: Удалять. Известные значения описаны в ScriptPermissionValue.
+  done:
+    type: string
+    description: Выполнять. Известные значения описаны в ScriptPermissionValue.

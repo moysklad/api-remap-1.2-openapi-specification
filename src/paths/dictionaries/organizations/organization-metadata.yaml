@@ -1,0 +1,19 @@
+get:
+  operationId: getOrganizationMetadata
+  tags:
+    - Organizations
+  summary: Получить метаданные юрлиц
+  description: Запрос на получение метаданных юрлиц
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/Metadata'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

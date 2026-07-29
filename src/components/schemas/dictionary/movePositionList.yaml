@@ -1,0 +1,16 @@
+type: object
+description: Список позиций Перемещения
+properties:
+  context:
+    description: Метаданные о сотруднике, выполнившем запрос
+    $ref: '../../../openapi.yaml#/components/schemas/Context'
+  meta:
+    allOf:
+      - $ref: '../common/metaList.yaml'
+    description: Метаданные о выдаче
+  rows:
+    type: array
+    description: Массив позиций Перемещения
+    nullable: true
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/MovePosition'

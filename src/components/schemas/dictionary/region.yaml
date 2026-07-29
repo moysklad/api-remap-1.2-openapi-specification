@@ -1,0 +1,44 @@
+type: object
+description: Регион
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "region"
+    - param: "id"
+  type: "region"
+properties:
+  meta:
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID Региона
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  name:
+    type: string
+    maxLength: 255
+    description: Наименование Региона
+  code:
+    type: string
+    maxLength: 255
+    description: Код Региона
+  externalCode:
+    type: string
+    maxLength: 255
+    description: Внешний код Региона
+  updated:
+    type: string
+    #    format: date-time  # API использует формат: YYYY-MM-DD HH:MM:SS.mmm
+    description: Время последнего изменения
+    readOnly: true
+  version:
+    type: integer
+    description: Версия сущности
+    readOnly: true

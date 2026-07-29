@@ -1,0 +1,211 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/retailshift/0b2b2caf-055e-11e6-9464-e4de0000007c",
+    "type": "retailshift",
+    "mediaType": "application/json"
+  },
+  "id": "0b2b2caf-055e-11e6-9464-e4de0000007c",
+  "accountId": "84e60e93-f504-11e5-8a84-bae500000008",
+  "syncId": "734a9e26-45a2-4ead-849c-e144daeb854d",
+  "updated": "2016-04-18 15:07:12",
+  "name": "00001",
+  "externalCode": "iR5ZTLzfhK98uzqIFbC871",
+  "owner": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/employee/faba7f37-2e58-11e6-8a84-bae500000028",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/employee/metadata",
+      "type": "employee",
+      "mediaType": "application/json"
+    }
+  },
+  "shared": false,
+  "group": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/group/f97aa1fb-2e58-11e6-8a84-bae500000002",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/group/metadata",
+      "type": "group",
+      "mediaType": "application/json"
+    }
+  },
+  "moment": "2016-04-18 15:06:51",
+  "created": "2016-08-25 19:55:00",
+  "printed": true,
+  "published": true,
+  "vatEnabled": true,
+  "vatIncluded": true,
+  "organization": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/organization/850c8195-f504-11e5-8a84-bae50000015e",
+      "type": "organization",
+      "mediaType": "application/json"
+    }
+  },
+  "store": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/store/850ee995-f504-11e5-8a84-bae500000160",
+      "type": "store",
+      "mediaType": "application/json"
+    }
+  },
+  "organizationAccount": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/account/3a30e844-016f-11e6-9464-e4de00000068",
+      "type": "account",
+      "mediaType": "application/json"
+    }
+  },
+  "contract": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/contract/2b34d43f-3f52-11e6-8a84-bae500000066",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/contract/metadata",
+      "type": "contract",
+      "mediaType": "application/json"
+    }
+  },
+  "attributes": [
+    {
+      "meta": {
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/retailshift/metadata/attributes/0cd74e1e-2e59-11e6-8a84-bae50000008a",
+        "type": "attributemetadata",
+        "mediaType": "application/json"
+      },
+      "id": "bb08dccf-0bd2-11e6-9464-e4de000000ae",
+      "name": "AttributeName1",
+      "type": "string",
+      "value": "Да"
+    }
+  ],
+  "files": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/retailshift/0b2b2caf-055e-11e6-9464-e4de0000007c/files",
+      "type": "files",
+      "mediaType": "application/json",
+      "size": 0,
+      "limit": 1000,
+      "offset": 0
+    }
+  },
+  "closeDate": "2016-04-18 15:07:12",
+  "proceedsNoCash": 0,
+  "proceedsCash": 5100,
+  "receivedNoCash": 0,
+  "receivedCash": 5136,
+  "retailStore": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/retailstore/851f8576-f504-11e5-8a84-bae50000016c",
+      "type": "retailstore",
+      "mediaType": "application/json"
+    }
+  },
+  "acquire": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/organization/741b9bbb-0016-11ec-ac12-000b0000007e",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/organization/metadata",
+      "type": "organization",
+      "mediaType": "application/json",
+      "uuidHref": "https://online.moysklad.ru/app/#mycompany/edit?id=741b9bbb-0016-11ec-ac12-000b0000007e"
+    }
+  },
+  "agentAccount": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/account/4b41f955-1270-11e6-9464-e4de00000079",
+      "type": "account",
+      "mediaType": "application/json"
+    }
+  },
+  "bankPercent": 21.2231,
+  "bankComission": 0.0,
+  "deleted": null,
+  "description": "Комментарий к розничной смене",
+  "qrAcquire": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/organization/741b9bbb-0016-11ec-ac12-000b0000007f",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/organization/metadata",
+      "type": "organization",
+      "mediaType": "application/json",
+      "uuidHref": "https://online.moysklad.ru/app/#mycompany/edit?id=741b9bbb-0016-11ec-ac12-000b0000007f"
+    }
+  },
+  "qrBankPercent": 0.0,
+  "qrBankComission": 0.0,
+  "cheque": {
+    "start": {
+      "shiftNumber": "3456",
+      "kktRegNumber": "5678",
+      "fnNumber": "1234",
+      "fiscalDocNumber": "7890",
+      "fiscalDocSign": "9012",
+      "time": "2021-08-17 16:56:00.000"
+    },
+    "end": {
+      "shiftNumber": "2109",
+      "kktRegNumber": "0987",
+      "fnNumber": "4321",
+      "fiscalDocNumber": "8765",
+      "fiscalDocSign": "6543",
+      "time": "2021-08-21 16:56:00.000",
+      "chequesTotal": 15,
+      "fiscalDocsTotal": 17
+    }
+  },
+  "operations": [
+    {
+      "meta": {
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/retaildemand/29547f06-ec69-11e7-0532-9eed0000001b",
+        "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/retaildemand/metadata",
+        "type": "retaildemand",
+        "mediaType": "application/json",
+        "uuidHref": "https://online.moysklad.ru/app/#retaildemand/edit?id=29547f06-ec69-11e7-0532-9eed0000001b"
+      }
+    },
+    {
+      "meta": {
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/retailsalesreturn/3395a278-ec69-11e7-0532-9eed00000022",
+        "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/retailsalesreturn/metadata",
+        "type": "retailsalesreturn",
+        "mediaType": "application/json",
+        "uuidHref": "https://online.moysklad.ru/app/#retailsalesreturn/edit?id=3395a278-ec69-11e7-0532-9eed00000022"
+      }
+    },
+    {
+      "meta": {
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/retaildrawercashin/2eb3c0ad-f9d9-11e7-0532-9eed0000005a",
+        "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/retaildrawercashin/metadata",
+        "type": "retaildrawercashin",
+        "mediaType": "application/json",
+        "uuidHref": "https://online.moysklad.ru/app/#retaildrawercashin/edit?id=2eb3c0ad-f9d9-11e7-0532-9eed0000005a"
+      }
+    },
+    {
+      "meta": {
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/retaildrawercashout/3d8258c5-f9d9-11e7-0532-9eed0000005e",
+        "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/retaildrawercashout/metadata",
+        "type": "retaildrawercashout",
+        "mediaType": "application/json",
+        "uuidHref": "https://online.moysklad.ru/app/#retaildrawercashout/edit?id=3d8258c5-f9d9-11e7-0532-9eed0000005e"
+      }
+    }
+  ],
+  "paymentOperations": [
+    {
+      "meta": {
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/cashin/6c3237ff-f9d9-11e7-0532-9eed00000086",
+        "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/cashin/metadata",
+        "type": "cashin",
+        "mediaType": "application/json",
+        "uuidHref": "https://online.moysklad.ru/app/#cashin/edit?id=6c3237ff-f9d9-11e7-0532-9eed00000086"
+      },
+      "linkedSum": 0
+    },
+    {
+      "meta": {
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/paymentin/5952a2fb-f9d8-11e7-0532-9eed00000036",
+        "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/paymentin/metadata",
+        "type": "paymentin",
+        "mediaType": "application/json",
+        "uuidHref": "https://online.moysklad.ru/app/#paymentin/edit?id=5952a2fb-f9d8-11e7-0532-9eed00000036"
+      },
+      "linkedSum": 0
+    }
+  ]
+}

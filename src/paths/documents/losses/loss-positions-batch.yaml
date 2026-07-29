@@ -1,0 +1,34 @@
+post:
+  operationId: createLossPositions
+  tags:
+    - Losses
+  summary: Массовое создание и обновление позиций Списания
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            $ref: '../../../openapi.yaml#/components/schemas/LossPosition'
+          minItems: 1
+          maxItems: 1000
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              oneOf:
+                - $ref: '../../../openapi.yaml#/components/schemas/LossPosition'
+                - $ref: '../../../openapi.yaml#/components/schemas/Error'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

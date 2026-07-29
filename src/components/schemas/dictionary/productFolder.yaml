@@ -1,0 +1,92 @@
+type: object
+description: Группа товаров
+x-polymorphic-parent: EntityWithMeta
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "productfolder"
+    - param: "id"
+  type: "productfolder"
+properties:
+  meta:
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID группы товаров
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  name:
+    type: string
+    maxLength: 255
+    description: Наименование группы товаров
+  code:
+    type: string
+    maxLength: 255
+    description: Код группы товаров
+  externalCode:
+    type: string
+    maxLength: 255
+    description: Внешний код группы товаров
+  archived:
+    type: boolean
+    description: Добавлена ли группа товаров в архив
+  pathName:
+    type: string
+    description: Наименование родительской группы
+    readOnly: true
+  description:
+    type: string
+    maxLength: 4096
+    nullable: true
+    description: Описание группы товаров
+  vat:
+    type: integer
+    minimum: 0
+    maximum: 99
+    description: НДС %
+  vatEnabled:
+    type: boolean
+    description: Включен ли НДС для группы
+  effectiveVat:
+    type: integer
+    description: Реальный НДС %
+    readOnly: true
+  effectiveVatEnabled:
+    type: boolean
+    description: Дополнительный признак для определения разграничения реального НДС
+    readOnly: true
+  useParentVat:
+    type: boolean
+    description: Используется ли ставка НДС родительской группы
+  shared:
+    type: boolean
+    description: Общий доступ
+  group:
+    $ref: '../../../openapi.yaml#/components/schemas/Group'
+  owner:
+    description: Владелец группы товаров. Может быть Meta объектом или полным объектом в зависимости от expand параметра
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Employee'
+  updated:
+    type: string
+    #    format: date-time  # API использует формат: YYYY-MM-DD HH:MM:SS.mmm
+    description: Момент последнего обновления
+    readOnly: true
+  productFolder:
+    description: Родительская группа товаров
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/ProductFolder'
+  taxSystem:
+    type: string
+    description: Код системы налогообложения. Известные значения описаны в TaxSystem

@@ -1,0 +1,62 @@
+get:
+  operationId: getCustomRoleById
+  tags:
+    - CustomRoles
+  summary: Получить пользовательскую роль по ID
+  description: Запрос на получение пользовательской роли с указанным id
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/CustomRole'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+put:
+  operationId: updateCustomRole
+  tags:
+    - CustomRoles
+  summary: Обновить пользовательскую роль
+  description: Обновление пользовательской роли с указанным id
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../openapi.yaml#/components/schemas/CustomRole'
+  responses:
+    '200':
+      description: Пользовательская роль успешно обновлена
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/CustomRole'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+delete:
+  operationId: deleteCustomRole
+  tags:
+    - CustomRoles
+  summary: Удалить пользовательскую роль
+  description: Удаление пользовательской роли с указанным id
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Пользовательская роль успешно удалена
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

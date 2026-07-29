@@ -1,0 +1,57 @@
+type: object
+description: Счета контрагентов/юрлиц
+x-entity-static-builder:
+  methodParams:
+    - "entityType"
+    - "parentId"
+    - "id"
+  href:
+    - path: "entity"
+    - param: "entityType"
+    - param: "parentId"
+    - path: "accounts"
+    - param: "id"
+  type: "account"
+properties:
+  meta:
+    description: Метаданные Счета
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID счета
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  updated:
+    type: string
+    #    format: date-time  # API использует формат: YYYY-MM-DD HH:MM:SS.mmm
+    description: Время последнего изменения
+    readOnly: true
+  isDefault:
+    type: boolean
+    description: Основной счет
+  accountNumber:
+    type: string
+    description: Номер счета
+  bankName:
+    type: string
+    description: Наименование банка
+  bankLocation:
+    type: string
+    description: Адрес банка
+  correspondentAccount:
+    type: string
+    description: Корр. счет
+  bic:
+    type: string
+    description: БИК
+  currency:
+    description: Метаданные валюты расчетного счета юрлица
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Currency'

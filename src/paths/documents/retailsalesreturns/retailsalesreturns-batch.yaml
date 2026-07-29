@@ -1,0 +1,34 @@
+post:
+  operationId: createRetailSalesReturnsBatch
+  tags:
+    - RetailSalesReturns
+  summary: Создать или изменить Розничные возвраты
+  description: Создание или изменение нескольких Розничных возвратов.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            $ref: '../../../openapi.yaml#/components/schemas/RetailSalesReturn'
+          minItems: 1
+          maxItems: 1000
+  responses:
+    '200':
+      description: Розничные возвраты успешно созданы или изменены
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              oneOf:
+                - $ref: '../../../openapi.yaml#/components/schemas/RetailSalesReturn'
+                - $ref: '../../../openapi.yaml#/components/schemas/Error'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
