@@ -10,3 +10,6 @@
 * model_entity_static_builder.mustache появился для удобства создания объектов с заполненной meta. Причина - приходится вручную конструировать 
   и заполнять много полей сперва по созданию meta, затем подстановку этой meta в готовый объект
 * pom.mustache - адаптация стандартного pom.xml для проекта.
+* apiException.mustache - типобезопасная обработка ошибок: добавлены методы `getErrorResponse()` (модель `Error`)
+  и `getErrorResponses()` (список `Error` для массовых операций), которые лениво десериализуют тело ответа через
+  сконфигурированный `ObjectMapper` из `Configuration.getDefaultApiClient()`.
