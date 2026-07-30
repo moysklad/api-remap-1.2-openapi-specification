@@ -69,7 +69,7 @@ public class PolymorphicMetaTypeDeserializer extends JsonDeserializer<Object> im
     }
 
     if (resolvedClass == null && useBatchErrorFallback(targetClass) && isBatchErrorPayload(node)) {
-      resolvedClass = Error.class;
+      resolvedClass = Errors.class;
     }
 
     if (resolvedClass != null && !targetClass.isAssignableFrom(resolvedClass)) {
