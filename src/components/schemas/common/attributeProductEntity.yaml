@@ -1,5 +1,5 @@
 type: object
-x-implements: IAttribute<EntityWithMeta>
+x-implements: IAttribute<BatchResponseEntity>
 allOf:
   - $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
 properties:
