@@ -1,0 +1,3 @@
+type: string
+description: Известные типы, используемые в допполях
+enum: [file, string, text, link, time, double, long, boolean, customentity, contract, counterparty, project, store, employee, product]

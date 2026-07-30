@@ -4,4 +4,4 @@ allOf:
   - $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
 properties:
   value:
-    type: object
+    $ref: '../../../openapi.yaml#/components/schemas/Store'

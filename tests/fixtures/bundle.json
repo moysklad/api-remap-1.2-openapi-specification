@@ -4,7 +4,7 @@
     "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/product/metadata",
     "type": "bundle",
     "mediaType": "application/json",
-    "uuidHref": "https://online-api-3.testms-test.lognex.ru/app/#good/edit?id=1545282c-26af-11f1-0a83-1f250000017f"
+    "uuidHref": "https://online.moysklad.ru/app/#good/edit?id=1545282c-26af-11f1-0a83-1f250000017f"
   },
   "id": "1545463f-26af-11f1-0a83-1f2500000181",
   "accountId": "c229f794-26ae-11f1-0a83-1f2100000002",
@@ -14,7 +14,7 @@
       "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/employee/metadata",
       "type": "employee",
       "mediaType": "application/json",
-      "uuidHref": "https://online-api-3.testms-test.lognex.ru/app/#employee/edit?id=c2f12a89-26ae-11f1-0a83-1f2500000055"
+      "uuidHref": "https://online.moysklad.ru/app/#employee/edit?id=c2f12a89-26ae-11f1-0a83-1f2500000055"
     }
   },
   "shared": true,
@@ -39,7 +39,7 @@
       "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/productfolder/metadata",
       "type": "productfolder",
       "mediaType": "application/json",
-      "uuidHref": "https://online-api-3.testms-test.lognex.ru/app/#good/edit?id=e6c84e89-26ae-11f1-0a83-1f2500000172"
+      "uuidHref": "https://online.moysklad.ru/app/#good/edit?id=e6c84e89-26ae-11f1-0a83-1f2500000172"
     }
   },
   "effectiveVat": 10,
@@ -74,7 +74,7 @@
         "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/currency/metadata",
         "type": "currency",
         "mediaType": "application/json",
-        "uuidHref": "https://online-api-3.testms-test.lognex.ru/app/#currency/edit?id=c34f8b1f-26ae-11f1-0a83-1f25000000a9"
+        "uuidHref": "https://online.moysklad.ru/app/#currency/edit?id=c34f8b1f-26ae-11f1-0a83-1f25000000a9"
       }
     }
   },
@@ -87,7 +87,7 @@
           "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/currency/metadata",
           "type": "currency",
           "mediaType": "application/json",
-          "uuidHref": "https://online-api-3.testms-test.lognex.ru/app/#currency/edit?id=c34f8b1f-26ae-11f1-0a83-1f25000000a9"
+          "uuidHref": "https://online.moysklad.ru/app/#currency/edit?id=c34f8b1f-26ae-11f1-0a83-1f25000000a9"
         }
       },
       "priceType": {
@@ -148,7 +148,7 @@
             "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/product/metadata",
             "type": "product",
             "mediaType": "application/json",
-            "uuidHref": "https://api.moysklad.ru/app/#good/edit?id=d825f169-26ae-11f1-0a83-1f250000016b"
+            "uuidHref": "https://online.moysklad.ru/app/#good/edit?id=d825f169-26ae-11f1-0a83-1f250000016b"
           }
         },
         "quantity": 1.0

@@ -84,7 +84,7 @@
             "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/employee/metadata",
             "type": "employee",
             "mediaType": "application/json",
-            "uuidHref": "https://api.moysklad.ru/app/#employee/edit?id=c2f12a89-26ae-11f1-0a83-1f2500000055"
+            "uuidHref": "https://online.moysklad.ru/app/#employee/edit?id=c2f12a89-26ae-11f1-0a83-1f2500000055"
           }
         },
         "miniature": {
@@ -158,7 +158,7 @@
       "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/saleschannel/metadata",
       "type": "saleschannel",
       "mediaType": "application/json",
-      "uuidHref": "https://api.moysklad.ru/app/#saleschannel/edit?id=10b0654b-2859-11f1-0a83-1f2500000244"
+      "uuidHref": "https://online.moysklad.ru/app/#saleschannel/edit?id=10b0654b-2859-11f1-0a83-1f2500000244"
     }
   },
   "agent": {

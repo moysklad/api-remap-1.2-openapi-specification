@@ -10,7 +10,7 @@ properties:
     description: Наименование дополнительного поля
   type:
     type: string
-    description: Тип дополнительного поля
+    description: Тип дополнительного поля. Известные значения описаны в AttributeType
   required:
     type: boolean
     description: Является ли поле обязательным

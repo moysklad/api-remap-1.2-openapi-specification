@@ -4,7 +4,7 @@
     "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/processingorder/metadata",
     "type": "processingorder",
     "mediaType": "application/json",
-    "uuidHref": "https://api.moysklad.ru/app/#processingorder/edit?id=b5556153-b164-11e6-5bed-427b0000006f"
+    "uuidHref": "https://online.moysklad.ru/app/#processingorder/edit?id=b5556153-b164-11e6-5bed-427b0000006f"
   },
   "id": "b5556153-b164-11e6-5bed-427b0000006f",
   "accountId": "d55cbfba-91f1-11e6-5bed-427b00000000",
@@ -23,7 +23,7 @@
       "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/employee/metadata",
       "type": "employee",
       "mediaType": "application/json",
-      "uuidHref": "https://api.moysklad.ru/app/#employee/edit?id=d5ad957e-91f1-11e6-5bed-427b0000002a"
+      "uuidHref": "https://online.moysklad.ru/app/#employee/edit?id=d5ad957e-91f1-11e6-5bed-427b0000002a"
     }
   },
   "shared": false,
@@ -41,7 +41,7 @@
       "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/store/metadata",
       "type": "store",
       "mediaType": "application/json",
-      "uuidHref": "https://api.moysklad.ru/app/#warehouse/edit?id=d5e311c0-91f1-11e6-5bed-427b00000053"
+      "uuidHref": "https://online.moysklad.ru/app/#warehouse/edit?id=d5e311c0-91f1-11e6-5bed-427b00000053"
     }
   },
   "project": {
@@ -50,7 +50,7 @@
       "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/project/metadata",
       "type": "project",
       "mediaType": "application/json",
-      "uuidHref": "https://api.moysklad.ru/app/#project/edit?id=7f3a7d7a-97a1-11e6-5bed-427b0000009c"
+      "uuidHref": "https://online.moysklad.ru/app/#project/edit?id=7f3a7d7a-97a1-11e6-5bed-427b0000009c"
     }
   },
   "organization": {
@@ -59,7 +59,7 @@
       "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/organization/metadata",
       "type": "organization",
       "mediaType": "application/json",
-      "uuidHref": "https://api.moysklad.ru/app/#mycompany/edit?id=a1331985-a1c8-11e6-5bed-427b00000084"
+      "uuidHref": "https://online.moysklad.ru/app/#mycompany/edit?id=a1331985-a1c8-11e6-5bed-427b00000084"
     }
   },
   "state": {
@@ -149,7 +149,7 @@
             "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/product/metadata",
             "type": "product",
             "mediaType": "application/json",
-            "uuidHref": "https://api.moysklad.ru/app/#good/edit?id=0de151c1-acdc-11e6-5bed-427b00000080"
+            "uuidHref": "https://online.moysklad.ru/app/#good/edit?id=0de151c1-acdc-11e6-5bed-427b00000080"
           }
         }
       }
@@ -162,7 +162,7 @@
       "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/processingplan/metadata",
       "type": "processingplan",
       "mediaType": "application/json",
-      "uuidHref": "https://api.moysklad.ru/app/#processingplan/edit?id=c38e50b0-acdc-11e6-5bed-427b0000009e"
+      "uuidHref": "https://online.moysklad.ru/app/#processingplan/edit?id=c38e50b0-acdc-11e6-5bed-427b0000009e"
     }
   },
   "processings": [

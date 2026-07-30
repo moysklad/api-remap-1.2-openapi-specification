@@ -4,7 +4,7 @@
     "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/variant/metadata",
     "type": "variant",
     "mediaType": "application/json",
-    "uuidHref": "https://api.moysklad.ru/app/#feature/edit?id=c52d0209-26b4-11f1-0a83-1f25000001bd"
+    "uuidHref": "https://online.moysklad.ru/app/#feature/edit?id=c52d0209-26b4-11f1-0a83-1f25000001bd"
   },
   "id": "c52d1e78-26b4-11f1-0a83-1f25000001bf",
   "accountId": "c229f794-26ae-11f1-0a83-1f2100000002",
@@ -44,7 +44,7 @@
         "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/currency/metadata",
         "type": "currency",
         "mediaType": "application/json",
-        "uuidHref": "https://api.moysklad.ru/app/#currency/edit?id=c34f8b1f-26ae-11f1-0a83-1f25000000a9"
+        "uuidHref": "https://online.moysklad.ru/app/#currency/edit?id=c34f8b1f-26ae-11f1-0a83-1f25000000a9"
       }
     }
   },
@@ -56,7 +56,7 @@
         "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/currency/metadata",
         "type": "currency",
         "mediaType": "application/json",
-        "uuidHref": "https://api.moysklad.ru/app/#currency/edit?id=c34f8b1f-26ae-11f1-0a83-1f25000000a9"
+        "uuidHref": "https://online.moysklad.ru/app/#currency/edit?id=c34f8b1f-26ae-11f1-0a83-1f25000000a9"
       }
     }
   },
@@ -69,7 +69,7 @@
           "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/currency/metadata",
           "type": "currency",
           "mediaType": "application/json",
-          "uuidHref": "https://api.moysklad.ru/app/#currency/edit?id=c34f8b1f-26ae-11f1-0a83-1f25000000a9"
+          "uuidHref": "https://online.moysklad.ru/app/#currency/edit?id=c34f8b1f-26ae-11f1-0a83-1f25000000a9"
         }
       },
       "priceType": {
@@ -118,7 +118,7 @@
       "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/product/metadata",
       "type": "product",
       "mediaType": "application/json",
-      "uuidHref": "https://api.moysklad.ru/app/#good/edit?id=d686c1fc-26ae-11f1-0a83-1f2500000147"
+      "uuidHref": "https://online.moysklad.ru/app/#good/edit?id=d686c1fc-26ae-11f1-0a83-1f2500000147"
     }
   },
   "things": [
