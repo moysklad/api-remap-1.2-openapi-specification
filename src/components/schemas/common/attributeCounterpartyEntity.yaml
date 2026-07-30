@@ -1,4 +1,5 @@
 type: object
+x-implements: IAttribute<Agent>
 allOf:
   - $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
 properties:
