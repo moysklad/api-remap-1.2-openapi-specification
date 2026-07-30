@@ -5,4 +5,4 @@ allOf:
 properties:
   value:
     description: ссылка на Товар, Комплект, Услугу или Группу товаров
-    $ref: '../../../openapi.yaml#/components/schemas/EntityWithMeta'
+    $ref: '../../../openapi.yaml#/components/schemas/BatchResponseEntity'
