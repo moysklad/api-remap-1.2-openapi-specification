@@ -83,7 +83,7 @@ properties:
   operation:
     description: Метаданные документа, связанного с задачей
     nullable: true
-    $ref: '../../../openapi.yaml#/components/schemas/DocumentMetadata'
+    $ref: '../../../openapi.yaml#/components/schemas/EntityWithMeta'
   state:
     description: Метаданные типа задачи
     nullable: true

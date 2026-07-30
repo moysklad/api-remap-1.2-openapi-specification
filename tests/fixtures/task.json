@@ -64,23 +64,7 @@
       "type": "supply",
       "mediaType": "application/json",
       "uuidHref": "https://online.moysklad.ru/app/#supply/edit?id=7eb5b552-8aa3-11e8-7210-075e000000f1"
-    },
-    "states": [
-      {
-        "meta": {
-          "href": "https://api.moysklad.ru/api/remap/1.2/entity/supply/metadata/states/3cba1fb0-8aa3-11e8-7210-075e000000d4",
-          "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/supply/metadata",
-          "type": "state",
-          "mediaType": "application/json"
-        },
-        "id": "3cba1fb0-8aa3-11e8-7210-075e000000d4",
-        "accountId": "98182760-8aa1-11e8-7210-075e00000001",
-        "name": "Новый",
-        "color": 10066329,
-        "stateType": "Regular",
-        "entityType": "supply"
-      }
-    ]
+    }
   },
   "state": {
     "meta": {
