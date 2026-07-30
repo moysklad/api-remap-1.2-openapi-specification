@@ -1,7 +1,8 @@
 type: object
-x-implements: IAttribute<ProductMarker>
+x-implements: IAttribute<EntityWithMeta>
 allOf:
   - $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
 properties:
   value:
-    $ref: '../../../openapi.yaml#/components/schemas/ProductMarker'
+    description: ссылка на Товар, Комплект, Услугу или Группу товаров
+    $ref: '../../../openapi.yaml#/components/schemas/EntityWithMeta'
