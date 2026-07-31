@@ -9,7 +9,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import ru.moysklad.remap_1_2.ApiClient;
 import ru.moysklad.remap_1_2.model.BatchResponseEntity;
-import ru.moysklad.remap_1_2.model.Error;
+import ru.moysklad.remap_1_2.model.Errors;
 
 import java.io.File;
 import java.lang.reflect.Constructor;
@@ -225,7 +225,7 @@ class SerializationTest extends BaseTestCase {
 
         BatchResponseEntity model = MAPPER.readValue(json, BatchResponseEntity.class);
 
-        Assertions.assertInstanceOf(Error.class, model);
+        Assertions.assertInstanceOf(Errors.class, model);
     }
 
     @Test
@@ -238,7 +238,7 @@ class SerializationTest extends BaseTestCase {
         BatchResponseEntity model = MAPPER.readValue(json, BatchResponseEntity.class);
 
         Assertions.assertInstanceOf(BatchResponseEntity.class, model);
-        Assertions.assertFalse(model instanceof Error);
+        Assertions.assertFalse(model instanceof Errors);
     }
 
     private static Stream<org.junit.jupiter.params.provider.Arguments> fixtureProvider() {
