@@ -1,5 +1,6 @@
 type: object
 description: Список позиций Счета покупателю
+x-implements: IEntityList
 properties:
   context:
     description: Метаданные о сотруднике, выполнившем запрос

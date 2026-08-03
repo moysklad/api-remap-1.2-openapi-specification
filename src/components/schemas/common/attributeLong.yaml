@@ -1,9 +1,7 @@
 type: object
+x-implements: IAttribute<Integer>
 allOf:
   - $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
 properties:
-  type:
-    type: string
-    enum: [long]
   value:
     type: integer

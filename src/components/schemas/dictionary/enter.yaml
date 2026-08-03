@@ -87,7 +87,6 @@ properties:
       - $ref: '../../../openapi.yaml#/components/schemas/Employee'
   positions:
     type: object
-    nullable: true
     description: Метаданные позиций Оприходования
     allOf:
       - $ref: '../../../openapi.yaml#/components/schemas/EnterPositionList'

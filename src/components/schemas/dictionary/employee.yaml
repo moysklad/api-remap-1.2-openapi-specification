@@ -1,6 +1,7 @@
 type: object
 description: Сотрудник
 x-polymorphic-parent: Agent
+x-implements: INamed
 x-entity-static-builder:
   methodParams:
     - "id"

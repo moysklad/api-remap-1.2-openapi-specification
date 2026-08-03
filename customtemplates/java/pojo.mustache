@@ -45,7 +45,7 @@ import {{polymorphicPackage}}.PolymorphicMetaTypeDeserializer;
 })
 @JsonDeserialize(using = PolymorphicMetaTypeDeserializer.class)
 {{/vendorExtensions.x-polymorphic-discriminator}}
-public class {{classname}} {{#parent}}extends {{{.}}} {{/parent}}{{^parent}}{{#vendorExtensions.x-polymorphic-parent}}extends {{{.}}} {{/vendorExtensions.x-polymorphic-parent}}{{/parent}}{{#vendorExtensions.x-implements}}{{#-first}}implements {{{.}}}{{/-first}}{{^-first}}, {{{.}}}{{/-first}}{{#-last}} {{/-last}}{{/vendorExtensions.x-implements}}{
+public class {{classname}} {{#parent}}extends {{{.}}} {{/parent}}{{^parent}}{{#vendorExtensions.x-polymorphic-parent}}extends {{{.}}} {{/vendorExtensions.x-polymorphic-parent}}{{/parent}}{{#vendorExtensions.x-implements}}{{#-first}}implements {{{.}}}{{/-first}}{{^-first}}, {{{.}}}{{/-first}}{{#-last}}{{#vendorExtensions.x-entity-static-builder}}, MetaEntity{{/vendorExtensions.x-entity-static-builder}} {{/-last}}{{/vendorExtensions.x-implements}}{{^vendorExtensions.x-implements}}{{#vendorExtensions.x-entity-static-builder}}implements MetaEntity {{/vendorExtensions.x-entity-static-builder}}{{/vendorExtensions.x-implements}}{
 {{#serializableModel}}
   private static final long serialVersionUID = 1L;
 

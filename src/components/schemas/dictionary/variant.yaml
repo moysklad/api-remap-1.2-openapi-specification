@@ -1,6 +1,7 @@
 type: object
 description: Модификация
 x-polymorphic-parent: ProductMarker
+x-implements: INamed
 x-entity-static-builder:
   methodParams:
     - "id"

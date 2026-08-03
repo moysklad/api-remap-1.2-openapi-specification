@@ -1,5 +1,6 @@
 type: object
 description: Список позиций Возврата поставщику
+x-implements: IEntityList
 properties:
   context:
     description: Метаданные о сотруднике, выполнившем запрос
@@ -10,7 +11,7 @@ properties:
     description: Метаданные о выдаче
   rows:
     type: array
-    description: Массив позиций Возврата поставщику
     nullable: true
+    description: Массив позиций Возврата поставщику
     items:
       $ref: '../../../openapi.yaml#/components/schemas/PurchaseReturnPosition'

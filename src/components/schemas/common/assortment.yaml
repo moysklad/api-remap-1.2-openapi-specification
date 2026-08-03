@@ -1,6 +1,7 @@
 type: object
 deprecated: true
 description: Товар/услуга/модификация/комплект, данная модель уже не поддерживается
+x-implements: MetaEntity
 allOf:
   - oneOf:
       - $ref: '../../../openapi.yaml#/components/schemas/Product'

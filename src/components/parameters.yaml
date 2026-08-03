@@ -72,6 +72,13 @@ order:
   schema:
     type: string
 
+entityType:
+  name: type
+  in: path
+  required: true
+  schema:
+    type: string
+
 fields:
   name: fields
   in: query

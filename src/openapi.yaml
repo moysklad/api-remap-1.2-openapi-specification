@@ -751,8 +751,12 @@ paths:
     $ref: './paths/documents/invoiceouts/invoiceout-metadata-attribute.yaml'
   /entity/invoiceout/metadata/attributes/{id}:
     $ref: './paths/documents/invoiceouts/invoiceout-metadata-attribute-by-id.yaml'
+  /entity/invoiceout/metadata/states:
+    $ref: './paths/documents/invoiceouts/invoiceout-metadata-states.yaml'
   /entity/invoiceout/metadata/states/{id}:
     $ref: './paths/documents/invoiceouts/invoiceout-metadata-state-by-id.yaml'
+  /entity/invoiceout/metadata/states/batch:
+    $ref: './paths/documents/invoiceouts/invoiceout-metadata-states-batch.yaml'
   /entity/invoiceout/new:
     $ref: './paths/documents/invoiceouts/invoiceout-new.yaml'
   /entity/invoiceout/{id}/positions:
@@ -786,8 +790,12 @@ paths:
     $ref: './paths/documents/invoiceins/invoicein-metadata-attribute.yaml'
   /entity/invoicein/metadata/attributes/{id}:
     $ref: './paths/documents/invoiceins/invoicein-metadata-attribute-by-id.yaml'
+  /entity/invoicein/metadata/states:
+    $ref: './paths/documents/invoiceins/invoicein-metadata-states.yaml'
   /entity/invoicein/metadata/states/{id}:
     $ref: './paths/documents/invoiceins/invoicein-metadata-state-by-id.yaml'
+  /entity/invoicein/metadata/states/batch:
+    $ref: './paths/documents/invoiceins/invoicein-metadata-states-batch.yaml'
   /entity/invoicein/new:
     $ref: './paths/documents/invoiceins/invoicein-new.yaml'
   /entity/invoicein/{id}/positions:
@@ -821,8 +829,12 @@ paths:
     $ref: './paths/documents/demands/demand-metadata-attribute.yaml'
   /entity/demand/metadata/attributes/{id}:
     $ref: './paths/documents/demands/demand-metadata-attribute-by-id.yaml'
+  /entity/demand/metadata/states:
+    $ref: './paths/documents/demands/demand-metadata-states.yaml'
   /entity/demand/metadata/states/{id}:
     $ref: './paths/documents/demands/demand-metadata-state-by-id.yaml'
+  /entity/demand/metadata/states/batch:
+    $ref: './paths/documents/demands/demand-metadata-states-batch.yaml'
   /entity/demand/new:
     $ref: './paths/documents/demands/demand-new.yaml'
   /entity/demand/{id}/positions:
@@ -964,8 +976,12 @@ paths:
     $ref: './paths/documents/losses/loss-metadata-attribute.yaml'
   /entity/loss/metadata/attributes/{id}:
     $ref: './paths/documents/losses/loss-metadata-attribute-by-id.yaml'
+  /entity/loss/metadata/states:
+    $ref: './paths/documents/losses/loss-metadata-states.yaml'
   /entity/loss/metadata/states/{id}:
     $ref: './paths/documents/losses/loss-metadata-state-by-id.yaml'
+  /entity/loss/metadata/states/batch:
+    $ref: './paths/documents/losses/loss-metadata-states-batch.yaml'
   /entity/loss/new:
     $ref: './paths/documents/losses/loss-new.yaml'
   /entity/loss/{id}/positions:
@@ -1136,8 +1152,12 @@ paths:
     $ref: './paths/documents/moves/move-metadata-attribute.yaml'
   /entity/move/metadata/attributes/{id}:
     $ref: './paths/documents/moves/move-metadata-attribute-by-id.yaml'
+  /entity/move/metadata/states:
+    $ref: './paths/documents/moves/move-metadata-states.yaml'
   /entity/move/metadata/states/{id}:
     $ref: './paths/documents/moves/move-metadata-state-by-id.yaml'
+  /entity/move/metadata/states/batch:
+    $ref: './paths/documents/moves/move-metadata-states-batch.yaml'
   /entity/move/new:
     $ref: './paths/documents/moves/move-new.yaml'
   /entity/move/{id}/positions:
@@ -1195,8 +1215,12 @@ paths:
     $ref: './paths/documents/emissionorders/emissionorders-batch.yaml'
   /entity/emissionorder/metadata:
     $ref: './paths/documents/emissionorders/emissionorder-metadata.yaml'
+  /entity/emissionorder/metadata/states:
+    $ref: './paths/documents/emissionorders/emissionorder-metadata-states.yaml'
   /entity/emissionorder/metadata/states/{id}:
     $ref: './paths/documents/emissionorders/emissionorder-metadata-state-by-id.yaml'
+  /entity/emissionorder/metadata/states/batch:
+    $ref: './paths/documents/emissionorders/emissionorder-metadata-states-batch.yaml'
   /entity/emissionorder/{id}/positions:
     $ref: './paths/documents/emissionorders/emissionorder-positions.yaml'
   /entity/emissionorder/{id}/positions/batch:
@@ -1501,6 +1525,13 @@ paths:
     $ref: './paths/documents/cashouts/cashout-metadata-states-batch.yaml'
   /entity/cashout/new:
     $ref: './paths/documents/cashouts/cashout-new.yaml'
+
+  /entity/{type}/metadata:
+    $ref: './paths/common/metadata/entity-metadata.yaml'
+  /entity/{type}/metadata/embeddedtemplate:
+    $ref: './paths/common/metadata/entity-embeddedtemplates.yaml'
+  /entity/{type}/metadata/embeddedtemplate/{id}:
+    $ref: './paths/common/metadata/entity-embeddedtemplate-by-id.yaml'
 
 components:
   schemas:
@@ -1823,6 +1854,8 @@ components:
       $ref: './components/schemas/dictionary/rewardType.yaml'
     RetailStore:
       $ref: './components/schemas/dictionary/retailStore.yaml'
+    RetailStoreUpsert:
+      $ref: './components/schemas/dictionary/retailStoreUpsert.yaml'
     SalePrice:
       $ref: './components/schemas/dictionary/salePrice.yaml'
     SalePlatform:
@@ -2518,3 +2551,5 @@ tags:
     description: Операции с бонусными операциями
   - name: CustomEntities
     description: Операции с пользовательскими справочниками
+  - name: Metadata
+    description: Операции c мета-датой сущности

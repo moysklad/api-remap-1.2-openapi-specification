@@ -1,9 +1,7 @@
 type: object
+x-implements: IAttribute<Contract>
 allOf:
   - $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
 properties:
-  type:
-    type: string
-    enum: [contract]
   value:
     $ref: '../../../openapi.yaml#/components/schemas/Contract'

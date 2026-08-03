@@ -2,8 +2,7 @@
 
 Почему были добавлены кастомные шаблоны:
 
-* ApiClient.mustache - кастомный формат дат, использование javax валидации для проверки ограничений property которые мы описываем в схеме.
-  Добавлена поддержка batch-ответов с частичными ошибками: стандартный шаблон обрабатывает ответ как один успешный объект или одну ошибку, что не подходит для batch-операций API.
+* ApiClient.mustache - кастомный формат дат, Добавлена поддержка batch-ответов с частичными ошибками: стандартный шаблон обрабатывает ответ как один успешный объект или одну ошибку, что не подходит для batch-операций API.
 * api.mustache - правильные заголовки Accept: application/json;charset=utf-8
 * RequestOptions.mustache, PageOptions.mustache, ListOptions.mustache, AssortmentListOptions.mustache, Filters.mustache, 
   Orders.mustache - удобные overload-методы для query-параметров без длинных позиционных сигнатур

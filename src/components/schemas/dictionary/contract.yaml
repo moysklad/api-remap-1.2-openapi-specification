@@ -1,6 +1,7 @@
 type: object
 description: Договор
 x-polymorphic-parent: EntityWithMeta
+x-implements: INamed
 x-entity-static-builder:
   methodParams:
     - "id"

@@ -1,0 +1,16 @@
+{{>licenseInfo}}
+package {{modelPackage}};
+
+import java.util.UUID;
+
+/**
+ * Interface for common document positions.
+ */
+public interface IDocumentPosition {
+
+    ProductMarker getAssortment();
+    void setAssortment(ProductMarker assortment);
+    Double getQuantity();
+    void setQuantity(Double quantity);
+    void setId(UUID id);
+}

@@ -1,5 +1,6 @@
 type: object
 description: Контрагент
+x-implements: INamed
 x-polymorphic-parent: Agent
 x-entity-static-builder:
   methodParams:
@@ -16,7 +17,6 @@ properties:
     type: string
     format: uuid
     description: ID контрагента
-    readOnly: true
   syncId:
     type: string
     format: uuid

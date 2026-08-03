@@ -6,7 +6,7 @@ properties:
   value:
     type: number
     minimum: 0
-    format: float
+    format: double
     description: Значение цены
   currency:
     description: Ссылка на валюту в формате Метаданных

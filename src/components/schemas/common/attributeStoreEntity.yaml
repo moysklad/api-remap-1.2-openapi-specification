@@ -1,9 +1,7 @@
 type: object
+x-implements: IAttribute<Store>
 allOf:
   - $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
 properties:
-  type:
-    type: string
-    enum: [store]
   value:
     $ref: '../../../openapi.yaml#/components/schemas/Store'

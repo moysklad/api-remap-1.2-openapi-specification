@@ -1,9 +1,7 @@
 type: object
+x-implements: IAttribute<Agent>
 allOf:
   - $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
 properties:
-  type:
-    type: string
-    enum: [counterparty]
   value:
     $ref: '../../../openapi.yaml#/components/schemas/Agent'
