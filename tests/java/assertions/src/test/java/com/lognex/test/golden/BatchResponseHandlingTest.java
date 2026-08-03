@@ -107,8 +107,8 @@ class BatchResponseHandlingTest extends BaseTestCase {
         return client.invokeAPIBatch(
                 BATCH_PATH,
                 "POST",
-                Collections.<ru.moysklad.remap_1_2.Pair>emptyList(),
-                Collections.<ru.moysklad.remap_1_2.Pair>emptyList(),
+                Collections.emptyList(),
+                Collections.emptyList(),
                 null,
                 Collections.singletonList(product),
                 new HashMap<String, String>(),
