@@ -1502,6 +1502,10 @@ paths:
   /entity/cashout/new:
     $ref: './paths/documents/cashouts/cashout-new.yaml'
 
+  # Reports - Stock
+  /report/stock/all:
+    $ref: './paths/reports/stocks/stock-all.yaml'
+
 components:
   schemas:
     Account:
@@ -2357,6 +2361,17 @@ components:
     CustomEntityElementList:
       $ref: './components/schemas/dictionary/customEntityElementList.yaml'
 
+    StockAll:
+      $ref: './components/schemas/report/stockAll.yaml'
+    StockAllProduct:
+      $ref: './components/schemas/report/stockAllProduct.yaml'
+    StockAllVariant:
+      $ref: './components/schemas/report/stockAllVariant.yaml'
+    StockAllConsignment:
+      $ref: './components/schemas/report/stockAllConsignment.yaml'
+    StockAllList:
+      $ref: './components/schemas/report/stockAllList.yaml'
+
   securitySchemes:
     basicAuth:
       type: http
@@ -2518,3 +2533,5 @@ tags:
     description: Операции с бонусными операциями
   - name: CustomEntities
     description: Операции с пользовательскими справочниками
+  - name: Reports
+    description: Операции с отчетами

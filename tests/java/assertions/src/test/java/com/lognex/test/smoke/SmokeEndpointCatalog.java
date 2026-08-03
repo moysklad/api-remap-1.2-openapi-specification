@@ -812,7 +812,13 @@ final class SmokeEndpointCatalog {
                 Arguments.of(new SmokeEndpointCase("testUpdateNotificationSettings#1", "PUT", "/notification/settings", SmokeEndpointCase.Expectation.NOT_404, true)),
 
                 // /entity/loss
-                Arguments.of(new SmokeEndpointCase("testDeleteLossMetadataStateById#1", "DELETE", "/entity/loss/metadata/states/{id}", SmokeEndpointCase.Expectation.DELETE, false))
+                Arguments.of(new SmokeEndpointCase("testDeleteLossMetadataStateById#1", "DELETE", "/entity/loss/metadata/states/{id}", SmokeEndpointCase.Expectation.DELETE, false)),
+
+                // /report/stock/all
+                Arguments.of(new SmokeEndpointCase("testGetStockAll#1", "GET", "/report/stock/all", SmokeEndpointCase.Expectation.NOT_404, false)),
+                Arguments.of(new SmokeEndpointCase("testGetStockAllGroupByProduct#1", "GET", "/report/stock/all?groupBy=product", SmokeEndpointCase.Expectation.NOT_404, false)),
+                Arguments.of(new SmokeEndpointCase("testGetStockAllGroupByVariant#1", "GET", "/report/stock/all?groupBy=variant", SmokeEndpointCase.Expectation.NOT_404, false)),
+                Arguments.of(new SmokeEndpointCase("testGetStockAllGroupByConsignment#1", "GET", "/report/stock/all?groupBy=consignment", SmokeEndpointCase.Expectation.NOT_404, false))
         );
     }
 }

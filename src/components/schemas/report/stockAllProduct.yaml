@@ -1,0 +1,7 @@
+type: object
+description: Строка Расширенного отчета об остатках по Товару (`groupBy=product`)
+x-polymorphic-parent: StockAll
+properties:
+  meta:
+    description: Метаданные Товара, по которому выдается остаток
+    $ref: '../common/meta.yaml'

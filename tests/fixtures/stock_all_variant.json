@@ -1,0 +1,37 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/variant/d1bef0a1-ffe7-11e5-9464-e4de0000001c?expand=product.supplier",
+    "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/variant/metadata",
+    "type": "variant",
+    "mediaType": "application/json"
+  },
+  "stock": -1,
+  "inTransit": 0,
+  "reserve": 0,
+  "quantity": -1,
+  "name": "ТОварИщ (10)",
+  "code": "00214",
+  "article": "Артикулс",
+  "price": 0.0,
+  "salePrice": 346347237000.0,
+  "uom": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/uom/c6bc9273-2c83-11e6-8a84-bae5000000a3",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/uom/metadata",
+      "type": "uom",
+      "mediaType": "application/json"
+    },
+    "name": "шт"
+  },
+  "folder": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/productfolder/0c78adde-ffe3-11e5-9464-e4de000000a2",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/productFolder/metadata",
+      "type": "productfolder",
+      "mediaType": "application/json"
+    },
+    "name": "Товары Из кастомной группы",
+    "pathName": "Группа"
+  },
+  "externalCode": "ibWbdtWWhXiIwfZVEal6z2"
+}

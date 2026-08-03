@@ -140,6 +140,9 @@ class SerializationTest extends TestCase
         'processing_plan_folder' => 'ProcessingPlanFolder',
         'organization' => 'Organization',
         'organization_account' => 'Account',
+        'stock_all_product' => 'StockAllProduct',
+        'stock_all_variant' => 'StockAllVariant',
+        'stock_all_consignment' => 'StockAllConsignment',
     ];
 
     /**

@@ -1,0 +1,84 @@
+type: object
+description: |
+  Строка Расширенного отчета об остатках.
+
+  Тип каждой строки задается её `meta.type` (product, variant или consignment).
+  Параметр запроса `groupBy` определяет набор возможных типов в выдаче:
+  `product` — только товары; `variant` — товары и модификации;
+  `consignment` — товары, модификации и партии.
+x-polymorphic-discriminator:
+  path: meta.type
+  mappings:
+    - type: product
+      componentName: StockAllProduct
+    - type: variant
+      componentName: StockAllVariant
+    - type: consignment
+      componentName: StockAllConsignment
+properties:
+  meta:
+    description: Метаданные Товара/Модификации/Партии, по которой выдается остаток
+    $ref: '../common/meta.yaml'
+  name:
+    type: string
+    maxLength: 255
+    description: Наименование
+  code:
+    type: string
+    maxLength: 255
+    description: Код
+  article:
+    type: string
+    maxLength: 255
+    description: Артикул
+  externalCode:
+    type: string
+    maxLength: 255
+    description: Внешний код сущности, по которой выводится остаток
+  folder:
+    type: object
+    description: Группа Товара/Модификации/Партии
+    properties:
+      meta:
+        description: Метаданные группы товара
+        $ref: '../common/meta.yaml'
+      name:
+        type: string
+        maxLength: 255
+        description: Наименование группы
+      pathName:
+        type: string
+        description: Наименование родительской группы
+  image:
+    description: Метаданные изображения Товара/Модификации/Партии
+    $ref: '../common/meta.yaml'
+  uom:
+    description: Единица измерения
+    $ref: '../../../openapi.yaml#/components/schemas/Uom'
+  stock:
+    type: number
+    format: double
+    description: Остаток
+  inTransit:
+    type: number
+    format: double
+    description: Ожидание
+  reserve:
+    type: number
+    format: double
+    description: Резерв
+  quantity:
+    type: number
+    format: double
+    description: Доступно
+  stockDays:
+    type: integer
+    description: Количество дней на складе
+  price:
+    type: number
+    format: double
+    description: Себестоимость в копейках
+  salePrice:
+    type: number
+    format: double
+    description: Цена продажи
