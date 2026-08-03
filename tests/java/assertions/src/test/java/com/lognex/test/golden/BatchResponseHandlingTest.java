@@ -6,11 +6,11 @@ import com.lognex.test.BaseTestCase;
 import com.sun.net.httpserver.HttpServer;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import ru.moysklad.remap_1_2.ApiClient;
-import ru.moysklad.remap_1_2.ApiException;
-import ru.moysklad.remap_1_2.model.BatchResponseEntity;
-import ru.moysklad.remap_1_2.model.Errors;
-import ru.moysklad.remap_1_2.model.Product;
+import ru.moysklad.remap_1_2.beta.ApiClient;
+import ru.moysklad.remap_1_2.beta.ApiException;
+import ru.moysklad.remap_1_2.beta.model.BatchResponseEntity;
+import ru.moysklad.remap_1_2.beta.model.Errors;
+import ru.moysklad.remap_1_2.beta.model.Product;
 
 import java.io.IOException;
 import java.io.InputStream;
