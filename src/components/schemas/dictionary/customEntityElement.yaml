@@ -1,5 +1,6 @@
 type: object
 description: Элемент пользовательского справочника (customentity)
+x-implements: INamed
 x-entity-static-builder:
   methodParams:
     - "metadataId"
