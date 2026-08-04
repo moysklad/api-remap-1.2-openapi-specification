@@ -2,7 +2,7 @@
 
 Почему были добавлены кастомные шаблоны:
 
-* ApiClient.mustache - кастомный формат дат
+* ApiClient.mustache - кастомный формат дат, Добавлена поддержка batch-ответов с частичными ошибками: стандартный шаблон обрабатывает ответ как один успешный объект или одну ошибку, что не подходит для batch-операций API.
 * api.mustache - правильные заголовки Accept: application/json;charset=utf-8
 * RequestOptions.mustache, PageOptions.mustache, ListOptions.mustache, AssortmentListOptions.mustache, Filters.mustache, 
   Orders.mustache - удобные overload-методы для query-параметров без длинных позиционных сигнатур
@@ -10,6 +10,4 @@
 * model_entity_static_builder.mustache появился для удобства создания объектов с заполненной meta. Причина - приходится вручную конструировать 
   и заполнять много полей сперва по созданию meta, затем подстановку этой meta в готовый объект
 * pom.mustache - адаптация стандартного pom.xml для проекта.
-* apiException.mustache - типобезопасная обработка ошибок: добавлены методы `getErrorResponse()` (модель `Error`)
-  и `getErrorResponses()` (список `Error` для массовых операций), которые лениво десериализуют тело ответа через
-  сконфигурированный `ObjectMapper` из `Configuration.getDefaultApiClient()`.
+* apiException.mustache - добавлен десериализованный объект ошибок, если ApiException выброшен когда получили ошибку от api 

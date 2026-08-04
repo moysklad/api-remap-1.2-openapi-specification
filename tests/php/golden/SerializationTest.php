@@ -256,7 +256,7 @@ class SerializationTest extends TestCase
             $this->getModelClass('BatchResponseEntity')
         );
 
-        $this->assertInstanceOf($this->getModelClass('Error'), $model);
+        $this->assertInstanceOf($this->getModelClass('Errors'), $model);
     }
 
     public function testBatchErrorFallbackRequiresErrorMarkers(): void
@@ -272,7 +272,7 @@ class SerializationTest extends TestCase
         );
 
         $this->assertInstanceOf($this->getModelClass('BatchResponseEntity'), $model);
-        $this->assertNotInstanceOf($this->getModelClass('Error'), $model);
+        $this->assertNotInstanceOf($this->getModelClass('Errors'), $model);
     }
 
     /**

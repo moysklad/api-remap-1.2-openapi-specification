@@ -11,6 +11,7 @@ const SPEC_PATH = path.join(ROOT_DIR, "src", "openapi.yaml");
 const POLYMORPHIC_DISCRIMINATOR = "x-polymorphic-discriminator";
 const POLYMORPHIC_BATCH_ERROR_FALLBACK = "batchErrorFallback";
 const POLYMORPHIC_PARENT = "x-polymorphic-parent";
+const SCHEMA_ERRORS_COMPONENT_NAME = "Errors";
 
 const errors = [];
 
@@ -292,12 +293,12 @@ function validateDiscriminatorBatchErrorFallback(componentName, discriminator, s
     }
 
     if (fallback === true) {
-        if (!schemaNames.has("Error")) {
-            addError(componentName, `${POLYMORPHIC_DISCRIMINATOR}.${POLYMORPHIC_BATCH_ERROR_FALLBACK} требует компонент Error`);
-        } else if (!hasPolymorphicAncestor("Error", componentName, schemas, rootDocument)) {
+        if (!schemaNames.has(SCHEMA_ERRORS_COMPONENT_NAME)) {
+            addError(componentName, `${POLYMORPHIC_DISCRIMINATOR}.${POLYMORPHIC_BATCH_ERROR_FALLBACK} требует компонент ${SCHEMA_ERRORS_COMPONENT_NAME}`);
+        } else if (!hasPolymorphicAncestor(SCHEMA_ERRORS_COMPONENT_NAME, componentName, schemas, rootDocument)) {
             addError(
                 componentName,
-                `${POLYMORPHIC_DISCRIMINATOR}.${POLYMORPHIC_BATCH_ERROR_FALLBACK} можно использовать только если Error наследуется от "${componentName}"`
+                `${POLYMORPHIC_DISCRIMINATOR}.${POLYMORPHIC_BATCH_ERROR_FALLBACK} можно использовать только если ${SCHEMA_ERRORS_COMPONENT_NAME} наследуется от "${componentName}"`
             );
         }
     }

@@ -23,7 +23,7 @@ post:
             items:
               oneOf:
                 - $ref: '../../../openapi.yaml#/components/schemas/DeleteInfo'
-                - $ref: '../../../openapi.yaml#/components/schemas/Error'
+                - $ref: '../../../openapi.yaml#/components/schemas/Errors'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
   parameters:

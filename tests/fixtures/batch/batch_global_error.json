@@ -1,0 +1,9 @@
+{
+  "errors": [
+    {
+      "error": "Ошибка аутентификации: Неверный пароль",
+      "code": 1056,
+      "moreInfo": "https://dev.moysklad.ru/doc/api/remap/1.2/#/errors"
+    }
+  ]
+}

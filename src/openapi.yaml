@@ -1647,8 +1647,8 @@ components:
       $ref: './components/schemas/dictionary/contractType.yaml'
     SalesChannelType:
       $ref: './components/schemas/dictionary/salesChannelType.yaml'
-    Error:
-      $ref: './components/schemas/common/error.yaml'
+    Errors:
+      $ref: './components/schemas/common/errors.yaml'
     DiscountBase:
       $ref: './components/schemas/dictionary/discountBase.yaml'
     DiscountStrategy:

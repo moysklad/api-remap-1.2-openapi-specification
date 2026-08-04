@@ -9,7 +9,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.deser.ContextualDeserializer;
-import {{modelPackage}}.Error;
+import {{modelPackage}}.Errors;
 
 import java.io.IOException;
 import java.util.LinkedHashMap;
@@ -69,7 +69,7 @@ public class PolymorphicMetaTypeDeserializer extends JsonDeserializer<Object> im
     }
 
     if (resolvedClass == null && useBatchErrorFallback(targetClass) && isBatchErrorPayload(node)) {
-      resolvedClass = Error.class;
+      resolvedClass = Errors.class;
     }
 
     if (resolvedClass != null && !targetClass.isAssignableFrom(resolvedClass)) {
