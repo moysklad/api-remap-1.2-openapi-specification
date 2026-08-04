@@ -27,7 +27,7 @@ properties:
     readOnly: true
   quantity:
     type: number
-    format: float
+    format: double
     description: Количество товаров/услуг/модификаций данного вида в компоненте
   assortment:
     description: Метаданные товара/услуги/модификации, которую представляет собой компонент

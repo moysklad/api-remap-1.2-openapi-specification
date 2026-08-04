@@ -29,8 +29,8 @@ properties:
       type: object
       properties:
         amount:
-          type: integer
-          format: int32
+          type: number
+          format: double
           description: Сумма накоплений в копейках
         discount:
           type: number
