@@ -38,7 +38,7 @@ properties:
     description: Кратность курса валюты
   rate:
     type: number
-    format: float
+    format: double
     description: Курс валюты
   margin:
     type: number

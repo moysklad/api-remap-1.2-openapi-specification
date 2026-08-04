@@ -31,8 +31,7 @@ properties:
     allOf:
       - $ref: '../../../openapi.yaml#/components/schemas/ProductMarker'
   quantity:
-    type: number
-    format: double
+    type: integer
     description: Количество товаров данного вида в позиции
     minimum: 0
     maximum: 1000

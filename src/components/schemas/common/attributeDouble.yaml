@@ -1,8 +1,8 @@
 type: object
-x-implements: IAttribute<Float>
+x-implements: IAttribute<Double>
 allOf:
   - $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
 properties:
   value:
     type: number
-    format: float
+    format: double

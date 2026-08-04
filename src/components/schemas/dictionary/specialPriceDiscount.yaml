@@ -28,7 +28,7 @@ properties:
     description: Использовать ли специальную цену
   discount:
     type: number
-    format: float
+    format: double
     nullable: true
     description: Процент скидки (используется при usePriceType=false)
   specialPrice:

@@ -139,7 +139,8 @@ properties:
     description: Курс валюты в документе
     $ref: '../common/currencyRate.yaml'
   rewardPercent:
-    type: integer
+    type: number
+    format: double
     minimum: 0
     maximum: 100
     description: Процент вознаграждения

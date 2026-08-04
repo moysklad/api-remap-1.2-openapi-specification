@@ -34,5 +34,5 @@ properties:
           description: Сумма накоплений в копейках
         discount:
           type: number
-          format: float
+          format: double
           description: Процент скидки, соответствующий данной сумме

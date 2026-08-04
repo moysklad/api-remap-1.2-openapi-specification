@@ -150,7 +150,8 @@ properties:
     description: Метаданные позиций возврата на склад комиссионера Полученного отчета комиссионера
     $ref: '../../../openapi.yaml#/components/schemas/CommissionReportInReturnedPositionList'
   rewardPercent:
-    type: integer
+    type: number
+    format: double
     minimum: 0
     maximum: 100
     description: Процент вознаграждения
