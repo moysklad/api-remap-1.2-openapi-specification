@@ -1,6 +1,6 @@
 type: object
 description: Комплект
-x-implements: INamed
+x-implements: Named
 x-polymorphic-parent: ProductMarker
 x-entity-static-builder:
   methodParams:

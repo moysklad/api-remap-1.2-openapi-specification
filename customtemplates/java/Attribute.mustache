@@ -6,8 +6,10 @@ import java.util.UUID;
 /**
  * Interface for common entities.
  */
-public interface INamed {
+public interface Attribute<T> {
 
-    String getName();
+    void setValue(T obj);
+
+    T getValue();
 
 }

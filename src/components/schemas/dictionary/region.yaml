@@ -1,6 +1,6 @@
 type: object
 description: Регион
-x-implements: INamed
+x-implements: Named
 x-entity-static-builder:
   methodParams:
     - "id"

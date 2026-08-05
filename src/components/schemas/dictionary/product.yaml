@@ -1,6 +1,6 @@
 type: object
 x-polymorphic-parent: ProductMarker
-x-implements: INamed
+x-implements: Named
 x-entity-static-builder:
   methodParams:
     - "id"

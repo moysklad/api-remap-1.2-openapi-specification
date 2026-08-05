@@ -1,5 +1,5 @@
 type: object
-x-implements: IAttribute<Double>
+x-implements: Attribute<Double>
 allOf:
   - $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
 properties:

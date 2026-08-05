@@ -1,7 +1,7 @@
 type: object
 description: Склад
 x-polymorphic-parent: EntityWithMeta
-x-implements: INamed
+x-implements: Named
 x-entity-static-builder:
   methodParams:
     - "id"

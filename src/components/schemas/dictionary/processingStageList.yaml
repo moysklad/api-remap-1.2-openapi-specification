@@ -1,6 +1,6 @@
 type: object
 description: Список Этапов производства
-x-implements: IEntityList
+x-implements: EntityList
 properties:
   context:
     description: Метаданные о сотруднике, выполнившем запрос

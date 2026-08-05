@@ -1,6 +1,6 @@
 type: object
 description: Позиция Розничного возврата
-x-implements: IDocumentPosition
+x-implements: DocumentPosition
 x-polymorphic-parent: EntityWithMeta
 x-entity-static-builder:
   methodParams:

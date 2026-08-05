@@ -1,6 +1,6 @@
 type: object
 description: Список Входящих платежей
-x-implements: IEntityList
+x-implements: EntityList
 properties:
   context:
     description: Метаданные о сотруднике, выполнившем запрос

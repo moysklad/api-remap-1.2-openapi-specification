@@ -1,5 +1,5 @@
 type: object
-x-implements: IAttribute<Store>
+x-implements: Attribute<Store>
 allOf:
   - $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
 properties:

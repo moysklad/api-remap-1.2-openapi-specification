@@ -1,5 +1,5 @@
 type: object
-x-implements: IAttribute<Boolean>
+x-implements: Attribute<Boolean>
 allOf:
   - $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
 properties:

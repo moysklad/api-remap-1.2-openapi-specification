@@ -2022,10 +2022,6 @@ components:
       $ref: './components/schemas/dictionary/taskNote.yaml'
     TaskNoteList:
       $ref: './components/schemas/dictionary/taskNoteList.yaml'
-    TaskNoteFile:
-      $ref: './components/schemas/dictionary/taskNoteFile.yaml'
-    TaskNoteFileList:
-      $ref: './components/schemas/dictionary/taskNoteFileList.yaml'
     Project:
       $ref: './components/schemas/dictionary/project.yaml'
     ProjectList:

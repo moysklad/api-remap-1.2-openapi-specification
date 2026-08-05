@@ -1,6 +1,6 @@
 type: object
 description: Список Счетов покупателям
-x-implements: IEntityList
+x-implements: EntityList
 properties:
   context:
     description: Метаданные о сотруднике, выполнившем запрос

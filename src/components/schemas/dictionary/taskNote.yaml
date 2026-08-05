@@ -47,4 +47,4 @@ properties:
     nullable: true
     type: object
     allOf:
-      - $ref: '../../../openapi.yaml#/components/schemas/TaskNoteFileList'
+      - $ref: '../../../openapi.yaml#/components/schemas/FileList'

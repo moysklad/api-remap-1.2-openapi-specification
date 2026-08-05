@@ -1,6 +1,6 @@
 type: object
 description: Список договоров
-x-implements: IEntityList
+x-implements: EntityList
 properties:
   context:
     description: Метаданные о сотруднике, выполнившем запрос

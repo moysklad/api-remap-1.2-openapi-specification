@@ -1,6 +1,6 @@
 type: object
 description: Список позиций Заказа кодов маркировки
-x-implements: IEntityList
+x-implements: EntityList
 properties:
   context:
     description: Метаданные о сотруднике, выполнившем запрос

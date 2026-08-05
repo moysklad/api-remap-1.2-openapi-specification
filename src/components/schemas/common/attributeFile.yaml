@@ -1,5 +1,5 @@
 type: object
-x-implements: IAttribute<String>
+x-implements: Attribute<String>
 allOf:
   - $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
 properties:

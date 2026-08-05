@@ -1,6 +1,6 @@
 type: object
 description: Позиция Заказа покупателя
-x-implements: IDocumentPosition
+x-implements: DocumentPosition
 x-polymorphic-parent: EntityWithMeta
 x-entity-static-builder:
   methodParams:

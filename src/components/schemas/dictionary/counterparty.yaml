@@ -1,6 +1,6 @@
 type: object
 description: Контрагент
-x-implements: INamed
+x-implements: Named
 x-polymorphic-parent: Agent
 x-entity-static-builder:
   methodParams:

@@ -33,15 +33,15 @@ files:
   MetaEntity.mustache:
     templateType: SupportingFiles
     destinationFilename: src/main/java/ru/moysklad/remap_1_2/beta/model/MetaEntity.java
-  IAttribute.mustache:
+  Attribute.mustache:
     templateType: SupportingFiles
-    destinationFilename: src/main/java/ru/moysklad/remap_1_2/beta/model/IAttribute.java
-  INamed.mustache:
+    destinationFilename: src/main/java/ru/moysklad/remap_1_2/beta/model/Attribute.java
+  Named.mustache:
     templateType: SupportingFiles
-    destinationFilename: src/main/java/ru/moysklad/remap_1_2/beta/model/INamed.java
-  IEntityList.mustache:
+    destinationFilename: src/main/java/ru/moysklad/remap_1_2/beta/model/Named.java
+  EntityList.mustache:
     templateType: SupportingFiles
-    destinationFilename: src/main/java/ru/moysklad/remap_1_2/beta/model/IEntityList.java
-  IDocumentPosition.mustache:
+    destinationFilename: src/main/java/ru/moysklad/remap_1_2/beta/model/EntityList.java
+  DocumentPosition.mustache:
     templateType: SupportingFiles
-    destinationFilename: src/main/java/ru/moysklad/remap_1_2/beta/model/IDocumentPosition.java
+    destinationFilename: src/main/java/ru/moysklad/remap_1_2/beta/model/DocumentPosition.java
