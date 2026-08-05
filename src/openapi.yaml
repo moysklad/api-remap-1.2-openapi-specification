@@ -32,6 +32,22 @@ security:
   - bearerAuth: []
 
 paths:
+  # Reports
+  #
+  # Dashboard
+  /report/dashboard/day:
+    $ref: './paths/reports/dashboard-day.yaml'
+  /report/dashboard/week:
+    $ref: './paths/reports/dashboard-week.yaml'
+  /report/dashboard/month:
+    $ref: './paths/reports/dashboard-month.yaml'
+
+  # Sales and Orders Plot Series
+  /report/orders/plotseries:
+    $ref: './paths/reports/orders-plotseries.yaml'
+  /report/sales/plotseries:
+    $ref: './paths/reports/sales-plotseries.yaml'
+
   # Dictionaries
   #
   # Contracts
@@ -1716,6 +1732,18 @@ components:
       $ref: './components/schemas/common/metadata.yaml'
     Context:
       $ref: './components/schemas/common/context.yaml'
+    ReportDashboard:
+      $ref: './components/schemas/report/reportDashboard.yaml'
+    ReportDashboardMoney:
+      $ref: './components/schemas/report/reportDashboardMoney.yaml'
+    ReportDashboardPeriodMetrics:
+      $ref: './components/schemas/report/reportDashboardPeriodMetrics.yaml'
+    ReportOrdersPlotSeriesList:
+      $ref: './components/schemas/report/reportOrdersPlotSeriesList.yaml'
+    ReportPlotSeries:
+      $ref: './components/schemas/report/reportPlotSeries.yaml'
+    ReportSalesPlotSeriesList:
+      $ref: './components/schemas/report/reportSalesPlotSeriesList.yaml'
     Declaration:
       $ref: './components/schemas/common/declaration.yaml'
     Gtd:
@@ -2500,6 +2528,8 @@ tags:
     description: Операции с полученными отчетами комиссионера
   - name: CommissionReportOuts
     description: Операции с выданными отчетами комиссионера
+  - name: Reports
+    description: Операции с отчетами
   - name: CompanySettings
     description: Операции с настройками компании
   - name: UserSettings

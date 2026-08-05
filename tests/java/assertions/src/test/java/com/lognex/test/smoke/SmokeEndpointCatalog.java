@@ -807,6 +807,13 @@ final class SmokeEndpointCatalog {
                 Arguments.of(new SmokeEndpointCase("testCreateRetailDrawerCashOutMetadataStatesBatch#1", "POST", "/entity/retaildrawercashout/metadata/states/batch", SmokeEndpointCase.Expectation.NOT_404, true)),
                 Arguments.of(new SmokeEndpointCase("testCreateCashOutMetadataStatesBatch#1", "POST", "/entity/cashout/metadata/states/batch", SmokeEndpointCase.Expectation.NOT_404, true)),
 
+                // /report
+                Arguments.of(new SmokeEndpointCase("testGetReportDashboardDay#1", "GET", "/report/dashboard/day", SmokeEndpointCase.Expectation.NOT_404, false)),
+                Arguments.of(new SmokeEndpointCase("testGetReportDashboardWeek#1", "GET", "/report/dashboard/week", SmokeEndpointCase.Expectation.NOT_404, false)),
+                Arguments.of(new SmokeEndpointCase("testGetReportDashboardMonth#1", "GET", "/report/dashboard/month", SmokeEndpointCase.Expectation.NOT_404, false)),
+                Arguments.of(new SmokeEndpointCase("testGetReportOrdersPlotSeries#1", "GET", "/report/orders/plotseries?momentFrom=2018-09-06%2000:00:00&momentTo=2018-09-06%2001:00:01&interval=hour", SmokeEndpointCase.Expectation.NOT_404, false)),
+                Arguments.of(new SmokeEndpointCase("testGetReportSalesPlotSeries#1", "GET", "/report/sales/plotseries?momentFrom=2018-09-06%2000:00:00&momentTo=2018-09-06%2001:00:01&interval=hour", SmokeEndpointCase.Expectation.NOT_404, false)),
+
                 // /notification/settings
                 Arguments.of(new SmokeEndpointCase("testGetNotificationSettings#1", "GET", "/notification/settings", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testUpdateNotificationSettings#1", "PUT", "/notification/settings", SmokeEndpointCase.Expectation.NOT_404, true)),

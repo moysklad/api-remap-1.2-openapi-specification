@@ -138,6 +138,9 @@ class SerializationTest extends TestCase
         'commission_report_in' => 'CommissionReportIn',
         'commission_report_out' => 'CommissionReportOut',
         'processing_plan_folder' => 'ProcessingPlanFolder',
+        'report_dashboard' => 'ReportDashboard',
+        'report_orders_plotseries_list' => 'ReportOrdersPlotSeriesList',
+        'report_sales_plotseries_list' => 'ReportSalesPlotSeriesList',
         'organization' => 'Organization',
         'organization_account' => 'Account',
     ];
