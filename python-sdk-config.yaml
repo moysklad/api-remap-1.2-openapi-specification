@@ -1,0 +1,13 @@
+packageName: moysklad_remap_12_sdk
+projectName: moysklad-remap-12-sdk
+packageVersion: 0.0.0
+library: urllib3
+hideGenerationTimestamp: true
+disallowAdditionalPropertiesIfNotPresent: false
+gitHost: github.com
+gitUserId: moysklad
+gitRepoId: remap-1.2-python-sdk
+files:
+  LICENSE.mustache:
+    templateType: SupportingFiles
+    destinationFilename: LICENSE

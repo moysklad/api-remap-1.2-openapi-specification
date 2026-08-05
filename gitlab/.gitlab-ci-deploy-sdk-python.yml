@@ -1,0 +1,55 @@
+# Build and publish Python SDK distributions.
+
+.deploy-sdk-python-base:
+  image: python:3.10
+  stage: deploy-sdk
+  cache:
+    key: python-publish-tools
+    paths:
+      - .cache/pip/
+  variables:
+    PIP_CACHE_DIR: $CI_PROJECT_DIR/.cache/pip
+  before_script:
+    - python -m pip install "build>=1.2,<2" "twine>=6,<7"
+
+deploy-python-to-testpypi:
+  extends: .deploy-sdk-python-base
+  needs:
+    - job: generate-sdk-python
+      artifacts: true
+    - job: sdk-golden-python
+  rules:
+    - if: '($SDK_LANGUAGES == "" || $SDK_LANGUAGES =~ /python/) && $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH != "master" && $CI_COMMIT_BRANCH != "release" && $CI_COMMIT_TAG == null'
+      when: manual
+    - if: '($SDK_LANGUAGES == "" || $SDK_LANGUAGES =~ /python/) && $CI_PIPELINE_SOURCE == "web" && $CI_COMMIT_BRANCH != "master" && $CI_COMMIT_BRANCH != "release" && $CI_COMMIT_TAG == null'
+      when: manual
+    - when: never
+  environment:
+    name: testpypi
+  script:
+    - TEST_VERSION="$(python -c 'import json; print(json.load(open("package.json"))["version"])').dev${CI_JOB_ID}"
+    - python scripts/set-python-package-version.py clients/python "$TEST_VERSION"
+    - sh scripts/build-python-package.sh clients/python
+    - sh scripts/publish-python-package.sh testpypi clients/python/dist
+
+deploy-python-to-pypi:
+  extends: .deploy-sdk-python-base
+  needs:
+    - job: merge-branch-python
+      artifacts: true
+  rules:
+    - if: '($SDK_LANGUAGES == "" || $SDK_LANGUAGES =~ /python/) && $CI_COMMIT_REF_NAME == "master" && $CI_PIPELINE_SOURCE == "push"'
+      when: on_success
+    - when: never
+  environment:
+    name: pypi-production
+  script:
+    - |
+      if [ ! -s "sdk-repo/python-release-tag.txt" ]; then
+        echo "Python release tag artifact is missing."
+        exit 1
+      fi
+      TAG="$(tr -d '\r\n' < sdk-repo/python-release-tag.txt)"
+      python scripts/set-python-package-version.py sdk-repo "$TAG"
+    - sh scripts/build-python-package.sh sdk-repo
+    - sh scripts/publish-python-package.sh pypi sdk-repo/dist

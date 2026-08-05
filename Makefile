@@ -1,5 +1,5 @@
 # Локальный запуск шагов pipeline (аналог GitLab CI)
-# Поддерживаемые языки: php, python, java, javascript (сейчас реализован только php)
+# Поддерживаемые языки: php, python, java
 # Запуск: docker compose run --rm sdk make <target>
 # Языки: make generate LANGUAGES=php или LANGUAGES=php,python (по умолчанию php)
 
@@ -8,7 +8,7 @@ LANGUAGES ?= php
 LANGUAGES_LIST := $(subst $(comma), ,$(LANGUAGES))
 comma := ,
 
-.PHONY: help lint bundle generate generate-php generate-python generate-java generate-javascript \
+.PHONY: help lint bundle generate generate-php generate-python build-python generate-java generate-javascript \
 	test-smoke test-golden test-golden-php test-golden-java test-golden-javascript test-golden-python \
 	schemathesis all
 
@@ -18,7 +18,8 @@ help:
 	@echo "  bundle            - bundle OpenAPI spec to dist/"
 	@echo "  generate          - generate SDK for LANGUAGES (default: php). Example: make generate LANGUAGES=php,python"
 	@echo "  generate-php      - generate PHP SDK only"
-	@echo "  generate-python   - generate Python SDK only (if script in package.json)"
+	@echo "  generate-python   - generate Python SDK only"
+	@echo "  build-python      - build and validate Python wheel/sdist"
 	@echo "  generate-java     - generate Java SDK only (if script in package.json)"
 	@echo "  generate-javascript - generate JavaScript SDK only (if script in package.json)"
 	@echo "  test-smoke        - smoke tests (openapi-mock + tests)."
@@ -47,13 +48,16 @@ light-bundle:
 
 # Генерация: все языки из LANGUAGES или по одному
 generate: npm-ci
-	@for lang in $(LANGUAGES_LIST); do $(MAKE) generate-$$lang || true; done
+	@for lang in $(LANGUAGES_LIST); do $(MAKE) generate-$$lang || exit $$?; done
 
 generate-php:
 	npm run generate-php
 
 generate-python:
-	@npm run generate-python 2>/dev/null || echo "Skipping generate-python: script not in package.json"
+	npm run generate-python
+
+build-python:
+	sh scripts/build-python-package.sh
 
 generate-java:
 	@npm run generate-java 2>/dev/null || echo "Skipping generate-java: script not in package.json"
@@ -69,7 +73,7 @@ test-smoke:
 	sh scripts/local-test-smoke.sh java
 
 test-golden:
-	@for lang in $(LANGUAGES_LIST); do $(MAKE) test-golden-$$lang || true; done
+	@for lang in $(LANGUAGES_LIST); do $(MAKE) test-golden-$$lang || exit $$?; done
 
 test-golden-php:
 	sh scripts/local-test-golden.sh php

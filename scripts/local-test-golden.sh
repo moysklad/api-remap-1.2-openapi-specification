@@ -24,16 +24,14 @@ run_php() {
 
 run_python() {
   if [ ! -d "clients/python" ]; then
-    echo "Skipping golden tests for python: clients/python not found. Run: make generate-python"
-    return 0
+    echo "ERROR: clients/python not found. Run: make generate-python"
+    exit 1
   fi
   if [ ! -d "tests/python" ]; then
-    echo "Skipping: tests/python not configured"
-    return 0
+    echo "ERROR: tests/python not configured"
+    exit 1
   fi
-  cd tests/python
-  pip install -q -r requirements.txt
-  pytest golden/ -v 2>/dev/null || echo "Skipping: no golden tests for python yet"
+  python3 -m pytest tests/python/golden -v
 }
 
 run_java() {

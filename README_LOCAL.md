@@ -36,7 +36,9 @@ npm run bundle-json
 
 ## Локальный запуск (Docker)
 
-Docker-среда поддерживает несколько языков SDK (php, python, java, javascript). Сейчас реализованы генерация и тесты для PHP; для остальных языков нужно добавить скрипты в `package.json` и тесты в `tests/<language>/`.
+Docker-среда поддерживает PHP, Python и Java SDK. Для Python реализованы генерация, сборка wheel/sdist и golden-тесты на Python 3.10+.
+При запуске без Docker установите зависимости командами
+`python3 -m pip install -r clients/python/requirements.txt -r tests/python/requirements.txt build twine`.
 
 Контейнеры `sdk` и `java-sdk` запускаются под UID/GID пользователя хоста (`${UID:-1000}:${GID:-1000}`), поэтому сгенерированные файлы в `clients/` остаются доступными текущему пользователю. Если ранее SDK уже генерировались контейнером от root, один раз исправьте владельца:
 
@@ -60,12 +62,17 @@ docker compose run --rm sdk make light-bundle
 # Генерация SDK (по умолчанию PHP; можно несколько: LANGUAGES=php,python)
 docker compose run --rm sdk make generate
 docker compose run --rm sdk make generate-php
+docker compose run --rm sdk make generate-python
 docker compose run --rm sdk make generate-java
 
 # Golden тесты (по умолчанию php)
 docker compose run --rm sdk make test-golden
 docker compose run --rm sdk make test-golden-php
+docker compose run --rm sdk make test-golden-python
 docker compose run --rm java-sdk make test-golden-java
+
+# Сборка и проверка Python wheel/sdist
+docker compose run --rm sdk make build-python
 
 # Сборка Java SDK (основной runtime-артефакт — self-contained shaded JAR с relocation, после generate-java)
 docker compose run --rm java-sdk bash -lc "cd clients/java && mvn clean package"
@@ -82,8 +89,15 @@ docker compose run --rm -e SCHEMATHESIS_HOST=host -e SCHEMATHESIS_LOGIN=login -e
 docker compose run --rm sdk make all
 ```
 
+Python SDK генерируется в `clients/python/src/moysklad_remap_12_sdk/`.
+Перед повторной генерацией `clients/python` пока очищается вручную. `build-python`
+выполняет `python -m build`, `twine check` и проверяет структуру wheel.
+Python golden-набор также динамически проверяет каждое объявление специальных
+расширений непосредственно из модульной спецификации `src/`.
+
 Smoke-тесты выполняются Java-набором (`tests/java/assertions/.../smoke/ApiEndpointsTest.java`) через:
 `docker compose run --rm sdk make test-smoke`.
+Отдельного Python smoke-набора нет; Python SDK блокируется golden-тестами, а endpoint coverage остаётся в общем Java smoke flow.
 
 **Без сборки образа** (если есть образ из CI):
 
@@ -136,8 +150,9 @@ api-sdk-builder/
 |   ├── java/                         # Кастомные шаблоны для Java SDK
 │   └── php/                          # Кастомные шаблоны для PHP SDK
 ├── tests/
-│   ├── java/                         # Java тесты (golden)
-│   └── php/                          # PHP тесты (golden + smoke)
+│   ├── java/                         # Java тесты (golden + smoke)
+│   ├── php/                          # PHP golden-тесты
+│   └── python/                       # Python golden-тесты
 └── clients/                          # Сгенерированные SDK (создаётся при генерации)
 ```
 
@@ -150,8 +165,6 @@ api-sdk-builder/
 ```json
 {
   "scripts": {
-    "generate-python": "openapi-generator-cli generate -i src/openapi.yaml -g python -o clients/python",
-    "generate-java": "openapi-generator-cli generate -i src/openapi.yaml -g java -o clients/java",
     "generate-javascript": "openapi-generator-cli generate -i src/openapi.yaml -g javascript -o clients/javascript"
   }
 }
@@ -170,7 +183,7 @@ tests/<language>/
 
 ### 3. Обновить CI job'ы
 
-Job'ы для новых языков уже созданы как заглушки в:
+Job'ы генерации и golden-тестов добавляются в:
 - `gitlab/sdk/generate-sdk.yml` — генерация
 - `gitlab/sdk/sdk-tests-golden.yml` — golden тесты
 - `gitlab/sdk/sdk-tests-smoke.yml` — smoke тесты

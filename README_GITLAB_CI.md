@@ -18,11 +18,14 @@
 | `bundle-openapi`         | Сборка полной bundled версии спецификации для SDK/docs/contract          |
 | `bundle-smoke-openapi`   | Сборка облегчённой bundled версии спецификации для быстрых smoke-тестов  |
 | `generate-sdk-php`       | Генерация PHP SDK                                                        |
-| `generate-sdk-java`      | Генерация Java SDK (заглушка)                                            |
+| `generate-sdk-python`    | Генерация Python SDK                                                     |
+| `generate-sdk-java`      | Генерация Java SDK                                                       |
 | `sdk-golden-php`         | Golden тесты для PHP (сериализация/десериализация)                       |
+| `sdk-golden-python`      | Golden тесты для Python                                                  |
 | `sdk-golden-java`        | Golden тесты для Java                                                    |
 | `sdk-smoke`              | Smoke тесты для Java с openapi-mock сервером                             |
 | `prep-branch-and-mr-php` | Cоздание/обновление ветки и mr по сгенерированному sdk в репозитории sdk |
+| `prep-branch-and-mr-python` | Создание/обновление ветки Python SDK во внутреннем репозитории         |
 
 #### 2. Ручной запуск (web) на ветке
 
@@ -63,8 +66,10 @@
 | `create-github-release` | Создание GitHub Release на основе CHANGELOG                                                       |
 | `merge-branch-php`      | Обновление ветки master на удаленном gitlab sdk репозитории по сгенерированному sdk и выпуск тэга |
 | `merge-branch-java`     | Обновление master во внутреннем Java SDK репозитории и сохранение релизного semver-тега           |
+| `merge-branch-python`   | Обновление master Python SDK и создание релизного semver-тега                              |
 | `deploy-to-maven`       | Публикация Java SDK в Maven Central                                                               |
 | `deploy-to-artifactory` | Публикация Java SDK в Artyfactory                                                                 |
+| `deploy-python-to-pypi` | Публикация проверенного Python wheel/sdist в PyPI                                           |
 
 Java release jobs (`deploy-to-artifactory`, `deploy-to-maven`) описаны в `gitlab/.gitlab-ci-deploy-sdk-java.yml` и выполняются на стадии `deploy-sdk`.
 Публикуемый Java runtime-артефакт собирается как self-contained shaded JAR с relocation зависимостей Jackson (включая nullable-модуль) внутрь SDK.
@@ -96,7 +101,7 @@ Java release jobs (`deploy-to-artifactory`, `deploy-to-maven`) описаны в
 | `SDK_LANGUAGES`  | Языки для генерации SDK (через запятую без пробелов) | `""` (все доступные)  |
 
 **Примеры SDK_LANGUAGES:**
-- `""` или не задана — генерируются все доступные SDK (сейчас только PHP)
+- `""` или не задана — генерируются все доступные SDK (PHP, Python, Java)
 - `"php"` — только PHP
 - `"php,python"` — PHP и Python
 - `"php,python,java,javascript"` — все языки
@@ -175,6 +180,10 @@ SCHEMATHESIS_INCLUDE_OPERATION_ID=createProduct
 | `GIT_MAIL`     | Email для git commits                                                                                                                   |
 | `CICD_PAT`     | GitLab token для доступа к внутреннему репозиторию Remap Api Specification (`git.company.lognex/moysklad/misc/remap-api-specification`) |
 | `CICD_PAT_PHP` | GitLab token для доступа к внутреннему репозиторию PHP SDK (`git.company.lognex/moysklad/misc/php-remap-1.2-sdk`)                       |
+| `CICD_PAT_PYTHON` | Project access token внутреннего Python SDK репозитория; masked/protected |
+| `PYTHON_SDK_REPOSITORY_PATH` | GitLab path без host и `.git`; по умолчанию `moysklad/misc/remap-1.2-python-sdk` |
+| `TEST_PYPI_API_TOKEN` | Project-scoped токен TestPyPI; masked, для manual branch job |
+| `PYPI_API_TOKEN` | Project-scoped токен PyPI; masked/protected, только для production environment |
 
 ### Переменные для обратной совместимости
 
