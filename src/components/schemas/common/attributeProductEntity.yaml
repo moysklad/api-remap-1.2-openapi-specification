@@ -1,5 +1,5 @@
 type: object
-x-implements: Attribute<BatchResponseEntity>
+x-implements: Attribute<ProductMarker>
 allOf:
   - $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
 properties:
