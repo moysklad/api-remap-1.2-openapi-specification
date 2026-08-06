@@ -2,7 +2,7 @@ get:
   operationId: getMetadataForType
   tags:
     - Metadata
-  summary: Получить Комплект
+  summary: Получить метаданные сущности
   parameters:
     - $ref: '../../../components/parameters.yaml#/entityType'
     - $ref: '../../../components/parameters.yaml#/expand'
