@@ -1,5 +1,5 @@
 type: object
-x-implements: Attribute<ProductMarker>
+x-implements: Attribute<EntityWithMeta>
 allOf:
   - $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
 properties:
@@ -7,4 +7,4 @@ properties:
     type: string
     enum: [product]
   value:
-    $ref: '../../../openapi.yaml#/components/schemas/ProductMarker'
+    $ref: '../../../openapi.yaml#/components/schemas/EntityWithMeta'
