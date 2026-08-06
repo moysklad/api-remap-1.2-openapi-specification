@@ -3,5 +3,8 @@ x-implements: Attribute<Project>
 allOf:
   - $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
 properties:
+  type:
+    type: string
+    enum: [project]
   value:
     $ref: '../../../openapi.yaml#/components/schemas/Project'

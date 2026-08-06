@@ -3,5 +3,8 @@ x-implements: Attribute<Integer>
 allOf:
   - $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
 properties:
+  type:
+    type: string
+    enum: [long]
   value:
     type: integer

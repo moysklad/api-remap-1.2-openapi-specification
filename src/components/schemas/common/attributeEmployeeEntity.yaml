@@ -3,5 +3,8 @@ x-implements: Attribute<Employee>
 allOf:
   - $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
 properties:
+  type:
+    type: string
+    enum: [employee]
   value:
     $ref: '../../../openapi.yaml#/components/schemas/Employee'

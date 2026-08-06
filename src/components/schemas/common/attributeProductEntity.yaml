@@ -3,6 +3,8 @@ x-implements: Attribute<BatchResponseEntity>
 allOf:
   - $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
 properties:
+  type:
+    type: string
+    enum: [product]
   value:
-    description: ссылка на Товар, Комплект, Услугу или Группу товаров
-    $ref: '../../../openapi.yaml#/components/schemas/BatchResponseEntity'
+    $ref: '../../../openapi.yaml#/components/schemas/ProductMarker'

@@ -11,7 +11,7 @@ properties:
     description: Метаданные о выдаче
   rows:
     type: array
-    nullable: true
     description: Массив позиций Возврата поставщику
+    nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/PurchaseReturnPosition'
