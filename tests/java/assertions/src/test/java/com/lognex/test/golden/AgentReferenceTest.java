@@ -3,12 +3,12 @@ package com.lognex.test.golden;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
-import ru.moysklad.remap_1_2.beta.ApiClient;
-import ru.moysklad.remap_1_2.beta.Configuration;
-import ru.moysklad.remap_1_2.beta.model.Agent;
-import ru.moysklad.remap_1_2.beta.model.CashIn;
-import ru.moysklad.remap_1_2.beta.model.FactureOut;
-import ru.moysklad.remap_1_2.beta.model.Meta;
+import ru.moysklad.remap_1_2.ApiClient;
+import ru.moysklad.remap_1_2.Configuration;
+import ru.moysklad.remap_1_2.model.Agent;
+import ru.moysklad.remap_1_2.model.CashIn;
+import ru.moysklad.remap_1_2.model.FactureOut;
+import ru.moysklad.remap_1_2.model.Meta;
 
 import java.net.URI;
 import java.util.Map;

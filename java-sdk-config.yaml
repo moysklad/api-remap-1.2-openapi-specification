@@ -1,47 +1,47 @@
-invokerPackage: "ru.moysklad.remap_1_2.beta"
-apiPackage: "ru.moysklad.remap_1_2.beta.api"
-modelPackage: "ru.moysklad.remap_1_2.beta.model"
-polymorphicPackage: "ru.moysklad.remap_1_2.beta.deserialize"
+invokerPackage: "ru.moysklad.remap_1_2"
+apiPackage: "ru.moysklad.remap_1_2.api"
+modelPackage: "ru.moysklad.remap_1_2.model"
+polymorphicPackage: "ru.moysklad.remap_1_2.deserialize"
 files:
   RequestOptions.mustache:
     templateType: SupportingFiles
-    destinationFilename: src/main/java/ru/moysklad/remap_1_2.beta/api/RequestOptions.java
+    destinationFilename: src/main/java/ru/moysklad/remap_1_2/api/RequestOptions.java
   PageOptions.mustache:
     templateType: SupportingFiles
-    destinationFilename: src/main/java/ru/moysklad/remap_1_2.beta/api/PageOptions.java
+    destinationFilename: src/main/java/ru/moysklad/remap_1_2/api/PageOptions.java
   ListOptions.mustache:
     templateType: SupportingFiles
-    destinationFilename: src/main/java/ru/moysklad/remap_1_2.beta/api/ListOptions.java
+    destinationFilename: src/main/java/ru/moysklad/remap_1_2/api/ListOptions.java
   AssortmentListOptions.mustache:
     templateType: SupportingFiles
-    destinationFilename: src/main/java/ru/moysklad/remap_1_2.beta/api/AssortmentListOptions.java
+    destinationFilename: src/main/java/ru/moysklad/remap_1_2/api/AssortmentListOptions.java
   Filters.mustache:
     templateType: SupportingFiles
-    destinationFilename: src/main/java/ru/moysklad/remap_1_2.beta/api/Filters.java
+    destinationFilename: src/main/java/ru/moysklad/remap_1_2/api/Filters.java
   Orders.mustache:
     templateType: SupportingFiles
-    destinationFilename: src/main/java/ru/moysklad/remap_1_2.beta/api/Orders.java
+    destinationFilename: src/main/java/ru/moysklad/remap_1_2/api/Orders.java
   OpenApiPolymorphicTypeInfo.mustache:
     templateType: SupportingFiles
-    destinationFilename: src/main/java/ru/moysklad/remap_1_2.beta/deserialize/OpenApiPolymorphicTypeInfo.java
+    destinationFilename: src/main/java/ru/moysklad/remap_1_2/deserialize/OpenApiPolymorphicTypeInfo.java
   OpenApiPolymorphicSubTypes.mustache:
     templateType: SupportingFiles
-    destinationFilename: src/main/java/ru/moysklad/remap_1_2.beta/deserialize/OpenApiPolymorphicSubTypes.java
+    destinationFilename: src/main/java/ru/moysklad/remap_1_2/deserialize/OpenApiPolymorphicSubTypes.java
   PolymorphicMetaTypeDeserializer.mustache:
     templateType: SupportingFiles
-    destinationFilename: src/main/java/ru/moysklad/remap_1_2.beta/deserialize/PolymorphicMetaTypeDeserializer.java
+    destinationFilename: src/main/java/ru/moysklad/remap_1_2/deserialize/PolymorphicMetaTypeDeserializer.java
   MetaEntity.mustache:
     templateType: SupportingFiles
-    destinationFilename: src/main/java/ru/moysklad/remap_1_2/beta/model/MetaEntity.java
+    destinationFilename: src/main/java/ru/moysklad/remap_1_2/model/MetaEntity.java
   Attribute.mustache:
     templateType: SupportingFiles
-    destinationFilename: src/main/java/ru/moysklad/remap_1_2/beta/model/Attribute.java
+    destinationFilename: src/main/java/ru/moysklad/remap_1_2/model/Attribute.java
   Named.mustache:
     templateType: SupportingFiles
-    destinationFilename: src/main/java/ru/moysklad/remap_1_2/beta/model/Named.java
+    destinationFilename: src/main/java/ru/moysklad/remap_1_2/model/Named.java
   EntityList.mustache:
     templateType: SupportingFiles
-    destinationFilename: src/main/java/ru/moysklad/remap_1_2/beta/model/EntityList.java
+    destinationFilename: src/main/java/ru/moysklad/remap_1_2/model/EntityList.java
   DocumentPosition.mustache:
     templateType: SupportingFiles
-    destinationFilename: src/main/java/ru/moysklad/remap_1_2/beta/model/DocumentPosition.java
+    destinationFilename: src/main/java/ru/moysklad/remap_1_2/model/DocumentPosition.java
