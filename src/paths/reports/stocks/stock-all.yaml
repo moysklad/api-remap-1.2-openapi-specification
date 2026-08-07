@@ -1,7 +1,7 @@
 get:
   operationId: getStockAll
   tags:
-    - Reports
+    - ReportsStockAll
   summary: Получить Расширенный отчет об остатках
   description: |
     Запрос Расширенного отчета об остатках по всей номенклатуре учетной записи.

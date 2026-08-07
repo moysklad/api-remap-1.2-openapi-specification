@@ -36,22 +36,11 @@ properties:
     maxLength: 255
     description: Внешний код сущности, по которой выводится остаток
   folder:
-    type: object
     description: Группа Товара/Модификации/Партии
-    properties:
-      meta:
-        description: Метаданные группы товара
-        $ref: '../common/meta.yaml'
-      name:
-        type: string
-        maxLength: 255
-        description: Наименование группы
-      pathName:
-        type: string
-        description: Наименование родительской группы
+    $ref: '../../../openapi.yaml#/components/schemas/ProductFolder'
   image:
-    description: Метаданные изображения Товара/Модификации/Партии
-    $ref: '../common/meta.yaml'
+    description: Изображение Товара/Модификации/Партии
+    $ref: '../../../openapi.yaml#/components/schemas/Image'
   uom:
     description: Единица измерения
     $ref: '../../../openapi.yaml#/components/schemas/Uom'

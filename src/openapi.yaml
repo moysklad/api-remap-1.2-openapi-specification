@@ -2533,5 +2533,5 @@ tags:
     description: Операции с бонусными операциями
   - name: CustomEntities
     description: Операции с пользовательскими справочниками
-  - name: Reports
-    description: Операции с отчетами
+  - name: ReportsStockAll
+    description: Операции с Расширенным отчетом об остатках
