@@ -1,6 +1,7 @@
 type: object
 description: Позиция Заказа кодов маркировки
 x-polymorphic-parent: EntityWithMeta
+x-implements: MetaEntity
 x-entity-static-builder:
   methodParams:
     - "parentId"

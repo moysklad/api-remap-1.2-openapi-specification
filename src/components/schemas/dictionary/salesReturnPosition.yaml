@@ -1,6 +1,6 @@
 type: object
 description: Позиция Возврата покупателя
-x-implements: DocumentPosition
+x-implements: DocumentPosition, MetaEntity
 x-polymorphic-parent: EntityWithMeta
 x-entity-static-builder:
   methodParams:

@@ -1,5 +1,6 @@
 type: object
 description: Компонент комплекта
+x-implements: MetaEntity
 x-entity-static-builder:
   methodParams:
     - "parentId"

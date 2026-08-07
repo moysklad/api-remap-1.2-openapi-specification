@@ -1,6 +1,7 @@
 type: object
 description: Юрлицо
 x-polymorphic-parent: Agent
+x-implements: Named
 x-entity-static-builder:
   methodParams:
     - "id"

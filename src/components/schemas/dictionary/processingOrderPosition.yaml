@@ -1,7 +1,7 @@
 type: object
 description: Позиция Заказа на производство
 x-polymorphic-parent: EntityWithMeta
-x-implements: DocumentPosition
+x-implements: DocumentPosition, MetaEntity
 x-entity-static-builder:
   methodParams:
     - "parentId"

@@ -1,5 +1,6 @@
 type: object
 description: Статус
+x-implements: MetaEntity
 x-entity-static-builder:
   methodParams:
     - "entityType"

@@ -1,5 +1,6 @@
 type: object
 description: Материал Техкарты
+x-implements: MetaEntity
 x-entity-static-builder:
   methodParams:
     - "parentId"

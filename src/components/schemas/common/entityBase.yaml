@@ -193,6 +193,7 @@ ProductMarker:
 
 DiscountAbstract:
   type: object
+  x-implements: MetaEntity
   x-polymorphic-discriminator:
     path: meta.type
     mappings:

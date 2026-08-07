@@ -1,6 +1,6 @@
 type: object
 description: Элемент пользовательского справочника (customentity)
-x-implements: Named
+x-implements: Named, MetaEntity
 x-entity-static-builder:
   methodParams:
     - "metadataId"

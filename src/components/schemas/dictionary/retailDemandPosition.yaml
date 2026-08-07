@@ -1,6 +1,6 @@
 type: object
 description: Позиция Розничной продажи
-x-implements: DocumentPosition
+x-implements: DocumentPosition, MetaEntity
 x-entity-static-builder:
   methodParams:
     - "parentId"

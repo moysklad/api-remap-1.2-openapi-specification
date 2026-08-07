@@ -1,5 +1,6 @@
 type: object
 description: Счета контрагентов/юрлиц
+x-implements: MetaEntity
 x-entity-static-builder:
   methodParams:
     - "entityType"
