@@ -14,7 +14,6 @@ properties:
   id:
     type: string
     format: uuid
-    readOnly: true
     description: ID Точки продаж
   accountId:
     type: string
