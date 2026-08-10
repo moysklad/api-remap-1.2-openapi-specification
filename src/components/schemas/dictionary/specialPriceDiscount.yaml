@@ -40,6 +40,9 @@ properties:
         type: integer
         format: int32
         description: Значение цены
+      meta:
+        description: Метаданные цены
+        $ref: '../common/meta.yaml'
       priceType:
         $ref: '../../../openapi.yaml#/components/schemas/PriceType'
 
