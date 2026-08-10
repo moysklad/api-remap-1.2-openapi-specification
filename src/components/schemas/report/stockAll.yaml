@@ -8,7 +8,7 @@ description: |
   `consignment` — товары, модификации и партии.
 properties:
   meta:
-    description: Метаданные Товара/Модификации/Партии, по которой выдается остаток
+    description: Метаданные Товара/Модификации/Партии,  по которой выдается остаток
     $ref: '../common/meta.yaml'
   name:
     type: string
