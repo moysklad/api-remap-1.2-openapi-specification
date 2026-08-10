@@ -38,6 +38,14 @@ npm run generate-java
 npm run generate-typescript
 ```
 
+TypeScript SDK генерируется как готовый к публикации npm-пакет `@moysklad/remap-1.2-sdk` в `clients/typescript` (версия берётся из semver-тега репозитория). Сборка и проверка пакета:
+
+```bash
+cd clients/typescript && npm install && npm run build && npm pack --dry-run
+```
+
+Подробности — в разделе «TypeScript SDK» файла [README_LOCAL.md](README_LOCAL.md).
+
 ## Локальный запуск через Make
 
 Все шаги пайплайна (lint, bundle, генерация SDK, golden-, smoke-тесты, а также schemathesis тесты) можно запускать локально через Make — **напрямую** или **в Docker**.

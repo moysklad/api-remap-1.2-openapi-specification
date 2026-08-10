@@ -1,9 +1,20 @@
 # Конфигурация генерации TypeScript SDK (generator: typescript-fetch).
-# Используется из npm-скрипта generate-typescript и Makefile-цели generate-typescript.
+# Запускается из scripts/generate-typescript-sdk.sh (npm run generate-typescript / make generate-typescript).
+# Версия пакета (npmVersion) задаётся скриптом из semver-тега репозитория и здесь не фиксируется.
+gitHost: "github.com"
+gitUserId: "moysklad"
+gitRepoId: "remap-1.2-typescript-sdk"
 modelNameMappings:
   # Схема Error конфликтует со встроенным типом TypeScript, см. customtemplates/typescript/readme.md
   Error: "ModelError"
+files:
+  LICENSE.mustache:
+    templateType: SupportingFiles
+    destinationFilename: LICENSE
 additionalProperties:
   npmName: "@moysklad/remap-1.2-sdk"
+  licenseName: "MIT"
   supportsES6: true
   legacyDiscriminatorBehavior: false
+  # Относительные импорты с расширением .js — иначе сборка dist/esm непригодна для Node ESM
+  importFileExtension: ".js"

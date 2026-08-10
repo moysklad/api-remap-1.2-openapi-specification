@@ -30,6 +30,9 @@ npm run generate-php
 # Генерация TypeScript SDK (результат — собираемый npm-пакет в clients/typescript)
 npm run generate-typescript
 
+# Сборка npm-пакета TypeScript SDK
+cd clients/typescript && npm install && npm run build && cd -
+
 # Сборка bundled спецификации
 npm run bundle
 npm run bundle-json
@@ -117,6 +120,35 @@ docker compose run --rm \
 
 ---
 
+## TypeScript SDK
+
+Генерация запускается через `make generate-typescript` (или `npm run generate-typescript`) и выполняет `scripts/generate-typescript-sdk.sh`. Скрипт пересоздаёт `clients/typescript` с нуля, поэтому после каждой генерации в пакете нужно заново выполнить `npm install`.
+
+**Версия пакета** не захардкожена в шаблонах: скрипт берёт её из версии репозитория спецификации в порядке `SDK_VERSION` → ближайший git-тег → `version` из корневого `package.json` (его же выставляет `version:auto`), и прерывает генерацию, если значение не является semver `MAJOR.MINOR.PATCH[-prerelease]`. Ручная сборка prerelease-версии:
+
+```bash
+SDK_VERSION=0.18.0-rc.1 npm run generate-typescript
+```
+
+**Метаданные пакета** задаются кастомными шаблонами в `customtemplates/typescript/` и конфигом `typescript-sdk-config.yaml`: имя `@moysklad/remap-1.2-sdk`, лицензия MIT (файл `LICENSE`), author `Lognex Dev Team`, `engines.node >= 22`, `main`/`module`/`types`/`exports`, `files`, ссылки на npm и GitHub-репозиторий `remap-1.2-typescript-sdk`. README пакета содержит установку, импорт, авторизацию и базовый пример запроса. Подробности и причины каждого шаблона — в `customtemplates/typescript/readme.md`.
+
+**Проверка собираемого пакета:**
+
+```bash
+cd clients/typescript
+npm install            # ставит зависимости и через prepare выполняет сборку
+npm run build          # dist/ (CommonJS), dist/esm/ (ES-модули), *.d.ts
+npm pack --dry-run     # список файлов будущего пакета
+npm pack               # .tgz для проверки установки в чистом проекте
+tar -tzf moysklad-remap-1.2-sdk-*.tgz
+```
+
+В пакет попадают только `dist/`, `README.md`, `LICENSE` и `package.json`: исходники, tsconfig и служебные файлы генератора исключены.
+
+**Детерминированность.** Повторная генерация из того же коммита даёт побайтово одинаковый вывод. Служебные файлы генератора (`.openapi-generator/FILES`, `.openapi-generator/VERSION`, `.openapi-generator-ignore`) удаляются из вывода: они не относятся к SDK и меняются при обновлении генератора.
+
+---
+
 ## Структура проекта
 
 ```
@@ -142,8 +174,10 @@ api-sdk-builder/
 ├── customtemplates/
 |   ├── java/                         # Кастомные шаблоны для Java SDK
 │   ├── php/                          # Кастомные шаблоны для PHP SDK
-│   └── typescript/                   # Кастомные шаблоны для TypeScript SDK
+│   └── typescript/                   # Кастомные шаблоны для TypeScript SDK (package.json, README, LICENSE, .npmignore)
 ├── typescript-sdk-config.yaml        # Конфигурация генератора TypeScript SDK
+├── scripts/
+│   └── generate-typescript-sdk.sh    # Генерация TypeScript SDK с версией из semver-тега
 ├── tests/
 │   ├── java/                         # Java тесты (golden)
 │   └── php/                          # PHP тесты (golden + smoke)
