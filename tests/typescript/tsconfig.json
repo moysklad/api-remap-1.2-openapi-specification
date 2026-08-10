@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "es2022",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "skipLibCheck": true,
+    "types": ["node"],
+    "rootDir": ".",
+    "outDir": "build",
+    "sourceMap": true
+  },
+  "include": ["src/**/*.ts", "golden/**/*.ts"]
+}

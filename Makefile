@@ -4,13 +4,14 @@
 # Языки: make generate LANGUAGES=php или LANGUAGES=php,python (по умолчанию php)
 
 LANGUAGES ?= php
+comma := ,
 # Список языков для генерации/тестов (через запятую без пробелов)
 LANGUAGES_LIST := $(subst $(comma), ,$(LANGUAGES))
-comma := ,
 
 .PHONY: help lint bundle generate generate-php generate-python generate-java generate-javascript generate-typescript \
+	build-typescript pack-typescript \
 	test-smoke test-golden test-golden-php test-golden-java test-golden-javascript test-golden-python \
-	schemathesis all
+	test-golden-typescript schemathesis all
 
 help:
 	@echo "Targets (docker compose run --rm sdk make <target>)"
@@ -22,8 +23,11 @@ help:
 	@echo "  generate-java     - generate Java SDK only (if script in package.json)"
 	@echo "  generate-javascript - generate JavaScript SDK only (if script in package.json)"
 	@echo "  generate-typescript - generate TypeScript SDK only"
+	@echo "  build-typescript  - build the generated TypeScript SDK (dist: CommonJS + ESM)"
+	@echo "  pack-typescript   - list npm tarball contents (npm pack --dry-run)"
 	@echo "  test-smoke        - smoke tests (openapi-mock + tests)."
-	@echo "  test-golden       - golden tests for LANGUAGES. Default: php"
+	@echo "  test-golden       - golden tests for LANGUAGES (php, java, typescript). Default: php"
+	@echo "  test-golden-typescript - TypeScript golden tests (no skips: missing SDK/tests is an error)"
 	@echo "  schemathesis      - contract tests (SCHEMATHESIS_HOST, _LOGIN, _PASSWORD)"
 	@echo "  all               - lint + bundle + generate (php) + test-golden + test-smoke"
 
@@ -65,6 +69,12 @@ generate-javascript:
 generate-typescript:
 	npm run generate-typescript
 
+build-typescript:
+	sh scripts/build-typescript-sdk.sh
+
+pack-typescript: build-typescript
+	cd clients/typescript && npm pack --dry-run
+
 npm-ci:
 	sh scripts/npm-ci-public-registry.sh
 
@@ -72,8 +82,9 @@ npm-ci:
 test-smoke:
 	sh scripts/local-test-smoke.sh java
 
+# Прогоняются все языки из LANGUAGES, но падение любого из них — ошибка цели
 test-golden:
-	@for lang in $(LANGUAGES_LIST); do $(MAKE) test-golden-$$lang || true; done
+	@status=0; for lang in $(LANGUAGES_LIST); do $(MAKE) test-golden-$$lang || status=1; done; exit $$status
 
 test-golden-php:
 	sh scripts/local-test-golden.sh php
@@ -86,6 +97,9 @@ test-golden-java:
 
 test-golden-javascript:
 	sh scripts/local-test-golden.sh javascript
+
+test-golden-typescript:
+	sh scripts/local-test-golden-typescript.sh
 
 schemathesis:
 	sh scripts/local-schemathesis.sh

@@ -31,7 +31,10 @@ npm run generate-php
 npm run generate-typescript
 
 # Сборка npm-пакета TypeScript SDK
-cd clients/typescript && npm install && npm run build && cd -
+make build-typescript
+
+# Golden тесты TypeScript SDK (общие fixtures из tests/fixtures)
+make test-golden-typescript
 
 # Сборка bundled спецификации
 npm run bundle
@@ -42,7 +45,7 @@ npm run bundle-json
 
 ## Локальный запуск (Docker)
 
-Docker-среда поддерживает несколько языков SDK (php, python, java, javascript). Сейчас реализованы генерация и тесты для PHP; для остальных языков нужно добавить скрипты в `package.json` и тесты в `tests/<language>/`.
+Docker-среда поддерживает несколько языков SDK (php, java, typescript, python, javascript). Генерация и golden-тесты реализованы для PHP, Java и TypeScript; для остальных языков нужно добавить скрипты в `package.json` и тесты в `tests/<language>/`. Для TypeScript CI-джобов пока нет — генерация и тесты запускаются локально.
 
 Контейнеры `sdk` и `java-sdk` запускаются под UID/GID пользователя хоста (`${UID:-1000}:${GID:-1000}`), поэтому сгенерированные файлы в `clients/` остаются доступными текущему пользователю. Если ранее SDK уже генерировались контейнером от root, один раз исправьте владельца:
 
@@ -69,12 +72,15 @@ docker compose run --rm sdk make generate-php
 docker compose run --rm sdk make generate-java
 docker compose run --rm sdk make generate-typescript
 
-# Сборка TypeScript SDK (после generate-typescript)
-docker compose run --rm sdk sh -c "cd clients/typescript && npm install && npm run build"
+# Сборка TypeScript SDK (после generate-typescript) и состав npm-пакета
+docker compose run --rm sdk make build-typescript
+docker compose run --rm sdk make pack-typescript
 
-# Golden тесты (по умолчанию php)
+# Golden тесты (по умолчанию php; падение любого языка из LANGUAGES роняет цель)
 docker compose run --rm sdk make test-golden
+docker compose run --rm sdk make test-golden LANGUAGES=php,typescript
 docker compose run --rm sdk make test-golden-php
+docker compose run --rm sdk make test-golden-typescript
 docker compose run --rm java-sdk make test-golden-java
 
 # Сборка Java SDK (основной runtime-артефакт — self-contained shaded JAR с relocation, после generate-java)
@@ -102,7 +108,7 @@ docker run --rm -v "$(pwd):/workspace" -w /workspace \
   docker.infra.lognex/docker-openapitools:1.2-release make all
 ```
 
-**Локальный Docker и Nexus:** если в `package-lock.json` указан корпоративный registry (nexus.infra.lognex), при запуске в Docker задаётся `USE_PUBLIC_NPM_REGISTRY=true`. Скрипт `scripts/npm-ci-public-registry.sh` временно подменяет URL на registry.npmjs.org, чтобы не было ошибки SSL (UNABLE_TO_VERIFY_LEAF_SIGNATURE). Исходный `package-lock.json` после `npm ci` восстанавливается.
+**Локальный Docker и Nexus:** если в `package-lock.json` указан корпоративный registry (nexus.infra.lognex), при запуске в Docker задаётся `USE_PUBLIC_NPM_REGISTRY=true`, и URL временно подменяется на registry.npmjs.org, чтобы не было ошибки SSL (UNABLE_TO_VERIFY_LEAF_SIGNATURE). Исходный `package-lock.json` после установки восстанавливается. За это отвечают `scripts/npm-ci-public-registry.sh` (корневой проект) и `scripts/npm-install-deps.sh` (подпроекты `clients/typescript` и `tests/typescript`; там же пропускается повторная установка, если `node_modules` уже соответствует `package.json` и lock-файлу — принудительно `NPM_CI_FORCE=1`).
 
 **Schemathesis** (контрактные тесты против живого API):
 
@@ -135,17 +141,36 @@ SDK_VERSION=0.18.0-rc.1 npm run generate-typescript
 **Проверка собираемого пакета:**
 
 ```bash
+make build-typescript   # scripts/build-typescript-sdk.sh: npm install + dist/ (CommonJS) и dist/esm/ (ESM) с *.d.ts
+make pack-typescript    # собирает пакет и печатает состав будущего npm-архива (npm pack --dry-run)
+
 cd clients/typescript
-npm install            # ставит зависимости и через prepare выполняет сборку
-npm run build          # dist/ (CommonJS), dist/esm/ (ES-модули), *.d.ts
-npm pack --dry-run     # список файлов будущего пакета
-npm pack               # .tgz для проверки установки в чистом проекте
+npm pack                # .tgz для проверки установки в чистом проекте
 tar -tzf moysklad-remap-1.2-sdk-*.tgz
 ```
 
 В пакет попадают только `dist/`, `README.md`, `LICENSE` и `package.json`: исходники, tsconfig и служебные файлы генератора исключены.
 
 **Детерминированность.** Повторная генерация из того же коммита даёт побайтово одинаковый вывод. Служебные файлы генератора (`.openapi-generator/FILES`, `.openapi-generator/VERSION`, `.openapi-generator-ignore`) удаляются из вывода: они не относятся к SDK и меняются при обновлении генератора.
+
+Версия генератора зафиксирована в `openapitools.json` (`7.14.0`), поэтому локальная генерация и генерация в CI дают одинаковый результат. Проверено побайтово (`diff -r`) в трёх средах: хост, локальный образ `sdk` из `Dockerfile` и CI-образ `docker-openapitools-common:1.4-release`. В CI checkout выполняется без тегов, поэтому версия пакета берётся из `version` в корневом `package.json` — то же значение, что и у ближайшего тега локально (их синхронно обновляет `version:auto`).
+
+### Golden тесты TypeScript SDK
+
+Тесты живут в `tests/typescript` и работают с собранным пакетом (`clients/typescript/dist/esm`), то есть проверяют ровно то, что публикуется в npm.
+
+```bash
+make test-golden-typescript                    # scripts/local-test-golden-typescript.sh
+docker compose run --rm sdk make test-golden-typescript
+```
+
+Скрипт сам собирает пакет, если `dist/` ещё нет, ставит зависимости тестов (`npm ci`) и прогоняет их. В отличие от `scripts/local-test-golden.sh` пропусков нет: отсутствие сгенерированного SDK, файлов тестов, fixtures, итогов прогона (`# pass` / `# fail` в TAP-выводе) или наличие пропущенных тестов — ошибка. Полный вывод прогона сохраняется в `tests/typescript/build/golden-tests.log`.
+
+По каждой fixture из `tests/fixtures` (те же файлы, что у PHP и Java golden-тестов) выполняется roundtrip `fixture → <Model>FromJSON → <Model>ToJSON` и проверяется, что значения не искажены, лишних ключей нет, а массивы сохранили длину. Соответствие fixture ↔ модель задано в `FIXTURE_MODEL_MAP` (`tests/typescript/golden/serialization.test.ts`), поэтому новая fixture без записи в маппинге роняет тест.
+
+Генератор `typescript-fetch` не сериализует `readOnly`-поля и объявляет их в сигнатуре `<Model>ToJSONTyped(value?: Omit<Model, 'id'|...>)`. Тест читает этот список из декларации собранного пакета, а не из захардкоженного перечня полей: пропуск поля допускается только если оно объявлено `readOnly` (на верхнем уровне — в самой модели, во вложенных объектах — хотя бы в одной модели SDK, так как модель вложенного поля в рантайме неизвестна).
+
+**Известные пробелы.** Шаблоны `customtemplates/typescript/` пока не реализуют расширения спецификации `x-polymorphic-parent` и `x-polymorphic-discriminator` (в PHP и Java это делают кастомные шаблоны). Из-за этого модель не наследует поля родителя и не выбирается по `meta.type`: например, `AgentToJSON` возвращает пустой объект, `FinanceInOperationDemand` теряет `linkedSum`, а `Discount` — `name`/`active`/`allAgents`. Все такие потери перечислены по путям полей в `tests/typescript/golden/knownSerializationGaps.ts` и сравниваются точно: новая потеря роняет тест, а исчезнувшая требует удалить запись из реестра. Искажение значений не допускается ни для одной fixture.
 
 ---
 
@@ -176,11 +201,18 @@ api-sdk-builder/
 │   ├── php/                          # Кастомные шаблоны для PHP SDK
 │   └── typescript/                   # Кастомные шаблоны для TypeScript SDK (package.json, README, LICENSE, .npmignore)
 ├── typescript-sdk-config.yaml        # Конфигурация генератора TypeScript SDK
+├── openapitools.json                 # Зафиксированная версия OpenAPI Generator (одна для локали и CI)
 ├── scripts/
-│   └── generate-typescript-sdk.sh    # Генерация TypeScript SDK с версией из semver-тега
+│   ├── generate-typescript-sdk.sh    # Генерация TypeScript SDK с версией из semver-тега
+│   ├── build-typescript-sdk.sh       # Сборка npm-пакета TypeScript SDK (dist + dist/esm)
+│   ├── npm-install-deps.sh           # npm-зависимости подпроектов (registry для Docker, кеш установки)
+│   ├── local-test-golden.sh          # Golden тесты php/python/java/javascript
+│   └── local-test-golden-typescript.sh # Golden тесты TypeScript (без пропусков)
 ├── tests/
+│   ├── fixtures/                     # Общие эталонные JSON для golden тестов всех языков
 │   ├── java/                         # Java тесты (golden)
-│   └── php/                          # PHP тесты (golden + smoke)
+│   ├── php/                          # PHP тесты (golden + smoke)
+│   └── typescript/                   # TypeScript golden тесты (node:test + tsc)
 └── clients/                          # Сгенерированные SDK (создаётся при генерации)
 ```
 
@@ -236,7 +268,7 @@ customtemplates/<language>/
 
 #### Golden тесты
 
-Проверяют корректность сериализации и десериализации моделей SDK:
+Проверяют корректность сериализации и десериализации моделей SDK на общих эталонных JSON из `tests/fixtures/` — одни и те же файлы используют PHP, Java и TypeScript:
 
 ```php
 // Пример PHP golden теста
@@ -246,6 +278,8 @@ $product = Product::fromArray($jsonData);
 $this->assertEquals($jsonData['id'], $product->getId());
 $this->assertEquals($jsonData['name'], $product->getName());
 ```
+
+Запуск по языкам: `make test-golden-php`, `make test-golden-java`, `make test-golden-typescript` или сразу несколько — `make test-golden LANGUAGES=php,typescript`. Про особенности TypeScript-набора см. [Golden тесты TypeScript SDK](#golden-тесты-typescript-sdk).
 
 #### Smoke тесты (openapi-mock)
 

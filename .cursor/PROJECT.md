@@ -20,8 +20,10 @@ Modular OpenAPI 3.0.3 specification for MoySklad JSON API 1.2 with automated SDK
 - **Bundling:** Redocly CLI → `dist/openapi.yaml` / `dist/openapi.json`
 - **SDK generation:** OpenAPI Generator CLI (PHP + Java + TypeScript with custom templates in `customtemplates/php/`, `customtemplates/java/` and `customtemplates/typescript/`); Java SDK runtime artifact is a self-contained shaded JAR with dependency relocation; TypeScript SDK uses the `typescript-fetch` generator and is generated locally only (no CI jobs yet)
 - **TypeScript SDK packaging:** generated as the publishable npm package `@moysklad/remap-1.2-sdk` (MIT, author Lognex Dev Team, `engines.node >= 22`, dual CommonJS/ESM build, npm tarball limited to `dist/`, `README.md`, `LICENSE`); package version comes from the spec repo semver (`SDK_VERSION` → nearest git tag → root `package.json`) via `scripts/generate-typescript-sdk.sh`, generator metadata is stripped so regeneration is byte-identical
+- **Generator version pinning:** `openapitools.json` pins OpenAPI Generator `7.14.0`; TypeScript generation output verified byte-identical on host, local `sdk` image and CI image `docker-openapitools-common:1.4-release` (CI checkout has no tags, so the package version falls back to root `package.json`)
+- **Known TypeScript SDK gap:** `customtemplates/typescript/` does not implement `x-polymorphic-parent` / `x-polymorphic-discriminator` (PHP and Java templates do), so models neither inherit parent properties nor resolve children by `meta.type` (e.g. `AgentToJSON` returns `{}`). Every resulting field loss is enumerated in `tests/typescript/golden/knownSerializationGaps.ts` and asserted exactly
 - **Custom schema helper generation:** `x-entity-static-builder` is consumed by both PHP and Java custom templates to generate `createWithMeta(...)` helpers on referenceable models with top-level `meta`
-- **Testing:** PHPUnit (PHP golden + smoke via openapi-mock), Maven Surefire (Java golden), Schemathesis (contract)
+- **Testing:** PHPUnit (PHP golden + smoke via openapi-mock), Maven Surefire (Java golden), `node:test` + `tsc` (TypeScript golden), Schemathesis (contract)
 - **Versioning:** `standard-version` + `oasdiff` (breaking change detection); tag format `MAJOR.MINOR.PATCH` (semver)
 - **Runtime:** Node.js v24.0.1, npm; Docker + Docker Compose for local reproducibility
 - **CI:** GitLab CI/CD (`.gitlab-ci.yml` + included files under `gitlab/`)
@@ -63,10 +65,15 @@ customtemplates/php/                   # Mustache templates for PHP SDK
 customtemplates/java/                  # Mustache templates for Java SDK
 customtemplates/typescript/            # Mustache templates for TypeScript SDK (package.json, README, LICENSE, .npmignore)
 typescript-sdk-config.yaml             # OpenAPI Generator config for the TypeScript SDK
+openapitools.json                      # Pinned OpenAPI Generator version (shared by local and CI runs)
 scripts/generate-typescript-sdk.sh     # TypeScript SDK generation (semver version resolution + metadata cleanup)
-tests/fixtures/                        # Shared golden fixtures for PHP and Java SDK assertions
+scripts/build-typescript-sdk.sh        # TypeScript SDK package build (dist CommonJS + dist/esm)
+scripts/npm-install-deps.sh            # npm deps for subprojects (public registry in Docker, install cache)
+scripts/local-test-golden-typescript.sh # TypeScript golden tests; missing SDK/tests/results is an error, never a skip
+tests/fixtures/                        # Shared golden fixtures for PHP, Java and TypeScript SDK assertions
 tests/php/                             # PHPUnit golden + smoke tests
 tests/java/assertions/                 # Maven golden tests for Java SDK
+tests/typescript/                      # TypeScript golden tests (node:test, run against the built package)
 java.Dockerfile                        # Java local test image (Maven + JDK)
 pom.xml                                # Root Maven config for Java golden tests
 clients/                               # Generated SDK output (gitignored)
@@ -144,12 +151,13 @@ Key differences from Prism: openapi-mock serves endpoints under the `servers.url
 - `npm run validate` / `npm run generate-php` / `npm run generate-java` / `npm run generate-typescript` / `npm run bundle` for quick local checks.
 - `docker compose run --rm sdk make <target>` for Docker-based runs (see `make help`).
 - Java golden tests locally: `docker compose run --rm java-sdk make test-golden-java` (or `make test-golden LANGUAGES=java`).
-- Golden fixtures live in `tests/fixtures/` and are shared by PHP and Java golden tests.
+- TypeScript golden tests locally: `make test-golden-typescript` (or `make test-golden LANGUAGES=typescript`); `make test-golden` fails if any requested language fails.
+- Golden fixtures live in `tests/fixtures/` and are shared by PHP, Java and TypeScript golden tests.
 - PHP tests require PHP 8.1+ with extensions: dom, json, mbstring, curl, Composer.
 - After `make light-bundle`, always `docker compose restart mock` before running smoke tests (see Fast Smoke Bundle and Mock Server section above).
 - Smoke tests are run via `docker compose run --rm sdk make test-smoke`.
 - After modifying any YAML schema, regenerate both SDKs before golden tests: `make generate-php` and `make generate-java`.
-- TypeScript SDK: `make generate-typescript`, then `cd clients/typescript && npm install && npm run build` to verify the package compiles; `npm pack --dry-run` to check the npm tarball contents. Generation recreates `clients/typescript` from scratch, so `npm install` must be repeated after each run. Override the package version with `SDK_VERSION=<semver>`.
+- TypeScript SDK: `make generate-typescript`, then `make build-typescript` (package build) and `make pack-typescript` (npm tarball contents). Generation recreates `clients/typescript` from scratch, so the package build must be repeated after each run. Override the package version with `SDK_VERSION=<semver>`. Golden tests run against the built package, so regenerate and rebuild before them.
 
 For detailed local setup and Docker usage see `README_LOCAL.md`.
 For detailed CI/CD pipeline docs see `README_GITLAB_CI.md`.
