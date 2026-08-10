@@ -1,0 +1,9 @@
+# Конфигурация генерации TypeScript SDK (generator: typescript-fetch).
+# Используется из npm-скрипта generate-typescript и Makefile-цели generate-typescript.
+modelNameMappings:
+  # Схема Error конфликтует со встроенным типом TypeScript, см. customtemplates/typescript/readme.md
+  Error: "ModelError"
+additionalProperties:
+  npmName: "@moysklad/remap-1.2-sdk"
+  supportsES6: true
+  legacyDiscriminatorBehavior: false

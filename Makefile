@@ -1,5 +1,5 @@
 # Локальный запуск шагов pipeline (аналог GitLab CI)
-# Поддерживаемые языки: php, python, java, javascript (сейчас реализован только php)
+# Поддерживаемые языки: php, java, typescript, python, javascript (python и javascript пока заглушки)
 # Запуск: docker compose run --rm sdk make <target>
 # Языки: make generate LANGUAGES=php или LANGUAGES=php,python (по умолчанию php)
 
@@ -8,7 +8,7 @@ LANGUAGES ?= php
 LANGUAGES_LIST := $(subst $(comma), ,$(LANGUAGES))
 comma := ,
 
-.PHONY: help lint bundle generate generate-php generate-python generate-java generate-javascript \
+.PHONY: help lint bundle generate generate-php generate-python generate-java generate-javascript generate-typescript \
 	test-smoke test-golden test-golden-php test-golden-java test-golden-javascript test-golden-python \
 	schemathesis all
 
@@ -21,6 +21,7 @@ help:
 	@echo "  generate-python   - generate Python SDK only (if script in package.json)"
 	@echo "  generate-java     - generate Java SDK only (if script in package.json)"
 	@echo "  generate-javascript - generate JavaScript SDK only (if script in package.json)"
+	@echo "  generate-typescript - generate TypeScript SDK only"
 	@echo "  test-smoke        - smoke tests (openapi-mock + tests)."
 	@echo "  test-golden       - golden tests for LANGUAGES. Default: php"
 	@echo "  schemathesis      - contract tests (SCHEMATHESIS_HOST, _LOGIN, _PASSWORD)"
@@ -60,6 +61,9 @@ generate-java:
 
 generate-javascript:
 	@npm run generate-javascript 2>/dev/null || echo "Skipping generate-javascript: script not in package.json"
+
+generate-typescript:
+	npm run generate-typescript
 
 npm-ci:
 	sh scripts/npm-ci-public-registry.sh

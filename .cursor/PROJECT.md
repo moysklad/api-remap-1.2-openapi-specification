@@ -18,7 +18,7 @@ Modular OpenAPI 3.0.3 specification for MoySklad JSON API 1.2 with automated SDK
 - **Spec format:** OpenAPI 3.0.3 (YAML, modular: `src/openapi.yaml` is the root)
 - **Linting:** Redocly CLI (`npm run validate`)
 - **Bundling:** Redocly CLI → `dist/openapi.yaml` / `dist/openapi.json`
-- **SDK generation:** OpenAPI Generator CLI (PHP + Java with custom templates in `customtemplates/php/` and `customtemplates/java/`); Java SDK runtime artifact is a self-contained shaded JAR with dependency relocation
+- **SDK generation:** OpenAPI Generator CLI (PHP + Java + TypeScript with custom templates in `customtemplates/php/`, `customtemplates/java/` and `customtemplates/typescript/`); Java SDK runtime artifact is a self-contained shaded JAR with dependency relocation; TypeScript SDK uses the `typescript-fetch` generator and is generated locally only (no CI jobs yet)
 - **Custom schema helper generation:** `x-entity-static-builder` is consumed by both PHP and Java custom templates to generate `createWithMeta(...)` helpers on referenceable models with top-level `meta`
 - **Testing:** PHPUnit (PHP golden + smoke via openapi-mock), Maven Surefire (Java golden), Schemathesis (contract)
 - **Versioning:** `standard-version` + `oasdiff` (breaking change detection); tag format `MAJOR.MINOR.PATCH` (semver)
@@ -60,6 +60,8 @@ gitlab/
 src/openapi.yaml                       # Root spec file
 customtemplates/php/                   # Mustache templates for PHP SDK
 customtemplates/java/                  # Mustache templates for Java SDK
+customtemplates/typescript/            # Mustache templates for TypeScript SDK
+typescript-sdk-config.yaml             # OpenAPI Generator config for the TypeScript SDK
 tests/fixtures/                        # Shared golden fixtures for PHP and Java SDK assertions
 tests/php/                             # PHPUnit golden + smoke tests
 tests/java/assertions/                 # Maven golden tests for Java SDK
@@ -137,7 +139,7 @@ Key differences from Prism: openapi-mock serves endpoints under the `servers.url
 ## Local Development
 
 - `nvm use v24.0.1 && npm install` for Node tooling.
-- `npm run validate` / `npm run generate-php` / `npm run generate-java` / `npm run bundle` for quick local checks.
+- `npm run validate` / `npm run generate-php` / `npm run generate-java` / `npm run generate-typescript` / `npm run bundle` for quick local checks.
 - `docker compose run --rm sdk make <target>` for Docker-based runs (see `make help`).
 - Java golden tests locally: `docker compose run --rm java-sdk make test-golden-java` (or `make test-golden LANGUAGES=java`).
 - Golden fixtures live in `tests/fixtures/` and are shared by PHP and Java golden tests.
@@ -145,6 +147,7 @@ Key differences from Prism: openapi-mock serves endpoints under the `servers.url
 - After `make light-bundle`, always `docker compose restart mock` before running smoke tests (see Fast Smoke Bundle and Mock Server section above).
 - Smoke tests are run via `docker compose run --rm sdk make test-smoke`.
 - After modifying any YAML schema, regenerate both SDKs before golden tests: `make generate-php` and `make generate-java`.
+- TypeScript SDK: `make generate-typescript`, then `cd clients/typescript && npm install && npm run build` to verify the package compiles.
 
 For detailed local setup and Docker usage see `README_LOCAL.md`.
 For detailed CI/CD pipeline docs see `README_GITLAB_CI.md`.

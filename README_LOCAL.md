@@ -27,6 +27,9 @@ npm run validate
 # Генерация PHP SDK
 npm run generate-php
 
+# Генерация TypeScript SDK (результат — собираемый npm-пакет в clients/typescript)
+npm run generate-typescript
+
 # Сборка bundled спецификации
 npm run bundle
 npm run bundle-json
@@ -61,6 +64,10 @@ docker compose run --rm sdk make light-bundle
 docker compose run --rm sdk make generate
 docker compose run --rm sdk make generate-php
 docker compose run --rm sdk make generate-java
+docker compose run --rm sdk make generate-typescript
+
+# Сборка TypeScript SDK (после generate-typescript)
+docker compose run --rm sdk sh -c "cd clients/typescript && npm install && npm run build"
 
 # Golden тесты (по умолчанию php)
 docker compose run --rm sdk make test-golden
@@ -134,7 +141,9 @@ api-sdk-builder/
 │   └── openapi.yaml                  # Главный файл OpenAPI спецификации
 ├── customtemplates/
 |   ├── java/                         # Кастомные шаблоны для Java SDK
-│   └── php/                          # Кастомные шаблоны для PHP SDK
+│   ├── php/                          # Кастомные шаблоны для PHP SDK
+│   └── typescript/                   # Кастомные шаблоны для TypeScript SDK
+├── typescript-sdk-config.yaml        # Конфигурация генератора TypeScript SDK
 ├── tests/
 │   ├── java/                         # Java тесты (golden)
 │   └── php/                          # PHP тесты (golden + smoke)

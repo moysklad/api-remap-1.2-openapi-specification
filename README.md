@@ -34,6 +34,8 @@ npm run serve-docs
 ### 5. Генерация клиентских SDK
 ```bash
 npm run generate-php
+npm run generate-java
+npm run generate-typescript
 ```
 
 ## Локальный запуск через Make
@@ -51,6 +53,7 @@ docker compose run --rm sdk make bundle       # сборка dist/openapi.yaml
 docker compose run --rm sdk make light-bundle  # сборка dist/openapi.yaml для быстрых smoke-тестов
 docker compose run --rm sdk make generate-php # генерация PHP SDK
 docker compose run --rm sdk make generate-java # генерация Java SDK
+docker compose run --rm sdk make generate-typescript # генерация TypeScript SDK
 docker compose run --rm java-sdk bash -lc "cd clients/java && mvn clean package" # сборка shaded Java SDK
 docker compose run --rm sdk make test-golden-php  # golden-тесты
 docker compose run --rm java-sdk make test-golden-java  # golden-тесты
