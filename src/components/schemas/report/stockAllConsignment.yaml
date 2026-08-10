@@ -1,7 +1,0 @@
-type: object
-description: Строка Расширенного отчета об остатках по Партии (`groupBy=consignment`)
-x-polymorphic-parent: StockAll
-properties:
-  meta:
-    description: Метаданные Партии, по которой выдается остаток
-    $ref: '../common/meta.yaml'

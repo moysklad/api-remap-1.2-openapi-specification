@@ -1,7 +1,0 @@
-type: object
-description: Строка Расширенного отчета об остатках по Модификации (`groupBy=variant`)
-x-polymorphic-parent: StockAll
-properties:
-  meta:
-    description: Метаданные Модификации, по которой выдается остаток
-    $ref: '../common/meta.yaml'

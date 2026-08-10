@@ -2363,12 +2363,6 @@ components:
 
     StockAll:
       $ref: './components/schemas/report/stockAll.yaml'
-    StockAllProduct:
-      $ref: './components/schemas/report/stockAllProduct.yaml'
-    StockAllVariant:
-      $ref: './components/schemas/report/stockAllVariant.yaml'
-    StockAllConsignment:
-      $ref: './components/schemas/report/stockAllConsignment.yaml'
     StockAllList:
       $ref: './components/schemas/report/stockAllList.yaml'
 

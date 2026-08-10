@@ -6,15 +6,6 @@ description: |
   Параметр запроса `groupBy` определяет набор возможных типов в выдаче:
   `product` — только товары; `variant` — товары и модификации;
   `consignment` — товары, модификации и партии.
-x-polymorphic-discriminator:
-  path: meta.type
-  mappings:
-    - type: product
-      componentName: StockAllProduct
-    - type: variant
-      componentName: StockAllVariant
-    - type: consignment
-      componentName: StockAllConsignment
 properties:
   meta:
     description: Метаданные Товара/Модификации/Партии, по которой выдается остаток

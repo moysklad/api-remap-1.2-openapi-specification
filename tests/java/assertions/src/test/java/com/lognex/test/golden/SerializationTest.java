@@ -151,9 +151,9 @@ class SerializationTest extends BaseTestCase {
         FIXTURE_MODEL_MAP.put("commission_report_out", "CommissionReportOut");
         FIXTURE_MODEL_MAP.put("organization", "Organization");
         FIXTURE_MODEL_MAP.put("organization_account", "Account");
-        FIXTURE_MODEL_MAP.put("stock_all_product", "StockAllProduct");
-        FIXTURE_MODEL_MAP.put("stock_all_variant", "StockAllVariant");
-        FIXTURE_MODEL_MAP.put("stock_all_consignment", "StockAllConsignment");
+        FIXTURE_MODEL_MAP.put("stock_all_product", "StockAll");
+        FIXTURE_MODEL_MAP.put("stock_all_variant", "StockAll");
+        FIXTURE_MODEL_MAP.put("stock_all_consignment", "StockAll");
     }
 
     private static final Set<String> IGNORED_FIELDS = new HashSet<>();
