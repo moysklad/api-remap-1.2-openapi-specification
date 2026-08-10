@@ -38,6 +38,11 @@
   "usePriceType": true,
   "specialPrice": {
     "value": 15.0,
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/context/companysettings/pricetype/672559f1-cbf3-11e1-9eb9-889ffa6f49fd",
+      "type": "pricetype",
+      "mediaType": "application/json"
+    },
     "priceType": {
       "meta": {
         "href": "https://api.moysklad.ru/api/remap/1.2/context/companysettings/pricetype/672559f1-cbf3-11e1-9eb9-889ffa6f49fd",
