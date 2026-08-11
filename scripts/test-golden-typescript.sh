@@ -5,8 +5,9 @@
 # В отличие от scripts/local-test-golden.sh здесь нет пропусков: отсутствие SDK, тестов,
 # fixtures или итогов прогона — ошибка. Тесты обязательны и локально, и в CI.
 #
-# Использование: ./scripts/local-test-golden-typescript.sh
-# Работает в Docker (working_dir=/workspace) и локально (корень репо определяется по пути скрипта).
+# Использование: ./scripts/test-golden-typescript.sh
+# (make test-golden-typescript / CI job sdk-golden-typescript)
+# Работает в Docker, локально и в GitLab CI (корень репо определяется по пути скрипта).
 set -e
 SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
 ROOT_DIR=$(cd "$SCRIPT_DIR/.." && pwd)

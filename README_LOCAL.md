@@ -45,7 +45,7 @@ npm run bundle-json
 
 ## Локальный запуск (Docker)
 
-Docker-среда поддерживает несколько языков SDK (php, java, typescript, python, javascript). Генерация и golden-тесты реализованы для PHP, Java и TypeScript; для остальных языков нужно добавить скрипты в `package.json` и тесты в `tests/<language>/`. Для TypeScript CI-джобов пока нет — генерация и тесты запускаются локально.
+Docker-среда поддерживает несколько языков SDK (php, java, typescript, python, javascript). Генерация и golden-тесты реализованы для PHP, Java и TypeScript; для остальных языков нужно добавить скрипты в `package.json` и тесты в `tests/<language>/`. Те же шаги TypeScript выполняются в GitLab CI (`generate-sdk-typescript`, `sdk-golden-typescript`) — см. [README_GITLAB_CI.md](README_GITLAB_CI.md#typescript-sdk-в-пайплайне).
 
 Контейнеры `sdk` и `java-sdk` запускаются под UID/GID пользователя хоста (`${UID:-1000}:${GID:-1000}`), поэтому сгенерированные файлы в `clients/` остаются доступными текущему пользователю. Если ранее SDK уже генерировались контейнером от root, один раз исправьте владельца:
 
@@ -160,11 +160,13 @@ tar -tzf moysklad-remap-1.2-sdk-*.tgz
 Тесты живут в `tests/typescript` и работают с собранным пакетом (`clients/typescript/dist/esm`), то есть проверяют ровно то, что публикуется в npm.
 
 ```bash
-make test-golden-typescript                    # scripts/local-test-golden-typescript.sh
+make test-golden-typescript                    # scripts/test-golden-typescript.sh
 docker compose run --rm sdk make test-golden-typescript
 ```
 
 Скрипт сам собирает пакет, если `dist/` ещё нет, ставит зависимости тестов (`npm ci`) и прогоняет их. В отличие от `scripts/local-test-golden.sh` пропусков нет: отсутствие сгенерированного SDK, файлов тестов, fixtures, итогов прогона (`# pass` / `# fail` в TAP-выводе) или наличие пропущенных тестов — ошибка. Полный вывод прогона сохраняется в `tests/typescript/build/golden-tests.log`.
+
+Тот же скрипт запускает CI-job `sdk-golden-typescript` (в CI-образе нет `make`, поэтому вызов идёт напрямую: `sh scripts/test-golden-typescript.sh`), а лог прогона публикуется артефактом job'а.
 
 По каждой fixture из `tests/fixtures` (те же файлы, что у PHP и Java golden-тестов) выполняется roundtrip `fixture → <Model>FromJSON → <Model>ToJSON` и проверяется, что значения не искажены, лишних ключей нет, а массивы сохранили длину. Соответствие fixture ↔ модель задано в `FIXTURE_MODEL_MAP` (`tests/typescript/golden/serialization.test.ts`), поэтому новая fixture без записи в маппинге роняет тест.
 
@@ -207,7 +209,7 @@ api-sdk-builder/
 │   ├── build-typescript-sdk.sh       # Сборка npm-пакета TypeScript SDK (dist + dist/esm)
 │   ├── npm-install-deps.sh           # npm-зависимости подпроектов (registry для Docker, кеш установки)
 │   ├── local-test-golden.sh          # Golden тесты php/python/java/javascript
-│   └── local-test-golden-typescript.sh # Golden тесты TypeScript (без пропусков)
+│   └── test-golden-typescript.sh # Golden тесты TypeScript (без пропусков)
 ├── tests/
 │   ├── fixtures/                     # Общие эталонные JSON для golden тестов всех языков
 │   ├── java/                         # Java тесты (golden)

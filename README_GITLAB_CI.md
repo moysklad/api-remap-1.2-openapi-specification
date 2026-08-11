@@ -19,8 +19,10 @@
 | `bundle-smoke-openapi`   | Сборка облегчённой bundled версии спецификации для быстрых smoke-тестов  |
 | `generate-sdk-php`       | Генерация PHP SDK                                                        |
 | `generate-sdk-java`      | Генерация Java SDK (заглушка)                                            |
+| `generate-sdk-typescript` | Генерация TypeScript SDK (npm-пакет `@moysklad/remap-1.2-sdk`)           |
 | `sdk-golden-php`         | Golden тесты для PHP (сериализация/десериализация)                       |
 | `sdk-golden-java`        | Golden тесты для Java                                                    |
+| `sdk-golden-typescript`  | Golden тесты для TypeScript (сборка npm-пакета + roundtrip на общих fixtures) |
 | `sdk-smoke`              | Smoke тесты для Java с openapi-mock сервером                             |
 | `prep-branch-and-mr-php` | Cоздание/обновление ветки и mr по сгенерированному sdk в репозитории sdk |
 
@@ -73,6 +75,22 @@ Java release jobs (`deploy-to-artifactory`, `deploy-to-maven`) описаны в
 
 При push тэга SDK-validate pipeline запускает те же проверки спецификации, сборку, SDK-тесты и Schemathesis `examples`. Автоматические релизные job'ы (`version:auto`, mirror/release) остаются привязаны к push в `master`.
 
+### TypeScript SDK в пайплайне
+
+TypeScript SDK проходит те же стадии, что PHP и Java, и его job'ы лежат в тех же файлах: генерация в `generate-sdk`, golden-тесты в `test`.
+
+| Job                       | Файл                                | Стадия / needs                            |
+|---------------------------|-------------------------------------|-------------------------------------------|
+| `generate-sdk-typescript` | `gitlab/sdk/generate-sdk.yml`       | `generate-sdk`, `needs: bundle-openapi`   |
+| `sdk-golden-typescript`   | `gitlab/sdk/sdk-tests-golden.yml`   | `test`, `needs: generate-sdk-typescript`  |
+
+Особенности по сравнению с PHP/Java:
+
+- golden-job перед прогоном собирает npm-пакет из артефакта генерации (`scripts/test-golden-typescript.sh`), поэтому тесты проверяют ровно то, что публикуется в npm; в CI-образе нет `make`, поэтому скрипт вызывается напрямую через `sh`;
+- отсутствие сгенерированного SDK, тестов, fixtures, итогов прогона или наличие пропущенных тестов — ошибка job'а, а не `skip`; полный TAP-вывод сохраняется артефактом `tests/typescript/build/golden-tests.log`;
+- версия npm-пакета в CI берётся из `version` корневого `package.json`: в CI checkout нет тегов, а значение синхронно обновляет `version:auto`;
+- job'ы синхронизации внутреннего репозитория `remap-1.2-typescript-sdk` и публикации в npm пока не реализованы.
+
 ---
 
 #### 5. Сборка ветки на облегчённом окружении для тестирования java-remap-1.2-sdk
@@ -91,14 +109,16 @@ Java release jobs (`deploy-to-artifactory`, `deploy-to-maven`) описаны в
 
 ### Основные переменные
 
-| Переменная       | Описание                                             | Значение по умолчанию |
-|------------------|------------------------------------------------------|-----------------------|
-| `SDK_LANGUAGES`  | Языки для генерации SDK (через запятую без пробелов) | `""` (все доступные)  |
+| Переменная          | Описание                                                                                              | Значение по умолчанию                     |
+|---------------------|-------------------------------------------------------------------------------------------------------|-------------------------------------------|
+| `SDK_LANGUAGES`     | Языки для генерации SDK (через запятую без пробелов)                                                   | `""` (все доступные)                      |
+| `NPM_REGISTRY_URL`  | npm registry для установки зависимостей `clients/typescript` в `sdk-golden-typescript` (пакет генерируется без lock-файла) | `https://nexus.infra.lognex/repository/npm` |
 
 **Примеры SDK_LANGUAGES:**
-- `""` или не задана — генерируются все доступные SDK (сейчас только PHP)
+- `""` или не задана — генерируются все доступные SDK (PHP, Java, TypeScript)
 - `"php"` — только PHP
-- `"php,python"` — PHP и Python
+- `"typescript"` — только TypeScript
+- `"php,typescript"` — PHP и TypeScript
 - `"php,python,java,javascript"` — все языки
 
 ### Переменные подготовки тестового окружения (DMS)

@@ -99,7 +99,7 @@ test-golden-javascript:
 	sh scripts/local-test-golden.sh javascript
 
 test-golden-typescript:
-	sh scripts/local-test-golden-typescript.sh
+	sh scripts/test-golden-typescript.sh
 
 schemathesis:
 	sh scripts/local-schemathesis.sh

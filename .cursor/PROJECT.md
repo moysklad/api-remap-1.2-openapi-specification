@@ -10,15 +10,17 @@ Modular OpenAPI 3.0.3 specification for MoySklad JSON API 1.2 with automated SDK
 | `github.com/moysklad/api-remap-1.2-openapi-specification` | Public GitHub mirror (mirrored on master merge) |
 | `github.com/moysklad/php-remap-1.2-sdk` | Public PHP SDK (pushed via `push-sdk-php` job) |
 | `github.com/moysklad/java-remap-1.2-sdk` | Public Java SDK repository (generated/tested from this spec) |
+| `github.com/moysklad/remap-1.2-typescript-sdk` | Public TypeScript SDK repository (to be synced from GitLab) |
 | `git.company.lognex/moysklad/misc/php-remap-1.2-sdk` | Internal GitLab PHP SDK (managed by `prep-branch-and-mr-php` / `merge-branch-php`) |
 | `git.company.lognex/moysklad/misc/remap-1.2-java-sdk` | Internal GitLab Java SDK (managed by `prep-branch-and-mr-java` / `merge-branch-java`) |
+| `git.company.lognex/moysklad/misc/remap-1.2-typescript-sdk` | Internal GitLab TypeScript SDK (prep/merge jobs not wired yet) |
 
 ## Tech Stack
 
 - **Spec format:** OpenAPI 3.0.3 (YAML, modular: `src/openapi.yaml` is the root)
 - **Linting:** Redocly CLI (`npm run validate`)
 - **Bundling:** Redocly CLI → `dist/openapi.yaml` / `dist/openapi.json`
-- **SDK generation:** OpenAPI Generator CLI (PHP + Java + TypeScript with custom templates in `customtemplates/php/`, `customtemplates/java/` and `customtemplates/typescript/`); Java SDK runtime artifact is a self-contained shaded JAR with dependency relocation; TypeScript SDK uses the `typescript-fetch` generator and is generated locally only (no CI jobs yet)
+- **SDK generation:** OpenAPI Generator CLI (PHP + Java + TypeScript with custom templates in `customtemplates/php/`, `customtemplates/java/` and `customtemplates/typescript/`); Java SDK runtime artifact is a self-contained shaded JAR with dependency relocation; TypeScript SDK uses the `typescript-fetch` generator and has CI parity with PHP/Java for generation and golden tests (`generate-sdk-typescript`, `sdk-golden-typescript`); SDK repo sync and npm publishing jobs are not wired yet
 - **TypeScript SDK packaging:** generated as the publishable npm package `@moysklad/remap-1.2-sdk` (MIT, author Lognex Dev Team, `engines.node >= 22`, dual CommonJS/ESM build, npm tarball limited to `dist/`, `README.md`, `LICENSE`); package version comes from the spec repo semver (`SDK_VERSION` → nearest git tag → root `package.json`) via `scripts/generate-typescript-sdk.sh`, generator metadata is stripped so regeneration is byte-identical
 - **Generator version pinning:** `openapitools.json` pins OpenAPI Generator `7.14.0`; TypeScript generation output verified byte-identical on host, local `sdk` image and CI image `docker-openapitools-common:1.4-release` (CI checkout has no tags, so the package version falls back to root `package.json`)
 - **TypeScript polymorphism:** `customtemplates/typescript/modelGeneric*.mustache` implement `x-polymorphic-parent` inheritance and `x-polymorphic-discriminator` resolution by nested paths such as `meta.type`, including the batch-error fallback. TypeScript golden tests cover all 113 fixtures with zero tolerance for non-readOnly field loss (`122` tests)
@@ -56,8 +58,8 @@ gitlab/
   .gitlab-ci-spec-gen.yml              # Legacy PHP via openapi (SPEC_SDK_GENERATION=true)
   sdk/
     validate.yml
-    generate-sdk.yml
-    sdk-tests-golden.yml
+    generate-sdk.yml                   # bundle jobs + PHP/Java/TypeScript generation
+    sdk-tests-golden.yml               # PHP/Java/TypeScript golden jobs (TypeScript builds the npm package first)
     sdk-tests-smoke.yml
     sdk-contract.yml
 src/openapi.yaml                       # Root spec file
@@ -69,7 +71,7 @@ openapitools.json                      # Pinned OpenAPI Generator version (share
 scripts/generate-typescript-sdk.sh     # TypeScript SDK generation (semver version resolution + metadata cleanup)
 scripts/build-typescript-sdk.sh        # TypeScript SDK package build (dist CommonJS + dist/esm)
 scripts/npm-install-deps.sh            # npm deps for subprojects (public registry in Docker, install cache)
-scripts/local-test-golden-typescript.sh # TypeScript golden tests; missing SDK/tests/results is an error, never a skip
+scripts/test-golden-typescript.sh # TypeScript golden tests; missing SDK/tests/results is an error, never a skip
 tests/fixtures/                        # Shared golden fixtures for PHP, Java and TypeScript SDK assertions
 tests/php/                             # PHPUnit golden + smoke tests
 tests/java/assertions/                 # Maven golden tests for Java SDK
@@ -93,8 +95,8 @@ CHANGELOG.md                           # Auto-generated changelog (prepended by 
 | `changes-check` | `check-openapi-changes` | master push |
 | `verify` | `validate`, `bundle-openapi`, `bundle-smoke-openapi`; `deploy-contract-env`, `create-contract-user` for web / master / tag contract pipelines | push / web / master / tags |
 | `contract-test` | `sdk-contract` | web / master / tags |
-| `generate-sdk` | `generate-sdk-php`, `generate-sdk-java` (python/js remain stubs) | push / web / master |
-| `test` | `sdk-golden-php`, `sdk-golden-java`, `sdk-smoke` (java) | push / web / master |
+| `generate-sdk` | `generate-sdk-php`, `generate-sdk-java`, `generate-sdk-typescript` (python/js remain stubs) | push / web / master |
+| `test` | `sdk-golden-php`, `sdk-golden-java`, `sdk-golden-typescript`, `sdk-smoke` (java) | push / web / master |
 | `version` | `version:auto` | master push |
 | `push-sdk` | `push-sdk-php` | web + PUSH_TO_REMOTE=true |
 | `mirror` | `mirror-to-github`, `create-github-release` | master push |
@@ -107,7 +109,7 @@ Legacy stages (`prepare`, `deploy-for-space`, `create-user`, `build`, `delete-sp
 
 ## Pipeline Scenarios (summary)
 
-1. **Push to branch** — lint, bundle, light-bundle, generate PHP+Java SDK, run golden (PHP+Java) and smoke (Java), prep branch sync for both internal SDK repos, then publish a branch-scoped Java artifact to Artifactory.
+1. **Push to branch** — lint, bundle, light-bundle, generate PHP+Java+TypeScript SDK, run golden (PHP+Java+TypeScript) and smoke (Java), prep branch sync for the PHP and Java internal SDK repos, then publish a branch-scoped Java artifact to Artifactory.
 2. **Manual (web) on branch** — same as push + contract test flow (`deploy-contract-env` → `create-contract-user` → `sdk-contract`, optional `remove-contract-env`) + optional `push-sdk-php` (PUSH_TO_REMOTE=true) + the same PHP/Java internal SDK sync and Java Artifactory publish steps.
 3. **Master merge/push** — checks, contract test flow, SDK generation + tests, `version:auto` (CHANGELOG + tag), `mirror-to-github` + `create-github-release`, manual internal SDK release sync for PHP+Java, then Java publish to Maven Central.
 4. **Tag push** — SDK validate flow including Schemathesis `examples`; release/mirror jobs remain tied to master pushes.
@@ -116,7 +118,8 @@ Legacy stages (`prepare`, `deploy-for-space`, `create-user`, `build`, `delete-sp
 
 | Variable | Purpose |
 |----------|---------|
-| `SDK_LANGUAGES` | Comma-separated SDK languages to generate (default: `""` = all available) |
+| `SDK_LANGUAGES` | Comma-separated SDK languages to generate (default: `""` = all available; `php`, `java`, `typescript`) |
+| `NPM_REGISTRY_URL` | npm registry for `clients/typescript` deps in `sdk-golden-typescript` (generated package has no lock file); default internal Nexus |
 | `PUSH_TO_REMOTE` | Push SDK to GitHub remote repos (`"true"` / `"false"`, default `"false"`) |
 | `GIT_PASSWORD` | GitHub token (mirror, push-sdk, GitHub release) |
 | `CICD_PAT_PHP` | GitLab token for internal PHP SDK repo (`git.company.lognex/.../php-remap-1.2-sdk`) |

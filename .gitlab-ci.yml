@@ -43,8 +43,12 @@
 #
 # SDK_LANGUAGES:
 #   Языки для генерации SDK, через запятую без пробелов.
-#   Примеры: "php", "php,python,java", "" (пустая строка = все доступные)
+#   Примеры: "php", "php,java,typescript", "" (пустая строка = все доступные)
 #   По умолчанию: "" (генерируются все доступные SDK)
+#
+# NPM_REGISTRY_URL:
+#   Registry для установки зависимостей clients/typescript в sdk-golden-typescript.
+#   По умолчанию: внутренний Nexus (тот же, что в resolved-URL package-lock.json)
 #
 # SCHEMATHESIS_HOST / SCHEMATHESIS_LOGIN / SCHEMATHESIS_PASSWORD:
 #   Необязательные override-переменные для ручных contract-тестов.
@@ -82,6 +86,7 @@ merge-request-ci-placeholder:
 variables:
   SDK_LANGUAGES: ""
   PUSH_TO_REMOTE: "false"
+  NPM_REGISTRY_URL: "https://nexus.infra.lognex/repository/npm"
 
 # Сделано через два отдельных пути, чтобы разделить пайплайн где сдк генерится openapi и старой ручной java sdk
 include:

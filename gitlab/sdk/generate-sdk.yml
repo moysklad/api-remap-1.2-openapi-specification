@@ -105,6 +105,22 @@ generate-sdk-java:
       - clients/java/
     expire_in: 2 hours
 
+# Генерация TypeScript SDK (npm-пакет @moysklad/remap-1.2-sdk)
+# Сборка пакета и golden-тесты — в job sdk-golden-typescript (стадия test)
+generate-sdk-typescript:
+  extends: .generate-sdk-base
+  rules:
+    - if: '$SDK_LANGUAGES == "" || $SDK_LANGUAGES =~ /typescript/'
+      when: on_success
+  script:
+    - npm ci
+    - npm run generate-typescript
+    - echo "TypeScript SDK generated successfully"
+  artifacts:
+    paths:
+      - clients/typescript/
+    expire_in: 2 hours
+
 # Генерация JavaScript SDK (заглушка)
 #generate-sdk-javascript:
 #  extends: .generate-sdk-base
