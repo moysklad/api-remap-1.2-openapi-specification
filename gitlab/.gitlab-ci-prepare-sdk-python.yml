@@ -72,7 +72,7 @@ prep-branch-and-mr-python:
       PROJECT_ENCODED=moysklad%2Fmisc%2Fremap-1.2-python-sdk
 
       echo "Checking existing OPEN merge requests for branch $BRANCH_NAME -> master"
-      EXISTING_MR=$(curl --fail --silent --show-error \
+      EXISTING_MR=$(curl --insecure --fail --silent --show-error \
         --header "PRIVATE-TOKEN: ${CICD_PAT_PYTHON}" \
         --get \
         --data-urlencode "source_branch=${BRANCH_NAME}" \
@@ -88,7 +88,7 @@ prep-branch-and-mr-python:
 
       echo "Creating draft merge request for branch $BRANCH_NAME -> master"
       MR_TITLE="${BRANCH_NAME} Auto-generated Python SDK from OpenAPI specification"
-      curl --fail --silent --show-error --request POST \
+      curl --insecure --fail --silent --show-error --request POST \
         --header "PRIVATE-TOKEN: ${CICD_PAT_PYTHON}" \
         --data-urlencode "source_branch=${BRANCH_NAME}" \
         --data-urlencode "target_branch=master" \
