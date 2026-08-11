@@ -65,6 +65,15 @@ export function getFieldsOmittedOnSerialization(modelName: string): ReadonlySet<
         throw new Error(`Недопустимое имя модели: ${modelName}`);
     }
 
+    return getModelFieldsOmittedOnSerialization(modelName, new Set());
+}
+
+function getModelFieldsOmittedOnSerialization(modelName: string, visitedModels: Set<string>): Set<string> {
+    if (visitedModels.has(modelName)) {
+        return new Set();
+    }
+    visitedModels.add(modelName);
+
     const declarationPath = join(getSdkBuildPath(), 'models', `${modelName}.d.ts`);
     if (!existsSync(declarationPath)) {
         throw new Error(`Декларация модели не найдена: ${declarationPath}. ${BUILD_HINT}`);
@@ -75,7 +84,26 @@ export function getFieldsOmittedOnSerialization(modelName: string): ReadonlySet<
         throw new Error(`В ${declarationPath} не найдена сигнатура ${modelName}ToJSONTyped`);
     }
 
-    return parseOmittedFields(declaration, modelName);
+    const fields = parseOmittedFields(declaration, modelName);
+    const polymorphicParent = declaration.match(
+        new RegExp(`export type ${modelName} = [^;]+ & ([A-Za-z0-9_]+)\\.([A-Za-z0-9_]+);`),
+    );
+    if (polymorphicParent === null) {
+        return fields;
+    }
+
+    const [, importAlias, parentModel] = polymorphicParent;
+    const parentImport = declaration.match(
+        new RegExp(`import \\* as ${importAlias} from './([^']+)\\.js';`),
+    );
+    if (parentImport === null || parentModel === undefined) {
+        throw new Error(`В ${declarationPath} не найден импорт полиморфного родителя ${parentModel}`);
+    }
+
+    for (const field of getModelFieldsOmittedOnSerialization(parentModel, visitedModels)) {
+        fields.add(field);
+    }
+    return fields;
 }
 
 let allOmittedFields: ReadonlySet<string> | undefined;

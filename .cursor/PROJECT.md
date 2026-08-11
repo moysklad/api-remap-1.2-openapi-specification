@@ -21,7 +21,7 @@ Modular OpenAPI 3.0.3 specification for MoySklad JSON API 1.2 with automated SDK
 - **SDK generation:** OpenAPI Generator CLI (PHP + Java + TypeScript with custom templates in `customtemplates/php/`, `customtemplates/java/` and `customtemplates/typescript/`); Java SDK runtime artifact is a self-contained shaded JAR with dependency relocation; TypeScript SDK uses the `typescript-fetch` generator and is generated locally only (no CI jobs yet)
 - **TypeScript SDK packaging:** generated as the publishable npm package `@moysklad/remap-1.2-sdk` (MIT, author Lognex Dev Team, `engines.node >= 22`, dual CommonJS/ESM build, npm tarball limited to `dist/`, `README.md`, `LICENSE`); package version comes from the spec repo semver (`SDK_VERSION` → nearest git tag → root `package.json`) via `scripts/generate-typescript-sdk.sh`, generator metadata is stripped so regeneration is byte-identical
 - **Generator version pinning:** `openapitools.json` pins OpenAPI Generator `7.14.0`; TypeScript generation output verified byte-identical on host, local `sdk` image and CI image `docker-openapitools-common:1.4-release` (CI checkout has no tags, so the package version falls back to root `package.json`)
-- **Known TypeScript SDK gap:** `customtemplates/typescript/` does not implement `x-polymorphic-parent` / `x-polymorphic-discriminator` (PHP and Java templates do), so models neither inherit parent properties nor resolve children by `meta.type` (e.g. `AgentToJSON` returns `{}`). Every resulting field loss is enumerated in `tests/typescript/golden/knownSerializationGaps.ts` and asserted exactly
+- **TypeScript polymorphism:** `customtemplates/typescript/modelGeneric*.mustache` implement `x-polymorphic-parent` inheritance and `x-polymorphic-discriminator` resolution by nested paths such as `meta.type`, including the batch-error fallback. TypeScript golden tests cover all 113 fixtures with zero tolerance for non-readOnly field loss (`122` tests)
 - **Custom schema helper generation:** `x-entity-static-builder` is consumed by both PHP and Java custom templates to generate `createWithMeta(...)` helpers on referenceable models with top-level `meta`
 - **Testing:** PHPUnit (PHP golden + smoke via openapi-mock), Maven Surefire (Java golden), `node:test` + `tsc` (TypeScript golden), Schemathesis (contract)
 - **Versioning:** `standard-version` + `oasdiff` (breaking change detection); tag format `MAJOR.MINOR.PATCH` (semver)
@@ -63,7 +63,7 @@ gitlab/
 src/openapi.yaml                       # Root spec file
 customtemplates/php/                   # Mustache templates for PHP SDK
 customtemplates/java/                  # Mustache templates for Java SDK
-customtemplates/typescript/            # Mustache templates for TypeScript SDK (package.json, README, LICENSE, .npmignore)
+customtemplates/typescript/            # Mustache templates for TypeScript models, polymorphism and npm package metadata
 typescript-sdk-config.yaml             # OpenAPI Generator config for the TypeScript SDK
 openapitools.json                      # Pinned OpenAPI Generator version (shared by local and CI runs)
 scripts/generate-typescript-sdk.sh     # TypeScript SDK generation (semver version resolution + metadata cleanup)

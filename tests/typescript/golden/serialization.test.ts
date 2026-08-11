@@ -22,7 +22,6 @@ import {
     hasModel,
     loadSdk,
 } from '../src/sdk.js';
-import { KNOWN_SERIALIZATION_GAPS } from './knownSerializationGaps.js';
 
 /**
  * Маппинг fixture-файлов на модели SDK: ключ — имя файла без расширения,
@@ -175,12 +174,6 @@ test('fixtures, маппинг моделей и сгенерированный 
         );
     }
 
-    for (const fixtureName of Object.keys(KNOWN_SERIALIZATION_GAPS)) {
-        assert.ok(
-            fixtureNames.includes(fixtureName),
-            `KNOWN_SERIALIZATION_GAPS ссылается на несуществующий fixture: ${fixtureName}.json`,
-        );
-    }
 });
 
 test('неизвестные спецификации поля не ломают десериализацию', () => {
@@ -227,9 +220,9 @@ for (const [fixtureName, modelName] of Object.entries(FIXTURE_MODEL_MAP)) {
 
         assert.deepEqual(
             lostFields,
-            [...(KNOWN_SERIALIZATION_GAPS[fixtureName] ?? [])].sort(),
-            `Roundtrip ${fixtureName} через ${modelName} потерял не те поля, что перечислены`
-                + ' в KNOWN_SERIALIZATION_GAPS (поля readOnly исключены из проверки)',
+            [],
+            `Roundtrip ${fixtureName} через ${modelName} потерял поля`
+                + ` (поля readOnly исключены из проверки): ${lostFields.join(', ')}`,
         );
     });
 }

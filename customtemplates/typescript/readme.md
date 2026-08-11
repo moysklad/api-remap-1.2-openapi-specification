@@ -4,10 +4,17 @@
 
 Почему были добавлены кастомные шаблоны:
 
+* modelGeneric.mustache - реализует проектные расширения `x-polymorphic-parent` и
+  `x-polymorphic-discriminator`: объединяет сериализацию полей родительской цепочки,
+  выбирает дочерние `FromJSON`/`ToJSON` по вложенному пути (`meta.type`), поддерживает
+  mapping `undefined` и batch-error fallback.
+
 * modelGenericInterfaces.mustache - discriminator-поле родителя объявлено как required (`AttributeAbstract.type`),
   но в наследниках по allOf генератор выводит его как optional. TypeScript на это отвечает
   `TS2430: Interface 'AttributeBool' incorrectly extends interface 'AttributeAbstract'`.
   Свойство с `isDiscriminator` всегда выводится как required, поэтому наследники совместимы с родителем.
+  Для `x-polymorphic-parent` собственный интерфейс модели объединяется с типом родителя через intersection,
+  чтобы сохранить обязательность унаследованных полей даже при конфликтующем allOf.
 
 * package.mustache - стандартный шаблон подставляет заглушки (`author: OpenAPI-Generator`,
   `github.com/GIT_USER_ID/GIT_REPO_ID`) и не описывает состав публикуемого пакета. Кастомный шаблон задаёт
