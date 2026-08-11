@@ -111,6 +111,7 @@ merge-branch-python:
       when: manual
     - when: never
   script:
+    - apk add --no-cache python3
     - |
       if [ ! -d "clients/python" ]; then
         echo "Directory clients/python not found. Nothing to sync."

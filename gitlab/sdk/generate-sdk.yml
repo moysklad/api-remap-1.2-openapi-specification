@@ -65,6 +65,8 @@ generate-sdk-python:
   rules:
     - if: '$SDK_LANGUAGES == "" || $SDK_LANGUAGES =~ /python/'
       when: on_success
+  before_script:
+    - apk add --no-cache python3
   script:
     - npm ci
     - npm run generate-python
