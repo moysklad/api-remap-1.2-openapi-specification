@@ -21,8 +21,8 @@ Modular OpenAPI 3.0.3 specification for MoySklad JSON API 1.2 with automated SDK
 - **Linting:** Redocly CLI (`npm run validate`)
 - **Bundling:** Redocly CLI → `dist/openapi.yaml` / `dist/openapi.json`
 - **SDK generation:** OpenAPI Generator CLI (PHP + Java + TypeScript with custom templates in `customtemplates/php/`, `customtemplates/java/` and `customtemplates/typescript/`); Java SDK runtime artifact is a self-contained shaded JAR with dependency relocation; TypeScript SDK uses the `typescript-fetch` generator and has CI parity with PHP/Java for generation and golden tests (`generate-sdk-typescript`, `sdk-golden-typescript`); SDK repo sync and npm publishing jobs are not wired yet
-- **TypeScript SDK packaging:** generated as the publishable npm package `@moysklad/remap-1.2-sdk` (MIT, author Lognex Dev Team, `engines.node >= 22`, dual CommonJS/ESM build, npm tarball limited to `dist/`, `README.md`, `LICENSE`); package version comes from the spec repo semver (`SDK_VERSION` → nearest git tag → root `package.json`) via `scripts/generate-typescript-sdk.sh`, generator metadata is stripped so regeneration is byte-identical
-- **Generator version pinning:** `openapitools.json` pins OpenAPI Generator `7.14.0`; TypeScript generation output verified byte-identical on host, local `sdk` image and CI image `docker-openapitools-common:1.4-release` (CI checkout has no tags, so the package version falls back to root `package.json`)
+- **TypeScript SDK packaging:** generated as the publishable npm package `@moysklad/remap-1.2-sdk` (MIT, author Lognex Dev Team, `engines.node >= 22`, dual CommonJS/ESM build, npm tarball limited to `dist/`, `README.md`, `LICENSE`); package version comes from the spec repo semver (`SDK_VERSION` → root `package.json`) via `scripts/generate-typescript-sdk.sh`, generator metadata is stripped so regeneration is byte-identical
+- **Generator version pinning:** `openapitools.json` pins OpenAPI Generator `7.14.0`; TypeScript generation output verified byte-identical on host, local `sdk` image and CI image `docker-openapitools-common:1.4-release` (package version from root `package.json` unless `SDK_VERSION` is set)
 - **TypeScript polymorphism:** `customtemplates/typescript/modelGeneric*.mustache` implement `x-polymorphic-parent` inheritance and `x-polymorphic-discriminator` resolution by nested paths such as `meta.type`, including the batch-error fallback. TypeScript golden tests cover all 113 fixtures with zero tolerance for non-readOnly field loss (`122` tests)
 - **Custom schema helper generation:** `x-entity-static-builder` is consumed by both PHP and Java custom templates to generate `createWithMeta(...)` helpers on referenceable models with top-level `meta`
 - **Testing:** PHPUnit (PHP golden + smoke via openapi-mock), Maven Surefire (Java golden), `node:test` + `tsc` (TypeScript golden), Schemathesis (contract)
@@ -68,10 +68,11 @@ customtemplates/java/                  # Mustache templates for Java SDK
 customtemplates/typescript/            # Mustache templates for TypeScript models, polymorphism and npm package metadata
 typescript-sdk-config.yaml             # OpenAPI Generator config for the TypeScript SDK
 openapitools.json                      # Pinned OpenAPI Generator version (shared by local and CI runs)
-scripts/generate-typescript-sdk.sh     # TypeScript SDK generation (semver version resolution + metadata cleanup)
+scripts/generate-typescript-sdk.sh     # TypeScript SDK generation (SDK_VERSION / package.json + metadata cleanup)
 scripts/build-typescript-sdk.sh        # TypeScript SDK package build (dist CommonJS + dist/esm)
 scripts/npm-install-deps.sh            # npm deps for subprojects (public registry in Docker, install cache)
-scripts/test-golden-typescript.sh # TypeScript golden tests; missing SDK/tests/results is an error, never a skip
+scripts/local-test-golden.sh               # Golden tests php/python/java/javascript/typescript (TS: build + hard fail if SDK missing)
+
 tests/fixtures/                        # Shared golden fixtures for PHP, Java and TypeScript SDK assertions
 tests/php/                             # PHPUnit golden + smoke tests
 tests/java/assertions/                 # Maven golden tests for Java SDK
@@ -119,7 +120,7 @@ Legacy stages (`prepare`, `deploy-for-space`, `create-user`, `build`, `delete-sp
 | Variable | Purpose |
 |----------|---------|
 | `SDK_LANGUAGES` | Comma-separated SDK languages to generate (default: `""` = all available; `php`, `java`, `typescript`) |
-| `NPM_REGISTRY_URL` | npm registry for `clients/typescript` deps in `sdk-golden-typescript` (generated package has no lock file); default internal Nexus |
+| `NPM_REGISTRY_URL` | npm registry for public `clients/typescript` and `tests/typescript` deps in `sdk-golden-typescript`; default `registry.npmjs.org` |
 | `PUSH_TO_REMOTE` | Push SDK to GitHub remote repos (`"true"` / `"false"`, default `"false"`) |
 | `GIT_PASSWORD` | GitHub token (mirror, push-sdk, GitHub release) |
 | `CICD_PAT_PHP` | GitLab token for internal PHP SDK repo (`git.company.lognex/.../php-remap-1.2-sdk`) |

@@ -50,6 +50,10 @@ if [ -n "$USE_PUBLIC_NPM_REGISTRY" ] && [ -f package-lock.json ]; then
   npm "$NPM_CMD" "$@"
   trap - EXIT INT TERM
   mv package-lock.json.bak package-lock.json
+elif [ -n "$USE_PUBLIC_NPM_REGISTRY" ]; then
+  # Сгенерированный clients/typescript не имеет lock-файла, поэтому registry
+  # нельзя подменить в resolved URL — задаём его непосредственно npm.
+  npm "$NPM_CMD" --registry="${NPM_REGISTRY_URL:-https://registry.npmjs.org}" "$@"
 else
   npm "$NPM_CMD" "$@"
 fi

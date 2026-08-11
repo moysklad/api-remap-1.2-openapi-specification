@@ -27,7 +27,6 @@ help:
 	@echo "  pack-typescript   - list npm tarball contents (npm pack --dry-run)"
 	@echo "  test-smoke        - smoke tests (openapi-mock + tests)."
 	@echo "  test-golden       - golden tests for LANGUAGES (php, java, typescript). Default: php"
-	@echo "  test-golden-typescript - TypeScript golden tests (no skips: missing SDK/tests is an error)"
 	@echo "  schemathesis      - contract tests (SCHEMATHESIS_HOST, _LOGIN, _PASSWORD)"
 	@echo "  all               - lint + bundle + generate (php) + test-golden + test-smoke"
 
@@ -99,7 +98,7 @@ test-golden-javascript:
 	sh scripts/local-test-golden.sh javascript
 
 test-golden-typescript:
-	sh scripts/test-golden-typescript.sh
+	sh scripts/local-test-golden.sh typescript
 
 schemathesis:
 	sh scripts/local-schemathesis.sh

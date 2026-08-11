@@ -68,9 +68,8 @@ sdk-golden-java:
       fi
 
 # TypeScript Golden JSON тесты
-# В отличие от PHP/Java перед прогоном нужно собрать npm-пакет из сгенерированного SDK:
-# тесты работают с dist/, то есть проверяют ровно то, что публикуется в npm. Сборку,
-# установку зависимостей и прогон выполняет один скрипт (в CI-образе нет make → sh).
+# Перед прогоном собирается npm-пакет (dist/): тесты проверяют то, что публикуется в npm.
+# Сборка + deps + прогон — scripts/local-test-golden.sh typescript (как php/java локально).
 sdk-golden-typescript:
   extends:
     - .openapitools-image
@@ -83,18 +82,14 @@ sdk-golden-typescript:
     - if: '$SDK_LANGUAGES == "" || $SDK_LANGUAGES =~ /typescript/'
       when: on_success
   variables:
-    # clients/typescript генерируется без package-lock.json, поэтому devDependency
-    # typescript ставится из registry: по умолчанию внутренний Nexus, тот же, что в
-    # resolved-URL корневого package-lock.json
+    # Все зависимости здесь публичные. Используем registry.npmjs.org, так как Nexus
+    # требует авторизацию, а его сертификат не доверен в CI-образе.
     npm_config_registry: $NPM_REGISTRY_URL
+    # Для tests/typescript временно подменяем Nexus URL в package-lock.json.
+    USE_PUBLIC_NPM_REGISTRY: "true"
   script:
-    - |
-      if [ ! -f "clients/typescript/package.json" ]; then
-        echo "ERROR: clients/typescript not found (generate-sdk-typescript artifact?)"
-        exit 1
-      fi
     - echo "=== Golden tests (TypeScript) ==="
-    - sh scripts/test-golden-typescript.sh
+    - sh scripts/local-test-golden.sh typescript
   artifacts:
     when: always
     paths:

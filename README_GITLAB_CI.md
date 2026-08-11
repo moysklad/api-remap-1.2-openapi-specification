@@ -86,8 +86,8 @@ TypeScript SDK проходит те же стадии, что PHP и Java, и �
 
 Особенности по сравнению с PHP/Java:
 
-- golden-job перед прогоном собирает npm-пакет из артефакта генерации (`scripts/test-golden-typescript.sh`), поэтому тесты проверяют ровно то, что публикуется в npm; в CI-образе нет `make`, поэтому скрипт вызывается напрямую через `sh`;
-- отсутствие сгенерированного SDK, тестов, fixtures, итогов прогона или наличие пропущенных тестов — ошибка job'а, а не `skip`; полный TAP-вывод сохраняется артефактом `tests/typescript/build/golden-tests.log`;
+- golden-job перед прогоном собирает npm-пакет из артефакта генерации (`scripts/local-test-golden.sh typescript`), поэтому тесты проверяют ровно то, что публикуется в npm; в CI-образе нет `make`, поэтому скрипт вызывается напрямую через `sh`;
+- отсутствие сгенерированного SDK или каталога тестов — ошибка job'а, а не `skip`; полный вывод сохраняется артефактом `tests/typescript/build/golden-tests.log`;
 - версия npm-пакета в CI берётся из `version` корневого `package.json`: в CI checkout нет тегов, а значение синхронно обновляет `version:auto`;
 - job'ы синхронизации внутреннего репозитория `remap-1.2-typescript-sdk` и публикации в npm пока не реализованы.
 
@@ -112,7 +112,7 @@ TypeScript SDK проходит те же стадии, что PHP и Java, и �
 | Переменная          | Описание                                                                                              | Значение по умолчанию                     |
 |---------------------|-------------------------------------------------------------------------------------------------------|-------------------------------------------|
 | `SDK_LANGUAGES`     | Языки для генерации SDK (через запятую без пробелов)                                                   | `""` (все доступные)                      |
-| `NPM_REGISTRY_URL`  | npm registry для установки зависимостей `clients/typescript` в `sdk-golden-typescript` (пакет генерируется без lock-файла) | `https://nexus.infra.lognex/repository/npm` |
+| `NPM_REGISTRY_URL`  | npm registry для публичных зависимостей `clients/typescript` и `tests/typescript` в `sdk-golden-typescript` | `https://registry.npmjs.org` |
 
 **Примеры SDK_LANGUAGES:**
 - `""` или не задана — генерируются все доступные SDK (PHP, Java, TypeScript)
