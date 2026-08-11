@@ -7,7 +7,3 @@ disallowAdditionalPropertiesIfNotPresent: false
 gitHost: github.com
 gitUserId: moysklad
 gitRepoId: remap-1.2-python-sdk
-files:
-  LICENSE.mustache:
-    templateType: SupportingFiles
-    destinationFilename: LICENSE

@@ -8,12 +8,6 @@
   before_script:
     - git config --global user.name "$GIT_USER"
     - git config --global user.email "$GIT_MAIL"
-    - |
-      if [ -z "$CICD_PAT_PYTHON" ] || [ -z "$PYTHON_SDK_REPOSITORY_PATH" ]; then
-        echo "CICD_PAT_PYTHON and PYTHON_SDK_REPOSITORY_PATH must be configured."
-        exit 1
-      fi
-      export SDK_REPO_URL="${CI_SERVER_PROTOCOL}://oauth2:${CICD_PAT_PYTHON}@${CI_SERVER_HOST}/${PYTHON_SDK_REPOSITORY_PATH}.git"
 
 prep-branch-and-mr-python:
   extends: .prepare-sdk-python-base
@@ -21,7 +15,9 @@ prep-branch-and-mr-python:
     - job: generate-sdk-python
       artifacts: true
     - job: sdk-golden-python
+    - job: sdk-smoke
   rules:
+    # Автоматически при push в ветку (кроме master/release)
     - if: '($SDK_LANGUAGES == "" || $SDK_LANGUAGES =~ /python/) && $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH != "master" && $CI_COMMIT_BRANCH != "release" && $CI_COMMIT_TAG == null'
       when: on_success
     - if: '($SDK_LANGUAGES == "" || $SDK_LANGUAGES =~ /python/) && $CI_PIPELINE_SOURCE == "web" && $CI_COMMIT_BRANCH != "master" && $CI_COMMIT_BRANCH != "release" && $CI_COMMIT_TAG == null'
@@ -30,32 +26,52 @@ prep-branch-and-mr-python:
   script:
     - |
       if [ ! -d "clients/python" ]; then
-        echo "clients/python not found."
+        echo "Directory clients/python not found. Nothing to sync."
         exit 1
       fi
+      if [ -z "${CICD_PAT_PYTHON:-}" ] || [ -z "${PYTHON_SDK_REPOSITORY_PATH:-}" ]; then
+        echo "CICD_PAT_PYTHON and PYTHON_SDK_REPOSITORY_PATH must be configured."
+        exit 1
+      fi
+      SDK_REPO_URL="${CI_SERVER_PROTOCOL}://oauth2:${CICD_PAT_PYTHON}@${CI_SERVER_HOST}/${PYTHON_SDK_REPOSITORY_PATH}.git"
       BRANCH_NAME="${CI_COMMIT_REF_NAME}"
+
+      echo "Cloning internal Python SDK repository: ${PYTHON_SDK_REPOSITORY_PATH}"
       git clone --depth=1 --filter=blob:none --single-branch --branch master "$SDK_REPO_URL" sdk-repo
       cd sdk-repo
+
+      # Создаём/обновляем ветку для текущего ref
       if git ls-remote --exit-code --heads origin "$BRANCH_NAME" >/dev/null 2>&1; then
+        echo "Branch $BRANCH_NAME exists in remote. Checking it out."
         git fetch origin "$BRANCH_NAME":"refs/remotes/origin/$BRANCH_NAME"
         git checkout -B "$BRANCH_NAME" "origin/$BRANCH_NAME"
       else
+        echo "Branch $BRANCH_NAME does not exist. Creating from origin/master."
         git checkout -B "$BRANCH_NAME" origin/master
       fi
+
+      # Копируем весь сгенерированный Python SDK
       rsync -a --delete --exclude ".git" ../clients/python/ ./
       if [ -f "../CHANGELOG.md" ]; then
         cp ../CHANGELOG.md ./CHANGELOG.md
+      else
+        echo "CHANGELOG.md not found in spec repo; skipping copy."
       fi
+
       git add -A
       if git diff --staged --quiet; then
-        echo "No Python SDK changes to push."
+        echo "No changes to commit in internal SDK repository. Skipping push and MR creation."
         exit 0
       fi
+
       git commit -m "$BRANCH_NAME Auto-generated Python SDK from OpenAPI specification"
       git push -u origin "$BRANCH_NAME"
 
+      # Создаём предварительный MR, если его ещё нет
       API_BASE="${CI_API_V4_URL}"
-      PROJECT_ENCODED=$(printf '%s' "$PYTHON_SDK_REPOSITORY_PATH" | sed 's|/|%2F|g')
+      PROJECT_ENCODED=moysklad%2Fmisc%2Fremap-1.2-python-sdk
+
+      echo "Checking existing OPEN merge requests for branch $BRANCH_NAME -> master"
       EXISTING_MR=$(curl --fail --silent --show-error \
         --header "PRIVATE-TOKEN: ${CICD_PAT_PYTHON}" \
         --get \
@@ -64,18 +80,20 @@ prep-branch-and-mr-python:
         --data-urlencode "state=opened" \
         --data-urlencode "per_page=1" \
         "${API_BASE}/projects/${PROJECT_ENCODED}/merge_requests")
-      if [ "$EXISTING_MR" = "[]" ]; then
-        curl --fail --silent --show-error --request POST \
-          --header "PRIVATE-TOKEN: ${CICD_PAT_PYTHON}" \
-          --data-urlencode "source_branch=${BRANCH_NAME}" \
-          --data-urlencode "target_branch=master" \
-          --data-urlencode "title=Draft: ${BRANCH_NAME} Auto-generated Python SDK from OpenAPI specification" \
-          "${API_BASE}/projects/${PROJECT_ENCODED}/merge_requests" >/dev/null
+
+      if [ "$EXISTING_MR" != "[]" ]; then
+        echo "Open merge request already exists for branch $BRANCH_NAME. Skipping MR creation."
+        exit 0
       fi
-  artifacts:
-    paths:
-      - sdk-repo/
-    expire_in: 1 day
+
+      echo "Creating draft merge request for branch $BRANCH_NAME -> master"
+      MR_TITLE="${BRANCH_NAME} Auto-generated Python SDK from OpenAPI specification"
+      curl --fail --silent --show-error --request POST \
+        --header "PRIVATE-TOKEN: ${CICD_PAT_PYTHON}" \
+        --data-urlencode "source_branch=${BRANCH_NAME}" \
+        --data-urlencode "target_branch=master" \
+        --data-urlencode "title=Draft: ${MR_TITLE}" \
+        "${API_BASE}/projects/${PROJECT_ENCODED}/merge_requests" >/dev/null
 
 merge-branch-python:
   extends: .prepare-sdk-python-base
@@ -83,6 +101,7 @@ merge-branch-python:
     - job: generate-sdk-python
       artifacts: true
     - job: sdk-golden-python
+    - job: sdk-smoke
     - job: version:auto
       optional: true
     - job: create-github-release
@@ -93,29 +112,69 @@ merge-branch-python:
     - when: never
   script:
     - |
-      git clone "$CI_REPOSITORY_URL" spec-repo
-      git -C spec-repo fetch origin "$CI_COMMIT_REF_NAME" --tags
-      git -C spec-repo checkout "$CI_COMMIT_REF_NAME"
-      TAG="$(git -C spec-repo describe --tags --abbrev=0 2>/dev/null || true)"
-      if [ -z "$TAG" ]; then
-        echo "No release tag found in specification repository."
+      if [ ! -d "clients/python" ]; then
+        echo "Directory clients/python not found. Nothing to sync."
         exit 1
       fi
-      TAG_MESSAGE="$(git -C spec-repo tag -l --format='%(contents)' "$TAG")"
+
+      if [ -z "${CICD_PAT_PYTHON:-}" ] || [ -z "${PYTHON_SDK_REPOSITORY_PATH:-}" ]; then
+        echo "CICD_PAT_PYTHON and PYTHON_SDK_REPOSITORY_PATH must be configured."
+        exit 1
+      fi
+      SDK_REPO_URL="${CI_SERVER_PROTOCOL}://oauth2:${CICD_PAT_PYTHON}@${CI_SERVER_HOST}/${PYTHON_SDK_REPOSITORY_PATH}.git"
+
+      # Используем отдельный клон репозитория спецификации,
+      # чтобы видеть состояние после job version:auto (новый коммит и тег)
+      git clone "$CI_REPOSITORY_URL" spec-repo
+      cd spec-repo
+
+      # Обновляем ветку и теги — сюда уже подтянуты изменения, сделанные в version:auto
+      git fetch origin "$CI_COMMIT_REF_NAME" --tags
+      git checkout "$CI_COMMIT_REF_NAME"
+
+      TAG="$(git describe --tags --abbrev=0 2>/dev/null || echo "")"
+      if [ -n "$TAG" ]; then
+        # Сообщение тэга берём напрямую из аннотированного тэга, созданного в version:auto
+        TAG_MESSAGE="$(git tag -l --format='%(contents)' "$TAG" || echo "")"
+      else
+        echo "No tag found in spec repo; will update SDK master without creating a tag."
+      fi
+
+      cd ..
       python3 scripts/set-python-package-version.py clients/python "$TAG"
 
+      echo "Cloning internal Python SDK repository: ${PYTHON_SDK_REPOSITORY_PATH}"
       git clone --depth=1 --filter=blob:none --single-branch --branch master "$SDK_REPO_URL" sdk-repo
       rsync -a --delete --exclude ".git" clients/python/ sdk-repo/
-      cp spec-repo/CHANGELOG.md sdk-repo/CHANGELOG.md
+      if [ -f "spec-repo/CHANGELOG.md" ]; then
+        cp spec-repo/CHANGELOG.md sdk-repo/CHANGELOG.md
+      else
+        echo "CHANGELOG.md not found in spec repo."
+        exit 1
+      fi
+
       cd sdk-repo
-      printf '%s' "$TAG" > python-release-tag.txt
       git add -A
-      if ! git diff --staged --quiet; then
+      if git diff --staged --quiet; then
+        echo "No changes to commit in internal SDK repository. Proceeding to tag (if any)."
+      else
         git commit -m "Update Python SDK from OpenAPI specification for $TAG"
         git push origin master
       fi
-      git tag -a "$TAG" -m "${TAG_MESSAGE:-Release $TAG}" 2>/dev/null || true
-      git push origin "$TAG"
+
+      if [ -n "$TAG" ]; then
+        echo "Creating tag $TAG in internal SDK repository"
+        if [ -z "$TAG_MESSAGE" ]; then
+          TAG_MESSAGE="Release $TAG"
+        fi
+        git tag -a "$TAG" -m "$TAG_MESSAGE" || echo "Tag $TAG already exists in SDK repo, skipping creation."
+        git push origin "$TAG" || echo "Failed to push tag $TAG (it may already exist)."
+      fi
+
+      # Артефакт для deploy-python-to-pypi; не коммитим его в SDK-репозиторий.
+      printf '%s' "$TAG" > python-release-tag.txt
+      # Не передаём downstream job OAuth URL из sdk-repo/.git/config.
+      rm -rf .git
   artifacts:
     paths:
       - sdk-repo/

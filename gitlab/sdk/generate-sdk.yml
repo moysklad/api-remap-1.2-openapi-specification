@@ -62,9 +62,6 @@ generate-sdk-php:
 # Генерация Python SDK
 generate-sdk-python:
   extends: .generate-sdk-base
-  needs:
-    - job: validate
-      optional: true
   rules:
     - if: '$SDK_LANGUAGES == "" || $SDK_LANGUAGES =~ /python/'
       when: on_success

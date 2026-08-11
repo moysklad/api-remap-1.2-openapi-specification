@@ -14,7 +14,8 @@ RUN apk add --no-cache python3 py3-pip && \
   python3 -m venv /opt/python-sdk-venv && \
   /opt/python-sdk-venv/bin/pip install --no-cache-dir \
     "build>=1.2,<2" "twine>=6,<7" "pytest>=8.3,<9" \
-    "urllib3>=2.1,<3" "python-dateutil>=2.8.2" "pydantic>=2,<3" "typing-extensions>=4.7.1"
+    "PyYAML>=6,<7" "urllib3>=2.1,<3" "python-dateutil>=2.8.2" \
+    "pydantic>=2,<3" "typing-extensions>=4.7.1"
 ENV PATH="/opt/python-sdk-venv/bin:${PATH}"
 
 # Java + Maven (для Java smoke/golden тестов)

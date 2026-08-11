@@ -74,6 +74,11 @@
 Java release jobs (`deploy-to-artifactory`, `deploy-to-maven`) описаны в `gitlab/.gitlab-ci-deploy-sdk-java.yml` и выполняются на стадии `deploy-sdk`.
 Публикуемый Java runtime-артефакт собирается как self-contained shaded JAR с relocation зависимостей Jackson (включая nullable-модуль) внутрь SDK.
 
+Python repository sync запускается после `generate-sdk-python` и
+`sdk-golden-python`. Общий Java-based `sdk-smoke` также блокирует sync, когда
+эта job присутствует в pipeline. `merge-branch-python` требует semver-тег,
+обновляет версию пакета и передаёт тег в PyPI deploy только как CI-артефакт.
+
 #### 4. Push тэга
 
 При push тэга SDK-validate pipeline запускает те же проверки спецификации, сборку, SDK-тесты и Schemathesis `examples`. Автоматические релизные job'ы (`version:auto`, mirror/release) остаются привязаны к push в `master`.
