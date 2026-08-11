@@ -276,7 +276,7 @@ SCHEMATHESIS_INCLUDE_OPERATION_ID=createProduct \
 make schemathesis
 ```
 
-Отладка: `SCHEMATHESIS_REPEAT=2` — два прогона подряд; `SCHEMATHESIS_SEED` — другой seed (по умолчанию `1`). 
+Отладка: `SCHEMATHESIS_REPEAT=2` — два прогона подряд; `SCHEMATHESIS_SEED` — другой seed (по умолчанию `1`).
 
 ## Ссылки
 
