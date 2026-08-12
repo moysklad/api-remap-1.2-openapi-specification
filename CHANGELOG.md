@@ -1,3 +1,7 @@
+# Версия 0.19.0
+
+* feat: добавлен эндпоинт report/stock/all с параметром groupBy
+
 # Версия 0.18.0
 
 * feat: support entities in attributes
