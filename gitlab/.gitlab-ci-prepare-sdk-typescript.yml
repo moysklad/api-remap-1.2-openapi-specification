@@ -89,6 +89,10 @@ prep-branch-and-mr-typescript:
         --data-urlencode "target_branch=master" \
         --data-urlencode "title=Draft: ${MR_TITLE}" \
         "${API_BASE}/projects/${PROJECT_ENCODED}/merge_requests" >/dev/null
+  artifacts:
+    paths:
+      - sdk-repo/
+    expire_in: 1 day
 
 merge-branch-typescript:
   extends: .prepare-sdk-typescript-base
@@ -160,6 +164,13 @@ merge-branch-typescript:
       fi
 
       if [ -n "$TAG" ]; then
+        printf '%s' "$TAG" > typescript-release-tag.txt
+        echo "Saved release tag $TAG for downstream jobs."
+      else
+        echo "No release tag found in spec repo; downstream npm deploy will fail if started."
+      fi
+
+      if [ -n "$TAG" ]; then
         echo "Creating tag $TAG in internal SDK repository"
         if [ -z "$TAG_MESSAGE" ]; then
           TAG_MESSAGE="Release $TAG"
@@ -167,3 +178,7 @@ merge-branch-typescript:
         git tag -a "$TAG" -m "$TAG_MESSAGE" || echo "Tag $TAG already exists in SDK repo, skipping creation."
         git push origin "$TAG" || echo "Failed to push tag $TAG (it may already exist)."
       fi
+  artifacts:
+    paths:
+      - sdk-repo/
+    expire_in: 3 day

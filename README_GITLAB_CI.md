@@ -69,12 +69,15 @@
 | `create-github-release` | Создание GitHub Release на основе CHANGELOG                                                       |
 | `merge-branch-php`      | Обновление ветки master на удаленном gitlab sdk репозитории по сгенерированному sdk и выпуск тэга |
 | `merge-branch-java`     | Обновление master во внутреннем Java SDK репозитории и сохранение релизного semver-тега           |
-| `merge-branch-typescript` | Обновление master во внутреннем TypeScript SDK репозитории и выпуск релизного semver-тега       |
+| `merge-branch-typescript` | Обновление master во внутреннем TypeScript SDK репозитории и сохранение релизного semver-тега |
 | `deploy-to-maven`       | Публикация Java SDK в Maven Central                                                               |
 | `deploy-to-artifactory` | Публикация Java SDK в Artyfactory                                                                 |
+| `deploy-to-npm-prerelease` | Публикация TypeScript SDK в npm (ветка, dist-tag ≠ `latest`)                                   |
+| `deploy-to-npm`         | Публикация TypeScript SDK в npm (`latest`, после `merge-branch-typescript`)                       |
 
 Java release jobs (`deploy-to-artifactory`, `deploy-to-maven`) описаны в `gitlab/.gitlab-ci-deploy-sdk-java.yml` и выполняются на стадии `deploy-sdk`.
 Публикуемый Java runtime-артефакт собирается как self-contained shaded JAR с relocation зависимостей Jackson (включая nullable-модуль) внутрь SDK.
+TypeScript npm jobs (`deploy-to-npm-prerelease`, `deploy-to-npm`) описаны в `gitlab/.gitlab-ci-deploy-sdk-typescript.yml` на той же стадии `deploy-sdk`.
 
 #### 4. Push тэга
 
@@ -88,16 +91,20 @@ TypeScript SDK проходит те же стадии, что PHP и Java, и �
 |---------------------------|-------------------------------------|-------------------------------------------|
 | `generate-sdk-typescript` | `gitlab/sdk/generate-sdk.yml`       | `generate-sdk`, `needs: bundle-openapi`   |
 | `sdk-golden-typescript`   | `gitlab/sdk/sdk-tests-golden.yml`   | `test`, `needs: generate-sdk-typescript`  |
-| `prep-branch-and-mr-typescript` | `gitlab/.gitlab-ci-prepare-sdk-typescript.yml` | `prepare-sdk-repository`, `needs: generate-sdk-typescript` + `sdk-golden-typescript` |
-| `merge-branch-typescript` | `gitlab/.gitlab-ci-prepare-sdk-typescript.yml` | `prepare-sdk-repository` (manual на master), `needs:` generation + golden + optional `version:auto` / `create-github-release` |
+| `prep-branch-and-mr-typescript` | `gitlab/.gitlab-ci-prepare-sdk-typescript.yml` | `prepare-sdk-repository`, `needs: generate-sdk-typescript` + `sdk-golden-typescript`; artifacts `sdk-repo/` |
+| `merge-branch-typescript` | `gitlab/.gitlab-ci-prepare-sdk-typescript.yml` | `prepare-sdk-repository` (manual на master), `needs:` generation + golden + optional `version:auto` / `create-github-release`; artifacts `sdk-repo/` + `typescript-release-tag.txt` |
+| `deploy-to-npm-prerelease` | `gitlab/.gitlab-ci-deploy-sdk-typescript.yml` | `deploy-sdk`, `needs: prep-branch-and-mr-typescript` (artifacts) |
+| `deploy-to-npm` | `gitlab/.gitlab-ci-deploy-sdk-typescript.yml` | `deploy-sdk`, `needs: merge-branch-typescript` (artifacts) |
 
 Особенности по сравнению с PHP/Java:
 
 - golden-job перед прогоном собирает npm-пакет из артефакта генерации (`scripts/local-test-golden.sh typescript`), поэтому тесты проверяют ровно то, что публикуется в npm; в CI-образе нет `make`, поэтому скрипт вызывается напрямую через `sh`;
 - отсутствие сгенерированного SDK или каталога тестов — ошибка job'а, а не `skip`; полный вывод сохраняется артефактом `tests/typescript/build/golden-tests.log`;
 - версия npm-пакета в CI берётся из `version` корневого `package.json`: в CI checkout нет тегов, а значение синхронно обновляет `version:auto`;
-- prep/merge sync копирует `clients/typescript/` во внутренний `remap-1.2-typescript-sdk` через `CICD_PAT_TYPESCRIPT`; в `needs` нет `sdk-smoke` (в отличие от PHP/Java);
-- публикация в npm пока не реализована.
+- prep/merge sync копирует `clients/typescript/` во внутренний `remap-1.2-typescript-sdk` через `CICD_PAT_TYPESCRIPT`; в `needs` нет `sdk-smoke` (в отличие от PHP/Java); оба job'а публикуют `sdk-repo/` для npm deploy;
+- npm publish идёт из `sdk-repo` (не из `clients/typescript`): `build` → `npm pack` → `npm publish <tgz>` без пересборки перед publish; токен только в masked CI variable `NPM_TOKEN`;
+- ветка: версия `0.0.0-{branch}-{pipeline-id}` (semver-кодировка Java-стиля `{branch}-{pipeline-id}`), dist-tag = `CI_COMMIT_REF_SLUG` (не `latest`);
+- master: версия = semver-тег из `merge-branch-typescript` (`typescript-release-tag.txt`, fallback — re-clone SDK + тег из спеки, как у Java), dist-tag `latest`.
 
 ---
 
@@ -120,7 +127,8 @@ TypeScript SDK проходит те же стадии, что PHP и Java, и �
 | Переменная          | Описание                                                                                              | Значение по умолчанию                     |
 |---------------------|-------------------------------------------------------------------------------------------------------|-------------------------------------------|
 | `SDK_LANGUAGES`     | Языки для генерации SDK (через запятую без пробелов)                                                   | `""` (все доступные)                      |
-| `NPM_REGISTRY_URL`  | npm registry для публичных зависимостей `clients/typescript` и `tests/typescript` в `sdk-golden-typescript` | `https://registry.npmjs.org` |
+| `NPM_REGISTRY_URL`  | npm registry для публичных зависимостей `clients/typescript` / `tests/typescript` и npm deploy jobs | `https://registry.npmjs.org` |
+| `NPM_TOKEN`         | Masked CI token для публикации `@moysklad/remap-1.2-sdk` в npm (`deploy-to-npm-prerelease`, `deploy-to-npm`) | Задаётся в GitLab CI/CD Variables |
 
 **Примеры SDK_LANGUAGES:**
 - `""` или не задана — генерируются все доступные SDK (PHP, Java, TypeScript)
@@ -205,6 +213,7 @@ SCHEMATHESIS_INCLUDE_OPERATION_ID=createProduct
 | `CICD_PAT_PHP` | GitLab token для доступа к внутреннему репозиторию PHP SDK (`git.company.lognex/moysklad/misc/php-remap-1.2-sdk`)                       |
 | `CICD_PAT_JAVA` | GitLab token для доступа к внутреннему репозиторию Java SDK (`git.company.lognex/moysklad/misc/remap-1.2-java-sdk`)                    |
 | `CICD_PAT_TYPESCRIPT` | GitLab token для доступа к внутреннему репозиторию TypeScript SDK (`git.company.lognex/moysklad/misc/remap-1.2-typescript-sdk`) |
+| `NPM_TOKEN` | Masked/protected token для публикации TypeScript SDK в npm (`deploy-to-npm-prerelease`, `deploy-to-npm`); не хранить в скриптах, `.npmrc` или SDK-репозитории |
 
 ### Переменные для обратной совместимости
 
@@ -230,7 +239,7 @@ SCHEMATHESIS_INCLUDE_OPERATION_ID=createProduct
 | `version`                | Автоматическое версионирование и подготовка CHANGELOG/тегов                                                                        |
 | `mirror`                 | Зеркалирование в GitHub и GitHub Release                                                                                           |
 | `prepare-sdk-repository` | Подготовка внутренних репозиториев SDK (PHP/Java/TypeScript: ветки и релиз master по текущим изменениям) |
-| `deploy-sdk`             | Публикация Java SDK артефактов (`deploy-to-artifactory`, `deploy-to-maven`)                                                        |
+| `deploy-sdk`             | Публикация SDK артефактов: Java (`deploy-to-artifactory`, `deploy-to-maven`) и TypeScript (`deploy-to-npm-prerelease`, `deploy-to-npm`) |
 
 ### Стадии для обратной совместимости (старый Java SDK)
 
