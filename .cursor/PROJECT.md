@@ -13,14 +13,14 @@ Modular OpenAPI 3.0.3 specification for MoySklad JSON API 1.2 with automated SDK
 | `github.com/moysklad/remap-1.2-typescript-sdk` | Public TypeScript SDK repository (to be synced from GitLab) |
 | `git.company.lognex/moysklad/misc/php-remap-1.2-sdk` | Internal GitLab PHP SDK (managed by `prep-branch-and-mr-php` / `merge-branch-php`) |
 | `git.company.lognex/moysklad/misc/remap-1.2-java-sdk` | Internal GitLab Java SDK (managed by `prep-branch-and-mr-java` / `merge-branch-java`) |
-| `git.company.lognex/moysklad/misc/remap-1.2-typescript-sdk` | Internal GitLab TypeScript SDK (prep/merge jobs not wired yet) |
+| `git.company.lognex/moysklad/misc/remap-1.2-typescript-sdk` | Internal GitLab TypeScript SDK (managed by `prep-branch-and-mr-typescript` / `merge-branch-typescript`) |
 
 ## Tech Stack
 
 - **Spec format:** OpenAPI 3.0.3 (YAML, modular: `src/openapi.yaml` is the root)
 - **Linting:** Redocly CLI (`npm run validate`)
 - **Bundling:** Redocly CLI → `dist/openapi.yaml` / `dist/openapi.json`
-- **SDK generation:** OpenAPI Generator CLI (PHP + Java + TypeScript with custom templates in `customtemplates/php/`, `customtemplates/java/` and `customtemplates/typescript/`); Java SDK runtime artifact is a self-contained shaded JAR with dependency relocation; TypeScript SDK uses the `typescript-fetch` generator and has CI parity with PHP/Java for generation and golden tests (`generate-sdk-typescript`, `sdk-golden-typescript`); SDK repo sync and npm publishing jobs are not wired yet
+- **SDK generation:** OpenAPI Generator CLI (PHP + Java + TypeScript with custom templates in `customtemplates/php/`, `customtemplates/java/` and `customtemplates/typescript/`); Java SDK runtime artifact is a self-contained shaded JAR with dependency relocation; TypeScript SDK uses the `typescript-fetch` generator and has CI parity with PHP/Java for generation, golden tests, and internal GitLab SDK repo sync (`generate-sdk-typescript`, `sdk-golden-typescript`, `prep-branch-and-mr-typescript`, `merge-branch-typescript`); npm publishing jobs are not wired yet
 - **TypeScript SDK packaging:** generated as the publishable npm package `@moysklad/remap-1.2-sdk` (MIT, author Lognex Dev Team, `engines.node >= 22`, dual CommonJS/ESM build, npm tarball limited to `dist/`, `README.md`, `LICENSE`); package version comes from the spec repo semver (`SDK_VERSION` → root `package.json`) via `scripts/generate-typescript-sdk.sh`, generator metadata is stripped so regeneration is byte-identical
 - **Generator version pinning:** `openapitools.json` pins OpenAPI Generator `7.14.0`; TypeScript generation output verified byte-identical on host, local `sdk` image and CI image `docker-openapitools-common:1.4-release` (package version from root `package.json` unless `SDK_VERSION` is set)
 - **TypeScript polymorphism:** `customtemplates/typescript/modelGeneric*.mustache` implement `x-polymorphic-parent` inheritance and `x-polymorphic-discriminator` resolution by nested paths such as `meta.type`, including the batch-error fallback. TypeScript golden tests cover all 113 fixtures with zero tolerance for non-readOnly field loss (`122` tests)
@@ -51,6 +51,7 @@ gitlab/
   .gitlab-ci-sdk-php-gen.yml           # push-sdk-php (to GitHub, PUSH_TO_REMOTE=true)
   .gitlab-ci-prepare-sdk-php.yml       # prep-branch-and-mr-php + merge-branch-php (internal GitLab SDK repo)
   .gitlab-ci-prepare-sdk-java.yml      # prep-branch-and-mr-java + merge-branch-java (internal GitLab Java SDK repo)
+  .gitlab-ci-prepare-sdk-typescript.yml # prep-branch-and-mr-typescript + merge-branch-typescript (internal GitLab TypeScript SDK repo)
   .gitlab-ci-deploy-sdk-java.yml       # deploy-to-artifactory + deploy-to-maven (Java artifact publishing)
   .gitlab-ci-github-mirror.yml         # mirror-to-github + create-github-release
   version.gitlab-ci.yml                # version:auto (CHANGELOG, tag, push)
@@ -101,7 +102,7 @@ CHANGELOG.md                           # Auto-generated changelog (prepended by 
 | `version` | `version:auto` | master push |
 | `push-sdk` | `push-sdk-php` | web + PUSH_TO_REMOTE=true |
 | `mirror` | `mirror-to-github`, `create-github-release` | master push |
-| `prepare-sdk-repository` | `prep-branch-and-mr-php`, `prep-branch-and-mr-java`, `merge-branch-php`, `merge-branch-java` | push/web (branch) / master push |
+| `prepare-sdk-repository` | `prep-branch-and-mr-php`, `prep-branch-and-mr-java`, `prep-branch-and-mr-typescript`, `merge-branch-php`, `merge-branch-java`, `merge-branch-typescript` | push/web (branch) / master push |
 | `deploy-sdk` | `deploy-to-artifactory`, `deploy-to-maven` | branch push/web (Artifactory) / master push (Maven Central) |
 
 Legacy stages (`prepare`, `deploy-for-space`, `create-user`, `build`, `delete-space`) exist for backward-compatible Java SDK pipeline (USE_OLD_SDK=true).
@@ -110,9 +111,9 @@ Legacy stages (`prepare`, `deploy-for-space`, `create-user`, `build`, `delete-sp
 
 ## Pipeline Scenarios (summary)
 
-1. **Push to branch** — lint, bundle, light-bundle, generate PHP+Java+TypeScript SDK, run golden (PHP+Java+TypeScript) and smoke (Java), prep branch sync for the PHP and Java internal SDK repos, then publish a branch-scoped Java artifact to Artifactory.
-2. **Manual (web) on branch** — same as push + contract test flow (`deploy-contract-env` → `create-contract-user` → `sdk-contract`, optional `remove-contract-env`) + optional `push-sdk-php` (PUSH_TO_REMOTE=true) + the same PHP/Java internal SDK sync and Java Artifactory publish steps.
-3. **Master merge/push** — checks, contract test flow, SDK generation + tests, `version:auto` (CHANGELOG + tag), `mirror-to-github` + `create-github-release`, manual internal SDK release sync for PHP+Java, then Java publish to Maven Central.
+1. **Push to branch** — lint, bundle, light-bundle, generate PHP+Java+TypeScript SDK, run golden (PHP+Java+TypeScript) and smoke (Java), prep branch sync for the PHP, Java and TypeScript internal SDK repos, then publish a branch-scoped Java artifact to Artifactory.
+2. **Manual (web) on branch** — same as push + contract test flow (`deploy-contract-env` → `create-contract-user` → `sdk-contract`, optional `remove-contract-env`) + optional `push-sdk-php` (PUSH_TO_REMOTE=true) + the same PHP/Java/TypeScript internal SDK sync and Java Artifactory publish steps.
+3. **Master merge/push** — checks, contract test flow, SDK generation + tests, `version:auto` (CHANGELOG + tag), `mirror-to-github` + `create-github-release`, manual internal SDK release sync for PHP+Java+TypeScript, then Java publish to Maven Central.
 4. **Tag push** — SDK validate flow including Schemathesis `examples`; release/mirror jobs remain tied to master pushes.
 
 ## Key CI Variables
@@ -125,6 +126,7 @@ Legacy stages (`prepare`, `deploy-for-space`, `create-user`, `build`, `delete-sp
 | `GIT_PASSWORD` | GitHub token (mirror, push-sdk, GitHub release) |
 | `CICD_PAT_PHP` | GitLab token for internal PHP SDK repo (`git.company.lognex/.../php-remap-1.2-sdk`) |
 | `CICD_PAT_JAVA` | GitLab token for internal Java SDK repo (`git.company.lognex/.../remap-1.2-java-sdk`) |
+| `CICD_PAT_TYPESCRIPT` | GitLab token for internal TypeScript SDK repo (`git.company.lognex/.../remap-1.2-typescript-sdk`) |
 | `GIT_USER` / `GIT_MAIL` | Git identity for CI commits |
 | `SCHEMATHESIS_HOST` / `_LOGIN` / `_PASSWORD` | Optional overrides for contract tests; by default exported by `deploy-contract-env` / `create-contract-user` in web, master, and tag contract pipelines |
 | `SCHEMATHESIS_WORKERS` | Schemathesis parallel workers inside `sdk-contract`; default **auto** |
@@ -139,7 +141,7 @@ Legacy stages (`prepare`, `deploy-for-space`, `create-user`, `build`, `delete-sp
 - CHANGELOG block is generated from Conventional Commits (`feat`, `fix`, `docs`, `feat!`); if none found, `* технические изменения` is used.
 - Annotated tag message = CHANGELOG block for that version.
 - Release commit includes `[skip ci]` to avoid retriggering.
-- After `version:auto`, the pipeline SHA is stale; downstream jobs (e.g. `merge-branch-php`, `merge-branch-java`, `mirror-to-github`) must re-clone the repo and fetch tags to see the new commit/tag.
+- After `version:auto`, the pipeline SHA is stale; downstream jobs (e.g. `merge-branch-php`, `merge-branch-java`, `merge-branch-typescript`, `mirror-to-github`) must re-clone the repo and fetch tags to see the new commit/tag.
 
 ## Mock Server for Smoke Tests
 

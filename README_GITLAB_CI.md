@@ -24,7 +24,9 @@
 | `sdk-golden-java`        | Golden тесты для Java                                                    |
 | `sdk-golden-typescript`  | Golden тесты для TypeScript (сборка npm-пакета + roundtrip на общих fixtures) |
 | `sdk-smoke`              | Smoke тесты для Java с openapi-mock сервером                             |
-| `prep-branch-and-mr-php` | Cоздание/обновление ветки и mr по сгенерированному sdk в репозитории sdk |
+| `prep-branch-and-mr-php` | Создание/обновление ветки и MR по сгенерированному PHP SDK               |
+| `prep-branch-and-mr-java` | Создание/обновление ветки и MR по сгенерированному Java SDK             |
+| `prep-branch-and-mr-typescript` | Создание/обновление ветки и MR по сгенерированному TypeScript SDK |
 
 #### 2. Ручной запуск (web) на ветке
 
@@ -41,7 +43,9 @@
 | `create-contract-user`            | Создание пользователя для contract‑тестов, экспорт кредов                |
 | `sdk-contract`                    | Schemathesis контрактные тесты (стадия `contract-test`)                  |
 | `remove-contract-env`             | Очистка окружения после contract‑тестов (manual, allow_failure)          |
-| `prep-branch-and-mr-php`          | Cоздание/обновление ветки и mr по сгенерированному sdk в репозитории sdk |
+| `prep-branch-and-mr-php`          | Создание/обновление ветки и MR по сгенерированному PHP SDK               |
+| `prep-branch-and-mr-java`         | Создание/обновление ветки и MR по сгенерированному Java SDK              |
+| `prep-branch-and-mr-typescript`   | Создание/обновление ветки и MR по сгенерированному TypeScript SDK        |
 
 #### 3. Merge/push в master
 
@@ -65,6 +69,7 @@
 | `create-github-release` | Создание GitHub Release на основе CHANGELOG                                                       |
 | `merge-branch-php`      | Обновление ветки master на удаленном gitlab sdk репозитории по сгенерированному sdk и выпуск тэга |
 | `merge-branch-java`     | Обновление master во внутреннем Java SDK репозитории и сохранение релизного semver-тега           |
+| `merge-branch-typescript` | Обновление master во внутреннем TypeScript SDK репозитории и выпуск релизного semver-тега       |
 | `deploy-to-maven`       | Публикация Java SDK в Maven Central                                                               |
 | `deploy-to-artifactory` | Публикация Java SDK в Artyfactory                                                                 |
 
@@ -77,19 +82,22 @@ Java release jobs (`deploy-to-artifactory`, `deploy-to-maven`) описаны в
 
 ### TypeScript SDK в пайплайне
 
-TypeScript SDK проходит те же стадии, что PHP и Java, и его job'ы лежат в тех же файлах: генерация в `generate-sdk`, golden-тесты в `test`.
+TypeScript SDK проходит те же стадии, что PHP и Java, и его job'ы лежат в тех же файлах для генерации и golden; синхронизация внутреннего репозитория — в отдельном include по образцу PHP/Java.
 
 | Job                       | Файл                                | Стадия / needs                            |
 |---------------------------|-------------------------------------|-------------------------------------------|
 | `generate-sdk-typescript` | `gitlab/sdk/generate-sdk.yml`       | `generate-sdk`, `needs: bundle-openapi`   |
 | `sdk-golden-typescript`   | `gitlab/sdk/sdk-tests-golden.yml`   | `test`, `needs: generate-sdk-typescript`  |
+| `prep-branch-and-mr-typescript` | `gitlab/.gitlab-ci-prepare-sdk-typescript.yml` | `prepare-sdk-repository`, `needs: generate-sdk-typescript` + `sdk-golden-typescript` |
+| `merge-branch-typescript` | `gitlab/.gitlab-ci-prepare-sdk-typescript.yml` | `prepare-sdk-repository` (manual на master), `needs:` generation + golden + optional `version:auto` / `create-github-release` |
 
 Особенности по сравнению с PHP/Java:
 
 - golden-job перед прогоном собирает npm-пакет из артефакта генерации (`scripts/local-test-golden.sh typescript`), поэтому тесты проверяют ровно то, что публикуется в npm; в CI-образе нет `make`, поэтому скрипт вызывается напрямую через `sh`;
 - отсутствие сгенерированного SDK или каталога тестов — ошибка job'а, а не `skip`; полный вывод сохраняется артефактом `tests/typescript/build/golden-tests.log`;
 - версия npm-пакета в CI берётся из `version` корневого `package.json`: в CI checkout нет тегов, а значение синхронно обновляет `version:auto`;
-- job'ы синхронизации внутреннего репозитория `remap-1.2-typescript-sdk` и публикации в npm пока не реализованы.
+- prep/merge sync копирует `clients/typescript/` во внутренний `remap-1.2-typescript-sdk` через `CICD_PAT_TYPESCRIPT`; в `needs` нет `sdk-smoke` (в отличие от PHP/Java);
+- публикация в npm пока не реализована.
 
 ---
 
@@ -195,6 +203,8 @@ SCHEMATHESIS_INCLUDE_OPERATION_ID=createProduct
 | `GIT_MAIL`     | Email для git commits                                                                                                                   |
 | `CICD_PAT`     | GitLab token для доступа к внутреннему репозиторию Remap Api Specification (`git.company.lognex/moysklad/misc/remap-api-specification`) |
 | `CICD_PAT_PHP` | GitLab token для доступа к внутреннему репозиторию PHP SDK (`git.company.lognex/moysklad/misc/php-remap-1.2-sdk`)                       |
+| `CICD_PAT_JAVA` | GitLab token для доступа к внутреннему репозиторию Java SDK (`git.company.lognex/moysklad/misc/remap-1.2-java-sdk`)                    |
+| `CICD_PAT_TYPESCRIPT` | GitLab token для доступа к внутреннему репозиторию TypeScript SDK (`git.company.lognex/moysklad/misc/remap-1.2-typescript-sdk`) |
 
 ### Переменные для обратной совместимости
 
@@ -219,7 +229,7 @@ SCHEMATHESIS_INCLUDE_OPERATION_ID=createProduct
 | `test`                   | Тестирование (golden, smoke)                                                                                                       |
 | `version`                | Автоматическое версионирование и подготовка CHANGELOG/тегов                                                                        |
 | `mirror`                 | Зеркалирование в GitHub и GitHub Release                                                                                           |
-| `prepare-sdk-repository` | Подготовка внутренних репозиториев SDK (PHP/Java: ветки и релиз master по текущим изменениям)                                      |
+| `prepare-sdk-repository` | Подготовка внутренних репозиториев SDK (PHP/Java/TypeScript: ветки и релиз master по текущим изменениям) |
 | `deploy-sdk`             | Публикация Java SDK артефактов (`deploy-to-artifactory`, `deploy-to-maven`)                                                        |
 
 ### Стадии для обратной совместимости (старый Java SDK)
