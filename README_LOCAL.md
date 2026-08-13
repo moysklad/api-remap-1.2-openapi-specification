@@ -108,7 +108,9 @@ docker run --rm -v "$(pwd):/workspace" -w /workspace \
   docker.infra.lognex/docker-openapitools:1.2-release make all
 ```
 
-**Локальный Docker, TypeScript CI и Nexus:** если в `package-lock.json` указан корпоративный registry (nexus.infra.lognex), задаётся `USE_PUBLIC_NPM_REGISTRY=true`, и URL временно подменяется на registry.npmjs.org, чтобы не требовались корпоративный CA и авторизация Nexus. Исходный `package-lock.json` после установки восстанавливается. За это отвечают `scripts/npm-ci-public-registry.sh` (корневой проект) и `scripts/npm-install-deps.sh` (подпроекты `clients/typescript` и `tests/typescript`; для сгенерированного SDK без lock-файла registry задаётся напрямую; повторная установка пропускается, если `node_modules` уже соответствует `package.json` и lock-файлу — принудительно `NPM_CI_FORCE=1`).
+**Локальный Docker и Nexus:** если в корневом `package-lock.json` указан корпоративный registry (nexus.infra.lognex), в Docker задаётся `USE_PUBLIC_NPM_REGISTRY=true`. Скрипт `scripts/npm-ci-public-registry.sh` временно подменяет URL на registry.npmjs.org, чтобы не было ошибки SSL (`UNABLE_TO_VERIFY_LEAF_SIGNATURE`). Исходный `package-lock.json` после `npm ci` восстанавливается.
+
+**TypeScript-зависимости:** `scripts/npm-install-deps.sh` ставит зависимости `clients/typescript` и `tests/typescript` из публичного `registry.npmjs.org` (без подмены lock-файла). Повторная установка пропускается, если `node_modules` уже соответствует `package.json` и lock-файлу — принудительно `NPM_CI_FORCE=1`.
 
 **Schemathesis** (контрактные тесты против живого API):
 
@@ -123,56 +125,6 @@ docker compose run --rm \
 Список целей: `docker compose run --rm sdk make help`.
 
 `make lint` через Redocly запрещает `example` внутри `Schema`. Для фазы Schemathesis `examples` оставляйте примеры только в `src/paths/**` в request-секциях (`requestBody.content.<media-type>.example`); component schema, parameter schema и header schema examples должны отсутствовать.
-
----
-
-## TypeScript SDK
-
-Генерация запускается через `make generate-typescript` (или `npm run generate-typescript`) и выполняет `scripts/generate-typescript-sdk.sh`. Скрипт пересоздаёт `clients/typescript` с нуля, поэтому после каждой генерации в пакете нужно заново выполнить `npm install`.
-
-**Версия пакета** не захардкожена в шаблонах: скрипт берёт её из `SDK_VERSION` или, если переменная не задана, из `version` корневого `package.json` (его же выставляет `version:auto`), и прерывает генерацию, если значение не является semver `MAJOR.MINOR.PATCH[-prerelease]`. Ручная сборка prerelease-версии:
-
-```bash
-SDK_VERSION=0.18.0-rc.1 npm run generate-typescript
-```
-
-**Метаданные пакета** задаются кастомными шаблонами в `customtemplates/typescript/` и конфигом `typescript-sdk-config.yaml`: имя `@moysklad/remap-1.2-sdk`, лицензия MIT (файл `LICENSE`), author `Lognex Dev Team`, `engines.node >= 22`, `main`/`module`/`types`/`exports`, `files`, ссылки на npm и GitHub-репозиторий `remap-1.2-typescript-sdk`. README пакета содержит установку, импорт, авторизацию и базовый пример запроса. Подробности и причины каждого шаблона — в `customtemplates/typescript/readme.md`.
-
-**Проверка собираемого пакета:**
-
-```bash
-make build-typescript   # scripts/build-typescript-sdk.sh: npm install + dist/ (CommonJS) и dist/esm/ (ESM) с *.d.ts
-make pack-typescript    # собирает пакет и печатает состав будущего npm-архива (npm pack --dry-run)
-
-cd clients/typescript
-npm pack                # .tgz для проверки установки в чистом проекте
-tar -tzf moysklad-remap-1.2-sdk-*.tgz
-```
-
-В пакет попадают только `dist/`, `README.md`, `LICENSE` и `package.json`: исходники, tsconfig и служебные файлы генератора исключены.
-
-**Детерминированность.** Повторная генерация из того же коммита даёт побайтово одинаковый вывод. Служебные файлы генератора (`.openapi-generator/FILES`, `.openapi-generator/VERSION`, `.openapi-generator-ignore`) удаляются из вывода: они не относятся к SDK и меняются при обновлении генератора.
-
-Версия генератора зафиксирована в `openapitools.json` (`7.14.0`), поэтому локальная генерация и генерация в CI дают одинаковый результат. Проверено побайтово (`diff -r`) в трёх средах: хост, локальный образ `sdk` из `Dockerfile` и CI-образ `docker-openapitools-common:1.4-release`. Версия пакета берётся из `version` в корневом `package.json` (если не задан `SDK_VERSION`); её синхронно с тегами обновляет `version:auto`.
-
-### Golden тесты TypeScript SDK
-
-Тесты живут в `tests/typescript` и работают с собранным пакетом (`clients/typescript/dist/esm`), то есть проверяют ровно то, что публикуется в npm.
-
-```bash
-make test-golden-typescript                    # scripts/local-test-golden.sh typescript
-docker compose run --rm sdk make test-golden-typescript
-```
-
-Скрипт при необходимости собирает пакет (`dist/`), ставит зависимости тестов (`npm ci`) и прогоняет их. Как у PHP, отсутствие сгенерированного SDK или каталога тестов — ошибка, не skip. Полный вывод прогона сохраняется в `tests/typescript/build/golden-tests.log` (артефакт CI).
-
-Тот же скрипт запускает CI-job `sdk-golden-typescript` (в CI-образе нет `make`, поэтому вызов: `sh scripts/local-test-golden.sh typescript`).
-
-По каждой fixture из `tests/fixtures` (те же файлы, что у PHP и Java golden-тестов) выполняется roundtrip `fixture → <Model>FromJSON → <Model>ToJSON` и проверяется, что значения не искажены, лишних ключей нет, а массивы сохранили длину. Соответствие fixture ↔ модель задано в `FIXTURE_MODEL_MAP` (`tests/typescript/golden/serialization.test.ts`), поэтому новая fixture без записи в маппинге роняет тест.
-
-Генератор `typescript-fetch` не сериализует `readOnly`-поля и объявляет их в сигнатуре `<Model>ToJSONTyped(value?: Omit<Model, 'id'|...>)`. Тест читает этот список из декларации собранного пакета, включая цепочку `x-polymorphic-parent`, а не из захардкоженного перечня полей: пропуск поля допускается только если оно объявлено `readOnly` (на верхнем уровне — в самой модели или её полиморфном родителе, во вложенных объектах — хотя бы в одной модели SDK, так как модель вложенного поля в рантайме неизвестна).
-
-**Полиморфия и потери.** Потерь сериализации, связанных с `x-polymorphic-parent` и `x-polymorphic-discriminator`, не осталось. Шаблоны `modelGeneric.mustache` и `modelGenericInterfaces.mustache` добавляют поля полиморфного родителя и выбирают дочернюю модель по вложенному пути discriminator (в текущей спецификации — `meta.type`), поддерживают mapping `undefined` и batch-error fallback. Любая потеря поля вне `readOnly` роняет golden-тест. Локальный набор проходит `122` теста по `113` fixtures без `fail` и `skip`.
 
 ---
 
@@ -207,7 +159,7 @@ api-sdk-builder/
 ├── scripts/
 │   ├── generate-typescript-sdk.sh    # Генерация TypeScript SDK с версией из package.json / SDK_VERSION
 │   ├── build-typescript-sdk.sh       # Сборка npm-пакета TypeScript SDK (dist + dist/esm)
-│   ├── npm-install-deps.sh           # npm-зависимости подпроектов (registry для Docker, кеш установки)
+│   ├── npm-install-deps.sh           # npm-зависимости подпроектов (пропуск повторной установки)
 │   └── local-test-golden.sh          # Golden тесты php/python/java/javascript/typescript
 ├── tests/
 │   ├── fixtures/                     # Общие эталонные JSON для golden тестов всех языков

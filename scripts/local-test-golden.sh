@@ -63,13 +63,8 @@ run_javascript() {
 }
 
 run_typescript() {
-  # Как PHP: отсутствие SDK/тестов — ошибка (не skip). Тесты идут по собранному npm-пакету.
-  if [ ! -f "clients/typescript/package.json" ]; then
+  if [ ! -d "clients/typescript" ]; then
     echo "ERROR: clients/typescript not found. Run: make generate-typescript"
-    exit 1
-  fi
-  if [ ! -f "tests/typescript/package.json" ]; then
-    echo "ERROR: tests/typescript not found"
     exit 1
   fi
   if [ ! -f "clients/typescript/dist/esm/index.js" ]; then
@@ -77,12 +72,8 @@ run_typescript() {
     sh scripts/build-typescript-sdk.sh
   fi
   sh scripts/npm-install-deps.sh tests/typescript ci --no-audit --no-fund
-  mkdir -p tests/typescript/build
-  TEST_LOG=tests/typescript/build/golden-tests.log
-  STATUS=0
-  (cd tests/typescript && npm run --silent test:golden) > "$TEST_LOG" 2>&1 || STATUS=$?
-  cat "$TEST_LOG"
-  exit "$STATUS"
+  cd tests/typescript
+  npm run test:golden
 }
 
 case "$LANG" in

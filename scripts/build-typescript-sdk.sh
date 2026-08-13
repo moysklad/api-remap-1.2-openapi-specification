@@ -14,7 +14,6 @@ if [ ! -f "$SDK_DIR/package.json" ]; then
   exit 1
 fi
 
-# --ignore-scripts: prepare пакета сам вызывает build, второй прогон tsc не нужен
 echo "==> установка зависимостей ($SDK_DIR)..."
 sh scripts/npm-install-deps.sh "$SDK_DIR" install --ignore-scripts --no-audit --no-fund
 

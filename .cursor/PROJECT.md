@@ -4,15 +4,15 @@ Modular OpenAPI 3.0.3 specification for MoySklad JSON API 1.2 with automated SDK
 
 ## Repositories
 
-| Repo | Purpose |
-|------|---------|
-| `git.company.lognex/moysklad/misc/remap-api-specification` (this repo) | OpenAPI spec, SDK generation, CI/CD pipeline, tests |
-| `github.com/moysklad/api-remap-1.2-openapi-specification` | Public GitHub mirror (mirrored on master merge) |
-| `github.com/moysklad/php-remap-1.2-sdk` | Public PHP SDK (pushed via `push-sdk-php` job) |
-| `github.com/moysklad/java-remap-1.2-sdk` | Public Java SDK repository (generated/tested from this spec) |
-| `github.com/moysklad/remap-1.2-typescript-sdk` | Public TypeScript SDK repository (to be synced from GitLab) |
-| `git.company.lognex/moysklad/misc/php-remap-1.2-sdk` | Internal GitLab PHP SDK (managed by `prep-branch-and-mr-php` / `merge-branch-php`) |
-| `git.company.lognex/moysklad/misc/remap-1.2-java-sdk` | Internal GitLab Java SDK (managed by `prep-branch-and-mr-java` / `merge-branch-java`) |
+| Repo | Purpose                                                                                                 |
+|------|---------------------------------------------------------------------------------------------------------|
+| `git.company.lognex/moysklad/misc/remap-api-specification` (this repo) | OpenAPI spec, SDK generation, CI/CD pipeline, tests                                                     |
+| `github.com/moysklad/api-remap-1.2-openapi-specification` | Public GitHub mirror (mirrored on master merge)                                                         |
+| `github.com/moysklad/php-remap-1.2-sdk` | Public PHP SDK (pushed via `push-sdk-php` job)                                                          |
+| `github.com/moysklad/java-remap-1.2-sdk` | Public Java SDK repository (generated/tested from this spec)                                            |
+| `github.com/moysklad/remap-1.2-typescript-sdk` | Public TypeScript SDK repository (GitLab - GitHub push mirror)                                          |
+| `git.company.lognex/moysklad/misc/php-remap-1.2-sdk` | Internal GitLab PHP SDK (managed by `prep-branch-and-mr-php` / `merge-branch-php`)                      |
+| `git.company.lognex/moysklad/misc/remap-1.2-java-sdk` | Internal GitLab Java SDK (managed by `prep-branch-and-mr-java` / `merge-branch-java`)                   |
 | `git.company.lognex/moysklad/misc/remap-1.2-typescript-sdk` | Internal GitLab TypeScript SDK (managed by `prep-branch-and-mr-typescript` / `merge-branch-typescript`) |
 
 ## Tech Stack
@@ -23,7 +23,6 @@ Modular OpenAPI 3.0.3 specification for MoySklad JSON API 1.2 with automated SDK
 - **SDK generation:** OpenAPI Generator CLI (PHP + Java + TypeScript with custom templates in `customtemplates/php/`, `customtemplates/java/` and `customtemplates/typescript/`); Java SDK runtime artifact is a self-contained shaded JAR with dependency relocation; TypeScript SDK uses the `typescript-fetch` generator and has CI parity with PHP/Java for generation, golden tests, internal GitLab SDK repo sync (`generate-sdk-typescript`, `sdk-golden-typescript`, `prep-branch-and-mr-typescript`, `merge-branch-typescript`), and npm publishing (`deploy-to-npm-prerelease`, `deploy-to-npm`)
 - **TypeScript SDK packaging:** generated as the publishable npm package `@moysklad/remap-1.2-sdk` (MIT, author Lognex Dev Team, `engines.node >= 22`, dual CommonJS/ESM build, npm tarball limited to `dist/`, `README.md`, `LICENSE`); package version comes from the spec repo semver (`SDK_VERSION` → root `package.json`) via `scripts/generate-typescript-sdk.sh`, generator metadata is stripped so regeneration is byte-identical
 - **Generator version pinning:** `openapitools.json` pins OpenAPI Generator `7.14.0`; TypeScript generation output verified byte-identical on host, local `sdk` image and CI image `docker-openapitools-common:1.4-release` (package version from root `package.json` unless `SDK_VERSION` is set)
-- **TypeScript polymorphism:** `customtemplates/typescript/modelGeneric*.mustache` implement `x-polymorphic-parent` inheritance and `x-polymorphic-discriminator` resolution by nested paths such as `meta.type`, including the batch-error fallback. TypeScript golden tests cover all 113 fixtures with zero tolerance for non-readOnly field loss (`122` tests)
 - **Custom schema helper generation:** `x-entity-static-builder` is consumed by both PHP and Java custom templates to generate `createWithMeta(...)` helpers on referenceable models with top-level `meta`
 - **Testing:** PHPUnit (PHP golden + smoke via openapi-mock), Maven Surefire (Java golden), `node:test` + `tsc` (TypeScript golden), Schemathesis (contract)
 - **Versioning:** `standard-version` + `oasdiff` (breaking change detection); tag format `MAJOR.MINOR.PATCH` (semver)
@@ -68,13 +67,6 @@ src/openapi.yaml                       # Root spec file
 customtemplates/php/                   # Mustache templates for PHP SDK
 customtemplates/java/                  # Mustache templates for Java SDK
 customtemplates/typescript/            # Mustache templates for TypeScript models, polymorphism and npm package metadata
-typescript-sdk-config.yaml             # OpenAPI Generator config for the TypeScript SDK
-openapitools.json                      # Pinned OpenAPI Generator version (shared by local and CI runs)
-scripts/generate-typescript-sdk.sh     # TypeScript SDK generation (SDK_VERSION / package.json + metadata cleanup)
-scripts/build-typescript-sdk.sh        # TypeScript SDK package build (dist CommonJS + dist/esm)
-scripts/npm-install-deps.sh            # npm deps for subprojects (public registry in Docker, install cache)
-scripts/local-test-golden.sh               # Golden tests php/python/java/javascript/typescript (TS: build + hard fail if SDK missing)
-
 tests/fixtures/                        # Shared golden fixtures for PHP, Java and TypeScript SDK assertions
 tests/php/                             # PHPUnit golden + smoke tests
 tests/java/assertions/                 # Maven golden tests for Java SDK

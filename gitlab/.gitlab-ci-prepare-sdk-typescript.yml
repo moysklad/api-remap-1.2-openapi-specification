@@ -100,6 +100,7 @@ merge-branch-typescript:
     - job: generate-sdk-typescript
       artifacts: true
     - job: sdk-golden-typescript
+    - job: sdk-smoke
     - job: version:auto
       optional: true
     - job: create-github-release

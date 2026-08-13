@@ -12,7 +12,7 @@ files:
     templateType: SupportingFiles
     destinationFilename: LICENSE
 additionalProperties:
-  npmName: "@moysklad/remap-1.2-sdk"
+  npmName: "@smaksimenko/remap-1.2-sdk"
   licenseName: "MIT"
   supportsES6: true
   legacyDiscriminatorBehavior: false

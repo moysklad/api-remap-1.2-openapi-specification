@@ -91,17 +91,17 @@ TypeScript SDK проходит те же стадии, что PHP и Java, и �
 |---------------------------|-------------------------------------|-------------------------------------------|
 | `generate-sdk-typescript` | `gitlab/sdk/generate-sdk.yml`       | `generate-sdk`, `needs: bundle-openapi`   |
 | `sdk-golden-typescript`   | `gitlab/sdk/sdk-tests-golden.yml`   | `test`, `needs: generate-sdk-typescript`  |
-| `prep-branch-and-mr-typescript` | `gitlab/.gitlab-ci-prepare-sdk-typescript.yml` | `prepare-sdk-repository`, `needs: generate-sdk-typescript` + `sdk-golden-typescript`; artifacts `sdk-repo/` |
-| `merge-branch-typescript` | `gitlab/.gitlab-ci-prepare-sdk-typescript.yml` | `prepare-sdk-repository` (manual на master), `needs:` generation + golden + optional `version:auto` / `create-github-release`; artifacts `sdk-repo/` + `typescript-release-tag.txt` |
+| `prep-branch-and-mr-typescript` | `gitlab/.gitlab-ci-prepare-sdk-typescript.yml` | `prepare-sdk-repository`, `needs: generate-sdk-typescript` + `sdk-golden-typescript` + `sdk-smoke`; artifacts `sdk-repo/` |
+| `merge-branch-typescript` | `gitlab/.gitlab-ci-prepare-sdk-typescript.yml` | `prepare-sdk-repository` (manual на master), `needs:` generation + golden + `sdk-smoke` + optional `version:auto` / `create-github-release`; artifacts `sdk-repo/` + `typescript-release-tag.txt` |
 | `deploy-to-npm-prerelease` | `gitlab/.gitlab-ci-deploy-sdk-typescript.yml` | `deploy-sdk`, `needs: prep-branch-and-mr-typescript` (artifacts) |
 | `deploy-to-npm` | `gitlab/.gitlab-ci-deploy-sdk-typescript.yml` | `deploy-sdk`, `needs: merge-branch-typescript` (artifacts) |
 
 Особенности по сравнению с PHP/Java:
 
 - golden-job перед прогоном собирает npm-пакет из артефакта генерации (`scripts/local-test-golden.sh typescript`), поэтому тесты проверяют ровно то, что публикуется в npm; в CI-образе нет `make`, поэтому скрипт вызывается напрямую через `sh`;
-- отсутствие сгенерированного SDK или каталога тестов — ошибка job'а, а не `skip`; полный вывод сохраняется артефактом `tests/typescript/build/golden-tests.log`;
+- отсутствие сгенерированного SDK или каталога тестов — ошибка job'а, а не `skip`;
 - версия npm-пакета в CI берётся из `version` корневого `package.json`: в CI checkout нет тегов, а значение синхронно обновляет `version:auto`;
-- prep/merge sync копирует `clients/typescript/` во внутренний `remap-1.2-typescript-sdk` через `CICD_PAT_TYPESCRIPT`; в `needs` нет `sdk-smoke` (в отличие от PHP/Java); оба job'а публикуют `sdk-repo/` для npm deploy;
+- prep/merge sync копирует `clients/typescript/` во внутренний `remap-1.2-typescript-sdk` через `CICD_PAT_TYPESCRIPT`; в `needs` у обоих job'ов есть `sdk-smoke` (как у PHP/Java); оба job'а публикуют `sdk-repo/` для npm deploy;
 - npm publish идёт из `sdk-repo` (не из `clients/typescript`): `build` → `npm pack` → `npm publish <tgz>` без пересборки перед publish; токен только в masked CI variable `NPM_TOKEN`;
 - ветка: версия `0.0.0-{branch}-{pipeline-id}` (semver-кодировка Java-стиля `{branch}-{pipeline-id}`), dist-tag = `CI_COMMIT_REF_SLUG` (не `latest`);
 - master: версия = semver-тег из `merge-branch-typescript` (`typescript-release-tag.txt`, fallback — re-clone SDK + тег из спеки, как у Java), dist-tag `latest`.

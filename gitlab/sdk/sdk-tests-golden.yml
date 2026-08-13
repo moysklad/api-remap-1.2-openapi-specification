@@ -68,8 +68,6 @@ sdk-golden-java:
       fi
 
 # TypeScript Golden JSON тесты
-# Перед прогоном собирается npm-пакет (dist/): тесты проверяют то, что публикуется в npm.
-# Сборка + deps + прогон — scripts/local-test-golden.sh typescript (как php/java локально).
 sdk-golden-typescript:
   extends:
     - .openapitools-image
@@ -82,19 +80,10 @@ sdk-golden-typescript:
     - if: '$SDK_LANGUAGES == "" || $SDK_LANGUAGES =~ /typescript/'
       when: on_success
   variables:
-    # Все зависимости здесь публичные. Используем registry.npmjs.org, так как Nexus
-    # требует авторизацию, а его сертификат не доверен в CI-образе.
     npm_config_registry: $NPM_REGISTRY_URL
-    # Для tests/typescript временно подменяем Nexus URL в package-lock.json.
-    USE_PUBLIC_NPM_REGISTRY: "true"
   script:
     - echo "=== Golden tests (TypeScript) ==="
     - sh scripts/local-test-golden.sh typescript
-  artifacts:
-    when: always
-    paths:
-      - tests/typescript/build/golden-tests.log
-    expire_in: 1 week
 
 # JavaScript Golden JSON тесты (заглушка)
 #sdk-golden-javascript:

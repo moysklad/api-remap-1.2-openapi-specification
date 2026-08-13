@@ -105,8 +105,7 @@ generate-sdk-java:
       - clients/java/
     expire_in: 2 hours
 
-# Генерация TypeScript SDK (npm-пакет @moysklad/remap-1.2-sdk)
-# Сборка пакета и golden-тесты — в job sdk-golden-typescript (стадия test)
+# Генерация TypeScript SDK
 generate-sdk-typescript:
   extends: .generate-sdk-base
   rules:

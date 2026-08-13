@@ -10,7 +10,6 @@ if [ -z "$VERSION" ]; then
   VERSION_SOURCE="package.json"
 fi
 
-# Версия попадает в публикуемый package.json, поэтому пропускаем только semver
 if ! echo "$VERSION" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?$'; then
   echo "ERROR: version '$VERSION' (source: $VERSION_SOURCE) is not semver MAJOR.MINOR.PATCH[-prerelease]"
   exit 1
@@ -18,7 +17,6 @@ fi
 
 echo "==> TypeScript SDK version: $VERSION (source: $VERSION_SOURCE)"
 
-# Полная перегенерация: файлы прошлых запусков не должны оставаться в выводе
 rm -rf clients/typescript
 
 openapi-generator-cli generate \
@@ -29,7 +27,6 @@ openapi-generator-cli generate \
   -t customtemplates/typescript \
   --additional-properties=npmVersion="$VERSION"
 
-# Служебные файлы генератора: не нужны в SDK-репозитории и меняются при обновлении генератора
 rm -rf clients/typescript/.openapi-generator
 rm -f clients/typescript/.openapi-generator-ignore
 
