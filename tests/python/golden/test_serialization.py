@@ -215,6 +215,17 @@ def test_roundtrip_serialization(fixture_name: str, name: str) -> None:
     assert normalize(serialized) == normalize(original)
 
 
+def test_from_dict_builds_nested_typed_model() -> None:
+    from moysklad_remap_12_sdk.models.currency import Currency
+    from moysklad_remap_12_sdk.models.currency_rate import CurrencyRate
+
+    rate = CurrencyRate.from_dict({"currency": {"name": "Rouble"}})
+
+    assert rate is not None
+    assert isinstance(rate.currency, Currency)
+    assert rate.currency.name == "Rouble"
+
+
 @pytest.mark.parametrize(
     ("wrapper_name", "entity_type"),
     [

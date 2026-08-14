@@ -73,7 +73,7 @@ Java SDK собирается как self-contained shaded-артефакт: в�
 
 ### Локально (без Docker)
 
-На машине должны быть установлены: **Node.js**, **npm**, **Python ≥3.10**, а для PHP flow — **PHP ≥8.1** с расширениями **dom**, **json**, **mbstring**, **curl**, **Composer**.
+На машине должны быть установлены: **Node.js**, **npm**, **Python ≥3.10** с расширениями (смотри Dockerfile), а для PHP flow — **PHP ≥8.1** с расширениями **dom**, **json**, **mbstring**, **curl**, **Composer**.
 
 ```bash
 make help

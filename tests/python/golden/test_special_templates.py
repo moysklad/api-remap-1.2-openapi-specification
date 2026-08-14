@@ -56,6 +56,7 @@ PARENTS = [
     for name, schema in SCHEMAS.items()
     if isinstance(schema, dict) and schema.get("x-polymorphic-parent")
 ]
+# Например, path=meta.type проверяется payload вида {"meta": {"type": "<mapping>"}}.
 DISCRIMINATORS = [
     (name, extension, mapping)
     for name, schema in SCHEMAS.items()
@@ -113,6 +114,7 @@ def test_every_polymorphic_parent_is_inherited(
     name: str,
     parent_name: str,
 ) -> None:
+    """Проверяет наследование моделей из x-polymorphic-parent."""
     assert model_class(parent_name) in model_class(name).__mro__[1:]
 
 
@@ -130,6 +132,7 @@ def test_every_nested_discriminator_mapping_dispatches(
     extension: dict[str, Any],
     mapping: dict[str, str],
 ) -> None:
+    """Проверяет выбор модели по вложенному discriminator mapping."""
     target = model_class(mapping["componentName"])
     sentinel = object()
     monkeypatch.setattr(
@@ -152,6 +155,7 @@ def test_every_batch_error_fallback_dispatches(
     name: str,
     extension: dict[str, Any],
 ) -> None:
+    """Проверяет fallback в Error для неизвестного batch discriminator."""
     error_class = model_class("Error")
     sentinel = object()
     monkeypatch.setattr(
@@ -174,6 +178,7 @@ def test_every_static_builder_sets_id_meta_and_href(
     name: str,
     extension: dict[str, Any],
 ) -> None:
+    """Проверяет id и meta, созданные статическим builder."""
     from moysklad_remap_12_sdk.configuration import Configuration
 
     values = {
@@ -205,6 +210,7 @@ def test_every_agent_reference_accepts_supported_entities(
     name: str,
     property_name: str,
 ) -> None:
+    """Проверяет допустимые типы сущностей для x-agent-reference."""
     from moysklad_remap_12_sdk.models.agent import Agent
     from moysklad_remap_12_sdk.models.counterparty import Counterparty
     from moysklad_remap_12_sdk.models.employee import Employee
@@ -237,6 +243,7 @@ def test_every_agent_reference_rejects_other_entities(
     name: str,
     property_name: str,
 ) -> None:
+    """Проверяет отклонение неподдерживаемых x-agent-reference сущностей."""
     from moysklad_remap_12_sdk.models.store import Store
 
     with pytest.raises(ValidationError):
@@ -253,6 +260,7 @@ def test_every_non_agent_reference_keeps_declared_type(
     property_name: str,
     target_name: str,
 ) -> None:
+    """Проверяет сохранение исходного типа без x-agent-reference."""
     from moysklad_remap_12_sdk.models.agent import Agent
 
     field_name = snake_case(property_name)
@@ -265,6 +273,7 @@ def test_every_non_agent_reference_keeps_declared_type(
 
 
 def test_special_models_allow_extra_and_arbitrary_types() -> None:
+    """Проверяет Pydantic config у моделей со спецрасширениями."""
     special_names = {
         *(name for name, _ in PARENTS),
         *(parent for _, parent in PARENTS),
@@ -278,9 +287,8 @@ def test_special_models_allow_extra_and_arbitrary_types() -> None:
         assert config["arbitrary_types_allowed"] is True, name
 
 
-def test_from_dict_preserves_inherited_extra_and_typed_fields() -> None:
-    from moysklad_remap_12_sdk.models.currency import Currency
-    from moysklad_remap_12_sdk.models.currency_rate import CurrencyRate
+def test_from_dict_preserves_inherited_extra_fields() -> None:
+    """Проверяет сохранение extra-полей у унаследованной модели."""
     from moysklad_remap_12_sdk.models.product import Product
 
     product = Product.from_dict(
@@ -298,13 +306,9 @@ def test_from_dict_preserves_inherited_extra_and_typed_fields() -> None:
     assert product.to_dict()["futureField"] == "preserved"
     assert product.to_dict()["meta"]["type"] == "product"
 
-    rate = CurrencyRate.from_dict({"currency": {"name": "Rouble"}})
-    assert rate is not None
-    assert isinstance(rate.currency, Currency)
-    assert rate.currency.name == "Rouble"
-
 
 def test_layout_preparation_does_not_rewrite_model_sources() -> None:
+    """Проверяет, что layout-скрипт не изменяет исходники моделей."""
     source = (ROOT / "scripts" / "prepare-python-sdk-layout.py").read_text(
         encoding="utf-8"
     )
