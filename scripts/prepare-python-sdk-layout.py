@@ -11,23 +11,11 @@ from pathlib import Path
 PACKAGE_NAME = "moysklad_remap_12_sdk"
 
 
-def remove_generator_only_files(sdk_dir: Path) -> None:
-    """Remove generator-owned CI and legacy packaging files."""
-    for relative_path in (
-        ".gitlab-ci.yml",
-        ".travis.yml",
-        ".github/workflows/python.yml",
-        "git_push.sh",
-        "setup.cfg",
-        "setup.py",
-    ):
-        path = sdk_dir / relative_path
-        if path.is_file():
-            path.unlink()
-    for relative_path in (".github", ".openapi-generator"):
-        path = sdk_dir / relative_path
-        if path.is_dir():
-            shutil.rmtree(path)
+def remove_generator_metadata(sdk_dir: Path) -> None:
+    """Remove metadata that OpenAPI Generator writes despite the ignore list."""
+    metadata = sdk_dir / ".openapi-generator"
+    if metadata.is_dir():
+        shutil.rmtree(metadata)
 
 
 def move_package_to_src_layout(sdk_dir: Path) -> None:
@@ -58,7 +46,7 @@ def main() -> int:
         print("Generated SDK directory is missing", file=sys.stderr)
         return 2
 
-    remove_generator_only_files(sdk_dir)
+    remove_generator_metadata(sdk_dir)
     move_package_to_src_layout(sdk_dir)
     return 0
 

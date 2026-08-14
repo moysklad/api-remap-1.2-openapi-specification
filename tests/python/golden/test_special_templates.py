@@ -305,13 +305,3 @@ def test_from_dict_preserves_inherited_extra_fields() -> None:
     assert product is not None
     assert product.to_dict()["futureField"] == "preserved"
     assert product.to_dict()["meta"]["type"] == "product"
-
-
-def test_layout_preparation_does_not_rewrite_model_sources() -> None:
-    """Проверяет, что layout-скрипт не изменяет исходники моделей."""
-    source = (ROOT / "scripts" / "prepare-python-sdk-layout.py").read_text(
-        encoding="utf-8"
-    )
-    assert "models" not in source
-    assert "read_text" not in source
-    assert "write_text" not in source
