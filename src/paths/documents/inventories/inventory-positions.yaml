@@ -43,6 +43,8 @@ post:
       content:
         application/json:
           schema:
-            $ref: '../../../openapi.yaml#/components/schemas/InventoryPosition'
+            type: array
+            items:
+              $ref: '../../../openapi.yaml#/components/schemas/InventoryPosition'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
