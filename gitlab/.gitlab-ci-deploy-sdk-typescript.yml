@@ -39,6 +39,7 @@ deploy-to-npm-prerelease:
     - npm install --ignore-scripts --no-audit --no-fund
     - npm run build
     - TGZ="$(npm pack | tail -n1)"
+    - node "${CI_PROJECT_DIR}/scripts/verify-typescript-tarball.js" "$TGZ"
     - npm publish "$TGZ" --tag "$DIST_TAG"
     - echo "Complete. Version $PACKAGE_VERSION (dist-tag $DIST_TAG)"
 
@@ -97,5 +98,6 @@ deploy-to-npm:
     - npm install --ignore-scripts --no-audit --no-fund
     - npm run build
     - TGZ="$(npm pack | tail -n1)"
+    - node "${CI_PROJECT_DIR}/scripts/verify-typescript-tarball.js" "$TGZ"
     - npm publish "$TGZ" --tag latest
     - echo "Complete. Version $TAG (dist-tag latest)"
