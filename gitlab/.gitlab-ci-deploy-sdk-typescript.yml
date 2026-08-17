@@ -3,9 +3,6 @@
 .deploy-sdk-typescript-base:
   extends: .openapitools-image
   stage: deploy-sdk
-  before_script:
-    - git config --global user.name "$GIT_USER"
-    - git config --global user.email "$GIT_MAIL"
   variables:
     npm_config_registry: $NPM_REGISTRY_URL
 

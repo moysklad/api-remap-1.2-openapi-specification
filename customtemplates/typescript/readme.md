@@ -26,7 +26,7 @@
 * README.mustache - стандартный README описывает сам генератор. Публикуемому пакету нужны установка,
   импорт (ESM и CommonJS), авторизация, базовый пример запроса и ссылки на npm/GitHub.
 
-* LICENSE.mustache - MIT-лицензия пакета. Подключается через `files:` в `typescript-sdk-config.yaml`
+* LICENSE.mustache - Apache-2.0 лицензия пакета. Подключается через `files:` в `typescript-sdk-config.yaml`
   (стандартный генератор файл лицензии не создаёт).
 
 * npmignore.mustache - стандартный шаблон исключает из пакета только `README.md`. Состав пакета задан
@@ -42,5 +42,5 @@
 расширение `.js`. Без него сборка `dist/esm` непригодна для Node ESM: импорты без расширения
 не резолвятся (`ERR_MODULE_NOT_FOUND`).
 
-Версия пакета (`npmVersion`) в конфиге не задаётся: её подставляет `scripts/generate-typescript-sdk.sh`
-из semver-версии репозитория спецификации.
+Версия пакета (`npmVersion`) в конфиге не задаётся: её подставляет `npm run generate-typescript`
+из `SDK_VERSION` или semver-версии репозитория спецификации (`package.json`).

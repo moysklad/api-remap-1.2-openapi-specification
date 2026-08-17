@@ -20,8 +20,8 @@ Modular OpenAPI 3.0.3 specification for MoySklad JSON API 1.2 with automated SDK
 - **Spec format:** OpenAPI 3.0.3 (YAML, modular: `src/openapi.yaml` is the root)
 - **Linting:** Redocly CLI (`npm run validate`)
 - **Bundling:** Redocly CLI → `dist/openapi.yaml` / `dist/openapi.json`
-- **SDK generation:** OpenAPI Generator CLI (PHP + Java + TypeScript with custom templates in `customtemplates/php/`, `customtemplates/java/` and `customtemplates/typescript/`); Java SDK runtime artifact is a self-contained shaded JAR with dependency relocation; TypeScript SDK uses the `typescript-fetch` generator and has CI parity with PHP/Java for generation, golden tests, internal GitLab SDK repo sync (`generate-sdk-typescript`, `sdk-golden-typescript`, `prep-branch-and-mr-typescript`, `merge-branch-typescript`), and npm publishing (`deploy-to-npm-prerelease`, `deploy-to-npm`)
-- **TypeScript SDK packaging:** generated as the publishable npm package `@moysklad/remap-1.2-sdk` (MIT, author Lognex Dev Team, `engines.node >= 22`, dual CommonJS/ESM build, npm tarball limited to `dist/`, `README.md`, `LICENSE`); package version comes from the spec repo semver (`SDK_VERSION` → root `package.json`) via `scripts/generate-typescript-sdk.sh`, generator metadata is stripped so regeneration is byte-identical
+- **SDK generation:** OpenAPI Generator CLI (PHP + Java + TypeScript with custom templates in `customtemplates/php/`, `customtemplates/java/` and `customtemplates/typescript/`); Java SDK runtime artifact is a self-contained shaded JAR with dependency relocation
+- **TypeScript SDK packaging:** generated as the publishable npm package `@moysklad/remap-1.2-sdk` (Apache-2.0, author Lognex Dev Team, `engines.node >= 22`, dual CommonJS/ESM build, npm tarball limited to `dist/`, `README.md`, `LICENSE`); package version comes from the spec repo semver (`SDK_VERSION` → root `package.json`) via `npm run generate-typescript`, generator metadata is stripped so regeneration is byte-identical
 - **Generator version pinning:** `openapitools.json` pins OpenAPI Generator `7.14.0`; TypeScript generation output verified byte-identical on host, local `sdk` image and CI image `docker-openapitools-common:1.4-release` (package version from root `package.json` unless `SDK_VERSION` is set)
 - **Custom schema helper generation:** `x-entity-static-builder` is consumed by both PHP and Java custom templates to generate `createWithMeta(...)` helpers on referenceable models with top-level `meta`
 - **Testing:** PHPUnit (PHP golden + smoke via openapi-mock), Maven Surefire (Java golden), `node:test` + `tsc` (TypeScript golden), Schemathesis (contract)
@@ -60,13 +60,13 @@ gitlab/
   sdk/
     validate.yml
     generate-sdk.yml                   # bundle jobs + PHP/Java/TypeScript generation
-    sdk-tests-golden.yml               # PHP/Java/TypeScript golden jobs (TypeScript builds the npm package first)
+    sdk-tests-golden.yml               # PHP/Java/TypeScript golden jobs
     sdk-tests-smoke.yml
     sdk-contract.yml
 src/openapi.yaml                       # Root spec file
 customtemplates/php/                   # Mustache templates for PHP SDK
 customtemplates/java/                  # Mustache templates for Java SDK
-customtemplates/typescript/            # Mustache templates for TypeScript models, polymorphism and npm package metadata
+customtemplates/typescript/            # Mustache templates for TypeScript SDK
 tests/fixtures/                        # Shared golden fixtures for PHP, Java and TypeScript SDK assertions
 tests/php/                             # PHPUnit golden + smoke tests
 tests/java/assertions/                 # Maven golden tests for Java SDK

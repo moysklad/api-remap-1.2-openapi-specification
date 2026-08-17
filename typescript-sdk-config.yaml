@@ -1,6 +1,6 @@
 # Конфигурация генерации TypeScript SDK (generator: typescript-fetch).
-# Запускается из scripts/generate-typescript-sdk.sh (npm run generate-typescript / make generate-typescript).
-# Версия пакета (npmVersion) задаётся скриптом из SDK_VERSION / package.json и здесь не фиксируется.
+# Запускается через npm run generate-typescript / make generate-typescript.
+# Версия пакета (npmVersion) задаётся npm-скриптом из SDK_VERSION / package.json и здесь не фиксируется.
 gitHost: "github.com"
 gitUserId: "moysklad"
 gitRepoId: "remap-1.2-typescript-sdk"
@@ -13,7 +13,7 @@ files:
     destinationFilename: LICENSE
 additionalProperties:
   npmName: "@smaksimenko/remap-1.2-sdk"
-  licenseName: "MIT"
+  licenseName: "Apache-2.0"
   supportsES6: true
   legacyDiscriminatorBehavior: false
   # Относительные импорты с расширением .js — иначе сборка dist/esm непригодна для Node ESM

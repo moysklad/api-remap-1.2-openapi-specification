@@ -82,8 +82,14 @@ sdk-golden-typescript:
   variables:
     npm_config_registry: $NPM_REGISTRY_URL
   script:
-    - echo "=== Golden tests (TypeScript) ==="
-    - sh scripts/local-test-golden.sh typescript
+    - |
+      if [ -d "tests/typescript" ]; then
+        echo "=== Golden tests (TypeScript) ==="
+        sh scripts/local-test-golden.sh typescript
+      else
+        echo "WARNING: tests/typescript directory not found"
+        exit 1
+      fi
 
 # JavaScript Golden JSON тесты (заглушка)
 #sdk-golden-javascript:

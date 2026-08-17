@@ -83,29 +83,6 @@ TypeScript npm jobs (`deploy-to-npm-prerelease`, `deploy-to-npm`) описаны
 
 При push тэга SDK-validate pipeline запускает те же проверки спецификации, сборку, SDK-тесты и Schemathesis `examples`. Автоматические релизные job'ы (`version:auto`, mirror/release) остаются привязаны к push в `master`.
 
-### TypeScript SDK в пайплайне
-
-TypeScript SDK проходит те же стадии, что PHP и Java, и его job'ы лежат в тех же файлах для генерации и golden; синхронизация внутреннего репозитория — в отдельном include по образцу PHP/Java.
-
-| Job                       | Файл                                | Стадия / needs                            |
-|---------------------------|-------------------------------------|-------------------------------------------|
-| `generate-sdk-typescript` | `gitlab/sdk/generate-sdk.yml`       | `generate-sdk`, `needs: bundle-openapi`   |
-| `sdk-golden-typescript`   | `gitlab/sdk/sdk-tests-golden.yml`   | `test`, `needs: generate-sdk-typescript`  |
-| `prep-branch-and-mr-typescript` | `gitlab/.gitlab-ci-prepare-sdk-typescript.yml` | `prepare-sdk-repository`, `needs: generate-sdk-typescript` + `sdk-golden-typescript` + `sdk-smoke`; artifacts `sdk-repo/` |
-| `merge-branch-typescript` | `gitlab/.gitlab-ci-prepare-sdk-typescript.yml` | `prepare-sdk-repository` (manual на master), `needs:` generation + golden + `sdk-smoke` + optional `version:auto` / `create-github-release`; artifacts `sdk-repo/` + `typescript-release-tag.txt` |
-| `deploy-to-npm-prerelease` | `gitlab/.gitlab-ci-deploy-sdk-typescript.yml` | `deploy-sdk`, `needs: prep-branch-and-mr-typescript` (artifacts) |
-| `deploy-to-npm` | `gitlab/.gitlab-ci-deploy-sdk-typescript.yml` | `deploy-sdk`, `needs: merge-branch-typescript` (artifacts) |
-
-Особенности по сравнению с PHP/Java:
-
-- golden-job перед прогоном собирает npm-пакет из артефакта генерации (`scripts/local-test-golden.sh typescript`), поэтому тесты проверяют ровно то, что публикуется в npm; в CI-образе нет `make`, поэтому скрипт вызывается напрямую через `sh`;
-- отсутствие сгенерированного SDK или каталога тестов — ошибка job'а, а не `skip`;
-- версия npm-пакета в CI берётся из `version` корневого `package.json`: в CI checkout нет тегов, а значение синхронно обновляет `version:auto`;
-- prep/merge sync копирует `clients/typescript/` во внутренний `remap-1.2-typescript-sdk` через `CICD_PAT_TYPESCRIPT`; в `needs` у обоих job'ов есть `sdk-smoke` (как у PHP/Java); оба job'а публикуют `sdk-repo/` для npm deploy;
-- npm publish идёт из `sdk-repo` (не из `clients/typescript`): `build` → `npm pack` → `npm publish <tgz>` без пересборки перед publish; токен только в masked CI variable `NPM_TOKEN`;
-- ветка: версия `0.0.0-{branch}-{pipeline-id}` (semver-кодировка Java-стиля `{branch}-{pipeline-id}`), dist-tag = `CI_COMMIT_REF_SLUG` (не `latest`);
-- master: версия = semver-тег из `merge-branch-typescript` (`typescript-release-tag.txt`, fallback — re-clone SDK + тег из спеки, как у Java), dist-tag `latest`.
-
 ---
 
 #### 5. Сборка ветки на облегчённом окружении для тестирования java-remap-1.2-sdk
@@ -127,7 +104,6 @@ TypeScript SDK проходит те же стадии, что PHP и Java, и �
 | Переменная          | Описание                                                                                              | Значение по умолчанию                     |
 |---------------------|-------------------------------------------------------------------------------------------------------|-------------------------------------------|
 | `SDK_LANGUAGES`     | Языки для генерации SDK (через запятую без пробелов)                                                   | `""` (все доступные)                      |
-| `NPM_REGISTRY_URL`  | npm registry для публичных зависимостей `clients/typescript` / `tests/typescript` и npm deploy jobs | `https://registry.npmjs.org` |
 | `NPM_TOKEN`         | Masked CI token для публикации `@moysklad/remap-1.2-sdk` в npm (`deploy-to-npm-prerelease`, `deploy-to-npm`) | Задаётся в GitLab CI/CD Variables |
 
 **Примеры SDK_LANGUAGES:**

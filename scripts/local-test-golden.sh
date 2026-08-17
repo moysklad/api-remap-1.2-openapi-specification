@@ -71,8 +71,8 @@ run_typescript() {
     echo "==> сборка SDK не найдена, собираем..."
     sh scripts/build-typescript-sdk.sh
   fi
-  sh scripts/npm-install-deps.sh tests/typescript ci --no-audit --no-fund
   cd tests/typescript
+  npm ci --no-audit --no-fund
   npm run test:golden
 }
 

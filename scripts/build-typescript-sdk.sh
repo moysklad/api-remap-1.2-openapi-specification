@@ -15,7 +15,7 @@ if [ ! -f "$SDK_DIR/package.json" ]; then
 fi
 
 echo "==> установка зависимостей ($SDK_DIR)..."
-sh scripts/npm-install-deps.sh "$SDK_DIR" install --ignore-scripts --no-audit --no-fund
+(cd "$SDK_DIR" && npm install --ignore-scripts --no-audit --no-fund)
 
 echo "==> npm run build ($SDK_DIR)..."
 (cd "$SDK_DIR" && npm run build)

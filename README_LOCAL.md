@@ -110,7 +110,7 @@ docker run --rm -v "$(pwd):/workspace" -w /workspace \
 
 **Локальный Docker и Nexus:** если в корневом `package-lock.json` указан корпоративный registry (nexus.infra.lognex), в Docker задаётся `USE_PUBLIC_NPM_REGISTRY=true`. Скрипт `scripts/npm-ci-public-registry.sh` временно подменяет URL на registry.npmjs.org, чтобы не было ошибки SSL (`UNABLE_TO_VERIFY_LEAF_SIGNATURE`). Исходный `package-lock.json` после `npm ci` восстанавливается.
 
-**TypeScript-зависимости:** `scripts/npm-install-deps.sh` ставит зависимости `clients/typescript` и `tests/typescript` из публичного `registry.npmjs.org` (без подмены lock-файла). Повторная установка пропускается, если `node_modules` уже соответствует `package.json` и lock-файлу — принудительно `NPM_CI_FORCE=1`.
+**TypeScript-зависимости:** `scripts/build-typescript-sdk.sh` ставит зависимости `clients/typescript` через `npm install`; `scripts/local-test-golden.sh` — `tests/typescript` через `npm ci`. Оба используют публичный `registry.npmjs.org` (без подмены lock-файла).
 
 **Schemathesis** (контрактные тесты против живого API):
 
@@ -157,9 +157,7 @@ api-sdk-builder/
 ├── typescript-sdk-config.yaml        # Конфигурация генератора TypeScript SDK
 ├── openapitools.json                 # Зафиксированная версия OpenAPI Generator (одна для локали и CI)
 ├── scripts/
-│   ├── generate-typescript-sdk.sh    # Генерация TypeScript SDK с версией из package.json / SDK_VERSION
 │   ├── build-typescript-sdk.sh       # Сборка npm-пакета TypeScript SDK (dist + dist/esm)
-│   ├── npm-install-deps.sh           # npm-зависимости подпроектов (пропуск повторной установки)
 │   └── local-test-golden.sh          # Golden тесты php/python/java/javascript/typescript
 ├── tests/
 │   ├── fixtures/                     # Общие эталонные JSON для golden тестов всех языков
