@@ -1,0 +1,13 @@
+type: object
+description: Измененные поля задачи
+properties:
+  description:
+    $ref: '../../../openapi.yaml#/components/schemas/NotificationDiffValue'
+  deadline:
+    $ref: '../../../openapi.yaml#/components/schemas/NotificationDiffValue'
+  agentLink:
+    $ref: '../../../openapi.yaml#/components/schemas/NotificationDiffValue'
+  documentLink:
+    $ref: '../../../openapi.yaml#/components/schemas/NotificationDiffValue'
+  assignee:
+    $ref: '../../../openapi.yaml#/components/schemas/NotificationDiffValue'

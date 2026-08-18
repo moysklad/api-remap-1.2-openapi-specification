@@ -431,8 +431,16 @@ paths:
     $ref: './paths/dictionaries/usersettings/usersettings.yaml'
 
   # Notifications
+  /notification:
+    $ref: './paths/dictionaries/notifications/notifications.yaml'
+  /notification/markasreadall:
+    $ref: './paths/dictionaries/notifications/notification-mark-as-read-all.yaml'
   /notification/settings:
     $ref: './paths/dictionaries/notifications/notification-settings.yaml'
+  /notification/{id}:
+    $ref: './paths/dictionaries/notifications/notification-by-id.yaml'
+  /notification/{id}/markasread:
+    $ref: './paths/dictionaries/notifications/notification-mark-as-read.yaml'
 
   # Discounts
   /entity/discount:
@@ -2338,6 +2346,94 @@ components:
       $ref: './components/schemas/dictionary/companySettingsMetadata.yaml'
     UserSettings:
       $ref: './components/schemas/dictionary/userSettings.yaml'
+    NotificationAbstract:
+      $ref: './components/schemas/dictionary/notificationAbstract.yaml'
+    NotificationList:
+      $ref: './components/schemas/dictionary/notificationList.yaml'
+    NotificationNamedEntity:
+      $ref: './components/schemas/dictionary/notificationNamedEntity.yaml'
+    NotificationTask:
+      $ref: './components/schemas/dictionary/notificationTask.yaml'
+    NotificationDeletedTask:
+      $ref: './components/schemas/dictionary/notificationDeletedTask.yaml'
+    NotificationInvoice:
+      $ref: './components/schemas/dictionary/notificationInvoice.yaml'
+    NotificationOrder:
+      $ref: './components/schemas/dictionary/notificationOrder.yaml'
+    NotificationRetailShift:
+      $ref: './components/schemas/dictionary/notificationRetailShift.yaml'
+    NotificationDiffValue:
+      $ref: './components/schemas/dictionary/notificationDiffValue.yaml'
+    NotificationTaskDiff:
+      $ref: './components/schemas/dictionary/notificationTaskDiff.yaml'
+    NotificationTaskCommentDiff:
+      $ref: './components/schemas/dictionary/notificationTaskCommentDiff.yaml'
+    NotificationEventType:
+      $ref: './components/schemas/dictionary/notificationEventType.yaml'
+    NotificationTaskState:
+      $ref: './components/schemas/dictionary/notificationTaskState.yaml'
+    NotificationExportType:
+      $ref: './components/schemas/dictionary/notificationExportType.yaml'
+    NotificationImportType:
+      $ref: './components/schemas/dictionary/notificationImportType.yaml'
+    AppAsyncButton:
+      $ref: './components/schemas/dictionary/appAsyncButton.yaml'
+    AppChangePermissions:
+      $ref: './components/schemas/dictionary/appChangePermissions.yaml'
+    FacebookTokenExpirationNotification:
+      $ref: './components/schemas/dictionary/facebookTokenExpirationNotification.yaml'
+    NotificationExportCompleted:
+      $ref: './components/schemas/dictionary/notificationExportCompleted.yaml'
+    NotificationGoodCountTooLow:
+      $ref: './components/schemas/dictionary/notificationGoodCountTooLow.yaml'
+    NotificationImportCompleted:
+      $ref: './components/schemas/dictionary/notificationImportCompleted.yaml'
+    NotificationInvoiceOutOverdue:
+      $ref: './components/schemas/dictionary/notificationInvoiceOutOverdue.yaml'
+    NotificationOrderNew:
+      $ref: './components/schemas/dictionary/notificationOrderNew.yaml'
+    NotificationOrderOverdue:
+      $ref: './components/schemas/dictionary/notificationOrderOverdue.yaml'
+    NotificationRetailShiftClosed:
+      $ref: './components/schemas/dictionary/notificationRetailShiftClosed.yaml'
+    NotificationRetailShiftOpened:
+      $ref: './components/schemas/dictionary/notificationRetailShiftOpened.yaml'
+    NotificationScript:
+      $ref: './components/schemas/dictionary/notificationScript.yaml'
+    NotificationSubscribeExpired:
+      $ref: './components/schemas/dictionary/notificationSubscribeExpired.yaml'
+    NotificationSubscribeTermsExpired:
+      $ref: './components/schemas/dictionary/notificationSubscribeTermsExpired.yaml'
+    NotificationTaskAssigned:
+      $ref: './components/schemas/dictionary/notificationTaskAssigned.yaml'
+    NotificationTaskChanged:
+      $ref: './components/schemas/dictionary/notificationTaskChanged.yaml'
+    NotificationTaskCommentChanged:
+      $ref: './components/schemas/dictionary/notificationTaskCommentChanged.yaml'
+    NotificationTaskCommentDeleted:
+      $ref: './components/schemas/dictionary/notificationTaskCommentDeleted.yaml'
+    NotificationTaskCompleted:
+      $ref: './components/schemas/dictionary/notificationTaskCompleted.yaml'
+    NotificationTaskDeleted:
+      $ref: './components/schemas/dictionary/notificationTaskDeleted.yaml'
+    NotificationTaskNewComment:
+      $ref: './components/schemas/dictionary/notificationTaskNewComment.yaml'
+    NotificationTaskOverdue:
+      $ref: './components/schemas/dictionary/notificationTaskOverdue.yaml'
+    NotificationTaskReopened:
+      $ref: './components/schemas/dictionary/notificationTaskReopened.yaml'
+    NotificationTaskUnassigned:
+      $ref: './components/schemas/dictionary/notificationTaskUnassigned.yaml'
+    NotificationBonusMoney:
+      $ref: './components/schemas/dictionary/notificationBonusMoney.yaml'
+    NewMentionInEvent:
+      $ref: './components/schemas/dictionary/newMentionInEvent.yaml'
+    NewMentionInTaskNote:
+      $ref: './components/schemas/dictionary/newMentionInTaskNote.yaml'
+    NewEventInEventFeed:
+      $ref: './components/schemas/dictionary/newEventInEventFeed.yaml'
+    RetireOrderByDemandNotificationCompleted:
+      $ref: './components/schemas/dictionary/retireOrderByDemandNotificationCompleted.yaml'
     NotificationSettings:
       $ref: './components/schemas/dictionary/notificationSettings.yaml'
     NotificationGroupSettings:

@@ -1,0 +1,14 @@
+put:
+  operationId: markAllNotificationsAsRead
+  tags:
+    - Notifications
+  summary: Отметить все уведомления как прочитанные
+  description: Отметить все уведомления текущего пользователя как прочитанные
+  parameters:
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Все уведомления успешно отмечены как прочитанные
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

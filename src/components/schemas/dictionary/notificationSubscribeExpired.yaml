@@ -1,0 +1,3 @@
+type: object
+description: Уведомление об окончании подписки
+x-polymorphic-parent: NotificationAbstract

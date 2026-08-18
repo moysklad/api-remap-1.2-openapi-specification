@@ -123,6 +123,7 @@ class SerializationTest extends TestCase
         'company_settings' => 'CompanySettings',
         'company_settings_metadata' => 'CompanySettingsMetadata',
         'user_settings' => 'UserSettings',
+        'notification_task_changed' => 'NotificationTaskChanged',
         'notification_settings' => 'NotificationSettings',
         'subscription' => 'Subscription',
         'assortment_settings' => 'AssortmentSettings',

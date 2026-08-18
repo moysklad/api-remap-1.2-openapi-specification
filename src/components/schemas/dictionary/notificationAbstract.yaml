@@ -1,0 +1,66 @@
+type: object
+description: Абстрактное уведомление; конкретный тип определяется по meta.type
+x-implements: MetaEntity
+x-polymorphic-discriminator:
+  path: meta.type
+  mappings:
+    - { type: AppAsyncButton, componentName: AppAsyncButton }
+    - { type: AppChangePermissions, componentName: AppChangePermissions }
+    - { type: FacebookTokenExpirationNotification, componentName: FacebookTokenExpirationNotification }
+    - { type: NotificationExportCompleted, componentName: NotificationExportCompleted }
+    - { type: NotificationGoodCountTooLow, componentName: NotificationGoodCountTooLow }
+    - { type: NotificationImportCompleted, componentName: NotificationImportCompleted }
+    - { type: NotificationInvoiceOutOverdue, componentName: NotificationInvoiceOutOverdue }
+    - { type: NotificationOrderNew, componentName: NotificationOrderNew }
+    - { type: NotificationOrderOverdue, componentName: NotificationOrderOverdue }
+    - { type: NotificationRetailShiftClosed, componentName: NotificationRetailShiftClosed }
+    - { type: NotificationRetailShiftOpened, componentName: NotificationRetailShiftOpened }
+    - { type: NotificationScript, componentName: NotificationScript }
+    - { type: NotificationSubscribeExpired, componentName: NotificationSubscribeExpired }
+    - { type: NotificationSubscribeTermsExpired, componentName: NotificationSubscribeTermsExpired }
+    - { type: NotificationTaskAssigned, componentName: NotificationTaskAssigned }
+    - { type: NotificationTaskChanged, componentName: NotificationTaskChanged }
+    - { type: NotificationTaskCommentChanged, componentName: NotificationTaskCommentChanged }
+    - { type: NotificationTaskCommentDeleted, componentName: NotificationTaskCommentDeleted }
+    - { type: NotificationTaskCompleted, componentName: NotificationTaskCompleted }
+    - { type: NotificationTaskDeleted, componentName: NotificationTaskDeleted }
+    - { type: NotificationTaskNewComment, componentName: NotificationTaskNewComment }
+    - { type: NotificationTaskOverdue, componentName: NotificationTaskOverdue }
+    - { type: NotificationTaskReopened, componentName: NotificationTaskReopened }
+    - { type: NotificationTaskUnassigned, componentName: NotificationTaskUnassigned }
+    - { type: NotificationBonusMoney, componentName: NotificationBonusMoney }
+    - { type: NewMentionInEvent, componentName: NewMentionInEvent }
+    - { type: NewMentionInTaskNote, componentName: NewMentionInTaskNote }
+    - { type: NewEventInEventFeed, componentName: NewEventInEventFeed }
+    - { type: RetireOrderByDemandNotificationCompleted, componentName: RetireOrderByDemandNotificationCompleted }
+properties:
+  meta:
+    description: Метаданные уведомления. Поле type содержит конкретный тип уведомления
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID уведомления
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  created:
+    type: string
+    description: Дата и время формирования уведомления
+    readOnly: true
+  read:
+    type: boolean
+    description: Признак того, было ли уведомление прочитано
+  title:
+    type: string
+    maxLength: 255
+    description: Краткий текст уведомления
+    readOnly: true
+  description:
+    type: string
+    maxLength: 4096
+    description: Описание уведомления
+    readOnly: true

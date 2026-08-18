@@ -1,0 +1,8 @@
+type: object
+description: Уведомление о снятии задачи
+x-polymorphic-parent: NotificationAbstract
+properties:
+  performedBy:
+    $ref: '../../../openapi.yaml#/components/schemas/NotificationNamedEntity'
+  task:
+    $ref: '../../../openapi.yaml#/components/schemas/NotificationTask'
