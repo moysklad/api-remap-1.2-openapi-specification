@@ -1,3 +1,4 @@
-type: object
+allOf:
+  - $ref: './notificationAbstract.yaml'
 description: Уведомление об окончании обработки нажатия асинхронной кастомной кнопки
 x-polymorphic-parent: NotificationAbstract

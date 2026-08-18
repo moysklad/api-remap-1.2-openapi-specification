@@ -1,3 +1,4 @@
-type: object
+allOf:
+  - $ref: './notificationAbstract.yaml'
 description: Уведомление об устаревших правах доступа в решении
 x-polymorphic-parent: NotificationAbstract
