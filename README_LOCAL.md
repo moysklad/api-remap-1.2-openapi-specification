@@ -27,6 +27,15 @@ npm run validate
 # Генерация PHP SDK
 npm run generate-php
 
+# Генерация TypeScript SDK (результат — собираемый npm-пакет в clients/typescript)
+npm run generate-typescript
+
+# Сборка npm-пакета TypeScript SDK
+make build-typescript
+
+# Golden тесты TypeScript SDK (общие fixtures из tests/fixtures)
+make test-golden-typescript
+
 # Сборка bundled спецификации
 npm run bundle
 npm run bundle-json
@@ -36,7 +45,7 @@ npm run bundle-json
 
 ## Локальный запуск (Docker)
 
-Docker-среда поддерживает PHP, Python и Java SDK. Для Python реализованы генерация, сборка wheel/sdist и golden-тесты на Python 3.10+.
+Docker-среда поддерживает PHP, Python, TypeScript и Java SDK. Для Python реализованы генерация, сборка wheel/sdist и golden-тесты на Python 3.10+.
 При запуске без Docker установите зависимости командами
 `python3 -m pip install -r clients/python/requirements.txt -r tests/python/requirements.txt build twine`.
 
@@ -64,11 +73,18 @@ docker compose run --rm sdk make generate
 docker compose run --rm sdk make generate-php
 docker compose run --rm sdk make generate-python
 docker compose run --rm sdk make generate-java
+docker compose run --rm sdk make generate-typescript
 
-# Golden тесты (по умолчанию php)
+# Сборка TypeScript SDK (после generate-typescript) и состав npm-пакета
+docker compose run --rm sdk make build-typescript
+docker compose run --rm sdk make pack-typescript
+
+# Golden тесты (по умолчанию php; падение любого языка из LANGUAGES роняет цель)
 docker compose run --rm sdk make test-golden
+docker compose run --rm sdk make test-golden LANGUAGES=php,typescript
 docker compose run --rm sdk make test-golden-php
 docker compose run --rm sdk make test-golden-python
+docker compose run --rm sdk make test-golden-typescript
 docker compose run --rm java-sdk make test-golden-java
 
 # Сборка и проверка Python wheel/sdist
@@ -106,7 +122,9 @@ docker run --rm -v "$(pwd):/workspace" -w /workspace \
   docker.infra.lognex/docker-openapitools:1.2-release make all
 ```
 
-**Локальный Docker и Nexus:** если в `package-lock.json` указан корпоративный registry (nexus.infra.lognex), при запуске в Docker задаётся `USE_PUBLIC_NPM_REGISTRY=true`. Скрипт `scripts/npm-ci-public-registry.sh` временно подменяет URL на registry.npmjs.org, чтобы не было ошибки SSL (UNABLE_TO_VERIFY_LEAF_SIGNATURE). Исходный `package-lock.json` после `npm ci` восстанавливается.
+**Локальный Docker и Nexus:** если в корневом `package-lock.json` указан корпоративный registry (nexus.infra.lognex), в Docker задаётся `USE_PUBLIC_NPM_REGISTRY=true`. Скрипт `scripts/npm-ci-public-registry.sh` временно подменяет URL на registry.npmjs.org, чтобы не было ошибки SSL (`UNABLE_TO_VERIFY_LEAF_SIGNATURE`). Исходный `package-lock.json` после `npm ci` восстанавливается.
+
+**TypeScript-зависимости:** `scripts/build-typescript-sdk.sh` ставит зависимости `clients/typescript` через `npm install`; `scripts/local-test-golden.sh` — `tests/typescript` через `npm ci`. Оба используют публичный `registry.npmjs.org` (без подмены lock-файла).
 
 **Schemathesis** (контрактные тесты против живого API):
 
@@ -148,11 +166,19 @@ api-sdk-builder/
 │   └── openapi.yaml                  # Главный файл OpenAPI спецификации
 ├── customtemplates/
 |   ├── java/                         # Кастомные шаблоны для Java SDK
-│   └── php/                          # Кастомные шаблоны для PHP SDK
+│   ├── php/                          # Кастомные шаблоны для PHP SDK
+│   └── typescript/                   # Кастомные шаблоны для TypeScript SDK (package.json, README, LICENSE, .npmignore)
+├── typescript-sdk-config.yaml        # Конфигурация генератора TypeScript SDK
+├── openapitools.json                 # Зафиксированная версия OpenAPI Generator (одна для локали и CI)
+├── scripts/
+│   ├── build-typescript-sdk.sh       # Сборка npm-пакета TypeScript SDK (dist + dist/esm)
+│   └── local-test-golden.sh          # Golden тесты php/python/java/javascript/typescript
 ├── tests/
+│   ├── fixtures/                     # Общие эталонные JSON для golden тестов всех языков
 │   ├── java/                         # Java тесты (golden + smoke)
 │   ├── php/                          # PHP golden-тесты
 │   └── python/                       # Python golden-тесты
+│   └── typescript/                   # TypeScript golden тесты (node:test + tsc)
 └── clients/                          # Сгенерированные SDK (создаётся при генерации)
 ```
 
@@ -206,7 +232,7 @@ customtemplates/<language>/
 
 #### Golden тесты
 
-Проверяют корректность сериализации и десериализации моделей SDK:
+Проверяют корректность сериализации и десериализации моделей SDK на общих эталонных JSON из `tests/fixtures/` — одни и те же файлы используют PHP, Java и TypeScript:
 
 ```php
 // Пример PHP golden теста
@@ -216,6 +242,8 @@ $product = Product::fromArray($jsonData);
 $this->assertEquals($jsonData['id'], $product->getId());
 $this->assertEquals($jsonData['name'], $product->getName());
 ```
+
+Запуск по языкам: `make test-golden-php`, `make test-golden-java`, `make test-golden-typescript` или сразу несколько — `make test-golden LANGUAGES=php,typescript`. Про особенности TypeScript-набора см. [Golden тесты TypeScript SDK](#golden-тесты-typescript-sdk).
 
 #### Smoke тесты (openapi-mock)
 

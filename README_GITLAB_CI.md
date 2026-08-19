@@ -12,20 +12,24 @@
 
 При каждом push в любую ветку (кроме тегов) запускаются проверки SDK:
 
-| Job                      | Описание                                                                 |
-|--------------------------|--------------------------------------------------------------------------|
-| `validate`           | Проверка OpenAPI спецификации с помощью Redocly                          |
-| `bundle-openapi`         | Сборка полной bundled версии спецификации для SDK/docs/contract          |
-| `bundle-smoke-openapi`   | Сборка облегчённой bundled версии спецификации для быстрых smoke-тестов  |
-| `generate-sdk-php`       | Генерация PHP SDK                                                        |
-| `generate-sdk-python`    | Генерация Python SDK                                                     |
-| `generate-sdk-java`      | Генерация Java SDK                                                       |
-| `sdk-golden-php`         | Golden тесты для PHP (сериализация/десериализация)                       |
-| `sdk-golden-python`      | Golden тесты для Python                                                  |
-| `sdk-golden-java`        | Golden тесты для Java                                                    |
-| `sdk-smoke`              | Smoke тесты для Java с openapi-mock сервером                             |
-| `prep-branch-and-mr-php` | Cоздание/обновление ветки и mr по сгенерированному sdk в репозитории sdk |
-| `prep-branch-and-mr-python` | Создание/обновление ветки Python SDK во внутреннем репозитории         |
+| Job                              | Описание                                                                      |
+|----------------------------------|-------------------------------------------------------------------------------|
+| `validate`                       | Проверка OpenAPI спецификации с помощью Redocly                               |
+| `bundle-openapi`                 | Сборка полной bundled версии спецификации для SDK/docs/contract               |
+| `bundle-smoke-openapi`           | Сборка облегчённой bundled версии спецификации для быстрых smoke-тестов       |
+| `generate-sdk-php`               | Генерация PHP SDK                                                             |
+| `generate-sdk-python`            | Генерация Python SDK                                                          |
+| `generate-sdk-java`              | Генерация Java SDK                                                            |
+| `generate-sdk-typescript`        | Генерация TypeScript SDK (npm-пакет `@moysklad/remap-1.2-sdk`)                |
+| `sdk-golden-php`                 | Golden тесты для PHP (сериализация/десериализация)                            |
+| `sdk-golden-python`              | Golden тесты для Python                                                       |
+| `sdk-golden-java`                | Golden тесты для Java                                                         |
+| `sdk-golden-typescript`          | Golden тесты для TypeScript (сборка npm-пакета + roundtrip на общих fixtures) |
+| `sdk-smoke`                      | Smoke тесты для Java с openapi-mock сервером                                  |
+| `prep-branch-and-mr-php`         | Cоздание/обновление ветки и mr по сгенерированному sdk в репозитории sdk      |
+| `prep-branch-and-mr-python`      | Создание/обновление ветки Python SDK во внутреннем репозитории                |
+| `prep-branch-and-mr-java`        | Создание/обновление ветки и MR по сгенерированному Java SDK                   |
+| `prep-branch-and-mr-typescript`  | Создание/обновление ветки и MR по сгенерированному TypeScript SDK             |
 
 #### 2. Ручной запуск (web) на ветке
 
@@ -42,37 +46,43 @@
 | `create-contract-user`            | Создание пользователя для contract‑тестов, экспорт кредов                |
 | `sdk-contract`                    | Schemathesis контрактные тесты (стадия `contract-test`)                  |
 | `remove-contract-env`             | Очистка окружения после contract‑тестов (manual, allow_failure)          |
-| `prep-branch-and-mr-php`          | Cоздание/обновление ветки и mr по сгенерированному sdk в репозитории sdk |
+| `prep-branch-and-mr-php`          | Создание/обновление ветки и MR по сгенерированному PHP SDK               |
+| `prep-branch-and-mr-java`         | Создание/обновление ветки и MR по сгенерированному Java SDK              |
+| `prep-branch-and-mr-typescript`   | Создание/обновление ветки и MR по сгенерированному TypeScript SDK        |
 
 #### 3. Merge/push в master
 
 При push/merge в `master` запускается полный релизный flow: проверки, contract-тесты Schemathesis, версионирование и зеркалирование.
 
-| Job                     | Описание                                                                                          |
-|-------------------------|---------------------------------------------------------------------------------------------------|
-| `check-openapi-changes` | Проверка изменений OpenAPI относительно последнего тега в текущем репо                            |
-| `validate`          | Проверка спецификации                                                                             |
-| `bundle-openapi`        | Сборка полной bundled версии для SDK/docs/contract                                                 |
-| `bundle-smoke-openapi`  | Сборка облегчённой bundled версии для smoke-тестов                                                 |
-| `deploy-contract-env`   | Подготовка окружения для Schemathesis                                                             |
-| `create-contract-user`  | Создание пользователя для contract‑тестов                                                         |
-| `sdk-contract`          | Schemathesis `examples` по текущим request examples                                                |
-| `remove-contract-env`   | Ручная очистка окружения после contract‑тестов (manual, allow_failure; также есть TTL)             |
-| `generate-sdk-*`        | Генерация SDK                                                                                     |
-| `sdk-golden-*`          | Golden тесты                                                                                      |
-| `sdk-smoke`             | Smoke тесты                                                                                       |
-| `version:auto`          | Автоматическое версионирование и выпуск тега                                                      |
-| `mirror-to-github`      | Зеркалирование в GitHub без internal CI/release tooling (`gitlab`, `.gitlab-ci.yml`, CI README, `.versionrc.json`, `scripts/generate-diff-changelog.js` и др.) |
-| `create-github-release` | Создание GitHub Release на основе CHANGELOG                                                       |
-| `merge-branch-php`      | Обновление ветки master на удаленном gitlab sdk репозитории по сгенерированному sdk и выпуск тэга |
-| `merge-branch-java`     | Обновление master во внутреннем Java SDK репозитории и сохранение релизного semver-тега           |
-| `merge-branch-python`   | Обновление master Python SDK и создание релизного semver-тега                              |
-| `deploy-to-maven`       | Публикация Java SDK в Maven Central                                                               |
-| `deploy-to-artifactory` | Публикация Java SDK в Artyfactory                                                                 |
-| `deploy-python-to-pypi` | Публикация проверенного Python wheel/sdist в PyPI                                           |
+| Job                        | Описание                                                                                                                                                       |
+|----------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `check-openapi-changes`    | Проверка изменений OpenAPI относительно последнего тега в текущем репо                                                                                         |
+| `validate`                 | Проверка спецификации                                                                                                                                          |
+| `bundle-openapi`           | Сборка полной bundled версии для SDK/docs/contract                                                                                                             |
+| `bundle-smoke-openapi`     | Сборка облегчённой bundled версии для smoke-тестов                                                                                                             |
+| `deploy-contract-env`      | Подготовка окружения для Schemathesis                                                                                                                          |
+| `create-contract-user`     | Создание пользователя для contract‑тестов                                                                                                                      |
+| `sdk-contract`             | Schemathesis `examples` по текущим request examples                                                                                                            |
+| `remove-contract-env`      | Ручная очистка окружения после contract‑тестов (manual, allow_failure; также есть TTL)                                                                         |
+| `generate-sdk-*`           | Генерация SDK                                                                                                                                                  |
+| `sdk-golden-*`             | Golden тесты                                                                                                                                                   |
+| `sdk-smoke`                | Smoke тесты                                                                                                                                                    |
+| `version:auto`             | Автоматическое версионирование и выпуск тега                                                                                                                   |
+| `mirror-to-github`         | Зеркалирование в GitHub без internal CI/release tooling (`gitlab`, `.gitlab-ci.yml`, CI README, `.versionrc.json`, `scripts/generate-diff-changelog.js` и др.) |
+| `create-github-release`    | Создание GitHub Release на основе CHANGELOG                                                                                                                    |
+| `merge-branch-php`         | Обновление ветки master на удаленном gitlab sdk репозитории по сгенерированному sdk и выпуск тэга                                                              |
+| `merge-branch-java`        | Обновление master во внутреннем Java SDK репозитории и сохранение релизного semver-тега                                                                        |
+| `merge-branch-python`      | Обновление master Python SDK и создание релизного semver-тега                                                                                                  |
+| `merge-branch-typescript`  | Обновление master во внутреннем TypeScript SDK репозитории и сохранение релизного semver-тега                                                                  |
+| `deploy-to-maven`          | Публикация Java SDK в Maven Central                                                                                                                            |
+| `deploy-to-artifactory`    | Публикация Java SDK в Artyfactory                                                                                                                              |
+| `deploy-python-to-pypi`    | Публикация проверенного Python wheel/sdist в PyPI                                                                                                              |
+| `deploy-to-npm-prerelease` | Публикация TypeScript SDK в npm (ветка, dist-tag ≠ `latest`)                                                                                                   |
+| `deploy-to-npm`            | Публикация TypeScript SDK в npm (`latest`, после `merge-branch-typescript`)                                                                                    |
 
 Java release jobs (`deploy-to-artifactory`, `deploy-to-maven`) описаны в `gitlab/.gitlab-ci-deploy-sdk-java.yml` и выполняются на стадии `deploy-sdk`.
 Публикуемый Java runtime-артефакт собирается как self-contained shaded JAR с relocation зависимостей Jackson (включая nullable-модуль) внутрь SDK.
+TypeScript npm jobs (`deploy-to-npm-prerelease`, `deploy-to-npm`) описаны в `gitlab/.gitlab-ci-deploy-sdk-typescript.yml` на той же стадии `deploy-sdk`.
 
 Python repository sync запускается после `generate-sdk-python` и
 `sdk-golden-python`. Общий Java-based `sdk-smoke` также блокирует sync, когда
@@ -101,14 +111,15 @@ Python repository sync запускается после `generate-sdk-python` �
 
 ### Основные переменные
 
-| Переменная       | Описание                                             | Значение по умолчанию |
-|------------------|------------------------------------------------------|-----------------------|
-| `SDK_LANGUAGES`  | Языки для генерации SDK (через запятую без пробелов) | `""` (все доступные)  |
+| Переменная          | Описание                                                                                              | Значение по умолчанию                     |
+|---------------------|-------------------------------------------------------------------------------------------------------|-------------------------------------------|
+| `SDK_LANGUAGES`     | Языки для генерации SDK (через запятую без пробелов)                                                   | `""` (все доступные)                      |
 
 **Примеры SDK_LANGUAGES:**
-- `""` или не задана — генерируются все доступные SDK (PHP, Python, Java)
+- `""` или не задана — генерируются все доступные SDK (PHP, Java, Python, TypeScript)
 - `"php"` — только PHP
-- `"php,python"` — PHP и Python
+- `"typescript"` — только TypeScript
+- `"php,typescript"` — PHP и TypeScript
 - `"php,python,java,javascript"` — все языки
 
 ### Переменные подготовки тестового окружения (DMS)
@@ -178,17 +189,20 @@ SCHEMATHESIS_INCLUDE_OPERATION_ID=createProduct
 
 ### Переменные для Push/Mirror
 
-| Переменная     | Описание                                                                                                                                |
-|----------------|-----------------------------------------------------------------------------------------------------------------------------------------|
-| `GIT_PASSWORD` | Токен для доступа к GitHub                                                                                                              |
-| `GIT_USER`     | Имя пользователя для git commits                                                                                                        |
-| `GIT_MAIL`     | Email для git commits                                                                                                                   |
-| `CICD_PAT`     | GitLab token для доступа к внутреннему репозиторию Remap Api Specification (`git.company.lognex/moysklad/misc/remap-api-specification`) |
-| `CICD_PAT_PHP` | GitLab token для доступа к внутреннему репозиторию PHP SDK (`git.company.lognex/moysklad/misc/php-remap-1.2-sdk`)                       |
-| `CICD_PAT_PYTHON` | Project access token внутреннего Python SDK репозитория; masked/protected |
-| `PYTHON_SDK_REPOSITORY_PATH` | GitLab path без host и `.git`; по умолчанию `moysklad/misc/remap-1.2-python-sdk` |
-| `TEST_PYPI_API_TOKEN` | Project-scoped токен TestPyPI; masked, для manual branch job |
-| `PYPI_API_TOKEN` | Project-scoped токен PyPI; masked/protected, только для production environment |
+| Переменная                   | Описание                                                                                                                                                      |
+|------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `GIT_PASSWORD`               | Токен для доступа к GitHub                                                                                                                                    |
+| `GIT_USER`                   | Имя пользователя для git commits                                                                                                                              |
+| `GIT_MAIL`                   | Email для git commits                                                                                                                                         |
+| `CICD_PAT`                   | GitLab token для доступа к внутреннему репозиторию Remap Api Specification (`git.company.lognex/moysklad/misc/remap-api-specification`)                       |
+| `CICD_PAT_PHP`               | GitLab token для доступа к внутреннему репозиторию PHP SDK (`git.company.lognex/moysklad/misc/php-remap-1.2-sdk`)                                             |
+| `CICD_PAT_PYTHON`            | Project access token внутреннего Python SDK репозитория; masked/protected                                                                                     |
+| `PYTHON_SDK_REPOSITORY_PATH` | GitLab path без host и `.git`; по умолчанию `moysklad/misc/remap-1.2-python-sdk`                                                                              |
+| `TEST_PYPI_API_TOKEN`        | Project-scoped токен TestPyPI; masked, для manual branch job                                                                                                  |
+| `PYPI_API_TOKEN`             | Project-scoped токен PyPI; masked/protected, только для production environment                                                                                |
+| `CICD_PAT_JAVA`              | GitLab token для доступа к внутреннему репозиторию Java SDK (`git.company.lognex/moysklad/misc/remap-1.2-java-sdk`)                                           |
+| `CICD_PAT_TYPESCRIPT`        | GitLab token для доступа к внутреннему репозиторию TypeScript SDK (`git.company.lognex/moysklad/misc/remap-1.2-typescript-sdk`)                               |
+| `NPM_TOKEN`                  | Masked/protected token для публикации TypeScript SDK в npm (`deploy-to-npm-prerelease`, `deploy-to-npm`); не хранить в скриптах, `.npmrc` или SDK-репозитории |
 
 ### Переменные для обратной совместимости
 
@@ -213,8 +227,8 @@ SCHEMATHESIS_INCLUDE_OPERATION_ID=createProduct
 | `test`                   | Тестирование (golden, smoke)                                                                                                       |
 | `version`                | Автоматическое версионирование и подготовка CHANGELOG/тегов                                                                        |
 | `mirror`                 | Зеркалирование в GitHub и GitHub Release                                                                                           |
-| `prepare-sdk-repository` | Подготовка внутренних репозиториев SDK (PHP/Java: ветки и релиз master по текущим изменениям)                                      |
-| `deploy-sdk`             | Публикация Java SDK артефактов (`deploy-to-artifactory`, `deploy-to-maven`)                                                        |
+| `prepare-sdk-repository` | Подготовка внутренних репозиториев SDK (PHP/Java/TypeScript: ветки и релиз master по текущим изменениям) |
+| `deploy-sdk`             | Публикация SDK артефактов: Java (`deploy-to-artifactory`, `deploy-to-maven`) и TypeScript (`deploy-to-npm-prerelease`, `deploy-to-npm`) |
 
 ### Стадии для обратной совместимости (старый Java SDK)
 
