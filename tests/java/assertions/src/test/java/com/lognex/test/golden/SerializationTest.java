@@ -136,6 +136,7 @@ class SerializationTest extends BaseTestCase {
         FIXTURE_MODEL_MAP.put("company_settings_metadata", "CompanySettingsMetadata");
         FIXTURE_MODEL_MAP.put("user_settings", "UserSettings");
         FIXTURE_MODEL_MAP.put("notification_task_changed", "NotificationTaskChanged");
+        FIXTURE_MODEL_MAP.put("sales_manager_chat_message", "SalesManagerChatMessage");
         FIXTURE_MODEL_MAP.put("notification_settings", "NotificationSettings");
         FIXTURE_MODEL_MAP.put("subscription", "Subscription");
         FIXTURE_MODEL_MAP.put("assortment_settings", "AssortmentSettings");

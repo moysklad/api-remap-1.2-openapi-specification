@@ -1,7 +1,7 @@
 type: object
 description: Краткое представление счета покупателю в уведомлении
 allOf:
-  - $ref: '../../../openapi.yaml#/components/schemas/NotificationNamedEntity'
+  - $ref: '../../../../openapi.yaml#/components/schemas/NotificationNamedEntity'
   - type: object
     properties:
       paymentPlannedMoment:

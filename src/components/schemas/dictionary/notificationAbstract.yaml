@@ -33,6 +33,7 @@ x-polymorphic-discriminator:
     - { type: NewMentionInTaskNote, componentName: NewMentionInTaskNote }
     - { type: NewEventInEventFeed, componentName: NewEventInEventFeed }
     - { type: RetireOrderByDemandNotificationCompleted, componentName: RetireOrderByDemandNotificationCompleted }
+    - { type: SalesManagerChatMessage, componentName: SalesManagerChatMessage }
 properties:
   meta:
     description: Метаданные уведомления. Поле type содержит конкретный тип уведомления

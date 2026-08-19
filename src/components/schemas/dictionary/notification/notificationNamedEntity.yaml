@@ -3,7 +3,7 @@ description: Краткое представление связанного с �
 properties:
   meta:
     description: Метаданные объекта
-    $ref: '../common/meta.yaml'
+    $ref: '../../common/meta.yaml'
   id:
     type: string
     format: uuid

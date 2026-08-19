@@ -2,4 +2,4 @@ type: object
 description: Изменение текста комментария к задаче
 properties:
   noteContent:
-    $ref: '../../../openapi.yaml#/components/schemas/NotificationDiffValue'
+    $ref: '../../../../openapi.yaml#/components/schemas/NotificationDiffValue'
