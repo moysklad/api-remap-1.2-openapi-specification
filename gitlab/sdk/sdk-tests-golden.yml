@@ -24,28 +24,29 @@ sdk-golden-php:
         exit 1
       fi
 
-# Python Golden JSON тесты (заглушка)
-#sdk-golden-python:
-#  stage: test
-#  image: python:3.11
-#  needs:
-#    - job: generate-sdk-python
-#      artifacts: true
-#      optional: true
-#  rules:
-#    - if: '$SDK_LANGUAGES =~ /python/'
-#      when: on_success
-#  script:
-#    - |
-#      if [ -d "tests/python" ] && [ -f "tests/python/requirements.txt" ]; then
-#        cd tests/python
-#        pip install -r requirements.txt
-#        pytest golden/ -v
-#      else
-#        echo "WARNING: tests/python directory not configured, skipping Python golden tests"
-#        echo "Create tests/python directory with pytest tests to enable"
-#        exit 1
-#      fi
+# Python Golden JSON тесты
+sdk-golden-python:
+  stage: test
+  image: python:3.10
+  needs:
+    - job: generate-sdk-python
+      artifacts: true
+  rules:
+    - if: '$SDK_LANGUAGES == "" || $SDK_LANGUAGES =~ /python/'
+      when: on_success
+  cache:
+    key:
+      files:
+        - clients/python/requirements.txt
+        - tests/python/requirements.txt
+    paths:
+      - .cache/pip/
+  variables:
+    PIP_CACHE_DIR: $CI_PROJECT_DIR/.cache/pip
+  script:
+    - python -m pip install -r clients/python/requirements.txt -r tests/python/requirements.txt
+    - python -m compileall -q clients/python/src/moysklad_remap_12_sdk
+    - python -m pytest tests/python/golden -v
 
 sdk-golden-java:
   extends: .maven-jdk11-image

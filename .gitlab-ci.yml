@@ -43,7 +43,7 @@
 #
 # SDK_LANGUAGES:
 #   Языки для генерации SDK, через запятую без пробелов.
-#   Примеры: "php", "php,java,typescript", "" (пустая строка = все доступные)
+#   Примеры: "php", "php,python,java,typescript", "" (пустая строка = все доступные)
 #   По умолчанию: "" (генерируются все доступные SDK)
 #
 # NPM_REGISTRY_URL:
@@ -138,6 +138,11 @@ include:
       - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_TAG == null'
       # Ветки (ручной запуск web, без тега)
       - if: '$CI_PIPELINE_SOURCE == "web" && $CI_COMMIT_TAG == null'
+  # Подготовка|внесение изменений в репозиторий Python SDK в GitLab
+  - local: 'gitlab/.gitlab-ci-prepare-sdk-python.yml'
+    rules:
+      - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_TAG == null'
+      - if: '$CI_PIPELINE_SOURCE == "web" && $CI_COMMIT_TAG == null'
   # Публикация артефакта в репозиторий (Maven, Artifactory)
   - local: 'gitlab/.gitlab-ci-deploy-sdk-java.yml'
     rules:
@@ -151,6 +156,11 @@ include:
       # Ветки (push)
       - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_TAG == null'
       # Ветки (ручной запуск web, без тега)
+      - if: '$CI_PIPELINE_SOURCE == "web" && $CI_COMMIT_TAG == null'
+  # Публикация Python SDK в TestPyPI/PyPI
+  - local: 'gitlab/.gitlab-ci-deploy-sdk-python.yml'
+    rules:
+      - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_TAG == null'
       - if: '$CI_PIPELINE_SOURCE == "web" && $CI_COMMIT_TAG == null'
 
 stages:

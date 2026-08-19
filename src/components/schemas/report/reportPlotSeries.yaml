@@ -1,0 +1,14 @@
+type: object
+description: Показатель продаж или заказов за период отчета
+properties:
+  date:
+    type: string
+    description: Дата показателя в формате YYYY-MM-DD HH:MM:SS
+  quantity:
+    type: integer
+    format: int32
+    description: Количество
+  sum:
+    type: number
+    format: double
+    description: Сумма

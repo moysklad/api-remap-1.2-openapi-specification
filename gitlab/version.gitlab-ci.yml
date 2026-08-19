@@ -10,6 +10,8 @@ version:auto:
       optional: true
     - job: generate-sdk-java
       optional: true
+    - job: generate-sdk-python
+      optional: true
     - job: generate-sdk-typescript
       optional: true
     - job: sdk-golden-php
@@ -17,6 +19,8 @@ version:auto:
     - job: sdk-smoke
       optional: true
     - job: sdk-golden-java
+      optional: true
+    - job: sdk-golden-python
       optional: true
     - job: sdk-golden-typescript
       optional: true

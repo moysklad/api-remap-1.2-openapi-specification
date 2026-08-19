@@ -1,5 +1,5 @@
 # Локальный запуск шагов pipeline (аналог GitLab CI)
-# Поддерживаемые языки: php, java, typescript, python, javascript (python и javascript пока заглушки)
+# Поддерживаемые языки: php, python, java, typescript
 # Запуск: docker compose run --rm sdk make <target>
 # Языки: make generate LANGUAGES=php или LANGUAGES=php,python (по умолчанию php)
 
@@ -8,8 +8,8 @@ comma := ,
 # Список языков для генерации/тестов (через запятую без пробелов)
 LANGUAGES_LIST := $(subst $(comma), ,$(LANGUAGES))
 
-.PHONY: help lint bundle generate generate-php generate-python generate-java generate-javascript generate-typescript \
-	build-typescript pack-typescript \
+.PHONY: help lint bundle generate generate-php generate-python build-python generate-java generate-javascript generate-typescript \
+    build-typescript pack-typescript \
 	test-smoke test-golden test-golden-php test-golden-java test-golden-javascript test-golden-python \
 	test-golden-typescript schemathesis all
 
@@ -19,14 +19,15 @@ help:
 	@echo "  bundle            - bundle OpenAPI spec to dist/"
 	@echo "  generate          - generate SDK for LANGUAGES (default: php). Example: make generate LANGUAGES=php,python"
 	@echo "  generate-php      - generate PHP SDK only"
-	@echo "  generate-python   - generate Python SDK only (if script in package.json)"
+	@echo "  generate-python   - generate Python SDK only"
+	@echo "  build-python      - build and validate Python wheel/sdist"
 	@echo "  generate-java     - generate Java SDK only (if script in package.json)"
 	@echo "  generate-javascript - generate JavaScript SDK only (if script in package.json)"
 	@echo "  generate-typescript - generate TypeScript SDK only"
 	@echo "  build-typescript  - build the generated TypeScript SDK (dist: CommonJS + ESM)"
 	@echo "  pack-typescript   - list npm tarball contents (npm pack --dry-run)"
 	@echo "  test-smoke        - smoke tests (openapi-mock + tests)."
-	@echo "  test-golden       - golden tests for LANGUAGES (php, java, typescript). Default: php"
+	@echo "  test-golden       - golden tests for LANGUAGES. Default: php"
 	@echo "  schemathesis      - contract tests (SCHEMATHESIS_HOST, _LOGIN, _PASSWORD)"
 	@echo "  all               - lint + bundle + generate (php) + test-golden + test-smoke"
 
@@ -51,13 +52,16 @@ light-bundle:
 
 # Генерация: все языки из LANGUAGES или по одному
 generate: npm-ci
-	@for lang in $(LANGUAGES_LIST); do $(MAKE) generate-$$lang || true; done
+	@for lang in $(LANGUAGES_LIST); do $(MAKE) generate-$$lang || exit $$?; done
 
 generate-php:
 	npm run generate-php
 
 generate-python:
-	@npm run generate-python 2>/dev/null || echo "Skipping generate-python: script not in package.json"
+	npm run generate-python
+
+build-python:
+	sh scripts/build-python-package.sh
 
 generate-java:
 	@npm run generate-java 2>/dev/null || echo "Skipping generate-java: script not in package.json"
