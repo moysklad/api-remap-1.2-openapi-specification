@@ -80,7 +80,7 @@ docker compose run --rm java-sdk bash -lc "cd clients/java && mvn clean package"
 # Smoke тесты (openapi-mock + тесты по языкам)
 # ВАЖНО: после make bundle/light-bundle перезапустите mock — он кэширует спецификацию при старте
 docker compose restart mock
-docker compose run --rm sdk make test-smoke
+docker compose run --rm java-sdk make test-smoke
 
 # Контрактные тесты Schemathesis (один для всех языков)
 docker compose run --rm -e SCHEMATHESIS_HOST=host -e SCHEMATHESIS_LOGIN=login -e SCHEMATHESIS_PASSWORD=pass sdk make schemathesis
@@ -96,7 +96,7 @@ Python golden-набор также динамически проверяет к
 расширений непосредственно из модульной спецификации `src/`.
 
 Smoke-тесты выполняются Java-набором (`tests/java/assertions/.../smoke/ApiEndpointsTest.java`) через:
-`docker compose run --rm sdk make test-smoke`.
+`docker compose run --rm java-sdk make test-smoke`.
 Отдельного Python smoke-набора нет; Python SDK блокируется golden-тестами, а endpoint coverage остаётся в общем Java smoke flow.
 
 **Без сборки образа** (если есть образ из CI):
