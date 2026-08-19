@@ -78,7 +78,7 @@ properties:
     type: string
     maxLength: 4096
     nullable: true
-    description: Описание товара
+    description: Описание Товара
   vat:
     type: integer
     minimum: 0
