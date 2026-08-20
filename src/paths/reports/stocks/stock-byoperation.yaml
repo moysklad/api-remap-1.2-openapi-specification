@@ -1,0 +1,37 @@
+get:
+  operationId: getStockByOperation
+  tags:
+    - ReportsStockByOperation
+  summary: Получить Остатки по документу
+  description: |
+    Запрос отчета «Остатки по документам» — остатки по позициям указанного документа
+    со склада документа, а также себестоимость позиций по FIFO с учётом количества.
+
+    Обязательный параметр — `operation.id` (ID документа).
+
+    Поддерживаемые типы документов: отгрузка, заказ покупателя, розничная продажа,
+    счет поставщика, счет покупателю, заказ поставщику, приемка, розничный возврат,
+    возврат поставщику, возврат покупателя.
+
+    Для отгрузки, розничной продажи, приемки, возвратов остатки рассчитываются на момент
+    поля `moment` документа. Для заказа покупателя, счетов и заказа поставщику —
+    на текущий момент времени.
+  parameters:
+    - name: operation.id
+      in: query
+      required: true
+      description: ID документа, по которому нужно получить остатки
+      schema:
+        type: string
+        format: uuid
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос. Результат - JSON представление отчета
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/StockByOperationList'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

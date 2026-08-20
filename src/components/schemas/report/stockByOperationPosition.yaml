@@ -1,0 +1,30 @@
+type: object
+description: Остаток по позиции в отчете «Остатки по документам»
+properties:
+  meta:
+    description: Метаданные позиции, по которой выдаётся остаток
+    $ref: '../common/meta.yaml'
+  name:
+    type: string
+    maxLength: 255
+    description: Наименование позиции
+  stock:
+    type: number
+    format: double
+    description: Остаток
+  cost:
+    type: number
+    format: double
+    description: Себестоимость в копейках
+  inTransit:
+    type: number
+    format: double
+    description: Ожидание. У сущности Комплект значение всегда `0`
+  reserve:
+    type: number
+    format: double
+    description: Резерв. У сущности Комплект значение всегда `0`
+  quantity:
+    type: number
+    format: double
+    description: Доступно. У сущности Комплект значение всегда `0`

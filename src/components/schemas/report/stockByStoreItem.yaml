@@ -1,0 +1,22 @@
+type: object
+description: Остаток по одному складу в отчете «Остатки по складам»
+properties:
+  meta:
+    description: Метаданные склада, по которому выводится остаток
+    $ref: '../common/meta.yaml'
+  name:
+    type: string
+    maxLength: 255
+    description: Наименование склада
+  stock:
+    type: number
+    format: double
+    description: Остаток
+  inTransit:
+    type: number
+    format: double
+    description: Ожидание
+  reserve:
+    type: number
+    format: double
+    description: Резерв
