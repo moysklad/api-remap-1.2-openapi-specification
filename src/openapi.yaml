@@ -1521,6 +1521,18 @@ paths:
   # Reports - Stock
   /report/stock/all:
     $ref: './paths/reports/stocks/stock-all.yaml'
+  /report/stock/bystore:
+    $ref: './paths/reports/stocks/stock-bystore.yaml'
+  /report/stock/byoperation:
+    $ref: './paths/reports/stocks/stock-byoperation.yaml'
+
+  # Reports - By operations
+  /report/byoperations/stock:
+    $ref: './paths/reports/byoperations/byoperations-stock.yaml'
+  /report/byoperations/reserve:
+    $ref: './paths/reports/byoperations/byoperations-reserve.yaml'
+  /report/byoperations/intransit:
+    $ref: './paths/reports/byoperations/byoperations-intransit.yaml'
 
 components:
   schemas:
@@ -2393,6 +2405,30 @@ components:
       $ref: './components/schemas/report/stockAll.yaml'
     StockAllList:
       $ref: './components/schemas/report/stockAllList.yaml'
+    StockByStore:
+      $ref: './components/schemas/report/stockByStore.yaml'
+    StockByStoreItem:
+      $ref: './components/schemas/report/stockByStoreItem.yaml'
+    StockByStoreList:
+      $ref: './components/schemas/report/stockByStoreList.yaml'
+    StockByOperation:
+      $ref: './components/schemas/report/stockByOperation.yaml'
+    StockByOperationPosition:
+      $ref: './components/schemas/report/stockByOperationPosition.yaml'
+    StockByOperationList:
+      $ref: './components/schemas/report/stockByOperationList.yaml'
+    ByOperationsStock:
+      $ref: './components/schemas/report/byOperationsStock.yaml'
+    ByOperationsStockList:
+      $ref: './components/schemas/report/byOperationsStockList.yaml'
+    ByOperationsReserve:
+      $ref: './components/schemas/report/byOperationsReserve.yaml'
+    ByOperationsReserveList:
+      $ref: './components/schemas/report/byOperationsReserveList.yaml'
+    ByOperationsInTransit:
+      $ref: './components/schemas/report/byOperationsInTransit.yaml'
+    ByOperationsInTransitList:
+      $ref: './components/schemas/report/byOperationsInTransitList.yaml'
 
   securitySchemes:
     basicAuth:
@@ -2559,3 +2595,9 @@ tags:
     description: Операции с пользовательскими справочниками
   - name: ReportsStockAll
     description: Операции с Расширенным отчетом об остатках
+  - name: ReportsStockByStore
+    description: Операции с отчетом «Остатки по складам»
+  - name: ReportsStockByOperation
+    description: Операции с отчетом «Остатки по документам»
+  - name: ReportsByOperations
+    description: Операции с отчетом по документам номенклатуры

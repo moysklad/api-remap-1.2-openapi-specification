@@ -146,6 +146,11 @@ class SerializationTest extends TestCase
         'stock_all_product' => 'StockAll',
         'stock_all_variant' => 'StockAll',
         'stock_all_consignment' => 'StockAll',
+        'stock_by_store' => 'StockByStore',
+        'stock_by_operation' => 'StockByOperation',
+        'by_operations_stock' => 'ByOperationsStock',
+        'by_operations_reserve' => 'ByOperationsReserve',
+        'by_operations_intransit' => 'ByOperationsInTransit',
     ];
 
     /**
