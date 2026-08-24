@@ -36,7 +36,7 @@ metadata:
   annotations:
     backstage.io/source-location: url:https://git.company.lognex/moysklad/misc/remap-1.2-java-sdk/tree/master
   links:
-    - url: https://central.sonatype.com/artifact/ru.moysklad.api/remap-1.2-sdk
+    - url: https://central.sonatype.com/artifact/ru.moysklad.api/remap-1.2-java-sdk
       title: Maven central repository
     - url: https://git.company.lognex/moysklad/misc/api-sdk-builder/-/blob/master/README.md
       title: Описания сборки SDK Remap 1.2
