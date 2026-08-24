@@ -1,6 +1,6 @@
 #!/bin/sh
 # Golden тесты для указанного языка
-# Использование: ./scripts/local-test-golden.sh <php|python|java|javascript>
+# Использование: ./scripts/local-test-golden.sh <php|python|java|javascript|typescript>
 # Работает в Docker (working_dir=/workspace) и локально (корень репо по пути скрипта).
 set -e
 LANG="${1:-php}"
@@ -24,16 +24,14 @@ run_php() {
 
 run_python() {
   if [ ! -d "clients/python" ]; then
-    echo "Skipping golden tests for python: clients/python not found. Run: make generate-python"
-    return 0
+    echo "ERROR: clients/python not found. Run: make generate-python"
+    exit 1
   fi
   if [ ! -d "tests/python" ]; then
-    echo "Skipping: tests/python not configured"
-    return 0
+    echo "ERROR: tests/python not configured"
+    exit 1
   fi
-  cd tests/python
-  pip install -q -r requirements.txt
-  pytest golden/ -v 2>/dev/null || echo "Skipping: no golden tests for python yet"
+  python3 -m pytest tests/python/golden -v
 }
 
 run_java() {
@@ -62,10 +60,25 @@ run_javascript() {
   npm run test:golden 2>/dev/null || echo "Skipping: no test:golden script"
 }
 
+run_typescript() {
+  if [ ! -d "clients/typescript" ]; then
+    echo "ERROR: clients/typescript not found. Run: make generate-typescript"
+    exit 1
+  fi
+  if [ ! -f "clients/typescript/dist/esm/index.js" ]; then
+    echo "==> сборка SDK не найдена, собираем..."
+    sh scripts/build-typescript-sdk.sh
+  fi
+  cd tests/typescript
+  npm ci --no-audit --no-fund
+  npm run test:golden
+}
+
 case "$LANG" in
   php) run_php ;;
   python) run_python ;;
   java) run_java ;;
   javascript) run_javascript ;;
+  typescript) run_typescript ;;
   *) echo "Unknown language: $LANG"; exit 1 ;;
 esac

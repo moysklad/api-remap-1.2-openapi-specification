@@ -28,6 +28,10 @@ tests/php/vendor/
 tests/php/.phpunit.cache/
 # Java
 tests/java/assertions/target/
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
 
 # Build artifacts
 dist/
