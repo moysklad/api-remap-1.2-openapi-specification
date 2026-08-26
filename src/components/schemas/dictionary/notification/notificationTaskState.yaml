@@ -1,0 +1,8 @@
+type: string
+description: Известные значения статуса завершения фоновой операции
+enum:
+  - completed
+  - interrupted
+  - interrupted_by_user
+  - interrupted_by_timeout
+  - interrupted_by_system
