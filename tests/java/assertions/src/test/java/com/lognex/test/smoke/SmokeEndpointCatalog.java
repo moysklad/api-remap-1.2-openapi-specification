@@ -829,7 +829,12 @@ final class SmokeEndpointCatalog {
                 Arguments.of(new SmokeEndpointCase("testGetReportOrdersPlotSeries#1", "GET", "/report/orders/plotseries?momentFrom=2018-09-06%2000:00:00&momentTo=2018-09-06%2001:00:01&interval=hour", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testGetReportSalesPlotSeries#1", "GET", "/report/sales/plotseries?momentFrom=2018-09-06%2000:00:00&momentTo=2018-09-06%2001:00:01&interval=hour", SmokeEndpointCase.Expectation.NOT_404, false)),
 
-                // /notification/settings
+                // /notification
+                Arguments.of(new SmokeEndpointCase("testGetNotifications#1", "GET", "/notification", SmokeEndpointCase.Expectation.NOT_404, false)),
+                Arguments.of(new SmokeEndpointCase("testGetNotificationById#1", "GET", "/notification/{id}", SmokeEndpointCase.Expectation.NOT_404, false)),
+                Arguments.of(new SmokeEndpointCase("testDeleteNotification#1", "DELETE", "/notification/{id}", SmokeEndpointCase.Expectation.DELETE, false)),
+                Arguments.of(new SmokeEndpointCase("testMarkNotificationAsRead#1", "PUT", "/notification/{id}/markasread", SmokeEndpointCase.Expectation.NOT_404, false)),
+                Arguments.of(new SmokeEndpointCase("testMarkAllNotificationsAsRead#1", "PUT", "/notification/markasreadall", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testGetNotificationSettings#1", "GET", "/notification/settings", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testUpdateNotificationSettings#1", "PUT", "/notification/settings", SmokeEndpointCase.Expectation.NOT_404, true)),
 

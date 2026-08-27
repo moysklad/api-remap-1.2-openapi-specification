@@ -1,0 +1,24 @@
+type: object
+description: Уведомление о завершении создания выводов из оборота по отгрузкам
+x-polymorphic-parent: NotificationAbstract
+properties:
+  createdDocsCount:
+    type: integer
+    description: Количество созданных документов
+  errorMessage:
+    type: string
+    maxLength: 255
+    description: Сообщение об ошибке
+  message:
+    type: string
+    maxLength: 255
+    description: Сообщение о завершении операции
+  taskState:
+    type: string
+    description: Статус завершения. Известные значения описаны в NotificationTaskState
+  startMoment:
+    type: string
+    description: Дата и время начала создания документов
+  endMoment:
+    type: string
+    description: Дата и время окончания создания документов
