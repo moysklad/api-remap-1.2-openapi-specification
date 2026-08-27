@@ -10,7 +10,7 @@
 #
 # Переменные:
 # - SDK_LANGUAGES: языки для генерации SDK (через запятую, пустая строка = все доступные)
-#   Примеры: "php", "php,python", "" (все)
+#   Примеры: "php", "php,typescript", "" (все)
 # - PUSH_TO_REMOTE: пушить изменения в удалённые репозитории (true/false, по умолчанию false)
 # - SCHEMATHESIS_HOST / SCHEMATHESIS_LOGIN / SCHEMATHESIS_PASSWORD:
 #   необязательные override-переменные для ручных schemathesis тестов;

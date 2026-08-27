@@ -79,7 +79,7 @@ properties:
     type: string
     maxLength: 4096
     nullable: true
-    description: Описание товара
+    description: Описание Товара
   vat:
     type: integer
     minimum: 0
@@ -181,7 +181,7 @@ properties:
       - $ref: '../../../openapi.yaml#/components/schemas/FileList'
   barcodes:
     type: array
-    description: Штрихкоды товара
+    description: Штрихкоды Товара
     nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/Barcode'

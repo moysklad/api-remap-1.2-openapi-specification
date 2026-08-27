@@ -817,12 +817,39 @@ final class SmokeEndpointCatalog {
                 Arguments.of(new SmokeEndpointCase("testCreateRetailDrawerCashOutMetadataStatesBatch#1", "POST", "/entity/retaildrawercashout/metadata/states/batch", SmokeEndpointCase.Expectation.NOT_404, true)),
                 Arguments.of(new SmokeEndpointCase("testCreateCashOutMetadataStatesBatch#1", "POST", "/entity/cashout/metadata/states/batch", SmokeEndpointCase.Expectation.NOT_404, true)),
 
+                // /report
+                Arguments.of(new SmokeEndpointCase("testGetReportDashboardDay#1", "GET", "/report/dashboard/day", SmokeEndpointCase.Expectation.NOT_404, false)),
+                Arguments.of(new SmokeEndpointCase("testGetReportDashboardWeek#1", "GET", "/report/dashboard/week", SmokeEndpointCase.Expectation.NOT_404, false)),
+                Arguments.of(new SmokeEndpointCase("testGetReportDashboardMonth#1", "GET", "/report/dashboard/month", SmokeEndpointCase.Expectation.NOT_404, false)),
+                Arguments.of(new SmokeEndpointCase("testGetReportOrdersPlotSeries#1", "GET", "/report/orders/plotseries?momentFrom=2018-09-06%2000:00:00&momentTo=2018-09-06%2001:00:01&interval=hour", SmokeEndpointCase.Expectation.NOT_404, false)),
+                Arguments.of(new SmokeEndpointCase("testGetReportSalesPlotSeries#1", "GET", "/report/sales/plotseries?momentFrom=2018-09-06%2000:00:00&momentTo=2018-09-06%2001:00:01&interval=hour", SmokeEndpointCase.Expectation.NOT_404, false)),
+
                 // /notification/settings
                 Arguments.of(new SmokeEndpointCase("testGetNotificationSettings#1", "GET", "/notification/settings", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testUpdateNotificationSettings#1", "PUT", "/notification/settings", SmokeEndpointCase.Expectation.NOT_404, true)),
 
                 // /entity/loss
-                Arguments.of(new SmokeEndpointCase("testDeleteLossMetadataStateById#1", "DELETE", "/entity/loss/metadata/states/{id}", SmokeEndpointCase.Expectation.DELETE, false))
+                Arguments.of(new SmokeEndpointCase("testDeleteLossMetadataStateById#1", "DELETE", "/entity/loss/metadata/states/{id}", SmokeEndpointCase.Expectation.DELETE, false)),
+
+                // /report/stock/all
+                Arguments.of(new SmokeEndpointCase("testGetStockAll#1", "GET", "/report/stock/all", SmokeEndpointCase.Expectation.NOT_404, false)),
+                Arguments.of(new SmokeEndpointCase("testGetStockAllGroupByProduct#1", "GET", "/report/stock/all?groupBy=product", SmokeEndpointCase.Expectation.NOT_404, false)),
+                Arguments.of(new SmokeEndpointCase("testGetStockAllGroupByVariant#1", "GET", "/report/stock/all?groupBy=variant", SmokeEndpointCase.Expectation.NOT_404, false)),
+                Arguments.of(new SmokeEndpointCase("testGetStockAllGroupByConsignment#1", "GET", "/report/stock/all?groupBy=consignment", SmokeEndpointCase.Expectation.NOT_404, false)),
+
+                // /report/stock/bystore
+                Arguments.of(new SmokeEndpointCase("testGetStockByStore#1", "GET", "/report/stock/bystore", SmokeEndpointCase.Expectation.NOT_404, false)),
+                Arguments.of(new SmokeEndpointCase("testGetStockByStoreGroupByProduct#1", "GET", "/report/stock/bystore?groupBy=product", SmokeEndpointCase.Expectation.NOT_404, false)),
+                Arguments.of(new SmokeEndpointCase("testGetStockByStoreGroupByVariant#1", "GET", "/report/stock/bystore?groupBy=variant", SmokeEndpointCase.Expectation.NOT_404, false)),
+                Arguments.of(new SmokeEndpointCase("testGetStockByStoreGroupByConsignment#1", "GET", "/report/stock/bystore?groupBy=consignment", SmokeEndpointCase.Expectation.NOT_404, false)),
+
+                // /report/stock/byoperation
+                Arguments.of(new SmokeEndpointCase("testGetStockByOperation#1", "GET", "/report/stock/byoperation?operation.id=34efe2ee-015e-11e6-9464-e4de0000006b", SmokeEndpointCase.Expectation.NOT_404, false)),
+
+                // /report/byoperations
+                Arguments.of(new SmokeEndpointCase("testGetByOperationsStock#1", "GET", "/report/byoperations/stock?filter=assortment=https://api.moysklad.ru/api/remap/1.2/entity/product/bb1865dc-32e1-11ef-ac16-001100000003", SmokeEndpointCase.Expectation.NOT_404, false)),
+                Arguments.of(new SmokeEndpointCase("testGetByOperationsReserve#1", "GET", "/report/byoperations/reserve?filter=assortment=https://api.moysklad.ru/api/remap/1.2/entity/product/bb1865dc-32e1-11ef-ac16-001100000003", SmokeEndpointCase.Expectation.NOT_404, false)),
+                Arguments.of(new SmokeEndpointCase("testGetByOperationsInTransit#1", "GET", "/report/byoperations/intransit?filter=assortment=https://api.moysklad.ru/api/remap/1.2/entity/product/bb1865dc-32e1-11ef-ac16-001100000003", SmokeEndpointCase.Expectation.NOT_404, false))
         );
     }
 }

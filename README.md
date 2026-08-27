@@ -9,6 +9,7 @@
 ```bash
 nvm use v24.0.1
 npm run generate-php
+npm run generate-python
 ```
 
 ### 1. Установка зависимостей
@@ -34,7 +35,20 @@ npm run serve-docs
 ### 5. Генерация клиентских SDK
 ```bash
 npm run generate-php
+npm run generate-python
+npm run generate-java
+npm run generate-typescript
 ```
+
+TypeScript SDK генерируется как готовый к публикации npm-пакет `@moysklad/remap-1.2-sdk` в `clients/typescript` (версия берётся из semver-тега репозитория). Сборка, состав пакета и golden-тесты:
+
+```bash
+make build-typescript        # сборка пакета: dist/ (CommonJS) и dist/esm/ (ESM) с declarations
+make pack-typescript         # состав будущего npm-архива
+make test-golden-typescript  # golden-тесты на общих fixtures из tests/fixtures
+```
+
+Подробности — в разделе «TypeScript SDK» файла [README_LOCAL.md](README_LOCAL.md).
 
 ## Локальный запуск через Make
 
@@ -50,10 +64,16 @@ docker compose run --rm sdk make lint         # проверка OpenAPI
 docker compose run --rm sdk make bundle       # сборка dist/openapi.yaml
 docker compose run --rm sdk make light-bundle  # сборка dist/openapi.yaml для быстрых smoke-тестов
 docker compose run --rm sdk make generate-php # генерация PHP SDK
+docker compose run --rm sdk make generate-python # генерация Python SDK
+docker compose run --rm sdk make test-golden-python # Python golden-тесты
+docker compose run --rm sdk make build-python # wheel/sdist + twine check
 docker compose run --rm sdk make generate-java # генерация Java SDK
+docker compose run --rm sdk make generate-typescript # генерация TypeScript SDK
+docker compose run --rm sdk make build-typescript # сборка npm-пакета TypeScript SDK
 docker compose run --rm java-sdk bash -lc "cd clients/java && mvn clean package" # сборка shaded Java SDK
 docker compose run --rm sdk make test-golden-php  # golden-тесты
 docker compose run --rm java-sdk make test-golden-java  # golden-тесты
+docker compose run --rm sdk make test-golden-typescript  # golden-тесты
 docker compose run --rm sdk make test-smoke  # smoke-тесты (openapi-mock поднимается автоматически)
 docker compose run --rm -e SCHEMATHESIS_HOST=host -e SCHEMATHESIS_LOGIN=login -e SCHEMATHESIS_PASSWORD=pass sdk make schemathesis # schemathesis-тесты на реальном окружении
 docker compose run --rm sdk make all          # lint + bundle + generate-php + test-golden + test-smoke
@@ -68,7 +88,7 @@ Java SDK собирается как self-contained shaded-артефакт: в�
 
 ### Локально (без Docker)
 
-На машине должны быть установлены: **Node.js**, **npm**, **PHP ≥8.1** с расширениями **dom**, **json**, **mbstring**, **curl**, **Composer**.
+На машине должны быть установлены: **Node.js**, **npm**, **Python ≥3.10** с расширениями (смотри Dockerfile), а для PHP flow — **PHP ≥8.1** с расширениями **dom**, **json**, **mbstring**, **curl**, **Composer**.
 
 ```bash
 make help
@@ -76,7 +96,11 @@ make lint
 make bundle
 make light-bundle
 make generate-php
+make generate-python
+make test-golden-python
+make build-python
 make test-golden-php   # из корня репо; в tests/php нужен composer install
+make generate-typescript && make test-golden-typescript   # golden-тесты TypeScript (нужен Node.js ≥22)
 make test-smoke    # нужен запущенный openapi-mock (например на http://localhost:8080)
 make schemathesis # в скрипте нужно также задать переменные SCHEMATHESIS_HOST, SCHEMATHESIS_LOGIN, SCHEMATHESIS_PASSWORD
 ```

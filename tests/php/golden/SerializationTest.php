@@ -138,8 +138,19 @@ class SerializationTest extends TestCase
         'commission_report_in' => 'CommissionReportIn',
         'commission_report_out' => 'CommissionReportOut',
         'processing_plan_folder' => 'ProcessingPlanFolder',
+        'report_dashboard' => 'ReportDashboard',
+        'report_orders_plotseries_list' => 'ReportOrdersPlotSeriesList',
+        'report_sales_plotseries_list' => 'ReportSalesPlotSeriesList',
         'organization' => 'Organization',
         'organization_account' => 'Account',
+        'stock_all_product' => 'StockAll',
+        'stock_all_variant' => 'StockAll',
+        'stock_all_consignment' => 'StockAll',
+        'stock_by_store' => 'StockByStore',
+        'stock_by_operation' => 'StockByOperation',
+        'by_operations_stock' => 'ByOperationsStock',
+        'by_operations_reserve' => 'ByOperationsReserve',
+        'by_operations_intransit' => 'ByOperationsInTransit',
     ];
 
     /**

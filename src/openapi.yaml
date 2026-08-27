@@ -32,6 +32,22 @@ security:
   - bearerAuth: []
 
 paths:
+  # Reports
+  #
+  # Dashboard
+  /report/dashboard/day:
+    $ref: './paths/reports/dashboard-day.yaml'
+  /report/dashboard/week:
+    $ref: './paths/reports/dashboard-week.yaml'
+  /report/dashboard/month:
+    $ref: './paths/reports/dashboard-month.yaml'
+
+  # Sales and Orders Plot Series
+  /report/orders/plotseries:
+    $ref: './paths/reports/orders-plotseries.yaml'
+  /report/sales/plotseries:
+    $ref: './paths/reports/sales-plotseries.yaml'
+
   # Dictionaries
   #
   # Contracts
@@ -1526,6 +1542,22 @@ paths:
   /entity/cashout/new:
     $ref: './paths/documents/cashouts/cashout-new.yaml'
 
+  # Reports - Stock
+  /report/stock/all:
+    $ref: './paths/reports/stocks/stock-all.yaml'
+  /report/stock/bystore:
+    $ref: './paths/reports/stocks/stock-bystore.yaml'
+  /report/stock/byoperation:
+    $ref: './paths/reports/stocks/stock-byoperation.yaml'
+
+  # Reports - By operations
+  /report/byoperations/stock:
+    $ref: './paths/reports/byoperations/byoperations-stock.yaml'
+  /report/byoperations/reserve:
+    $ref: './paths/reports/byoperations/byoperations-reserve.yaml'
+  /report/byoperations/intransit:
+    $ref: './paths/reports/byoperations/byoperations-intransit.yaml'
+
   /entity/{type}/metadata:
     $ref: './paths/common/metadata/entity-metadata.yaml'
   /entity/{type}/metadata/embeddedtemplate:
@@ -1747,6 +1779,18 @@ components:
       $ref: './components/schemas/common/metadata.yaml'
     Context:
       $ref: './components/schemas/common/context.yaml'
+    ReportDashboard:
+      $ref: './components/schemas/report/reportDashboard.yaml'
+    ReportDashboardMoney:
+      $ref: './components/schemas/report/reportDashboardMoney.yaml'
+    ReportDashboardPeriodMetrics:
+      $ref: './components/schemas/report/reportDashboardPeriodMetrics.yaml'
+    ReportOrdersPlotSeriesList:
+      $ref: './components/schemas/report/reportOrdersPlotSeriesList.yaml'
+    ReportPlotSeries:
+      $ref: './components/schemas/report/reportPlotSeries.yaml'
+    ReportSalesPlotSeriesList:
+      $ref: './components/schemas/report/reportSalesPlotSeriesList.yaml'
     Declaration:
       $ref: './components/schemas/common/declaration.yaml'
     Gtd:
@@ -2386,6 +2430,35 @@ components:
     CustomEntityElementList:
       $ref: './components/schemas/dictionary/customEntityElementList.yaml'
 
+    StockAll:
+      $ref: './components/schemas/report/stockAll.yaml'
+    StockAllList:
+      $ref: './components/schemas/report/stockAllList.yaml'
+    StockByStore:
+      $ref: './components/schemas/report/stockByStore.yaml'
+    StockByStoreItem:
+      $ref: './components/schemas/report/stockByStoreItem.yaml'
+    StockByStoreList:
+      $ref: './components/schemas/report/stockByStoreList.yaml'
+    StockByOperation:
+      $ref: './components/schemas/report/stockByOperation.yaml'
+    StockByOperationPosition:
+      $ref: './components/schemas/report/stockByOperationPosition.yaml'
+    StockByOperationList:
+      $ref: './components/schemas/report/stockByOperationList.yaml'
+    ByOperationsStock:
+      $ref: './components/schemas/report/byOperationsStock.yaml'
+    ByOperationsStockList:
+      $ref: './components/schemas/report/byOperationsStockList.yaml'
+    ByOperationsReserve:
+      $ref: './components/schemas/report/byOperationsReserve.yaml'
+    ByOperationsReserveList:
+      $ref: './components/schemas/report/byOperationsReserveList.yaml'
+    ByOperationsInTransit:
+      $ref: './components/schemas/report/byOperationsInTransit.yaml'
+    ByOperationsInTransitList:
+      $ref: './components/schemas/report/byOperationsInTransitList.yaml'
+
   securitySchemes:
     basicAuth:
       type: http
@@ -2529,6 +2602,8 @@ tags:
     description: Операции с полученными отчетами комиссионера
   - name: CommissionReportOuts
     description: Операции с выданными отчетами комиссионера
+  - name: Reports
+    description: Операции с отчетами
   - name: CompanySettings
     description: Операции с настройками компании
   - name: UserSettings
@@ -2547,5 +2622,13 @@ tags:
     description: Операции с бонусными операциями
   - name: CustomEntities
     description: Операции с пользовательскими справочниками
+  - name: ReportsStockAll
+    description: Операции с Расширенным отчетом об остатках
+  - name: ReportsStockByStore
+    description: Операции с отчетом «Остатки по складам»
+  - name: ReportsStockByOperation
+    description: Операции с отчетом «Остатки по документам»
+  - name: ReportsByOperations
+    description: Операции с отчетом по документам номенклатуры
   - name: Metadata
     description: Операции c мета-датой сущности
