@@ -8,3 +8,4 @@ properties:
     enum: [long]
   value:
     type: integer
+    format: int64

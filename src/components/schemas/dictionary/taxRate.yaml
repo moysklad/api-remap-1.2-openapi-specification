@@ -42,7 +42,7 @@ properties:
     readOnly: true
   rate:
     type: number
-    format: float
+    format: double
     description: Значение налоговой ставки
   archived:
     type: boolean

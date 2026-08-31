@@ -43,7 +43,7 @@ properties:
     description: Курс валюты
   margin:
     type: number
-    format: float
+    format: double
     description: Наценка при автоматическом обновлении курса
   indirect:
     type: boolean
