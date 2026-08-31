@@ -49,7 +49,7 @@ sdk-golden-python:
     - python -m pytest tests/python/golden -v
 
 sdk-golden-java:
-  extends: .maven-jdk11-image
+  extends: .maven-jdk17-image
   stage: test
   needs:
     - job: generate-sdk-java

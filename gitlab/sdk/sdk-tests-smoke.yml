@@ -1,7 +1,7 @@
 # Smoke тесты: openapi-mock запускается в том же контейнере
 # (GitLab CI service не имеет доступа к артефакту dist/openapi.yaml)
 sdk-smoke:
-  extends: .maven-jdk11-image
+  extends: .maven-jdk17-image
   stage: test
   needs:
     - job: bundle-smoke-openapi
