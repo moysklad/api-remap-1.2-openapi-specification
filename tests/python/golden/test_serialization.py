@@ -136,6 +136,8 @@ FIXTURE_MODEL_MAP = {
     "processing_plan_folder": "ProcessingPlanFolder",
     "organization": "Organization",
     "organization_account": "Account",
+    "notification_task_changed": "NotificationTaskChanged",
+    "sales_manager_chat_message": "NotificationSalesManagerChatMessage",
 }
 
 IGNORED_FIELDS = {

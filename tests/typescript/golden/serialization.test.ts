@@ -153,6 +153,8 @@ const FIXTURE_MODEL_MAP: Readonly<Record<string, string>> = {
     commission_report_out: 'CommissionReportOut',
     organization: 'Organization',
     organization_account: 'Account',
+    notification_task_changed: 'NotificationTaskChanged',
+    sales_manager_chat_message: 'SalesManagerChatMessage',
 };
 
 const sdk = await loadSdk();
