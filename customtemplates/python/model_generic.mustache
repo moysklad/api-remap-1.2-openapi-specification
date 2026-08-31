@@ -297,8 +297,8 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}{{#vendorExtensions.
                     for error in errors
                 )
             ):
-                from {{packageName}}.models.error import Error
-                return Error.from_dict(obj)
+                from {{packageName}}.models.errors import Errors
+                return Errors.from_dict(obj)
             {{/batchErrorFallback}}
 
         {{/vendorExtensions.x-polymorphic-discriminator}}

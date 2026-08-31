@@ -14,13 +14,6 @@ import com.fasterxml.jackson.databind.JavaType;
 {{#openApiNullable}}
 import org.openapitools.jackson.nullable.JsonNullableModule;
 {{/openApiNullable}}
-{{#useBeanValidation}}
-import org.hibernate.validator.messageinterpolation.ParameterMessageInterpolator;
-
-import {{javaxPackage}}.validation.ConstraintViolation;
-import {{javaxPackage}}.validation.Validation;
-import {{javaxPackage}}.validation.Validator;
-{{/useBeanValidation}}
 
 import org.apache.hc.client5.http.cookie.BasicCookieStore;
 import org.apache.hc.client5.http.cookie.Cookie;
@@ -78,6 +71,8 @@ import java.net.URI;
 import java.text.DateFormat;
 
 import {{invokerPackage}}.auth.Authentication;
+import {{modelPackage}}.BatchResponseEntity;
+import {{modelPackage}}.Errors;
 {{#hasHttpBasicMethods}}
 import {{invokerPackage}}.auth.HttpBasicAuth;
 {{/hasHttpBasicMethods}}
@@ -137,12 +132,13 @@ public class ApiClient{{#jsr310}} extends JavaTimeFormatter{{/jsr310}} {
   protected ThreadLocal<Map<String, List<String>>> lastResponseHeaders = new ThreadLocal<>();
 
   protected DateFormat dateFormat;
-  {{#useBeanValidation}}
-  protected final Validator beanValidator;
-  {{/useBeanValidation}}
 
   // Methods that can have a request body
   protected static List<String> bodyMethods = Arrays.asList("POST", "PUT", "DELETE", "PATCH");
+
+  protected interface ApiResponseProcessor<T> {
+    T process(CloseableHttpResponse response) throws ApiException, IOException, ParseException;
+  }
 
   public ApiClient(CloseableHttpClient httpClient) {
     objectMapper = new ObjectMapper();
@@ -169,13 +165,6 @@ public class ApiClient{{#jsr310}} extends JavaTimeFormatter{{/jsr310}} {
     objectMapper.setDateFormat(ApiClient.buildDefaultDateFormat());
 
     dateFormat = ApiClient.buildDefaultDateFormat();
-    {{#useBeanValidation}}
-    beanValidator = Validation.byDefaultProvider()
-        .configure()
-        .messageInterpolator(new ParameterMessageInterpolator())
-        .buildValidatorFactory()
-        .getValidator();
-    {{/useBeanValidation}}
 
     // Set default User-Agent.
     setUserAgent("{{#httpUserAgent}}{{{.}}}{{/httpUserAgent}}{{^httpUserAgent}}OpenAPI-Generator/{{{artifactVersion}}}/java{{/httpUserAgent}}");
@@ -900,6 +889,29 @@ public class ApiClient{{#jsr310}} extends JavaTimeFormatter{{/jsr310}} {
     }
   }
 
+  public JsonNode deserializeToJsonNode(CloseableHttpResponse response) throws ApiException, IOException, ParseException {
+    HttpEntity entity = response.getEntity();
+    String mimeType = getResponseMimeType(response);
+    if (mimeType == null || isJsonMime(mimeType)) {
+      // Assume json if no mime type
+      // convert input stream to string
+      String content = EntityUtils.toString(entity);
+
+      if ("".equals(content)) { // returns null for empty body
+        return null;
+      }
+      return objectMapper.readTree(content);
+    } else {
+      Map<String, List<String>> responseHeaders = transformResponseHeaders(response.getHeaders());
+      throw new ApiException(
+              "Deserialization for content type '" + mimeType + "' not supported",
+              response.getCode(),
+              responseHeaders,
+              EntityUtils.toString(entity)
+      );
+    }
+  }
+
   protected File downloadFileFromResponse(CloseableHttpResponse response) throws IOException {
     Header contentDispositionHeader = response.getFirstHeader("Content-Disposition");
     String contentDisposition = contentDispositionHeader == null ? null : contentDispositionHeader.getValue();
@@ -1028,51 +1040,119 @@ public class ApiClient{{#jsr310}} extends JavaTimeFormatter{{/jsr310}} {
   protected boolean isBodyAllowed(String method) {
     return bodyMethods.contains(method);
   }
-  {{#useBeanValidation}}
 
-  private void validateRequestBody(Object requestBody) throws ApiException {
-    if (requestBody == null) {
-      return;
-    }
-
-    List<String> errors = new ArrayList<String>();
-    collectValidationErrors(requestBody, errors, "");
-    if (!errors.isEmpty()) {
-      throw new ApiException(400, "Request body validation failed: " + String.join("; ", errors));
+  protected void validateRequestParams(Object body, Map<String, Object> formParams) throws ApiException {
+    if (body != null && !formParams.isEmpty()) {
+      throw new ApiException("Cannot have body and form params");
     }
   }
 
-  private void collectValidationErrors(Object value, List<String> errors, String pathPrefix) {
-    if (value == null) {
-      return;
+  protected ClassicRequestBuilder buildRequest(
+       String path,
+       String method,
+       List<Pair> queryParams,
+       List<Pair> collectionQueryParams,
+       String urlQueryDeepObject,
+       Map<String, String> headerParams,
+       Map<String, String> cookieParams,
+       String accept,
+       String[] authNames) throws ApiException {
+    updateParamsForAuth(authNames, queryParams, headerParams, cookieParams);
+    final String url = buildUrl(path, queryParams, collectionQueryParams, urlQueryDeepObject);
+
+    ClassicRequestBuilder builder = ClassicRequestBuilder.create(method);
+    builder.setUri(url);
+
+    addHeaders(builder, headerParams, accept);
+
+    return builder;
+  }
+
+  protected void addHeaders(ClassicRequestBuilder builder, Map<String, String> headerParams, String accept) {
+    if (accept != null) {
+      builder.addHeader("Accept", accept);
     }
-    if (value instanceof Collection<?>) {
-      int index = 0;
-      for (Object item : (Collection<?>) value) {
-        collectValidationErrors(item, errors, pathPrefix + "[" + index + "]");
-        index++;
-      }
-      return;
+    for (Entry<String, String> keyValue : headerParams.entrySet()) {
+      builder.addHeader(keyValue.getKey(), keyValue.getValue());
     }
-    if (value instanceof Map<?, ?>) {
-      for (Entry<?, ?> entry : ((Map<?, ?>) value).entrySet()) {
-        collectValidationErrors(entry.getValue(), errors, pathPrefix + "[" + entry.getKey() + "]");
+    for (Map.Entry<String,String> keyValue : defaultHeaderMap.entrySet()) {
+      if (!headerParams.containsKey(keyValue.getKey())) {
+        builder.addHeader(keyValue.getKey(), keyValue.getValue());
       }
-      return;
+    }
+  }
+
+  protected HttpClientContext buildHttpContext(Map<String, String> cookieParams, URI uri) {
+    BasicCookieStore store = new BasicCookieStore();
+    for (Entry<String, String> keyValue : cookieParams.entrySet()) {
+      store.addCookie(buildCookie(keyValue.getKey(), keyValue.getValue(), uri));
+    }
+    for (Entry<String,String> keyValue : defaultCookieMap.entrySet()) {
+      if (!cookieParams.containsKey(keyValue.getKey())) {
+        store.addCookie(buildCookie(keyValue.getKey(), keyValue.getValue(), uri));
+      }
     }
 
-    for (ConstraintViolation<Object> violation : beanValidator.validate(value)) {
-      String propertyPath = violation.getPropertyPath().toString();
-      if (pathPrefix == null || pathPrefix.isEmpty()) {
-        errors.add(propertyPath + ": " + violation.getMessage());
-      } else if (propertyPath == null || propertyPath.isEmpty()) {
-        errors.add(pathPrefix + ": " + violation.getMessage());
+    HttpClientContext context = HttpClientContext.create();
+    context.setCookieStore(store);
+    return context;
+  }
+
+  protected void addRequestEntity(
+      ClassicRequestBuilder builder,
+      String method,
+      Object body,
+      Map<String, Object> formParams,
+      String contentType) throws ApiException {
+    ContentType contentTypeObj = getContentType(contentType);
+    if (body != null || !formParams.isEmpty()) {
+      if (isBodyAllowed(method)) {
+        // Add entity if we have content and a valid method
+        builder.setEntity(serialize(body, formParams, contentTypeObj));
       } else {
-        errors.add(pathPrefix + "." + propertyPath + ": " + violation.getMessage());
+        throw new ApiException("method " + method + " does not support a request body");
       }
+    } else {
+      // for empty body
+      builder.setEntity(new StringEntity("", contentTypeObj));
     }
   }
-  {{/useBeanValidation}}
+
+  protected <T> T executeAPIRequest(
+       String path,
+       String method,
+       List<Pair> queryParams,
+       List<Pair> collectionQueryParams,
+       String urlQueryDeepObject,
+       Object body,
+       Map<String, String> headerParams,
+       Map<String, String> cookieParams,
+       Map<String, Object> formParams,
+       String accept,
+       String contentType,
+       String[] authNames,
+       ApiResponseProcessor<T> responseProcessor) throws ApiException {
+    validateRequestParams(body, formParams);
+
+    ClassicRequestBuilder builder = buildRequest(
+        path,
+        method,
+        queryParams,
+        collectionQueryParams,
+        urlQueryDeepObject,
+        headerParams,
+        cookieParams,
+        accept,
+        authNames);
+    HttpClientContext context = buildHttpContext(cookieParams, builder.getUri());
+    addRequestEntity(builder, method, body, formParams, contentType);
+
+    try (CloseableHttpResponse response = httpClient.execute(builder.build(), context)) {
+      return responseProcessor.process(response);
+    } catch (IOException | ParseException e) {
+      throw new ApiException(e);
+    }
+  }
 
   protected Cookie buildCookie(String key, String value, URI uri) {
     BasicClientCookie cookie = new BasicClientCookie(key, value);
@@ -1097,6 +1177,28 @@ public class ApiClient{{#jsr310}} extends JavaTimeFormatter{{/jsr310}} {
       String message = EntityUtils.toString(response.getEntity());
       throw new ApiException(message, statusCode, responseHeaders, message);
     }
+  }
+
+  protected List<BatchResponseEntity> processResponseBatch(CloseableHttpResponse response) throws ApiException, IOException, ParseException {
+    int statusCode = response.getCode();
+    lastStatusCode.set(statusCode);
+    if (statusCode == HttpStatus.SC_NO_CONTENT) {
+      return null;
+    }
+
+    Map<String, List<String>> responseHeaders = transformResponseHeaders(response.getHeaders());
+    lastResponseHeaders.set(responseHeaders);
+
+    JsonNode node = this.deserializeToJsonNode(response);
+    if (node == null) {
+      return null;
+    }
+    if (!isSuccessfulStatus(statusCode) && node.isObject()) {
+      Errors e = objectMapper.treeToValue(node, Errors.class);
+      throw new ApiException(e.toString(), statusCode, responseHeaders, node.toString());
+    }
+    TypeReference<List<BatchResponseEntity>> returnType = new TypeReference<List<BatchResponseEntity>>() {};
+    return objectMapper.treeToValue(node, returnType);
   }
 
   /**
@@ -1133,62 +1235,50 @@ public class ApiClient{{#jsr310}} extends JavaTimeFormatter{{/jsr310}} {
        String contentType,
        String[] authNames,
        TypeReference<T> returnType) throws ApiException {
-    if (body != null && !formParams.isEmpty()) {
-      throw new ApiException("Cannot have body and form params");
-    }
-    {{#useBeanValidation}}
-    validateRequestBody(body);
-    {{/useBeanValidation}}
+    return executeAPIRequest(
+        path,
+        method,
+        queryParams,
+        collectionQueryParams,
+        urlQueryDeepObject,
+        body,
+        headerParams,
+        cookieParams,
+        formParams,
+        accept,
+        contentType,
+        authNames,
+        response -> processResponse(response, returnType));
+  }
 
-    updateParamsForAuth(authNames, queryParams, headerParams, cookieParams);
-    final String url = buildUrl(path, queryParams, collectionQueryParams, urlQueryDeepObject);
-
-    ClassicRequestBuilder builder = ClassicRequestBuilder.create(method);
-    builder.setUri(url);
-
-    if (accept != null) {
-      builder.addHeader("Accept", accept);
-    }
-    for (Entry<String, String> keyValue : headerParams.entrySet()) {
-      builder.addHeader(keyValue.getKey(), keyValue.getValue());
-    }
-    for (Map.Entry<String,String> keyValue : defaultHeaderMap.entrySet()) {
-      if (!headerParams.containsKey(keyValue.getKey())) {
-        builder.addHeader(keyValue.getKey(), keyValue.getValue());
-      }
-    }
-
-    BasicCookieStore store = new BasicCookieStore();
-    for (Entry<String, String> keyValue : cookieParams.entrySet()) {
-      store.addCookie(buildCookie(keyValue.getKey(), keyValue.getValue(), builder.getUri()));
-    }
-    for (Entry<String,String> keyValue : defaultCookieMap.entrySet()) {
-      if (!cookieParams.containsKey(keyValue.getKey())) {
-        store.addCookie(buildCookie(keyValue.getKey(), keyValue.getValue(), builder.getUri()));
-      }
-    }
-
-    HttpClientContext context = HttpClientContext.create();
-    context.setCookieStore(store);
-
-    ContentType contentTypeObj = getContentType(contentType);
-    if (body != null || !formParams.isEmpty()) {
-      if (isBodyAllowed(method)) {
-        // Add entity if we have content and a valid method
-        builder.setEntity(serialize(body, formParams, contentTypeObj));
-      } else {
-        throw new ApiException("method " + method + " does not support a request body");
-      }
-    } else {
-      // for empty body
-      builder.setEntity(new StringEntity("", contentTypeObj));
-    }
-
-    try (CloseableHttpResponse response = httpClient.execute(builder.build(), context)) {
-      return processResponse(response, returnType);
-    } catch (IOException | ParseException e) {
-      throw new ApiException(e);
-    }
+  public <T> List<BatchResponseEntity> invokeAPIBatch(
+       String path,
+       String method,
+       List<Pair> queryParams,
+       List<Pair> collectionQueryParams,
+       String urlQueryDeepObject,
+       Object body,
+       Map<String, String> headerParams,
+       Map<String, String> cookieParams,
+       Map<String, Object> formParams,
+       String accept,
+       String contentType,
+       String[] authNames,
+       TypeReference<T> returnType) throws ApiException {
+    return executeAPIRequest(
+        path,
+        method,
+        queryParams,
+        collectionQueryParams,
+        urlQueryDeepObject,
+        body,
+        headerParams,
+        cookieParams,
+        formParams,
+        accept,
+        contentType,
+        authNames,
+        response -> processResponseBatch(response));
   }
 
   /**

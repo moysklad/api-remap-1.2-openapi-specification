@@ -1,5 +1,6 @@
 type: object
 x-polymorphic-parent: ProductMarker
+x-implements: Named
 x-entity-static-builder:
   methodParams:
     - "id"
@@ -39,13 +40,13 @@ properties:
         type: number
         minimum: 0
         nullable: true
-        format: float
+        format: double
         description: Крепость
       volume:
         type: number
         minimum: 0
         nullable: true
-        format: float
+        format: double
         description: Объём тары
   archived:
     type: boolean
@@ -127,7 +128,7 @@ properties:
     readOnly: true
   weight:
     type: number
-    format: float
+    format: double
     minimum: 0
     description: Вес
   volume:

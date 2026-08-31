@@ -1,6 +1,7 @@
 type: object
 description: Возврат поставщику
 x-polymorphic-parent: EntityWithMeta
+x-implements: MetaEntity
 x-entity-static-builder:
   methodParams:
     - "id"
@@ -166,7 +167,6 @@ properties:
     $ref: '../../../openapi.yaml#/components/schemas/CurrencyRate'
   positions:
     type: object
-    nullable: true
     description: Позиции Возврата поставщику
     allOf:
       - $ref: '../../../openapi.yaml#/components/schemas/PurchaseReturnPositionList'

@@ -1,5 +1,6 @@
 type: object
 description: Компонент комплекта
+x-implements: MetaEntity
 x-entity-static-builder:
   methodParams:
     - "parentId"
@@ -27,7 +28,7 @@ properties:
     readOnly: true
   quantity:
     type: number
-    format: float
+    format: double
     description: Количество товаров/услуг/модификаций данного вида в компоненте
   assortment:
     description: Метаданные товара/услуги/модификации, которую представляет собой компонент

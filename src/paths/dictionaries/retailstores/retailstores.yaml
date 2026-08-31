@@ -32,7 +32,7 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../../../openapi.yaml#/components/schemas/RetailStore'
+          $ref: '../../../openapi.yaml#/components/schemas/RetailStoreUpsert'
   responses:
     '200':
       description: Успешный запрос

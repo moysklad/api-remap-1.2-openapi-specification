@@ -582,7 +582,7 @@ class ObjectSerializer
                     && $class::openAPIPolymorphicBatchErrorFallback()
                     && self::isBatchErrorPayload($data)
                 ) {
-                    $subclass = '\{{invokerPackage}}\Model\Error';
+                    $subclass = '\{{invokerPackage}}\Model\Errors';
                     if (class_exists($subclass) && is_subclass_of($subclass, $class)) {
                         $class = $subclass;
                     }

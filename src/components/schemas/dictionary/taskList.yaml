@@ -1,5 +1,6 @@
 type: object
 description: Список Задач
+x-implements: EntityList
 properties:
   context:
     description: Метаданные о сотруднике, выполнившем запрос

@@ -38,6 +38,18 @@ public final class Filters {
     return condition(field, "<=", value);
   }
 
+  public static String startsWith(String field, Object value) {
+    return condition(field, "=~", value);
+  }
+
+  public static String endsWith(String field, Object value) {
+    return condition(field, "~=", value);
+  }
+
+  public static String contains(String field, Object value) {
+    return condition(field, "~", value);
+  }
+
   public static String and(String... filters) {
     StringJoiner joiner = new StringJoiner(";");
     if (filters != null) {

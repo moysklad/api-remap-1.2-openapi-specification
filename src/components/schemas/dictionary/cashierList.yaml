@@ -1,5 +1,6 @@
 type: object
 description: Список кассиров
+x-implements: EntityList
 properties:
   context:
     description: Метаданные о сотруднике, выполнившем запрос

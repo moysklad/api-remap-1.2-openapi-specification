@@ -1,5 +1,6 @@
 type: object
 description: Позиция Розничной продажи
+x-implements: DocumentPosition, MetaEntity
 x-entity-static-builder:
   methodParams:
     - "parentId"
@@ -19,7 +20,6 @@ properties:
     type: string
     format: uuid
     description: ID позиции
-    readOnly: true
   accountId:
     type: string
     format: uuid

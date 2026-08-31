@@ -1,6 +1,7 @@
 type: object
 description: Задача
 x-polymorphic-parent: EntityWithMeta
+x-implements: MetaEntity
 x-entity-static-builder:
   methodParams:
     - "id"
@@ -83,7 +84,7 @@ properties:
   operation:
     description: Метаданные документа, связанного с задачей
     nullable: true
-    $ref: '../../../openapi.yaml#/components/schemas/DocumentMetadata'
+    $ref: '../../../openapi.yaml#/components/schemas/EntityWithMeta'
   state:
     description: Метаданные типа задачи
     nullable: true

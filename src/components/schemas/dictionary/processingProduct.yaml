@@ -1,5 +1,6 @@
 type: object
 description: Продукт техоперации
+x-implements: MetaEntity
 x-entity-static-builder:
   methodParams:
     - "parentId"

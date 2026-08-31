@@ -1,0 +1,22 @@
+type: object
+description: Уведомление о завершении экспорта
+x-polymorphic-parent: NotificationAbstract
+properties:
+  createdDocumentName:
+    type: string
+    maxLength: 255
+    description: Имя экспортированного документа
+  errorMessage:
+    type: string
+    maxLength: 255
+    description: Сообщение об ошибке
+  message:
+    type: string
+    maxLength: 255
+    description: Сообщение о завершении экспорта
+  taskState:
+    type: string
+    description: Статус завершения. Известные значения описаны в NotificationTaskState
+  taskType:
+    type: string
+    description: Тип экспорта. Известные значения описаны в NotificationExportType

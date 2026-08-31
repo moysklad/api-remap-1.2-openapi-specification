@@ -9,7 +9,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import ru.moysklad.remap_1_2.ApiClient;
 import ru.moysklad.remap_1_2.model.BatchResponseEntity;
-import ru.moysklad.remap_1_2.model.Error;
+import ru.moysklad.remap_1_2.model.Errors;
 
 import java.io.File;
 import java.lang.reflect.Constructor;
@@ -135,6 +135,8 @@ class SerializationTest extends BaseTestCase {
         FIXTURE_MODEL_MAP.put("company_settings", "CompanySettings");
         FIXTURE_MODEL_MAP.put("company_settings_metadata", "CompanySettingsMetadata");
         FIXTURE_MODEL_MAP.put("user_settings", "UserSettings");
+        FIXTURE_MODEL_MAP.put("notification_task_changed", "NotificationTaskChanged");
+        FIXTURE_MODEL_MAP.put("sales_manager_chat_message", "SalesManagerChatMessage");
         FIXTURE_MODEL_MAP.put("notification_settings", "NotificationSettings");
         FIXTURE_MODEL_MAP.put("subscription", "Subscription");
         FIXTURE_MODEL_MAP.put("assortment_settings", "AssortmentSettings");
@@ -236,7 +238,7 @@ class SerializationTest extends BaseTestCase {
 
         BatchResponseEntity model = MAPPER.readValue(json, BatchResponseEntity.class);
 
-        Assertions.assertInstanceOf(Error.class, model);
+        Assertions.assertInstanceOf(Errors.class, model);
     }
 
     @Test
@@ -249,7 +251,7 @@ class SerializationTest extends BaseTestCase {
         BatchResponseEntity model = MAPPER.readValue(json, BatchResponseEntity.class);
 
         Assertions.assertInstanceOf(BatchResponseEntity.class, model);
-        Assertions.assertFalse(model instanceof Error);
+        Assertions.assertFalse(model instanceof Errors);
     }
 
     private static Stream<org.junit.jupiter.params.provider.Arguments> fixtureProvider() {

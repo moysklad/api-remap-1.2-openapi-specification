@@ -1,5 +1,6 @@
 type: object
 description: Шаблон печатной формы
+x-implements: MetaEntity
 x-entity-static-builder:
   methodParams:
     - "type"

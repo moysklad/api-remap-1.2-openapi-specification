@@ -28,7 +28,7 @@ properties:
     description: Использовать ли специальную цену
   discount:
     type: number
-    format: float
+    format: double
     nullable: true
     description: Процент скидки (используется при usePriceType=false)
   specialPrice:
@@ -40,6 +40,9 @@ properties:
         type: integer
         format: int32
         description: Значение цены
+      meta:
+        description: Метаданные цены
+        $ref: '../common/meta.yaml'
       priceType:
         $ref: '../../../openapi.yaml#/components/schemas/PriceType'
 

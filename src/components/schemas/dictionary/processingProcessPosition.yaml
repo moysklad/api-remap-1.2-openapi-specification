@@ -1,6 +1,7 @@
 type: object
 description: Позиция Техпроцесса
 x-polymorphic-parent: EntityWithMeta
+x-implements: MetaEntity
 x-entity-static-builder:
   methodParams:
     - "parentId"

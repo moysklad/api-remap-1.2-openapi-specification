@@ -1,5 +1,6 @@
 type: object
 description: Группа/отдел
+x-implements: MetaEntity
 x-entity-static-builder:
   methodParams:
     - "id"

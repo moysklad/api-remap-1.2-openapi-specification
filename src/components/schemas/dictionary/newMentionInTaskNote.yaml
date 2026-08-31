@@ -1,0 +1,9 @@
+type: object
+description: Уведомление о новом упоминании в комментарии задачи
+x-polymorphic-parent: NotificationAbstract
+properties:
+  task:
+    description: Задача с комментарием, содержащим упоминание
+    readOnly: true
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/NotificationNamedEntity'

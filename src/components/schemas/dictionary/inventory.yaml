@@ -1,6 +1,7 @@
 type: object
 description: Инвентаризация
 x-polymorphic-parent: EntityWithMeta
+x-implements: MetaEntity
 x-entity-static-builder:
   methodParams:
     - "id"
@@ -80,7 +81,6 @@ properties:
   positions:
     type: object
     description: Метаданные позиций Инвентаризации
-    nullable: true
     allOf:
       - $ref: '../../../openapi.yaml#/components/schemas/InventoryPositionList'
   printed:

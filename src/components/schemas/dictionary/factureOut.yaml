@@ -1,5 +1,6 @@
 type: object
 description: Счет-фактура выданный (factureout)
+x-implements: MetaEntity
 x-entity-static-builder:
   methodParams:
     - "id"
