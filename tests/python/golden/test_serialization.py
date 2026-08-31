@@ -267,7 +267,7 @@ def test_batch_error_fallback_resolves_unknown_discriminator() -> None:
         "errors": [{"error": "Invalid JSON structure", "code": 1000}],
     }
     model = model_class("BatchResponseEntity").from_dict(data)
-    assert isinstance(model, model_class("Error"))
+    assert isinstance(model, model_class("Errors"))
 
 
 def test_batch_error_fallback_requires_error_markers() -> None:

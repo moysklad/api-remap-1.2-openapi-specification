@@ -156,7 +156,7 @@ def test_every_batch_error_fallback_dispatches(
     extension: dict[str, Any],
 ) -> None:
     """Проверяет fallback в Error для неизвестного batch discriminator."""
-    error_class = model_class("Error")
+    error_class = model_class("Errors")
     sentinel = object()
     monkeypatch.setattr(
         error_class,

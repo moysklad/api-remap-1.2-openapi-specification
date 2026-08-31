@@ -297,12 +297,8 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}{{#vendorExtensions.
                     for error in errors
                 )
             ):
-                from {{packageName}}.models.error import Error
-                first_error = next(
-                    (error for error in errors if isinstance(error, dict)),
-                    None
-                )
-                return Error.from_dict(first_error) if first_error is not None else None
+                from {{packageName}}.models.errors import Errors
+                return Errors.from_dict(obj)
             {{/batchErrorFallback}}
 
         {{/vendorExtensions.x-polymorphic-discriminator}}
