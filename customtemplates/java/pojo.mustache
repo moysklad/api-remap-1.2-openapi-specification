@@ -240,10 +240,6 @@ public class {{classname}} {{#parent}}extends {{{.}}} {{/parent}}{{^parent}}{{#v
 {{#jsonb}}
   @JsonbProperty("{{baseName}}")
 {{/jsonb}}
-{{#useBeanValidation}}
-{{>beanValidation}}
-
-{{/useBeanValidation}}
 {{#swagger1AnnotationLibrary}}
   @ApiModelProperty({{#example}}example = "{{{.}}}", {{/example}}{{#required}}required = {{required}}, {{/required}}value = "{{{description}}}")
 {{/swagger1AnnotationLibrary}}
