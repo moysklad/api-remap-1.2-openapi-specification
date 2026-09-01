@@ -11,5 +11,6 @@ properties:
   rows:
     type: array
     description: Массив событий аудита
+    nullable: true
     items:
       $ref: '../../../../openapi.yaml#/components/schemas/AuditEvent'

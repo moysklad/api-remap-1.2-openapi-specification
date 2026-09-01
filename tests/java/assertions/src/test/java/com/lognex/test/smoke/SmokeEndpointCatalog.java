@@ -170,6 +170,11 @@ final class SmokeEndpointCatalog {
                 // /accountSettings/subscription
                 Arguments.of(new SmokeEndpointCase("testGetSubscription#1", "GET", "/accountSettings/subscription", SmokeEndpointCase.Expectation.NOT_404, false)),
 
+                // /audit
+                Arguments.of(new SmokeEndpointCase("testGetAuditContexts#1", "GET", "/audit", SmokeEndpointCase.Expectation.NOT_404, false)),
+                Arguments.of(new SmokeEndpointCase("testGetAuditContextEvents#1", "GET", "/audit/{id}/events", SmokeEndpointCase.Expectation.NOT_404, false)),
+                Arguments.of(new SmokeEndpointCase("testGetAuditMetadataFilters#1", "GET", "/audit/metadata/filters", SmokeEndpointCase.Expectation.NOT_404, false)),
+
                 // /entity/saleplatform
                 Arguments.of(new SmokeEndpointCase("testListSalePlatforms#1", "GET", "/entity/saleplatform", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testGetSalePlatformById#1", "GET", "/entity/saleplatform/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
