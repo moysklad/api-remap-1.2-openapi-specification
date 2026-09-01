@@ -1,0 +1,73 @@
+type: object
+description: Событие аудита
+properties:
+  additionalInfo:
+    type: string
+    maxLength: 4096
+    nullable: true
+    description: Дополнительная информация о событии
+    readOnly: true
+  audit:
+    type: object
+    nullable: true
+    description: Метаданные контекста аудита
+    readOnly: true
+    properties:
+      meta:
+        $ref: '../meta.yaml'
+  diff:
+    type: object
+    nullable: true
+    description: Изменения, произошедшие в событии
+    additionalProperties: true
+    readOnly: true
+  entity:
+    type: object
+    nullable: true
+    description: Метаданные сущности, в которой произошло изменение
+    readOnly: true
+    properties:
+      meta:
+        $ref: '../meta.yaml'
+  entityType:
+    type: string
+    description: Тип сущности
+    readOnly: true
+  eventType:
+    type: string
+    description: Действие события. Известные значения описаны в AuditEventType
+    readOnly: true
+  moment:
+    type: string
+    description: Время создания события
+    readOnly: true
+  name:
+    type: string
+    maxLength: 255
+    nullable: true
+    description: Имя сущности
+    readOnly: true
+  objectCount:
+    type: integer
+    nullable: true
+    description: Количество измененных объектов
+    readOnly: true
+  objectType:
+    type: string
+    nullable: true
+    description: Тип сущностей для специальных настроечных событий
+    readOnly: true
+  source:
+    type: string
+    description: Источник изменения. Известные значения описаны в AuditSourceType
+    readOnly: true
+  supportAccess:
+    type: boolean
+    nullable: true
+    description: Признак доступа поддержки от имени пользователя
+    readOnly: true
+  uid:
+    type: string
+    maxLength: 255
+    description: Логин сотрудника
+    readOnly: true

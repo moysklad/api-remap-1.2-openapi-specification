@@ -17,6 +17,6 @@ get:
       content:
         application/json:
           schema:
-            additionalProperties: true
+            $ref: '../../../openapi.yaml#/components/schemas/AuditEventList'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'

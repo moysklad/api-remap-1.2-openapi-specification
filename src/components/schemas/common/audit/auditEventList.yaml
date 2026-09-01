@@ -1,0 +1,15 @@
+type: object
+description: Список событий аудита
+x-implements: EntityList
+properties:
+  context:
+    description: Метаданные о сотруднике, выполнившем запрос
+    $ref: '../context.yaml'
+  meta:
+    description: Метаданные о выдаче
+    $ref: '../metaList.yaml'
+  rows:
+    type: array
+    description: Массив событий аудита
+    items:
+      $ref: '../../../../openapi.yaml#/components/schemas/AuditEvent'

@@ -54,6 +54,8 @@ class SerializationTest extends BaseTestCase {
         FIXTURE_MODEL_MAP.put("counterparty_account", "Account");
         FIXTURE_MODEL_MAP.put("counterparty_contactperson", "ContactPerson");
         FIXTURE_MODEL_MAP.put("counterparty_note", "Note");
+        FIXTURE_MODEL_MAP.put("audit", "Audit");
+        FIXTURE_MODEL_MAP.put("audit_event", "AuditEvent");
         FIXTURE_MODEL_MAP.put("counterparty_file", "ModelFile");
         FIXTURE_MODEL_MAP.put("currency", "Currency");
         FIXTURE_MODEL_MAP.put("employee", "Employee");

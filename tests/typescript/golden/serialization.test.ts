@@ -45,6 +45,8 @@ const FIXTURE_MODEL_MAP: Readonly<Record<string, string>> = {
     counterparty_contactperson: 'ContactPerson',
     counterparty_note: 'Note',
     event_note: 'EventNote',
+    audit: 'Audit',
+    audit_event: 'AuditEvent',
     // Схема File переименована генератором в ModelFile (конфликт со встроенным типом File)
     counterparty_file: 'ModelFile',
     currency: 'Currency',

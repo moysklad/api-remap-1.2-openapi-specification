@@ -1,0 +1,41 @@
+type: string
+description: Известные значения источника изменения в аудите
+enum:
+  - registration
+  - clearrecyclebin
+  - combine
+  - bulkcreate
+  - connectors
+  - copy
+  - emailsend
+  - evotor
+  - export
+  - exportediclient1c
+  - import
+  - import1c
+  - importAlfabank
+  - importModulebank
+  - importTinkoffbank
+  - importTochkabank
+  - importediclient1c
+  - loginlogout
+  - phone-1.0
+  - posapi
+  - remap-1.0
+  - remap-1.1
+  - remap-1.2
+  - restapi
+  - retail
+  - app
+  - importSberbank
+  - jsonapi
+  - manufacture-1.0
+  - scriptor
+  - exportyml
+  - edoimportsupply
+  - taxcomimportsupply
+  - yandexkassawebhook
+  - fillreserves
+  - recyclebincleaner
+  - dropgoodfolder
+  - print

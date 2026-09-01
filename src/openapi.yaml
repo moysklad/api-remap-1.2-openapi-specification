@@ -48,6 +48,14 @@ paths:
   /report/sales/plotseries:
     $ref: './paths/reports/sales-plotseries.yaml'
 
+  # Audit
+  /audit:
+    $ref: './paths/audit/audit.yaml'
+  /audit/{id}/events:
+    $ref: './paths/audit/audit-events.yaml'
+  /audit/metadata/filters:
+    $ref: './paths/audit/audit-metadata-filters.yaml'
+
   # Dictionaries
   #
   # Contracts
@@ -1589,6 +1597,20 @@ components:
       $ref: './components/schemas/dictionary/agentDiscount.yaml'
     Application:
       $ref: './components/schemas/dictionary/application.yaml'
+    Audit:
+      $ref: './components/schemas/common/audit/audit.yaml'
+    AuditEvent:
+      $ref: './components/schemas/common/audit/auditEvent.yaml'
+    AuditEventList:
+      $ref: './components/schemas/common/audit/auditEventList.yaml'
+    AuditEventType:
+      $ref: './components/schemas/common/audit/auditEventType.yaml'
+    AuditFilters:
+      $ref: './components/schemas/common/audit/auditFilters.yaml'
+    AuditList:
+      $ref: './components/schemas/common/audit/auditList.yaml'
+    AuditSourceType:
+      $ref: './components/schemas/common/audit/auditSourceType.yaml'
     Assortment:
       $ref: './components/schemas/common/assortment.yaml'
     AssortmentList:
@@ -2706,6 +2728,8 @@ tags:
     description: Операции с выданными отчетами комиссионера
   - name: Reports
     description: Операции с отчетами
+  - name: Audit
+    description: Операции с аудитом
   - name: CompanySettings
     description: Операции с настройками компании
   - name: UserSettings
