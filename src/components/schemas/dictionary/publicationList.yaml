@@ -1,0 +1,16 @@
+type: object
+description: Список Публикаций Заказа покупателя
+x-implements: EntityList
+properties:
+  context:
+    description: Метаданные о сотруднике, выполнившем запрос
+    $ref: '../common/context.yaml'
+  meta:
+    description: Метаданные о выдаче
+    $ref: '../common/metaList.yaml'
+  rows:
+    type: array
+    description: Список Публикаций Заказа покупателя
+    nullable: true
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/Publication'

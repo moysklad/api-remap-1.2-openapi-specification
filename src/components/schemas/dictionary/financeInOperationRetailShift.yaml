@@ -1,0 +1,5 @@
+type: object
+description: Смена + linkedSum
+x-polymorphic-parent: FinanceInOperationAbstract
+allOf:
+  - $ref: '../../../openapi.yaml#/components/schemas/RetailShift'
