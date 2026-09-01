@@ -32,6 +32,10 @@ deploy-to-artifactory:
     - mvn versions:set -DnewVersion=$ARTEFACT_VERSION -DgenerateBackupPoms=false;
     - mvn $MAVEN_CLI_OPTS -Ppublishing-artifactory clean deploy -DartifactoryRepo=${ARTIFACTORY_REPO_URL};
     - echo "Complete. Version $ARTEFACT_VERSION"
+    - |
+      echo "Опубликованные варианты артефакта:"
+      echo "  fat  (без classifier): ru.moysklad.api:remap-1.2-java-sdk:${ARTEFACT_VERSION}"
+      echo "  slim (classifier slim): ru.moysklad.api:remap-1.2-java-sdk:jar:slim:${ARTEFACT_VERSION}"
 
 deploy-to-maven:
   extends: .deploy-sdk-java-base
@@ -91,3 +95,7 @@ deploy-to-maven:
 
     - mvn versions:set -DnewVersion="$TAG" -DgenerateBackupPoms=false
     - mvn $MAVEN_CLI_OPTS -Ppublishing-central clean deploy
+    - |
+      echo "Опубликованные варианты артефакта:"
+      echo "  fat  (без classifier): ru.moysklad.api:remap-1.2-java-sdk:${TAG}"
+      echo "  slim (classifier slim): ru.moysklad.api:remap-1.2-java-sdk:jar:slim:${TAG}"

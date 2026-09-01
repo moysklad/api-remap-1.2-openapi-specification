@@ -90,6 +90,32 @@ Redocly lint запрещает `example` внутри `Schema`. Для Schemath
 Тот же артефакт с classifier `slim` содержит только классы SDK;
 клиент slim-версии должен явно предоставить все зависимости, перечисленные в POM.
 
+Оба варианта публикуются из одного Maven lifecycle под одними координатами и выбираются на стороне клиента:
+
+```xml
+<!-- fat: ничего доставлять не нужно -->
+<dependency>
+  <groupId>ru.moysklad.api</groupId>
+  <artifactId>remap-1.2-java-sdk</artifactId>
+  <version>ВЕРСИЯ</version>
+</dependency>
+
+<!-- slim: зависимости приносит клиент -->
+<dependency>
+  <groupId>ru.moysklad.api</groupId>
+  <artifactId>remap-1.2-java-sdk</artifactId>
+  <version>ВЕРСИЯ</version>
+  <classifier>slim</classifier>
+</dependency>
+```
+
+Для slim клиент сам объявляет runtime-зависимости SDK: 
+* `tools.jackson.core:jackson-core`
+* `tools.jackson.core:jackson-databind`
+* `com.fasterxml.jackson.core:jackson-annotations`
+* `org.openapitools:jackson-databind-nullable`
+* `org.apache.httpcomponents.client5:httpclient5`
+
 ### Локально (без Docker)
 
 На машине должны быть установлены: **Node.js**, **npm**, **Python ≥3.10** с расширениями (смотри Dockerfile), а для PHP flow — **PHP ≥8.1** с расширениями **dom**, **json**, **mbstring**, **curl**, **Composer**.

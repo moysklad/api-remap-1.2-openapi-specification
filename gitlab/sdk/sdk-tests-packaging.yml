@@ -1,0 +1,19 @@
+# Проверка упаковки Java SDK: основной fat-артефакт и classifier slim
+sdk-verify-java-fat-slim:
+  extends: .maven-jdk17-image
+  stage: test
+  needs:
+    - job: generate-sdk-java
+      artifacts: true
+  rules:
+    - if: '$SDK_LANGUAGES == "" || $SDK_LANGUAGES =~ /java/'
+      when: on_success
+  script:
+    - |
+      if [ -d "clients/java" ]; then
+        echo "=== Packaging tests (Java) ==="
+        sh scripts/test-java-sdk-packaging.sh
+      else
+        echo "WARNING: clients/java directory not found"
+        exit 1
+      fi

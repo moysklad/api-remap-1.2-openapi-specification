@@ -48,13 +48,13 @@ Modular OpenAPI 3.0.3 specification for MoySklad JSON API 1.2 with automated SDK
     dependency-governance.mdc         # File-scoped dependency change governance
 .gitlab-ci.yml                         # Main CI entrypoint
 gitlab/
-  .gitlab-ci-sdk-validate.yml          # Includes lint, bundle, generate (php/java), golden, smoke, contract jobs
+  .gitlab-ci-sdk-validate.yml          # Includes lint, bundle, generate (php/java), golden, packaging, smoke, contract jobs
   .gitlab-ci-sdk-php-gen.yml           # push-sdk-php (to GitHub, PUSH_TO_REMOTE=true)
   .gitlab-ci-prepare-sdk-php.yml       # prep-branch-and-mr-php + merge-branch-php (internal GitLab SDK repo)
   .gitlab-ci-prepare-sdk-java.yml      # prep-branch-and-mr-java + merge-branch-java (internal GitLab Java SDK repo)
   .gitlab-ci-prepare-sdk-python.yml    # Python SDK branch/release repository sync
   .gitlab-ci-prepare-sdk-typescript.yml # prep-branch-and-mr-typescript + merge-branch-typescript (internal GitLab TypeScript SDK repo; sdk-repo artifacts for npm deploy)
-  .gitlab-ci-deploy-sdk-java.yml       # deploy-to-artifactory + deploy-to-maven (Java artifact publishing)
+  .gitlab-ci-deploy-sdk-java.yml       # deploy-to-artifactory + deploy-to-maven (Java fat + slim artifact publishing)
   .gitlab-ci-deploy-sdk-python.yml     # TestPyPI/PyPI publishing
   .gitlab-ci-deploy-sdk-typescript.yml # deploy-to-npm-prerelease + deploy-to-npm (TypeScript npm publishing)
   .gitlab-ci-github-mirror.yml         # mirror-to-github + create-github-release
@@ -65,6 +65,7 @@ gitlab/
     validate.yml
     generate-sdk.yml
     sdk-tests-golden.yml
+    sdk-tests-packaging.yml
     sdk-tests-smoke.yml
     sdk-contract.yml
 src/openapi.yaml                       # Root spec file
@@ -97,7 +98,7 @@ CHANGELOG.md                           # Auto-generated changelog (prepended by 
 | `verify`                 | `validate`, `bundle-openapi`, `bundle-smoke-openapi`; `deploy-contract-env`, `create-contract-user` for web / master / tag contract pipelines                                         | push / web / master / tags                                                                |
 | `contract-test`          | `sdk-contract`                                                                                                                                                                        | web / master / tags                                                                       |
 | `generate-sdk`           | `generate-sdk-php`, `generate-sdk-java`, `generate-sdk-python`, `generate-sdk-typescript`                                                                                             | push / web / master                                                                       |
-| `test`                   | `sdk-golden-php`, `sdk-golden-python`, `sdk-golden-java`, `sdk-golden-typescript`, `sdk-smoke` (java)                                                                                 | push / web / master                                                                       |
+| `test`                   | `sdk-golden-php`, `sdk-golden-python`, `sdk-golden-java`, `sdk-golden-typescript`, `sdk-verify-java-fat-slim`, `sdk-smoke` (java)                                                           | push / web / master                                                                       |
 | `version`                | `version:auto`                                                                                                                                                                        | master push                                                                               |
 | `push-sdk`               | `push-sdk-php`                                                                                                                                                                        | web + PUSH_TO_REMOTE=true                                                                 |
 | `mirror`                 | `mirror-to-github`, `create-github-release`                                                                                                                                           | master push                                                                               |
