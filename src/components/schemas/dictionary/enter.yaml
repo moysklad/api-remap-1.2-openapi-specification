@@ -1,6 +1,7 @@
 type: object
 description: Оприходование
 x-polymorphic-parent: EntityWithMeta
+x-implements: MetaEntity
 x-entity-static-builder:
   methodParams:
     - "id"
@@ -87,7 +88,6 @@ properties:
       - $ref: '../../../openapi.yaml#/components/schemas/Employee'
   positions:
     type: object
-    nullable: true
     description: Метаданные позиций Оприходования
     allOf:
       - $ref: '../../../openapi.yaml#/components/schemas/EnterPositionList'

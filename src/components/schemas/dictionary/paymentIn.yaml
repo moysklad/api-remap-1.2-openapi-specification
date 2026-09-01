@@ -1,6 +1,7 @@
 type: object
 description: Входящий платеж
 x-polymorphic-parent: EntityWithMeta
+x-implements: MetaEntity
 x-entity-static-builder:
   methodParams:
     - "id"
@@ -151,7 +152,6 @@ properties:
     format: double
     minimum: 0
     description: Сумма Входящего платежа в установленной валюте
-    readOnly: true
   vatSum:
     type: number
     format: double

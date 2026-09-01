@@ -1,5 +1,6 @@
 type: object
 description: Неснижаемый остаток по складу
+x-implements: MetaEntity
 x-entity-static-builder:
   methodParams:
     - "parentId"

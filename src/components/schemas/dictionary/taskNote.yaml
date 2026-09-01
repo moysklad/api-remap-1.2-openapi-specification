@@ -1,6 +1,7 @@
 type: object
 description: Комментарий к Задаче
 x-polymorphic-parent: EntityWithMeta
+x-implements: MetaEntity
 x-entity-static-builder:
   methodParams:
     - "parentId"
@@ -47,4 +48,4 @@ properties:
     nullable: true
     type: object
     allOf:
-      - $ref: '../../../openapi.yaml#/components/schemas/TaskNoteFileList'
+      - $ref: '../../../openapi.yaml#/components/schemas/FileList'

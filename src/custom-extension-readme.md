@@ -76,7 +76,7 @@ agent:
 * batchErrorFallback - опциональный флаг. Если `true` и компонент не удалось
   определить по `path` и `mappings`, SDK проверяет JSON на маркеры batch-ошибки
   (`errors` - массив объектов, где есть строковое поле `error`) и десериализует
-  такой объект в компонент `Error`.
+  такой объект в компонент `Errors`.
 * mappings - массив соответствий `{type, componentName}` для генерации SDK 
   * `type` — значение дискриминатора 
   * `componentName` — имя компонента из `components.schemas`.

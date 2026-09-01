@@ -15,7 +15,7 @@ properties:
   quantity:
     type: number
     minimum: 0
-    format: float
+    format: double
     description: Количество товаров в упаковке
   barcodes:
     type: array

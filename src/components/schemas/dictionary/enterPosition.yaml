@@ -1,5 +1,6 @@
 type: object
 description: Позиция Оприходования
+x-implements: DocumentPosition, MetaEntity
 x-polymorphic-parent: EntityWithMeta
 x-entity-static-builder:
   methodParams:
@@ -20,7 +21,6 @@ properties:
     type: string
     format: uuid
     description: ID позиции
-    readOnly: true
   accountId:
     type: string
     format: uuid

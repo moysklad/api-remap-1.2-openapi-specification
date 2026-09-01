@@ -1,6 +1,7 @@
 type: object
 description: Исходящий платеж
 x-polymorphic-parent: EntityWithMeta
+x-implements: MetaEntity
 x-entity-static-builder:
   methodParams:
     - "id"
@@ -136,7 +137,6 @@ properties:
   shared:
     type: boolean
     description: Общий доступ
-    readOnly: true
   state:
     description: Метаданные статуса Исходящего платежа
     nullable: true

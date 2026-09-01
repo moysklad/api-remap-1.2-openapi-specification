@@ -181,16 +181,16 @@ public class {{classname}} extends BaseApi {
             {{/isExplode}}
         {{/isDeepObject}}
     {{/queryParams}}
-    {{#headerParams}}if ({{paramName}} != null)
+    {{#headerParams}}if ({{paramName}} != null) {
       localVarHeaderParams.put("{{baseName}}", apiClient.parameterToString({{paramName}}));
+    }
     {{/headerParams}}
 
     localVarHeaderParams.putAll(additionalHeaders);
-
-    {{#cookieParams}}if ({{paramName}} != null)
+    {{#cookieParams}}if ({{paramName}} != null) {
       localVarCookieParams.put("{{baseName}}", apiClient.parameterToString({{paramName}}));
+    }
     {{/cookieParams}}
-
     {{#formParams}}if ({{paramName}} != null)
       localVarFormParams.put("{{baseName}}", {{paramName}});
     {{/formParams}}
@@ -209,7 +209,7 @@ public class {{classname}} extends BaseApi {
 
     {{#returnType}}
     TypeReference<{{{returnType}}}> localVarReturnType = new TypeReference<{{{returnType}}}>() {};
-    return apiClient.invokeAPI(
+    return apiClient.{{#returnProperty.mostInnerItems.vendorExtensions.x-polymorphic-discriminator.batchErrorFallback}}invokeAPIBatch{{/returnProperty.mostInnerItems.vendorExtensions.x-polymorphic-discriminator.batchErrorFallback}}{{^returnProperty.mostInnerItems.vendorExtensions.x-polymorphic-discriminator.batchErrorFallback}}invokeAPI{{/returnProperty.mostInnerItems.vendorExtensions.x-polymorphic-discriminator.batchErrorFallback}}(
     {{/returnType}}
     {{^returnType}}
     apiClient.invokeAPI(

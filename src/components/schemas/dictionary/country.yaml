@@ -1,6 +1,7 @@
 type: object
 description: Страна
 x-polymorphic-parent: EntityWithMeta
+x-implements: Named, MetaEntity
 x-entity-static-builder:
   methodParams:
     - "id"

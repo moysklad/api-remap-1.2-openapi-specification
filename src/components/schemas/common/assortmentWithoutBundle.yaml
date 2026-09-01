@@ -1,5 +1,6 @@
 type: object
 description: Товар/услуга/модификация (без комплекта)
+x-implements: MetaEntity
 allOf:
   - oneOf:
       - $ref: '../../../openapi.yaml#/components/schemas/Product'

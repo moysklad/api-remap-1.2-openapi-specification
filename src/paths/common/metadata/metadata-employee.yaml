@@ -2,9 +2,10 @@ get:
   operationId: getEmployeeMetadata
   tags:
     - Employees
-  summary: Получить метаданные товаров
-  description: Запрос на получение метаданных товаров
+  summary: Получить метаданные сотрудников
+  description: Запрос на получение метаданных сотрудников.
   parameters:
+    - $ref: '../../../components/parameters.yaml#/expand'
     - $ref: '../../../components/headers.yaml#/AcceptHeader'
     - $ref: '../../../components/headers.yaml#/AcceptEncoding'
   responses:
@@ -14,13 +15,5 @@ get:
         application/json:
           schema:
             $ref: '../../../openapi.yaml#/components/schemas/Metadata'
-    '400':
-      $ref: '../../../components/responses.yaml#/BadRequest'
-    '401':
-      $ref: '../../../components/responses.yaml#/Unauthorized'
-    '403':
-      $ref: '../../../components/responses.yaml#/Forbidden'
-    '405':
-      $ref: '../../../components/responses.yaml#/MethodNotAllowed'
-    '415':
-      $ref: '../../../components/responses.yaml#/UnsupportedMediaType'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

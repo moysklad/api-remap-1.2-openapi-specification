@@ -1,5 +1,6 @@
 type: object
 description: Площадка для продаж
+x-implements: MetaEntity
 x-entity-static-builder:
   methodParams:
     - "id"

@@ -1,5 +1,6 @@
 type: object
 description: Список Отгрузок
+x-implements: EntityList
 properties:
   context:
     description: Метаданные о сотруднике, выполнившем запрос

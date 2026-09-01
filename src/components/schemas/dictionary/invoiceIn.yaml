@@ -1,5 +1,6 @@
 type: object
 description: Счет поставщика
+x-implements: MetaEntity
 x-entity-static-builder:
   methodParams:
     - "id"

@@ -5,6 +5,7 @@ description: |
   как Counterparty, так и Organization. На запись поля `meta` достаточно, остальные поля
   Counterparty/Organization читаются сервером только при создании самих этих сущностей.
 x-polymorphic-parent: EntityWithMeta
+x-implements: MetaEntity
 properties:
   id:
     type: string

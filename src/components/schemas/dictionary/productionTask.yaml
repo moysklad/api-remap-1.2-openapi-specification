@@ -1,5 +1,6 @@
 type: object
 description: Производственное задание
+x-implements: MetaEntity
 x-entity-static-builder:
   methodParams:
     - "id"

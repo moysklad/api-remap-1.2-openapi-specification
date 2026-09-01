@@ -1,5 +1,6 @@
 type: object
 description: Список позиций Возврата поставщику
+x-implements: EntityList
 properties:
   context:
     description: Метаданные о сотруднике, выполнившем запрос

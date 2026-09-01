@@ -1,6 +1,7 @@
 type: object
 description: Валюта
 x-polymorphic-parent: EntityWithMeta
+x-implements: MetaEntity
 x-entity-static-builder:
   methodParams:
     - "id"
@@ -38,7 +39,7 @@ properties:
     description: Кратность курса валюты
   rate:
     type: number
-    format: float
+    format: double
     description: Курс валюты
   margin:
     type: number

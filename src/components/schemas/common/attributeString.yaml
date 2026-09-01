@@ -1,4 +1,5 @@
 type: object
+x-implements: Attribute<String>
 allOf:
   - $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
 properties:

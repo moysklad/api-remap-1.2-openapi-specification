@@ -1,5 +1,6 @@
 type: object
 description: Розничная смена
+x-implements: MetaEntity
 x-entity-static-builder:
   methodParams:
     - "id"

@@ -13,6 +13,10 @@ public class ListOptions extends PageOptions {
     return new Builder<>();
   }
 
+  public static RequestOptions filter(String field) {
+    return builder().filter(field).build();
+  }
+
   public static class Builder<T extends Builder<T>> extends PageOptions.Builder<T> {
     public T search(String search) {
       return queryParam("search", search);

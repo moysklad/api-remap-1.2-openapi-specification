@@ -1,5 +1,6 @@
 type: object
 description: Пользовательская роль
+x-implements: Named, MetaEntity
 x-entity-static-builder:
   methodParams:
     - "id"

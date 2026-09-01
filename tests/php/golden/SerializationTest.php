@@ -123,6 +123,8 @@ class SerializationTest extends TestCase
         'company_settings' => 'CompanySettings',
         'company_settings_metadata' => 'CompanySettingsMetadata',
         'user_settings' => 'UserSettings',
+        'notification_task_changed' => 'NotificationTaskChanged',
+        'sales_manager_chat_message' => 'SalesManagerChatMessage',
         'notification_settings' => 'NotificationSettings',
         'subscription' => 'Subscription',
         'assortment_settings' => 'AssortmentSettings',
@@ -267,7 +269,7 @@ class SerializationTest extends TestCase
             $this->getModelClass('BatchResponseEntity')
         );
 
-        $this->assertInstanceOf($this->getModelClass('Error'), $model);
+        $this->assertInstanceOf($this->getModelClass('Errors'), $model);
     }
 
     public function testBatchErrorFallbackRequiresErrorMarkers(): void
@@ -283,7 +285,7 @@ class SerializationTest extends TestCase
         );
 
         $this->assertInstanceOf($this->getModelClass('BatchResponseEntity'), $model);
-        $this->assertNotInstanceOf($this->getModelClass('Error'), $model);
+        $this->assertNotInstanceOf($this->getModelClass('Errors'), $model);
     }
 
     /**
