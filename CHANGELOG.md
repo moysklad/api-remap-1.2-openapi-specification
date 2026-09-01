@@ -1,3 +1,7 @@
+# Версия 0.26.0
+
+* feat: поддержана работа с эндпоинтам notification/*, employee/metadata/attributes/*, entity/*/metadata/states и entity/*/metadata/embeddedtemplate/*
+
 # Версия 0.25.0
 
 * fix: исправлен ответ вложенных эндпоинтов на POST-запрос.
