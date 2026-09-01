@@ -1,5 +1,5 @@
 type: object
-x-implements: Attribute<Integer>
+x-implements: Attribute<Long>
 allOf:
   - $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
 properties:
