@@ -70,7 +70,8 @@ docker compose run --rm sdk make build-python # wheel/sdist + twine check
 docker compose run --rm sdk make generate-java # генерация Java SDK
 docker compose run --rm sdk make generate-typescript # генерация TypeScript SDK
 docker compose run --rm sdk make build-typescript # сборка npm-пакета TypeScript SDK
-docker compose run --rm java-sdk bash -lc "cd clients/java && mvn clean package" # сборка shaded Java SDK
+docker compose run --rm java-sdk bash -lc "cd clients/java && mvn clean package" # сборка fat + slim Java SDK
+docker compose run --rm java-sdk make test-packaging-java # проверка упаковки fat/slim Java SDK
 docker compose run --rm sdk make test-golden-php  # golden-тесты
 docker compose run --rm java-sdk make test-golden-java  # golden-тесты
 docker compose run --rm sdk make test-golden-typescript  # golden-тесты
@@ -84,7 +85,10 @@ Redocly lint запрещает `example` внутри `Schema`. Для Schemath
 При повторных запусках зависимости npm не перекачиваются (пропуск `npm ci`, если `package-lock.json` не менялся). Принудительная переустановка:  
 `docker compose run --rm -e NPM_CI_FORCE=1 sdk make lint`
 
-Java SDK собирается как self-contained shaded-артефакт: Jackson 3 (включая nullable-модуль) затеняется и релокируется внутрь артефакта.
+Основной Java SDK артефакт `ru.moysklad.api:remap-1.2-java-sdk:<version>` — self-contained fat JAR.
+Все его библиотеки релокированы в namespace SDK и не экспортируются как транзитивные зависимости.
+Тот же артефакт с classifier `slim` содержит только классы SDK;
+клиент slim-версии должен явно предоставить все зависимости, перечисленные в POM.
 
 ### Локально (без Docker)
 
