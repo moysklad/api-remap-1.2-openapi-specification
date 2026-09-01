@@ -1,8 +1,9 @@
 package com.lognex.test;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.core.JacksonException;
+import tools.jackson.core.type.TypeReference;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
 import org.junit.jupiter.api.Assertions;
 
 import java.io.IOException;
@@ -24,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.fail;
  * - Работы с путями к сгенерированному SDK
  */
 public abstract class BaseTestCase {
-    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+    private static final ObjectMapper OBJECT_MAPPER = JsonMapper.builder().build();
 
     /**
      * Возвращает путь к директории с fixture файлами.
@@ -54,7 +55,7 @@ public abstract class BaseTestCase {
         try {
             String content = new String(Files.readAllBytes(path), StandardCharsets.UTF_8);
             return OBJECT_MAPPER.readValue(content, new TypeReference<Map<String, Object>>() {});
-        } catch (JsonProcessingException e) {
+        } catch (JacksonException e) {
             return Assertions.fail("Failed to parse JSON fixture '" + filename + "': " + e.getOriginalMessage());
         } catch (IOException e) {
             return Assertions.fail("Failed to read fixture '" + filename + "': " + e.getMessage());

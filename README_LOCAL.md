@@ -90,7 +90,7 @@ docker compose run --rm java-sdk make test-golden-java
 # Сборка и проверка Python wheel/sdist
 docker compose run --rm sdk make build-python
 
-# Сборка Java SDK (основной runtime-артефакт — self-contained shaded JAR с relocation, после generate-java)
+# Сборка Java SDK (основной runtime-артефакт — self-contained shaded JAR с relocation Jackson 3, после generate-java)
 docker compose run --rm java-sdk bash -lc "cd clients/java && mvn clean package"
 
 # Smoke тесты (openapi-mock + тесты по языкам)

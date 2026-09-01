@@ -84,7 +84,7 @@ Redocly lint запрещает `example` внутри `Schema`. Для Schemath
 При повторных запусках зависимости npm не перекачиваются (пропуск `npm ci`, если `package-lock.json` не менялся). Принудительная переустановка:  
 `docker compose run --rm -e NPM_CI_FORCE=1 sdk make lint`
 
-Java SDK собирается как self-contained shaded-артефакт: внешние зависимости Jackson (включая nullable-модуль) затеняются и релокируются внутрь артефакта.
+Java SDK собирается как self-contained shaded-артефакт: Jackson 3 (включая nullable-модуль) затеняется и релокируется внутрь артефакта.
 
 ### Локально (без Docker)
 

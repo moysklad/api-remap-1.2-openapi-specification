@@ -2,17 +2,18 @@
 package {{invokerPackage}};
 
 import com.fasterxml.jackson.annotation.*;
-import com.fasterxml.jackson.databind.*;
-{{#joda}}
-import com.fasterxml.jackson.datatype.joda.JodaModule;
-{{/joda}}
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import tools.jackson.core.JacksonException;
+import tools.jackson.core.type.TypeReference;
+import tools.jackson.databind.*;
+import tools.jackson.databind.cfg.ContextAttributes;
+import tools.jackson.databind.cfg.DateTimeFeature;
+import tools.jackson.databind.cfg.EnumFeature;
+import tools.jackson.databind.ext.javatime.deser.LocalDateTimeDeserializer;
+import tools.jackson.databind.json.JsonMapper;
+import tools.jackson.databind.module.SimpleModule;
 import java.time.OffsetDateTime;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JavaType;
 {{#openApiNullable}}
-import org.openapitools.jackson.nullable.JsonNullableModule;
+import org.openapitools.jackson.nullable.JsonNullableJackson3Module;
 {{/openApiNullable}}
 
 import org.apache.hc.client5.http.cookie.BasicCookieStore;
@@ -73,6 +74,7 @@ import java.text.DateFormat;
 import {{invokerPackage}}.auth.Authentication;
 import {{modelPackage}}.BatchResponseEntity;
 import {{modelPackage}}.Errors;
+import {{polymorphicPackage}}.PolymorphicMetaTypeDeserializer;
 {{#hasHttpBasicMethods}}
 import {{invokerPackage}}.auth.HttpBasicAuth;
 {{/hasHttpBasicMethods}}
@@ -141,28 +143,30 @@ public class ApiClient{{#jsr310}} extends JavaTimeFormatter{{/jsr310}} {
   }
 
   public ApiClient(CloseableHttpClient httpClient) {
-    objectMapper = new ObjectMapper();
-    objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-    objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, {{failOnUnknownProperties}});
-    objectMapper.configure(DeserializationFeature.FAIL_ON_INVALID_SUBTYPE, false);
-    objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-    objectMapper.enable(SerializationFeature.WRITE_ENUMS_USING_TO_STRING);
-    objectMapper.enable(DeserializationFeature.READ_ENUMS_USING_TO_STRING);
-    {{#joda}}
-    objectMapper.registerModule(new JodaModule());
-    {{/joda}}
-    // Configure JavaTimeModule with custom datetime format
-    JavaTimeModule javaTimeModule = new JavaTimeModule();
-    // Add custom deserializer for datetime format
-    javaTimeModule.addDeserializer(java.time.LocalDateTime.class, new com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer(
+    SimpleModule localDateTimeModule = new SimpleModule("CustomLocalDateTime");
+    localDateTimeModule.addDeserializer(java.time.LocalDateTime.class, new LocalDateTimeDeserializer(
         java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")
     ));
-    objectMapper.registerModule(javaTimeModule);
-    {{#openApiNullable}}
-    objectMapper.registerModule(new JsonNullableModule());
-    {{/openApiNullable}}
-    objectMapper.registerModule(new RFC3339JavaTimeModule());
-    objectMapper.setDateFormat(ApiClient.buildDefaultDateFormat());
+    JsonMapper jsonMapper = JsonMapper.builder()
+        .changeDefaultPropertyInclusion(v -> v.withValueInclusion(JsonInclude.Include.NON_NULL))
+        {{#failOnUnknownProperties}}
+        .enable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+        {{/failOnUnknownProperties}}
+        {{^failOnUnknownProperties}}
+        .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+        {{/failOnUnknownProperties}}
+        .disable(DeserializationFeature.FAIL_ON_INVALID_SUBTYPE)
+        .disable(DateTimeFeature.WRITE_DATES_AS_TIMESTAMPS)
+        .enable(EnumFeature.WRITE_ENUMS_USING_TO_STRING)
+        .enable(EnumFeature.READ_ENUMS_USING_TO_STRING)
+        .addModule(localDateTimeModule)
+        {{#openApiNullable}}
+        .addModule(new JsonNullableJackson3Module())
+        {{/openApiNullable}}
+        .addModule(new RFC3339JavaTimeModule())
+        .defaultDateFormat(ApiClient.buildDefaultDateFormat())
+        .build();
+    objectMapper = attachObjectMapperAttribute(jsonMapper);
 
     dateFormat = ApiClient.buildDefaultDateFormat();
 
@@ -208,8 +212,15 @@ public class ApiClient{{#jsr310}} extends JavaTimeFormatter{{/jsr310}} {
    * @return API client
    */
   public ApiClient setObjectMapper(ObjectMapper objectMapper) {
-    this.objectMapper = objectMapper;
+    this.objectMapper = attachObjectMapperAttribute(objectMapper);
     return this;
+  }
+
+  private static ObjectMapper attachObjectMapperAttribute(ObjectMapper mapper) {
+    return mapper.rebuild()
+        .defaultAttributes(ContextAttributes.getEmpty()
+            .withSharedAttribute(PolymorphicMetaTypeDeserializer.OBJECT_MAPPER_ATTRIBUTE, mapper))
+        .build();
   }
 
   public CloseableHttpClient getHttpClient() {
@@ -552,7 +563,9 @@ public class ApiClient{{#jsr310}} extends JavaTimeFormatter{{/jsr310}} {
   public ApiClient setDateFormat(DateFormat dateFormat) {
     this.dateFormat = dateFormat;
     // Also set the date format for model (de)serialization with Date properties.
-    this.objectMapper.setDateFormat((DateFormat) dateFormat.clone());
+    this.objectMapper = attachObjectMapperAttribute(this.objectMapper.rebuild()
+        .defaultDateFormat((DateFormat) dateFormat.clone())
+        .build());
     return this;
   }
 
@@ -802,7 +815,7 @@ public class ApiClient{{#jsr310}} extends JavaTimeFormatter{{/jsr310}} {
     if (isJsonMime(mimeType)) {
       try {
         return new StringEntity(objectMapper.writeValueAsString(obj), contentType.withCharset(StandardCharsets.UTF_8));
-      } catch (JsonProcessingException e) {
+      } catch (JacksonException e) {
         throw new ApiException(e);
       }
     } else if (mimeType.equals(ContentType.MULTIPART_FORM_DATA.getMimeType())) {
@@ -1149,7 +1162,7 @@ public class ApiClient{{#jsr310}} extends JavaTimeFormatter{{/jsr310}} {
 
     try (CloseableHttpResponse response = httpClient.execute(builder.build(), context)) {
       return responseProcessor.process(response);
-    } catch (IOException | ParseException e) {
+    } catch (IOException | ParseException | JacksonException e) {
       throw new ApiException(e);
     }
   }

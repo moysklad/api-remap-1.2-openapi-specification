@@ -81,7 +81,7 @@
 | `deploy-to-npm`            | Публикация TypeScript SDK в npm (`latest`, после `merge-branch-typescript`)                                                                                    |
 
 Java release jobs (`deploy-to-artifactory`, `deploy-to-maven`) описаны в `gitlab/.gitlab-ci-deploy-sdk-java.yml` и выполняются на стадии `deploy-sdk`.
-Публикуемый Java runtime-артефакт собирается как self-contained shaded JAR с relocation зависимостей Jackson (включая nullable-модуль) внутрь SDK.
+Публикуемый Java runtime-артефакт собирается как self-contained shaded JAR с relocation Jackson 3 (включая nullable-модуль) внутрь SDK.
 TypeScript npm jobs (`deploy-to-npm-prerelease`, `deploy-to-npm`) описаны в `gitlab/.gitlab-ci-deploy-sdk-typescript.yml` на той же стадии `deploy-sdk`.
 
 Python repository sync запускается после `generate-sdk-python` и
