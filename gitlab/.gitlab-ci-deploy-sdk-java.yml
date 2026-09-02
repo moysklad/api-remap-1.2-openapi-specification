@@ -4,7 +4,7 @@ variables:
   MAVEN_CLI_OPTS: "--batch-mode"
 
 .deploy-sdk-java-base:
-  extends: .maven-jdk17-image
+  extends: .maven-3.4-image
   stage: deploy-sdk
   before_script:
     - git config --global user.name "$GIT_USER"
