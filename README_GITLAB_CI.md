@@ -229,7 +229,7 @@ SCHEMATHESIS_INCLUDE_OPERATION_ID=createProduct
 | `verify`                 | Проверка спецификации, полный bundling, отдельный smoke bundling; в contract-пайплайнах сюда также входят `deploy-contract-env` и `create-contract-user` |
 | `contract-test`          | Контрактные тесты Schemathesis (`sdk-contract`) в `web`, `master` и tag pipeline, после verify, до generate-sdk                    |
 | `generate-sdk`           | Генерация SDK                                                                                                                      |
-| `test`                   | Тестирование (golden, packaging, smoke)                                                                                            |
+| `test`                   | Тестирование (golden, проверка fat/slim Java SDK, smoke)                                                                           |
 | `version`                | Автоматическое версионирование и подготовка CHANGELOG/тегов                                                                        |
 | `mirror`                 | Зеркалирование в GitHub и GitHub Release                                                                                           |
 | `prepare-sdk-repository` | Подготовка внутренних репозиториев SDK (PHP/Java/TypeScript: ветки и релиз master по текущим изменениям) |

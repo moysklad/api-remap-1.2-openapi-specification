@@ -22,6 +22,6 @@ include:
   - local: 'gitlab/sdk/validate.yml'
   - local: 'gitlab/sdk/generate-sdk.yml'
   - local: 'gitlab/sdk/sdk-tests-golden.yml'
-  - local: 'gitlab/sdk/sdk-tests-packaging.yml'
+  - local: 'gitlab/sdk/sdk-verify-java-fat-slim.yml'
   - local: 'gitlab/sdk/sdk-tests-smoke.yml'
   - local: 'gitlab/sdk/sdk-contract.yml'

@@ -150,4 +150,4 @@ EOF
 javac -cp "$FAT_JAR" -d "$TMP_DIR/classes" "$TMP_DIR/FatConsumer.java"
 java -cp "$TMP_DIR/classes:$FAT_JAR" FatConsumer
 
-echo "Java SDK packaging verification passed"
+echo "Java SDK fat/slim verification passed"
