@@ -1,0 +1,40 @@
+type: object
+description: |
+  Строка краткого отчета об остатках по складам.
+  В ответе возвращается только одно поле значения остатка, выбранное параметром `stockType`.
+properties:
+  assortmentId:
+    type: string
+    format: uuid
+    description: ID товара, модификации или партии
+  storeId:
+    type: string
+    format: uuid
+    nullable: true
+    description: |
+      ID склада. Значение `null` может возвращаться для части резерва, не привязанной к складу.
+  stock:
+    type: number
+    format: double
+    nullable: true
+    description: Физический остаток на складах, без учета резерва и ожидания
+  freeStock:
+    type: number
+    format: double
+    nullable: true
+    description: Остаток на складах за вычетом резерва
+  quantity:
+    type: number
+    format: double
+    nullable: true
+    description: Доступно (учитывает резерв и ожидания)
+  reserve:
+    type: number
+    format: double
+    nullable: true
+    description: Резерв
+  inTransit:
+    type: number
+    format: double
+    nullable: true
+    description: Ожидание

@@ -163,6 +163,9 @@ class SerializationTest extends BaseTestCase {
         FIXTURE_MODEL_MAP.put("stock_all_consignment", "StockAll");
         FIXTURE_MODEL_MAP.put("stock_by_store", "StockByStore");
         FIXTURE_MODEL_MAP.put("stock_by_operation", "StockByOperation");
+        FIXTURE_MODEL_MAP.put("stock_current_all", "StockCurrentAll");
+        FIXTURE_MODEL_MAP.put("stock_current_by_store", "StockCurrentByStore");
+        FIXTURE_MODEL_MAP.put("stock_current_by_slot", "StockCurrentBySlot");
         FIXTURE_MODEL_MAP.put("by_operations_stock", "ByOperationsStock");
         FIXTURE_MODEL_MAP.put("by_operations_reserve", "ByOperationsReserve");
         FIXTURE_MODEL_MAP.put("by_operations_intransit", "ByOperationsInTransit");

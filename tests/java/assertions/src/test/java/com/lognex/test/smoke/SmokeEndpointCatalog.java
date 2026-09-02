@@ -861,6 +861,12 @@ final class SmokeEndpointCatalog {
                 // /report/stock/byoperation
                 Arguments.of(new SmokeEndpointCase("testGetStockByOperation#1", "GET", "/report/stock/byoperation?operation.id=34efe2ee-015e-11e6-9464-e4de0000006b", SmokeEndpointCase.Expectation.NOT_404, false)),
 
+                // /report/stock/*/current
+                Arguments.of(new SmokeEndpointCase("testGetStockAllCurrent#1", "GET", "/report/stock/all/current", SmokeEndpointCase.Expectation.NOT_404, false)),
+                Arguments.of(new SmokeEndpointCase("testGetStockByStoreCurrent#1", "GET", "/report/stock/bystore/current", SmokeEndpointCase.Expectation.NOT_404, false)),
+                Arguments.of(new SmokeEndpointCase("testGetStockByStoreCurrentWithStockType#1", "GET", "/report/stock/bystore/current", SmokeEndpointCase.Expectation.NOT_404, false)),
+                Arguments.of(new SmokeEndpointCase("testGetStockBySlotCurrent#1", "GET", "/report/stock/byslot/current", SmokeEndpointCase.Expectation.NOT_404, false)),
+
                 // /report/byoperations
                 Arguments.of(new SmokeEndpointCase("testGetByOperationsStock#1", "GET", "/report/byoperations/stock?filter=assortment=https://api.moysklad.ru/api/remap/1.2/entity/product/bb1865dc-32e1-11ef-ac16-001100000003", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testGetByOperationsReserve#1", "GET", "/report/byoperations/reserve?filter=assortment=https://api.moysklad.ru/api/remap/1.2/entity/product/bb1865dc-32e1-11ef-ac16-001100000003", SmokeEndpointCase.Expectation.NOT_404, false)),

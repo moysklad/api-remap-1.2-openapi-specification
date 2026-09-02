@@ -1565,8 +1565,14 @@ paths:
   # Reports - Stock
   /report/stock/all:
     $ref: './paths/reports/stocks/stock-all.yaml'
+  /report/stock/all/current:
+    $ref: './paths/reports/stocks/stock-all-current.yaml'
   /report/stock/bystore:
     $ref: './paths/reports/stocks/stock-bystore.yaml'
+  /report/stock/bystore/current:
+    $ref: './paths/reports/stocks/stock-bystore-current.yaml'
+  /report/stock/byslot/current:
+    $ref: './paths/reports/stocks/stock-byslot-current.yaml'
   /report/stock/byoperation:
     $ref: './paths/reports/stocks/stock-byoperation.yaml'
 
@@ -2564,6 +2570,12 @@ components:
       $ref: './components/schemas/report/stockByStoreItem.yaml'
     StockByStoreList:
       $ref: './components/schemas/report/stockByStoreList.yaml'
+    StockCurrentAll:
+      $ref: './components/schemas/report/stockCurrentAll.yaml'
+    StockCurrentByStore:
+      $ref: './components/schemas/report/stockCurrentByStore.yaml'
+    StockCurrentBySlot:
+      $ref: './components/schemas/report/stockCurrentBySlot.yaml'
     StockByOperation:
       $ref: './components/schemas/report/stockByOperation.yaml'
     StockByOperationPosition:
@@ -2754,6 +2766,8 @@ tags:
     description: Операции с отчетом «Остатки по складам»
   - name: ReportsStockByOperation
     description: Операции с отчетом «Остатки по документам»
+  - name: ReportsStockCurrent
+    description: Операции с краткими отчетами по текущим остаткам
   - name: ReportsByOperations
     description: Операции с отчетом по документам номенклатуры
   - name: Metadata
