@@ -3,7 +3,6 @@ package com.lognex.test;
 import tools.jackson.core.JacksonException;
 import tools.jackson.core.type.TypeReference;
 import tools.jackson.databind.ObjectMapper;
-import tools.jackson.databind.json.JsonMapper;
 import org.junit.jupiter.api.Assertions;
 
 import java.io.IOException;
@@ -14,8 +13,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.fail;
-
 /**
  * Базовый класс для всех тестов SDK.
  *
@@ -25,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.fail;
  * - Работы с путями к сгенерированному SDK
  */
 public abstract class BaseTestCase {
-    private static final ObjectMapper OBJECT_MAPPER = JsonMapper.builder().build();
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     /**
      * Возвращает путь к директории с fixture файлами.
