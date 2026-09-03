@@ -1,0 +1,43 @@
+get:
+  operationId: getReportMoneyPlotSeries
+  tags:
+    - Reports
+  summary: Получить график движения денежных средств
+  description: |
+    Запрос отчета о движении денежных средств за период с разбивкой по часам, дням или месяцам.
+    Для доступа к отчету требуется право на просмотр показателей `viewDashboard`
+    и право «Видеть остатки денег» `viewMoneyDashboard`.
+  parameters:
+    - name: momentFrom
+      in: query
+      required: true
+      description: Начало периода отчета в формате YYYY-MM-DD HH:MM:SS
+      schema:
+        type: string
+    - name: momentTo
+      in: query
+      required: true
+      description: Конец периода отчета в формате YYYY-MM-DD HH:MM:SS
+      schema:
+        type: string
+    - $ref: '../../../components/reportParameters.yaml#/interval'
+    - $ref: '../../../components/parameters.yaml#/filter'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/LognexAcceptTimezone'
+  responses:
+    '200':
+      description: Успешный запрос. JSON представление отчета о движении денежных средств
+      headers:
+        X-Lognex-Content-Timezone:
+          description: |
+            Заголовок ответа. В нем указывается (как думает сервер) текущая дата на клиенте в RFC 3522.
+            Пример: `Wed, 16 Aug 2017 23:07:01 +0700`.
+          schema:
+            type: string
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/ReportMoneyPlotSeries'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

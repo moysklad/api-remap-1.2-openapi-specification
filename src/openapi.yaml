@@ -57,6 +57,10 @@ paths:
     $ref: './paths/reports/profit/profit-bycounterparty.yaml'
   /report/profit/bysaleschannel:
     $ref: './paths/reports/profit/profit-bysaleschannel.yaml'
+  /report/money/plotseries:
+    $ref: './paths/reports/money/money-plotseries.yaml'
+  /report/money/byaccount:
+    $ref: './paths/reports/money/money-byaccount.yaml'
 
   # Audit
   /audit:
@@ -1863,6 +1867,14 @@ components:
       $ref: './components/schemas/report/reportProfitBySalesChannel.yaml'
     ReportProfitBySalesChannelList:
       $ref: './components/schemas/report/reportProfitBySalesChannelList.yaml'
+    ReportMoneyPlotSeriesItem:
+      $ref: './components/schemas/report/reportMoneyPlotSeriesItem.yaml'
+    ReportMoneyPlotSeries:
+      $ref: './components/schemas/report/reportMoneyPlotSeries.yaml'
+    ReportMoneyByAccount:
+      $ref: './components/schemas/report/reportMoneyByAccount.yaml'
+    ReportMoneyByAccountList:
+      $ref: './components/schemas/report/reportMoneyByAccountList.yaml'
     Declaration:
       $ref: './components/schemas/common/declaration.yaml'
     Gtd:
