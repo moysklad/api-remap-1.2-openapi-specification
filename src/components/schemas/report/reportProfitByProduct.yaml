@@ -1,0 +1,57 @@
+type: object
+description: Строка отчета «Прибыльность по товарам»
+properties:
+  assortment:
+    $ref: '../../../openapi.yaml#/components/schemas/ReportProfitAssortment'
+  margin:
+    type: number
+    format: double
+    description: Рентабельность товара
+  salesMargin:
+    type: number
+    format: double
+    description: Рентабельность продаж
+  profit:
+    type: number
+    format: double
+    description: Прибыль
+  returnCost:
+    type: number
+    format: double
+    description: Себестоимость возвратов в копейках
+  returnCostSum:
+    type: number
+    format: double
+    description: Сумма себестоимостей возвратов в копейках
+  returnPrice:
+    type: number
+    format: double
+    description: Цена возвратов
+  returnQuantity:
+    type: number
+    format: double
+    description: Возвращенное количество
+  returnSum:
+    type: number
+    format: double
+    description: Сумма возвратов
+  sellCost:
+    type: number
+    format: double
+    description: Себестоимость в копейках
+  sellCostSum:
+    type: number
+    format: double
+    description: Сумма себестоимостей продаж в копейках
+  sellPrice:
+    type: number
+    format: double
+    description: Средняя цена продаж
+  sellQuantity:
+    type: number
+    format: double
+    description: Проданное количество
+  sellSum:
+    type: number
+    format: double
+    description: Сумма продаж

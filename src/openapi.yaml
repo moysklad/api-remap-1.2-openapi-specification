@@ -47,6 +47,16 @@ paths:
     $ref: './paths/reports/orders-plotseries.yaml'
   /report/sales/plotseries:
     $ref: './paths/reports/sales-plotseries.yaml'
+  /report/profit/byproduct:
+    $ref: './paths/reports/profit/profit-byproduct.yaml'
+  /report/profit/byvariant:
+    $ref: './paths/reports/profit/profit-byvariant.yaml'
+  /report/profit/byemployee:
+    $ref: './paths/reports/profit/profit-byemployee.yaml'
+  /report/profit/bycounterparty:
+    $ref: './paths/reports/profit/profit-bycounterparty.yaml'
+  /report/profit/bysaleschannel:
+    $ref: './paths/reports/profit/profit-bysaleschannel.yaml'
 
   # Audit
   /audit:
@@ -1831,6 +1841,28 @@ components:
       $ref: './components/schemas/report/reportPlotSeries.yaml'
     ReportSalesPlotSeriesList:
       $ref: './components/schemas/report/reportSalesPlotSeriesList.yaml'
+    ReportProfitByProduct:
+      $ref: './components/schemas/report/reportProfitByProduct.yaml'
+    ReportProfitByProductList:
+      $ref: './components/schemas/report/reportProfitByProductList.yaml'
+    ReportProfitByVariant:
+      $ref: './components/schemas/report/reportProfitByVariant.yaml'
+    ReportProfitAssortment:
+      $ref: './components/schemas/report/reportProfitAssortment.yaml'
+    ReportProfitByVariantList:
+      $ref: './components/schemas/report/reportProfitByVariantList.yaml'
+    ReportProfitByEmployee:
+      $ref: './components/schemas/report/reportProfitByEmployee.yaml'
+    ReportProfitByEmployeeList:
+      $ref: './components/schemas/report/reportProfitByEmployeeList.yaml'
+    ReportProfitByCounterparty:
+      $ref: './components/schemas/report/reportProfitByCounterparty.yaml'
+    ReportProfitByCounterpartyList:
+      $ref: './components/schemas/report/reportProfitByCounterpartyList.yaml'
+    ReportProfitBySalesChannel:
+      $ref: './components/schemas/report/reportProfitBySalesChannel.yaml'
+    ReportProfitBySalesChannelList:
+      $ref: './components/schemas/report/reportProfitBySalesChannelList.yaml'
     Declaration:
       $ref: './components/schemas/common/declaration.yaml'
     Gtd:

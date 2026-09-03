@@ -1,0 +1,26 @@
+get:
+  operationId: getReportProfitByProduct
+  tags:
+    - Reports
+  summary: Получить прибыльность по товарам
+  description: |
+    Запрос отчета «Прибыльность по товарам». В отчете учитываются товары, услуги и комплекты.
+    Для доступа к отчету требуется право на просмотр отчета «Прибыльность».
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/limit'
+    - $ref: '../../../components/parameters.yaml#/offset'
+    - $ref: '../../../components/parameters.yaml#/filter'
+    - $ref: '../../../components/parameters.yaml#/momentFrom'
+    - $ref: '../../../components/parameters.yaml#/momentTo'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/LognexAcceptTimezone'
+  responses:
+    '200':
+      description: Успешный запрос. Результат - JSON представление отчета
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/ReportProfitByProductList'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

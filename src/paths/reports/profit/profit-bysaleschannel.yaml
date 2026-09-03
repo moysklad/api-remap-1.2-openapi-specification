@@ -1,0 +1,26 @@
+get:
+  operationId: getReportProfitBySalesChannel
+  tags:
+    - Reports
+  summary: Получить прибыльность по каналам продаж
+  description: |
+    Запрос отчета «Прибыльность по каналам продаж».
+    Для доступа к отчету требуется право на просмотр отчета «Прибыльность».
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/limit'
+    - $ref: '../../../components/parameters.yaml#/offset'
+    - $ref: '../../../components/parameters.yaml#/filter'
+    - $ref: '../../../components/parameters.yaml#/momentFrom'
+    - $ref: '../../../components/parameters.yaml#/momentTo'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/LognexAcceptTimezone'
+  responses:
+    '200':
+      description: Успешный запрос. Результат - JSON представление отчета
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/ReportProfitBySalesChannelList'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

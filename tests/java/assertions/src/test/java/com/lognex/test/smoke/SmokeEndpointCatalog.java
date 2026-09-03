@@ -833,6 +833,11 @@ final class SmokeEndpointCatalog {
                 Arguments.of(new SmokeEndpointCase("testGetReportDashboardMonth#1", "GET", "/report/dashboard/month", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testGetReportOrdersPlotSeries#1", "GET", "/report/orders/plotseries?momentFrom=2018-09-06%2000:00:00&momentTo=2018-09-06%2001:00:01&interval=hour", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testGetReportSalesPlotSeries#1", "GET", "/report/sales/plotseries?momentFrom=2018-09-06%2000:00:00&momentTo=2018-09-06%2001:00:01&interval=hour", SmokeEndpointCase.Expectation.NOT_404, false)),
+                Arguments.of(new SmokeEndpointCase("testGetReportProfitByProduct#1", "GET", "/report/profit/byproduct", SmokeEndpointCase.Expectation.NOT_404, false)),
+                Arguments.of(new SmokeEndpointCase("testGetReportProfitByVariant#1", "GET", "/report/profit/byvariant", SmokeEndpointCase.Expectation.NOT_404, false)),
+                Arguments.of(new SmokeEndpointCase("testGetReportProfitByEmployee#1", "GET", "/report/profit/byemployee", SmokeEndpointCase.Expectation.NOT_404, false)),
+                Arguments.of(new SmokeEndpointCase("testGetReportProfitByCounterparty#1", "GET", "/report/profit/bycounterparty", SmokeEndpointCase.Expectation.NOT_404, false)),
+                Arguments.of(new SmokeEndpointCase("testGetReportProfitBySalesChannel#1", "GET", "/report/profit/bysaleschannel", SmokeEndpointCase.Expectation.NOT_404, false)),
 
                 // /notification
                 Arguments.of(new SmokeEndpointCase("testGetNotifications#1", "GET", "/notification", SmokeEndpointCase.Expectation.NOT_404, false)),

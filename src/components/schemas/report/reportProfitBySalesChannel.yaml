@@ -1,0 +1,57 @@
+type: object
+description: Строка отчета «Прибыльность по каналам продаж»
+properties:
+  salesChannel:
+    type: object
+    description: Краткое представление канала продаж
+    properties:
+      meta:
+        $ref: '../common/meta.yaml'
+      name:
+        type: string
+        description: Наименование канала продаж
+      type:
+        type: string
+        description: Тип канала продаж
+  margin:
+    type: number
+    format: double
+    description: Рентабельность товара
+  salesMargin:
+    type: number
+    format: double
+    description: Рентабельность продаж
+  profit:
+    type: number
+    format: double
+    description: Прибыль
+  returnAvgCheck:
+    type: number
+    format: double
+    description: Средний чек возврата
+  returnCostSum:
+    type: number
+    format: double
+    description: Сумма себестоимостей возвратов в копейках
+  returnCount:
+    type: integer
+    description: Количество возвратов
+  returnSum:
+    type: number
+    format: double
+    description: Сумма возвратов
+  salesAvgCheck:
+    type: number
+    format: double
+    description: Средний чек продаж
+  salesCount:
+    type: integer
+    description: Количество продаж
+  sellCostSum:
+    type: number
+    format: double
+    description: Сумма себестоимостей продаж в копейках
+  sellSum:
+    type: number
+    format: double
+    description: Сумма продаж

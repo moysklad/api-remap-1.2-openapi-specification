@@ -72,6 +72,38 @@ order:
   schema:
     type: string
 
+momentFrom:
+  name: momentFrom
+  in: query
+  required: false
+  description: Начало периода отчета в формате YYYY-MM-DD HH:MM:SS
+  schema:
+    type: string
+
+momentTo:
+  name: momentTo
+  in: query
+  required: false
+  description: Конец периода отчета в формате YYYY-MM-DD HH:MM:SS
+  schema:
+    type: string
+
+momentFromRequired:
+  name: momentFrom
+  in: query
+  required: true
+  description: Начало периода отчета в формате YYYY-MM-DD HH:MM:SS
+  schema:
+    type: string
+
+momentToRequired:
+  name: momentTo
+  in: query
+  required: true
+  description: Конец периода отчета в формате YYYY-MM-DD HH:MM:SS
+  schema:
+    type: string
+
 entityType:
   name: type
   in: path
