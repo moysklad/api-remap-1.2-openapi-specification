@@ -57,6 +57,10 @@ final class SmokePayloads {
 
     private static final String RETAIL_DOCUMENT_BATCH = array(obj(str("name", "Smoke Test")));
 
+    private static final String REPORT_COUNTERPARTY = obj(
+            field("counterparties", array(obj(
+                    ref("counterparty", "counterparty", "/entity/counterparty")))));
+
     private static final String DEFAULT_PAYLOAD = obj(str("name", "Smoke Test"));
 
     private static final List<Rule> RULES = Arrays.asList(
@@ -75,7 +79,8 @@ final class SmokePayloads {
             rule(methods("PUT").and(pathEndsWith("/access/activate")), ACTIVATE),
             rule(methods("POST").and(pathEndsWith("/export")), EXPORT),
             rule(methods("PUT").and(pathIn("/notification/settings")), NOTIFICATION_SETTINGS),
-            rule(methods("POST").and(pathIn("/entity/retailshift/batch", "/entity/retailsalesreturn/batch")), RETAIL_DOCUMENT_BATCH));
+            rule(methods("POST").and(pathIn("/entity/retailshift/batch", "/entity/retailsalesreturn/batch")), RETAIL_DOCUMENT_BATCH),
+            rule(methods("POST").and(pathIn("/report/counterparty")), REPORT_COUNTERPARTY));
 
     private SmokePayloads() {
     }

@@ -81,6 +81,7 @@ const FIXTURE_MODEL_MAP: Readonly<Record<string, string>> = {
     report_profit_by_sales_channel_list: 'ReportProfitBySalesChannelList',
     report_money_plotseries: 'ReportMoneyPlotSeries',
     report_money_by_account_list: 'ReportMoneyByAccountList',
+    report_counterparty: 'ReportCounterparty',
     stock_all_consignment: 'StockAll',
     stock_all_product: 'StockAll',
     stock_all_variant: 'StockAll',

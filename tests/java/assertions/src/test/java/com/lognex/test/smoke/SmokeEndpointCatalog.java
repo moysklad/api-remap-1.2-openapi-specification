@@ -840,6 +840,9 @@ final class SmokeEndpointCatalog {
                 Arguments.of(new SmokeEndpointCase("testGetReportProfitBySalesChannel#1", "GET", "/report/profit/bysaleschannel", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testGetReportMoneyPlotSeries#1", "GET", "/report/money/plotseries?momentFrom=2018-09-01%2000:00:00&momentTo=2018-09-04%2000:00:00&interval=day", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testGetReportMoneyByAccount#1", "GET", "/report/money/byaccount", SmokeEndpointCase.Expectation.NOT_404, false)),
+                Arguments.of(new SmokeEndpointCase("testGetReportCounterparty#1", "GET", "/report/counterparty", SmokeEndpointCase.Expectation.NOT_404, false)),
+                Arguments.of(new SmokeEndpointCase("testQueryReportCounterparty#1", "POST", "/report/counterparty", SmokeEndpointCase.Expectation.NOT_404, true)),
+                Arguments.of(new SmokeEndpointCase("testGetReportCounterpartyById#1", "GET", "/report/counterparty/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
 
                 // /notification
                 Arguments.of(new SmokeEndpointCase("testGetNotifications#1", "GET", "/notification", SmokeEndpointCase.Expectation.NOT_404, false)),

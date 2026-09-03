@@ -61,6 +61,10 @@ paths:
     $ref: './paths/reports/money/money-plotseries.yaml'
   /report/money/byaccount:
     $ref: './paths/reports/money/money-byaccount.yaml'
+  /report/counterparty:
+    $ref: './paths/reports/counterparty/counterparty.yaml'
+  /report/counterparty/{id}:
+    $ref: './paths/reports/counterparty/counterparty-by-id.yaml'
 
   # Audit
   /audit:
@@ -1875,6 +1879,12 @@ components:
       $ref: './components/schemas/report/reportMoneyByAccount.yaml'
     ReportMoneyByAccountList:
       $ref: './components/schemas/report/reportMoneyByAccountList.yaml'
+    ReportCounterparty:
+      $ref: './components/schemas/report/reportCounterparty.yaml'
+    ReportCounterpartyList:
+      $ref: './components/schemas/report/reportCounterpartyList.yaml'
+    ReportCounterpartyQuery:
+      $ref: './components/schemas/report/reportCounterpartyQuery.yaml'
     Declaration:
       $ref: './components/schemas/common/declaration.yaml'
     Gtd:
