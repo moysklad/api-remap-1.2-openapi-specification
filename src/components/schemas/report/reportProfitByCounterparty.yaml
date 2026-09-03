@@ -32,6 +32,7 @@ properties:
     description: Сумма себестоимостей возвратов в копейках
   returnCount:
     type: integer
+    format: int64
     description: Количество возвратов
   returnSum:
     type: number
@@ -43,6 +44,7 @@ properties:
     description: Средний чек продаж
   salesCount:
     type: integer
+    format: int64
     description: Количество продаж
   sellCostSum:
     type: number

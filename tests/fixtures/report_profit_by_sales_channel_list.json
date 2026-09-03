@@ -29,11 +29,11 @@
         "name": "ijk-shop.ru",
         "type": "ECOMMERCE"
       },
-      "salesCount": 1,
+      "salesCount": 1.0,
       "salesAvgCheck": 252500.0,
       "sellSum": 252500.0,
       "sellCostSum": 150000.0,
-      "returnCount": 0,
+      "returnCount": 0.0,
       "returnAvgCheck": 0.0,
       "returnSum": 0.0,
       "returnCostSum": 0.0,

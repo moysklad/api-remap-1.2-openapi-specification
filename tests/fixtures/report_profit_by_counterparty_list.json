@@ -28,11 +28,11 @@
         },
         "name": "ООО \"Покупатель\""
       },
-      "salesCount": 1,
+      "salesCount": 1.0,
       "salesAvgCheck": 310390.0,
       "sellSum": 310390.0,
       "sellCostSum": 200000.0,
-      "returnCount": 0,
+      "returnCount": 0.0,
       "returnAvgCheck": 0.0,
       "returnSum": 0.0,
       "returnCostSum": 0.0,

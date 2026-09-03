@@ -20,16 +20,7 @@ get:
       description: Конец периода отчета в формате YYYY-MM-DD HH:MM:SS
       schema:
         type: string
-    - name: interval
-      in: query
-      required: true
-      description: Интервал построения отчета
-      schema:
-        type: string
-        enum:
-          - hour
-          - day
-          - month
+    - $ref: '../../components/reportParameters.yaml#/interval'
     - name: filter
       in: query
       required: false

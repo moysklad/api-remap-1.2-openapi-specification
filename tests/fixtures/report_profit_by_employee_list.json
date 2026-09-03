@@ -28,11 +28,11 @@
         },
         "name": "Администратор"
       },
-      "salesCount": 3,
+      "salesCount": 3.0,
       "salesAvgCheck": 104498.0,
       "sellSum": 313495.0,
       "sellCostSum": 180000.0,
-      "returnCount": 1,
+      "returnCount": 1.0,
       "returnAvgCheck": 15000.0,
       "returnSum": 15000.0,
       "returnCostSum": 9000.0,
