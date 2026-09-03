@@ -162,7 +162,7 @@ class SerializationTest extends BaseTestCase {
         FIXTURE_MODEL_MAP.put("report_profit_by_employee_list", "ReportProfitByEmployeeList");
         FIXTURE_MODEL_MAP.put("report_profit_by_counterparty_list", "ReportProfitByCounterpartyList");
         FIXTURE_MODEL_MAP.put("report_profit_by_sales_channel_list", "ReportProfitBySalesChannelList");
-        FIXTURE_MODEL_MAP.put("report_money_plotseries_list", "ReportMoneyPlotSeriesList");
+        FIXTURE_MODEL_MAP.put("report_money_plotseries", "ReportMoneyPlotSeries");
         FIXTURE_MODEL_MAP.put("report_money_by_account_list", "ReportMoneyByAccountList");
         FIXTURE_MODEL_MAP.put("organization", "Organization");
         FIXTURE_MODEL_MAP.put("organization_account", "Account");

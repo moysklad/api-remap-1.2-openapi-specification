@@ -133,7 +133,7 @@ FIXTURE_MODEL_MAP = {
     "report_profit_by_employee_list": "ReportProfitByEmployeeList",
     "report_profit_by_counterparty_list": "ReportProfitByCounterpartyList",
     "report_profit_by_sales_channel_list": "ReportProfitBySalesChannelList",
-    "report_money_plotseries_list": "ReportMoneyPlotSeriesList",
+    "report_money_plotseries": "ReportMoneyPlotSeries",
     "report_money_by_account_list": "ReportMoneyByAccountList",
     "stock_all_product": "StockAll",
     "stock_all_variant": "StockAll",
