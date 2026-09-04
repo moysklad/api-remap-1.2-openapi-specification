@@ -1,0 +1,25 @@
+type: object
+description: Детализация оборотов по одному складу
+properties:
+  store:
+    type: object
+    description: Склад
+    properties:
+      meta:
+        $ref: '../common/meta.yaml'
+      name:
+        type: string
+        maxLength: 255
+        description: Наименование склада
+  onPeriodStart:
+    description: Показатели на начало периода
+    $ref: '../../../openapi.yaml#/components/schemas/ReportTurnoverIndicators'
+  onPeriodEnd:
+    description: Показатели на конец периода
+    $ref: '../../../openapi.yaml#/components/schemas/ReportTurnoverIndicators'
+  income:
+    description: Показатели прихода в течение периода отчета
+    $ref: '../../../openapi.yaml#/components/schemas/ReportTurnoverIndicators'
+  outcome:
+    description: Показатели расхода в течение периода отчета
+    $ref: '../../../openapi.yaml#/components/schemas/ReportTurnoverIndicators'

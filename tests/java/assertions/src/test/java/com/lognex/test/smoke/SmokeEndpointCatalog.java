@@ -844,6 +844,11 @@ final class SmokeEndpointCatalog {
                 Arguments.of(new SmokeEndpointCase("testQueryReportCounterparty#1", "POST", "/report/counterparty", SmokeEndpointCase.Expectation.NOT_404, true)),
                 Arguments.of(new SmokeEndpointCase("testGetReportCounterpartyById#1", "GET", "/report/counterparty/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
 
+                // /report/turnover
+                Arguments.of(new SmokeEndpointCase("testGetReportTurnoverAll#1", "GET", "/report/turnover/all", SmokeEndpointCase.Expectation.NOT_404, false)),
+                Arguments.of(new SmokeEndpointCase("testGetReportTurnoverByStore#1", "GET", "/report/turnover/bystore", SmokeEndpointCase.Expectation.NOT_404, false)),
+                Arguments.of(new SmokeEndpointCase("testGetReportTurnoverByOperations#1", "GET", "/report/turnover/byoperations", SmokeEndpointCase.Expectation.NOT_404, false)),
+
                 // /notification
                 Arguments.of(new SmokeEndpointCase("testGetNotifications#1", "GET", "/notification", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testGetNotificationById#1", "GET", "/notification/{id}", SmokeEndpointCase.Expectation.NOT_404, false)),

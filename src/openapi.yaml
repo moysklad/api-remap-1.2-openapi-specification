@@ -65,6 +65,12 @@ paths:
     $ref: './paths/reports/counterparty/counterparty.yaml'
   /report/counterparty/{id}:
     $ref: './paths/reports/counterparty/counterparty-by-id.yaml'
+  /report/turnover/all:
+    $ref: './paths/reports/turnover/turnover-all.yaml'
+  /report/turnover/bystore:
+    $ref: './paths/reports/turnover/turnover-bystore.yaml'
+  /report/turnover/byoperations:
+    $ref: './paths/reports/turnover/turnover-byoperations.yaml'
 
   # Audit
   /audit:
@@ -1885,6 +1891,26 @@ components:
       $ref: './components/schemas/report/reportCounterpartyList.yaml'
     ReportCounterpartyQuery:
       $ref: './components/schemas/report/reportCounterpartyQuery.yaml'
+    ReportTurnoverIndicators:
+      $ref: './components/schemas/report/reportTurnoverIndicators.yaml'
+    ReportTurnoverAssortment:
+      $ref: './components/schemas/report/reportTurnoverAssortment.yaml'
+    ReportTurnover:
+      $ref: './components/schemas/report/reportTurnover.yaml'
+    ReportTurnoverList:
+      $ref: './components/schemas/report/reportTurnoverList.yaml'
+    ReportTurnoverByStoreItem:
+      $ref: './components/schemas/report/reportTurnoverByStoreItem.yaml'
+    ReportTurnoverByStore:
+      $ref: './components/schemas/report/reportTurnoverByStore.yaml'
+    ReportTurnoverByStoreList:
+      $ref: './components/schemas/report/reportTurnoverByStoreList.yaml'
+    ReportTurnoverOperation:
+      $ref: './components/schemas/report/reportTurnoverOperation.yaml'
+    ReportTurnoverByOperation:
+      $ref: './components/schemas/report/reportTurnoverByOperation.yaml'
+    ReportTurnoverByOperationList:
+      $ref: './components/schemas/report/reportTurnoverByOperationList.yaml'
     Declaration:
       $ref: './components/schemas/common/declaration.yaml'
     Gtd:

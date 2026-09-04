@@ -1,0 +1,22 @@
+get:
+  operationId: getReportTurnoverByStore
+  tags:
+    - Reports
+  summary: Получить Обороты по товару с детализацией по складам
+  description: Запрос отчета «Обороты по товару с детализацией по складам».
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/filter'
+    - $ref: '../../../components/reportParameters.yaml#/momentFrom'
+    - $ref: '../../../components/reportParameters.yaml#/momentTo'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/LognexAcceptTimezone'
+  responses:
+    '200':
+      description: Успешный запрос. Результат - JSON представление отчета
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/ReportTurnoverByStoreList'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
