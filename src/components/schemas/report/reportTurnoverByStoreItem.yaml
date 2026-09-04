@@ -2,15 +2,8 @@ type: object
 description: Детализация оборотов по одному складу
 properties:
   store:
-    type: object
     description: Склад
-    properties:
-      meta:
-        $ref: '../common/meta.yaml'
-      name:
-        type: string
-        maxLength: 255
-        description: Наименование склада
+    $ref: '../../../openapi.yaml#/components/schemas/NamedEntity'
   onPeriodStart:
     description: Показатели на начало периода
     $ref: '../../../openapi.yaml#/components/schemas/ReportTurnoverIndicators'

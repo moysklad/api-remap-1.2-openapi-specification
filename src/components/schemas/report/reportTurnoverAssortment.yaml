@@ -23,22 +23,8 @@ properties:
       meta:
         $ref: '../common/meta.yaml'
   productFolder:
-    type: object
     description: Группа номенклатуры
-    properties:
-      meta:
-        $ref: '../common/meta.yaml'
-      name:
-        type: string
-        maxLength: 255
-        description: Наименование группы
+    $ref: '../../../openapi.yaml#/components/schemas/NamedEntity'
   uom:
-    type: object
     description: Единица измерения
-    properties:
-      meta:
-        $ref: '../common/meta.yaml'
-      name:
-        type: string
-        maxLength: 255
-        description: Наименование единицы измерения
+    $ref: '../../../openapi.yaml#/components/schemas/NamedEntity'

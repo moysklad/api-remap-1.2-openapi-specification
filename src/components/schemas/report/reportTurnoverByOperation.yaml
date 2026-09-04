@@ -5,15 +5,8 @@ properties:
     description: Краткое представление номенклатуры в отчете
     $ref: '../../../openapi.yaml#/components/schemas/ReportTurnoverAssortment'
   store:
-    type: object
     description: Склад
-    properties:
-      meta:
-        $ref: '../common/meta.yaml'
-      name:
-        type: string
-        maxLength: 255
-        description: Наименование склада
+    $ref: '../../../openapi.yaml#/components/schemas/NamedEntity'
   operation:
     description: Документ, связанный с номенклатурой
     $ref: '../../../openapi.yaml#/components/schemas/ReportTurnoverOperation'

@@ -16,12 +16,5 @@ properties:
     type: string
     description: Дата проведения документа
   agent:
-    type: object
     description: Контрагент документа
-    properties:
-      meta:
-        $ref: '../common/meta.yaml'
-      name:
-        type: string
-        maxLength: 255
-        description: Наименование контрагента
+    $ref: '../../../openapi.yaml#/components/schemas/NamedEntity'

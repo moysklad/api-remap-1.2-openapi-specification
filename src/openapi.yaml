@@ -1841,6 +1841,8 @@ components:
       $ref: './components/schemas/common/metaList.yaml'
     Metadata:
       $ref: './components/schemas/common/metadata.yaml'
+    NamedEntity:
+      $ref: './components/schemas/common/namedEntity.yaml'
     Context:
       $ref: './components/schemas/common/context.yaml'
     ReportDashboard:
