@@ -18,7 +18,6 @@ properties:
   agent:
     type: object
     description: Контрагент документа
-    x-agent-reference: true
     properties:
       meta:
         $ref: '../common/meta.yaml'
