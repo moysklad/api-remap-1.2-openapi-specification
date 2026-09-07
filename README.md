@@ -70,8 +70,9 @@ docker compose run --rm sdk make build-python # wheel/sdist + twine check
 docker compose run --rm sdk make generate-java # генерация Java SDK
 docker compose run --rm sdk make generate-typescript # генерация TypeScript SDK
 docker compose run --rm sdk make build-typescript # сборка npm-пакета TypeScript SDK
-docker compose run --rm java-sdk bash -lc "cd clients/java && mvn clean package" # сборка fat + slim Java SDK
-docker compose run --rm java-sdk make sdk-verify-java-fat-slim # проверка fat/slim Java SDK
+docker compose run --rm java-sdk bash -lc "cd clients/java && mvn clean package" # сборка slim Java SDK
+docker compose run --rm java-sdk bash -lc "cd clients/java && mvn -Pshaded clean package" # сборка shaded Java SDK
+docker compose run --rm java-sdk make sdk-verify-java-shaded-slim # проверка shaded/slim Java SDK
 docker compose run --rm sdk make test-golden-php  # golden-тесты
 docker compose run --rm java-sdk make test-golden-java  # golden-тесты
 docker compose run --rm sdk make test-golden-typescript  # golden-тесты
@@ -85,36 +86,9 @@ Redocly lint запрещает `example` внутри `Schema`. Для Schemath
 При повторных запусках зависимости npm не перекачиваются (пропуск `npm ci`, если `package-lock.json` не менялся). Принудительная переустановка:  
 `docker compose run --rm -e NPM_CI_FORCE=1 sdk make lint`
 
-Основной Java SDK артефакт `ru.moysklad.api:remap-1.2-java-sdk:<version>` — self-contained fat JAR.
-Все его библиотеки релокированы в namespace SDK и не экспортируются как транзитивные зависимости.
-Тот же артефакт с classifier `slim` содержит только классы SDK;
-клиент slim-версии должен явно предоставить все зависимости, перечисленные в POM.
+Основной Java SDK артефакт `ru.moysklad.api:remap-1.2-java-sdk:<version>` — Maven резолвит зависимости SDK транзитивно.
+Shaded-вариант `ru.moysklad.api:remap-1.2-java-sdk:<version>-shaded` собирается профилем `shaded`, его библиотеки релокированы в namespace SDK и не экспортируются как транзитивные зависимости.
 
-Оба варианта публикуются из одного Maven lifecycle под одними координатами и выбираются на стороне клиента:
-
-```xml
-<!-- fat: ничего доставлять не нужно -->
-<dependency>
-  <groupId>ru.moysklad.api</groupId>
-  <artifactId>remap-1.2-java-sdk</artifactId>
-  <version>ВЕРСИЯ</version>
-</dependency>
-
-<!-- slim: зависимости приносит клиент -->
-<dependency>
-  <groupId>ru.moysklad.api</groupId>
-  <artifactId>remap-1.2-java-sdk</artifactId>
-  <version>ВЕРСИЯ</version>
-  <classifier>slim</classifier>
-</dependency>
-```
-
-Для slim клиент сам объявляет runtime-зависимости SDK: 
-* `tools.jackson.core:jackson-core`
-* `tools.jackson.core:jackson-databind`
-* `com.fasterxml.jackson.core:jackson-annotations`
-* `org.openapitools:jackson-databind-nullable`
-* `org.apache.httpcomponents.client5:httpclient5`
 
 ### Локально (без Docker)
 

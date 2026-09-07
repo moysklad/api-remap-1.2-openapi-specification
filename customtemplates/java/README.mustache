@@ -54,15 +54,31 @@ Add this dependency to your project's POM:
 </dependency>
 ```
 
-The default artifact is a self-contained fat JAR with SDK dependencies shaded and relocated.
-If you need the slim JAR without bundled dependencies, use the `slim` classifier:
+The default artifact is a slim JAR. Maven resolves SDK dependencies transitively.
+To build a self-contained shaded JAR with SDK dependencies relocated into the SDK namespace, use the `shaded` Maven profile:
+
+```shell
+mvn -Pshaded clean package
+```
+
+Published shaded artifacts use the same Maven coordinates with a `-shaded` version suffix.
 
 ```xml
 <dependency>
     <groupId>{{{groupId}}}</groupId>
     <artifactId>{{{artifactId}}}</artifactId>
     <version>{{{artifactVersion}}}</version>
-    <classifier>slim</classifier>
+    <scope>compile</scope>
+</dependency>
+```
+
+Use the shaded artifact if you need a self-contained JAR:
+
+```xml
+<dependency>
+    <groupId>{{{groupId}}}</groupId>
+    <artifactId>{{{artifactId}}}</artifactId>
+    <version>{{{artifactVersion}}}-shaded</version>
     <scope>compile</scope>
 </dependency>
 ```
@@ -75,7 +91,7 @@ Add this dependency to your project's build file:
 compile "{{{groupId}}}:{{{artifactId}}}:{{{artifactVersion}}}"
 ```
 
-For the slim JAR, use the `slim` classifier.
+Use the `-shaded` version suffix for the shaded JAR.
 
 ### Others
 

@@ -29,13 +29,16 @@ deploy-to-artifactory:
     - export TZ='Europe/Moscow'
   script:
     - ARTEFACT_VERSION="${CI_COMMIT_REF_NAME}-${CI_PIPELINE_ID}"
-    - mvn versions:set -DnewVersion=$ARTEFACT_VERSION -DgenerateBackupPoms=false;
-    - mvn $MAVEN_CLI_OPTS -Ppublishing-artifactory clean deploy -DartifactoryRepo=${ARTIFACTORY_REPO_URL};
+    - SHADED_ARTEFACT_VERSION="${ARTEFACT_VERSION}-shaded"
+    - mvn versions:set -DnewVersion="$ARTEFACT_VERSION" -DgenerateBackupPoms=false
+    - mvn $MAVEN_CLI_OPTS -Ppublishing-artifactory clean deploy -DartifactoryRepo=${ARTIFACTORY_REPO_URL}
+    - mvn versions:set -DnewVersion="$SHADED_ARTEFACT_VERSION" -DgenerateBackupPoms=false
+    - mvn $MAVEN_CLI_OPTS -Pshaded,publishing-artifactory clean deploy -DartifactoryRepo=${ARTIFACTORY_REPO_URL}
     - echo "Complete. Version $ARTEFACT_VERSION"
     - |
       echo "Опубликованные варианты артефакта:"
-      echo "  fat  (без classifier): ru.moysklad.api:remap-1.2-java-sdk:${ARTEFACT_VERSION}"
-      echo "  slim (classifier slim): ru.moysklad.api:remap-1.2-java-sdk:jar:slim:${ARTEFACT_VERSION}"
+      echo "  slim:   ru.moysklad.api:remap-1.2-java-sdk:${ARTEFACT_VERSION}"
+      echo "  shaded: ru.moysklad.api:remap-1.2-java-sdk:${SHADED_ARTEFACT_VERSION}"
 
 deploy-to-maven:
   extends: .deploy-sdk-java-base
@@ -95,7 +98,10 @@ deploy-to-maven:
 
     - mvn versions:set -DnewVersion="$TAG" -DgenerateBackupPoms=false
     - mvn $MAVEN_CLI_OPTS -Ppublishing-central clean deploy
+    - SHADED_TAG="${TAG}-shaded"
+    - mvn versions:set -DnewVersion="$SHADED_TAG" -DgenerateBackupPoms=false
+    - mvn $MAVEN_CLI_OPTS -Pshaded,publishing-central clean deploy
     - |
       echo "Опубликованные варианты артефакта:"
-      echo "  fat  (без classifier): ru.moysklad.api:remap-1.2-java-sdk:${TAG}"
-      echo "  slim (classifier slim): ru.moysklad.api:remap-1.2-java-sdk:jar:slim:${TAG}"
+      echo "  slim:   ru.moysklad.api:remap-1.2-java-sdk:${TAG}"
+      echo "  shaded: ru.moysklad.api:remap-1.2-java-sdk:${SHADED_TAG}"

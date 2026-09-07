@@ -1,5 +1,5 @@
-# Проверка fat/slim Java SDK артефактов
-sdk-verify-java-fat-slim:
+# Проверка shaded/slim Java SDK артефактов
+sdk-verify-java-shaded-slim:
   extends: .maven-jdk17-image
   stage: test
   needs:
@@ -11,8 +11,8 @@ sdk-verify-java-fat-slim:
   script:
     - |
       if [ -d "clients/java" ]; then
-        echo "=== Verify Java SDK fat/slim artifacts ==="
-        sh scripts/sdk-verify-java-fat-slim.sh
+        echo "=== Verify Java SDK shaded/slim artifacts ==="
+        sh scripts/sdk-verify-java-shaded-slim.sh
       else
         echo "WARNING: clients/java directory not found"
         exit 1
