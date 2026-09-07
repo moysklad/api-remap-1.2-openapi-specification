@@ -168,7 +168,7 @@ Before verification, every matrix row must have:
 | `String(N)` | `type: string`, `maxLength: N` | |
 | `String` | `type: string` | |
 | `Int` | `type: integer` | Add `minimum`/`maximum` if documented |
-| `Float` | `type: number`, `format: float` | For monetary values use `format: double` |
+| `Float` | `type: number`, `format: double` | Backend uses `double` |
 | `Boolean` | `type: boolean` | |
 | `DateTime` | `type: string` | Do NOT set `format: date-time` — API uses non-standard format `YYYY-MM-DD HH:MM:SS.mmm` |
 | `Object` | `type: object` with inline `properties` | Or `$ref` if it matches a known schema |
@@ -1016,7 +1016,7 @@ Re-read the source `_<entity>.md` file and verify completeness:
    - `[Meta]` type → correct `$ref` pattern (`allOf` for nullable, direct for non-nullable)
    - `Enum` → open string field + separate PascalCase enum component; use **JSON values** from the mapping table, not Russian labels
    - `String(N)` → `maxLength: N`
-   - `Float` used for money → `format: double`; for weight/volume → `format: float`
+   - `Float` → `format: double` (money, weight, volume, and other numeric fields)
 4. Note any intentionally skipped fields (region-specific like `mod__*`, deprecated) — these are OK to omit
 
 ### Endpoints check

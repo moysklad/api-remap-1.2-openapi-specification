@@ -163,11 +163,12 @@ properties:
       - $ref: '../../../openapi.yaml#/components/schemas/Employee'
   salesAmount:
     type: number
-    format: float
+    format: double
     description: Сумма продаж
     readOnly: true
   bonusPoints:
     type: integer
+    format: int64
     description: Бонусные баллы по активной бонусной программе
     readOnly: true
   bonusProgram:

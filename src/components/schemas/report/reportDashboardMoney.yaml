@@ -2,8 +2,8 @@ type: object
 description: Информация о деньгах за период
 properties:
   income:
-    type: integer
-    format: int32
+    type: number
+    format: double
     description: Доходы за период
   outcome:
     type: number

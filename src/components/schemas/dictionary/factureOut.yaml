@@ -132,8 +132,8 @@ properties:
     description: Момент последнего обновления Счета-фактуры выданного
     readOnly: true
   advancePaymentVat:
-    type: integer
-    format: int32
+    type: number
+    format: double
     description: |
       Ставка НДС для авансового платежа (в процентах).
       Доступно только для счетов-фактур с основаниями-платежами.

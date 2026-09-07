@@ -84,7 +84,8 @@ properties:
     items:
       $ref: '../../../openapi.yaml#/components/schemas/PositionTrackingCode'
   overhead:
-    type: integer
+    type: number
+    format: double
     description: |
       Накладные расходы по позиции.
       Если позиции Приемки не заданы, накладные расходы на уровне документа задать нельзя.

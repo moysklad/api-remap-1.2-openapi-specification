@@ -108,7 +108,7 @@ properties:
       value:
         type: number
         minimum: 0
-        format: float
+        format: double
         description: Сумма оклада
   cashiers:
     type: array

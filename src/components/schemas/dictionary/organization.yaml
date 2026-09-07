@@ -178,6 +178,7 @@ properties:
       - $ref: '../../../openapi.yaml#/components/schemas/Image'
   bonusPoints:
     type: integer
+    format: int64
     description: Бонусные баллы по активной бонусной программе
     readOnly: true
   bonusProgram:

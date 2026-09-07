@@ -16,6 +16,7 @@ properties:
     description: Изображение, закодированное в Base64
   size:
     type: integer
+    format: int64
     description: Размер файла в байтах
     readOnly: true
   updated:

@@ -101,11 +101,11 @@ properties:
     description: Код ТН ВЭД
   weight:
     type: number
-    format: float
+    format: double
     description: Вес
   volume:
     type: number
-    format: float
+    format: double
     description: Объем
   group:
     description: Метаданные отдела сотрудника

@@ -16,6 +16,7 @@ properties:
     description: Файл, закодированный в Base64
   size:
     type: integer
+    format: int64
     description: Размер файла в байтах
     readOnly: true
   created:
