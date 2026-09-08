@@ -137,6 +137,7 @@ const FIXTURE_MODEL_MAP: Readonly<Record<string, string>> = {
     retail_drawer_cash_in: 'RetailDrawerCashIn',
     retail_drawer_cash_out: 'RetailDrawerCashOut',
     inventory: 'Inventory',
+    price_list: 'PriceList',
     finance_in_operation_commission_report_in: 'FinanceInOperationCommissionReportIn',
     finance_in_operation_customer_order: 'FinanceInOperationCustomerOrder',
     finance_in_operation_demand: 'FinanceInOperationDemand',

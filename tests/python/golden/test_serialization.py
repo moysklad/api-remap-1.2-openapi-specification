@@ -92,6 +92,7 @@ FIXTURE_MODEL_MAP = {
     "retail_drawer_cash_in": "RetailDrawerCashIn",
     "retail_drawer_cash_out": "RetailDrawerCashOut",
     "inventory": "Inventory",
+    "price_list": "PriceList",
     "cash_out": "CashOut",
     "finance_in_operation_commission_report_in": "FinanceInOperationCommissionReportIn",
     "finance_in_operation_customer_order": "FinanceInOperationCustomerOrder",

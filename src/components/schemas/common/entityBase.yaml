@@ -86,6 +86,10 @@ BatchResponseEntity:
         componentName: PaymentOut
       - type: prepaymentreturnposition
         componentName: PrepaymentReturnPosition
+      - type: pricelist
+        componentName: PriceList
+      - type: pricelistrow
+        componentName: PriceListPosition
       - type: pricetype
         componentName: PriceType
       - type: processing

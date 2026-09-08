@@ -1089,6 +1089,39 @@ paths:
     $ref: './paths/documents/inventories/inventory-positions-delete.yaml'
   /rpc/inventory/{id}/recalcCalculatedQuantity:
     $ref: './paths/documents/inventories/inventory-recalc-calculated-quantity.yaml'
+  # Documents - Price Lists
+  /entity/pricelist:
+    $ref: './paths/documents/pricelists/pricelists.yaml'
+  /entity/pricelist/{id}:
+    $ref: './paths/documents/pricelists/pricelist-by-id.yaml'
+  /entity/pricelist/{id}/files:
+    $ref: './paths/documents/pricelists/pricelist-files.yaml'
+  /entity/pricelist/{id}/files/{fileId}:
+    $ref: './paths/documents/pricelists/pricelist-file-by-id.yaml'
+  /entity/pricelist/delete:
+    $ref: './paths/documents/pricelists/pricelists-delete.yaml'
+  /entity/pricelist/batch:
+    $ref: './paths/documents/pricelists/pricelists-batch.yaml'
+  /entity/pricelist/metadata:
+    $ref: './paths/documents/pricelists/pricelist-metadata.yaml'
+  /entity/pricelist/metadata/attributes:
+    $ref: './paths/documents/pricelists/pricelist-metadata-attribute.yaml'
+  /entity/pricelist/metadata/attributes/{id}:
+    $ref: './paths/documents/pricelists/pricelist-metadata-attribute-by-id.yaml'
+  /entity/pricelist/metadata/states:
+    $ref: './paths/documents/pricelists/pricelist-metadata-states.yaml'
+  /entity/pricelist/metadata/states/{id}:
+    $ref: './paths/documents/pricelists/pricelist-metadata-state-by-id.yaml'
+  /entity/pricelist/metadata/states/batch:
+    $ref: './paths/documents/pricelists/pricelist-metadata-states-batch.yaml'
+  /entity/pricelist/{id}/positions:
+    $ref: './paths/documents/pricelists/pricelist-positions.yaml'
+  /entity/pricelist/{id}/positions/batch:
+    $ref: './paths/documents/pricelists/pricelist-positions-batch.yaml'
+  /entity/pricelist/{id}/positions/{positionId}:
+    $ref: './paths/documents/pricelists/pricelist-position-by-id.yaml'
+  /entity/pricelist/{id}/positions/delete:
+    $ref: './paths/documents/pricelists/pricelist-positions-delete.yaml'
   # Documents - Purchase Returns
   /entity/purchasereturn:
     $ref: './paths/documents/purchasereturns/purchasereturns.yaml'
@@ -1990,6 +2023,18 @@ components:
       $ref: './components/schemas/dictionary/ppeType.yaml'
     PositionStock:
       $ref: './components/schemas/common/positionStock.yaml'
+    PriceList:
+      $ref: './components/schemas/dictionary/priceList.yaml'
+    PriceListList:
+      $ref: './components/schemas/dictionary/priceListList.yaml'
+    PriceListPosition:
+      $ref: './components/schemas/dictionary/priceListPosition.yaml'
+    PriceListPositionList:
+      $ref: './components/schemas/dictionary/priceListPositionList.yaml'
+    PriceListColumn:
+      $ref: './components/schemas/dictionary/priceListColumn.yaml'
+    PriceListCell:
+      $ref: './components/schemas/dictionary/priceListCell.yaml'
     PriceType:
       $ref: './components/schemas/dictionary/priceType.yaml'
     Product:
@@ -2804,6 +2849,8 @@ tags:
     description: Операции со списаниями
   - name: Inventories
     description: Операции с инвентаризациями
+  - name: PriceLists
+    description: Операции с прайс-листами
   - name: PurchaseReturns
     description: Операции с возвратами поставщикам
   - name: Supplies
