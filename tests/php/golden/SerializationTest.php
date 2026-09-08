@@ -97,6 +97,7 @@ class SerializationTest extends TestCase
         'emission_order' => 'EmissionOrder',
         'variantcharacteristic' => 'VariantCharacteristic',
         'contract' => 'Contract',
+        'counterparty_adjustment' => 'CounterpartyAdjustment',
         'task' => 'Task',
         'sales_channel' => 'SalesChannel',
         'project' => 'Project',

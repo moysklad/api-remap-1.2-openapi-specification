@@ -36,6 +36,8 @@ BatchResponseEntity:
         componentName: Contract
       - type: counterparty
         componentName: Counterparty
+      - type: counterpartyadjustment
+        componentName: CounterpartyAdjustment
       - type: country
         componentName: Country
       - type: currency

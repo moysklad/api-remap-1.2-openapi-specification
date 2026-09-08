@@ -109,6 +109,7 @@ class SerializationTest extends BaseTestCase {
         FIXTURE_MODEL_MAP.put("event_note", "EventNote");
         FIXTURE_MODEL_MAP.put("variantcharacteristic", "VariantCharacteristic");
         FIXTURE_MODEL_MAP.put("contract", "Contract");
+        FIXTURE_MODEL_MAP.put("counterparty_adjustment", "CounterpartyAdjustment");
         FIXTURE_MODEL_MAP.put("task", "Task");
         FIXTURE_MODEL_MAP.put("sales_channel", "SalesChannel");
         FIXTURE_MODEL_MAP.put("project", "Project");

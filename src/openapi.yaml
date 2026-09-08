@@ -1362,6 +1362,22 @@ paths:
   /entity/commissionreportout/{id}/notes/{noteId}:
     $ref: './paths/documents/commissionreportouts/commissionreportout-note-by-id.yaml'
 
+  # Documents - Counterparty Adjustments
+  /entity/counterpartyadjustment:
+    $ref: './paths/documents/counterpartyadjustments/counterpartyadjustments.yaml'
+  /entity/counterpartyadjustment/{id}:
+    $ref: './paths/documents/counterpartyadjustments/counterpartyadjustment-by-id.yaml'
+  /entity/counterpartyadjustment/delete:
+    $ref: './paths/documents/counterpartyadjustments/counterpartyadjustments-delete.yaml'
+  /entity/counterpartyadjustment/batch:
+    $ref: './paths/documents/counterpartyadjustments/counterpartyadjustments-batch.yaml'
+  /entity/counterpartyadjustment/metadata:
+    $ref: './paths/documents/counterpartyadjustments/counterpartyadjustment-metadata.yaml'
+  /entity/counterpartyadjustment/metadata/attributes:
+    $ref: './paths/documents/counterpartyadjustments/counterpartyadjustment-metadata-attribute.yaml'
+  /entity/counterpartyadjustment/metadata/attributes/{id}:
+    $ref: './paths/documents/counterpartyadjustments/counterpartyadjustment-metadata-attribute-by-id.yaml'
+
   # Documents - Cash In Orders
   /entity/cashin:
     $ref: './paths/documents/cashins/cashins.yaml'
@@ -1761,6 +1777,10 @@ components:
       $ref: './components/schemas/dictionary/counterparty.yaml'
     CounterpartyList:
       $ref: './components/schemas/dictionary/counterpartyList.yaml'
+    CounterpartyAdjustment:
+      $ref: './components/schemas/dictionary/counterpartyAdjustment.yaml'
+    CounterpartyAdjustmentList:
+      $ref: './components/schemas/dictionary/counterpartyAdjustmentList.yaml'
     CountryList:
       $ref: './components/schemas/dictionary/countryList.yaml'
     BatchResponseEntity:
@@ -2820,6 +2840,8 @@ tags:
     description: Операции с полученными отчетами комиссионера
   - name: CommissionReportOuts
     description: Операции с выданными отчетами комиссионера
+  - name: CounterpartyAdjustments
+    description: Операции с корректировками взаиморасчетов
   - name: Reports
     description: Операции с отчетами
   - name: Audit

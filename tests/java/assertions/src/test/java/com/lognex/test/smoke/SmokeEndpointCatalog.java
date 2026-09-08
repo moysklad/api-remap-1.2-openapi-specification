@@ -360,6 +360,21 @@ final class SmokeEndpointCatalog {
                 Arguments.of(new SmokeEndpointCase("testUpdateCustomEntityElementById#1", "PUT", "/entity/customentity/{id}/{id}", SmokeEndpointCase.Expectation.BY_ID, true)),
                 Arguments.of(new SmokeEndpointCase("testDeleteCustomEntityElementById#1", "DELETE", "/entity/customentity/{id}/{id}", SmokeEndpointCase.Expectation.DELETE, false)),
 
+                // /entity/counterpartyadjustment
+                Arguments.of(new SmokeEndpointCase("testListCounterpartyAdjustments#1", "GET", "/entity/counterpartyadjustment", SmokeEndpointCase.Expectation.NOT_404, false)),
+                Arguments.of(new SmokeEndpointCase("testCreateCounterpartyAdjustment#1", "POST", "/entity/counterpartyadjustment", SmokeEndpointCase.Expectation.NOT_404, true)),
+                Arguments.of(new SmokeEndpointCase("testGetCounterpartyAdjustmentById#1", "GET", "/entity/counterpartyadjustment/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
+                Arguments.of(new SmokeEndpointCase("testUpdateCounterpartyAdjustment#1", "PUT", "/entity/counterpartyadjustment/{id}", SmokeEndpointCase.Expectation.BY_ID, true)),
+                Arguments.of(new SmokeEndpointCase("testDeleteCounterpartyAdjustment#1", "DELETE", "/entity/counterpartyadjustment/{id}", SmokeEndpointCase.Expectation.DELETE, false)),
+                Arguments.of(new SmokeEndpointCase("testDeleteCounterpartyAdjustmentsBatch#1", "POST", "/entity/counterpartyadjustment/delete", SmokeEndpointCase.Expectation.NOT_404, true)),
+                Arguments.of(new SmokeEndpointCase("testCreateCounterpartyAdjustmentsBatch#1", "POST", "/entity/counterpartyadjustment/batch", SmokeEndpointCase.Expectation.NOT_404, true)),
+                Arguments.of(new SmokeEndpointCase("testGetCounterpartyAdjustmentMetadata#1", "GET", "/entity/counterpartyadjustment/metadata", SmokeEndpointCase.Expectation.NOT_404, false)),
+                Arguments.of(new SmokeEndpointCase("testGetCounterpartyAdjustmentMetadataAttributes#1", "GET", "/entity/counterpartyadjustment/metadata/attributes", SmokeEndpointCase.Expectation.NOT_404, false)),
+                Arguments.of(new SmokeEndpointCase("testCreateCounterpartyAdjustmentMetadataAttribute#1", "POST", "/entity/counterpartyadjustment/metadata/attributes", SmokeEndpointCase.Expectation.NOT_404, true)),
+                Arguments.of(new SmokeEndpointCase("testGetCounterpartyAdjustmentMetadataAttributeById#1", "GET", "/entity/counterpartyadjustment/metadata/attributes/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
+                Arguments.of(new SmokeEndpointCase("testUpdateCounterpartyAdjustmentMetadataAttributeById#1", "PUT", "/entity/counterpartyadjustment/metadata/attributes/{id}", SmokeEndpointCase.Expectation.BY_ID, true)),
+                Arguments.of(new SmokeEndpointCase("testDeleteCounterpartyAdjustmentMetadataAttributeById#1", "DELETE", "/entity/counterpartyadjustment/metadata/attributes/{id}", SmokeEndpointCase.Expectation.DELETE, false)),
+
                 // /entity/cashin
                 Arguments.of(new SmokeEndpointCase("testListCashIns#1", "GET", "/entity/cashin", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testGetCashInById#1", "GET", "/entity/cashin/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
