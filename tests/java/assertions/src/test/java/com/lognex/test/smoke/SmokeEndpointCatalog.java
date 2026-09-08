@@ -374,6 +374,10 @@ final class SmokeEndpointCatalog {
                 Arguments.of(new SmokeEndpointCase("testGetCounterpartyAdjustmentMetadataAttributeById#1", "GET", "/entity/counterpartyadjustment/metadata/attributes/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
                 Arguments.of(new SmokeEndpointCase("testUpdateCounterpartyAdjustmentMetadataAttributeById#1", "PUT", "/entity/counterpartyadjustment/metadata/attributes/{id}", SmokeEndpointCase.Expectation.BY_ID, true)),
                 Arguments.of(new SmokeEndpointCase("testDeleteCounterpartyAdjustmentMetadataAttributeById#1", "DELETE", "/entity/counterpartyadjustment/metadata/attributes/{id}", SmokeEndpointCase.Expectation.DELETE, false)),
+                Arguments.of(new SmokeEndpointCase("testGetCounterpartyAdjustmentFiles#1", "GET", "/entity/counterpartyadjustment/{id}/files", SmokeEndpointCase.Expectation.BY_ID, false)),
+                Arguments.of(new SmokeEndpointCase("testAddCounterpartyAdjustmentFiles#1", "POST", "/entity/counterpartyadjustment/{id}/files", SmokeEndpointCase.Expectation.BY_ID, true)),
+                Arguments.of(new SmokeEndpointCase("testGetCounterpartyAdjustmentFileById#1", "GET", "/entity/counterpartyadjustment/{id}/files/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
+                Arguments.of(new SmokeEndpointCase("testDeleteCounterpartyAdjustmentFile#1", "DELETE", "/entity/counterpartyadjustment/{id}/files/{id}", SmokeEndpointCase.Expectation.DELETE, false)),
 
                 // /entity/cashin
                 Arguments.of(new SmokeEndpointCase("testListCashIns#1", "GET", "/entity/cashin", SmokeEndpointCase.Expectation.NOT_404, false)),
@@ -894,7 +898,6 @@ final class SmokeEndpointCatalog {
                 // /report/stock/*/current
                 Arguments.of(new SmokeEndpointCase("testGetStockAllCurrent#1", "GET", "/report/stock/all/current", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testGetStockByStoreCurrent#1", "GET", "/report/stock/bystore/current", SmokeEndpointCase.Expectation.NOT_404, false)),
-                Arguments.of(new SmokeEndpointCase("testGetStockByStoreCurrentWithStockType#1", "GET", "/report/stock/bystore/current", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testGetStockBySlotCurrent#1", "GET", "/report/stock/byslot/current", SmokeEndpointCase.Expectation.NOT_404, false)),
 
                 // /report/byoperations
