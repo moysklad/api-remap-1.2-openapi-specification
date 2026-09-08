@@ -13,9 +13,6 @@
     <artifactId>assertions</artifactId>
 
     <properties>
-        <httpclient-version>5.2.1</httpclient-version>
-        <jackson-databind-nullable-version>0.2.11</jackson-databind-nullable-version>
-        <jackson-version>3.1.5</jackson-version>
         <junit-version>5.10.2</junit-version>
     </properties>
 
@@ -30,34 +27,8 @@
     <dependencies>
         <dependency>
             <groupId>ru.moysklad.api</groupId>
-            <artifactId>remap-1.2-java-sdk</artifactId>
+            <artifactId>remap-1.2-java-sdk-fat</artifactId>
             <version>1.0.0</version>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- Java SDK dependencies are client-managed for the slim artifact. -->
-        <dependency>
-            <groupId>tools.jackson.core</groupId>
-            <artifactId>jackson-core</artifactId>
-            <version>${jackson-version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>tools.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>${jackson-version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.openapitools</groupId>
-            <artifactId>jackson-databind-nullable</artifactId>
-            <version>${jackson-databind-nullable-version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.httpcomponents.client5</groupId>
-            <artifactId>httpclient5</artifactId>
-            <version>${httpclient-version}</version>
             <scope>test</scope>
         </dependency>
 
