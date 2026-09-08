@@ -8,6 +8,9 @@
   "uid": "admin@11",
   "source": "app",
   "moment": "2017-08-04 18:35:15",
+  "info": {
+    "loginInfo" : "Вход в МойСклад"
+  },
   "objectCount": 1,
   "eventType": "create",
   "entityType": "customerorder",

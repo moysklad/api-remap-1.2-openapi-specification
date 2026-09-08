@@ -56,4 +56,6 @@ properties:
     nullable: true
     description: Метаданные списка связанных событий аудита
     readOnly: true
-    $ref: '../../../../openapi.yaml#/components/schemas/AuditEventList'
+    properties:
+      meta:
+        $ref: '../metaList.yaml'

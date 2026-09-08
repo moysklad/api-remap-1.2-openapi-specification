@@ -7,21 +7,8 @@ get:
     Возвращает общую ленту изменений (контексты аудита).
     Поддерживает пагинацию и фильтрацию через параметр `filter`.
   parameters:
-    - name: limit
-      in: query
-      description: Максимальное количество контекстов в выдаче (допустимые значения 1-100)
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 100
-        default: 25
-    - name: offset
-      in: query
-      description: Отступ в выдаваемом списке контекстов
-      schema:
-        type: integer
-        minimum: 0
-        default: 0
+    - $ref: '../../components/parameters.yaml#/limit'
+    - $ref: '../../components/parameters.yaml#/offset'
     - $ref: '../../components/parameters.yaml#/filter'
     - $ref: '../../components/headers.yaml#/AcceptHeader'
     - $ref: '../../components/headers.yaml#/AcceptEncoding'
