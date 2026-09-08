@@ -79,7 +79,7 @@ properties:
   profit:
     type: number
     format: double
-    description: Прибыль.
+    description: Прибыль
   lastEventDate:
     type: string
     nullable: true
