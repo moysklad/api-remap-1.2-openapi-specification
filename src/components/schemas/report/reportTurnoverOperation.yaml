@@ -17,5 +17,4 @@ properties:
     description: Дата проведения документа
   agent:
     description: Контрагент документа
-    allOf:
-      - $ref: '../../../openapi.yaml#/components/schemas/NamedEntity'
+    $ref: '../../../openapi.yaml#/components/schemas/NamedEntity'
