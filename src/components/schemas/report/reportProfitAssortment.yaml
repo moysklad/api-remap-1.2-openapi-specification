@@ -11,7 +11,8 @@ properties:
     description: Код сущности
   uom:
     description: Единица измерения
-    $ref: '../../../openapi.yaml#/components/schemas/NamedEntity'
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/NamedEntity'
   article:
     type: string
     description: Артикул товара, модификации или комплекта

@@ -24,7 +24,9 @@ properties:
         $ref: '../common/meta.yaml'
   productFolder:
     description: Группа номенклатуры
-    $ref: '../../../openapi.yaml#/components/schemas/NamedEntity'
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/NamedEntity'
   uom:
     description: Единица измерения
-    $ref: '../../../openapi.yaml#/components/schemas/NamedEntity'
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/NamedEntity'

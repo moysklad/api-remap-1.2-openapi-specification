@@ -3,10 +3,12 @@ description: Строка отчета об остатках денежных с
 properties:
   account:
     description: Счет организации. Не выводится для остатка кассы, так как касса одна на организацию.
-    $ref: '../../../openapi.yaml#/components/schemas/NamedEntity'
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/NamedEntity'
   organization:
     description: Краткое представление организации
-    $ref: '../../../openapi.yaml#/components/schemas/NamedEntity'
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/NamedEntity'
   balance:
     type: number
     format: double

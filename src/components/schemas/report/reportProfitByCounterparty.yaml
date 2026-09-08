@@ -3,7 +3,8 @@ description: Строка отчета «Прибыльность по поку�
 properties:
   counterparty:
     description: Краткое представление покупателя
-    $ref: '../../../openapi.yaml#/components/schemas/NamedEntity'
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/NamedEntity'
   margin:
     type: number
     format: double

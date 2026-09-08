@@ -3,7 +3,8 @@ description: Строка отчета «Прибыльность по сотр�
 properties:
   employee:
     description: Краткое представление сотрудника
-    $ref: '../../../openapi.yaml#/components/schemas/NamedEntity'
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/NamedEntity'
   margin:
     type: number
     format: double

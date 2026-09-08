@@ -6,7 +6,8 @@ properties:
     $ref: '../../../openapi.yaml#/components/schemas/ReportTurnoverAssortment'
   store:
     description: Склад
-    $ref: '../../../openapi.yaml#/components/schemas/NamedEntity'
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/NamedEntity'
   operation:
     description: Документ, связанный с номенклатурой
     $ref: '../../../openapi.yaml#/components/schemas/ReportTurnoverOperation'
