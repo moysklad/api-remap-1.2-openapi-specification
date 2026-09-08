@@ -93,7 +93,6 @@ docker compose run --rm sdk make build-python
 # Сборка Java SDK (fat собирается профилем -Pfat)
 docker compose run --rm java-sdk bash -lc "cd clients/java && mvn clean package"
 docker compose run --rm java-sdk bash -lc "cd clients/java && mvn -Pfat clean package"
-docker compose run --rm java-sdk make sdk-verify-java-fat-slim
 
 # Smoke тесты (openapi-mock + тесты по языкам)
 # ВАЖНО: после make bundle/light-bundle перезапустите mock — он кэширует спецификацию при старте

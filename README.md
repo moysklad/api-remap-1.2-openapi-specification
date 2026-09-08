@@ -72,7 +72,6 @@ docker compose run --rm sdk make generate-typescript # генерация TypeSc
 docker compose run --rm sdk make build-typescript # сборка npm-пакета TypeScript SDK
 docker compose run --rm java-sdk bash -lc "cd clients/java && mvn clean package" # сборка slim Java SDK
 docker compose run --rm java-sdk bash -lc "cd clients/java && mvn -Pfat clean package" # сборка fat Java SDK
-docker compose run --rm java-sdk make sdk-verify-java-fat-slim # проверка fat/slim Java SDK
 docker compose run --rm sdk make test-golden-php  # golden-тесты
 docker compose run --rm java-sdk make test-golden-java  # golden-тесты
 docker compose run --rm sdk make test-golden-typescript  # golden-тесты
