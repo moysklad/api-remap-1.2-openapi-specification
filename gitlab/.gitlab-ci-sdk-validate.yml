@@ -5,7 +5,7 @@
 # - bundle-openapi: сборка bundled версии спецификации
 # - generate-sdk-*: генерация SDK для различных языков
 # - sdk-golden-*: golden тесты (сериализация/десериализация)
-# - sdk-verify-java-shaded-slim: проверка публикуемых shaded/slim артефактов Java SDK
+# - sdk-verify-java-fat-slim: проверка публикуемых fat/slim артефактов Java SDK
 # - sdk-smoke-*: smoke тесты с openapi-mock mock сервером
 # - sdk-contract: schemathesis тесты (только при ручном запуске)
 #
@@ -22,6 +22,6 @@ include:
   - local: 'gitlab/sdk/validate.yml'
   - local: 'gitlab/sdk/generate-sdk.yml'
   - local: 'gitlab/sdk/sdk-tests-golden.yml'
-  - local: 'gitlab/sdk/sdk-verify-java-shaded-slim.yml'
+  - local: 'gitlab/sdk/sdk-verify-java-fat-slim.yml'
   - local: 'gitlab/sdk/sdk-tests-smoke.yml'
   - local: 'gitlab/sdk/sdk-contract.yml'

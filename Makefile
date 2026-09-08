@@ -11,7 +11,7 @@ LANGUAGES_LIST := $(subst $(comma), ,$(LANGUAGES))
 .PHONY: help lint bundle generate generate-php generate-python build-python generate-java generate-javascript generate-typescript \
     build-typescript pack-typescript \
 	test-smoke test-golden test-golden-php test-golden-java test-golden-javascript test-golden-python \
-	test-golden-typescript sdk-verify-java-shaded-slim schemathesis all
+	test-golden-typescript sdk-verify-java-fat-slim schemathesis all
 
 help:
 	@echo "Targets (docker compose run --rm sdk make <target>)"
@@ -28,7 +28,7 @@ help:
 	@echo "  pack-typescript   - list npm tarball contents (npm pack --dry-run)"
 	@echo "  test-smoke        - smoke tests (openapi-mock + tests)."
 	@echo "  test-golden       - golden tests for LANGUAGES. Default: php"
-	@echo "  sdk-verify-java-shaded-slim - verify shaded/slim Java SDK artifacts"
+	@echo "  sdk-verify-java-fat-slim - verify fat/slim Java SDK artifacts"
 	@echo "  schemathesis      - contract tests (SCHEMATHESIS_HOST, _LOGIN, _PASSWORD)"
 	@echo "  all               - lint + bundle + generate (php) + test-golden + test-smoke"
 
@@ -99,8 +99,8 @@ test-golden-python:
 test-golden-java:
 	sh scripts/local-test-golden.sh java
 
-sdk-verify-java-shaded-slim:
-	sh scripts/sdk-verify-java-shaded-slim.sh
+sdk-verify-java-fat-slim:
+	sh scripts/sdk-verify-java-fat-slim.sh
 
 test-golden-javascript:
 	sh scripts/local-test-golden.sh javascript

@@ -25,7 +25,7 @@
 | `sdk-golden-python`              | Golden тесты для Python                                                       |
 | `sdk-golden-java`                | Golden тесты для Java                                                         |
 | `sdk-golden-typescript`          | Golden тесты для TypeScript (сборка npm-пакета + roundtrip на общих fixtures) |
-| `sdk-verify-java-shaded-slim`    | Проверка публикуемых shaded/slim артефактов Java SDK                          |
+| `sdk-verify-java-fat-slim`    | Проверка публикуемых fat/slim артефактов Java SDK                          |
 | `sdk-smoke`                      | Smoke тесты для Java с openapi-mock сервером                                  |
 | `prep-branch-and-mr-php`         | Cоздание/обновление ветки и mr по сгенерированному sdk в репозитории sdk      |
 | `prep-branch-and-mr-python`      | Создание/обновление ветки Python SDK во внутреннем репозитории                |
@@ -42,7 +42,7 @@
 | `bundle-smoke-openapi`            | Сборка облегчённой спецификации для smoke-тестов                         |
 | `generate-sdk-*`                  | Генерация SDK                                                            |
 | `sdk-golden-*`                    | Golden тесты SDK                                                         |
-| `sdk-verify-java-shaded-slim`     | Проверка публикуемых shaded/slim артефактов Java SDK                     |
+| `sdk-verify-java-fat-slim`     | Проверка публикуемых fat/slim артефактов Java SDK                     |
 | `sdk-smoke`                       | Smoke тесты SDK                                                          |
 | `deploy-contract-env`             | Подготовка окружения для schemathesis (ветка **stable** сервиса)         |
 | `create-contract-user`            | Создание пользователя для contract‑тестов, экспорт кредов                |
@@ -68,7 +68,7 @@
 | `remove-contract-env`      | Ручная очистка окружения после contract‑тестов (manual, allow_failure; также есть TTL)                                                                         |
 | `generate-sdk-*`           | Генерация SDK                                                                                                                                                  |
 | `sdk-golden-*`             | Golden тесты                                                                                                                                                   |
-| `sdk-verify-java-shaded-slim` | Проверка публикуемых shaded/slim артефактов Java SDK                                                                                                       |
+| `sdk-verify-java-fat-slim` | Проверка публикуемых fat/slim артефактов Java SDK                                                                                                       |
 | `sdk-smoke`                | Smoke тесты                                                                                                                                                    |
 | `version:auto`             | Автоматическое версионирование и выпуск тега                                                                                                                   |
 | `mirror-to-github`         | Зеркалирование в GitHub без internal CI/release tooling (`gitlab`, `.gitlab-ci.yml`, CI README, `.versionrc.json`, `scripts/generate-diff-changelog.js` и др.) |
@@ -85,7 +85,7 @@
 
 Java release jobs (`deploy-to-artifactory`, `deploy-to-maven`) описаны в `gitlab/.gitlab-ci-deploy-sdk-java.yml` и выполняются на стадии `deploy-sdk`.
 Основной публикуемый Java runtime-артефакт — JAR с обычным транзитивным резолвом зависимостей.
-Shaded-вариант публикуется второй версией с суффиксом `-shaded` и собирается Maven-профилем `shaded`.
+Fat-вариант публикуется второй версией с суффиксом `-fat` и собирается Maven-профилем `fat`.
 TypeScript npm jobs (`deploy-to-npm-prerelease`, `deploy-to-npm`) описаны в `gitlab/.gitlab-ci-deploy-sdk-typescript.yml` на той же стадии `deploy-sdk`.
 
 Python repository sync запускается после `generate-sdk-python` и
@@ -228,7 +228,7 @@ SCHEMATHESIS_INCLUDE_OPERATION_ID=createProduct
 | `verify`                 | Проверка спецификации, полный bundling, отдельный smoke bundling; в contract-пайплайнах сюда также входят `deploy-contract-env` и `create-contract-user` |
 | `contract-test`          | Контрактные тесты Schemathesis (`sdk-contract`) в `web`, `master` и tag pipeline, после verify, до generate-sdk                    |
 | `generate-sdk`           | Генерация SDK                                                                                                                      |
-| `test`                   | Тестирование (golden, проверка shaded/slim Java SDK, smoke)                                                                        |
+| `test`                   | Тестирование (golden, проверка fat/slim Java SDK, smoke)                                                                        |
 | `version`                | Автоматическое версионирование и подготовка CHANGELOG/тегов                                                                        |
 | `mirror`                 | Зеркалирование в GitHub и GitHub Release                                                                                           |
 | `prepare-sdk-repository` | Подготовка внутренних репозиториев SDK (PHP/Java/TypeScript: ветки и релиз master по текущим изменениям) |

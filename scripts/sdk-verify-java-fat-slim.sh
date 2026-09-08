@@ -31,21 +31,21 @@ fi
 
 TARGET_JAR="$SDK_DIR/target/remap-1.2-java-sdk-$VERSION.jar"
 SLIM_JAR="$TMP_DIR/remap-1.2-java-sdk-$VERSION-slim.jar"
-SHADED_JAR="$TMP_DIR/remap-1.2-java-sdk-$VERSION-shaded.jar"
+FAT_JAR="$TMP_DIR/remap-1.2-java-sdk-$VERSION-fat.jar"
 CLASSIFIER_SLIM_JAR="$SDK_DIR/target/remap-1.2-java-sdk-$VERSION-slim.jar"
 
 mvn -f "$SDK_DIR/pom.xml" clean package -DskipTests
 cp "$TARGET_JAR" "$SLIM_JAR"
 
-mvn -f "$SDK_DIR/pom.xml" -Pshaded clean package -DskipTests
-cp "$TARGET_JAR" "$SHADED_JAR"
+mvn -f "$SDK_DIR/pom.xml" -Pfat clean package -DskipTests
+cp "$TARGET_JAR" "$FAT_JAR"
 
 if [ -f "$CLASSIFIER_SLIM_JAR" ]; then
   echo "ERROR: unexpected classifier slim JAR: $CLASSIFIER_SLIM_JAR" >&2
   exit 1
 fi
 
-for artifact in "$SLIM_JAR" "$SHADED_JAR"; do
+for artifact in "$SLIM_JAR" "$FAT_JAR"; do
   if [ ! -f "$artifact" ]; then
     echo "ERROR: expected artifact not found: $artifact" >&2
     exit 1
@@ -53,7 +53,7 @@ for artifact in "$SLIM_JAR" "$SHADED_JAR"; do
 done
 
 jar tf "$SLIM_JAR" > "$TMP_DIR/slim-entries"
-jar tf "$SHADED_JAR" > "$TMP_DIR/shaded-entries"
+jar tf "$FAT_JAR" > "$TMP_DIR/fat-entries"
 
 has_prefix() {
   awk -v prefix="$1" '
@@ -87,10 +87,10 @@ javax/annotation/
 
 for prefix in $DEPENDENCY_PREFIXES; do
   assert_no_prefix "$prefix" "$TMP_DIR/slim-entries" "slim JAR"
-  assert_no_prefix "$prefix" "$TMP_DIR/shaded-entries" "shaded JAR"
+  assert_no_prefix "$prefix" "$TMP_DIR/fat-entries" "fat JAR"
 done
 
-assert_no_prefix "META-INF/versions/" "$TMP_DIR/shaded-entries" "shaded JAR"
+assert_no_prefix "META-INF/versions/" "$TMP_DIR/fat-entries" "fat JAR"
 
 RELOCATED_PREFIXES="
 ru/moysklad/api/shaded/tools/jackson/
@@ -103,26 +103,26 @@ ru/moysklad/api/shaded/javax/annotation/
 
 for prefix in $RELOCATED_PREFIXES; do
   assert_no_prefix "$prefix" "$TMP_DIR/slim-entries" "slim JAR"
-  assert_has_prefix "$prefix" "$TMP_DIR/shaded-entries" "shaded JAR"
+  assert_has_prefix "$prefix" "$TMP_DIR/fat-entries" "fat JAR"
 done
 
 assert_has_prefix "ru/moysklad/remap_1_2/ApiClient.class" "$TMP_DIR/slim-entries" "slim JAR"
-assert_has_prefix "ru/moysklad/remap_1_2/ApiClient.class" "$TMP_DIR/shaded-entries" "shaded JAR"
+assert_has_prefix "ru/moysklad/remap_1_2/ApiClient.class" "$TMP_DIR/fat-entries" "fat JAR"
 
 if grep -n '<optional>true</optional>' "$SDK_DIR/pom.xml" >/dev/null 2>&1; then
   echo "ERROR: default slim POM must expose SDK dependencies transitively" >&2
   exit 1
 fi
 
-mkdir -p "$TMP_DIR/shaded-contents"
+mkdir -p "$TMP_DIR/fat-contents"
 (
-  cd "$TMP_DIR/shaded-contents"
-  jar xf "$SHADED_JAR"
+  cd "$TMP_DIR/fat-contents"
+  jar xf "$FAT_JAR"
 )
 
-SERVICES_DIR="$TMP_DIR/shaded-contents/META-INF/services"
+SERVICES_DIR="$TMP_DIR/fat-contents/META-INF/services"
 if [ ! -d "$SERVICES_DIR" ]; then
-  echo "ERROR: shaded JAR does not contain transformed service descriptors" >&2
+  echo "ERROR: fat JAR does not contain transformed service descriptors" >&2
   exit 1
 fi
 
@@ -149,14 +149,14 @@ for service in "$SERVICES_DIR"/*; do
 done
 
 if [ "$service_count" -eq 0 ]; then
-  echo "ERROR: shaded JAR contains no service descriptors" >&2
+  echo "ERROR: fat JAR contains no service descriptors" >&2
   exit 1
 fi
 
-cat > "$TMP_DIR/ShadedConsumer.java" <<'EOF'
+cat > "$TMP_DIR/FatConsumer.java" <<'EOF'
 import ru.moysklad.remap_1_2.ApiClient;
 
-public final class ShadedConsumer {
+public final class FatConsumer {
   public static void main(String[] args) {
     ApiClient client = new ApiClient();
     if (client.getObjectMapper() == null || client.getHttpClient() == null) {
@@ -166,8 +166,8 @@ public final class ShadedConsumer {
 }
 EOF
 
-"$JAVAC_CMD" -cp "$SHADED_JAR" -d "$TMP_DIR/classes" "$TMP_DIR/ShadedConsumer.java"
-"$JAVA_CMD" -cp "$TMP_DIR/classes:$SHADED_JAR" ShadedConsumer
+"$JAVAC_CMD" -cp "$FAT_JAR" -d "$TMP_DIR/classes" "$TMP_DIR/FatConsumer.java"
+"$JAVA_CMD" -cp "$TMP_DIR/classes:$FAT_JAR" FatConsumer
 
 mvn -q -f "$SDK_DIR/pom.xml" dependency:build-classpath \
   -DincludeScope=runtime \
@@ -209,20 +209,20 @@ mvn -q -f "$DEPLOY_SDK_DIR/pom.xml" -Ppublishing-artifactory clean deploy -Dskip
   -DaltDeploymentRepository="verify::default::file://$DEPLOY_REPO" \
   -DartifactoryRepo=file://$DEPLOY_REPO
 
-SHADED_VERSION="$VERSION-shaded"
+FAT_VERSION="$VERSION-fat"
 mvn -q -f "$DEPLOY_SDK_DIR/pom.xml" versions:set \
-  -DnewVersion="$SHADED_VERSION" \
+  -DnewVersion="$FAT_VERSION" \
   -DgenerateBackupPoms=false \
   -Dmaven.repo.local="$MAVEN_LOCAL_REPO"
-mvn -q -f "$DEPLOY_SDK_DIR/pom.xml" -Pshaded,publishing-artifactory clean deploy -DskipTests \
+mvn -q -f "$DEPLOY_SDK_DIR/pom.xml" -Pfat,publishing-artifactory clean deploy -DskipTests \
   -Dmaven.repo.local="$MAVEN_LOCAL_REPO" \
   -DaltDeploymentRepository="verify::default::file://$DEPLOY_REPO" \
   -DartifactoryRepo=file://$DEPLOY_REPO
 
 SLIM_POM="$DEPLOY_REPO/ru/moysklad/api/remap-1.2-java-sdk/$VERSION/remap-1.2-java-sdk-$VERSION.pom"
-SHADED_POM="$DEPLOY_REPO/ru/moysklad/api/remap-1.2-java-sdk/$SHADED_VERSION/remap-1.2-java-sdk-$SHADED_VERSION.pom"
+FAT_POM="$DEPLOY_REPO/ru/moysklad/api/remap-1.2-java-sdk/$FAT_VERSION/remap-1.2-java-sdk-$FAT_VERSION.pom"
 
-for deployed_pom in "$SLIM_POM" "$SHADED_POM"; do
+for deployed_pom in "$SLIM_POM" "$FAT_POM"; do
   if [ ! -f "$deployed_pom" ]; then
     echo "ERROR: expected deployed POM not found: $deployed_pom" >&2
     exit 1
@@ -234,10 +234,10 @@ for dependency in jackson-core jackson-databind jackson-annotations jackson-data
     echo "ERROR: slim POM must expose SDK dependency: $dependency" >&2
     exit 1
   fi
-  if grep -q "<artifactId>$dependency</artifactId>" "$SHADED_POM"; then
-    echo "ERROR: shaded POM must not export shaded dependency: $dependency" >&2
+  if grep -q "<artifactId>$dependency</artifactId>" "$FAT_POM"; then
+    echo "ERROR: fat POM must not export fat dependency: $dependency" >&2
     exit 1
   fi
 done
 
-echo "Java SDK shaded/slim verification passed"
+echo "Java SDK fat/slim verification passed"

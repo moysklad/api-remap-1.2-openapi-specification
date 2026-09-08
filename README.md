@@ -71,8 +71,8 @@ docker compose run --rm sdk make generate-java # генерация Java SDK
 docker compose run --rm sdk make generate-typescript # генерация TypeScript SDK
 docker compose run --rm sdk make build-typescript # сборка npm-пакета TypeScript SDK
 docker compose run --rm java-sdk bash -lc "cd clients/java && mvn clean package" # сборка slim Java SDK
-docker compose run --rm java-sdk bash -lc "cd clients/java && mvn -Pshaded clean package" # сборка shaded Java SDK
-docker compose run --rm java-sdk make sdk-verify-java-shaded-slim # проверка shaded/slim Java SDK
+docker compose run --rm java-sdk bash -lc "cd clients/java && mvn -Pfat clean package" # сборка fat Java SDK
+docker compose run --rm java-sdk make sdk-verify-java-fat-slim # проверка fat/slim Java SDK
 docker compose run --rm sdk make test-golden-php  # golden-тесты
 docker compose run --rm java-sdk make test-golden-java  # golden-тесты
 docker compose run --rm sdk make test-golden-typescript  # golden-тесты
@@ -87,7 +87,7 @@ Redocly lint запрещает `example` внутри `Schema`. Для Schemath
 `docker compose run --rm -e NPM_CI_FORCE=1 sdk make lint`
 
 Основной Java SDK артефакт `ru.moysklad.api:remap-1.2-java-sdk:<version>` — Maven резолвит зависимости SDK транзитивно.
-Shaded-вариант `ru.moysklad.api:remap-1.2-java-sdk:<version>-shaded` собирается профилем `shaded`, его библиотеки релокированы в namespace SDK и не экспортируются как транзитивные зависимости.
+Fat-вариант `ru.moysklad.api:remap-1.2-java-sdk:<version>-fat` собирается профилем `fat`, его библиотеки релокированы в namespace SDK и не экспортируются как транзитивные зависимости.
 
 
 ### Локально (без Docker)
@@ -161,4 +161,3 @@ components:
 ## Лицензия
 
 Спецификация создана на основе официальной документации МойСклад API.
-
