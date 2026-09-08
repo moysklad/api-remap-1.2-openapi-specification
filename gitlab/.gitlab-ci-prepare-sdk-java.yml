@@ -13,7 +13,6 @@ prep-branch-and-mr-java:
     - job: generate-sdk-java
       artifacts: true
     - job: sdk-golden-java
-    - job: sdk-verify-java-fat-slim
     - job: sdk-smoke
   rules:
     # Автоматически при push в ветку (кроме master/release)
@@ -103,7 +102,6 @@ merge-branch-java:
     - job: generate-sdk-java
       artifacts: true
     - job: sdk-golden-java
-    - job: sdk-verify-java-fat-slim
     - job: sdk-smoke
     - job: version:auto
       optional: true

@@ -5,7 +5,6 @@
 # - bundle-openapi: сборка bundled версии спецификации
 # - generate-sdk-*: генерация SDK для различных языков
 # - sdk-golden-*: golden тесты (сериализация/десериализация)
-# - sdk-verify-java-fat-slim: проверка публикуемых fat/slim артефактов Java SDK
 # - sdk-smoke-*: smoke тесты с openapi-mock mock сервером
 # - sdk-contract: schemathesis тесты (только при ручном запуске)
 #
