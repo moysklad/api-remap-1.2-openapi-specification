@@ -13,7 +13,7 @@ properties:
   margin:
     type: number
     format: double
-    description: Рентабельность товара
+    description: Рентабельность
   salesMargin:
     type: number
     format: double

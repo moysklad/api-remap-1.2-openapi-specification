@@ -5,9 +5,11 @@ properties:
     $ref: '../common/meta.yaml'
   name:
     type: string
+    maxLength: 255
     description: Наименование сущности
   code:
     type: string
+    maxLength: 255
     description: Код сущности
   uom:
     type: object
@@ -20,6 +22,7 @@ properties:
         description: Наименование единицы измерения
   article:
     type: string
+    maxLength: 255
     description: Артикул товара, модификации или комплекта
   image:
     type: object
