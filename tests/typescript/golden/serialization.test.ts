@@ -47,6 +47,7 @@ const FIXTURE_MODEL_MAP: Readonly<Record<string, string>> = {
     event_note: 'EventNote',
     audit: 'Audit',
     audit_event: 'AuditEvent',
+    audit_filters: 'AuditFilters',
     // Схема File переименована генератором в ModelFile (конфликт со встроенным типом File)
     counterparty_file: 'ModelFile',
     currency: 'Currency',

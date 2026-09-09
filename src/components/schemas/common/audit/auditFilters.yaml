@@ -6,12 +6,12 @@ properties:
     description: Источники изменений, доступные для фильтрации
     items:
       $ref: '../../../../openapi.yaml#/components/schemas/AuditSourceType'
-  entityType:
+  entitytype:
     type: array
     description: Типы сущностей, доступные для фильтрации
     items:
       type: string
-  eventType:
+  eventtype:
     type: array
     description: Типы событий, доступные для фильтрации
     items:

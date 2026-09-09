@@ -31,6 +31,7 @@ FIXTURE_MODEL_MAP = {
     "event_note": "EventNote",
     "audit": "Audit",
     "audit_event": "AuditEvent",
+    "audit_filters": "AuditFilters",
     "counterparty_file": "File",
     "currency": "Currency",
     "employee": "Employee",
