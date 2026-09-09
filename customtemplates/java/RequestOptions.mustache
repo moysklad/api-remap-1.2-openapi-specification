@@ -1,0 +1,111 @@
+{{>licenseInfo}}
+package {{apiPackage}};
+
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.StringJoiner;
+
+/**
+ * Common optional request parameters shared by entity endpoints.
+ */
+public class RequestOptions {
+  private static final RequestOptions EMPTY = new Builder<>().build();
+
+  private final Map<String, Object> queryParams;
+  private final Map<String, String> additionalHeaders;
+
+  protected RequestOptions(Builder<?> builder) {
+    this.queryParams = Collections.unmodifiableMap(new LinkedHashMap<>(builder.queryParams));
+    this.additionalHeaders = Collections.unmodifiableMap(new LinkedHashMap<>(builder.additionalHeaders));
+  }
+
+  public static RequestOptions empty() {
+    return EMPTY;
+  }
+
+  public static RequestOptions emptyIfNull(RequestOptions options) {
+    return options == null ? EMPTY : options;
+  }
+
+  public static Builder<?> builder() {
+    return new Builder<>();
+  }
+
+  public Object get(String name) {
+    return queryParams.get(name);
+  }
+
+  public Map<String, Object> getQueryParams() {
+    return queryParams;
+  }
+
+  public Map<String, String> getAdditionalHeaders() {
+    return additionalHeaders;
+  }
+
+  public static RequestOptions expand(String... fields) {
+    return builder().expand(fields).build();
+  }
+
+  public static RequestOptions fields(String field) {
+    return builder().fields(field).build();
+  }
+
+  public static class Builder<T extends Builder<T>> {
+    protected final Map<String, Object> queryParams = new LinkedHashMap<>();
+    protected final Map<String, String> additionalHeaders = new LinkedHashMap<>();
+
+    protected T self() {
+      @SuppressWarnings("unchecked")
+      T self = (T) this;
+      return self;
+    }
+
+    public T expand(String... fields) {
+      return queryParam("expand", join(fields));
+    }
+
+    public T fields(String field) {
+      return queryParam("fields", field);
+    }
+
+    public T queryParam(String name, Object value) {
+      if (value == null) {
+        queryParams.remove(name);
+      } else {
+        queryParams.put(name, value);
+      }
+      return self();
+    }
+
+    public T header(String name, String value) {
+      if (value == null) {
+        additionalHeaders.remove(name);
+      } else {
+        additionalHeaders.put(name, value);
+      }
+      return self();
+    }
+
+    public RequestOptions build() {
+      return new RequestOptions(this);
+    }
+
+    protected static String join(String... values) {
+      if (values == null || values.length == 0) {
+        return null;
+      }
+
+      StringJoiner joiner = new StringJoiner(",");
+      for (String value : values) {
+        if (value != null && !value.isEmpty()) {
+          joiner.add(value);
+        }
+      }
+
+      String result = joiner.toString();
+      return result.isEmpty() ? null : result;
+    }
+  }
+}

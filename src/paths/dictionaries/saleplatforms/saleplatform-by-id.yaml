@@ -1,0 +1,19 @@
+get:
+  operationId: getSalePlatformById
+  tags:
+    - SalePlatforms
+  summary: Получить Площадку для продаж по ID
+  description: Запрос на получение отдельной площадки для продаж с указанным id
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/SalePlatform'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

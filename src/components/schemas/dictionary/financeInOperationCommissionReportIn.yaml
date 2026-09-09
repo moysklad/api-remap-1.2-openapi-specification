@@ -1,0 +1,5 @@
+type: object
+description: Полученный отчет комиссионера + linkedSum
+x-polymorphic-parent: FinanceInOperationAbstract
+allOf:
+  - $ref: '../../../openapi.yaml#/components/schemas/CommissionReportIn'

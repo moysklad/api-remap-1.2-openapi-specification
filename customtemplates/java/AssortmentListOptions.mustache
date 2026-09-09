@@ -1,0 +1,34 @@
+{{>licenseInfo}}
+package {{apiPackage}};
+
+/**
+ * Optional parameters for the assortment list endpoint.
+ */
+public class AssortmentListOptions extends ListOptions {
+  protected AssortmentListOptions(Builder<?> builder) {
+    super(builder);
+  }
+
+  public static Builder<?> builder() {
+    return new Builder<>();
+  }
+
+  public static class Builder<T extends Builder<T>> extends ListOptions.Builder<T> {
+    public T groupBy(String groupBy) {
+      return queryParam("groupBy", groupBy);
+    }
+
+    public T stockMode(String stockMode) {
+      return queryParam("stockMode", stockMode);
+    }
+
+    public T quantityMode(String quantityMode) {
+      return queryParam("quantityMode", quantityMode);
+    }
+
+    @Override
+    public AssortmentListOptions build() {
+      return new AssortmentListOptions(this);
+    }
+  }
+}

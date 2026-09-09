@@ -1,0 +1,19 @@
+{
+  "sales": {
+    "count": 0,
+    "amount": 0,
+    "movementAmount": -80000
+  },
+  "orders": {
+    "count": 0,
+    "amount": 0,
+    "movementAmount": 0
+  },
+  "money": {
+    "income": 0,
+    "outcome": 0,
+    "balance": 69700,
+    "todayMovement": 0,
+    "movement": 0
+  }
+}

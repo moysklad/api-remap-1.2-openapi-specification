@@ -1,0 +1,83 @@
+get:
+  operationId: getInvoiceOutNoteById
+  tags:
+    - InvoiceOuts
+  summary: Получить Событие Счета покупателю по ID
+  description: Запрос на получение одного События Счета покупателю
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - name: noteId
+      in: path
+      required: true
+      description: ID События
+      schema:
+        type: string
+        format: uuid
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/EventNote'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+put:
+  operationId: updateInvoiceOutNote
+  tags:
+    - InvoiceOuts
+  summary: Обновить Событие Счета покупателю
+  description: Запрос на обновление одного События Счета покупателю
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - name: noteId
+      in: path
+      required: true
+      description: ID События
+      schema:
+        type: string
+        format: uuid
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../openapi.yaml#/components/schemas/EventNote'
+  responses:
+    '200':
+      description: Событие успешно обновлено
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/EventNote'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+delete:
+  operationId: deleteInvoiceOutNote
+  tags:
+    - InvoiceOuts
+  summary: Удалить Событие Счета покупателю
+  description: Запрос на удаление одного События Счета покупателю
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - name: noteId
+      in: path
+      required: true
+      description: ID События
+      schema:
+        type: string
+        format: uuid
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '204':
+      description: Событие успешно удалено
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

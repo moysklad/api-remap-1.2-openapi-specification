@@ -1,0 +1,10 @@
+type: object
+description: 'Ответ ошибки: объект { errors }'
+x-polymorphic-parent: BatchResponseEntity
+required:
+  - errors
+properties:
+  errors:
+    type: array
+    items:
+      $ref: './error.yaml'

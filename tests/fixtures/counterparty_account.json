@@ -1,0 +1,16 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/12a8b923-692c-11e6-8a84-bae500000056/accounts/40702810-1234-1234-1234-123456789012",
+    "type": "account",
+    "mediaType": "application/json"
+  },
+  "id": "40702810-1234-1234-1234-123456789012",
+  "accountId": "f976ed28-2e58-11e6-8a84-bae500000001",
+  "updated": "2024-01-15T10:30:00.000+03:00",
+  "isDefault": true,
+  "accountNumber": "40702810123456789012",
+  "bankName": "ПАО Сбербанк",
+  "bankLocation": "г. Москва, ул. Вавилова, д. 19",
+  "correspondentAccount": "30101810400000000225",
+  "bic": "044525225"
+}

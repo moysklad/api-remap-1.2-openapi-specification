@@ -1,0 +1,28 @@
+post:
+  operationId: createFactureInMetadataState
+  tags:
+    - FactureIns
+  summary: Создать статус Счета-фактуры полученного
+  parameters:
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../openapi.yaml#/components/schemas/State'
+        example:
+          name: "Одобрено"
+          color: 69446
+          stateType: "Regular"
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/State'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
