@@ -47,6 +47,8 @@ paths:
     $ref: './paths/reports/orders-plotseries.yaml'
   /report/sales/plotseries:
     $ref: './paths/reports/sales-plotseries.yaml'
+
+  #Profit
   /report/profit/byproduct:
     $ref: './paths/reports/profit/profit-byproduct.yaml'
   /report/profit/byvariant:

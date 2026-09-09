@@ -12,7 +12,7 @@ properties:
         description: Наименование канала продаж
       type:
         type: string
-        description: Тип канала продаж
+        description: Тип канала продаж. Известные значения описаны в SalesChannelType
   margin:
     type: number
     format: double
