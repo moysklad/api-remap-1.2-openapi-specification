@@ -5,7 +5,7 @@ get:
   summary: Получить Обороты по товару с детализацией по документам
   description: Запрос отчета «Обороты по товару с детализацией по документам».
   parameters:
-    - $ref: '../../../components/parameters.yaml#/filter'
+    - $ref: '../../../components/reportParameters.yaml#/requiredFilter'
     - $ref: '../../../components/reportParameters.yaml#/momentFrom'
     - $ref: '../../../components/reportParameters.yaml#/momentTo'
     - $ref: '../../../components/headers.yaml#/AcceptHeader'
