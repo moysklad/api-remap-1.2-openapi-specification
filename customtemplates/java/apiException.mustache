@@ -2,7 +2,7 @@
 
 package {{invokerPackage}};
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import tools.jackson.core.JacksonException;
 import java.util.Map;
 import java.util.List;
 import {{modelPackage}}.Errors;
@@ -36,7 +36,7 @@ public class ApiException extends{{#useRuntimeException}} RuntimeException {{/us
                 apiErrors = Configuration.getDefaultApiClient()
                         .getObjectMapper()
                         .readValue(responseBody, Errors.class);
-            } catch (JsonProcessingException e) {
+            } catch (JacksonException e) {
                 apiErrors = null;
             }
         }

@@ -1,7 +1,7 @@
 {{#vendorExtensions.x-polymorphic-discriminator}}
 import {{polymorphicPackage}}.OpenApiPolymorphicTypeInfo;
 import {{polymorphicPackage}}.OpenApiPolymorphicSubTypes;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import tools.jackson.databind.annotation.JsonDeserialize;
 import {{polymorphicPackage}}.PolymorphicMetaTypeDeserializer;
 
 {{/vendorExtensions.x-polymorphic-discriminator}}
@@ -240,10 +240,6 @@ public class {{classname}} {{#parent}}extends {{{.}}} {{/parent}}{{^parent}}{{#v
 {{#jsonb}}
   @JsonbProperty("{{baseName}}")
 {{/jsonb}}
-{{#useBeanValidation}}
-{{>beanValidation}}
-
-{{/useBeanValidation}}
 {{#swagger1AnnotationLibrary}}
   @ApiModelProperty({{#example}}example = "{{{.}}}", {{/example}}{{#required}}required = {{required}}, {{/required}}value = "{{{description}}}")
 {{/swagger1AnnotationLibrary}}

@@ -37,7 +37,7 @@
 
 | Job                               | Описание                                                                 |
 |-----------------------------------|--------------------------------------------------------------------------|
-| `validate` / `bundle-openapi` | Проверка и сборка полной спецификации                                    |
+| `validate` / `bundle-openapi`     | Проверка и сборка полной спецификации                                    |
 | `bundle-smoke-openapi`            | Сборка облегчённой спецификации для smoke-тестов                         |
 | `generate-sdk-*`                  | Генерация SDK                                                            |
 | `sdk-golden-*`                    | Golden тесты SDK                                                         |
@@ -81,7 +81,8 @@
 | `deploy-to-npm`            | Публикация TypeScript SDK в npm (`latest`, после `merge-branch-typescript`)                                                                                    |
 
 Java release jobs (`deploy-to-artifactory`, `deploy-to-maven`) описаны в `gitlab/.gitlab-ci-deploy-sdk-java.yml` и выполняются на стадии `deploy-sdk`.
-Публикуемый Java runtime-артефакт собирается как self-contained shaded JAR с relocation зависимостей Jackson (включая nullable-модуль) внутрь SDK.
+Основной публикуемый Java runtime-артефакт — JAR с обычным транзитивным резолвом зависимостей.
+Fat-вариант публикуется второй версией с суффиксом `-fat` и собирается Maven-профилем `fat`.
 TypeScript npm jobs (`deploy-to-npm-prerelease`, `deploy-to-npm`) описаны в `gitlab/.gitlab-ci-deploy-sdk-typescript.yml` на той же стадии `deploy-sdk`.
 
 Python repository sync запускается после `generate-sdk-python` и
