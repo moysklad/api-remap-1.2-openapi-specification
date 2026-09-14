@@ -36,6 +36,7 @@ FIXTURE_MODEL_MAP = {
     "employee": "Employee",
     "employee_security": "EmployeeSecurity",
     "employee_role": "EmployeeRole",
+    "employee_role_individual": "EmployeeRole",
     "custom_role": "CustomRole",
     "group": "Group",
     "entity_with_extra_field": "Group",

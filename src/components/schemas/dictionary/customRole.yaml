@@ -1,5 +1,10 @@
 type: object
-description: Пользовательская роль
+description: |
+  Пользовательская роль — именованный набор прав сотрудника.
+  Код сущности в URL — role, значение meta.type — customrole.
+  Получать и изменять роли можно от лица сотрудника с правами системного
+  администратора или от лица Решения. Использование пользовательских ролей
+  доступно на тарифах «Профессиональный» и «Корпоративный».
 x-implements: Named, MetaEntity
 x-entity-static-builder:
   methodParams:
@@ -21,10 +26,15 @@ properties:
   name:
     type: string
     maxLength: 255
-    description: Наименование пользовательской роли
+    description: Наименование пользовательской роли. Необходимо при создании.
   permissions:
     type: object
-    description: Список пермиссий (только для индивидуальной роли)
+    description: |
+      Права пользовательской роли. В JSON передаются объектом,
+      где ключи — названия пермиссий, значения — Boolean или объекты прав сущностей.
+      Структура прав соответствует permissions индивидуальной роли сотрудника.
+      Для currency, country, taxrate и uom право view неизменяемо и равно ALL;
+      попытка изменить его приводит к ошибке.
     nullable: true
     properties:
       apiRequest:
@@ -66,9 +76,9 @@ properties:
       purchaseControl:
         type: boolean
         description: Управление закупками
-      resto$refromRecycleBin:
+      restoreFromRecycleBin:
         type: boolean
-        description: Восстанавливать документы
+        description: Восстанавливать документы из корзины
       sendEmail:
         type: boolean
         description: Отправлять почту
@@ -121,213 +131,220 @@ properties:
         type: boolean
         description: Просматривать обороты
       GTINList:
-        description: Список GTIN
+        description: "Список GTIN. Доступные действия: view, create, delete. Возможные значения прав — ALL или NO."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       accountAdjustment:
-        description: Корректировка остатков на счете
+        description: "Корректировка остатков на счете. Доступные действия: view, create, update, delete, print."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       bonusTransaction:
-        description: Бонусные баллы
+        description: "Бонусные баллы. Доступные действия: view, create, update, delete, print, approve."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       cashIn:
-        description: Приходной ордер
+        description: "Приходной ордер. Доступные действия: view, create, update, delete, print, approve."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       cashOut:
-        description: Расходной ордер
+        description: "Расходной ордер. Доступные действия: view, create, update, delete, print, approve."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       cashboxAdjustment:
-        description: Корректировка остатков в кассе
+        description: "Корректировка остатков в кассе. Доступные действия: view, create, update, delete, print."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       commissionReportIn:
-        description: Полученный отчет комиссионера
+        description: "Полученный отчет комиссионера. Доступные действия: view, create, update, delete, print, approve."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       commissionReportOut:
-        description: Выданный отчет комиссионера
+        description: "Выданный отчет комиссионера. Доступные действия: view, create, update, delete, print, approve."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       company:
-        description: Контрагенты
+        description: "Контрагенты. Доступные действия: view, create, update, delete, print."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       contract:
-        description: Договоры
+        description: "Договоры. Доступные действия: view, create, update, delete, print."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       counterpartyAdjustment:
-        description: Корректировка взаиморасчетов
+        description: "Корректировка взаиморасчетов. Доступные действия: view, create, update, delete, print."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       country:
-        description: Страны
+        description: "Страны. Доступные действия: view, create, update, delete. Право view неизменяемо и равно ALL."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       crptCancellation:
-        description: Списание кодов маркировки
+        description: "Списание кодов маркировки. Доступные действия: view, create, update, delete, print."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       crptPackageCreation:
-        description: Формирование упаковки
+        description: "Формирование упаковки. Доступные действия: view, create, update, delete, print."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       crptPackageDisaggregation:
-        description: Расформирование упаковки
+        description: "Расформирование упаковки. Доступные действия: view, create, update, delete, print."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       crptPackageItemRemoval:
-        description: Изъятие из упаковки
+        description: "Изъятие из упаковки. Доступные действия: view, create, update, delete, print."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       currency:
-        description: Валюты
+        description: "Валюты. Доступные действия: view, create, update, delete. Право view неизменяемо и равно ALL."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       customEntity:
-        description: Элементы пользовательских справочников
+        description: "Элементы пользовательских справочников. Доступные действия: view, create, update, delete."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       customerOrder:
-        description: Заказ покупателям
+        description: "Заказ покупателям. Доступные действия: view, create, update, delete, print, approve."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       demand:
-        description: Отгрузка
+        description: "Отгрузка. Доступные действия: view, create, update, delete, print, approve."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       emissionOrder:
-        description: Заказ кодов маркировки
+        description: "Заказ кодов маркировки. Доступные действия: view, create, update, delete, print."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       utilizationReport:
-        description: Отчет об использовании
+        description: "Отчет об использовании. Доступные действия: view, create, update, delete, print."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       atkAggregation:
-        description: Формирование АТК
+        description: "Формирование АТК. Доступные действия: view, create, update, delete, print."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       retireOrderOSU:
-        description: Вывод из оборота ОСУ
+        description: "Вывод из оборота ОСУ. Доступные действия: view, create, update, delete, print."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       employee:
-        description: Сотрудники
+        description: "Сотрудники. Доступные действия: view, create, update, delete."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       enrollOrder:
-        description: Ввод в оборот кодов маркировки
+        description: "Ввод в оборот кодов маркировки. Доступные действия: view, create, update, delete, print."
+        $ref: '../../../openapi.yaml#/components/schemas/Permissions'
+      enrollReturn:
+        description: "Возврат в оборот кодов маркировки. Доступные действия: view, create, update, delete, print."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       enter:
-        description: Оприходование
+        description: "Оприходование. Доступные действия: view, create, update, delete, print, approve."
+        $ref: '../../../openapi.yaml#/components/schemas/Permissions'
+      expenseitem:
+        description: "Статьи расходов. Доступные действия: view, create, update, delete."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       factureIn:
-        description: Счета-фактуры полученные
+        description: "Счета-фактуры полученные. Доступные действия: view, create, update, delete, print, approve."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       factureOut:
-        description: Счета-фактуры выданные
+        description: "Счета-фактуры выданные. Доступные действия: view, create, update, delete, print, approve."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       good:
-        description: Товары и Услуги
+        description: "Товары и Услуги. Доступные действия: view, create, update, delete, print."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       internalOrder:
-        description: Внутренние заказы
+        description: "Внутренние заказы. Доступные действия: view, create, update, delete, print, approve."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       inventory:
-        description: Инвентаризация
+        description: "Инвентаризация. Доступные действия: view, create, update, delete, print."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       invoiceIn:
-        description: Счет поставщику
+        description: "Счет поставщику. Доступные действия: view, create, update, delete, print, approve."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       invoiceOut:
-        description: Счет покупателям
+        description: "Счет покупателям. Доступные действия: view, create, update, delete, print, approve."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       loss:
-        description: Списание
+        description: "Списание. Доступные действия: view, create, update, delete, print, approve."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       move:
-        description: Перемещение
+        description: "Перемещение. Доступные действия: view, create, update, delete, print, approve."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       myCompany:
-        description: Юр. Лица
+        description: "Юр. Лица. Доступные действия: view, create, update, delete."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       paymentIn:
-        description: Входящий платеж
+        description: "Входящий платеж. Доступные действия: view, create, update, delete, print, approve."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       paymentOut:
-        description: Исходящий платеж
+        description: "Исходящий платеж. Доступные действия: view, create, update, delete, print, approve."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       prepayment:
-        description: Предоплаты
+        description: "Предоплаты. Доступные действия: view, create, update, delete, print, approve."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       prepaymentReturn:
-        description: Возврат предоплаты
+        description: "Возврат предоплаты. Доступные действия: view, create, update, delete, print, approve."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       priceList:
-        description: Прайс-лист
+        description: "Прайс-лист. Доступные действия: view, create, update, delete, print, approve."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       processing:
-        description: Техоперации
+        description: "Техоперации. Доступные действия: view, create, update, delete, print, approve."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       processingOrder:
-        description: Заказ на производство
+        description: "Заказ на производство. Доступные действия: view, create, update, delete, print, approve."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       processingPlan:
-        description: Техкарты
+        description: "Техкарты. Доступные действия: view, create, update, delete."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
+      # Имена в camelCase, как в таблице пермиссий: варианты processingstage и
+      # processingprocess из примера /security дали бы те же имена методов в SDK.
       processingStage:
-        description: Этапы производства
+        description: "Этапы производства. Доступные действия: view, create, update, delete."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       processingProcess:
-        description: Техпроцессы
+        description: "Техпроцессы. Доступные действия: view, create, update, delete, print, approve."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       productionTask:
-        description: Производственные задания
+        description: "Производственные задания. Доступные действия: view, create, update, delete, print, approve."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       productionStageCompletion:
-        description: Выполнение этапов
+        description: "Выполнение этапов. Доступные действия: view, create, update, delete, print."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       project:
-        description: Проекты
+        description: "Проекты. Доступные действия: view, create, update, delete."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       purchaseOrder:
-        description: Заказ поставщикам
+        description: "Заказ поставщикам. Доступные действия: view, create, update, delete, print, approve."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       purchaseReturn:
-        description: Возврат поставщику
+        description: "Возврат поставщику. Доступные действия: view, create, update, delete, print, approve."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       remainsOrder:
-        description: Описание остатков
+        description: "Описание остатков. Доступные действия: view, create, update, delete, print."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       remarkingOrder:
-        description: Перемаркировка
+        description: "Перемаркировка. Доступные действия: view, create, update, delete, print."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       retailDemand:
-        description: Продажи
+        description: "Продажи. Доступные действия: view, create, update, delete, print, approve."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       retailDrawerCashIn:
-        description: Внесения
+        description: "Внесения. Доступные действия: view, create, update, delete, print, approve."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       retailDrawerCashOut:
-        description: Выплаты
+        description: "Выплаты. Доступные действия: view, create, update, delete, print, approve."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       retailSalesReturn:
-        description: Возвраты
+        description: "Возвраты. Доступные действия: view, create, update, delete, print, approve."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       retailShift:
-        description: Смены
+        description: "Смены. Доступные действия: view, create, update, delete, print."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       retailStore:
-        description: Точка продаж
+        description: "Точка продаж. Доступные действия: view, create, update, delete."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       retireOrder:
-        description: Вывод из оборота
+        description: "Вывод из оборота. Доступные действия: view, create, update, delete, print."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       salesReturn:
-        description: Возврат покупателя
+        description: "Возврат покупателя. Доступные действия: view, create, update, delete, print, approve."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       salesChannel:
-        description: Канал продаж
+        description: "Канал продаж. Доступные действия: view, create, update, delete, print."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       script:
         description: Задачи
         $ref: '../../../openapi.yaml#/components/schemas/ScriptPermissions'
       scriptTemplate:
-        description: Задачи
+        description: Сценарии
         $ref: '../../../openapi.yaml#/components/schemas/ScriptTemplatePermissions'
       supply:
-        description: Приемки
+        description: "Приемки. Доступные действия: view, create, update, delete, print, approve."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       taxrate:
-        description: Ставки НДС
+        description: "Ставки НДС. Доступные действия: view, create, update, delete. Право view неизменяемо и равно ALL."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       trackingCodeList:
-        description: Коды маркировки
+        description: "Коды маркировки. Доступные действия: view, print. Возможные значения прав — ALL или NO."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       uom:
-        description: Единицы измерения
+        description: "Единицы измерения. Доступные действия: view, create, update, delete. Право view неизменяемо и равно ALL."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
       warehouse:
-        description: Склады
+        description: "Склады. Доступные действия: view, create, update, delete."
         $ref: '../../../openapi.yaml#/components/schemas/Permissions'
-

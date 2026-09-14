@@ -53,6 +53,7 @@ const FIXTURE_MODEL_MAP: Readonly<Record<string, string>> = {
     employee: 'Employee',
     employee_security: 'EmployeeSecurity',
     employee_role: 'EmployeeRole',
+    employee_role_individual: 'EmployeeRole',
     custom_role: 'CustomRole',
     group: 'Group',
     entity_with_extra_field: 'Group',

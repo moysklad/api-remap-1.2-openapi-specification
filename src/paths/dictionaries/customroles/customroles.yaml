@@ -3,7 +3,9 @@ get:
   tags:
     - CustomRoles
   summary: Получить список пользовательских ролей
-  description: Запрос всех пользовательских ролей на данной учетной записи
+  description: |
+    Запрос всех пользовательских ролей на данной учетной записи.
+    Доступно сотруднику с правами системного администратора или Решению.
   parameters:
     - $ref: '../../../components/parameters.yaml#/limit'
     - $ref: '../../../components/parameters.yaml#/offset'
@@ -28,7 +30,9 @@ post:
   tags:
     - CustomRoles
   summary: Создать пользовательскую роль
-  description: Создание новой пользовательской роли
+  description: |
+    Создание новой пользовательской роли. Необходимо передать name (не более 255 символов).
+    Доступно сотруднику с правами системного администратора или Решению.
   parameters:
     - $ref: '../../../components/headers.yaml#/AcceptHeader'
     - $ref: '../../../components/headers.yaml#/AcceptEncoding'
