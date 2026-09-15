@@ -40,6 +40,7 @@ class SerializationTest extends BaseTestCase {
     static {
         FIXTURE_MODEL_MAP.put("product", "Product");
         FIXTURE_MODEL_MAP.put("product_full", "Product");
+        FIXTURE_MODEL_MAP.put("pack", "Pack");
         FIXTURE_MODEL_MAP.put("product_image", "Image");
         FIXTURE_MODEL_MAP.put("product_storebalance", "StoreBalance");
         FIXTURE_MODEL_MAP.put("counterparty", "Counterparty");

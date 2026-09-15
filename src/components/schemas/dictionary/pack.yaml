@@ -1,25 +1,35 @@
 type: object
-description: Упаковка
+description: |
+  Упаковка товара — элемент вложенной коллекции packs.
+  В API 1.2 отдельный ресурс для упаковок товаров отсутствует.
+  Для создания упаковки при обновлении товара передайте uom и quantity.
+  Коллекция packs полностью заменяет существующие упаковки товара.
 properties:
   meta:
-    description: Метаданные Упаковки
+    description: Метаданные упаковки. Сохранены для совместимости; в документации упаковок товара API 1.2 поле не описано.
     $ref: '../common/meta.yaml'
   id:
     type: string
     format: uuid
-    description: ID упаковки
+    description: ID упаковки товара. Обязательное при ответе
     readOnly: true
   uom:
-    description: Метаданные единиц измерения
+    description: |
+      Метаданные единиц измерения. Обязательное при ответе. Поддерживает expand.
+      Единица измерения упаковки не должна совпадать с единицей измерения товара.
     $ref: '../../../openapi.yaml#/components/schemas/Uom'
   quantity:
     type: number
     minimum: 0
     format: double
-    description: Количество товаров в упаковке
+    description: Количество товаров в упаковке данного вида. Обязательное при ответе
   barcodes:
     type: array
-    description: Штрихкоды упаковки
+    description: |
+      Массив штрихкодов упаковки товара, содержащий не более одного штрихкода.
+      Если штрихкод отсутствует, поле не выводится.
+      При обновлении товара переданная коллекция полностью заменяет существующие штрихкоды упаковки.
+    maxItems: 1
     nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/Barcode'

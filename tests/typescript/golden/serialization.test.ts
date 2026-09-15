@@ -30,6 +30,7 @@ import {
 const FIXTURE_MODEL_MAP: Readonly<Record<string, string>> = {
     product: 'Product',
     product_full: 'Product',
+    pack: 'Pack',
     product_image: 'Image',
     product_storebalance: 'StoreBalance',
     counterparty: 'Counterparty',

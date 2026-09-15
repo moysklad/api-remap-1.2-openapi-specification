@@ -187,7 +187,11 @@ properties:
       $ref: '../../../openapi.yaml#/components/schemas/Barcode'
   packs:
     type: array
-    description: Упаковки товара
+    description: |
+      Упаковки товара — вложенная коллекция. Для создания упаковки при обновлении
+      товара передайте элемент с uom и quantity. Переданная коллекция полностью
+      заменяет существующие упаковки; пустой массив удаляет все упаковки.
+      Единица измерения упаковки не должна совпадать с единицей измерения товара.
     nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/Pack'
@@ -243,4 +247,3 @@ properties:
   ppeType:
     type: string
     description: Код вида номенклатурной классификации медицинских средств индивидуальной защиты. Известные значения описаны в PpeType
-
