@@ -1,0 +1,29 @@
+post:
+  operationId: deletePurchaseOrderNotesBatch
+  tags:
+    - PurchaseOrders
+  summary: Массовое удаление Событий Заказа поставщику
+  description: >-
+    В теле запроса передается массив Событий с метаданными удаляемых Событий.
+    При успешном удалении сервер возвращает пустое тело ответа.
+    Удалять События может администратор или автор События с правом на просмотр документа.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            $ref: '../../../openapi.yaml#/components/schemas/EventNote'
+          minItems: 1
+          maxItems: 1000
+  responses:
+    '200':
+      description: События успешно удалены. Тело ответа отсутствует.
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

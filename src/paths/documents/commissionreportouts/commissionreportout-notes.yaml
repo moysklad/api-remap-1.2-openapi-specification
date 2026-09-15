@@ -26,7 +26,7 @@ post:
   tags:
     - CommissionReportOuts
   summary: Добавить Событие Выданного отчета комиссионера
-  description: Запрос на добавление одного События Выданного отчета комиссионера
+  description: Запрос на добавление одного События документа
   parameters:
     - $ref: '../../../components/parameters.yaml#/entityId'
     - $ref: '../../../components/headers.yaml#/AcceptHeader'
@@ -39,8 +39,8 @@ post:
         schema:
           $ref: '../../../openapi.yaml#/components/schemas/EventNote'
   responses:
-    '200':
-      description: Событие успешно создано
+    '201':
+      description: Массив с созданным Событием
       content:
         application/json:
           schema:

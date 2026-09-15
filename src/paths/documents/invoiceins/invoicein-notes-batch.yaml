@@ -1,0 +1,37 @@
+post:
+  operationId: createInvoiceInNotesBatch
+  tags:
+    - InvoiceIns
+  summary: Массовое создание и обновление Событий Счета поставщику
+  description: >-
+    В теле запроса передается массив Событий для создания или обновления.
+    Обновляемые События должны содержать идентификатор в виде метаданных (meta).
+    При создании События необходимо передать description.
+    Для каждого документа можно создать не более 5000 Событий.
+    Редактировать События может администратор или автор События с правом на просмотр документа.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            $ref: '../../../openapi.yaml#/components/schemas/EventNote'
+          minItems: 1
+          maxItems: 1000
+  responses:
+    '201':
+      description: Массив созданных и обновленных Событий
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../../../openapi.yaml#/components/schemas/EventNote'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
