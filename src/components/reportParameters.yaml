@@ -14,6 +14,22 @@ momentTo:
   schema:
     type: string
 
+momentFromRequired:
+  name: momentFrom
+  in: query
+  required: true
+  description: Начало периода отчета в формате YYYY-MM-DD HH:MM:SS
+  schema:
+    type: string
+
+momentToRequired:
+  name: momentTo
+  in: query
+  required: true
+  description: Конец периода отчета в формате YYYY-MM-DD HH:MM:SS
+  schema:
+    type: string
+
 interval:
   name: interval
   in: query
