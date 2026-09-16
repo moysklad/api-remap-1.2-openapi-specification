@@ -24,6 +24,7 @@ enum:
   - remap-1.0
   - remap-1.1
   - remap-1.2
+  - remap-1.3
   - restapi
   - retail
   - app
