@@ -2,17 +2,8 @@ type: object
 description: Строка отчета «Прибыльность по каналам продаж»
 properties:
   salesChannel:
-    type: object
-    description: Краткое представление канала продаж
-    properties:
-      meta:
-        $ref: '../common/meta.yaml'
-      name:
-        type: string
-        description: Наименование канала продаж
-      type:
-        type: string
-        description: Тип канала продаж. Известные значения описаны в SalesChannelType
+    description: Канал продаж. В отчете заполнены только `meta`, `name` и `type`
+    $ref: '../../../openapi.yaml#/components/schemas/SalesChannel'
   margin:
     type: number
     format: double
