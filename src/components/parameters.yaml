@@ -96,3 +96,51 @@ fields:
       - downloadPermanentHref
       - stock
       - declaration
+
+stockCurrentInclude:
+  name: include
+  in: query
+  required: false
+  description: |
+    Управляет включением нулевых остатков.
+    По умолчанию выводятся только ненулевые значения.
+  schema:
+    type: string
+    enum:
+      - zeroLines
+
+stockCurrentChangedSince:
+  name: changedSince
+  in: query
+  required: false
+  description: |
+    Выводит фактические остатки по позициям, у которых остаток изменился с указанного момента.
+    Формат: `yyyy-MM-dd HH:mm:ss`.
+  schema:
+    type: string
+
+stockCurrentStockType:
+  name: stockType
+  in: query
+  required: false
+  description: |
+    Тип рассчитываемого значения остатка. По умолчанию `stock`.
+  schema:
+    type: string
+    enum:
+      - stock
+      - freeStock
+      - quantity
+      - reserve
+      - inTransit
+    default: stock
+
+stockCurrentFilter:
+  name: filter
+  in: query
+  required: false
+  description: |
+    Фильтрация отчета по ID сущностей.
+    Поддерживаемые поля: `assortmentId`, `storeId`.
+  schema:
+    type: string

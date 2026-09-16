@@ -7,38 +7,9 @@ get:
     Краткий отчет об остатках с группировкой по номенклатуре и складам.
     Возвращает один тип значения остатка, выбранный параметром `stockType`.
   parameters:
-    - name: include
-      in: query
-      required: false
-      description: |
-        Управляет включением нулевых остатков.
-        По умолчанию выводятся только ненулевые значения.
-      schema:
-        type: string
-        enum:
-          - zeroLines
-    - name: changedSince
-      in: query
-      required: false
-      description: |
-        Выводит фактические остатки по номенклатуре/складам, у которых остаток изменился с указанного момента.
-        Формат: `yyyy-MM-dd HH:mm:ss`.
-      schema:
-        type: string
-    - name: stockType
-      in: query
-      required: false
-      description: |
-        Тип рассчитываемого значения остатка. По умолчанию `stock`.
-      schema:
-        type: string
-        enum:
-          - stock
-          - freeStock
-          - quantity
-          - reserve
-          - inTransit
-        default: stock
+    - $ref: '../../../components/parameters.yaml#/stockCurrentInclude'
+    - $ref: '../../../components/parameters.yaml#/stockCurrentChangedSince'
+    - $ref: '../../../components/parameters.yaml#/stockCurrentStockType'
     - name: withRecalculate
       in: query
       required: false
@@ -47,14 +18,7 @@ get:
         Для таких позиций значение остатка может быть `null`.
       schema:
         type: boolean
-    - name: filter
-      in: query
-      required: false
-      description: |
-        Фильтрация отчета по ID сущностей.
-        Поддерживаемые поля: `assortmentId`, `storeId`.
-      schema:
-        type: string
+    - $ref: '../../../components/parameters.yaml#/stockCurrentFilter'
     - $ref: '../../../components/headers.yaml#/AcceptHeader'
     - $ref: '../../../components/headers.yaml#/AcceptEncoding'
   responses:

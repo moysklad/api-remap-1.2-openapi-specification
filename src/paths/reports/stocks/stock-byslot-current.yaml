@@ -9,38 +9,9 @@ get:
 
     Для запроса требуется фильтрация по `assortmentId` или `storeId`.
   parameters:
-    - name: include
-      in: query
-      required: false
-      description: |
-        Управляет включением нулевых остатков.
-        По умолчанию выводятся только ненулевые значения.
-      schema:
-        type: string
-        enum:
-          - zeroLines
-    - name: stockType
-      in: query
-      required: false
-      description: |
-        Тип рассчитываемого значения остатка. По умолчанию `stock`.
-      schema:
-        type: string
-        enum:
-          - stock
-          - freeStock
-          - quantity
-          - reserve
-          - inTransit
-        default: stock
-    - name: filter
-      in: query
-      required: false
-      description: |
-        Фильтрация отчета по ID сущностей.
-        Поддерживаемые поля: `assortmentId`, `storeId`.
-      schema:
-        type: string
+    - $ref: '../../../components/parameters.yaml#/stockCurrentInclude'
+    - $ref: '../../../components/parameters.yaml#/stockCurrentStockType'
+    - $ref: '../../../components/parameters.yaml#/stockCurrentFilter'
     - $ref: '../../../components/headers.yaml#/AcceptHeader'
     - $ref: '../../../components/headers.yaml#/AcceptEncoding'
   responses:
