@@ -1481,6 +1481,44 @@ paths:
   /entity/cashin/new:
     $ref: './paths/documents/cashins/cashin-new.yaml'
 
+  # Documents - Payrolls
+  /entity/payroll:
+    $ref: './paths/documents/payrolls/payrolls.yaml'
+  /entity/payroll/{id}:
+    $ref: './paths/documents/payrolls/payroll-by-id.yaml'
+  /entity/payroll/{id}/trash:
+    $ref: './paths/documents/payrolls/payroll-trash.yaml'
+  /entity/payroll/{id}/files:
+    $ref: './paths/documents/payrolls/payroll-files.yaml'
+  /entity/payroll/{id}/files/{fileId}:
+    $ref: './paths/documents/payrolls/payroll-file-by-id.yaml'
+  /entity/payroll/delete:
+    $ref: './paths/documents/payrolls/payrolls-delete.yaml'
+  /entity/payroll/batch:
+    $ref: './paths/documents/payrolls/payrolls-batch.yaml'
+  /entity/payroll/metadata:
+    $ref: './paths/documents/payrolls/payroll-metadata.yaml'
+  /entity/payroll/metadata/attributes:
+    $ref: './paths/documents/payrolls/payroll-metadata-attribute.yaml'
+  /entity/payroll/metadata/attributes/{id}:
+    $ref: './paths/documents/payrolls/payroll-metadata-attribute-by-id.yaml'
+  /entity/payroll/metadata/states:
+    $ref: './paths/documents/payrolls/payroll-metadata-states.yaml'
+  /entity/payroll/metadata/states/{id}:
+    $ref: './paths/documents/payrolls/payroll-metadata-state-by-id.yaml'
+  /entity/payroll/metadata/states/batch:
+    $ref: './paths/documents/payrolls/payroll-metadata-states-batch.yaml'
+  /entity/payroll/new:
+    $ref: './paths/documents/payrolls/payroll-new.yaml'
+  /entity/payroll/{id}/positions:
+    $ref: './paths/documents/payrolls/payroll-positions.yaml'
+  /entity/payroll/{id}/positions/batch:
+    $ref: './paths/documents/payrolls/payroll-positions-batch.yaml'
+  /entity/payroll/{id}/positions/{positionId}:
+    $ref: './paths/documents/payrolls/payroll-position-by-id.yaml'
+  /entity/payroll/{id}/positions/delete:
+    $ref: './paths/documents/payrolls/payroll-positions-delete.yaml'
+
   # Documents - Payment In
   /entity/paymentin:
     $ref: './paths/documents/paymentins/paymentins.yaml'
@@ -2399,6 +2437,14 @@ components:
       $ref: './components/schemas/dictionary/paymentIn.yaml'
     PaymentInList:
       $ref: './components/schemas/dictionary/paymentInList.yaml'
+    Payroll:
+      $ref: './components/schemas/dictionary/payroll.yaml'
+    PayrollList:
+      $ref: './components/schemas/dictionary/payrollList.yaml'
+    PayrollPosition:
+      $ref: './components/schemas/dictionary/payrollPosition.yaml'
+    PayrollPositionList:
+      $ref: './components/schemas/dictionary/payrollPositionList.yaml'
     Prepayment:
       $ref: './components/schemas/dictionary/prepayment.yaml'
     PrepaymentReturn:
@@ -2929,6 +2975,8 @@ tags:
     description: Операции с заказами кодов маркировки
   - name: CashIns
     description: Операции с приходными ордерами
+  - name: Payrolls
+    description: Операции с Начислениями зарплаты
   - name: PaymentIns
     description: Операции с входящими платежами
   - name: FactureIns
