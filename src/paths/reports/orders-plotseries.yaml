@@ -7,18 +7,8 @@ get:
     Запрос показателей заказов покупателей за период с разбивкой по часам, дням или месяцам.
     Для доступа к отчету требуется право на просмотр показателей `viewDashboard`.
   parameters:
-    - name: momentFrom
-      in: query
-      required: true
-      description: Начало периода отчета в формате YYYY-MM-DD HH:MM:SS
-      schema:
-        type: string
-    - name: momentTo
-      in: query
-      required: true
-      description: Конец периода отчета в формате YYYY-MM-DD HH:MM:SS
-      schema:
-        type: string
+    - $ref: '../../components/reportParameters.yaml#/momentFromRequired'
+    - $ref: '../../components/reportParameters.yaml#/momentToRequired'
     - $ref: '../../components/reportParameters.yaml#/interval'
     - name: filter
       in: query
