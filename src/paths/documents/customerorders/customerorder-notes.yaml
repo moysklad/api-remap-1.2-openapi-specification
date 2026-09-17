@@ -26,7 +26,7 @@ post:
   tags:
     - CustomerOrders
   summary: Добавить Событие Заказа покупателя
-  description: Запрос на добавление одного События документа
+  description: Запрос на добавление одного События Заказа покупателя
   parameters:
     - $ref: '../../../components/parameters.yaml#/entityId'
     - $ref: '../../../components/headers.yaml#/AcceptHeader'

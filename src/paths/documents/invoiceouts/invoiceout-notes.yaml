@@ -26,7 +26,7 @@ post:
   tags:
     - InvoiceOuts
   summary: Добавить Событие Счета покупателю
-  description: Запрос на добавление одного События документа
+  description: Запрос на добавление одного События Счета покупателю
   parameters:
     - $ref: '../../../components/parameters.yaml#/entityId'
     - $ref: '../../../components/headers.yaml#/AcceptHeader'

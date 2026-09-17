@@ -26,7 +26,7 @@ post:
   tags:
     - InvoiceIns
   summary: Добавить Событие Счета поставщику
-  description: Запрос на добавление одного События документа
+  description: Запрос на добавление одного События Счета поставщику
   parameters:
     - $ref: '../../../components/parameters.yaml#/entityId'
     - $ref: '../../../components/headers.yaml#/AcceptHeader'
