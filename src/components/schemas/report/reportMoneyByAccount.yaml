@@ -2,25 +2,11 @@ type: object
 description: Строка отчета об остатках денежных средств по кассам и счетам
 properties:
   account:
-    type: object
     description: Счет организации. Не выводится для остатка кассы, так как касса одна на организацию.
-    properties:
-      meta:
-        $ref: '../common/meta.yaml'
-      name:
-        type: string
-        maxLength: 255
-        description: Номер счета
+    $ref: '../../../openapi.yaml#/components/schemas/ReportMoneyAccount'
   organization:
-    type: object
-    description: Краткое представление организации
-    properties:
-      meta:
-        $ref: '../common/meta.yaml'
-      name:
-        type: string
-        maxLength: 255
-        description: Наименование организации
+    description: Метаданные юрлица
+    $ref: '../../../openapi.yaml#/components/schemas/Organization'
   balance:
     type: number
     format: double

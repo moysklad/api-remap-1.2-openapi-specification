@@ -1871,6 +1871,8 @@ components:
       $ref: './components/schemas/report/reportMoneyPlotSeriesItem.yaml'
     ReportMoneyPlotSeries:
       $ref: './components/schemas/report/reportMoneyPlotSeries.yaml'
+    ReportMoneyAccount:
+      $ref: './components/schemas/report/reportMoneyAccount.yaml'
     ReportMoneyByAccount:
       $ref: './components/schemas/report/reportMoneyByAccount.yaml'
     ReportMoneyByAccountList:
