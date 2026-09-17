@@ -13,4 +13,5 @@ properties:
         counterparty:
           type: object
           description: Контрагент, по которому требуется отчет
-          $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
+          allOf:
+            - $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
