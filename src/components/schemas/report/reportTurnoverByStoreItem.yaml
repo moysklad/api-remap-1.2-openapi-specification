@@ -3,8 +3,7 @@ description: Детализация оборотов по одному скла�
 properties:
   store:
     description: Склад
-    allOf:
-      - $ref: '../../../openapi.yaml#/components/schemas/NamedEntity'
+    $ref: '../../../openapi.yaml#/components/schemas/Store'
   onPeriodStart:
     description: Показатели на начало периода
     $ref: '../../../openapi.yaml#/components/schemas/ReportTurnoverIndicators'

@@ -17,16 +17,11 @@ properties:
     maxLength: 255
     description: Артикул Товара
   image:
-    type: object
     description: Первое изображение
-    properties:
-      meta:
-        $ref: '../common/meta.yaml'
+    $ref: '../../../openapi.yaml#/components/schemas/Image'
   productFolder:
     description: Группа номенклатуры
-    allOf:
-      - $ref: '../../../openapi.yaml#/components/schemas/NamedEntity'
+    $ref: '../../../openapi.yaml#/components/schemas/ProductFolder'
   uom:
     description: Единица измерения
-    allOf:
-      - $ref: '../../../openapi.yaml#/components/schemas/NamedEntity'
+    $ref: '../../../openapi.yaml#/components/schemas/Uom'
