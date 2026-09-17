@@ -27,6 +27,7 @@ class SerializationTest extends TestCase
      * Ключ - имя файла без расширения, значение - короткое имя класса модели.
      */
     private const FIXTURE_MODEL_MAP = [
+        'audit_event_list' => 'AuditEventList',
         'product' => 'Product',
         'product_full' => 'Product',
         'product_image' => 'Image',
