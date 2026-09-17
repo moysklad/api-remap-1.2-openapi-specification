@@ -1844,6 +1844,8 @@ components:
       $ref: './components/schemas/dictionary/customRole.yaml'
     CustomRoleList:
       $ref: './components/schemas/dictionary/customRoleList.yaml'
+    RolePermissions:
+      $ref: './components/schemas/common/rolePermissions.yaml'
     Permissions:
       $ref: './components/schemas/common/permissions.yaml'
     PermissionValue:
