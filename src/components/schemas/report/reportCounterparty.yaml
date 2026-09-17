@@ -5,37 +5,8 @@ properties:
     description: Метаданные отчета по данному контрагенту
     $ref: '../common/meta.yaml'
   counterparty:
-    type: object
-    description: Краткое представление контрагента
-    properties:
-      meta:
-        $ref: '../common/meta.yaml'
-      id:
-        type: string
-        format: uuid
-        description: ID контрагента
-      name:
-        type: string
-        maxLength: 255
-        description: Наименование контрагента
-      externalCode:
-        type: string
-        maxLength: 255
-        description: Внешний код контрагента
-      companyType:
-        type: string
-        description: Тип контрагента. Известные значения описаны в CompanyType
-      inn:
-        type: string
-        maxLength: 255
-        description: ИНН контрагента
-      phone:
-        type: string
-        description: Номер телефона
-      email:
-        type: string
-        format: email
-        description: Адрес электронной почты
+    description: Контрагент, по которому выдаются показатели
+    $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
   firstDemandDate:
     type: string
     nullable: true
