@@ -3,7 +3,9 @@ get:
   tags:
     - Employees
   summary: Получить роль владельца аккаунта
-  description: Запрос на получение роли владельца аккаунта.
+  description: |
+    Запрос на получение роли владельца аккаунта.
+    Ответ содержит meta роли с type = systemrole.
   parameters:
     - $ref: '../../../components/headers.yaml#/AcceptHeader'
     - $ref: '../../../components/headers.yaml#/AcceptEncoding'
@@ -16,5 +18,3 @@ get:
             $ref: '../../../openapi.yaml#/components/schemas/EmployeeRole'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
-    
-    
