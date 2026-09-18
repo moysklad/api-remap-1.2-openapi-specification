@@ -30,6 +30,13 @@ momentToRequired:
   schema:
     type: string
 
+requiredFilter:
+  name: filter
+  in: query
+  description: Фильтрация выборки
+  schema:
+    type: string
+
 interval:
   name: interval
   in: query

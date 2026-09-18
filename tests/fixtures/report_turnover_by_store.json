@@ -1,0 +1,79 @@
+{
+  "assortment": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/variant/3e32ef51-c1f1-11eb-c0a8-800c00000003",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/variant/metadata",
+      "type": "variant",
+      "mediaType": "application/json",
+      "uuidHref": "https://online.moysklad.ru/app/#feature/edit?id=3e3278e5-c1f1-11eb-c0a8-800c00000001"
+    },
+    "name": "товар 2 (красный)",
+    "uom": {
+      "meta": {
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/uom/af3b8110-5a23-4839-b3f7-a486f771a315",
+        "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/uom/metadata",
+        "type": "uom",
+        "mediaType": "application/json"
+      },
+      "name": "10^6 м3"
+    }
+  },
+  "stockByStore": [
+    {
+      "store": {
+        "meta": {
+          "href": "https://api.moysklad.ru/api/remap/1.2/entity/store/9238b396-b719-11eb-c0a8-800c00000074",
+          "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/store/metadata",
+          "type": "store",
+          "mediaType": "application/json",
+          "uuidHref": "https://online.moysklad.ru/app/#warehouse/edit?id=9238b396-b719-11eb-c0a8-800c00000074"
+        },
+        "name": "Основной склад"
+      },
+      "onPeriodStart": {
+        "quantity": 0.0,
+        "sum": 0.0
+      },
+      "onPeriodEnd": {
+        "quantity": 2.0,
+        "sum": 20000.0
+      },
+      "income": {
+        "quantity": 3.0,
+        "sum": 30000.0
+      },
+      "outcome": {
+        "quantity": 1.0,
+        "sum": 10000.0
+      }
+    },
+    {
+      "store": {
+        "meta": {
+          "href": "https://api.moysklad.ru/api/remap/1.2/entity/store/8d3d4ad8-be02-11eb-c0a8-800c00000025",
+          "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/store/metadata",
+          "type": "store",
+          "mediaType": "application/json",
+          "uuidHref": "https://online.moysklad.ru/app/#warehouse/edit?id=8d3d4ad8-be02-11eb-c0a8-800c00000025"
+        },
+        "name": "склад 2"
+      },
+      "onPeriodStart": {
+        "quantity": 0.0,
+        "sum": 0.0
+      },
+      "onPeriodEnd": {
+        "quantity": -5.0,
+        "sum": 0.0
+      },
+      "income": {
+        "quantity": 0.0,
+        "sum": 0.0
+      },
+      "outcome": {
+        "quantity": 5.0,
+        "sum": 0.0
+      }
+    }
+  ]
+}

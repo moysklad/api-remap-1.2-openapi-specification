@@ -1,0 +1,36 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/report/counterparty/df2fdd2d-6934-11e6-8a84-bae500000049",
+    "type": "counterparty",
+    "mediaType": "application/json"
+  },
+  "counterparty": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/df2fdd2d-6934-11e6-8a84-bae500000049",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/metadata",
+      "type": "counterparty",
+      "mediaType": "application/json"
+    },
+    "id": "df2fdd2d-6934-11e6-8a84-bae500000049",
+    "name": "rtr",
+    "externalCode": "rRlzrdZmjql9r9dveXPE43",
+    "companyType": "legal",
+    "email": "888888888@mail.ru",
+    "phone": "888888888",
+    "inn": "7736570902"
+  },
+  "firstDemandDate": "2016-09-01 17:54:00",
+  "lastDemandDate": "2016-09-01 17:54:00",
+  "demandsCount": 1,
+  "demandsSum": 60000,
+  "averageReceipt": 60000,
+  "returnsCount": 0,
+  "returnsSum": 0,
+  "discountsSum": 0,
+  "balance": -60000,
+  "bonusBalance": 200,
+  "profit": 50000,
+  "lastEventDate": "2016-09-08 13:07:30",
+  "lastEventText": "продажа",
+  "updated": "2016-08-23 16:24:08"
+}
