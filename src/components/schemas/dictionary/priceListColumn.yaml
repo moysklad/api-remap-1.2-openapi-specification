@@ -1,0 +1,11 @@
+type: object
+description: Столбец Прайс-листа
+properties:
+  name:
+    type: string
+    maxLength: 255
+    description: Наименование столбца. Не может быть пустым и должно быть уникальным в пределах Прайс-листа
+  percentageDiscount:
+    type: integer
+    format: int64
+    description: Процентная наценка или скидка по умолчанию для столбца

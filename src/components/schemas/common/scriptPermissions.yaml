@@ -1,17 +1,21 @@
 type: object
+description: |
+  Права на задачи. NO для view и done допустимо, только если остальные права равны NO.
+  Если view отличается от NO, поле done обязательно и должно совпадать с view.
+  Известные значения описаны в ScriptPermissionValue.
 properties:
   view:
     type: string
-    description: Смотреть. Известные значения описаны в ScriptPermissionValue.
+    description: Смотреть. Допустимые значения — NO, AUTHOR_OR_ASSIGNEE, ALL. Известные значения описаны в ScriptPermissionValue.
   create:
     type: string
-    description: Создавать. Известные значения описаны в ScriptPermissionValue.
+    description: Создавать. Допустимые значения — NO, ALL. Область действия не шире view; поле может отсутствовать. Известные значения описаны в ScriptPermissionValue.
   update:
     type: string
-    description: Редактировать. Известные значения описаны в ScriptPermissionValue.
+    description: Редактировать. Допустимые значения — NO, AUTHOR, AUTHOR_OR_ASSIGNEE, ALL. Область действия не шире view; поле может отсутствовать. Известные значения описаны в ScriptPermissionValue.
   delete:
     type: string
-    description: Удалять. Известные значения описаны в ScriptPermissionValue.
+    description: Удалять. Допустимые значения — NO, AUTHOR, AUTHOR_OR_ASSIGNEE, ALL. Область действия не шире update; поле может отсутствовать. Известные значения описаны в ScriptPermissionValue.
   done:
     type: string
-    description: Выполнять. Известные значения описаны в ScriptPermissionValue.
+    description: Выполнять. Допустимые значения — NO, ASSIGNEE, AUTHOR_OR_ASSIGNEE, ALL. Область действия не шире view; при view, отличном от NO, обязательно и совпадает с view. Известные значения описаны в ScriptPermissionValue.

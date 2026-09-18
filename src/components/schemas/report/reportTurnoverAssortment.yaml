@@ -1,0 +1,27 @@
+type: object
+description: Краткое представление номенклатуры в отчете «Обороты»
+properties:
+  meta:
+    description: Метаданные номенклатуры
+    $ref: '../common/meta.yaml'
+  name:
+    type: string
+    maxLength: 255
+    description: Наименование номенклатуры
+  code:
+    type: string
+    maxLength: 255
+    description: Код Товара
+  article:
+    type: string
+    maxLength: 255
+    description: Артикул Товара
+  image:
+    description: Первое изображение
+    $ref: '../../../openapi.yaml#/components/schemas/Image'
+  productFolder:
+    description: Группа номенклатуры
+    $ref: '../../../openapi.yaml#/components/schemas/ProductFolder'
+  uom:
+    description: Единица измерения
+    $ref: '../../../openapi.yaml#/components/schemas/Uom'
