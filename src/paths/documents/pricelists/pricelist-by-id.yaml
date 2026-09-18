@@ -1,0 +1,64 @@
+get:
+  operationId: getPriceListById
+  tags:
+    - PriceLists
+  summary: Получить Прайс-лист по ID
+  description: Запрос Прайс-листа с указанным id
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/PriceList'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+put:
+  operationId: updatePriceList
+  tags:
+    - PriceLists
+  summary: Изменить Прайс-лист
+  description: Обновление Прайс-листа с указанным id
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../openapi.yaml#/components/schemas/PriceList'
+  responses:
+    '200':
+      description: Прайс-лист успешно обновлен
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/PriceList'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+delete:
+  operationId: deletePriceList
+  tags:
+    - PriceLists
+  summary: Удалить Прайс-лист
+  description: Удаление Прайс-листа с указанным id
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Прайс-лист успешно удален
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
