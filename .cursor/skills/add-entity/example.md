@@ -135,6 +135,7 @@ Use this pattern for `api-remap-1.2-doc/md/documents/_<entity>.md` when the MD h
 | Metadata states create/batch | MD state section has create or mass create/update states | `<entity>-metadata-states.yaml` with `oneOf` `State` or array of `State`; peer: `cashin-metadata-states.yaml` |
 | Metadata states | metadata response includes `states` | `<entity>-metadata-state-by-id.yaml` with explicit `404: NotFoundEmpty` on DELETE |
 | Positions | MD has `### Позиции` | `<entity>-positions.yaml`, `<entity>-position-by-id.yaml`, `<entity>-positions-delete.yaml` |
+| Trash | Always for documents with `/{id}` (common MD: `_common_info.md`); never for dictionaries | `<entity>-trash.yaml`, register `/entity/<keyword>/{id}/trash` |
 
 ### Files to create
 
@@ -145,6 +146,7 @@ src/components/schemas/document/<entity>Position.yaml
 src/components/schemas/document/<entity>PositionList.yaml
 src/paths/documents/<entities>/<entities>.yaml
 src/paths/documents/<entities>/<entity>-by-id.yaml
+src/paths/documents/<entities>/<entity>-trash.yaml
 src/paths/documents/<entities>/<entities>-batch.yaml
 src/paths/documents/<entities>/<entities>-delete.yaml
 src/paths/documents/<entities>/<entity>-positions.yaml
@@ -160,3 +162,4 @@ tests/fixtures/<snake_case>.json
 3. **Position smoke tests are endpoint-level** — cover list, get by ID, create/update if supported by MD, and batch delete where documented.
 4. **Compare against document peers first** — documents often have extra refs (`agent`, `organization`, `contract`, `state`, `rate.currency`) and operation arrays that generic dictionary templates do not show.
 5. **Static builder on both schemas with `meta`** — `<entity>.yaml` gets the entity convention (`methodParams: ["id"]`, `type: "<keyword>"`); `<entity>Position.yaml` gets the position convention (`methodParams: ["parentId", "id"]`, `type: "<keyword>position"`). `<entity>List.yaml` and `<entity>PositionList.yaml` do not get the block. Reference peers: `customerOrder.yaml`, `customerOrderPosition.yaml`.
+6. **Trash is mandatory for documents** — add `<entity>-trash.yaml` and `POST /entity/<keyword>/{id}/trash` even if the entity MD has no recycle-bin section. Do not add trash for dictionaries.
