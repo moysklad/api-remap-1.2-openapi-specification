@@ -1,0 +1,162 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/pricelist/28bd7720-afee-11e6-8af5-581e00000093",
+    "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/pricelist/metadata",
+    "type": "pricelist",
+    "mediaType": "application/json"
+  },
+  "id": "28bd7720-afee-11e6-8af5-581e00000093",
+  "accountId": "9560e3e3-9609-11e6-8af5-581e00000008",
+  "syncId": "28bd7720-afee-11e6-8af5-581e00000093",
+  "owner": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/employee/9575ba6d-9609-11e6-8af5-581e000000ad",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/employee/metadata",
+      "type": "employee",
+      "mediaType": "application/json"
+    }
+  },
+  "shared": false,
+  "group": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/group/956169fa-9609-11e6-8af5-581e00000009",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/group/metadata",
+      "type": "group",
+      "mediaType": "application/json"
+    }
+  },
+  "updated": "2016-11-21 18:00:28",
+  "name": "Новый прайс-лист",
+  "description": "test",
+  "code": "PL-0001",
+  "externalCode": "w08cWHC6jzNZr7i7ZwTN63",
+  "moment": "2016-11-21 16:26:00",
+  "applicable": true,
+  "organization": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/organization/95920812-9609-11e6-8af5-581e000000d4",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/organization/metadata",
+      "type": "organization",
+      "mediaType": "application/json"
+    }
+  },
+  "state": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/pricelist/metadata/states/666f86f9-afec-11e6-8af5-581e00000080",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/pricelist/metadata",
+      "type": "state",
+      "mediaType": "application/json"
+    }
+  },
+  "attributes": [
+    {
+      "meta": {
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/pricelist/metadata/attributes/666f86f9-afec-11e6-8af5-581e00000087",
+        "type": "attributemetadata",
+        "mediaType": "application/json"
+      },
+      "id": "666f86f9-afec-11e6-8af5-581e00000087",
+      "name": "AttributeName1",
+      "type": "string",
+      "value": "новое значение"
+    },
+    {
+      "meta": {
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/pricelist/metadata/attributes/666ffdb9-afec-11e6-8af5-581e00000088",
+        "type": "attributemetadata",
+        "mediaType": "application/json"
+      },
+      "id": "666ffdb9-afec-11e6-8af5-581e00000088",
+      "name": "AttributeName2",
+      "type": "long",
+      "value": 2
+    }
+  ],
+  "created": "2007-02-07 17:16:41",
+  "printed": true,
+  "published": true,
+  "files": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/pricelist/28bd7720-afee-11e6-8af5-581e00000093/files",
+      "type": "files",
+      "mediaType": "application/json",
+      "size": 0,
+      "limit": 1000,
+      "offset": 0
+    }
+  },
+  "positions": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/pricelist/28bd7720-afee-11e6-8af5-581e00000093/positions",
+      "type": "pricelistrow",
+      "mediaType": "application/json",
+      "size": 2,
+      "limit": 1000,
+      "offset": 0
+    },
+    "rows": [
+      {
+        "meta": {
+          "href": "https://api.moysklad.ru/api/remap/1.2/entity/pricelist/28bd7720-afee-11e6-8af5-581e00000093/positions/33026e32-afee-11e6-8af5-581e0000009a",
+          "type": "pricelistrow",
+          "mediaType": "application/json"
+        },
+        "id": "33026e32-afee-11e6-8af5-581e0000009a",
+        "accountId": "9560e3e3-9609-11e6-8af5-581e00000008",
+        "assortment": {
+          "meta": {
+            "href": "https://api.moysklad.ru/api/remap/1.2/entity/product/987148b8-9a09-11e6-8af5-581e0000006f",
+            "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/product/metadata",
+            "type": "product",
+            "mediaType": "application/json",
+            "uuidHref": "https://online.moysklad.ru/app/#good/edit?id=3b1e1f15-2842-11e9-ac12-000c0000002f"
+          }
+        },
+        "cells": []
+      },
+      {
+        "meta": {
+          "href": "https://api.moysklad.ru/api/remap/1.2/entity/pricelist/28bd7720-afee-11e6-8af5-581e00000093/positions/001d16d0-affe-11e6-8af5-581e0000000f",
+          "type": "pricelistrow",
+          "mediaType": "application/json"
+        },
+        "id": "001d16d0-affe-11e6-8af5-581e0000000f",
+        "accountId": "9560e3e3-9609-11e6-8af5-581e00000008",
+        "assortment": {
+          "meta": {
+            "href": "https://api.moysklad.ru/api/remap/1.2/entity/product/987148b8-9a09-11e6-8af5-581e0000006f",
+            "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/product/metadata",
+            "type": "product",
+            "mediaType": "application/json",
+            "uuidHref": "https://online.moysklad.ru/app/#good/edit?id=e64d0a86-2a99-11e9-ac12-000c00000041"
+          }
+        },
+        "cells": [
+          {
+            "column": "with_discount",
+            "sum": 100000
+          }
+        ]
+      }
+    ]
+  },
+  "priceType": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/context/companysettings/pricetype/672559f1-cbf3-11e1-9eb9-889ffa6f49fd",
+      "type": "pricetype",
+      "mediaType": "application/json"
+    },
+    "id": "672559f1-cbf3-11e1-9eb9-889ffa6f49fd",
+    "name": "Цена продажи",
+    "externalCode": "cbcf493b-55bc-11d9-848a-00112f43529a"
+  },
+  "columns": [
+    {
+      "name": "without_discount"
+    },
+    {
+      "name": "with_discount",
+      "percentageDiscount": 1000
+    }
+  ]
+}

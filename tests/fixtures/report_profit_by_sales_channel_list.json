@@ -1,0 +1,45 @@
+{
+  "context": {
+    "employee": {
+      "meta": {
+        "href": "https://api.moysklad.ru/api/remap/1.2/context/employee",
+        "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/employee/metadata",
+        "type": "employee",
+        "mediaType": "application/json"
+      }
+    }
+  },
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/report/profit/bysaleschannel",
+    "type": "salesbysaleschannel",
+    "mediaType": "application/json",
+    "size": 1,
+    "limit": 1000,
+    "offset": 0
+  },
+  "rows": [
+    {
+      "salesChannel": {
+        "meta": {
+          "href": "https://api.moysklad.ru/api/remap/1.2/entity/saleschannel/656c4032-8552-11e6-8a84-bae500000044",
+          "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/saleschannel/metadata",
+          "type": "saleschannel",
+          "mediaType": "application/json"
+        },
+        "name": "ijk-shop.ru",
+        "type": "ECOMMERCE"
+      },
+      "salesCount": 1.0,
+      "salesAvgCheck": 252500.0,
+      "sellSum": 252500.0,
+      "sellCostSum": 150000.0,
+      "returnCount": 0.0,
+      "returnAvgCheck": 0.0,
+      "returnSum": 0.0,
+      "returnCostSum": 0.0,
+      "profit": 102500.0,
+      "margin": 0.6833333333333333,
+      "salesMargin": 0.40594059405940597
+    }
+  ]
+}
