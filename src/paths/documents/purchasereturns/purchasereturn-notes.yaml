@@ -39,8 +39,8 @@ post:
         schema:
           $ref: '../../../openapi.yaml#/components/schemas/EventNote'
   responses:
-    '200':
-      description: Событие успешно создано
+    '201':
+      description: Массив с созданным Событием
       content:
         application/json:
           schema:

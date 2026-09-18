@@ -14,6 +14,7 @@ FIXTURES = Path(__file__).resolve().parents[2] / "fixtures"
 FIXTURE_MODEL_MAP = {
     "product": "Product",
     "product_full": "Product",
+    "pack": "Pack",
     "product_image": "Image",
     "product_storebalance": "StoreBalance",
     "counterparty": "Counterparty",
