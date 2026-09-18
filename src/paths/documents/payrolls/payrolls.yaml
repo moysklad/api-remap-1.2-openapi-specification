@@ -1,14 +1,16 @@
 get:
-  operationId: getSupplyNotes
+  operationId: getPayrolls
   tags:
-    - Supplies
-  summary: Получить список Событий Приемки
-  description: Запрос на получение всех Событий Приемки для данной учетной записи
+    - Payrolls
+  summary: Получить список Начислений зарплаты
+  description: Запрос всех Начислений зарплаты на данной учетной записи
   parameters:
-    - $ref: '../../../components/parameters.yaml#/entityId'
     - $ref: '../../../components/parameters.yaml#/limit'
     - $ref: '../../../components/parameters.yaml#/offset'
+    - $ref: '../../../components/parameters.yaml#/search'
+    - $ref: '../../../components/parameters.yaml#/filter'
     - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/parameters.yaml#/order'
     - $ref: '../../../components/headers.yaml#/AcceptHeader'
     - $ref: '../../../components/headers.yaml#/AcceptEncoding'
   responses:
@@ -17,18 +19,18 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../../../openapi.yaml#/components/schemas/EventNoteList'
+            $ref: '../../../openapi.yaml#/components/schemas/PayrollList'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
 
 post:
-  operationId: createSupplyNote
+  operationId: createPayroll
   tags:
-    - Supplies
-  summary: Добавить Событие Приемки
-  description: Запрос на добавление одного События Приемки
+    - Payrolls
+  summary: Создать Начисление зарплаты
+  description: Создание Начисления зарплаты
   parameters:
-    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/parameters.yaml#/expand'
     - $ref: '../../../components/headers.yaml#/AcceptHeader'
     - $ref: '../../../components/headers.yaml#/AcceptEncoding'
     - $ref: '../../../components/headers.yaml#/ContentTypeJson'
@@ -37,15 +39,13 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../../../openapi.yaml#/components/schemas/EventNote'
+          $ref: '../../../openapi.yaml#/components/schemas/Payroll'
   responses:
-    '201':
-      description: Массив с созданным Событием
+    '200':
+      description: Начисление зарплаты успешно создано
       content:
         application/json:
           schema:
-            type: array
-            items:
-              $ref: '../../../openapi.yaml#/components/schemas/EventNote'
+            $ref: '../../../openapi.yaml#/components/schemas/Payroll'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'

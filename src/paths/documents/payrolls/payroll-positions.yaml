@@ -1,9 +1,8 @@
 get:
-  operationId: getSupplyNotes
+  operationId: getPayrollPositions
   tags:
-    - Supplies
-  summary: Получить список Событий Приемки
-  description: Запрос на получение всех Событий Приемки для данной учетной записи
+    - Payrolls
+  summary: Получить позиции Начисления зарплаты
   parameters:
     - $ref: '../../../components/parameters.yaml#/entityId'
     - $ref: '../../../components/parameters.yaml#/limit'
@@ -17,18 +16,18 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../../../openapi.yaml#/components/schemas/EventNoteList'
+            $ref: '../../../openapi.yaml#/components/schemas/PayrollPositionList'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
 
 post:
-  operationId: createSupplyNote
+  operationId: createPayrollPosition
   tags:
-    - Supplies
-  summary: Добавить Событие Приемки
-  description: Запрос на добавление одного События Приемки
+    - Payrolls
+  summary: Создать позицию Начисления зарплаты
   parameters:
     - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/parameters.yaml#/expand'
     - $ref: '../../../components/headers.yaml#/AcceptHeader'
     - $ref: '../../../components/headers.yaml#/AcceptEncoding'
     - $ref: '../../../components/headers.yaml#/ContentTypeJson'
@@ -37,15 +36,15 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../../../openapi.yaml#/components/schemas/EventNote'
+          $ref: '../../../openapi.yaml#/components/schemas/PayrollPosition'
   responses:
-    '201':
-      description: Массив с созданным Событием
+    '200':
+      description: Успешный запрос
       content:
         application/json:
           schema:
             type: array
             items:
-              $ref: '../../../openapi.yaml#/components/schemas/EventNote'
+              $ref: '../../../openapi.yaml#/components/schemas/PayrollPosition'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
