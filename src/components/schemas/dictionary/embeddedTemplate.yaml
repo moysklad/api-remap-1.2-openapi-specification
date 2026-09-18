@@ -1,0 +1,43 @@
+type: object
+description: Шаблон печатной формы
+x-implements: MetaEntity
+x-entity-static-builder:
+  methodParams:
+    - "type"
+    - "id"
+  href:
+    - path: "entity"
+    - param: "type"
+    - path: "metadata"
+    - path: "embeddedtemplate"
+    - param: "id"
+  type: "embeddedtemplate"
+properties:
+  meta:
+    description: Метаданные шаблона печатной формы
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID шаблона печатной формы
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  name:
+    type: string
+    maxLength: 255
+    description: Наименование шаблона
+    readOnly: true
+  type:
+    type: string
+    maxLength: 255
+    description: Тип шаблона
+    readOnly: true
+  content:
+    type: string
+    format: uri
+    description: Ссылка на скачивание шаблона
+    readOnly: true

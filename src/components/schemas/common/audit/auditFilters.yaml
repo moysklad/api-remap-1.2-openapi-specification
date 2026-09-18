@@ -1,0 +1,18 @@
+type: object
+description: Доступные значения фильтров аудита
+properties:
+  source:
+    type: array
+    description: Источники изменений, доступные для фильтрации
+    items:
+      $ref: '../../../../openapi.yaml#/components/schemas/AuditSourceType'
+  entitytype:
+    type: array
+    description: Типы сущностей, доступные для фильтрации
+    items:
+      type: string
+  eventtype:
+    type: array
+    description: Типы событий, доступные для фильтрации
+    items:
+      $ref: '../../../../openapi.yaml#/components/schemas/AuditEventType'

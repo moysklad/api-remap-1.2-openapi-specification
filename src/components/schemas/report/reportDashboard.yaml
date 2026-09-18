@@ -1,0 +1,12 @@
+type: object
+description: Показатели за день, неделю или месяц
+properties:
+  sales:
+    description: Информация о продажах за указанный период
+    $ref: '../../../openapi.yaml#/components/schemas/ReportDashboardPeriodMetrics'
+  orders:
+    description: Информация о заказах за указанный период
+    $ref: '../../../openapi.yaml#/components/schemas/ReportDashboardPeriodMetrics'
+  money:
+    description: Информация о деньгах за указанный период
+    $ref: '../../../openapi.yaml#/components/schemas/ReportDashboardMoney'

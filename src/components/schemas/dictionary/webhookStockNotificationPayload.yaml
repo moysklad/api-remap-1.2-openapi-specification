@@ -1,0 +1,19 @@
+type: object
+description: |
+  Тело HTTP POST, которое МойСклад отправляет на url вебхука при изменении остатков (уведомления с интервалом 1–5 минут).
+  Параметр query requestId идентифицирует уведомление (сохраняется при повторных попытках).
+properties:
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+  stockType:
+    type: string
+    description: Тип остатков. Известные значения описаны в WebhookStockStockType
+  reportType:
+    type: string
+    description: Тип отчёта. Известные значения описаны в WebhookStockReportType
+  reportUrl:
+    type: string
+    maxLength: 255
+    description: URL для получения данных по изменившейся номенклатуре за период (отчёт об остатках)

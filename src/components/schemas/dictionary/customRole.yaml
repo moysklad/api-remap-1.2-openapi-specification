@@ -1,0 +1,34 @@
+type: object
+description: |
+  Пользовательская роль — именованный набор прав сотрудника.
+  Код сущности в URL — role, значение meta.type — customrole.
+  Получать и изменять роли можно от лица сотрудника с правами системного
+  администратора или от лица Решения. Использование пользовательских ролей
+  доступно на тарифах «Профессиональный» и «Корпоративный».
+x-implements: Named, MetaEntity
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "role"
+    - param: "id"
+  type: "customrole"
+properties:
+  meta:
+    description: Метаданные пользовательской роли
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID пользовательской роли
+    readOnly: true
+  name:
+    type: string
+    maxLength: 255
+    description: Наименование пользовательской роли. Необходимо при создании.
+  permissions:
+    description: |
+      Права пользовательской роли. Структура прав соответствует permissions
+      индивидуальной роли сотрудника.
+    $ref: '../../../openapi.yaml#/components/schemas/RolePermissions'

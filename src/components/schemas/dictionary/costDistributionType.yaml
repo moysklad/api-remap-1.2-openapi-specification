@@ -1,0 +1,5 @@
+type: string
+description: Известные значения типа распределения себестоимости Техкарты
+enum:
+  - BY_PRICE
+  - BY_PRODUCTION

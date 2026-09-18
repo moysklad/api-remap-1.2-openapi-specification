@@ -1,0 +1,18 @@
+type: object
+description: Строка отчета «Обороты по товарам»
+properties:
+  assortment:
+    description: Краткое представление Товара или Модификации в отчете
+    $ref: '../../../openapi.yaml#/components/schemas/ReportTurnoverAssortment'
+  onPeriodStart:
+    description: Показатели на начало периода
+    $ref: '../../../openapi.yaml#/components/schemas/ReportTurnoverIndicators'
+  onPeriodEnd:
+    description: Показатели на конец периода
+    $ref: '../../../openapi.yaml#/components/schemas/ReportTurnoverIndicators'
+  income:
+    description: Показатели прихода в течение периода отчета
+    $ref: '../../../openapi.yaml#/components/schemas/ReportTurnoverIndicators'
+  outcome:
+    description: Показатели расхода в течение периода отчета
+    $ref: '../../../openapi.yaml#/components/schemas/ReportTurnoverIndicators'

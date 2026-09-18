@@ -1,0 +1,28 @@
+type: string
+description: Известные значения типа импорта
+enum:
+  - importer_csv
+  - importer_yml
+  - importer_csv_agent
+  - importer_csv_customerorder
+  - importer_csv_purchaseorder
+  - importer_csv_pricelist
+  - importer_ms_xml
+  - importer_1c_client_bank
+  - import_alfa_payments
+  - import_alfa_payments_request
+  - import_alfa_payments_save
+  - import_tochka_payments
+  - import_modulbank_payments
+  - import_tochka_payments_save
+  - import_modulbank_payments_save
+  - import_tinkoff_payments
+  - import_tinkoff_payments_save
+  - importer_good
+  - importer_good_in_doc
+  - import_edo_supply
+  - import_union_company
+  - import_sberbank_payments_request
+  - import_sberbank_payments_save
+  - import_update_vat_to_20_percents
+  - import_custom_entity

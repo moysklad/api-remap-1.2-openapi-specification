@@ -1,0 +1,14 @@
+type: object
+description: Уведомление о снижении остатка товара ниже неснижаемого
+x-polymorphic-parent: NotificationAbstract
+properties:
+  actualBalance:
+    type: number
+    format: double
+    description: Остаток товара
+  good:
+    $ref: '../../../openapi.yaml#/components/schemas/NotificationNamedEntity'
+  minimumBalance:
+    type: number
+    format: double
+    description: Неснижаемый остаток товара

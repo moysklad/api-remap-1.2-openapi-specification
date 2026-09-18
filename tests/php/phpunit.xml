@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  PHPUnit конфигурация для тестов SDK МойСклад API.
+  
+  Тест-сьюты:
+  - golden: тесты сериализации/десериализации (roundtrip)
+  - smoke: тесты доступности API endpoint'ов через openapi-mock
+  
+  Запуск:
+    composer test              - все тесты
+    composer test:golden       - только golden тесты
+    composer test:smoke        - только smoke тесты
+-->
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.0/phpunit.xsd"
+         bootstrap="bootstrap.php"
+         colors="true"
+         cacheDirectory=".phpunit.cache"
+         displayDetailsOnTestsThatTriggerWarnings="true"
+         failOnWarning="false">
+    
+    <testsuites>
+        <!-- Golden тесты: проверка сериализации/десериализации моделей -->
+        <testsuite name="golden">
+            <directory>golden</directory>
+        </testsuite>
+        <!-- Smoke тесты: проверка доступности API endpoint'ов -->
+        <testsuite name="smoke">
+            <directory>smoke</directory>
+        </testsuite>
+    </testsuites>
+
+    <php>
+        <!-- URL mock сервера (openapi-mock) для smoke тестов -->
+        <env name="SMOKE_BASE_URL" value="http://mock:8080" force="false"/>
+        <!-- Путь к сгенерированному SDK -->
+        <env name="SDK_PATH" value="../../clients/php"/>
+    </php>
+
+    <source>
+        <include>
+            <directory suffix=".php">../../clients/php/lib</directory>
+        </include>
+    </source>
+</phpunit>

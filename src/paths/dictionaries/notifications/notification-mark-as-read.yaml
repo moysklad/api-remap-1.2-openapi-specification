@@ -1,0 +1,15 @@
+put:
+  operationId: markNotificationAsRead
+  tags:
+    - Notifications
+  summary: Отметить уведомление как прочитанное
+  description: Отметить уведомление текущего пользователя с указанным id как прочитанное
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Уведомление успешно отмечено как прочитанное
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

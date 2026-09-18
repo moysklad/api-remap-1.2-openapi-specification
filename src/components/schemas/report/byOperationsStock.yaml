@@ -1,0 +1,44 @@
+type: object
+description: Строка отчета по документам номенклатуры, отображающего остатки
+properties:
+  assortment:
+    type: object
+    description: Метаданные Товара/Модификации/Партии
+    properties:
+      meta:
+        $ref: '../common/meta.yaml'
+  operation:
+    type: object
+    description: Метаданные документа
+    properties:
+      meta:
+        $ref: '../common/meta.yaml'
+  moment:
+    type: string
+    description: Дата документа
+  store:
+    type: object
+    description: Метаданные склада документа
+    properties:
+      meta:
+        $ref: '../common/meta.yaml'
+  stock:
+    type: number
+    format: double
+    description: Остатки
+  costPerUnit:
+    type: number
+    format: double
+    description: |
+      Себестоимость за единицу.
+      Не возвращается при отсутствии пермиссии «Видеть себестоимость, цену закупки, прибыль товаров».
+  sumCost:
+    type: number
+    format: double
+    description: |
+      Сумма себестоимости.
+      Не возвращается при отсутствии пермиссии «Видеть себестоимость, цену закупки, прибыль товаров».
+  avgStockDays:
+    type: number
+    format: double
+    description: Количество дней на складе

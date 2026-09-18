@@ -1,0 +1,16 @@
+type: object
+description: Уведомление о просроченном счете покупателя
+x-polymorphic-parent: NotificationAbstract
+properties:
+  agentName:
+    type: string
+    maxLength: 255
+    description: Имя контрагента
+  invoice:
+    $ref: '../../../openapi.yaml#/components/schemas/NotificationInvoice'
+  paymentPlannedMoment:
+    type: string
+    description: Запланированная дата оплаты
+  sum:
+    type: integer
+    description: Сумма счета

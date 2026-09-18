@@ -1,0 +1,11 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/saleplatform/39aaefe6-0304-4b85-ad3c-e8b93549f426",
+    "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/saleplatform/metadata",
+    "type": "saleplatform",
+    "mediaType": "application/json"
+  },
+  "id": "39aaefe6-0304-4b85-ad3c-e8b93549f426",
+  "name": "Avito",
+  "salePlatformGroup": "MARKETPLACES"
+}

@@ -1,0 +1,17 @@
+type: object
+properties:
+  view:
+    type: string
+    description: Смотреть. Известные значения описаны в PermissionValue.
+  create:
+    type: string
+    description: Создавать. Известные значения описаны в PermissionValue.
+  update:
+    type: string
+    description: Редактировать. Известные значения описаны в PermissionValue.
+  delete:
+    type: string
+    description: Удалять. Известные значения описаны в PermissionValue.
+  activate:
+    type: string
+    description: Выполнять. Известные значения описаны в PermissionValue.

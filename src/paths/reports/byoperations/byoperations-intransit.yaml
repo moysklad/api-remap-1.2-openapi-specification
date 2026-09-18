@@ -1,0 +1,32 @@
+get:
+  operationId: getByOperationsInTransit
+  tags:
+    - ReportsByOperations
+  summary: Получить Отчет по документам, отображающий ожидание
+  description: |
+    Отчет по документам номенклатуры, формирующим ожидания.
+    Обязательный параметр фильтрации — `filter` с полем `assortment`
+    (ссылка на товар, модификацию или партию; только одна номенклатура).
+    Для доступа нужны права на просмотр товаров и остатков.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/limit'
+    - $ref: '../../../components/parameters.yaml#/offset'
+    - name: filter
+      in: query
+      required: true
+      description: |
+        Фильтрация выборки. Обязательно указать `assortment=<href>` —
+        ссылку на товар, модификацию или партию. Можно фильтровать только по одной номенклатуре.
+      schema:
+        type: string
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос. Результат - JSON представление отчета
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/ByOperationsInTransitList'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

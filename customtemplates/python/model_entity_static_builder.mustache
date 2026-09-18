@@ -1,0 +1,23 @@
+{{#vendorExtensions.x-entity-static-builder}}
+    @classmethod
+    def create_with_meta(
+        cls,
+{{#methodParams}}
+        {{.}}: str,
+{{/methodParams}}
+    ) -> Self:
+        """Create a reference with ``meta`` populated for this entity."""
+        from {{packageName}}.configuration import Configuration
+        from {{packageName}}.models.meta import Meta
+
+        href = Configuration.get_default().host{{#href}}{{#path}} + "/{{.}}"{{/path}}{{#param}} + "/" + {{.}}{{/param}}{{/href}}
+        return cls(
+            id=id,
+            meta=Meta(
+                href=href,
+                type="{{type}}",
+                media_type="application/json",
+            ),
+        )
+
+{{/vendorExtensions.x-entity-static-builder}}

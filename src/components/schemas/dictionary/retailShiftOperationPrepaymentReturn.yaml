@@ -1,0 +1,5 @@
+type: object
+description: Возврат предоплаты
+x-polymorphic-parent: RetailShiftOperation
+allOf:
+  - $ref: '../../../openapi.yaml#/components/schemas/PrepaymentReturn'

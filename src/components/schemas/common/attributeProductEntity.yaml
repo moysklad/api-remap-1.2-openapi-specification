@@ -1,0 +1,10 @@
+type: object
+x-implements: Attribute<EntityWithMeta>
+allOf:
+  - $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
+properties:
+  type:
+    type: string
+    enum: [product]
+  value:
+    $ref: '../../../openapi.yaml#/components/schemas/EntityWithMeta'

@@ -1,0 +1,29 @@
+type: array
+description: |
+  Информация о прослеживаемости импортных товаров.
+  Не входит в ответ по умолчанию; может быть возвращена только при явном запросе `fields=declaration`.
+  Только для чтения.
+readOnly: true
+items:
+  type: object
+  description: Запись о прослеживаемости импортных товаров
+  properties:
+    gtd:
+      type: string
+      description: Грузовая таможенная декларация
+      readOnly: true
+    rnpt:
+      type: string
+      description: Регистрационный номер партии товара (прослеживаемый товар)
+      readOnly: true
+    country:
+      description: Страна происхождения товара
+      readOnly: true
+      type: object
+      allOf:
+        - $ref: '../../../openapi.yaml#/components/schemas/Country'
+    quantity:
+      type: number
+      format: double
+      description: Количество товара с указанными ГТД или РНПТ в позиции документа
+      readOnly: true

@@ -1,0 +1,38 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/context/companysettings",
+    "type": "companysettings",
+    "mediaType": "application/json"
+  },
+  "currency": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/currency/45ffbac2-24a5-11e6-8a84-bae500000055",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/currency/metadata",
+      "type": "currency",
+      "mediaType": "application/json"
+    },
+    "id": "45ffbac2-24a5-11e6-8a84-bae500000055",
+    "name": "руб"
+  },
+  "priceTypes": [
+    {
+      "meta": {
+        "href": "https://api.moysklad.ru/api/remap/1.2/context/companysettings/pricetype/672559f1-cbf3-11e1-9eb9-889ffa6f2222",
+        "type": "pricetype",
+        "mediaType": "application/json"
+      },
+      "id": "672559f1-cbf3-11e1-9eb9-889ffa6f2222",
+      "name": "Цена для друзей",
+      "externalCode": "cbcf493b-55bc-11d9-848a-00112f432222"
+    }
+  ],
+  "discountStrategy": "bySum",
+  "globalOperationNumbering": true,
+  "checkShippingStock": true,
+  "checkMinPrice": true,
+  "useRecycleBin": true,
+  "useCompanyAddress": true,
+  "companyAddress": "MyCompany@moysklad.ru",
+  "accountCountry": "RU"
+}
+

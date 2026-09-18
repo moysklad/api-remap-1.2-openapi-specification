@@ -1,0 +1,46 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/project/51f263f9-0307-11e6-9464-e4de0000007c",
+    "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/project/metadata",
+    "type": "project",
+    "mediaType": "application/json"
+  },
+  "id": "51f263f9-0307-11e6-9464-e4de0000007c",
+  "accountId": "84e60e93-f504-11e5-8a84-bae500000008",
+  "owner": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/employee/faba7f37-2e58-11e6-8a84-bae500000028",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/employee/metadata",
+      "type": "employee",
+      "mediaType": "application/json"
+    }
+  },
+  "shared": false,
+  "group": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/group/f97aa1fb-2e58-11e6-8a84-bae500000002",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/group/metadata",
+      "type": "group",
+      "mediaType": "application/json"
+    }
+  },
+  "updated": "2016-04-15 15:41:05",
+  "name": "Аггрегатор томатной пасты",
+  "description": "Проект по сбору и переработке томатной пасты от всех поставщиков",
+  "code": "1248y12hrd",
+  "externalCode": "HZV7dGc8iAnf0aNjrvQvN0",
+  "archived": false,
+  "attributes": [
+    {
+      "meta": {
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/project/metadata/attributes/0cd74e1e-2e59-11e6-8a84-bae50000008a",
+        "type": "attributemetadata",
+        "mediaType": "application/json"
+      },
+      "id": "ddff1ee8-12c1-11e6-9464-e4de0000007a",
+      "name": "Приоритет проекта",
+      "type": "string",
+      "value": "Средний"
+    }
+  ]
+}

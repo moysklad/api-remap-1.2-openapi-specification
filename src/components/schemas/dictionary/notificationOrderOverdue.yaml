@@ -1,0 +1,16 @@
+type: object
+description: Уведомление о просроченном заказе покупателя
+x-polymorphic-parent: NotificationAbstract
+properties:
+  agentName:
+    type: string
+    maxLength: 255
+    description: Имя контрагента
+  deliveryPlannedMoment:
+    type: string
+    description: Планируемое время отгрузки
+  order:
+    $ref: '../../../openapi.yaml#/components/schemas/NotificationOrder'
+  sum:
+    type: integer
+    description: Сумма заказа

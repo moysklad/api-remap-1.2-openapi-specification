@@ -1,0 +1,6 @@
+type: object
+description: Грузовая таможенная декларация
+properties:
+  name:
+    type: string
+    description: Номер ГТД

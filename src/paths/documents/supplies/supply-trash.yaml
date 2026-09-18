@@ -1,0 +1,14 @@
+post:
+  operationId: moveSupplyToTrash
+  tags:
+    - Supplies
+  summary: Удалить Приемку в корзину
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

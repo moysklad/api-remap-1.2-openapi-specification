@@ -1,0 +1,15 @@
+type: object
+description: Изменение поля связанного с уведомлением объекта
+properties:
+  oldValue:
+    type: string
+    maxLength: 255
+    nullable: true
+    description: Значение поля до изменения
+    readOnly: true
+  newValue:
+    type: string
+    maxLength: 255
+    nullable: true
+    description: Значение поля после изменения
+    readOnly: true

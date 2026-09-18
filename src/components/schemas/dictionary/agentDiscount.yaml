@@ -1,0 +1,15 @@
+type: object
+properties:
+  discount:
+    description: Метаданные скидки
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/DiscountBase'
+  personalDiscount:
+    type: number
+    format: double
+    description: Процент персональной скидки
+  demandSumCorrection:
+    type: number
+    format: double
+    description: Коррекция суммы накоплений по скидке

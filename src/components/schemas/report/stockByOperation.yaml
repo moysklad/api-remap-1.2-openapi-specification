@@ -1,0 +1,17 @@
+type: object
+description: |
+  Строка отчета «Остатки по документам».
+
+  `meta` — ссылка на документ, по которому выдаются остатки.
+  Поддерживаемые типы документов: demand, customerorder, retaildemand,
+  invoicein, invoiceout, purchaseorder, supply, retailsalesreturn,
+  purchasereturn, salesreturn.
+properties:
+  meta:
+    description: Метаданные документа, по которому выдаются остатки
+    $ref: '../common/meta.yaml'
+  positions:
+    type: array
+    description: Массив остатков по каждой из позиций документа
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/StockByOperationPosition'

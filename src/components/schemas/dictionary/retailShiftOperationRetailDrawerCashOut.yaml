@@ -1,0 +1,5 @@
+type: object
+description: Выплата денег
+x-polymorphic-parent: RetailShiftOperation
+allOf:
+  - $ref: '../../../openapi.yaml#/components/schemas/RetailDrawerCashOut'

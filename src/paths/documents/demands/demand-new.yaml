@@ -1,0 +1,27 @@
+put:
+  operationId: getDemandTemplate
+  tags:
+    - Demands
+  summary: Шаблон Отгрузки
+  description: |
+    Предзаполненный шаблон Отгрузки. Пустое тело — стандартные значения без привязки к документу;
+    в теле можно передать, например, `customerOrder` или `invoicesOut` для шаблона на основе документа.
+  requestBody:
+    required: false
+    content:
+      application/json:
+        schema:
+          type: object
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/Demand'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+  parameters:
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'

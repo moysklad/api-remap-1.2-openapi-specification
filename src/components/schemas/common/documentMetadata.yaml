@@ -1,0 +1,15 @@
+type: object
+description: Метаданные объекта
+properties:
+  meta:
+    $ref: '../common/meta.yaml'
+  attributes:
+    $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfoList'
+  createShared:
+    type: boolean
+    description: Создавать новые документы с общим доступом
+  states:
+    type: array
+    description: Массив статусов документа
+    items:
+      $ref: '../../../components/schemas/dictionary/state.yaml'

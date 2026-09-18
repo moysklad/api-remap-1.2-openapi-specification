@@ -1,0 +1,50 @@
+[project]
+name = "{{{projectName}}}"
+version = "{{{packageVersion}}}"
+description = "Python SDK for MoySklad JSON API 1.2"
+authors = [
+  {name = "Lognex dev team"},
+]
+license = "Apache-2.0"
+readme = "README.md"
+requires-python = ">=3.10"
+keywords = ["MoySklad", "OpenAPI", "SDK", "JSON API", "Remap 1.2"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+  "Typing :: Typed",
+]
+
+dependencies = [
+  "urllib3>=2.1.0,<3.0.0",
+  "python-dateutil>=2.8.2",
+  "pydantic>=2,<3",
+  "typing-extensions>=4.7.1",
+]
+
+[project.urls]
+Homepage = "https://dev.moysklad.ru/"
+Documentation = "https://dev.moysklad.ru/doc/api/remap/1.2/"
+Repository = "https://{{{gitHost}}}/{{{gitUserId}}}/{{{gitRepoId}}}"
+Issues = "https://{{{gitHost}}}/{{{gitUserId}}}/{{{gitRepoId}}}/issues"
+Specification = "https://github.com/moysklad/api-remap-1.2-openapi-specification"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["{{{packageName}}}*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

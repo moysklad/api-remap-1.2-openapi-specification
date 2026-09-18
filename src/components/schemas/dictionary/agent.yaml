@@ -1,0 +1,23 @@
+type: object
+description: |
+  Метаданные контрагента или юрлица. Используется как тип полей-ссылок,
+  которые принимают только meta-ссылку, а в ответе сервера могут вернуться
+  как Counterparty, так и Organization. На запись поля `meta` достаточно, остальные поля
+  Counterparty/Organization читаются сервером только при создании самих этих сущностей.
+x-polymorphic-parent: EntityWithMeta
+x-implements: MetaEntity
+properties:
+  id:
+    type: string
+    format: uuid
+    description: ID товара
+    readOnly: true
+x-polymorphic-discriminator:
+  path: meta.type
+  mappings:
+    - type: counterparty
+      componentName: Counterparty
+    - type: organization
+      componentName: Organization
+    - type: employee
+      componentName: Employee

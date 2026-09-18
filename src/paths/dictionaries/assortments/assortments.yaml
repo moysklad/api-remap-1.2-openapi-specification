@@ -1,0 +1,61 @@
+get:
+  operationId: getAssortment
+  tags:
+    - Assortment
+  summary: Получить список ассортимента
+  description: Запрос всех товаров, услуг, комплектов, модификаций и партий в виде списка
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/limit'
+    - $ref: '../../../components/parameters.yaml#/offset'
+    - $ref: '../../../components/parameters.yaml#/search'
+    - $ref: '../../../components/parameters.yaml#/filter'
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/parameters.yaml#/order'
+    - name: groupBy
+      in: query
+      required: false
+      description: Параметр группировки (product, variant, consignment)
+      schema:
+        type: string
+        enum:
+          - product
+          - variant
+          - consignment
+    - name: stockMode
+      in: query
+      required: false
+      description: Фильтрация по значению остатка
+      schema:
+        type: string
+        enum:
+          - all
+          - positiveOnly
+          - negativeOnly
+          - empty
+          - nonEmpty
+          - underMinimum
+    - name: quantityMode
+      in: query
+      required: false
+      description: Фильтрация по значению доступно
+      schema:
+        type: string
+        enum:
+          - all
+          - positiveOnly
+          - negativeOnly
+          - empty
+          - nonEmpty
+          - underMinimum
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/AssortmentList'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+

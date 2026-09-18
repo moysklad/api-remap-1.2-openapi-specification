@@ -1,0 +1,18 @@
+get:
+  operationId: getAuditMetadataFilters
+  tags:
+    - Audit
+  summary: Получить доступные фильтры аудита
+  description: Возвращает набор значений для фильтрации контекстов аудита.
+  parameters:
+    - $ref: '../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос. JSON представление списка фильтров аудита
+      content:
+        application/json:
+          schema:
+            $ref: '../../openapi.yaml#/components/schemas/AuditFilters'
+    default:
+      $ref: '../../components/responses.yaml#/CommonError'

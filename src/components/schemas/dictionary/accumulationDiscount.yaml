@@ -1,0 +1,38 @@
+type: object
+x-polymorphic-parent: DiscountAbstract
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "accumulationdiscount"
+    - param: "id"
+  type: "accumulationdiscount"
+properties:
+  id:
+    type: string
+    format: uuid
+    description: ID дополнительного поля
+    readOnly: true
+  meta:
+    description: Метаданные скидки
+    $ref: '../common/meta.yaml'
+  productFolders:
+    type: array
+    description: Группы товаров со скидкой
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/ProductFolder'
+  levels:
+    type: array
+    description: Проценты скидок при определенной сумме продаж
+    items:
+      type: object
+      properties:
+        amount:
+          type: number
+          format: double
+          description: Сумма накоплений в копейках
+        discount:
+          type: number
+          format: double
+          description: Процент скидки, соответствующий данной сумме

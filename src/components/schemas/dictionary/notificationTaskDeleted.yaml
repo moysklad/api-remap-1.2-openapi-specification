@@ -1,0 +1,8 @@
+type: object
+description: Уведомление об удалении задачи
+x-polymorphic-parent: NotificationAbstract
+properties:
+  performedBy:
+    $ref: '../../../openapi.yaml#/components/schemas/NotificationNamedEntity'
+  task:
+    $ref: '../../../openapi.yaml#/components/schemas/NotificationDeletedTask'

@@ -1,0 +1,23 @@
+type: object
+description: Подписка компании
+properties:
+  role:
+    type: string
+    maxLength: 255
+    description: Роль авторизованного пользователя (USER/ADMIN)
+    readOnly: true
+  tariff:
+    type: string
+    maxLength: 255
+    description: Действующий тариф Аккаунта. Известные значения описаны в SubscriptionTariff
+    readOnly: true
+  isSubscriptionChangeAvailable:
+    type: boolean
+    description: Доступность изменения подписки
+    readOnly: true
+  subscriptionEndDate:
+    type: integer
+    format: int64
+    nullable: true
+    description: Дата (в миллисекундах) окончания действия текущего тарифа, если тариф отличается от "Пробный" и "Бесплатный"
+    readOnly: true

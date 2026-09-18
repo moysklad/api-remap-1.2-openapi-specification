@@ -1,0 +1,14 @@
+type: object
+description: Отчет об остатках денежных средств по кассам и счетам
+properties:
+  context:
+    description: Метаданные о сотруднике, выполнившем запрос
+    $ref: '../common/context.yaml'
+  meta:
+    description: Метаданные отчета об остатках денежных средств
+    $ref: '../common/meta.yaml'
+  rows:
+    type: array
+    description: Массив строк отчета об остатках денежных средств
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/ReportMoneyByAccount'
