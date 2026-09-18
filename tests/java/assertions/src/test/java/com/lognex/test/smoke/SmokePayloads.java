@@ -73,6 +73,20 @@ final class SmokePayloads {
 
     private static final String PRICELIST_POSITIONS_BATCH = array(PRICELIST_POSITION);
 
+    private static final String PAYROLL = obj(
+            ref("organization", "organization", "/entity/organization"),
+            str("startPayrollPeriod", "2026-03-24 00:00:00.000"),
+            str("endPayrollPeriod", "2026-03-25 23:59:59.000"));
+
+    private static final String PAYROLL_BATCH = array(PAYROLL);
+
+    private static final String PAYROLL_POSITION = obj(
+            ref("employee", "employee", "/entity/employee"),
+            field("baseSalary", "2000"),
+            field("pieceworkSalary", "3000"));
+
+    private static final String PAYROLL_POSITIONS_BATCH = array(PAYROLL_POSITION);
+
     private static final List<Rule> RULES = Arrays.asList(
             rule(methods("POST", "PUT").and(pathEndsWith("/delete")), EMPTY_ARRAY),
             rule(methods("POST").and(pathEndsWith("/files")), FILES),
@@ -85,6 +99,10 @@ final class SmokePayloads {
             rule(methods("POST", "PUT").and(pathContains("/metadata/attributes")), ATTRIBUTE),
             rule(methods("POST").and(pathIn("/entity/pricelist/batch")), PRICELIST_BATCH),
             rule(methods("POST").and(pathIn("/entity/pricelist")), PRICELIST),
+            rule(methods("POST").and(pathIn("/entity/payroll/batch")), PAYROLL_BATCH),
+            rule(methods("POST").and(pathIn("/entity/payroll")), PAYROLL),
+            rule(methods("POST").and(pathIn("/entity/payroll/{id}/positions/batch")), PAYROLL_POSITIONS_BATCH),
+            rule(methods("POST", "PUT").and(pathContains("/entity/payroll/")).and(pathContains("/positions")), PAYROLL_POSITION),
             rule(methods("POST").and(pathIn("/entity/pricelist/{id}/positions/batch")), PRICELIST_POSITIONS_BATCH),
             rule(methods("POST", "PUT").and(pathContains("/entity/pricelist/")).and(pathContains("/positions")), PRICELIST_POSITION),
             rule(methods("POST").and(pathEndsWith("/positions/batch")), POSITIONS_BATCH),

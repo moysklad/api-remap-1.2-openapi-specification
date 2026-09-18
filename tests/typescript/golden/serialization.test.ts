@@ -30,6 +30,7 @@ import {
 const FIXTURE_MODEL_MAP: Readonly<Record<string, string>> = {
     product: 'Product',
     product_full: 'Product',
+    pack: 'Pack',
     product_image: 'Image',
     product_storebalance: 'StoreBalance',
     counterparty: 'Counterparty',
@@ -150,6 +151,7 @@ const FIXTURE_MODEL_MAP: Readonly<Record<string, string>> = {
     finance_out_operation_purchase_order: 'FinanceOutOperationPurchaseOrder',
     finance_out_operation_sales_return: 'FinanceOutOperationSalesReturn',
     finance_out_operation_supply: 'FinanceOutOperationSupply',
+    payroll: 'Payroll',
     payment_in: 'PaymentIn',
     payment_out: 'PaymentOut',
     facture_in: 'FactureIn',

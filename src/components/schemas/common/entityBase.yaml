@@ -84,6 +84,10 @@ BatchResponseEntity:
         componentName: PaymentIn
       - type: paymentout
         componentName: PaymentOut
+      - type: payroll
+        componentName: Payroll
+      - type: payrollposition
+        componentName: PayrollPosition
       - type: prepaymentreturnposition
         componentName: PrepaymentReturnPosition
       - type: pricelist

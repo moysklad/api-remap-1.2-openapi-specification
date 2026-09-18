@@ -1,0 +1,116 @@
+type: object
+description: Начисление зарплаты
+x-polymorphic-parent: EntityWithMeta
+x-implements: MetaEntity
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "payroll"
+    - param: "id"
+  type: "payroll"
+properties:
+  meta:
+    description: Метаданные Начисления зарплаты
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID Начисления зарплаты
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  applicable:
+    type: boolean
+    description: Отметка о проведении
+  attributes:
+    description: Коллекция метаданных доп. полей
+    nullable: true
+    type: array
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
+  created:
+    type: string
+    description: Дата создания
+    readOnly: true
+  description:
+    type: string
+    maxLength: 4096
+    description: Описание Начисления зарплаты
+  endPayrollPeriod:
+    type: string
+    description: |
+      Окончание расчётного периода, за который начисляется зарплата.
+      Разница начала и окончания расчётного периода должна быть кратна 24 часам; секунды игнорируются.
+  externalCode:
+    type: string
+    maxLength: 255
+    description: Внешний код Начисления зарплаты
+  files:
+    description: Метаданные массива Файлов (максимальное количество файлов — 100)
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/FileList'
+  group:
+    description: Отдел сотрудника
+    $ref: '../../../openapi.yaml#/components/schemas/Group'
+  moment:
+    type: string
+    description: Дата документа
+  name:
+    type: string
+    maxLength: 255
+    description: Наименование Начисления зарплаты
+  organization:
+    description: Метаданные юрлица
+    $ref: '../../../openapi.yaml#/components/schemas/Organization'
+  owner:
+    description: Владелец (Сотрудник)
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Employee'
+  positions:
+    type: object
+    description: Метаданные позиций Начисления зарплаты
+    $ref: '../../../openapi.yaml#/components/schemas/PayrollPositionList'
+  printed:
+    type: boolean
+    description: Напечатан ли документ
+    readOnly: true
+  published:
+    type: boolean
+    description: Опубликован ли документ
+    readOnly: true
+  shared:
+    type: boolean
+    description: Общий доступ
+  startPayrollPeriod:
+    type: string
+    description: |
+      Начало расчётного периода, за который начисляется зарплата.
+      Разница начала и окончания расчётного периода должна быть кратна 24 часам; секунды игнорируются.
+  state:
+    description: Метаданные статуса Начисления зарплаты
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/State'
+  sum:
+    type: number
+    format: double
+    description: Сумма Начисления зарплаты в копейках
+    readOnly: true
+  syncId:
+    type: string
+    format: uuid
+    description: ID синхронизации. После заполнения недоступен для изменения
+  updated:
+    type: string
+    description: Момент последнего обновления Начисления зарплаты
+    readOnly: true
