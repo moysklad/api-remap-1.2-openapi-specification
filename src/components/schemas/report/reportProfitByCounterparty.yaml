@@ -2,14 +2,8 @@ type: object
 description: Строка отчета «Прибыльность по покупателям»
 properties:
   counterparty:
-    type: object
     description: Краткое представление покупателя
-    properties:
-      meta:
-        $ref: '../common/meta.yaml'
-      name:
-        type: string
-        description: Наименование покупателя
+    $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
   margin:
     type: number
     format: double

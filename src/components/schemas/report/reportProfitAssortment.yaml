@@ -10,20 +10,11 @@ properties:
     type: string
     description: Код сущности
   uom:
-    type: object
     description: Единица измерения
-    properties:
-      meta:
-        $ref: '../common/meta.yaml'
-      name:
-        type: string
-        description: Наименование единицы измерения
+    $ref: '../../../openapi.yaml#/components/schemas/Uom'
   article:
     type: string
     description: Артикул товара, модификации или комплекта
   image:
-    type: object
     description: Изображение сущности
-    properties:
-      meta:
-        $ref: '../common/meta.yaml'
+    $ref: '../../../openapi.yaml#/components/schemas/Image'

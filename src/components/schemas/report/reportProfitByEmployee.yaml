@@ -2,14 +2,8 @@ type: object
 description: Строка отчета «Прибыльность по сотрудникам»
 properties:
   employee:
-    type: object
     description: Краткое представление сотрудника
-    properties:
-      meta:
-        $ref: '../common/meta.yaml'
-      name:
-        type: string
-        description: Имя сотрудника
+    $ref: '../../../openapi.yaml#/components/schemas/Employee'
   margin:
     type: number
     format: double

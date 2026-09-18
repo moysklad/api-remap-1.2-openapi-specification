@@ -1,0 +1,22 @@
+type: object
+description: Документ, связанный с Товаром
+properties:
+  meta:
+    description: Метаданные документа
+    $ref: '../common/meta.yaml'
+  name:
+    type: string
+    maxLength: 255
+    description: Номер документа
+  description:
+    type: string
+    maxLength: 255
+    description: Комментарий к документу
+  moment:
+    type: string
+    description: Дата проведения документа
+  agent:
+    description: Контрагент документа
+    x-agent-reference: true
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Agent'

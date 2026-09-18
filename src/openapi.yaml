@@ -61,6 +61,16 @@ paths:
     $ref: './paths/reports/money/money-plotseries.yaml'
   /report/money/byaccount:
     $ref: './paths/reports/money/money-byaccount.yaml'
+  /report/counterparty:
+    $ref: './paths/reports/counterparty/counterparty.yaml'
+  /report/counterparty/{id}:
+    $ref: './paths/reports/counterparty/counterparty-by-id.yaml'
+  /report/turnover/all:
+    $ref: './paths/reports/turnover/turnover-all.yaml'
+  /report/turnover/bystore:
+    $ref: './paths/reports/turnover/turnover-bystore.yaml'
+  /report/turnover/byoperations:
+    $ref: './paths/reports/turnover/turnover-byoperations.yaml'
 
   # Audit
   /audit:
@@ -643,6 +653,8 @@ paths:
     $ref: './paths/documents/internalorders/internalorders.yaml'
   /entity/internalorder/{id}:
     $ref: './paths/documents/internalorders/internalorder-by-id.yaml'
+  /entity/internalorder/{id}/trash:
+    $ref: './paths/documents/internalorders/internalorder-trash.yaml'
   /entity/internalorder/delete:
     $ref: './paths/documents/internalorders/internalorders-delete.yaml'
   /entity/internalorder/batch:
@@ -674,6 +686,8 @@ paths:
     $ref: './paths/documents/processingorders/processingorders.yaml'
   /entity/processingorder/{id}:
     $ref: './paths/documents/processingorders/processingorder-by-id.yaml'
+  /entity/processingorder/{id}/trash:
+    $ref: './paths/documents/processingorders/processingorder-trash.yaml'
   /entity/processingorder/delete:
     $ref: './paths/documents/processingorders/processingorders-delete.yaml'
   /entity/processingorder/batch:
@@ -709,6 +723,8 @@ paths:
     $ref: './paths/documents/processings/processings.yaml'
   /entity/processing/{id}:
     $ref: './paths/documents/processings/processing-by-id.yaml'
+  /entity/processing/{id}/trash:
+    $ref: './paths/documents/processings/processing-trash.yaml'
   /entity/processing/{id}/files:
     $ref: './paths/documents/processings/processing-files.yaml'
   /entity/processing/{id}/files/{fileId}:
@@ -748,6 +764,8 @@ paths:
     $ref: './paths/documents/customerorders/customerorders.yaml'
   /entity/customerorder/{id}:
     $ref: './paths/documents/customerorders/customerorder-by-id.yaml'
+  /entity/customerorder/{id}/trash:
+    $ref: './paths/documents/customerorders/customerorder-trash.yaml'
   /entity/customerorder/delete:
     $ref: './paths/documents/customerorders/customerorders-delete.yaml'
   /entity/customerorder/batch:
@@ -776,6 +794,10 @@ paths:
     $ref: './paths/documents/customerorders/customerorder-positions-delete.yaml'
   /entity/customerorder/{id}/notes:
     $ref: './paths/documents/customerorders/customerorder-notes.yaml'
+  /entity/customerorder/{id}/notes/batch:
+    $ref: './paths/documents/customerorders/customerorder-notes-batch.yaml'
+  /entity/customerorder/{id}/notes/delete:
+    $ref: './paths/documents/customerorders/customerorder-notes-delete.yaml'
   /entity/customerorder/{id}/notes/{noteId}:
     $ref: './paths/documents/customerorders/customerorder-note-by-id.yaml'
   /entity/customerorder/{id}/publication:
@@ -791,6 +813,8 @@ paths:
     $ref: './paths/documents/invoiceouts/invoiceouts.yaml'
   /entity/invoiceout/{id}:
     $ref: './paths/documents/invoiceouts/invoiceout-by-id.yaml'
+  /entity/invoiceout/{id}/trash:
+    $ref: './paths/documents/invoiceouts/invoiceout-trash.yaml'
   /entity/invoiceout/delete:
     $ref: './paths/documents/invoiceouts/invoiceouts-delete.yaml'
   /entity/invoiceout/batch:
@@ -823,6 +847,10 @@ paths:
     $ref: './paths/documents/invoiceouts/invoiceout-file-by-id.yaml'
   /entity/invoiceout/{id}/notes:
     $ref: './paths/documents/invoiceouts/invoiceout-notes.yaml'
+  /entity/invoiceout/{id}/notes/batch:
+    $ref: './paths/documents/invoiceouts/invoiceout-notes-batch.yaml'
+  /entity/invoiceout/{id}/notes/delete:
+    $ref: './paths/documents/invoiceouts/invoiceout-notes-delete.yaml'
   /entity/invoiceout/{id}/notes/{noteId}:
     $ref: './paths/documents/invoiceouts/invoiceout-note-by-id.yaml'
   # Documents - Invoices In
@@ -830,6 +858,8 @@ paths:
     $ref: './paths/documents/invoiceins/invoiceins.yaml'
   /entity/invoicein/{id}:
     $ref: './paths/documents/invoiceins/invoicein-by-id.yaml'
+  /entity/invoicein/{id}/trash:
+    $ref: './paths/documents/invoiceins/invoicein-trash.yaml'
   /entity/invoicein/delete:
     $ref: './paths/documents/invoiceins/invoiceins-delete.yaml'
   /entity/invoicein/batch:
@@ -862,6 +892,10 @@ paths:
     $ref: './paths/documents/invoiceins/invoicein-file-by-id.yaml'
   /entity/invoicein/{id}/notes:
     $ref: './paths/documents/invoiceins/invoicein-notes.yaml'
+  /entity/invoicein/{id}/notes/batch:
+    $ref: './paths/documents/invoiceins/invoicein-notes-batch.yaml'
+  /entity/invoicein/{id}/notes/delete:
+    $ref: './paths/documents/invoiceins/invoicein-notes-delete.yaml'
   /entity/invoicein/{id}/notes/{noteId}:
     $ref: './paths/documents/invoiceins/invoicein-note-by-id.yaml'
   # Documents - Demands
@@ -869,6 +903,8 @@ paths:
     $ref: './paths/documents/demands/demands.yaml'
   /entity/demand/{id}:
     $ref: './paths/documents/demands/demand-by-id.yaml'
+  /entity/demand/{id}/trash:
+    $ref: './paths/documents/demands/demand-trash.yaml'
   /entity/demand/delete:
     $ref: './paths/documents/demands/demands-delete.yaml'
   /entity/demand/batch:
@@ -900,6 +936,8 @@ paths:
     $ref: './paths/documents/retaildemands/retaildemands.yaml'
   /entity/retaildemand/{id}:
     $ref: './paths/documents/retaildemands/retaildemand-by-id.yaml'
+  /entity/retaildemand/{id}/trash:
+    $ref: './paths/documents/retaildemands/retaildemand-trash.yaml'
   /entity/retaildemand/delete:
     $ref: './paths/documents/retaildemands/retaildemands-delete.yaml'
   /entity/retaildemand/batch:
@@ -929,6 +967,8 @@ paths:
     $ref: './paths/documents/retailsalesreturns/retailsalesreturns.yaml'
   /entity/retailsalesreturn/{id}:
     $ref: './paths/documents/retailsalesreturns/retailsalesreturn-by-id.yaml'
+  /entity/retailsalesreturn/{id}/trash:
+    $ref: './paths/documents/retailsalesreturns/retailsalesreturn-trash.yaml'
   /entity/retailsalesreturn/batch:
     $ref: './paths/documents/retailsalesreturns/retailsalesreturns-batch.yaml'
   /entity/retailsalesreturn/metadata:
@@ -954,6 +994,8 @@ paths:
     $ref: './paths/documents/enters/enters.yaml'
   /entity/enter/{id}:
     $ref: './paths/documents/enters/enter-by-id.yaml'
+  /entity/enter/{id}/trash:
+    $ref: './paths/documents/enters/enter-trash.yaml'
   /entity/enter/{id}/files:
     $ref: './paths/documents/enters/enter-files.yaml'
   /entity/enter/{id}/files/{fileId}:
@@ -989,6 +1031,8 @@ paths:
     $ref: './paths/documents/salesreturns/salesreturns.yaml'
   /entity/salesreturn/{id}:
     $ref: './paths/documents/salesreturns/salesreturn-by-id.yaml'
+  /entity/salesreturn/{id}/trash:
+    $ref: './paths/documents/salesreturns/salesreturn-trash.yaml'
   /entity/salesreturn/delete:
     $ref: './paths/documents/salesreturns/salesreturns-delete.yaml'
   /entity/salesreturn/batch:
@@ -1016,6 +1060,8 @@ paths:
     $ref: './paths/documents/losses/losses.yaml'
   /entity/loss/{id}:
     $ref: './paths/documents/losses/loss-by-id.yaml'
+  /entity/loss/{id}/trash:
+    $ref: './paths/documents/losses/loss-trash.yaml'
   /entity/loss/delete:
     $ref: './paths/documents/losses/losses-delete.yaml'
   /entity/loss/batch:
@@ -1047,6 +1093,8 @@ paths:
     $ref: './paths/documents/inventories/inventories.yaml'
   /entity/inventory/{id}:
     $ref: './paths/documents/inventories/inventory-by-id.yaml'
+  /entity/inventory/{id}/trash:
+    $ref: './paths/documents/inventories/inventory-trash.yaml'
   /entity/inventory/{id}/files:
     $ref: './paths/documents/inventories/inventory-files.yaml'
   /entity/inventory/{id}/files/{fileId}:
@@ -1079,11 +1127,48 @@ paths:
     $ref: './paths/documents/inventories/inventory-positions-delete.yaml'
   /rpc/inventory/{id}/recalcCalculatedQuantity:
     $ref: './paths/documents/inventories/inventory-recalc-calculated-quantity.yaml'
+  # Documents - Price Lists
+  /entity/pricelist:
+    $ref: './paths/documents/pricelists/pricelists.yaml'
+  /entity/pricelist/{id}:
+    $ref: './paths/documents/pricelists/pricelist-by-id.yaml'
+  /entity/pricelist/{id}/trash:
+    $ref: './paths/documents/pricelists/pricelist-trash.yaml'
+  /entity/pricelist/{id}/files:
+    $ref: './paths/documents/pricelists/pricelist-files.yaml'
+  /entity/pricelist/{id}/files/{fileId}:
+    $ref: './paths/documents/pricelists/pricelist-file-by-id.yaml'
+  /entity/pricelist/delete:
+    $ref: './paths/documents/pricelists/pricelists-delete.yaml'
+  /entity/pricelist/batch:
+    $ref: './paths/documents/pricelists/pricelists-batch.yaml'
+  /entity/pricelist/metadata:
+    $ref: './paths/documents/pricelists/pricelist-metadata.yaml'
+  /entity/pricelist/metadata/attributes:
+    $ref: './paths/documents/pricelists/pricelist-metadata-attribute.yaml'
+  /entity/pricelist/metadata/attributes/{id}:
+    $ref: './paths/documents/pricelists/pricelist-metadata-attribute-by-id.yaml'
+  /entity/pricelist/metadata/states:
+    $ref: './paths/documents/pricelists/pricelist-metadata-states.yaml'
+  /entity/pricelist/metadata/states/{id}:
+    $ref: './paths/documents/pricelists/pricelist-metadata-state-by-id.yaml'
+  /entity/pricelist/metadata/states/batch:
+    $ref: './paths/documents/pricelists/pricelist-metadata-states-batch.yaml'
+  /entity/pricelist/{id}/positions:
+    $ref: './paths/documents/pricelists/pricelist-positions.yaml'
+  /entity/pricelist/{id}/positions/batch:
+    $ref: './paths/documents/pricelists/pricelist-positions-batch.yaml'
+  /entity/pricelist/{id}/positions/{positionId}:
+    $ref: './paths/documents/pricelists/pricelist-position-by-id.yaml'
+  /entity/pricelist/{id}/positions/delete:
+    $ref: './paths/documents/pricelists/pricelist-positions-delete.yaml'
   # Documents - Purchase Returns
   /entity/purchasereturn:
     $ref: './paths/documents/purchasereturns/purchasereturns.yaml'
   /entity/purchasereturn/{id}:
     $ref: './paths/documents/purchasereturns/purchasereturn-by-id.yaml'
+  /entity/purchasereturn/{id}/trash:
+    $ref: './paths/documents/purchasereturns/purchasereturn-trash.yaml'
   /entity/purchasereturn/{id}/files:
     $ref: './paths/documents/purchasereturns/purchasereturn-files.yaml'
   /entity/purchasereturn/{id}/files/{fileId}:
@@ -1116,6 +1201,10 @@ paths:
     $ref: './paths/documents/purchasereturns/purchasereturn-positions-delete.yaml'
   /entity/purchasereturn/{id}/notes:
     $ref: './paths/documents/purchasereturns/purchasereturn-notes.yaml'
+  /entity/purchasereturn/{id}/notes/batch:
+    $ref: './paths/documents/purchasereturns/purchasereturn-notes-batch.yaml'
+  /entity/purchasereturn/{id}/notes/delete:
+    $ref: './paths/documents/purchasereturns/purchasereturn-notes-delete.yaml'
   /entity/purchasereturn/{id}/notes/{noteId}:
     $ref: './paths/documents/purchasereturns/purchasereturn-note-by-id.yaml'
   # Documents - Supplies
@@ -1157,6 +1246,10 @@ paths:
     $ref: './paths/documents/supplies/supply-positions-delete.yaml'
   /entity/supply/{id}/notes:
     $ref: './paths/documents/supplies/supply-notes.yaml'
+  /entity/supply/{id}/notes/batch:
+    $ref: './paths/documents/supplies/supply-notes-batch.yaml'
+  /entity/supply/{id}/notes/delete:
+    $ref: './paths/documents/supplies/supply-notes-delete.yaml'
   /entity/supply/{id}/notes/{noteId}:
     $ref: './paths/documents/supplies/supply-note-by-id.yaml'
   # Documents - Prepayments
@@ -1167,6 +1260,8 @@ paths:
     $ref: './paths/documents/prepaymentreturns/prepaymentreturns.yaml'
   /entity/prepaymentreturn/{id}:
     $ref: './paths/documents/prepaymentreturns/prepaymentreturn-by-id.yaml'
+  /entity/prepaymentreturn/{id}/trash:
+    $ref: './paths/documents/prepaymentreturns/prepaymentreturn-trash.yaml'
   /entity/prepaymentreturn/metadata:
     $ref: './paths/documents/prepaymentreturns/prepaymentreturn-metadata.yaml'
   /entity/prepaymentreturn/metadata/attributes:
@@ -1188,6 +1283,8 @@ paths:
     $ref: './paths/documents/moves/moves.yaml'
   /entity/move/{id}:
     $ref: './paths/documents/moves/move-by-id.yaml'
+  /entity/move/{id}/trash:
+    $ref: './paths/documents/moves/move-trash.yaml'
   /entity/move/{id}/files:
     $ref: './paths/documents/moves/move-files.yaml'
   /entity/move/{id}/files/{fileId}:
@@ -1223,6 +1320,8 @@ paths:
     $ref: './paths/documents/purchaseorders/purchaseorders.yaml'
   /entity/purchaseorder/{id}:
     $ref: './paths/documents/purchaseorders/purchaseorder-by-id.yaml'
+  /entity/purchaseorder/{id}/trash:
+    $ref: './paths/documents/purchaseorders/purchaseorder-trash.yaml'
   /entity/purchaseorder/delete:
     $ref: './paths/documents/purchaseorders/purchaseorders-delete.yaml'
   /entity/purchaseorder/batch:
@@ -1251,6 +1350,10 @@ paths:
     $ref: './paths/documents/purchaseorders/purchaseorder-positions-delete.yaml'
   /entity/purchaseorder/{id}/notes:
     $ref: './paths/documents/purchaseorders/purchaseorder-notes.yaml'
+  /entity/purchaseorder/{id}/notes/batch:
+    $ref: './paths/documents/purchaseorders/purchaseorder-notes-batch.yaml'
+  /entity/purchaseorder/{id}/notes/delete:
+    $ref: './paths/documents/purchaseorders/purchaseorder-notes-delete.yaml'
   /entity/purchaseorder/{id}/notes/{noteId}:
     $ref: './paths/documents/purchaseorders/purchaseorder-note-by-id.yaml'
   # Documents - Production Tasks
@@ -1261,6 +1364,8 @@ paths:
     $ref: './paths/documents/emissionorders/emissionorders.yaml'
   /entity/emissionorder/{id}:
     $ref: './paths/documents/emissionorders/emissionorder-by-id.yaml'
+  /entity/emissionorder/{id}/trash:
+    $ref: './paths/documents/emissionorders/emissionorder-trash.yaml'
   /entity/emissionorder/batch:
     $ref: './paths/documents/emissionorders/emissionorders-batch.yaml'
   /entity/emissionorder/metadata:
@@ -1283,6 +1388,8 @@ paths:
     $ref: './paths/documents/commissionreportins/commissionreportins.yaml'
   /entity/commissionreportin/{id}:
     $ref: './paths/documents/commissionreportins/commissionreportin-by-id.yaml'
+  /entity/commissionreportin/{id}/trash:
+    $ref: './paths/documents/commissionreportins/commissionreportin-trash.yaml'
   /entity/commissionreportin/delete:
     $ref: './paths/documents/commissionreportins/commissionreportins-delete.yaml'
   /entity/commissionreportin/batch:
@@ -1319,6 +1426,8 @@ paths:
     $ref: './paths/documents/commissionreportouts/commissionreportouts.yaml'
   /entity/commissionreportout/{id}:
     $ref: './paths/documents/commissionreportouts/commissionreportout-by-id.yaml'
+  /entity/commissionreportout/{id}/trash:
+    $ref: './paths/documents/commissionreportouts/commissionreportout-trash.yaml'
   /entity/commissionreportout/delete:
     $ref: './paths/documents/commissionreportouts/commissionreportouts-delete.yaml'
   /entity/commissionreportout/batch:
@@ -1349,14 +1458,42 @@ paths:
     $ref: './paths/documents/commissionreportouts/commissionreportout-file-by-id.yaml'
   /entity/commissionreportout/{id}/notes:
     $ref: './paths/documents/commissionreportouts/commissionreportout-notes.yaml'
+  /entity/commissionreportout/{id}/notes/batch:
+    $ref: './paths/documents/commissionreportouts/commissionreportout-notes-batch.yaml'
+  /entity/commissionreportout/{id}/notes/delete:
+    $ref: './paths/documents/commissionreportouts/commissionreportout-notes-delete.yaml'
   /entity/commissionreportout/{id}/notes/{noteId}:
     $ref: './paths/documents/commissionreportouts/commissionreportout-note-by-id.yaml'
+
+  # Documents - Counterparty Adjustments
+  /entity/counterpartyadjustment:
+    $ref: './paths/documents/counterpartyadjustments/counterpartyadjustments.yaml'
+  /entity/counterpartyadjustment/{id}:
+    $ref: './paths/documents/counterpartyadjustments/counterpartyadjustment-by-id.yaml'
+  /entity/counterpartyadjustment/{id}/trash:
+    $ref: './paths/documents/counterpartyadjustments/counterpartyadjustment-trash.yaml'
+  /entity/counterpartyadjustment/{id}/files:
+    $ref: './paths/documents/counterpartyadjustments/counterpartyadjustment-files.yaml'
+  /entity/counterpartyadjustment/{id}/files/{fileId}:
+    $ref: './paths/documents/counterpartyadjustments/counterpartyadjustment-file-by-id.yaml'
+  /entity/counterpartyadjustment/delete:
+    $ref: './paths/documents/counterpartyadjustments/counterpartyadjustments-delete.yaml'
+  /entity/counterpartyadjustment/batch:
+    $ref: './paths/documents/counterpartyadjustments/counterpartyadjustments-batch.yaml'
+  /entity/counterpartyadjustment/metadata:
+    $ref: './paths/documents/counterpartyadjustments/counterpartyadjustment-metadata.yaml'
+  /entity/counterpartyadjustment/metadata/attributes:
+    $ref: './paths/documents/counterpartyadjustments/counterpartyadjustment-metadata-attribute.yaml'
+  /entity/counterpartyadjustment/metadata/attributes/{id}:
+    $ref: './paths/documents/counterpartyadjustments/counterpartyadjustment-metadata-attribute-by-id.yaml'
 
   # Documents - Cash In Orders
   /entity/cashin:
     $ref: './paths/documents/cashins/cashins.yaml'
   /entity/cashin/{id}:
     $ref: './paths/documents/cashins/cashin-by-id.yaml'
+  /entity/cashin/{id}/trash:
+    $ref: './paths/documents/cashins/cashin-trash.yaml'
   /entity/cashin/delete:
     $ref: './paths/documents/cashins/cashins-delete.yaml'
   /entity/cashin/batch:
@@ -1376,11 +1513,51 @@ paths:
   /entity/cashin/new:
     $ref: './paths/documents/cashins/cashin-new.yaml'
 
+  # Documents - Payrolls
+  /entity/payroll:
+    $ref: './paths/documents/payrolls/payrolls.yaml'
+  /entity/payroll/{id}:
+    $ref: './paths/documents/payrolls/payroll-by-id.yaml'
+  /entity/payroll/{id}/trash:
+    $ref: './paths/documents/payrolls/payroll-trash.yaml'
+  /entity/payroll/{id}/files:
+    $ref: './paths/documents/payrolls/payroll-files.yaml'
+  /entity/payroll/{id}/files/{fileId}:
+    $ref: './paths/documents/payrolls/payroll-file-by-id.yaml'
+  /entity/payroll/delete:
+    $ref: './paths/documents/payrolls/payrolls-delete.yaml'
+  /entity/payroll/batch:
+    $ref: './paths/documents/payrolls/payrolls-batch.yaml'
+  /entity/payroll/metadata:
+    $ref: './paths/documents/payrolls/payroll-metadata.yaml'
+  /entity/payroll/metadata/attributes:
+    $ref: './paths/documents/payrolls/payroll-metadata-attribute.yaml'
+  /entity/payroll/metadata/attributes/{id}:
+    $ref: './paths/documents/payrolls/payroll-metadata-attribute-by-id.yaml'
+  /entity/payroll/metadata/states:
+    $ref: './paths/documents/payrolls/payroll-metadata-states.yaml'
+  /entity/payroll/metadata/states/{id}:
+    $ref: './paths/documents/payrolls/payroll-metadata-state-by-id.yaml'
+  /entity/payroll/metadata/states/batch:
+    $ref: './paths/documents/payrolls/payroll-metadata-states-batch.yaml'
+  /entity/payroll/new:
+    $ref: './paths/documents/payrolls/payroll-new.yaml'
+  /entity/payroll/{id}/positions:
+    $ref: './paths/documents/payrolls/payroll-positions.yaml'
+  /entity/payroll/{id}/positions/batch:
+    $ref: './paths/documents/payrolls/payroll-positions-batch.yaml'
+  /entity/payroll/{id}/positions/{positionId}:
+    $ref: './paths/documents/payrolls/payroll-position-by-id.yaml'
+  /entity/payroll/{id}/positions/delete:
+    $ref: './paths/documents/payrolls/payroll-positions-delete.yaml'
+
   # Documents - Payment In
   /entity/paymentin:
     $ref: './paths/documents/paymentins/paymentins.yaml'
   /entity/paymentin/{id}:
     $ref: './paths/documents/paymentins/paymentin-by-id.yaml'
+  /entity/paymentin/{id}/trash:
+    $ref: './paths/documents/paymentins/paymentin-trash.yaml'
   /entity/paymentin/{id}/files:
     $ref: './paths/documents/paymentins/paymentin-files.yaml'
   /entity/paymentin/{id}/files/{fileId}:
@@ -1409,6 +1586,8 @@ paths:
     $ref: './paths/documents/factureins/factureins.yaml'
   /entity/facturein/{id}:
     $ref: './paths/documents/factureins/facturein-by-id.yaml'
+  /entity/facturein/{id}/trash:
+    $ref: './paths/documents/factureins/facturein-trash.yaml'
   /entity/facturein/delete:
     $ref: './paths/documents/factureins/factureins-delete.yaml'
   /entity/facturein/batch:
@@ -1433,6 +1612,8 @@ paths:
     $ref: './paths/documents/factureouts/factureouts.yaml'
   /entity/factureout/{id}:
     $ref: './paths/documents/factureouts/factureout-by-id.yaml'
+  /entity/factureout/{id}/trash:
+    $ref: './paths/documents/factureouts/factureout-trash.yaml'
   /entity/factureout/delete:
     $ref: './paths/documents/factureouts/factureouts-delete.yaml'
   /entity/factureout/batch:
@@ -1457,6 +1638,8 @@ paths:
     $ref: './paths/documents/paymentouts/paymentouts.yaml'
   /entity/paymentout/{id}:
     $ref: './paths/documents/paymentouts/paymentout-by-id.yaml'
+  /entity/paymentout/{id}/trash:
+    $ref: './paths/documents/paymentouts/paymentout-trash.yaml'
   /entity/paymentout/{id}/files:
     $ref: './paths/documents/paymentouts/paymentout-files.yaml'
   /entity/paymentout/{id}/files/{fileId}:
@@ -1485,6 +1668,8 @@ paths:
     $ref: './paths/documents/retaildrawercashins/retaildrawercashins.yaml'
   /entity/retaildrawercashin/{id}:
     $ref: './paths/documents/retaildrawercashins/retaildrawercashin-by-id.yaml'
+  /entity/retaildrawercashin/{id}/trash:
+    $ref: './paths/documents/retaildrawercashins/retaildrawercashin-trash.yaml'
   /entity/retaildrawercashin/{id}/files:
     $ref: './paths/documents/retaildrawercashins/retaildrawercashin-files.yaml'
   /entity/retaildrawercashin/{id}/files/{fileId}:
@@ -1513,6 +1698,8 @@ paths:
     $ref: './paths/documents/retaildrawercashouts/retaildrawercashouts.yaml'
   /entity/retaildrawercashout/{id}:
     $ref: './paths/documents/retaildrawercashouts/retaildrawercashout-by-id.yaml'
+  /entity/retaildrawercashout/{id}/trash:
+    $ref: './paths/documents/retaildrawercashouts/retaildrawercashout-trash.yaml'
   /entity/retaildrawercashout/{id}/files:
     $ref: './paths/documents/retaildrawercashouts/retaildrawercashout-files.yaml'
   /entity/retaildrawercashout/{id}/files/{fileId}:
@@ -1545,6 +1732,8 @@ paths:
     $ref: './paths/documents/retailshifts/retailshifts-batch.yaml'
   /entity/retailshift/{id}:
     $ref: './paths/documents/retailshifts/retailshift-by-id.yaml'
+  /entity/retailshift/{id}/trash:
+    $ref: './paths/documents/retailshifts/retailshift-trash.yaml'
   /entity/retailshift/metadata:
     $ref: './paths/documents/retailshifts/retailshift-metadata.yaml'
   /entity/retailshift/metadata/attributes:
@@ -1557,6 +1746,8 @@ paths:
     $ref: './paths/documents/cashouts/cashouts.yaml'
   /entity/cashout/{id}:
     $ref: './paths/documents/cashouts/cashout-by-id.yaml'
+  /entity/cashout/{id}/trash:
+    $ref: './paths/documents/cashouts/cashout-trash.yaml'
   /entity/cashout/delete:
     $ref: './paths/documents/cashouts/cashouts-delete.yaml'
   /entity/cashout/batch:
@@ -1751,6 +1942,10 @@ components:
       $ref: './components/schemas/dictionary/counterparty.yaml'
     CounterpartyList:
       $ref: './components/schemas/dictionary/counterpartyList.yaml'
+    CounterpartyAdjustment:
+      $ref: './components/schemas/dictionary/counterpartyAdjustment.yaml'
+    CounterpartyAdjustmentList:
+      $ref: './components/schemas/dictionary/counterpartyAdjustmentList.yaml'
     CountryList:
       $ref: './components/schemas/dictionary/countryList.yaml'
     BatchResponseEntity:
@@ -1781,6 +1976,8 @@ components:
       $ref: './components/schemas/dictionary/customRole.yaml'
     CustomRoleList:
       $ref: './components/schemas/dictionary/customRoleList.yaml'
+    RolePermissions:
+      $ref: './components/schemas/common/rolePermissions.yaml'
     Permissions:
       $ref: './components/schemas/common/permissions.yaml'
     PermissionValue:
@@ -1877,6 +2074,32 @@ components:
       $ref: './components/schemas/report/reportMoneyByAccount.yaml'
     ReportMoneyByAccountList:
       $ref: './components/schemas/report/reportMoneyByAccountList.yaml'
+    ReportCounterparty:
+      $ref: './components/schemas/report/reportCounterparty.yaml'
+    ReportCounterpartyList:
+      $ref: './components/schemas/report/reportCounterpartyList.yaml'
+    ReportCounterpartyQuery:
+      $ref: './components/schemas/report/reportCounterpartyQuery.yaml'
+    ReportTurnoverIndicators:
+      $ref: './components/schemas/report/reportTurnoverIndicators.yaml'
+    ReportTurnoverAssortment:
+      $ref: './components/schemas/report/reportTurnoverAssortment.yaml'
+    ReportTurnover:
+      $ref: './components/schemas/report/reportTurnover.yaml'
+    ReportTurnoverList:
+      $ref: './components/schemas/report/reportTurnoverList.yaml'
+    ReportTurnoverByStoreItem:
+      $ref: './components/schemas/report/reportTurnoverByStoreItem.yaml'
+    ReportTurnoverByStore:
+      $ref: './components/schemas/report/reportTurnoverByStore.yaml'
+    ReportTurnoverByStoreList:
+      $ref: './components/schemas/report/reportTurnoverByStoreList.yaml'
+    ReportTurnoverOperation:
+      $ref: './components/schemas/report/reportTurnoverOperation.yaml'
+    ReportTurnoverByOperation:
+      $ref: './components/schemas/report/reportTurnoverByOperation.yaml'
+    ReportTurnoverByOperationList:
+      $ref: './components/schemas/report/reportTurnoverByOperationList.yaml'
     Declaration:
       $ref: './components/schemas/common/declaration.yaml'
     Gtd:
@@ -1934,6 +2157,18 @@ components:
       $ref: './components/schemas/dictionary/ppeType.yaml'
     PositionStock:
       $ref: './components/schemas/common/positionStock.yaml'
+    PriceList:
+      $ref: './components/schemas/dictionary/priceList.yaml'
+    PriceListList:
+      $ref: './components/schemas/dictionary/priceListList.yaml'
+    PriceListPosition:
+      $ref: './components/schemas/dictionary/priceListPosition.yaml'
+    PriceListPositionList:
+      $ref: './components/schemas/dictionary/priceListPositionList.yaml'
+    PriceListColumn:
+      $ref: './components/schemas/dictionary/priceListColumn.yaml'
+    PriceListCell:
+      $ref: './components/schemas/dictionary/priceListCell.yaml'
     PriceType:
       $ref: './components/schemas/dictionary/priceType.yaml'
     Product:
@@ -2236,6 +2471,14 @@ components:
       $ref: './components/schemas/dictionary/paymentIn.yaml'
     PaymentInList:
       $ref: './components/schemas/dictionary/paymentInList.yaml'
+    Payroll:
+      $ref: './components/schemas/dictionary/payroll.yaml'
+    PayrollList:
+      $ref: './components/schemas/dictionary/payrollList.yaml'
+    PayrollPosition:
+      $ref: './components/schemas/dictionary/payrollPosition.yaml'
+    PayrollPositionList:
+      $ref: './components/schemas/dictionary/payrollPositionList.yaml'
     Prepayment:
       $ref: './components/schemas/dictionary/prepayment.yaml'
     PrepaymentReturn:
@@ -2748,6 +2991,8 @@ tags:
     description: Операции со списаниями
   - name: Inventories
     description: Операции с инвентаризациями
+  - name: PriceLists
+    description: Операции с прайс-листами
   - name: PurchaseReturns
     description: Операции с возвратами поставщикам
   - name: Supplies
@@ -2764,6 +3009,8 @@ tags:
     description: Операции с заказами кодов маркировки
   - name: CashIns
     description: Операции с приходными ордерами
+  - name: Payrolls
+    description: Операции с Начислениями зарплаты
   - name: PaymentIns
     description: Операции с входящими платежами
   - name: FactureIns
@@ -2784,6 +3031,8 @@ tags:
     description: Операции с полученными отчетами комиссионера
   - name: CommissionReportOuts
     description: Операции с выданными отчетами комиссионера
+  - name: CounterpartyAdjustments
+    description: Операции с корректировками взаиморасчетов
   - name: Reports
     description: Операции с отчетами
   - name: Audit

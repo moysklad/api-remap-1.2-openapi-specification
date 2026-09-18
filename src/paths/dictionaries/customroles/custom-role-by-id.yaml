@@ -3,7 +3,9 @@ get:
   tags:
     - CustomRoles
   summary: Получить пользовательскую роль по ID
-  description: Запрос на получение пользовательской роли с указанным id
+  description: |
+    Запрос на получение пользовательской роли с указанным id.
+    Доступно сотруднику с правами системного администратора или Решению.
   parameters:
     - $ref: '../../../components/parameters.yaml#/entityId'
     - $ref: '../../../components/headers.yaml#/AcceptHeader'
@@ -23,7 +25,9 @@ put:
   tags:
     - CustomRoles
   summary: Обновить пользовательскую роль
-  description: Обновление пользовательской роли с указанным id
+  description: |
+    Обновление пользовательской роли с указанным id.
+    Доступно сотруднику с правами системного администратора или Решению.
   parameters:
     - $ref: '../../../components/parameters.yaml#/entityId'
     - $ref: '../../../components/headers.yaml#/AcceptHeader'
@@ -50,7 +54,9 @@ delete:
   tags:
     - CustomRoles
   summary: Удалить пользовательскую роль
-  description: Удаление пользовательской роли с указанным id
+  description: |
+    Удаление пользовательской роли с указанным id.
+    Доступно сотруднику с правами системного администратора или Решению.
   parameters:
     - $ref: '../../../components/parameters.yaml#/entityId'
     - $ref: '../../../components/headers.yaml#/AcceptHeader'
