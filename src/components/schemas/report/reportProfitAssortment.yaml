@@ -5,16 +5,19 @@ properties:
     $ref: '../common/meta.yaml'
   name:
     type: string
+    maxLength: 255
     description: Наименование сущности
   code:
     type: string
+    maxLength: 255
     description: Код сущности
   uom:
-    description: Единица измерения
+    description: Единица измерения. В отчете заполнены только `meta` и `name`
     $ref: '../../../openapi.yaml#/components/schemas/Uom'
   article:
     type: string
+    maxLength: 255
     description: Артикул товара, модификации или комплекта
   image:
-    description: Изображение сущности
+    description: Изображение сущности. В отчете заполнена только `meta`
     $ref: '../../../openapi.yaml#/components/schemas/Image'
