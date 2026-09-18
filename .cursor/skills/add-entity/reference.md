@@ -52,6 +52,7 @@ Track these columns while implementing:
 | get by ID section | `/entity/<keyword>/{id}` | GET | `<entity>-by-id.yaml` |
 | update section | `/entity/<keyword>/{id}` | PUT | `<entity>-by-id.yaml` |
 | delete by ID section | `/entity/<keyword>/{id}` | DELETE | `<entity>-by-id.yaml` |
+| trash / recycle bin (**documents only**) | `/entity/<keyword>/{id}/trash` | POST | `<entity>-trash.yaml` |
 | mass delete | `/entity/<keyword>/delete` | POST | `<entities>-delete.yaml` |
 | metadata | `/entity/<keyword>/metadata` | GET | `<entity>-metadata.yaml` or shared metadata path |
 | metadata attributes list/create | `/entity/<keyword>/metadata/attributes` | GET/POST | `<entity>-metadata-attribute.yaml` |
@@ -61,6 +62,34 @@ Track these columns while implementing:
 | positions list/create | `/entity/<keyword>/{id}/positions` | GET/POST | `<entity>-positions.yaml` |
 | position by ID | `/entity/<keyword>/{id}/positions/{positionId}` | GET/PUT/DELETE | `<entity>-position-by-id.yaml` |
 | positions batch delete | `/entity/<keyword>/{id}/positions/delete` | POST | `<entity>-positions-delete.yaml` |
+
+### Document trash (`POST .../trash`)
+
+For **documents** with a registered `/entity/<keyword>/{id}` path, always add recycle-bin move. Dictionaries must not get this path (API error 1066).
+
+- MD source is the shared section `### Удаление в корзину` in `_common_info.md` / `_general.md`, not a per-entity heading.
+- Path file: `<entity>-trash.yaml`. Peer: `src/paths/documents/supplies/supply-trash.yaml`.
+- Method `POST`, no `requestBody`, no query params; path param `entityId`; headers Accept + Accept-Encoding; `200` empty body; `default: CommonError`.
+- `operationId`: `move<PascalSingular>ToTrash` (unique per entity). Register `/entity/<keyword>/{id}/trash` in `src/openapi.yaml` next to `/{id}`.
+- No new schema, fixture, or golden map entry.
+- Smoke: `hasBody=false` (do not send JSON). Do not copy a template-new test name.
+
+```yaml
+post:
+  operationId: moveDemandToTrash
+  tags:
+    - Demands
+  summary: Удалить Отгрузку в корзину
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+```
 
 ### Top-level POST vs `/batch` (mandatory split)
 
@@ -992,6 +1021,15 @@ Arguments.of(new SmokeEndpointCase(
         "/entity/contract",
         SmokeEndpointCase.Expectation.NOT_404,
         true
+));
+
+// Documents only — empty body, hasBody=false
+Arguments.of(new SmokeEndpointCase(
+        "testMoveDemandToTrash#1",
+        "POST",
+        "/entity/demand/{id}/trash",
+        SmokeEndpointCase.Expectation.NOT_404,
+        false
 ));
 
 // SmokePayloads.java (only when default payload is insufficient)
