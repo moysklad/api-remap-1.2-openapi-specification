@@ -1472,6 +1472,10 @@ paths:
     $ref: './paths/documents/counterpartyadjustments/counterpartyadjustment-by-id.yaml'
   /entity/counterpartyadjustment/{id}/trash:
     $ref: './paths/documents/counterpartyadjustments/counterpartyadjustment-trash.yaml'
+  /entity/counterpartyadjustment/{id}/files:
+    $ref: './paths/documents/counterpartyadjustments/counterpartyadjustment-files.yaml'
+  /entity/counterpartyadjustment/{id}/files/{fileId}:
+    $ref: './paths/documents/counterpartyadjustments/counterpartyadjustment-file-by-id.yaml'
   /entity/counterpartyadjustment/delete:
     $ref: './paths/documents/counterpartyadjustments/counterpartyadjustments-delete.yaml'
   /entity/counterpartyadjustment/batch:

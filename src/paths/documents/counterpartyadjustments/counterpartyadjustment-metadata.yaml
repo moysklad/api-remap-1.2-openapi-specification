@@ -9,10 +9,9 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../../../openapi.yaml#/components/schemas/DocumentMetadata'
+            $ref: '../../../openapi.yaml#/components/schemas/Metadata'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
   parameters:
     - $ref: '../../../components/headers.yaml#/AcceptHeader'
     - $ref: '../../../components/headers.yaml#/AcceptEncoding'
-    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
