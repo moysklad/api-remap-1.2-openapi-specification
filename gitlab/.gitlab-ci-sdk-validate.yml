@@ -4,7 +4,8 @@
 # - validate: проверка OpenAPI спецификации
 # - bundle-openapi: сборка bundled версии спецификации
 # - generate-sdk-*: генерация SDK для различных языков
-# - sdk-golden-*: golden тесты (сериализация/десериализация)
+# - sdk-golden-*: golden тесты (сериализация/десериализация); для php и java в них же идут
+#   location тесты операций с x-location-response (локальный HTTP-стаб)
 # - sdk-smoke-*: smoke тесты с openapi-mock mock сервером
 # - sdk-contract: schemathesis тесты (только при ручном запуске)
 #

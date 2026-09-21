@@ -11,6 +11,8 @@ import {{invokerPackage}}.Configuration;
 import {{modelPackage}}.*;
 {{/models.0}}
 import {{invokerPackage}}.Pair;
+{{#operations}}{{#operation}}{{#vendorExtensions.x-location-response}}import {{invokerPackage}}.LocationResult;
+{{/vendorExtensions.x-location-response}}{{/operation}}{{/operations}}
 
 {{#imports}}import {{import}};
 {{/imports}}
@@ -96,6 +98,25 @@ public class {{classname}} extends BaseApi {
     {{#returnType}}return {{/returnType}}this.{{operationId}}({{#allParams}}{{#isQueryParam}}({{{dataType}}}) effectiveOptions.get("{{paramName}}"){{/isQueryParam}}{{#isHeaderParam}}null{{/isHeaderParam}}{{^isQueryParam}}{{^isHeaderParam}}{{paramName}}{{/isHeaderParam}}{{/isQueryParam}}, {{/allParams}}effectiveOptions.getAdditionalHeaders());
   }
 
+  {{#vendorExtensions.x-location-response}}
+  /**
+   * {{summary}}
+   * Возвращает код ответа и заголовки вызова: переход по редиректу не выполняется, Location сохраняется.
+   {{#pathParams}}
+   * @param {{paramName}} {{description}}{{#required}} (required){{/required}}{{^required}} (optional){{/required}}
+   {{/pathParams}}
+   {{#bodyParam}}
+   * @param {{paramName}} {{description}}{{#required}} (required){{/required}}{{^required}} (optional){{/required}}
+   {{/bodyParam}}
+   * @return {@link LocationResult} со статусом и заголовками ответа
+   * @throws ApiException if fails to make API call
+   */
+  public LocationResult {{operationId}}WithLocation({{#pathParams}}{{>nullable_var_annotations}} {{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/pathParams}}{{#bodyParam}}{{#pathParams.0}}, {{/pathParams.0}}{{>nullable_var_annotations}} {{{dataType}}} {{paramName}}{{/bodyParam}}) throws ApiException {
+    RequestOptions effectiveOptions = RequestOptions.empty();
+    return this.{{operationId}}WithLocation({{#allParams}}{{#isQueryParam}}({{{dataType}}}) effectiveOptions.get("{{paramName}}"){{/isQueryParam}}{{#isHeaderParam}}null{{/isHeaderParam}}{{^isQueryParam}}{{^isHeaderParam}}{{paramName}}{{/isHeaderParam}}{{/isQueryParam}}, {{/allParams}}effectiveOptions.getAdditionalHeaders());
+  }
+
+  {{/vendorExtensions.x-location-response}}
   /**
    * {{summary}}
    * {{notes}}
@@ -118,7 +139,22 @@ public class {{classname}} extends BaseApi {
   {{#isDeprecated}}
   @Deprecated
   {{/isDeprecated}}
+  {{#vendorExtensions.x-location-response}}
+  protected void {{operationId}}({{#allParams}}{{>nullable_var_annotations}} {{{dataType}}} {{paramName}}, {{/allParams}}Map<String, String> additionalHeaders) throws ApiException {
+    this.{{operationId}}WithLocation({{#allParams}}{{paramName}}, {{/allParams}}additionalHeaders);
+  }
+
+  /**
+   * {{summary}}
+   * @param additionalHeaders additionalHeaders for this call
+   * @return {@link LocationResult} со статусом и заголовками ответа
+   * @throws ApiException if fails to make API call
+   */
+  protected LocationResult {{operationId}}WithLocation({{#allParams}}{{>nullable_var_annotations}} {{{dataType}}} {{paramName}}, {{/allParams}}Map<String, String> additionalHeaders) throws ApiException {
+  {{/vendorExtensions.x-location-response}}
+  {{^vendorExtensions.x-location-response}}
   protected {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{operationId}}({{#allParams}}{{>nullable_var_annotations}} {{{dataType}}} {{paramName}}, {{/allParams}}Map<String, String> additionalHeaders) throws ApiException {
+  {{/vendorExtensions.x-location-response}}
     Object localVarPostBody = {{#bodyParam}}{{paramName}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}};
     {{#allParams}}{{#required}}
     // verify the required parameter '{{paramName}}' is set
@@ -207,7 +243,12 @@ public class {{classname}} extends BaseApi {
     return apiClient.{{#returnProperty.mostInnerItems.vendorExtensions.x-polymorphic-discriminator.batchErrorFallback}}invokeAPIBatch{{/returnProperty.mostInnerItems.vendorExtensions.x-polymorphic-discriminator.batchErrorFallback}}{{^returnProperty.mostInnerItems.vendorExtensions.x-polymorphic-discriminator.batchErrorFallback}}invokeAPI{{/returnProperty.mostInnerItems.vendorExtensions.x-polymorphic-discriminator.batchErrorFallback}}(
     {{/returnType}}
     {{^returnType}}
+    {{#vendorExtensions.x-location-response}}
+    return apiClient.invokeAPIForLocation(
+    {{/vendorExtensions.x-location-response}}
+    {{^vendorExtensions.x-location-response}}
     apiClient.invokeAPI(
+    {{/vendorExtensions.x-location-response}}
     {{/returnType}}
         localVarPath,
         "{{httpMethod}}",
@@ -220,8 +261,8 @@ public class {{classname}} extends BaseApi {
         localVarFormParams,
         localVarAccept,
         localVarContentType,
-        localVarAuthNames,
-        {{#returnType}}localVarReturnType{{/returnType}}{{^returnType}}null{{/returnType}}
+        localVarAuthNames{{^vendorExtensions.x-location-response}},
+        {{#returnType}}localVarReturnType{{/returnType}}{{^returnType}}null{{/returnType}}{{/vendorExtensions.x-location-response}}
     );
   }
 

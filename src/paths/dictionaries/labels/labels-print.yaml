@@ -6,6 +6,7 @@ post:
   description: |
     Запрос на формирование печатной формы с этикетками и ценниками.
     В случае готовности сервер возвращает пустой ответ с кодом 303 и заголовком Location.
+  x-location-response: true
   parameters:
     - $ref: '../../../components/parameters.yaml#/entityId'
     - name: type
@@ -33,23 +34,15 @@ post:
       description: Печатная форма еще не готова, в Location передана ссылка на статус печати
       headers:
         Location:
-          description: Ссылка на статус печати
-          schema:
-            type: string
+          $ref: '../../../components/headers.yaml#/PrintStatusLocation'
         Content-Type:
-          description: Тип содержимого ответа
-          schema:
-            type: string
+          $ref: '../../../components/headers.yaml#/ResponseContentType'
     '303':
       description: Печатная форма готова, в Location передана ссылка на файл
       headers:
         Location:
-          description: Ссылка на готовый файл
-          schema:
-            type: string
+          $ref: '../../../components/headers.yaml#/PrintFileLocation'
         Content-Type:
-          description: Тип содержимого ответа
-          schema:
-            type: string
+          $ref: '../../../components/headers.yaml#/ResponseContentType'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'

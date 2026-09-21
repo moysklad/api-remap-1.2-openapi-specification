@@ -1,0 +1,61 @@
+{{>licenseInfo}}
+package {{invokerPackage}};
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.TreeMap;
+
+/**
+ * Result of a call whose payload is carried by response headers and whose body is empty.
+ * Values belong to a single call and are never shared between requests.
+ */
+public class LocationResult {
+  private static final String LOCATION = "Location";
+
+  private final int statusCode;
+  private final Map<String, List<String>> headers;
+
+  public LocationResult(int statusCode, Map<String, List<String>> headers) {
+    Map<String, List<String>> caseInsensitive = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+    if (headers != null) {
+      caseInsensitive.putAll(headers);
+    }
+
+    this.statusCode = statusCode;
+    this.headers = Collections.unmodifiableMap(caseInsensitive);
+  }
+
+  public int getStatusCode() {
+    return statusCode;
+  }
+
+  /**
+   * Response headers, looked up without regard to case.
+   *
+   * @return response headers
+   */
+  public Map<String, List<String>> getHeaders() {
+    return headers;
+  }
+
+  /**
+   * Value of the Location header, empty if the response did not carry one.
+   *
+   * @return Location header value
+   */
+  public Optional<String> getLocation() {
+    List<String> values = headers.get(LOCATION);
+    if (values == null || values.isEmpty()) {
+      return Optional.empty();
+    }
+
+    return Optional.ofNullable(values.get(0));
+  }
+
+  @Override
+  public String toString() {
+    return "LocationResult{statusCode=" + statusCode + ", location=" + getLocation().orElse(null) + "}";
+  }
+}

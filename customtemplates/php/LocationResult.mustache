@@ -1,0 +1,56 @@
+<?php
+/**
+ * LocationResult
+ * PHP version {{phpVersion}}
+ *
+ * @category Class
+ * @package  {{invokerPackage}}
+ */
+
+namespace {{invokerPackage}};
+
+/**
+ * Результат вызова, полезные данные которого передаются в заголовках ответа,
+ * а тело ответа отсутствует. Значения принадлежат конкретному вызову.
+ *
+ * @package {{invokerPackage}}
+ */
+class LocationResult
+{
+    /**
+     * @param array<string, string[]> $headers
+     */
+    public function __construct(
+        private readonly int $statusCode,
+        private readonly array $headers,
+    ) {
+    }
+
+    public function getStatusCode(): int
+    {
+        return $this->statusCode;
+    }
+
+    /**
+     * @return array<string, string[]>
+     */
+    public function getHeaders(): array
+    {
+        return $this->headers;
+    }
+
+    /**
+     * Значение заголовка Location или null, если заголовка нет.
+     * Имя заголовка сравнивается без учета регистра.
+     */
+    public function getLocation(): ?string
+    {
+        foreach ($this->headers as $name => $values) {
+            if (strcasecmp($name, 'Location') === 0) {
+                return $values[0] ?? null;
+            }
+        }
+
+        return null;
+    }
+}

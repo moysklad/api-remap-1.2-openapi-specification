@@ -239,6 +239,9 @@ use {{invokerPackage}}\ObjectSerializer;
             {{#returnProperty.mostInnerItems.vendorExtensions.x-polymorphic-discriminator.batchErrorFallback}}
             $options[RequestOptions::HTTP_ERRORS] = false;
             {{/returnProperty.mostInnerItems.vendorExtensions.x-polymorphic-discriminator.batchErrorFallback}}
+            {{#vendorExtensions.x-location-response}}
+            $options[RequestOptions::ALLOW_REDIRECTS] = false;
+            {{/vendorExtensions.x-location-response}}
             try {
                 $response = $this->client->send($request, $options);
             } catch (RequestException $e) {
@@ -349,6 +352,34 @@ use {{invokerPackage}}\ObjectSerializer;
             throw $e;
         }
     }
+{{#vendorExtensions.x-location-response}}
+
+    /**
+     * Operation {{{operationId}}}WithLocation
+{{#summary}}
+     *
+     * {{.}}
+{{/summary}}
+     *
+     * Возвращает код ответа и заголовки вызова: переход по редиректу не выполняется,
+     * поэтому заголовок Location исходного ответа не теряется.
+     *
+{{#allParams}}
+     * @param  {{{dataType}}}{{^required}}|null{{/required}} ${{paramName}}{{#description}} {{.}}{{/description}} {{#required}}(required){{/required}}{{^required}}(optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}
+{{/allParams}}
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['{{{operationId}}}'] to see the possible values for this operation
+     *
+     * @throws \{{invokerPackage}}\ApiException on 4xx/5xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \{{invokerPackage}}\LocationResult
+     */
+    public function {{operationId}}WithLocation({{#allParams}}${{paramName}}{{^required}} = {{#defaultValue}}{{{.}}}{{/defaultValue}}{{^defaultValue}}null{{/defaultValue}}{{/required}}, {{/allParams}}string $contentType = self::contentTypes['{{{operationId}}}'][0]): \{{invokerPackage}}\LocationResult
+    {
+        list(, $statusCode, $headers) = $this->{{operationId}}WithHttpInfo({{#allParams}}${{paramName}}, {{/allParams}}$contentType);
+
+        return new \{{invokerPackage}}\LocationResult($statusCode, $headers);
+    }
+{{/vendorExtensions.x-location-response}}
 
     /**
      * Operation {{{operationId}}}Async
@@ -472,6 +503,9 @@ use {{invokerPackage}}\ObjectSerializer;
         {{#returnProperty.mostInnerItems.vendorExtensions.x-polymorphic-discriminator.batchErrorFallback}}
         $options[RequestOptions::HTTP_ERRORS] = false;
         {{/returnProperty.mostInnerItems.vendorExtensions.x-polymorphic-discriminator.batchErrorFallback}}
+        {{#vendorExtensions.x-location-response}}
+        $options[RequestOptions::ALLOW_REDIRECTS] = false;
+        {{/vendorExtensions.x-location-response}}
 
         return $this->client
             ->sendAsync($request, $options)

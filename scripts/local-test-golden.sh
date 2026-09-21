@@ -1,5 +1,6 @@
 #!/bin/sh
-# Golden тесты для указанного языка
+# Golden тесты для указанного языка. Для php и java сюда же входит location набор
+# (операции с x-location-response): он поднимает собственный HTTP-стаб, openapi-mock не нужен.
 # Использование: ./scripts/local-test-golden.sh <php|python|java|javascript|typescript>
 # Работает в Docker (working_dir=/workspace) и локально (корень репо по пути скрипта).
 set -e
@@ -19,7 +20,7 @@ run_php() {
   fi
   cd tests/php
   composer install --no-interaction
-  php vendor/bin/phpunit --testsuite golden
+  php vendor/bin/phpunit --testsuite golden,location
 }
 
 run_python() {
@@ -43,7 +44,7 @@ run_java() {
     echo "Skipping: tests/java not configured"
     return 0
   fi
-  mvn test -Dtest=**/golden/** -Dsurefire.failIfNoSpecifiedTests=false
+  mvn test -Dtest='**/golden/**,**/location/**' -Dsurefire.failIfNoSpecifiedTests=false
 }
 
 run_javascript() {

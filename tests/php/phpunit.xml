@@ -5,11 +5,13 @@
   Тест-сьюты:
   - golden: тесты сериализации/десериализации (roundtrip)
   - smoke: тесты доступности API endpoint'ов через openapi-mock
-  
+  - location: операции, отдающие полезные данные в заголовках ответа (локальный HTTP-стаб)
+
   Запуск:
     composer test              - все тесты
     composer test:golden       - только golden тесты
     composer test:smoke        - только smoke тесты
+    composer test:location     - только location тесты
 -->
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.0/phpunit.xsd"
@@ -27,6 +29,10 @@
         <!-- Smoke тесты: проверка доступности API endpoint'ов -->
         <testsuite name="smoke">
             <directory>smoke</directory>
+        </testsuite>
+        <!-- Location тесты: операции, отдающие полезные данные в заголовках ответа -->
+        <testsuite name="location">
+            <directory>location</directory>
         </testsuite>
     </testsuites>
 

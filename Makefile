@@ -27,7 +27,7 @@ help:
 	@echo "  build-typescript  - build the generated TypeScript SDK (dist: CommonJS + ESM)"
 	@echo "  pack-typescript   - list npm tarball contents (npm pack --dry-run)"
 	@echo "  test-smoke        - smoke tests (openapi-mock + tests)."
-	@echo "  test-golden       - golden tests for LANGUAGES. Default: php"
+	@echo "  test-golden       - golden tests for LANGUAGES (php and java also run location tests). Default: php"
 	@echo "  schemathesis      - contract tests (SCHEMATHESIS_HOST, _LOGIN, _PASSWORD)"
 	@echo "  all               - lint + bundle + generate (php) + test-golden + test-smoke"
 

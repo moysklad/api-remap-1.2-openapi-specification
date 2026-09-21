@@ -79,7 +79,8 @@ docker compose run --rm sdk make generate-typescript
 docker compose run --rm sdk make build-typescript
 docker compose run --rm sdk make pack-typescript
 
-# Golden тесты (по умолчанию php; падение любого языка из LANGUAGES роняет цель)
+# Golden тесты (по умолчанию php; падение любого языка из LANGUAGES роняет цель).
+# Для php и java сюда же входят location тесты.
 docker compose run --rm sdk make test-golden
 docker compose run --rm sdk make test-golden LANGUAGES=php,typescript
 docker compose run --rm sdk make test-golden-php
@@ -173,10 +174,10 @@ api-sdk-builder/
 ├── openapitools.json                 # Зафиксированная версия OpenAPI Generator (одна для локали и CI)
 ├── scripts/
 │   ├── build-typescript-sdk.sh       # Сборка npm-пакета TypeScript SDK (dist + dist/esm)
-│   └── local-test-golden.sh          # Golden тесты php/python/java/javascript/typescript
+│   └── local-test-golden.sh          # Golden тесты php/python/java/javascript/typescript (+ location для php/java)
 ├── tests/
 │   ├── fixtures/                     # Общие эталонные JSON для golden тестов всех языков
-│   ├── java/                         # Java тесты (golden + smoke)
+│   ├── java/                         # Java тесты (golden + location + smoke)
 │   ├── php/                          # PHP golden-тесты
 │   └── python/                       # Python golden-тесты
 │   └── typescript/                   # TypeScript golden тесты (node:test + tsc)
@@ -244,7 +245,25 @@ $this->assertEquals($jsonData['id'], $product->getId());
 $this->assertEquals($jsonData['name'], $product->getName());
 ```
 
-Запуск по языкам: `make test-golden-php`, `make test-golden-java`, `make test-golden-typescript` или сразу несколько — `make test-golden LANGUAGES=php,typescript`. Про особенности TypeScript-набора см. [Golden тесты TypeScript SDK](#golden-тесты-typescript-sdk).
+Запуск по языкам: `make test-golden-php`, `make test-golden-java`, `make test-golden-typescript` или сразу несколько — `make test-golden LANGUAGES=php,typescript`. Для PHP и Java в эти же цели входят [location тесты](#location-тесты-локальный-http-стаб). Про особенности TypeScript-набора см. [Golden тесты TypeScript SDK](#golden-тесты-typescript-sdk).
+
+#### Location тесты (локальный HTTP-стаб)
+
+Проверяют операции с расширением `x-location-response` (`printLabels`, `exportCustomerOrder`): полезные данные
+приходят в заголовке `Location`, тело ответа пустое. Набор поднимает собственный HTTP-стаб на loopback, поэтому
+openapi-mock и `make bundle` не нужны: muonsoft/openapi-mock не отдаёт заголовки, описанные в спецификации.
+
+```php
+$result = $labelsApi->printLabelsWithLocation($id, 'product', $request);
+
+$this->assertSame(303, $result->getStatusCode());
+$this->assertSame($expectedUrl, $result->getLocation());
+```
+
+Отдельной job и отдельной make-цели у набора нет: он идёт внутри `make test-golden-php` и
+`make test-golden-java` (в CI — `sdk-golden-php` и `sdk-golden-java`), потому что использует тот же
+сгенерированный SDK. Запустить только его: `composer test:location` в `tests/php`,
+`mvn test -Dtest='**/location/**'` для Java. Для Python и TypeScript контракт пока не реализован.
 
 #### Smoke тесты (openapi-mock)
 

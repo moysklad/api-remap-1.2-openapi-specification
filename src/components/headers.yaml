@@ -29,6 +29,21 @@ LognexAcceptTimezone:
   schema:
     type: string
 
+# Заголовки ответа (Header Object) для операций, у которых полезные данные передаются
+# в заголовках, а тело ответа отсутствует. См. x-location-response в src/custom-extension-readme.md
+PrintStatusLocation:
+  description: Ссылка на статус печати
+  schema:
+    type: string
+PrintFileLocation:
+  description: Ссылка на готовый файл
+  schema:
+    type: string
+ResponseContentType:
+  description: Тип содержимого ответа
+  schema:
+    type: string
+
 # Явный Content-Type для запросов с телом (batch и др.) — чтобы генератор и тесты всегда отправляли application/json
 ContentTypeJson:
   name: Content-Type

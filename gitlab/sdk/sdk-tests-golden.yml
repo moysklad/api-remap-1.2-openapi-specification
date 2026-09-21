@@ -1,4 +1,6 @@
-# PHP Golden JSON тесты (сериализация/десериализация)
+# PHP Golden JSON тесты (сериализация/десериализация) + location тесты.
+# Location набор (операции с x-location-response) поднимает собственный локальный HTTP-стаб
+# и работает с тем же артефактом генерации, поэтому идёт в одной job с golden.
 sdk-golden-php:
   extends: .php-test-base
   stage: test
@@ -17,8 +19,8 @@ sdk-golden-php:
           printf '%s\n' '<?php $b=dirname(__DIR__,2); require __DIR__."/vendor/autoload.php"; if(file_exists($b."/clients/php/autoload.php")) require $b."/clients/php/autoload.php";' > bootstrap.php
         fi
         composer install --no-interaction
-        echo "=== Golden tests (PHP) ==="
-        vendor/bin/phpunit --testsuite golden --testdox
+        echo "=== Golden + location tests (PHP) ==="
+        vendor/bin/phpunit --testsuite golden,location --testdox
       else
         echo "WARNING: tests/php directory not found"
         exit 1
@@ -61,8 +63,8 @@ sdk-golden-java:
   script:
     - |
       if [ -d "tests/java/assertions" ]; then
-        echo "=== Golden tests (Java) ==="
-        mvn test -Dtest=**/golden/** -Dsurefire.failIfNoSpecifiedTests=false
+        echo "=== Golden + location tests (Java) ==="
+        mvn test -Dtest='**/golden/**,**/location/**' -Dsurefire.failIfNoSpecifiedTests=false
       else
         echo "WARNING: tests/java/assertions directory not found"
         exit 1

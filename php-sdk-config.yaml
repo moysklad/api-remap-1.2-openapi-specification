@@ -1,0 +1,8 @@
+# Конфигурация генерации PHP SDK (generator: php).
+# Запускается через npm run generate-php / make generate-php.
+files:
+  LocationResult.mustache:
+    templateType: SupportingFiles
+    destinationFilename: lib/LocationResult.php
+additionalProperties:
+  phpVersion: "8.1"
