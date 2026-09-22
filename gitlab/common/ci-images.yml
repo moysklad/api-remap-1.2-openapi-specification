@@ -3,7 +3,7 @@
 # При новом релизе образов обновите тег во всех CI_IMAGE_* ниже.
 
 variables:
-  CI_IMAGE_OPENAPITOOLS: $GLOBAL_DOCKER_URL/docker-openapitools-common:1.5-release
+  CI_IMAGE_OPENAPITOOLS: $GLOBAL_DOCKER_URL/docker-openapitools-common:ATK-261-478679
   CI_IMAGE_PHP_TEST: $GLOBAL_DOCKER_URL/docker-openapitools-php-test:1.5-release
   CI_IMAGE_PYTHON: $GLOBAL_DOCKER_URL/docker-openapitools-python:ATK-261-478679
   CI_IMAGE_SCHEMATHESIS: $GLOBAL_DOCKER_URL/docker-openapitools-schemathesis:1.5-release
