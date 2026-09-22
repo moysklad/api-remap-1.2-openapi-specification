@@ -1,6 +1,15 @@
 check-openapi-changes:
   extends: .openapitools-image
   stage: changes-check
+  # Пути, изменения в которых с прошлого тега считаются поводом для релиза SDK
+  variables:
+    SDK_RELEASE_PATHS: |
+      src/
+      customtemplates/
+      java-sdk-config.yaml
+      python-sdk-config.yaml
+      typescript-sdk-config.yaml
+      scripts/prepare-python-sdk-layout.py
   rules:
     # Теги берём из текущего репозитория (git describe в клоне пайплайна)
     # Запускаем при merge/push в master и при ручном запуске (web) на master
@@ -12,7 +21,7 @@ check-openapi-changes:
   script:
     - |
       set -e
-      echo "Checking OpenAPI changes in src/ relative to last tag (current repo)..."
+      echo "Checking OpenAPI changes relative to last tag (current repo)..."
       LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
       if [ -z "$LAST_TAG" ]; then
         echo "No tags found. Skipping check and allowing pipeline to continue."
@@ -22,9 +31,12 @@ check-openapi-changes:
       if git diff --quiet "$LAST_TAG"...HEAD -- src; then
         echo "ERROR: No changes in src/ OpenAPI specification relative to tag $LAST_TAG."
         echo "Please ensure that OpenAPI specification changes are present before running this pipeline."
+      if git diff --quiet "$LAST_TAG"...HEAD -- "$@"; then
+        echo "ERROR: Не зафиксировано изменений в файлах, требующихся для генерации новой версии SDK $LAST_TAG."
+        echo "Please ensure that SDK generation inputs changed before running this pipeline."
         exit 1
       else
-        echo "OpenAPI changes detected in src/ relative to tag $LAST_TAG. Continuing pipeline."
+        echo "SDK release input changes detected relative to tag $LAST_TAG. Continuing pipeline."
       fi
 
 validate:

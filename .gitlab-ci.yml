@@ -23,7 +23,7 @@
 #    - push-sdk-*: пуш SDK в удалённые репозитории (если PUSH_TO_REMOTE=true)
 #
 # 3. Merge/push в master:
-#    - check-openapi-changes: проверка изменений OpenAPI относительно последнего тега
+#    - check-openapi-changes: проверка изменений OpenAPI (src/, шаблоны, конфиги) относительно последнего тега
 #    - validate и bundle-openapi
 #    - deploy-contract-env/create-contract-user/sdk-contract: schemathesis examples
 #    - generate-sdk-*, sdk-golden-*, sdk-smoke-*

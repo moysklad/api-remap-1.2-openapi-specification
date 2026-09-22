@@ -219,17 +219,17 @@ SCHEMATHESIS_INCLUDE_OPERATION_ID=createProduct
 
 ### Текущие стадии
 
-| Стадия                   | Описание                                                                                                                           |
-|--------------------------|------------------------------------------------------------------------------------------------------------------------------------|
-| `changes-check`          | Проверка изменений OpenAPI в `src/` относительно последнего тега (теги из текущего репо)                                           |
+| Стадия                   | Описание                                                                                                                                                 |
+|--------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `changes-check`          | Проверка изменений OpenAPI в файлах, перечисленных в `SDK_RELEASE_PATHS` относительно последнего тега (теги из текущего репо)                            |
 | `verify`                 | Проверка спецификации, полный bundling, отдельный smoke bundling; в contract-пайплайнах сюда также входят `deploy-contract-env` и `create-contract-user` |
-| `contract-test`          | Контрактные тесты Schemathesis (`sdk-contract`) в `web`, `master` и tag pipeline, после verify, до generate-sdk                    |
-| `generate-sdk`           | Генерация SDK                                                                                                                      |
-| `test`                   | Тестирование (golden, smoke)                                                                                                       |
-| `version`                | Автоматическое версионирование и подготовка CHANGELOG/тегов                                                                        |
-| `mirror`                 | Зеркалирование в GitHub и GitHub Release                                                                                           |
-| `prepare-sdk-repository` | Подготовка внутренних репозиториев SDK (PHP/Java/TypeScript: ветки и релиз master по текущим изменениям) |
-| `deploy-sdk`             | Публикация SDK артефактов: Java (`deploy-to-artifactory`, `deploy-to-maven`) и TypeScript (`deploy-to-npm-prerelease`, `deploy-to-npm`) |
+| `contract-test`          | Контрактные тесты Schemathesis (`sdk-contract`) в `web`, `master` и tag pipeline, после verify, до generate-sdk                                          |
+| `generate-sdk`           | Генерация SDK                                                                                                                                            |
+| `test`                   | Тестирование (golden, smoke)                                                                                                                             |
+| `version`                | Автоматическое версионирование и подготовка CHANGELOG/тегов                                                                                              |
+| `mirror`                 | Зеркалирование в GitHub и GitHub Release                                                                                                                 |
+| `prepare-sdk-repository` | Подготовка внутренних репозиториев SDK (PHP/Java/TypeScript: ветки и релиз master по текущим изменениям)                                                 |
+| `deploy-sdk`             | Публикация SDK артефактов: Java (`deploy-to-artifactory`, `deploy-to-maven`) и TypeScript (`deploy-to-npm-prerelease`, `deploy-to-npm`)                  |
 
 ### Стадии для обратной совместимости (старый Java SDK)
 
