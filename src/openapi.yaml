@@ -3068,5 +3068,3 @@ tags:
     description: Операции с отчетом по документам номенклатуры
   - name: Metadata
     description: Операции c мета-датой сущности
-  - name: Audit
-    description: Операции с аудитом сущностей
