@@ -9,8 +9,8 @@
   Если в будущем в OpeanApi будет добавлен дефолтный тип маппера то данные правки можно убрать
 * ObjectSerializer. Заменен формат даты
 * api.mustache - поддержка batch-ответов с частичными ошибками: стандартный шаблон Guzzle бросает exception на 400+ до разбора тела ответа, а batch-операции могут возвращать массив результата с таким статусом.
-* api.mustache, LocationResult.mustache - для операций с `x-location-response` (`printLabels`, `exportCustomerOrder`)
-  генерируется метод `<operationId>WithLocation`, возвращающий `LocationResult`, а всем путям операции
+* api.mustache, HeaderResponse.mustache - для операций с `x-location-response` (`printLabels`, `exportCustomerOrder`)
+  метод `<operationId>` возвращает `HeaderResponse` вместо `void`, а всем путям операции
   проставляется `allow_redirects = false`: иначе Guzzle переходит по 303 и заголовок Location теряется.
   Описание расширения - `src/custom-extension-readme.md`. Файл подключается через `php-sdk-config.yaml`.
 * Кастомный шаблон model_constant больше не используется.

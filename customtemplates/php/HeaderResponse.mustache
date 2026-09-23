@@ -1,6 +1,6 @@
 <?php
 /**
- * LocationResult
+ * HeaderResponse
  * PHP version {{phpVersion}}
  *
  * @category Class
@@ -10,12 +10,12 @@
 namespace {{invokerPackage}};
 
 /**
- * Результат вызова, полезные данные которого передаются в заголовках ответа,
+ * Ответ вызова, полезные данные которого передаются в заголовках,
  * а тело ответа отсутствует. Значения принадлежат конкретному вызову.
  *
  * @package {{invokerPackage}}
  */
-class LocationResult
+class HeaderResponse
 {
     /**
      * @param array<string, string[]> $headers
@@ -40,17 +40,25 @@ class LocationResult
     }
 
     /**
-     * Значение заголовка Location или null, если заголовка нет.
+     * Первое значение заголовка или null, если заголовка нет.
      * Имя заголовка сравнивается без учета регистра.
      */
-    public function getLocation(): ?string
+    public function getHeader(string $name): ?string
     {
-        foreach ($this->headers as $name => $values) {
-            if (strcasecmp($name, 'Location') === 0) {
+        foreach ($this->headers as $headerName => $values) {
+            if (strcasecmp($headerName, $name) === 0) {
                 return $values[0] ?? null;
             }
         }
 
         return null;
+    }
+
+    /**
+     * Значение заголовка Location или null, если заголовка нет.
+     */
+    public function getLocation(): ?string
+    {
+        return $this->getHeader('Location');
     }
 }

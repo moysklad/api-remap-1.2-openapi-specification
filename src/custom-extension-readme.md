@@ -67,8 +67,8 @@ agent:
 
 * отключают автоматический переход по редиректу, иначе `Location` теряется до возврата управления в SDK;
 * не считают `3xx` ошибкой и возвращают результат вызова со статусом и заголовками;
-* генерируют дополнительный метод `<operationId>WithLocation`, возвращающий `LocationResult`
-  (`statusCode`, `headers`, `location`). Существующие методы операции не меняются.
+* возвращают из методов операции `HeaderResponse` (`statusCode`, `headers`, `getHeader(name)`, `location`)
+  вместо `void`.
 
 Сами заголовки ответа описываются обычным блоком `headers` и вынесены в переиспользуемые
 Header Objects в `src/components/headers.yaml`.

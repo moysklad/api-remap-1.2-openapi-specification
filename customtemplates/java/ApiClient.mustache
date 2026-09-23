@@ -1232,7 +1232,7 @@ public class ApiClient{{#jsr310}} extends JavaTimeFormatter{{/jsr310}} {
     }
   }
 
-  protected LocationResult processLocationResponse(CloseableHttpResponse response) throws ApiException, IOException, ParseException {
+  protected HeaderResponse processHeaderResponse(CloseableHttpResponse response) throws ApiException, IOException, ParseException {
     int statusCode = response.getCode();
     lastStatusCode.set(statusCode);
 
@@ -1240,7 +1240,7 @@ public class ApiClient{{#jsr310}} extends JavaTimeFormatter{{/jsr310}} {
     lastResponseHeaders.set(responseHeaders);
 
     if (isSuccessfulStatus(statusCode) || isRedirectStatus(statusCode)) {
-      return new LocationResult(statusCode, responseHeaders);
+      return new HeaderResponse(statusCode, responseHeaders);
     }
 
     String message = EntityUtils.toString(response.getEntity());
@@ -1321,7 +1321,7 @@ public class ApiClient{{#jsr310}} extends JavaTimeFormatter{{/jsr310}} {
 
   /**
    * Invoke an API operation whose payload is carried by response headers.
-   * The redirect is not followed, so the Location header of the original response is preserved.
+   * The redirect is not followed, so the headers of the original response are preserved.
    *
    * @param path The sub-path of the HTTP URL
    * @param method The request method, one of "GET", "POST", "PUT", and "DELETE"
@@ -1338,7 +1338,7 @@ public class ApiClient{{#jsr310}} extends JavaTimeFormatter{{/jsr310}} {
    * @return Status code and headers of the response
    * @throws ApiException API exception
    */
-  public LocationResult invokeAPIForLocation(
+  public HeaderResponse invokeAPIForHeaders(
        String path,
        String method,
        List<Pair> queryParams,
@@ -1364,7 +1364,7 @@ public class ApiClient{{#jsr310}} extends JavaTimeFormatter{{/jsr310}} {
         accept,
         contentType,
         authNames,
-        response -> processLocationResponse(response),
+        response -> processHeaderResponse(response),
         false);
   }
 

@@ -42,7 +42,7 @@ final class PrintLocationTest extends TestCase
         $expected = $this->stub->locationUrl('status');
         $this->stub->enqueue(202, 'Location', $expected);
 
-        $result = $this->labelsApi->printLabelsWithLocation(self::ENTITY_ID, 'product', $this->printRequest());
+        $result = $this->labelsApi->printLabels(self::ENTITY_ID, 'product', $this->printRequest());
 
         self::assertSame(202, $result->getStatusCode());
         self::assertSame($expected, $result->getLocation());
@@ -54,7 +54,7 @@ final class PrintLocationTest extends TestCase
         $expected = $this->stub->locationUrl('file.pdf');
         $this->stub->enqueue(303, 'Location', $expected);
 
-        $result = $this->labelsApi->printLabelsWithLocation(self::ENTITY_ID, 'product', $this->printRequest());
+        $result = $this->labelsApi->printLabels(self::ENTITY_ID, 'product', $this->printRequest());
 
         self::assertSame(303, $result->getStatusCode());
         self::assertSame($expected, $result->getLocation());
@@ -67,9 +67,10 @@ final class PrintLocationTest extends TestCase
         $expected = $this->stub->locationUrl('file.pdf');
         $this->stub->enqueue(303, $headerName, $expected);
 
-        $result = $this->labelsApi->printLabelsWithLocation(self::ENTITY_ID, 'product', $this->printRequest());
+        $result = $this->labelsApi->printLabels(self::ENTITY_ID, 'product', $this->printRequest());
 
         self::assertSame($expected, $result->getLocation());
+        self::assertSame($expected, $result->getHeader('location'));
     }
 
     /** @return array<string, string[]> */
@@ -86,7 +87,7 @@ final class PrintLocationTest extends TestCase
     {
         $this->stub->enqueue(202);
 
-        $result = $this->labelsApi->printLabelsWithLocation(self::ENTITY_ID, 'product', $this->printRequest());
+        $result = $this->labelsApi->printLabels(self::ENTITY_ID, 'product', $this->printRequest());
 
         self::assertSame(202, $result->getStatusCode());
         self::assertNull($result->getLocation());
@@ -99,8 +100,8 @@ final class PrintLocationTest extends TestCase
         $this->stub->enqueue(303, 'Location', $first);
         $this->stub->enqueue(202, 'Location', $second);
 
-        $firstResult = $this->labelsApi->printLabelsWithLocation(self::ENTITY_ID, 'product', $this->printRequest());
-        $secondResult = $this->labelsApi->printLabelsWithLocation(self::ENTITY_ID, 'product', $this->printRequest());
+        $firstResult = $this->labelsApi->printLabels(self::ENTITY_ID, 'product', $this->printRequest());
+        $secondResult = $this->labelsApi->printLabels(self::ENTITY_ID, 'product', $this->printRequest());
 
         self::assertSame($first, $firstResult->getLocation());
         self::assertSame(303, $firstResult->getStatusCode());
@@ -114,7 +115,7 @@ final class PrintLocationTest extends TestCase
         $this->stub->enqueue($status, null, null, '{"errors":[{"error":"stub","code":1}]}');
 
         try {
-            $this->labelsApi->printLabelsWithLocation(self::ENTITY_ID, 'product', $this->printRequest());
+            $this->labelsApi->printLabels(self::ENTITY_ID, 'product', $this->printRequest());
             self::fail('Ожидалось ApiException со статусом ' . $status);
         } catch (ApiException $exception) {
             self::assertSame($status, $exception->getCode());

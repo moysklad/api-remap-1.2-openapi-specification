@@ -7,16 +7,16 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import ru.moysklad.remap_1_2.ApiClient;
 import ru.moysklad.remap_1_2.ApiException;
-import ru.moysklad.remap_1_2.LocationResult;
+import ru.moysklad.remap_1_2.HeaderResponse;
 import ru.moysklad.remap_1_2.api.LabelsApi;
 import ru.moysklad.remap_1_2.api.ProductsApi;
+import ru.moysklad.remap_1_2.api.RequestOptions;
 import ru.moysklad.remap_1_2.model.LabelPrintRequest;
 import ru.moysklad.remap_1_2.model.Product;
 
 import java.io.IOException;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -50,7 +50,7 @@ class PrintLocationTest {
         String expected = stub.locationUrl("status");
         stub.enqueueHeader(202, "Location", expected);
 
-        LocationResult result = labelsApi.printLabelsWithLocation(ENTITY_ID, "product", printRequest());
+        HeaderResponse result = labelsApi.printLabels(ENTITY_ID, "product", printRequest());
 
         assertEquals(202, result.getStatusCode());
         assertEquals(expected, result.getLocation().orElse(null));
@@ -62,7 +62,7 @@ class PrintLocationTest {
         String expected = stub.locationUrl("file.pdf");
         stub.enqueueHeader(303, "Location", expected);
 
-        LocationResult result = labelsApi.printLabelsWithLocation(ENTITY_ID, "product", printRequest());
+        HeaderResponse result = labelsApi.printLabels(ENTITY_ID, "product", printRequest());
 
         assertEquals(303, result.getStatusCode());
         assertEquals(expected, result.getLocation().orElse(null));
@@ -75,16 +75,17 @@ class PrintLocationTest {
         String expected = stub.locationUrl("file.pdf");
         stub.enqueueHeader(303, headerName, expected);
 
-        LocationResult result = labelsApi.printLabelsWithLocation(ENTITY_ID, "product", printRequest());
+        HeaderResponse result = labelsApi.printLabels(ENTITY_ID, "product", printRequest());
 
         assertEquals(expected, result.getLocation().orElse(null));
+        assertEquals(expected, result.getHeader("location").orElse(null));
     }
 
     @Test
     void reportsMissingLocationAsEmptyValue() throws ApiException {
         stub.enqueue(202);
 
-        LocationResult result = labelsApi.printLabelsWithLocation(ENTITY_ID, "product", printRequest());
+        HeaderResponse result = labelsApi.printLabels(ENTITY_ID, "product", printRequest());
 
         assertEquals(202, result.getStatusCode());
         assertTrue(result.getLocation().isEmpty());
@@ -97,8 +98,8 @@ class PrintLocationTest {
         stub.enqueueHeader(303, "Location", first);
         stub.enqueueHeader(202, "Location", second);
 
-        LocationResult firstResult = labelsApi.printLabelsWithLocation(ENTITY_ID, "product", printRequest());
-        LocationResult secondResult = labelsApi.printLabelsWithLocation(ENTITY_ID, "product", printRequest());
+        HeaderResponse firstResult = labelsApi.printLabels(ENTITY_ID, "product", printRequest());
+        HeaderResponse secondResult = labelsApi.printLabels(ENTITY_ID, "product", printRequest());
 
         assertEquals(first, firstResult.getLocation().orElse(null));
         assertEquals(303, firstResult.getStatusCode());
@@ -113,16 +114,20 @@ class PrintLocationTest {
 
         ApiException exception = assertThrows(
                 ApiException.class,
-                () -> labelsApi.printLabelsWithLocation(ENTITY_ID, "product", printRequest()));
+                () -> labelsApi.printLabels(ENTITY_ID, "product", printRequest()));
 
         assertEquals(statusCode, exception.getCode());
     }
 
     @Test
-    void existingVoidMethodStillWorks() {
-        stub.enqueueHeader(303, "Location", stub.locationUrl("file.pdf"));
+    void overloadWithRequestOptionsReturnsHeaders() throws ApiException {
+        String expected = stub.locationUrl("file.pdf");
+        stub.enqueueHeader(303, "Location", expected);
 
-        assertDoesNotThrow(() -> labelsApi.printLabels(ENTITY_ID, "product", printRequest()));
+        HeaderResponse result = labelsApi.printLabels(ENTITY_ID, "product", printRequest(), RequestOptions.empty());
+
+        assertEquals(303, result.getStatusCode());
+        assertEquals(expected, result.getLocation().orElse(null));
         assertEquals(0, stub.getLocationHits());
     }
 

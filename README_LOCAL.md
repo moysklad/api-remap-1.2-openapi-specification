@@ -254,7 +254,7 @@ $this->assertEquals($jsonData['name'], $product->getName());
 openapi-mock и `make bundle` не нужны: muonsoft/openapi-mock не отдаёт заголовки, описанные в спецификации.
 
 ```php
-$result = $labelsApi->printLabelsWithLocation($id, 'product', $request);
+$result = $labelsApi->printLabels($id, 'product', $request);
 
 $this->assertSame(303, $result->getStatusCode());
 $this->assertSame($expectedUrl, $result->getLocation());

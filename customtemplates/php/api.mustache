@@ -167,15 +167,22 @@ use {{invokerPackage}}\ObjectSerializer;
      *
      * @throws \{{invokerPackage}}\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return {{#returnType}}{{#responses}}{{#dataType}}{{^-first}}|{{/-first}}{{/dataType}}{{{dataType}}}{{/responses}}{{/returnType}}{{^returnType}}void{{/returnType}}
+     * @return {{#returnType}}{{#responses}}{{#dataType}}{{^-first}}|{{/-first}}{{/dataType}}{{{dataType}}}{{/responses}}{{/returnType}}{{^returnType}}{{#vendorExtensions.x-location-response}}\{{invokerPackage}}\HeaderResponse статус и заголовки ответа; переход по редиректу не выполняется{{/vendorExtensions.x-location-response}}{{^vendorExtensions.x-location-response}}void{{/vendorExtensions.x-location-response}}{{/returnType}}
     {{#isDeprecated}}
      * @deprecated
     {{/isDeprecated}}
      */
     public function {{operationId}}({{^vendorExtensions.x-group-parameters}}{{#allParams}}${{paramName}}{{^required}} = {{#defaultValue}}{{{.}}}{{/defaultValue}}{{^defaultValue}}null{{/defaultValue}}{{/required}}, {{/allParams}}{{#servers}}{{#-first}}?int $hostIndex = null, array $variables = [], {{/-first}}{{/servers}}string $contentType = self::contentTypes['{{{operationId}}}'][0]{{/vendorExtensions.x-group-parameters}}{{#vendorExtensions.x-group-parameters}}$associative_array{{/vendorExtensions.x-group-parameters}})
     {
+        {{#vendorExtensions.x-location-response}}
+        list(, $statusCode, $headers) = $this->{{operationId}}WithHttpInfo({{^vendorExtensions.x-group-parameters}}{{#allParams}}${{paramName}}, {{/allParams}}{{#servers}}{{#-first}}$hostIndex, $variables, {{/-first}}{{/servers}}$contentType{{/vendorExtensions.x-group-parameters}}{{#vendorExtensions.x-group-parameters}}$associative_array{{/vendorExtensions.x-group-parameters}});
+
+        return new \{{invokerPackage}}\HeaderResponse($statusCode, $headers);
+        {{/vendorExtensions.x-location-response}}
+        {{^vendorExtensions.x-location-response}}
         {{#returnType}}list($response) = {{/returnType}}$this->{{operationId}}WithHttpInfo({{^vendorExtensions.x-group-parameters}}{{#allParams}}${{paramName}}, {{/allParams}}{{#servers}}{{#-first}}$hostIndex, $variables, {{/-first}}{{/servers}}$contentType{{/vendorExtensions.x-group-parameters}}{{#vendorExtensions.x-group-parameters}}$associative_array{{/vendorExtensions.x-group-parameters}});{{#returnType}}
         return $response;{{/returnType}}
+        {{/vendorExtensions.x-location-response}}
     }
 
     /**
@@ -352,35 +359,6 @@ use {{invokerPackage}}\ObjectSerializer;
             throw $e;
         }
     }
-{{#vendorExtensions.x-location-response}}
-
-    /**
-     * Operation {{{operationId}}}WithLocation
-{{#summary}}
-     *
-     * {{.}}
-{{/summary}}
-     *
-     * Возвращает код ответа и заголовки вызова: переход по редиректу не выполняется,
-     * поэтому заголовок Location исходного ответа не теряется.
-     *
-{{#allParams}}
-     * @param  {{{dataType}}}{{^required}}|null{{/required}} ${{paramName}}{{#description}} {{.}}{{/description}} {{#required}}(required){{/required}}{{^required}}(optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}
-{{/allParams}}
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['{{{operationId}}}'] to see the possible values for this operation
-     *
-     * @throws \{{invokerPackage}}\ApiException on 4xx/5xx response or if the response body is not in the expected format
-     * @throws \InvalidArgumentException
-     * @return \{{invokerPackage}}\LocationResult
-     */
-    public function {{operationId}}WithLocation({{#allParams}}${{paramName}}{{^required}} = {{#defaultValue}}{{{.}}}{{/defaultValue}}{{^defaultValue}}null{{/defaultValue}}{{/required}}, {{/allParams}}string $contentType = self::contentTypes['{{{operationId}}}'][0]): \{{invokerPackage}}\LocationResult
-    {
-        list(, $statusCode, $headers) = $this->{{operationId}}WithHttpInfo({{#allParams}}${{paramName}}, {{/allParams}}$contentType);
-
-        return new \{{invokerPackage}}\LocationResult($statusCode, $headers);
-    }
-{{/vendorExtensions.x-location-response}}
-
     /**
      * Operation {{{operationId}}}Async
      *
