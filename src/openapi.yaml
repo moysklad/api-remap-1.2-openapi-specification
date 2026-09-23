@@ -1831,12 +1831,6 @@ components:
       $ref: './components/schemas/common/assortmentWithoutBundle.yaml'
     AssortmentSettings:
       $ref: './components/schemas/dictionary/assortmentSettings.yaml'
-    AuditEvent:
-      $ref: './components/schemas/common/auditEvent.yaml'
-    AuditEventList:
-      $ref: './components/schemas/common/auditEventList.yaml'
-    AuditEventReference:
-      $ref: './components/schemas/common/auditEventReference.yaml'
     AttributeAbstract:
       type: object
       required:
