@@ -89,6 +89,9 @@ prep-branch-and-mr-typescript:
         --data-urlencode "target_branch=master" \
         --data-urlencode "title=Draft: ${MR_TITLE}" \
         "${API_BASE}/projects/${PROJECT_ENCODED}/merge_requests" >/dev/null
+  after_script:
+    # Не передаем oauth url из sdk-repo/.git/config
+    - rm -rf sdk-repo/.git
   artifacts:
     paths:
       - sdk-repo/
@@ -179,6 +182,9 @@ merge-branch-typescript:
         git tag -a "$TAG" -m "$TAG_MESSAGE" || echo "Tag $TAG already exists in SDK repo, skipping creation."
         git push origin "$TAG" || echo "Failed to push tag $TAG (it may already exist)."
       fi
+  after_script:
+    # Не передаем oauth url из sdk-repo/.git/config
+    - rm -rf sdk-repo/.git
   artifacts:
     paths:
       - sdk-repo/

@@ -174,8 +174,9 @@ merge-branch-python:
 
       # Артефакт для deploy-python-to-pypi; не коммитим его в SDK-репозиторий.
       printf '%s' "$TAG" > python-release-tag.txt
-      # Не передаём downstream job OAuth URL из sdk-repo/.git/config.
-      rm -rf .git
+  after_script:
+    # Не передаем oauth url из sdk-repo/.git/config
+    - rm -rf sdk-repo/.git
   artifacts:
     paths:
       - sdk-repo/
