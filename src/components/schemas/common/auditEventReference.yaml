@@ -1,0 +1,5 @@
+type: object
+description: Ссылка на контекст аудита или измененную сущность
+properties:
+  meta:
+    $ref: './meta.yaml'

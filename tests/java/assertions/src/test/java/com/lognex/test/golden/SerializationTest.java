@@ -38,6 +38,7 @@ class SerializationTest extends BaseTestCase {
     private static final Map<String, String> FIXTURE_MODEL_MAP = new HashMap<>();
 
     static {
+        FIXTURE_MODEL_MAP.put("audit_event_list", "AuditEventList");
         FIXTURE_MODEL_MAP.put("product", "Product");
         FIXTURE_MODEL_MAP.put("product_full", "Product");
         FIXTURE_MODEL_MAP.put("pack", "Pack");

@@ -28,6 +28,7 @@ import {
  * значение — имя модели в сгенерированном пакете.
  */
 const FIXTURE_MODEL_MAP: Readonly<Record<string, string>> = {
+    audit_event_list: 'AuditEventList',
     product: 'Product',
     product_full: 'Product',
     pack: 'Pack',

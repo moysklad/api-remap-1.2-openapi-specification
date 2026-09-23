@@ -12,6 +12,7 @@ import pytest
 FIXTURES = Path(__file__).resolve().parents[2] / "fixtures"
 
 FIXTURE_MODEL_MAP = {
+    "audit_event_list": "AuditEventList",
     "product": "Product",
     "product_full": "Product",
     "pack": "Pack",

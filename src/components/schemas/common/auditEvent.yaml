@@ -1,0 +1,55 @@
+type: object
+description: Событие аудита
+properties:
+  additionalInfo:
+    type: string
+    maxLength: 4096
+    description: Дополнительная информация о событии
+    readOnly: true
+  audit:
+    $ref: '../../../openapi.yaml#/components/schemas/AuditEventReference'
+  diff:
+    type: object
+    description: Изменения полей сущности; формат зависит от типа события
+    additionalProperties: true
+    readOnly: true
+  entity:
+    $ref: '../../../openapi.yaml#/components/schemas/AuditEventReference'
+  entityType:
+    type: string
+    description: Тип сущности
+    readOnly: true
+  eventType:
+    type: string
+    description: Тип события
+    readOnly: true
+  moment:
+    type: string
+    description: Время создания события в формате YYYY-MM-DD HH:MM:SS.mmm
+    readOnly: true
+  name:
+    type: string
+    maxLength: 255
+    description: Имя сущности
+    readOnly: true
+  objectCount:
+    type: integer
+    description: Количество измененных объектов
+    readOnly: true
+  objectType:
+    type: string
+    description: Тип объектов, связанных с изменением настроек
+    readOnly: true
+  source:
+    type: string
+    description: Источник изменения
+    readOnly: true
+  supportAccess:
+    type: boolean
+    description: Доступ выполнялся поддержкой от имени пользователя
+    readOnly: true
+  uid:
+    type: string
+    maxLength: 255
+    description: Логин сотрудника
+    readOnly: true

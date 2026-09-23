@@ -419,8 +419,6 @@ paths:
     $ref: './paths/dictionaries/counterparties/counterparty-files.yaml'
   /entity/counterparty/{id}/files/{fileId}:
     $ref: './paths/dictionaries/counterparties/counterparty-file-by-id.yaml'
-  /entity/counterparty/{id}/audit:
-    $ref: './paths/dictionaries/counterparties/counterparty-audit.yaml'
   #
   # Organizations
   /entity/organization:
@@ -626,6 +624,9 @@ paths:
   # Labels
   /entity/{type}/{id}/export:
     $ref: './paths/dictionaries/labels/labels-print.yaml'
+  # Audit
+  /entity/{type}/{id}/audit:
+    $ref: './paths/audit/entity-audit.yaml'
   # Webhooks
   /entity/webhook:
     $ref: './paths/dictionaries/webhooks/webhooks.yaml'
@@ -808,8 +809,6 @@ paths:
     $ref: './paths/documents/customerorders/customerorder-publication-by-id.yaml'
   /entity/customerorder/{id}/export:
     $ref: './paths/documents/customerorders/customerorder-export.yaml'
-  /entity/customerorder/{id}/audit:
-    $ref: './paths/documents/customerorders/customerorder-audit.yaml'
   # Documents - Invoices Out
   /entity/invoiceout:
     $ref: './paths/documents/invoiceouts/invoiceouts.yaml'
@@ -1832,6 +1831,12 @@ components:
       $ref: './components/schemas/common/assortmentWithoutBundle.yaml'
     AssortmentSettings:
       $ref: './components/schemas/dictionary/assortmentSettings.yaml'
+    AuditEvent:
+      $ref: './components/schemas/common/auditEvent.yaml'
+    AuditEventList:
+      $ref: './components/schemas/common/auditEventList.yaml'
+    AuditEventReference:
+      $ref: './components/schemas/common/auditEventReference.yaml'
     AttributeAbstract:
       type: object
       required:
@@ -3069,3 +3074,5 @@ tags:
     description: Операции с отчетом по документам номенклатуры
   - name: Metadata
     description: Операции c мета-датой сущности
+  - name: Audit
+    description: Операции с аудитом сущностей

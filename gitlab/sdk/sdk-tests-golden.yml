@@ -26,25 +26,15 @@ sdk-golden-php:
 
 # Python Golden JSON тесты
 sdk-golden-python:
+  extends: .python-image
   stage: test
-  image: python:3.10
   needs:
     - job: generate-sdk-python
       artifacts: true
   rules:
     - if: '$SDK_LANGUAGES == "" || $SDK_LANGUAGES =~ /python/'
       when: on_success
-  cache:
-    key:
-      files:
-        - clients/python/requirements.txt
-        - tests/python/requirements.txt
-    paths:
-      - .cache/pip/
-  variables:
-    PIP_CACHE_DIR: $CI_PROJECT_DIR/.cache/pip
   script:
-    - python -m pip install -r clients/python/requirements.txt -r tests/python/requirements.txt
     - python -m compileall -q clients/python/src/moysklad_remap_12_sdk
     - python -m pytest tests/python/golden -v
 

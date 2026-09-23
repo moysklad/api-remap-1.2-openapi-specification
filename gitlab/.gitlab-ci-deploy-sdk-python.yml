@@ -1,16 +1,8 @@
 # Build and publish Python SDK distributions.
 
 .deploy-sdk-python-base:
-  image: python:3.10
+  extends: .python-image
   stage: deploy-sdk
-  cache:
-    key: python-publish-tools
-    paths:
-      - .cache/pip/
-  variables:
-    PIP_CACHE_DIR: $CI_PROJECT_DIR/.cache/pip
-  before_script:
-    - python -m pip install "build>=1.2,<2" "twine>=6,<7"
 
 deploy-python-to-testpypi:
   extends: .deploy-sdk-python-base
