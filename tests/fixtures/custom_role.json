@@ -1,416 +1,423 @@
 {
   "meta": {
-    "href": "https://api.moysklad.ru/api/remap/1.2/entity/role/ae6e61ad-ad8c-11eb-0a80-380e00001e6c",
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/role/736da682-ad8b-11eb-0a80-17ef000000d4",
     "type": "customrole",
     "mediaType": "application/json"
   },
-  "id": "ae6e61ad-ad8c-11eb-0a80-380e00001e6c",
-  "name": "updatedTestRole",
+  "id": "736da682-ad8b-11eb-0a80-17ef000000d4",
+  "name": "CustomRole",
   "permissions": {
     "importData": true,
-    "exportData": false,
-    "onlineShops": false,
-    "apiRequest": false,
-    "sendEmail": false,
-    "viewProductCostAndProfit": false,
-    "viewDashboard": false,
-    "viewRecycleBin": false,
+    "exportData": true,
+    "onlineShops": true,
+    "apiRequest": true,
+    "sendEmail": true,
+    "viewProductCostAndProfit": true,
+    "viewDashboard": true,
+    "viewRecycleBin": true,
     "viewAudit": false,
-    "viewSaleProfit": false,
-    "viewCommissionGoods": false,
-    "viewPurchaseFunnel": false,
-    "viewStockReport": false,
-    "viewTurnover": false,
-    "viewSerialNumbers": false,
-    "viewCashFlow": false,
-    "viewCustomerBalanceList": false,
-    "viewProfitAndLoss": false,
-    "viewCompanyCRM": false,
+    "viewSaleProfit": true,
+    "viewCommissionGoods": true,
+    "viewPurchaseFunnel": true,
+    "viewStockReport": true,
+    "viewTurnover": true,
+    "viewSerialNumbers": true,
+    "viewCashFlow": true,
+    "viewCustomerBalanceList": true,
+    "viewProfitAndLoss": true,
+    "viewCompanyCRM": true,
     "viewMoneyDashboard": false,
-    "deleteFromRecycleBin": false,
+    "restoreFromRecycleBin": true,
+    "deleteFromRecycleBin": true,
     "editDocumentsOfRestrictedPeriod": false,
-    "editDocumentTemplates": false,
-    "editCurrencyRateOfDocument": false,
+    "editDocumentTemplates": true,
+    "editCurrencyRateOfDocument": true,
     "subscriptionControl": false,
-    "purchaseControl": false,
-    "listenCalls": false,
+    "purchaseControl": true,
+    "listenCalls": true,
     "ownerAssign": false,
     "ownerDataUpdate": false,
     "accountDelete": false,
     "supply": {
-      "view": "NO",
-      "print": "NO",
-      "create": "NO",
-      "update": "NO",
-      "delete": "NO",
-      "approve": "NO"
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
     },
     "accountAdjustment": {
-      "view": "NO",
-      "print": "NO",
-      "create": "NO",
-      "update": "NO",
-      "delete": "NO"
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL"
     },
     "commissionReportIn": {
-      "view": "NO",
-      "print": "NO",
-      "create": "NO",
-      "update": "NO",
-      "delete": "NO",
-      "approve": "NO"
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
     },
     "processingPlan": {
-      "view": "NO",
-      "create": "NO",
-      "update": "NO",
-      "delete": "NO"
+      "view": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL"
     },
     "retailSalesReturn": {
-      "view": "NO",
-      "print": "NO",
-      "create": "NO",
-      "update": "NO",
-      "delete": "NO",
-      "approve": "NO"
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
     },
     "loss": {
-      "view": "NO",
-      "print": "NO",
-      "create": "NO",
-      "update": "NO",
-      "delete": "NO",
-      "approve": "NO"
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
     },
     "cashboxAdjustment": {
-      "view": "NO",
-      "print": "NO",
-      "create": "NO",
-      "update": "NO",
-      "delete": "NO"
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL"
     },
     "paymentOut": {
-      "view": "NO",
-      "print": "NO",
-      "create": "NO",
-      "update": "NO",
-      "delete": "NO",
-      "approve": "NO"
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
     },
     "move": {
-      "view": "NO",
-      "print": "NO",
-      "create": "NO",
-      "update": "NO",
-      "delete": "NO",
-      "approve": "NO"
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
     },
     "inventory": {
-      "view": "NO",
-      "print": "NO",
-      "create": "NO",
-      "update": "NO",
-      "delete": "NO"
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL"
     },
     "cashOut": {
-      "view": "NO",
-      "print": "NO",
-      "create": "NO",
-      "update": "NO",
-      "delete": "NO",
-      "approve": "NO"
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
     },
     "contract": {
-      "view": "NO",
-      "print": "NO",
-      "create": "NO",
-      "update": "NO",
-      "delete": "NO"
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL"
     },
     "project": {
-      "view": "NO",
-      "create": "NO",
-      "update": "NO",
-      "delete": "NO"
+      "view": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL"
     },
     "purchaseOrder": {
-      "view": "NO",
-      "print": "NO",
-      "create": "NO",
-      "update": "NO",
-      "delete": "NO",
-      "approve": "NO"
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
     },
     "customEntity": {
-      "view": "NO",
-      "create": "NO",
-      "update": "NO",
-      "delete": "NO"
+      "view": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL"
     },
     "cashIn": {
-      "view": "NO",
-      "print": "NO",
-      "create": "NO",
-      "update": "NO",
-      "delete": "NO",
-      "approve": "NO"
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
     },
     "salesReturn": {
-      "view": "NO",
-      "print": "NO",
-      "create": "NO",
-      "update": "NO",
-      "delete": "NO",
-      "approve": "NO"
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
     },
     "retailStore": {
-      "view": "NO",
-      "create": "NO",
-      "update": "NO",
-      "delete": "NO"
+      "view": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL"
     },
     "retailShift": {
-      "view": "NO",
-      "print": "NO",
-      "create": "NO",
-      "update": "NO",
-      "delete": "NO"
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL"
     },
     "purchaseReturn": {
-      "view": "NO",
-      "print": "NO",
-      "create": "NO",
-      "update": "NO",
-      "delete": "NO",
-      "approve": "NO"
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
     },
     "processingOrder": {
-      "view": "NO",
-      "print": "NO",
-      "create": "NO",
-      "update": "NO",
-      "delete": "NO",
-      "approve": "NO"
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
     },
     "retailDrawerCashIn": {
-      "view": "NO",
-      "print": "NO",
-      "create": "NO",
-      "update": "NO",
-      "delete": "NO",
-      "approve": "NO"
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
     },
     "retailDrawerCashOut": {
-      "view": "NO",
-      "print": "NO",
-      "create": "NO",
-      "update": "NO",
-      "delete": "NO",
-      "approve": "NO"
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
     },
     "factureIn": {
-      "view": "NO",
-      "print": "NO",
-      "create": "NO",
-      "update": "NO",
-      "delete": "NO",
-      "approve": "NO"
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
     },
     "bonusTransaction": {
-      "view": "NO",
-      "print": "NO",
-      "create": "NO",
-      "update": "NO",
-      "delete": "NO",
-      "approve": "NO"
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
     },
     "commissionReportOut": {
-      "view": "NO",
-      "print": "NO",
-      "create": "NO",
-      "update": "NO",
-      "delete": "NO",
-      "approve": "NO"
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
     },
     "demand": {
-      "view": "NO",
-      "print": "NO",
-      "create": "NO",
-      "update": "NO",
-      "delete": "NO",
-      "approve": "NO"
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
     },
     "good": {
-      "view": "NO",
-      "print": "NO",
-      "create": "NO",
-      "update": "NO",
-      "delete": "NO"
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL"
     },
     "retailDemand": {
-      "view": "NO",
-      "print": "NO",
-      "create": "NO",
-      "update": "NO",
-      "delete": "NO",
-      "approve": "NO"
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
     },
     "priceList": {
-      "view": "NO",
-      "print": "NO",
-      "create": "NO",
-      "update": "NO",
-      "delete": "NO",
-      "approve": "NO"
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
     },
     "currency": {
       "view": "ALL",
-      "create": "NO",
-      "update": "NO",
-      "delete": "NO"
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL"
     },
     "internalOrder": {
-      "view": "NO",
-      "print": "NO",
-      "create": "NO",
-      "update": "NO",
-      "delete": "NO",
-      "approve": "NO"
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
     },
     "myCompany": {
-      "view": "NO",
+      "view": "ALL",
       "create": "NO",
       "update": "NO",
       "delete": "NO"
     },
     "counterpartyAdjustment": {
-      "view": "NO",
-      "print": "NO",
-      "create": "NO",
-      "update": "NO",
-      "delete": "NO"
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL"
     },
     "invoiceIn": {
-      "view": "NO",
-      "print": "NO",
-      "create": "NO",
-      "update": "NO",
-      "delete": "NO",
-      "approve": "NO"
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
     },
     "prepayment": {
-      "view": "NO",
-      "print": "NO",
-      "create": "NO",
-      "update": "NO",
-      "delete": "NO",
-      "approve": "NO"
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
     },
     "processingProcess": {
-      "view": "NO",
-      "create": "NO",
-      "update": "NO",
-      "delete": "NO"
+      "view": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL"
     },
     "employee": {
-      "view": "NO",
-      "create": "NO",
-      "update": "NO",
-      "delete": "NO"
+      "view": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL"
     },
     "processingStage": {
-      "view": "NO",
-      "create": "NO",
-      "update": "NO",
-      "delete": "NO"
+      "view": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL"
     },
     "factureOut": {
-      "view": "NO",
-      "print": "NO",
-      "create": "NO",
-      "update": "NO",
-      "delete": "NO",
-      "approve": "NO"
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
     },
     "processing": {
-      "view": "NO",
-      "print": "NO",
-      "create": "NO",
-      "update": "NO",
-      "delete": "NO",
-      "approve": "NO"
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
     },
     "customerOrder": {
-      "view": "NO",
-      "print": "NO",
-      "create": "NO",
-      "update": "NO",
-      "delete": "NO",
-      "approve": "NO"
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
     },
     "enter": {
-      "view": "NO",
-      "print": "NO",
-      "create": "NO",
-      "update": "NO",
-      "delete": "NO",
-      "approve": "NO"
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
     },
     "paymentIn": {
-      "view": "NO",
-      "print": "NO",
-      "create": "NO",
-      "update": "NO",
-      "delete": "NO",
-      "approve": "NO"
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
     },
     "invoiceOut": {
-      "view": "NO",
-      "print": "NO",
-      "create": "NO",
-      "update": "NO",
-      "delete": "NO",
-      "approve": "NO"
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
     },
     "company": {
-      "view": "NO",
-      "print": "NO",
-      "create": "NO",
-      "update": "NO",
-      "delete": "NO"
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL"
     },
     "warehouse": {
-      "view": "NO",
-      "create": "NO",
-      "update": "NO",
-      "delete": "NO"
+      "view": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL"
     },
     "country": {
       "view": "ALL",
-      "create": "NO",
-      "update": "NO",
-      "delete": "NO"
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL"
     },
     "uom": {
       "view": "ALL",
-      "create": "NO",
-      "update": "NO",
-      "delete": "NO"
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL"
     },
     "prepaymentReturn": {
-      "view": "NO",
-      "print": "NO",
-      "create": "NO",
-      "update": "NO",
-      "delete": "NO",
-      "approve": "NO"
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
     },
     "script": {
-      "view": "NO",
-      "create": "NO",
-      "done": "NO",
-      "update": "NO",
-      "delete": "NO"
+      "view": "AUTHOR_OR_ASSIGNEE",
+      "create": "ALL",
+      "done": "AUTHOR_OR_ASSIGNEE",
+      "update": "AUTHOR",
+      "delete": "AUTHOR"
+    },
+    "expenseitem": {
+      "view": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL"
     },
     "taxrate": {
       "view": "ALL",

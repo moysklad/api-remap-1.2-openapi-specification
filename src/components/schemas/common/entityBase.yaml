@@ -36,6 +36,8 @@ BatchResponseEntity:
         componentName: Contract
       - type: counterparty
         componentName: Counterparty
+      - type: counterpartyadjustment
+        componentName: CounterpartyAdjustment
       - type: country
         componentName: Country
       - type: currency
@@ -82,8 +84,16 @@ BatchResponseEntity:
         componentName: PaymentIn
       - type: paymentout
         componentName: PaymentOut
+      - type: payroll
+        componentName: Payroll
+      - type: payrollposition
+        componentName: PayrollPosition
       - type: prepaymentreturnposition
         componentName: PrepaymentReturnPosition
+      - type: pricelist
+        componentName: PriceList
+      - type: pricelistrow
+        componentName: PriceListPosition
       - type: pricetype
         componentName: PriceType
       - type: processing

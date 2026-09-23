@@ -1,3 +1,13 @@
+# Версия 0.29.0
+
+* feat: поддержана работа с эндпоинтом entity/payroll
+* feat: поддержана работа с эндпоинтом entity/pricelist
+* feat: поддержана работа с эндпоинтом entity/counterpartyadjustment
+* feat: поддержана работа с эндпоинтом report/turnover
+* feat: поддержана работа с эндпоинтом report/counterparty
+* feat: поддержана работа с эндпоинтом report/money
+* feat: поддержана работа с эндпоинтом report/profit
+
 # Версия 0.28.0
 
 * технические изменения

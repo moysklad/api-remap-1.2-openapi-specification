@@ -3,7 +3,10 @@ get:
   tags:
     - Employees
   summary: Получить индивидуальную роль
-  description: Запрос на получение индивидуальной роли.
+  description: |
+    Запрос на получение индивидуальной роли.
+    Ответ содержит meta роли с type = individualrole.
+    Индивидуальные права сотрудника доступны через /entity/employee/{id}/security.
   parameters:
     - $ref: '../../../components/headers.yaml#/AcceptHeader'
     - $ref: '../../../components/headers.yaml#/AcceptEncoding'
@@ -16,5 +19,3 @@ get:
             $ref: '../../../openapi.yaml#/components/schemas/EmployeeRole'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
-    
-    

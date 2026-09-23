@@ -3,11 +3,15 @@
 FROM node:22-alpine
 
 # PHP: расширения для PHPUnit — dom, xmlwriter, ctype и др.
+# Alpine 3.23 composer зависит от php85, а пакеты расширений ставим для php84.
+# Обёртка composer должна вызывать php84, иначе platform-check падает на ext-dom/tokenizer.
 RUN echo "https://dl-cdn.alpinelinux.org/alpine/v3.23/community" >> /etc/apk/repositories && \
   apk add --no-cache --repository=https://dl-cdn.alpinelinux.org/alpine/v3.23/community \
     php84 php84-curl php84-xml php84-xmlwriter php84-mbstring php84-phar php84-openssl php84-json php84-dom php84-tokenizer php84-ctype \
     composer && \
-  ln -sf /usr/bin/php84 /usr/bin/php
+  ln -sf /usr/bin/php84 /usr/bin/php && \
+  printf '%s\n' '#!/bin/sh' '/usr/bin/php84 /usr/bin/composer.phar "$@"' > /usr/bin/composer && \
+  chmod +x /usr/bin/composer
 
 # Python
 RUN apk add --no-cache python3 py3-pip && \

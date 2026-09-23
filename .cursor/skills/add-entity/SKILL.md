@@ -58,8 +58,11 @@ Before creating paths, produce and keep an internal matrix like this:
 | `### Получить ... по ID` | `/entity/<keyword>/{id}` | GET | `<entity>-by-id.yaml` | `testGet<PascalSingular>ById` |
 | `### Изменить ...` | `/entity/<keyword>/{id}` | PUT | `<entity>-by-id.yaml` | `testUpdate<PascalSingular>` |
 | `### Удалить ...` | `/entity/<keyword>/{id}` | DELETE | `<entity>-by-id.yaml` | `testDelete<PascalSingular>` |
+| `### Удаление в корзину` (documents only) | `/entity/<keyword>/{id}/trash` | POST | `<entity>-trash.yaml` | `testMove<PascalSingular>ToTrash` |
 
 Add rows for batch, metadata, attributes, states, positions, files/images, accounts, notes, storebalances, or other MD-specific endpoint groups. Detailed extraction and classification rules are in [reference.md](reference.md).
+
+**Trash is documents-only.** Recycle-bin move is a common document operation (`POST /entity/<keyword>/{id}/trash`), even when the entity MD has no dedicated section — the source is `md/documents/_common_info.md` / `md/_general.md`. Do **not** add `/trash` for dictionaries. Do **not** add a schema, fixture, or golden mapping. Peer: `src/paths/documents/supplies/supply-trash.yaml`. Smoke: empty body (`hasBody=false`), `Expectation.NOT_404`. Unique `operationId` per entity (`move<PascalSingular>ToTrash`); do not reuse one path YAML across types.
 
 ## Bulk create/update endpoint rule (top-level entities)
 
