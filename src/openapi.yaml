@@ -1831,12 +1831,6 @@ components:
       $ref: './components/schemas/common/assortmentWithoutBundle.yaml'
     AssortmentSettings:
       $ref: './components/schemas/dictionary/assortmentSettings.yaml'
-    AuditEvent:
-      $ref: './components/schemas/common/auditEvent.yaml'
-    AuditEventList:
-      $ref: './components/schemas/common/auditEventList.yaml'
-    AuditEventReference:
-      $ref: './components/schemas/common/auditEventReference.yaml'
     AttributeAbstract:
       type: object
       required:
@@ -3074,5 +3068,3 @@ tags:
     description: Операции с отчетом по документам номенклатуры
   - name: Metadata
     description: Операции c мета-датой сущности
-  - name: Audit
-    description: Операции с аудитом сущностей
