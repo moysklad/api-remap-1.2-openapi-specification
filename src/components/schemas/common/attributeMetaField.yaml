@@ -1,0 +1,5 @@
+type: object
+description: Поле meta в доп. полях
+properties:
+  meta:
+    $ref: '../../../openapi.yaml#/components/schemas/Meta'

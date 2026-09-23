@@ -1,0 +1,5 @@
+type: object
+description: Счет покупателю + linkedSum
+x-polymorphic-parent: FinanceInOperationAbstract
+allOf:
+  - $ref: '../../../openapi.yaml#/components/schemas/InvoiceOut'

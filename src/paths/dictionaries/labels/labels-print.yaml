@@ -1,0 +1,55 @@
+post:
+  operationId: printLabels
+  tags:
+    - Labels
+  summary: Запрос на печать этикеток и ценников
+  description: |
+    Запрос на формирование печатной формы с этикетками и ценниками.
+    В случае готовности сервер возвращает пустой ответ с кодом 303 и заголовком Location.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - name: type
+      in: path
+      required: true
+      description: Тип сущности, для которой запрашивается печать
+      schema:
+        type: string
+        enum:
+          - product
+          - service
+          - bundle
+          - variant
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../openapi.yaml#/components/schemas/LabelPrintRequest'
+  responses:
+    '202':
+      description: Печатная форма еще не готова, в Location передана ссылка на статус печати
+      headers:
+        Location:
+          description: Ссылка на статус печати
+          schema:
+            type: string
+        Content-Type:
+          description: Тип содержимого ответа
+          schema:
+            type: string
+    '303':
+      description: Печатная форма готова, в Location передана ссылка на файл
+      headers:
+        Location:
+          description: Ссылка на готовый файл
+          schema:
+            type: string
+        Content-Type:
+          description: Тип содержимого ответа
+          schema:
+            type: string
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

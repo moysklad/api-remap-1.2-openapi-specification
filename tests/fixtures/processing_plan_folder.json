@@ -1,0 +1,32 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/processingplanfolder/8c329385-bee9-11ec-0a82-04c500000102",
+    "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/processingplanfolder/metadata",
+    "type": "processingplanfolder",
+    "mediaType": "application/json"
+  },
+  "id": "8c329385-bee9-11ec-0a82-04c500000102",
+  "accountId": "da7d9bbe-2c97-11e6-8a84-bae500000001",
+  "owner": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/employee/faba7f37-2e58-11e6-8a84-bae500000028",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/employee/metadata",
+      "type": "employee",
+      "mediaType": "application/json"
+    }
+  },
+  "shared": false,
+  "group": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/group/f97aa1fb-2e58-11e6-8a84-bae500000002",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/group/metadata",
+      "type": "group",
+      "mediaType": "application/json"
+    }
+  },
+  "updated": "2022-04-19 09:48:28.563",
+  "name": "Группа Мебель",
+  "externalCode": "furnitureCode",
+  "archived": false,
+  "pathName": ""
+}

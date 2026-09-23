@@ -1,0 +1,19 @@
+get:
+  operationId: getEmbeddedTemplateByTypeAndId
+  tags:
+    - Metadata
+  summary: Получить Стандартный шаблон печатной формы
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityType'
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/EmbeddedTemplate'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

@@ -1,0 +1,15 @@
+type: object
+description: Краткое представление розничной смены в уведомлении
+allOf:
+  - $ref: '../../../../openapi.yaml#/components/schemas/NotificationNamedEntity'
+  - type: object
+    properties:
+      open:
+        type: string
+        description: Дата открытия смены
+      close:
+        type: string
+        description: Дата закрытия смены
+      proceed:
+        type: integer
+        description: Выручка смены

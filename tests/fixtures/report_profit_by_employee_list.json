@@ -1,0 +1,44 @@
+{
+  "context": {
+    "employee": {
+      "meta": {
+        "href": "https://api.moysklad.ru/api/remap/1.2/context/employee",
+        "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/employee/metadata",
+        "type": "employee",
+        "mediaType": "application/json"
+      }
+    }
+  },
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/report/profit/byemployee",
+    "type": "salesbyemployee",
+    "mediaType": "application/json",
+    "size": 1,
+    "limit": 1000,
+    "offset": 0
+  },
+  "rows": [
+    {
+      "employee": {
+        "meta": {
+          "href": "https://api.moysklad.ru/api/remap/1.2/entity/employee/3c9ef5be-4814-11e6-8a84-bae500000028",
+          "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/employee/metadata",
+          "type": "employee",
+          "mediaType": "application/json"
+        },
+        "name": "Администратор"
+      },
+      "salesCount": 3.0,
+      "salesAvgCheck": 104498.0,
+      "sellSum": 313495.0,
+      "sellCostSum": 180000.0,
+      "returnCount": 1.0,
+      "returnAvgCheck": 15000.0,
+      "returnSum": 15000.0,
+      "returnCostSum": 9000.0,
+      "profit": 124495.0,
+      "margin": 0.6916388888888889,
+      "salesMargin": 0.3971224421442144
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/taxrate/6031a4ab-fec1-11ec-0a80-059200000007",
+    "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/taxrate/metadata",
+    "type": "taxrate",
+    "mediaType": "application/json",
+    "uuidHref": "https://online.moysklad.ru/app/#taxrate/edit?id=6031a4ab-fec1-11ec-0a80-059200000007"
+  },
+  "id": "6031a4ab-fec1-11ec-0a80-059200000007",
+  "accountId": "c6bc8eaa-fe92-11ec-0a82-062000000018",
+  "owner": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/employee/c6f50a9a-fe92-11ec-0a82-09860000027a",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/employee/metadata",
+      "type": "employee",
+      "mediaType": "application/json",
+      "uuidHref": "https://online.moysklad.ru/app/#employee/edit?id=c6f50a9a-fe92-11ec-0a82-09860000027a"
+    }
+  },
+  "shared": true,
+  "group": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/group/c6bcfbf3-fe92-11ec-0a82-062000000019",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/group/metadata",
+      "type": "group",
+      "mediaType": "application/json"
+    }
+  },
+  "updated": "2022-07-08 16:25:03.726",
+  "rate": 33.0,
+  "archived": false,
+  "comment": "Ставка на продукты с ГМО"
+}

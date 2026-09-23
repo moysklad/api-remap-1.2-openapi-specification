@@ -1,0 +1,9 @@
+type: object
+description: Настройки группы уведомлений
+properties:
+  enabled:
+    type: boolean
+    description: Признак активности подписки на группу уведомлений
+  channelsEnabled:
+    description: Настройки каналов доставки уведомлений группы
+    $ref: '../../../openapi.yaml#/components/schemas/NotificationChannelSettings'

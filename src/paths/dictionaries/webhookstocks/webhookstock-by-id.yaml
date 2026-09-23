@@ -1,0 +1,64 @@
+get:
+  operationId: getWebhookStockById
+  tags:
+    - WebhookStocks
+  summary: Получить вебхук на изменение остатков по ID
+  description: Запрос на получение отдельного вебхука на изменение остатков с указанным id
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/WebhookStock'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+put:
+  operationId: updateWebhookStock
+  tags:
+    - WebhookStocks
+  summary: Изменить вебхук на изменение остатков
+  description: Изменение сведений о вебхуке (включая отключение через enabled)
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../openapi.yaml#/components/schemas/WebhookStock'
+  responses:
+    '200':
+      description: Вебхук успешно изменён
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/WebhookStock'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+delete:
+  operationId: deleteWebhookStock
+  tags:
+    - WebhookStocks
+  summary: Удалить вебхук на изменение остатков
+  description: Удаление вебхука на изменение остатков с указанным id
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Вебхук на изменение остатков успешно удалён
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

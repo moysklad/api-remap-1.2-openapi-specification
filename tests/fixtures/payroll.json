@@ -1,0 +1,77 @@
+{
+    "meta": {
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/payroll/946f8595-17c3-11f1-4095-ec9f00000001",
+        "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/payroll/metadata",
+        "type": "payroll",
+        "mediaType": "application/json",
+        "uuidHref": "https://online.moysklad.ru/app/#payroll/edit?id=946f8595-17c3-11f1-4095-ec9f00000001"
+    },
+    "id": "946f8595-17c3-11f1-4095-ec9f00000001",
+    "accountId": "bc637f03-fda6-11f0-4e60-ea2900000001",
+    "owner": {
+        "meta": {
+            "href": "https://api.moysklad.ru/api/remap/1.2/entity/employee/be4118c7-fda6-11f0-2555-e5d500000055",
+            "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/employee/metadata",
+            "type": "employee",
+            "mediaType": "application/json",
+            "uuidHref": "https://online.moysklad.ru/app/#employee/edit?id=be4118c7-fda6-11f0-2555-e5d500000055"
+        }
+    },
+    "shared": false,
+    "group": {
+        "meta": {
+            "href": "https://api.moysklad.ru/api/remap/1.2/entity/group/bc657ddf-fda6-11f0-4e60-ea2900000002",
+            "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/group/metadata",
+            "type": "group",
+            "mediaType": "application/json"
+        }
+    },
+    "updated": "2026-03-12 08:15:10.678",
+    "name": "00001",
+    "externalCode": "EX0JefwKhGFRrJ7uS95aI0",
+    "moment": "2026-03-04 15:13:00.000",
+    "applicable": true,
+    "sum": 60000.0,
+    "organization": {
+        "meta": {
+            "href": "https://api.moysklad.ru/api/remap/1.2/entity/organization/be919d95-fda6-11f0-2555-e5d5000000a1",
+            "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/organization/metadata",
+            "type": "organization",
+            "mediaType": "application/json",
+            "uuidHref": "https://online.moysklad.ru/app/#mycompany/edit?id=be919d95-fda6-11f0-2555-e5d5000000a1"
+        }
+    },
+    "state": {
+        "meta": {
+            "href": "https://api.moysklad.ru/api/remap/1.2/entity/payroll/metadata/states/615bd402-1dd2-11f1-994a-b7f800000002",
+            "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/payroll/metadata",
+            "type": "state",
+            "mediaType": "application/json"
+        }
+    },
+    "created": "2026-03-04 15:13:40.158",
+    "printed": false,
+    "published": false,
+    "files": {
+        "meta": {
+            "href": "https://api.moysklad.ru/api/remap/1.2/entity/payroll/946f8595-17c3-11f1-4095-ec9f00000001/files",
+            "type": "files",
+            "mediaType": "application/json",
+            "size": 0,
+            "limit": 1000,
+            "offset": 0
+        }
+    },
+    "positions": {
+        "meta": {
+            "href": "https://api.moysklad.ru/api/remap/1.2/entity/payroll/946f8595-17c3-11f1-4095-ec9f00000001/positions",
+            "type": "payrollposition",
+            "mediaType": "application/json",
+            "size": 2,
+            "limit": 1000,
+            "offset": 0
+        }
+    },
+    "startPayrollPeriod": "2026-03-03 00:00:00.000",
+    "endPayrollPeriod": "2026-03-04 23:59:59.000"
+}

@@ -1,0 +1,83 @@
+get:
+  operationId: getTaskNoteById
+  tags:
+    - Tasks
+  summary: Получить комментарий к Задаче по ID
+  description: Запрос на получение отдельного комментария к Задаче с указанным id
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - name: noteId
+      in: path
+      required: true
+      description: ID комментария к Задаче
+      schema:
+        type: string
+        format: uuid
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/TaskNote'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+put:
+  operationId: updateTaskNote
+  tags:
+    - Tasks
+  summary: Обновить комментарий к Задаче
+  description: Обновление комментария к Задаче с указанным id
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - name: noteId
+      in: path
+      required: true
+      description: ID комментария к Задаче
+      schema:
+        type: string
+        format: uuid
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../openapi.yaml#/components/schemas/TaskNote'
+  responses:
+    '200':
+      description: Комментарий успешно обновлен
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/TaskNote'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+delete:
+  operationId: deleteTaskNote
+  tags:
+    - Tasks
+  summary: Удалить комментарий к Задаче
+  description: Удаление комментария к Задаче с указанным id
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - name: noteId
+      in: path
+      required: true
+      description: ID комментария к Задаче
+      schema:
+        type: string
+        format: uuid
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Комментарий успешно удален
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
