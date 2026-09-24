@@ -3,11 +3,8 @@
 Почему были добавлены кастомные шаблоны:
 
 * ApiClient.mustache - кастомный формат дат, Jackson 3 (`JsonMapper`), добавлена поддержка batch-ответов с частичными ошибками: стандартный шаблон обрабатывает ответ как один успешный объект или одну ошибку, что не подходит для batch-операций API.
-* api.mustache - правильные заголовки Accept: application/json;charset=utf-8; для операций с `x-location-response`
-  все перегрузки `<operationId>` возвращают `HeaderResponse` вместо `void`
-* ApiClient.mustache, HeaderResponse.mustache - операции с `x-location-response` вызываются через `invokeAPIForHeaders`:
-  редиректы отключаются на уровне запроса (иначе Location теряется до возврата управления в SDK),
-  а `3xx` не считается ошибкой и отдаётся как результат вызова. Описание расширения - `src/custom-extension-readme.md`
+* api.mustache - правильные заголовки Accept: application/json;charset=utf-8; `x-location-response` → `HeaderResponse`
+* ApiClient.mustache, HeaderResponse.mustache - `x-location-response`: `invokeAPIForHeaders` без редиректа, `3xx` не ошибка
 * RequestOptions.mustache, PageOptions.mustache, ListOptions.mustache, AssortmentListOptions.mustache, Filters.mustache, 
   Orders.mustache - удобные overload-методы для query-параметров без длинных позиционных сигнатур
 * pojo.mustache - решение проблем с дискриминатором в полиморфных классах
