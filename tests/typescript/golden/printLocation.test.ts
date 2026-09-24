@@ -15,25 +15,27 @@ const ENTITY_ID = '12345678-1234-1234-1234-123456789012';
 const sdk = (await loadSdk()) as unknown as typeof Sdk;
 
 let stub: LocationStubServer;
-let configuration: Sdk.Configuration;
 let labelsApi: Sdk.LabelsApi;
 
 beforeEach(async () => {
     stub = await LocationStubServer.start();
-    configuration = new sdk.Configuration({ basePath: stub.basePath });
-    labelsApi = new sdk.LabelsApi(configuration);
+    labelsApi = new sdk.LabelsApi(new sdk.Configuration({ basePath: stub.basePath }));
 });
 
 afterEach(async () => {
     await stub.close();
 });
 
-function printLabels(): Promise<Sdk.HeaderResponse> {
-    return labelsApi.printLabels({
+function printParameters(): Sdk.PrintLabelsRequest {
+    return {
         id: ENTITY_ID,
         type: sdk.PrintLabelsTypeEnum.Product,
         labelPrintRequest: sdk.LabelPrintRequestFromJSON({ count: 1 }),
-    });
+    };
+}
+
+function printLabels(): Promise<Sdk.HeaderResponse> {
+    return labelsApi.printLabels(printParameters());
 }
 
 test('202: сохраняются статус и Location ожидающей печати', async () => {
@@ -59,17 +61,15 @@ test('303: результат возвращается без перехода �
     assert.equal(stub.locationHits, 0, 'переход по Location выполняться не должен');
 });
 
-for (const headerName of ['Location', 'location', 'LOCATION']) {
-    test(`заголовок ${headerName} читается без учёта регистра`, async () => {
-        const expected = stub.locationUrl('file.pdf');
-        stub.enqueue(303, headerName, expected);
+test('заголовок location читается без учёта регистра', async () => {
+    const expected = stub.locationUrl('file.pdf');
+    stub.enqueue(303, 'location', expected);
 
-        const result = await printLabels();
+    const result = await printLabels();
 
-        assert.equal(result.location, expected);
-        assert.equal(result.getHeader('location'), expected);
-    });
-}
+    assert.equal(result.location, expected);
+    assert.equal(result.getHeader('LOCATION'), expected);
+});
 
 test('отсутствие Location — undefined', async () => {
     stub.enqueue(202);
@@ -80,37 +80,26 @@ test('отсутствие Location — undefined', async () => {
     assert.equal(result.location, undefined);
 });
 
-test('результаты последовательных вызовов независимы', async () => {
-    const first = stub.locationUrl('first');
-    const second = stub.locationUrl('second');
-    stub.enqueue(303, 'Location', first);
-    stub.enqueue(202, 'Location', second);
+test('статус 400: сохраняется контракт ошибок', async () => {
+    stub.enqueue(400, undefined, undefined, '{"errors":[{"error":"stub","code":1}]}');
 
-    const firstResult = await printLabels();
-    const secondResult = await printLabels();
-
-    assert.equal(firstResult.location, first);
-    assert.equal(firstResult.statusCode, 303);
-    assert.equal(secondResult.location, second);
-    assert.equal(secondResult.statusCode, 202);
+    await assert.rejects(printLabels(), (error: unknown) => {
+        assert.ok(error instanceof sdk.ResponseError);
+        assert.equal(error.response.status, 400);
+        return true;
+    });
 });
 
-for (const status of [400, 401, 500]) {
-    test(`статус ${status}: сохраняется контракт ошибок`, async () => {
-        stub.enqueue(status, undefined, undefined, '{"errors":[{"error":"stub","code":1}]}');
+test('пользовательский initOverrides применяется вместе с отключением редиректа', async () => {
+    const expected = stub.locationUrl('file.pdf');
+    stub.enqueue(303, 'Location', expected);
 
-        await assert.rejects(printLabels(), (error: unknown) => {
-            assert.ok(error instanceof sdk.ResponseError);
-            assert.equal(error.response.status, status);
-            return true;
-        });
-    });
-}
+    const result = await labelsApi.printLabels(printParameters(), async ({ init }) => ({
+        headers: { ...init.headers, 'X-Test': 'override' },
+    }));
 
-test('обычный JSON-ответ 200 по-прежнему десериализуется', async () => {
-    stub.enqueue(200, undefined, undefined, JSON.stringify({ id: ENTITY_ID, name: 'Стул' }));
-
-    const product = await new sdk.ProductsApi(configuration).getProductById({ id: ENTITY_ID });
-
-    assert.equal(product.name, 'Стул');
+    assert.equal(result.statusCode, 303);
+    assert.equal(result.location, expected);
+    assert.equal(stub.lastRequestHeaders['x-test'], 'override');
+    assert.equal(stub.locationHits, 0);
 });

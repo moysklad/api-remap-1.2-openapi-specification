@@ -19,6 +19,7 @@ interface StubResponse {
 export class LocationStubServer {
     private readonly responses: StubResponse[] = [];
     private hits = 0;
+    private lastHeaders: IncomingMessage['headers'] = {};
     private readonly server = createServer((request, response) => this.handle(request, response));
 
     static async start(): Promise<LocationStubServer> {
@@ -38,6 +39,11 @@ export class LocationStubServer {
     /** Количество обращений к адресу, переданному в Location. */
     get locationHits(): number {
         return this.hits;
+    }
+
+    /** Заголовки последнего запроса к API (имена в нижнем регистре). */
+    get lastRequestHeaders(): IncomingMessage['headers'] {
+        return this.lastHeaders;
     }
 
     /** Ответы отдаются в порядке постановки в очередь, по одному на вызов. */
@@ -63,6 +69,7 @@ export class LocationStubServer {
             return;
         }
 
+        this.lastHeaders = request.headers;
         const next = this.responses.shift();
         if (next === undefined) {
             response.writeHead(599).end();

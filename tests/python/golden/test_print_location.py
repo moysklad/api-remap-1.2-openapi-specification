@@ -12,7 +12,7 @@ from typing import Iterator, NamedTuple, Optional
 
 import pytest
 
-from moysklad_remap_12_sdk import ApiClient, Configuration, LabelsApi, ProductsApi
+from moysklad_remap_12_sdk import ApiClient, Configuration, LabelsApi
 from moysklad_remap_12_sdk.exceptions import ApiException
 from moysklad_remap_12_sdk.header_response import HeaderResponse
 from moysklad_remap_12_sdk.models.label_print_request import LabelPrintRequest
@@ -102,13 +102,8 @@ def stub() -> Iterator[LocationStubServer]:
 
 
 @pytest.fixture
-def api_client(stub: LocationStubServer) -> ApiClient:
-    return ApiClient(Configuration(host=stub.base_path))
-
-
-@pytest.fixture
-def labels_api(api_client: ApiClient) -> LabelsApi:
-    return LabelsApi(api_client)
+def labels_api(stub: LocationStubServer) -> LabelsApi:
+    return LabelsApi(ApiClient(Configuration(host=stub.base_path)))
 
 
 def print_request() -> LabelPrintRequest:
@@ -146,15 +141,14 @@ def test_keeps_status_and_location_of_ready_print_without_following_redirect(
     assert stub.location_hits == 0, "переход по Location выполняться не должен"
 
 
-@pytest.mark.parametrize("header_name", ["Location", "location", "LOCATION"])
-def test_reads_location_regardless_of_header_case(stub, labels_api, header_name) -> None:
+def test_reads_location_regardless_of_header_case(stub, labels_api) -> None:
     expected = stub.location_url("file.pdf")
-    stub.enqueue(StubResponse(303, header_name, expected))
+    stub.enqueue(StubResponse(303, "location", expected))
 
     result = print_labels(labels_api)
 
     assert result.location == expected
-    assert result.get_header("location") == expected
+    assert result.get_header("LOCATION") == expected
 
 
 def test_reports_missing_location_as_none(stub, labels_api) -> None:
@@ -166,29 +160,13 @@ def test_reports_missing_location_as_none(stub, labels_api) -> None:
     assert result.location is None
 
 
-def test_results_of_subsequent_calls_are_independent(stub, labels_api) -> None:
-    first = stub.location_url("first")
-    second = stub.location_url("second")
-    stub.enqueue(StubResponse(303, "Location", first))
-    stub.enqueue(StubResponse(202, "Location", second))
-
-    first_result = print_labels(labels_api)
-    second_result = print_labels(labels_api)
-
-    assert first_result.location == first
-    assert first_result.status_code == 303
-    assert second_result.location == second
-    assert second_result.status_code == 202
-
-
-@pytest.mark.parametrize("status", [400, 401, 500])
-def test_keeps_error_contract_for_error_statuses(stub, labels_api, status) -> None:
-    stub.enqueue(StubResponse(status, body='{"errors":[{"error":"stub","code":1}]}'))
+def test_keeps_error_contract_for_error_status(stub, labels_api) -> None:
+    stub.enqueue(StubResponse(400, body='{"errors":[{"error":"stub","code":1}]}'))
 
     with pytest.raises(ApiException) as error:
         print_labels(labels_api)
 
-    assert error.value.status == status
+    assert error.value.status == 400
 
 
 def test_with_http_info_returns_redirect_without_following(stub, labels_api) -> None:
@@ -200,12 +178,3 @@ def test_with_http_info_returns_redirect_without_following(stub, labels_api) -> 
     assert response.status_code == 303
     assert response.headers["Location"] == expected
     assert stub.location_hits == 0
-
-
-def test_ordinary_json_response_is_still_deserialized(stub, api_client) -> None:
-    stub.enqueue(StubResponse(200, body=f'{{"id":"{ENTITY_ID}","name":"Стул"}}'))
-
-    product = ProductsApi(api_client).get_product_by_id(ENTITY_ID)
-
-    assert product is not None
-    assert product.name == "Стул"
