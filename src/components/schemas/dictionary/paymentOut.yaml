@@ -60,6 +60,9 @@ properties:
   moment:
     type: string
     description: Дата документа
+  accrualDate:
+    type: string
+    description: Дата начисления
   owner:
     description: Владелец (Сотрудник)
     nullable: true
