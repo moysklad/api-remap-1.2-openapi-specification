@@ -21,9 +21,9 @@
 | `generate-sdk-python`            | Генерация Python SDK                                                          |
 | `generate-sdk-java`              | Генерация Java SDK                                                            |
 | `generate-sdk-typescript`        | Генерация TypeScript SDK (npm-пакет `@moysklad/remap-1.2-sdk`)                |
-| `sdk-golden-php`                 | Golden + location тесты для PHP (сериализация/десериализация, `x-location-response`) |
+| `sdk-golden-php`                 | Golden тесты для PHP (сериализация/десериализация)                            |
 | `sdk-golden-python`              | Golden тесты для Python                                                       |
-| `sdk-golden-java`                | Golden + location тесты для Java                                              |
+| `sdk-golden-java`                | Golden тесты для Java                                                         |
 | `sdk-golden-typescript`          | Golden тесты для TypeScript (сборка npm-пакета + roundtrip на общих fixtures) |
 | `sdk-smoke`                      | Smoke тесты для Java с openapi-mock сервером                                  |
 | `prep-branch-and-mr-php`         | Cоздание/обновление ветки и mr по сгенерированному sdk в репозитории sdk      |
@@ -40,7 +40,7 @@
 | `validate` / `bundle-openapi`     | Проверка и сборка полной спецификации                                    |
 | `bundle-smoke-openapi`            | Сборка облегчённой спецификации для smoke-тестов                         |
 | `generate-sdk-*`                  | Генерация SDK                                                            |
-| `sdk-golden-*`                    | Golden тесты SDK (для PHP и Java включают location набор)                |
+| `sdk-golden-*`                    | Golden тесты SDK                                                         |
 | `sdk-smoke`                       | Smoke тесты SDK                                                          |
 | `deploy-contract-env`             | Подготовка окружения для schemathesis (ветка **stable** сервиса)         |
 | `create-contract-user`            | Создание пользователя для contract‑тестов, экспорт кредов                |
@@ -65,7 +65,7 @@
 | `sdk-contract`             | Schemathesis `examples` по текущим request examples                                                                                                            |
 | `remove-contract-env`      | Ручная очистка окружения после contract‑тестов (manual, allow_failure; также есть TTL)                                                                         |
 | `generate-sdk-*`           | Генерация SDK                                                                                                                                                  |
-| `sdk-golden-*`             | Golden тесты; для PHP и Java в них же идут location тесты операций с `x-location-response`                                                                     |
+| `sdk-golden-*`             | Golden тесты                                                                                                                                                   |
 | `sdk-smoke`                | Smoke тесты                                                                                                                                                    |
 | `version:auto`             | Автоматическое версионирование и выпуск тега                                                                                                                   |
 | `mirror-to-github`         | Зеркалирование в GitHub без internal CI/release tooling (`gitlab`, `.gitlab-ci.yml`, CI README, `.versionrc.json`, `scripts/generate-diff-changelog.js` и др.) |

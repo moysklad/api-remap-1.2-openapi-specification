@@ -18,15 +18,13 @@
     "autoload-dev": {
         "psr-4": {
             "MoySklad\\Tests\\Golden\\": "golden/",
-            "MoySklad\\Tests\\Smoke\\": "smoke/",
-            "MoySklad\\Tests\\Location\\": "location/"
+            "MoySklad\\Tests\\Smoke\\": "smoke/"
         }
     },
     "scripts": {
         "test": "phpunit",
         "test:golden": "phpunit --testsuite golden",
-        "test:smoke": "phpunit --testsuite smoke",
-        "test:location": "phpunit --testsuite location"
+        "test:smoke": "phpunit --testsuite smoke"
     },
     "config": {
         "sort-packages": true

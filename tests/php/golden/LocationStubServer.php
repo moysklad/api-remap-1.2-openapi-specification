@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace MoySklad\Tests\Location;
+namespace MoySklad\Tests\Golden;
 
 /**
  * Локальный HTTP-стаб с фиксированными ответами и счётчиком обращений к адресу из Location.

@@ -1,4 +1,4 @@
-package com.lognex.test.location;
+package com.lognex.test.golden;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

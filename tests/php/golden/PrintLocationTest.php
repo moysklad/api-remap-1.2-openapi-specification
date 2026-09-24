@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace MoySklad\Tests\Location;
+namespace MoySklad\Tests\Golden;
 
 use OpenAPI\Client\Api\LabelsApi;
 use OpenAPI\Client\Api\ProductsApi;

@@ -26,7 +26,7 @@ Modular OpenAPI 3.0.3 specification for MoySklad JSON API 1.2 with automated SDK
 - **TypeScript SDK packaging:** generated as the publishable npm package `@moysklad/remap-1.2-sdk` (Apache-2.0, author Lognex Dev Team, `engines.node >= 22`, dual CommonJS/ESM build, npm tarball limited to `dist/`, `README.md`, `LICENSE`); package version comes from the spec repo semver (`SDK_VERSION` → root `package.json`) via `npm run generate-typescript`, generator metadata is stripped so regeneration is byte-identical
 - **Generator version pinning:** `openapitools.json` pins OpenAPI Generator `7.14.0`; TypeScript generation output verified byte-identical on host, local `sdk` image and CI image `docker-openapitools-common:1.4-release` (package version from root `package.json` unless `SDK_VERSION` is set)
 - **Custom schema helper generation:** `x-entity-static-builder` is consumed by PHP/Java/Python/TypeScript templates to generate `createWithMeta(...)` / `create_with_meta(...)`
-- **Testing:** PHPUnit (PHP golden + location + smoke via openapi-mock), pytest (Python golden), Maven Surefire (Java golden + location + smoke), `node:test` + `tsc` (TypeScript golden), Schemathesis (contract); location-набор идёт внутри golden-job/цели для PHP и Java
+- **Testing:** PHPUnit (PHP golden + smoke via openapi-mock), pytest (Python golden), Maven Surefire (Java golden + smoke), `node:test` + `tsc` (TypeScript golden), Schemathesis (contract)
 - **Response-header operations:** operations marked `x-location-response` (`printLabels`, `exportCustomerOrder`) carry their payload in the `Location` header with an empty body; PHP/Java templates disable redirect following for them and make the operation methods return `HeaderResponse` (`statusCode`, `headers`, `getHeader(name)`, `location`) instead of `void`. Python and TypeScript are not covered yet
 - **Versioning:** `standard-version` + `oasdiff` (breaking change detection); tag format `MAJOR.MINOR.PATCH` (semver)
 - **Runtime:** Node.js v24.0.1, npm; Docker + Docker Compose for local reproducibility
@@ -75,9 +75,9 @@ customtemplates/java/                  # Mustache templates for Java SDK
 customtemplates/python/                # Mustache templates for Python SDK
 customtemplates/typescript/            # Mustache templates for TypeScript SDK
 tests/fixtures/                        # Shared golden fixtures for PHP, Python, TypeScript and Java
-tests/php/                             # PHPUnit golden + location tests
+tests/php/                             # PHPUnit golden tests
 tests/python/                          # pytest golden tests
-tests/java/assertions/                 # Maven golden + location + smoke tests
+tests/java/assertions/                 # Maven golden + smoke tests
 tests/typescript/                      # TypeScript golden tests (node:test, run against the built package)
 java.Dockerfile                        # Java local test image (Maven + JDK)
 pom.xml                                # Root Maven config for Java golden tests
@@ -161,7 +161,6 @@ Key differences from Prism: openapi-mock serves endpoints under the `servers.url
 - `npm run validate` / `npm run generate-php` / `npm run generate-java` / `npm run generate-typescript` / `npm run bundle` for quick local checks.
 - `docker compose run --rm sdk make <target>` for Docker-based runs (see `make help`).
 - Java golden tests locally: `docker compose run --rm java-sdk make test-golden-java` (or `make test-golden LANGUAGES=java`).
-- Location tests (`x-location-response`) run inside the PHP and Java golden targets/jobs; they start their own local HTTP stub, so neither openapi-mock nor `make bundle` is required. Only that suite: `composer test:location` in `tests/php`, `mvn test -Dtest='**/location/**'` for Java.
 - TypeScript golden tests locally: `make test-golden-typescript` (or `make test-golden LANGUAGES=typescript`); `make test-golden` fails if any requested language fails.
 - Golden fixtures live in `tests/fixtures/` and are shared by PHP, Java and TypeScript golden tests.
 - PHP tests require PHP 8.1+ with extensions: dom, json, mbstring, curl, Composer.
