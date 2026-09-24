@@ -1,0 +1,30 @@
+/* tslint:disable */
+/* eslint-disable */
+{{>licenseInfo}}
+
+/**
+ * Ответ вызова, полезные данные которого передаются в заголовках,
+ * а тело ответа отсутствует. Значения принадлежат конкретному вызову.
+ */
+export class HeaderResponse {
+    constructor(
+        public readonly statusCode: number,
+        public readonly headers: Headers,
+    ) {
+    }
+
+    /**
+     * Значение заголовка или undefined, если заголовка нет.
+     * Имя заголовка сравнивается без учета регистра.
+     */
+    getHeader(name: string): string | undefined {
+        return this.headers.get(name) ?? undefined;
+    }
+
+    /**
+     * Значение заголовка Location или undefined, если заголовка нет.
+     */
+    get location(): string | undefined {
+        return this.getHeader('Location');
+    }
+}

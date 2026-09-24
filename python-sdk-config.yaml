@@ -7,3 +7,7 @@ disallowAdditionalPropertiesIfNotPresent: false
 gitHost: github.com
 gitUserId: moysklad
 gitRepoId: remap-1.2-python-sdk
+files:
+  header_response.mustache:
+    templateType: SupportingFiles
+    destinationFilename: moysklad_remap_12_sdk/header_response.py
