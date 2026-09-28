@@ -197,6 +197,8 @@ paths:
     $ref: './paths/dictionaries/products/product-metadata-attribute-by-id.yaml'
   /entity/product/{id}/images:
     $ref: './paths/dictionaries/products/product-images.yaml'
+  /entity/product/{id}/images/batch:
+    $ref: './paths/dictionaries/products/product-images-batch.yaml'
   /entity/product/{id}/images/{imageId}:
     $ref: './paths/dictionaries/products/product-image-by-id.yaml'
   /entity/product/{id}/images/delete:
@@ -565,12 +567,16 @@ paths:
     $ref: './paths/dictionaries/stores/store-metadata-attribute-by-id.yaml'
   /entity/store/{storeId}/zones:
     $ref: './paths/dictionaries/stores/store-zones.yaml'
+  /entity/store/{storeId}/zones/batch:
+    $ref: './paths/dictionaries/stores/store-zones-batch.yaml'
   /entity/store/{storeId}/zones/{id}:
     $ref: './paths/dictionaries/stores/store-zone-by-id.yaml'
   /entity/store/{storeId}/zones/delete:
     $ref: './paths/dictionaries/stores/store-zones-delete.yaml'
   /entity/store/{storeId}/slots:
     $ref: './paths/dictionaries/stores/store-slots.yaml'
+  /entity/store/{storeId}/slots/batch:
+    $ref: './paths/dictionaries/stores/store-slots-batch.yaml'
   /entity/store/{storeId}/slots/{id}:
     $ref: './paths/dictionaries/stores/store-slot-by-id.yaml'
   /entity/store/{storeId}/slots/delete:
@@ -601,6 +607,8 @@ paths:
     $ref: './paths/dictionaries/bundles/bundles-batch.yaml'
   /entity/bundle/{id}/components:
     $ref: './paths/dictionaries/bundles/bundle-components.yaml'
+  /entity/bundle/{id}/components/batch:
+    $ref: './paths/dictionaries/bundles/bundle-components-batch.yaml'
   /entity/bundle/{id}/components/{componentId}:
     $ref: './paths/dictionaries/bundles/bundle-component-by-id.yaml'
   /entity/bundle/{id}/components/delete:
@@ -953,6 +961,8 @@ paths:
     $ref: './paths/documents/retaildemands/retaildemand-metadata-states.yaml'
   /entity/retaildemand/metadata/states/{id}:
     $ref: './paths/documents/retaildemands/retaildemand-metadata-state-by-id.yaml'
+  /entity/retaildemand/metadata/states/batch:
+    $ref: './paths/documents/retaildemands/retaildemand-metadata-states-batch.yaml'
   /entity/retaildemand/new:
     $ref: './paths/documents/retaildemands/retaildemand-new.yaml'
   /entity/retaildemand/{id}/positions:
@@ -1417,6 +1427,8 @@ paths:
     $ref: './paths/documents/commissionreportins/commissionreportin-positions-delete.yaml'
   /entity/commissionreportin/{id}/returntocommissionerpositions:
     $ref: './paths/documents/commissionreportins/commissionreportin-returntocommissionerpositions.yaml'
+  /entity/commissionreportin/{id}/returntocommissionerpositions/batch:
+    $ref: './paths/documents/commissionreportins/commissionreportin-returntocommissionerpositions-batch.yaml'
   /entity/commissionreportin/{id}/returntocommissionerpositions/{positionId}:
     $ref: './paths/documents/commissionreportins/commissionreportin-returntocommissionerposition-by-id.yaml'
   /entity/commissionreportin/{id}/returntocommissionerpositions/delete:
