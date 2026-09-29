@@ -140,7 +140,7 @@ post:
 Nested collections (document positions, `returntocommissionerpositions`, bundle `components`, store `zones`/`slots`, product `images`) follow split create semantics:
 
 - `POST /entity/<keyword>/{id}/<collection>` — single object request (`$ref: <Item>`); response is always an array (`type: array, items: <Item>`), even for one created item. `operationId` is singular (`create<PascalSingular>Position`, `createBundleComponent`, `addProductImage`).
-- `POST /entity/<keyword>/{id}/<collection>/batch` — mass create/update in a separate `<entity>-<collection>-batch.yaml`: array request with `minItems: 1`, `maxItems: 1000`; per-item `oneOf: [<Item>, Errors]` response. `operationId` is plural (`create<PascalSingular>Positions`, `createBundleComponents`).
+- `POST /entity/<keyword>/{id}/<collection>/batch` — mass create/update in a separate `<entity>-<collection>-batch.yaml`: array request with `minItems: 1`, `maxItems: 1000`; response `type: array, items: BatchResponseEntity` (not inline `oneOf: [<Item>, Errors]`, which generates anonymous `...200ResponseInner` classes); `<Item>` must have `x-polymorphic-parent: EntityWithMeta` and a `meta.type` mapping in `common/entityBase.yaml`. `operationId` is plural (`create<PascalSingular>Positions`, `createBundleComponents`).
 - Product `images` batch replaces the whole image list: request `maxItems: 10`, response is the array of all `Image` objects (no per-item errors).
 
 Do not combine single+array payloads on the nested collection endpoint.

@@ -30,8 +30,6 @@ post:
           schema:
             type: array
             items:
-              oneOf:
-                - $ref: '../../../openapi.yaml#/components/schemas/StoreZone'
-                - $ref: '../../../openapi.yaml#/components/schemas/Errors'
+              $ref: '../../../openapi.yaml#/components/schemas/BatchResponseEntity'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
