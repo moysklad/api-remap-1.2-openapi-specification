@@ -24,6 +24,9 @@ properties:
     format: uuid
     description: ID учетной записи
     readOnly: true
+  archived:
+    type: boolean
+    description: Добавлена ли Статья расходов в архив
   code:
     type: string
     maxLength: 255
