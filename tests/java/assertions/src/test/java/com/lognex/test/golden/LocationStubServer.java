@@ -4,6 +4,8 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.nio.charset.StandardCharsets;
@@ -50,26 +52,29 @@ final class LocationStubServer implements AutoCloseable {
         server.stop(0);
     }
 
+    /** HttpExchange реализует AutoCloseable только с JDK 18, поэтому закрываются оба потока обмена. */
     private void handle(HttpExchange exchange) throws IOException {
-        exchange.getRequestBody().readAllBytes();
+        try (InputStream requestBody = exchange.getRequestBody();
+             OutputStream responseBody = exchange.getResponseBody()) {
+            requestBody.readAllBytes();
 
-        StubResponse response = exchange.getRequestURI().getPath().startsWith(LOCATION_TARGET_PATH)
-                ? hitLocation()
-                : responses.poll();
-        if (response == null) {
-            response = new StubResponse(599, null, null);
-        }
+            StubResponse response = exchange.getRequestURI().getPath().startsWith(LOCATION_TARGET_PATH)
+                    ? hitLocation()
+                    : responses.poll();
+            if (response == null) {
+                response = new StubResponse(599, null, null);
+            }
 
-        if (response.location() != null) {
-            exchange.getResponseHeaders().set("Location", response.location());
+            if (response.location() != null) {
+                exchange.getResponseHeaders().set("Location", response.location());
+            }
+            byte[] body = response.body() == null ? new byte[0] : response.body().getBytes(StandardCharsets.UTF_8);
+            if (body.length > 0) {
+                exchange.getResponseHeaders().set("Content-Type", "application/json;charset=utf-8");
+            }
+            exchange.sendResponseHeaders(response.statusCode(), body.length == 0 ? -1 : body.length);
+            responseBody.write(body);
         }
-        byte[] body = response.body() == null ? new byte[0] : response.body().getBytes(StandardCharsets.UTF_8);
-        if (body.length > 0) {
-            exchange.getResponseHeaders().set("Content-Type", "application/json;charset=utf-8");
-        }
-        exchange.sendResponseHeaders(response.statusCode(), body.length == 0 ? -1 : body.length);
-        exchange.getResponseBody().write(body);
-        exchange.close();
     }
 
     private StubResponse hitLocation() {

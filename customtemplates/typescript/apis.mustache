@@ -6,7 +6,7 @@ import * as runtime from '../runtime{{importFileExtension}}';
 {{#operations}}
 {{#operation}}
 {{#vendorExtensions.x-location-response}}
-import { HeaderResponse } from '../HeaderResponse{{importFileExtension}}';
+import { LocationResponse } from '../LocationResponse{{importFileExtension}}';
 {{/vendorExtensions.x-location-response}}
 {{/operation}}
 {{/operations}}
@@ -77,10 +77,10 @@ export interface {{classname}}Interface {
      {{/isDeprecated}}
      */
     {{^useSingleRequestParameter}}
-    {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{dataType}}}{{#isNullable}} | null{{/isNullable}}{{/isEnum}}, {{/allParams}}initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{{{returnType}}}{{#returnType}}{{#isResponseOptional}} | null | undefined {{/isResponseOptional}}{{/returnType}}{{^returnType}}{{#vendorExtensions.x-location-response}}HeaderResponse{{/vendorExtensions.x-location-response}}{{^vendorExtensions.x-location-response}}void{{/vendorExtensions.x-location-response}}{{/returnType}}>;
+    {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{dataType}}}{{#isNullable}} | null{{/isNullable}}{{/isEnum}}, {{/allParams}}initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{{{returnType}}}{{#returnType}}{{#isResponseOptional}} | null | undefined {{/isResponseOptional}}{{/returnType}}{{^returnType}}{{#vendorExtensions.x-location-response}}LocationResponse{{/vendorExtensions.x-location-response}}{{^vendorExtensions.x-location-response}}void{{/vendorExtensions.x-location-response}}{{/returnType}}>;
     {{/useSingleRequestParameter}}
     {{#useSingleRequestParameter}}
-    {{nickname}}({{#allParams.0}}requestParameters: {{#prefixParameterInterfaces}}{{classname}}{{/prefixParameterInterfaces}}{{operationIdCamelCase}}Request, {{/allParams.0}}initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{{{returnType}}}{{#returnType}}{{#isResponseOptional}} | null | undefined {{/isResponseOptional}}{{/returnType}}{{^returnType}}{{#vendorExtensions.x-location-response}}HeaderResponse{{/vendorExtensions.x-location-response}}{{^vendorExtensions.x-location-response}}void{{/vendorExtensions.x-location-response}}{{/returnType}}>;
+    {{nickname}}({{#allParams.0}}requestParameters: {{#prefixParameterInterfaces}}{{classname}}{{/prefixParameterInterfaces}}{{operationIdCamelCase}}Request, {{/allParams.0}}initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{{{returnType}}}{{#returnType}}{{#isResponseOptional}} | null | undefined {{/isResponseOptional}}{{/returnType}}{{^returnType}}{{#vendorExtensions.x-location-response}}LocationResponse{{/vendorExtensions.x-location-response}}{{^vendorExtensions.x-location-response}}void{{/vendorExtensions.x-location-response}}{{/returnType}}>;
     {{/useSingleRequestParameter}}
 
 {{/operation}}
@@ -346,8 +346,8 @@ export class {{classname}} extends runtime.BaseAPI {
             // при автоматическом переходе Location ответа 3xx теряется
             redirect: 'manual',
         })).catch((error: unknown) => {
-            // request() считает ошибкой всё, кроме 2xx; для этой операции 3xx - результат вызова
-            if (error instanceof runtime.ResponseError && error.response.status >= 300 && error.response.status < 400) {
+            // request() считает ошибкой всё, кроме 2xx; для этой операции 303 - результат вызова
+            if (error instanceof runtime.ResponseError && error.response.status === 303) {
                 return error.response;
             }
             throw error;
@@ -405,7 +405,7 @@ export class {{classname}} extends runtime.BaseAPI {
      {{/isDeprecated}}
      */
     {{^useSingleRequestParameter}}
-    async {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{dataType}}}{{#isNullable}} | null{{/isNullable}}{{/isEnum}}, {{/allParams}}initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{{{returnType}}}{{#returnType}}{{#isResponseOptional}} | null | undefined {{/isResponseOptional}}{{/returnType}}{{^returnType}}{{#vendorExtensions.x-location-response}}HeaderResponse{{/vendorExtensions.x-location-response}}{{^vendorExtensions.x-location-response}}void{{/vendorExtensions.x-location-response}}{{/returnType}}> {
+    async {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{dataType}}}{{#isNullable}} | null{{/isNullable}}{{/isEnum}}, {{/allParams}}initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{{{returnType}}}{{#returnType}}{{#isResponseOptional}} | null | undefined {{/isResponseOptional}}{{/returnType}}{{^returnType}}{{#vendorExtensions.x-location-response}}LocationResponse{{/vendorExtensions.x-location-response}}{{^vendorExtensions.x-location-response}}void{{/vendorExtensions.x-location-response}}{{/returnType}}> {
         {{#returnType}}
         const response = await this.{{nickname}}Raw({{#allParams.0}}{ {{#allParams}}{{paramName}}: {{paramName}}{{^-last}}, {{/-last}}{{/allParams}} }, {{/allParams.0}}initOverrides);
         {{#isResponseOptional}}
@@ -427,7 +427,7 @@ export class {{classname}} extends runtime.BaseAPI {
         {{^returnType}}
         {{#vendorExtensions.x-location-response}}
         const response = await this.{{nickname}}Raw({{#allParams.0}}{ {{#allParams}}{{paramName}}: {{paramName}}{{^-last}}, {{/-last}}{{/allParams}} }, {{/allParams.0}}initOverrides);
-        return new HeaderResponse(response.raw.status, response.raw.headers);
+        return LocationResponse.fromHeaders(response.raw.status, response.raw.headers);
         {{/vendorExtensions.x-location-response}}
         {{^vendorExtensions.x-location-response}}
         await this.{{nickname}}Raw({{#allParams.0}}{ {{#allParams}}{{paramName}}: {{paramName}}{{^-last}}, {{/-last}}{{/allParams}} }, {{/allParams.0}}initOverrides);
@@ -436,7 +436,7 @@ export class {{classname}} extends runtime.BaseAPI {
     }
     {{/useSingleRequestParameter}}
     {{#useSingleRequestParameter}}
-    async {{nickname}}({{#allParams.0}}requestParameters: {{#prefixParameterInterfaces}}{{classname}}{{/prefixParameterInterfaces}}{{operationIdCamelCase}}Request{{^hasRequiredParams}} = {}{{/hasRequiredParams}}, {{/allParams.0}}initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{{{returnType}}}{{#returnType}}{{#isResponseOptional}} | null | undefined {{/isResponseOptional}}{{/returnType}}{{^returnType}}{{#vendorExtensions.x-location-response}}HeaderResponse{{/vendorExtensions.x-location-response}}{{^vendorExtensions.x-location-response}}void{{/vendorExtensions.x-location-response}}{{/returnType}}> {
+    async {{nickname}}({{#allParams.0}}requestParameters: {{#prefixParameterInterfaces}}{{classname}}{{/prefixParameterInterfaces}}{{operationIdCamelCase}}Request{{^hasRequiredParams}} = {}{{/hasRequiredParams}}, {{/allParams.0}}initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{{{returnType}}}{{#returnType}}{{#isResponseOptional}} | null | undefined {{/isResponseOptional}}{{/returnType}}{{^returnType}}{{#vendorExtensions.x-location-response}}LocationResponse{{/vendorExtensions.x-location-response}}{{^vendorExtensions.x-location-response}}void{{/vendorExtensions.x-location-response}}{{/returnType}}> {
         {{#returnType}}
         const response = await this.{{nickname}}Raw({{#allParams.0}}requestParameters, {{/allParams.0}}initOverrides);
         {{#isResponseOptional}}
@@ -458,7 +458,7 @@ export class {{classname}} extends runtime.BaseAPI {
         {{^returnType}}
         {{#vendorExtensions.x-location-response}}
         const response = await this.{{nickname}}Raw({{#allParams.0}}requestParameters, {{/allParams.0}}initOverrides);
-        return new HeaderResponse(response.raw.status, response.raw.headers);
+        return LocationResponse.fromHeaders(response.raw.status, response.raw.headers);
         {{/vendorExtensions.x-location-response}}
         {{^vendorExtensions.x-location-response}}
         await this.{{nickname}}Raw({{#allParams.0}}requestParameters, {{/allParams.0}}initOverrides);

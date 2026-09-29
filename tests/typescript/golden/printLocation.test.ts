@@ -34,7 +34,7 @@ function printParameters(): Sdk.PrintLabelsRequest {
     };
 }
 
-function printLabels(): Promise<Sdk.HeaderResponse> {
+function printLabels(): Promise<Sdk.LocationResponse> {
     return labelsApi.printLabels(printParameters());
 }
 
@@ -44,7 +44,7 @@ test('202: сохраняются статус и Location ожидающей п
 
     const result = await printLabels();
 
-    assert.ok(result instanceof sdk.HeaderResponse);
+    assert.ok(result instanceof sdk.LocationResponse);
     assert.equal(result.statusCode, 202);
     assert.equal(result.location, expected);
     assert.equal(stub.locationHits, 0);
@@ -68,7 +68,6 @@ test('заголовок location читается без учёта регис�
     const result = await printLabels();
 
     assert.equal(result.location, expected);
-    assert.equal(result.getHeader('LOCATION'), expected);
 });
 
 test('отсутствие Location — undefined', async () => {
@@ -88,6 +87,17 @@ test('статус 400: сохраняется контракт ошибок', a
         assert.equal(error.response.status, 400);
         return true;
     });
+});
+
+test('статус 302: ошибка, переход по Location не выполняется', async () => {
+    stub.enqueue(302, 'Location', stub.locationUrl('file.pdf'));
+
+    await assert.rejects(printLabels(), (error: unknown) => {
+        assert.ok(error instanceof sdk.ResponseError);
+        assert.equal(error.response.status, 302);
+        return true;
+    });
+    assert.equal(stub.locationHits, 0);
 });
 
 test('пользовательский initOverrides применяется вместе с отключением редиректа', async () => {

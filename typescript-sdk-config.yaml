@@ -11,9 +11,9 @@ files:
   LICENSE.mustache:
     templateType: SupportingFiles
     destinationFilename: LICENSE
-  HeaderResponse.mustache:
+  LocationResponse.mustache:
     templateType: SupportingFiles
-    destinationFilename: src/HeaderResponse.ts
+    destinationFilename: src/LocationResponse.ts
 additionalProperties:
   npmName: "@moysklad/remap-1.2-sdk"
   licenseName: "Apache-2.0"

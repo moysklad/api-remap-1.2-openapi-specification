@@ -61,9 +61,9 @@ agent:
 ## x-location-response
 
 **Предназначение**: операция без тела, данные в `Location` (`202` — статус подготовки, `303` — файл).
-Шаблоны SDK отключают редирект, не считают `3xx` ошибкой и возвращают `HeaderResponse`
-(`statusCode`, `headers`, `getHeader(name)`, `location`) вместо `void`.
-Заголовки — в `src/components/headers.yaml`.
+Шаблоны SDK отключают редирект, возвращают для `2xx` и `303` `LocationResponse`
+(`statusCode`, `location`) вместо `void`, остальные статусы — ошибка.
+Заголовки — в `src/components/response-headers.yaml`.
 
 **Структура**: boolean на уровне операции. Только для операций без `content`, иначе SDK не соберётся.
 
@@ -78,7 +78,7 @@ post:
       description: Печатная форма готова, в Location передана ссылка на файл
       headers:
         Location:
-          $ref: '../../../components/headers.yaml#/PrintFileLocation'
+          $ref: '../../../components/response-headers.yaml#/PrintLocation'
 ```
 
 

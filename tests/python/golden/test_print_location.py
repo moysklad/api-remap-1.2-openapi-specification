@@ -14,7 +14,7 @@ import pytest
 
 from moysklad_remap_12_sdk import ApiClient, Configuration, LabelsApi
 from moysklad_remap_12_sdk.exceptions import ApiException
-from moysklad_remap_12_sdk.header_response import HeaderResponse
+from moysklad_remap_12_sdk.location_response import LocationResponse
 from moysklad_remap_12_sdk.models.label_print_request import LabelPrintRequest
 
 
@@ -112,7 +112,7 @@ def print_request() -> LabelPrintRequest:
     )
 
 
-def print_labels(labels_api: LabelsApi) -> HeaderResponse:
+def print_labels(labels_api: LabelsApi) -> LocationResponse:
     return labels_api.print_labels(ENTITY_ID, "product", print_request())
 
 
@@ -122,7 +122,7 @@ def test_keeps_status_and_location_of_pending_print(stub, labels_api) -> None:
 
     result = print_labels(labels_api)
 
-    assert isinstance(result, HeaderResponse)
+    assert isinstance(result, LocationResponse)
     assert result.status_code == 202
     assert result.location == expected
     assert stub.location_hits == 0
@@ -148,7 +148,6 @@ def test_reads_location_regardless_of_header_case(stub, labels_api) -> None:
     result = print_labels(labels_api)
 
     assert result.location == expected
-    assert result.get_header("LOCATION") == expected
 
 
 def test_reports_missing_location_as_none(stub, labels_api) -> None:
@@ -167,6 +166,16 @@ def test_keeps_error_contract_for_error_status(stub, labels_api) -> None:
         print_labels(labels_api)
 
     assert error.value.status == 400
+
+
+def test_treats_unexpected_redirect_as_error(stub, labels_api) -> None:
+    stub.enqueue(StubResponse(302, "Location", stub.location_url("file.pdf")))
+
+    with pytest.raises(ApiException) as error:
+        print_labels(labels_api)
+
+    assert error.value.status == 302
+    assert stub.location_hits == 0
 
 
 def test_with_http_info_returns_redirect_without_following(stub, labels_api) -> None:

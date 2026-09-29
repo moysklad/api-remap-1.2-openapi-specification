@@ -11,7 +11,7 @@ import {{invokerPackage}}.Configuration;
 import {{modelPackage}}.*;
 {{/models.0}}
 import {{invokerPackage}}.Pair;
-{{#operations}}{{#operation}}{{#vendorExtensions.x-location-response}}import {{invokerPackage}}.HeaderResponse;
+{{#operations}}{{#operation}}{{#vendorExtensions.x-location-response}}import {{invokerPackage}}.LocationResponse;
 {{/vendorExtensions.x-location-response}}{{/operation}}{{/operations}}
 
 {{#imports}}import {{import}};
@@ -52,7 +52,7 @@ public class {{classname}} extends BaseApi {
    * @return {{returnType}}
    {{/returnType}}
    {{#vendorExtensions.x-location-response}}
-   * @return {@link HeaderResponse} со статусом и заголовками ответа; переход по редиректу не выполняется
+   * @return {@link LocationResponse} со статусом и заголовком Location ответа; переход по редиректу не выполняется
    {{/vendorExtensions.x-location-response}}
    * @throws ApiException if fails to make API call
    {{#isDeprecated}}
@@ -66,7 +66,7 @@ public class {{classname}} extends BaseApi {
   {{#isDeprecated}}
   @Deprecated
   {{/isDeprecated}}
-  public {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}{{#vendorExtensions.x-location-response}}HeaderResponse {{/vendorExtensions.x-location-response}}{{^vendorExtensions.x-location-response}}void {{/vendorExtensions.x-location-response}}{{/returnType}}{{operationId}}({{#pathParams}}{{>nullable_var_annotations}} {{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/pathParams}}{{#bodyParam}}{{#pathParams.0}}, {{/pathParams.0}}{{>nullable_var_annotations}} {{{dataType}}} {{paramName}}{{/bodyParam}}) throws ApiException {
+  public {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}{{#vendorExtensions.x-location-response}}LocationResponse {{/vendorExtensions.x-location-response}}{{^vendorExtensions.x-location-response}}void {{/vendorExtensions.x-location-response}}{{/returnType}}{{operationId}}({{#pathParams}}{{>nullable_var_annotations}} {{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/pathParams}}{{#bodyParam}}{{#pathParams.0}}, {{/pathParams.0}}{{>nullable_var_annotations}} {{{dataType}}} {{paramName}}{{/bodyParam}}) throws ApiException {
     RequestOptions effectiveOptions = RequestOptions.empty();
     {{#returnType}}return {{/returnType}}{{#vendorExtensions.x-location-response}}return {{/vendorExtensions.x-location-response}}this.{{operationId}}({{#allParams}}{{#isQueryParam}}({{{dataType}}}) effectiveOptions.get("{{paramName}}"){{/isQueryParam}}{{#isHeaderParam}}null{{/isHeaderParam}}{{^isQueryParam}}{{^isHeaderParam}}{{paramName}}{{/isHeaderParam}}{{/isQueryParam}}, {{/allParams}}effectiveOptions.getAdditionalHeaders());
   }
@@ -85,7 +85,7 @@ public class {{classname}} extends BaseApi {
    * @return {{returnType}}
    {{/returnType}}
    {{#vendorExtensions.x-location-response}}
-   * @return {@link HeaderResponse} со статусом и заголовками ответа; переход по редиректу не выполняется
+   * @return {@link LocationResponse} со статусом и заголовком Location ответа; переход по редиректу не выполняется
    {{/vendorExtensions.x-location-response}}
    * @throws ApiException if fails to make API call
    {{#isDeprecated}}
@@ -99,7 +99,7 @@ public class {{classname}} extends BaseApi {
   {{#isDeprecated}}
   @Deprecated
   {{/isDeprecated}}
-  public {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}{{#vendorExtensions.x-location-response}}HeaderResponse {{/vendorExtensions.x-location-response}}{{^vendorExtensions.x-location-response}}void {{/vendorExtensions.x-location-response}}{{/returnType}}{{operationId}}({{#allParams}}{{^isQueryParam}}{{^isHeaderParam}}{{>nullable_var_annotations}} {{{dataType}}} {{paramName}}, {{/isHeaderParam}}{{/isQueryParam}}{{/allParams}}RequestOptions options) throws ApiException {
+  public {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}{{#vendorExtensions.x-location-response}}LocationResponse {{/vendorExtensions.x-location-response}}{{^vendorExtensions.x-location-response}}void {{/vendorExtensions.x-location-response}}{{/returnType}}{{operationId}}({{#allParams}}{{^isQueryParam}}{{^isHeaderParam}}{{>nullable_var_annotations}} {{{dataType}}} {{paramName}}, {{/isHeaderParam}}{{/isQueryParam}}{{/allParams}}RequestOptions options) throws ApiException {
     RequestOptions effectiveOptions = RequestOptions.emptyIfNull(options);
     {{#returnType}}return {{/returnType}}{{#vendorExtensions.x-location-response}}return {{/vendorExtensions.x-location-response}}this.{{operationId}}({{#allParams}}{{#isQueryParam}}({{{dataType}}}) effectiveOptions.get("{{paramName}}"){{/isQueryParam}}{{#isHeaderParam}}null{{/isHeaderParam}}{{^isQueryParam}}{{^isHeaderParam}}{{paramName}}{{/isHeaderParam}}{{/isQueryParam}}, {{/allParams}}effectiveOptions.getAdditionalHeaders());
   }
@@ -115,7 +115,7 @@ public class {{classname}} extends BaseApi {
    * @return {{returnType}}
    {{/returnType}}
    {{#vendorExtensions.x-location-response}}
-   * @return {@link HeaderResponse} со статусом и заголовками ответа; переход по редиректу не выполняется
+   * @return {@link LocationResponse} со статусом и заголовком Location ответа; переход по редиректу не выполняется
    {{/vendorExtensions.x-location-response}}
    * @throws ApiException if fails to make API call
    {{#isDeprecated}}
@@ -129,7 +129,7 @@ public class {{classname}} extends BaseApi {
   {{#isDeprecated}}
   @Deprecated
   {{/isDeprecated}}
-  protected {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}{{#vendorExtensions.x-location-response}}HeaderResponse {{/vendorExtensions.x-location-response}}{{^vendorExtensions.x-location-response}}void {{/vendorExtensions.x-location-response}}{{/returnType}}{{operationId}}({{#allParams}}{{>nullable_var_annotations}} {{{dataType}}} {{paramName}}, {{/allParams}}Map<String, String> additionalHeaders) throws ApiException {
+  protected {{#returnType}}{{{returnType}}} {{/returnType}}{{^returnType}}{{#vendorExtensions.x-location-response}}LocationResponse {{/vendorExtensions.x-location-response}}{{^vendorExtensions.x-location-response}}void {{/vendorExtensions.x-location-response}}{{/returnType}}{{operationId}}({{#allParams}}{{>nullable_var_annotations}} {{{dataType}}} {{paramName}}, {{/allParams}}Map<String, String> additionalHeaders) throws ApiException {
     Object localVarPostBody = {{#bodyParam}}{{paramName}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}};
     {{#allParams}}{{#required}}
     // verify the required parameter '{{paramName}}' is set
@@ -219,7 +219,7 @@ public class {{classname}} extends BaseApi {
     {{/returnType}}
     {{^returnType}}
     {{#vendorExtensions.x-location-response}}
-    return apiClient.invokeAPIForHeaders(
+    return apiClient.invokeAPIForLocation(
     {{/vendorExtensions.x-location-response}}
     {{^vendorExtensions.x-location-response}}
     apiClient.invokeAPI(

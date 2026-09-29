@@ -23,15 +23,11 @@ post:
       description: Печатная форма еще не готова, в Location передана ссылка на статус печати
       headers:
         Location:
-          $ref: '../../../components/headers.yaml#/PrintStatusLocation'
-        Content-Type:
-          $ref: '../../../components/headers.yaml#/ResponseContentType'
+          $ref: '../../../components/response-headers.yaml#/PrintLocation'
     '303':
       description: Печатная форма готова, в Location передана ссылка на файл
       headers:
         Location:
-          $ref: '../../../components/headers.yaml#/PrintFileLocation'
-        Content-Type:
-          $ref: '../../../components/headers.yaml#/ResponseContentType'
+          $ref: '../../../components/response-headers.yaml#/PrintLocation'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'

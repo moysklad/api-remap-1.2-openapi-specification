@@ -167,7 +167,7 @@ use {{invokerPackage}}\ObjectSerializer;
      *
      * @throws \{{invokerPackage}}\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return {{#returnType}}{{#responses}}{{#dataType}}{{^-first}}|{{/-first}}{{/dataType}}{{{dataType}}}{{/responses}}{{/returnType}}{{^returnType}}{{#vendorExtensions.x-location-response}}\{{invokerPackage}}\HeaderResponse статус и заголовки ответа; переход по редиректу не выполняется{{/vendorExtensions.x-location-response}}{{^vendorExtensions.x-location-response}}void{{/vendorExtensions.x-location-response}}{{/returnType}}
+     * @return {{#returnType}}{{#responses}}{{#dataType}}{{^-first}}|{{/-first}}{{/dataType}}{{{dataType}}}{{/responses}}{{/returnType}}{{^returnType}}{{#vendorExtensions.x-location-response}}\{{invokerPackage}}\LocationResponse статус и заголовок Location ответа; переход по редиректу не выполняется{{/vendorExtensions.x-location-response}}{{^vendorExtensions.x-location-response}}void{{/vendorExtensions.x-location-response}}{{/returnType}}
     {{#isDeprecated}}
      * @deprecated
     {{/isDeprecated}}
@@ -177,7 +177,7 @@ use {{invokerPackage}}\ObjectSerializer;
         {{#vendorExtensions.x-location-response}}
         list(, $statusCode, $headers) = $this->{{operationId}}WithHttpInfo({{^vendorExtensions.x-group-parameters}}{{#allParams}}${{paramName}}, {{/allParams}}{{#servers}}{{#-first}}$hostIndex, $variables, {{/-first}}{{/servers}}$contentType{{/vendorExtensions.x-group-parameters}}{{#vendorExtensions.x-group-parameters}}$associative_array{{/vendorExtensions.x-group-parameters}});
 
-        return new \{{invokerPackage}}\HeaderResponse($statusCode, $headers);
+        return \{{invokerPackage}}\LocationResponse::fromHeaders($statusCode, $headers);
         {{/vendorExtensions.x-location-response}}
         {{^vendorExtensions.x-location-response}}
         {{#returnType}}list($response) = {{/returnType}}$this->{{operationId}}WithHttpInfo({{^vendorExtensions.x-group-parameters}}{{#allParams}}${{paramName}}, {{/allParams}}{{#servers}}{{#-first}}$hostIndex, $variables, {{/-first}}{{/servers}}$contentType{{/vendorExtensions.x-group-parameters}}{{#vendorExtensions.x-group-parameters}}$associative_array{{/vendorExtensions.x-group-parameters}});{{#returnType}}
@@ -327,6 +327,20 @@ use {{invokerPackage}}\ObjectSerializer;
             {{/returnProperty.mostInnerItems.vendorExtensions.x-polymorphic-discriminator.batchErrorFallback}}
             {{/returnType}}
             {{^returnType}}
+            {{#vendorExtensions.x-location-response}}
+            if (($statusCode < 200 || $statusCode > 299) && $statusCode !== 303) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+            {{/vendorExtensions.x-location-response}}
 
             return [null, $statusCode, $response->getHeaders()];
             {{/returnType}}
@@ -515,6 +529,21 @@ use {{invokerPackage}}\ObjectSerializer;
                     {{/returnProperty.mostInnerItems.vendorExtensions.x-polymorphic-discriminator.batchErrorFallback}}
                     {{/returnType}}
                     {{^returnType}}
+                    {{#vendorExtensions.x-location-response}}
+                    $statusCode = $response->getStatusCode();
+                    if (($statusCode < 200 || $statusCode > 299) && $statusCode !== 303) {
+                        throw new ApiException(
+                            sprintf(
+                                '[%d] Error connecting to the API (%s)',
+                                $statusCode,
+                                (string) $request->getUri()
+                            ),
+                            $statusCode,
+                            $response->getHeaders(),
+                            (string) $response->getBody()
+                        );
+                    }
+                    {{/vendorExtensions.x-location-response}}
                     return [null, $response->getStatusCode(), $response->getHeaders()];
                     {{/returnType}}
                 },

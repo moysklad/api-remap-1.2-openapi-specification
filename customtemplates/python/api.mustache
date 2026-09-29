@@ -15,7 +15,7 @@ from {{packageName}}.api_response import ApiResponse
 {{#operations}}
 {{#operation}}
 {{#vendorExtensions.x-location-response}}
-from {{packageName}}.header_response import HeaderResponse
+from {{packageName}}.location_response import LocationResponse
 {{/vendorExtensions.x-location-response}}
 {{/operation}}
 {{/operations}}
@@ -38,7 +38,7 @@ class {{classname}}:
 
 
     @validate_call
-    {{#asyncio}}async {{/asyncio}}def {{operationId}}{{>partial_api_args}} -> {{{returnType}}}{{^returnType}}{{#vendorExtensions.x-location-response}}HeaderResponse{{/vendorExtensions.x-location-response}}{{^vendorExtensions.x-location-response}}None{{/vendorExtensions.x-location-response}}{{/returnType}}:
+    {{#asyncio}}async {{/asyncio}}def {{operationId}}{{>partial_api_args}} -> {{{returnType}}}{{^returnType}}{{#vendorExtensions.x-location-response}}LocationResponse{{/vendorExtensions.x-location-response}}{{^vendorExtensions.x-location-response}}None{{/vendorExtensions.x-location-response}}{{/returnType}}:
 {{>partial_api}}
 {{#vendorExtensions.x-location-response}}
         response_data = {{#asyncio}}await {{/asyncio}}self.api_client.rest_client.request(
@@ -46,16 +46,16 @@ class {{classname}}:
             _request_timeout=_request_timeout,
             redirect=False
         )
-        if not 200 <= response_data.status <= 399:
+        if not (200 <= response_data.status <= 299 or response_data.status == 303):
             {{#asyncio}}await {{/asyncio}}response_data.read()
             # бросает ApiException для любого статуса вне 2xx
             self.api_client.response_deserialize(
                 response_data=response_data,
                 response_types_map=_response_types_map,
             )
-        # тело 2xx/3xx пустое и не разбирается; drain_conn возвращает соединение в пул
+        # тело 2xx/303 пустое и не разбирается; drain_conn возвращает соединение в пул
         response_data.response.drain_conn()
-        return HeaderResponse(response_data.status, response_data.getheaders())
+        return LocationResponse.from_headers(response_data.status, response_data.getheaders())
 {{/vendorExtensions.x-location-response}}
 {{^vendorExtensions.x-location-response}}
         response_data = {{#asyncio}}await {{/asyncio}}self.api_client.call_api(
@@ -80,7 +80,7 @@ class {{classname}}:
             redirect=False
         )
         {{#asyncio}}await {{/asyncio}}response_data.read()
-        if 300 <= response_data.status <= 399:
+        if response_data.status == 303:
             return ApiResponse(
                 status_code=response_data.status,
                 data=None,

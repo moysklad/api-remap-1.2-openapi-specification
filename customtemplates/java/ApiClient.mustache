@@ -1051,10 +1051,6 @@ public class ApiClient{{#jsr310}} extends JavaTimeFormatter{{/jsr310}} {
     return statusCode >= 200 && statusCode < 300;
   }
 
-  protected boolean isRedirectStatus(int statusCode) {
-    return statusCode >= 300 && statusCode < 400;
-  }
-
   protected boolean isBodyAllowed(String method) {
     return bodyMethods.contains(method);
   }
@@ -1226,25 +1222,27 @@ public class ApiClient{{#jsr310}} extends JavaTimeFormatter{{/jsr310}} {
 
     if (isSuccessfulStatus(statusCode)) {
       return this.deserialize(response, returnType);
-    } else {
-      String message = EntityUtils.toString(response.getEntity());
-      throw new ApiException(message, statusCode, responseHeaders, message);
     }
+    throw toApiException(response, statusCode, responseHeaders);
   }
 
-  protected HeaderResponse processHeaderResponse(CloseableHttpResponse response) throws ApiException, IOException, ParseException {
+  protected LocationResponse processLocationResponse(CloseableHttpResponse response) throws ApiException, IOException, ParseException {
     int statusCode = response.getCode();
     lastStatusCode.set(statusCode);
 
     Map<String, List<String>> responseHeaders = transformResponseHeaders(response.getHeaders());
     lastResponseHeaders.set(responseHeaders);
 
-    if (isSuccessfulStatus(statusCode) || isRedirectStatus(statusCode)) {
-      return new HeaderResponse(statusCode, responseHeaders);
+    if (isSuccessfulStatus(statusCode) || statusCode == HttpStatus.SC_SEE_OTHER) {
+      return LocationResponse.fromHeaders(statusCode, responseHeaders);
     }
+    throw toApiException(response, statusCode, responseHeaders);
+  }
 
-    String message = EntityUtils.toString(response.getEntity());
-    throw new ApiException(message, statusCode, responseHeaders, message);
+  protected ApiException toApiException(CloseableHttpResponse response, int statusCode,
+                                        Map<String, List<String>> responseHeaders) throws IOException, ParseException {
+    String message = response.getEntity() == null ? null : EntityUtils.toString(response.getEntity());
+    return new ApiException(message, statusCode, responseHeaders, message);
   }
 
   protected List<BatchResponseEntity> processResponseBatch(CloseableHttpResponse response) throws ApiException, IOException, ParseException {
@@ -1335,10 +1333,10 @@ public class ApiClient{{#jsr310}} extends JavaTimeFormatter{{/jsr310}} {
    * @param accept The request's Accept header
    * @param contentType The request's Content-Type header
    * @param authNames The authentications to apply
-   * @return Status code and headers of the response
+   * @return Status code and Location header of the response
    * @throws ApiException API exception
    */
-  public HeaderResponse invokeAPIForHeaders(
+  public LocationResponse invokeAPIForLocation(
        String path,
        String method,
        List<Pair> queryParams,
@@ -1364,7 +1362,7 @@ public class ApiClient{{#jsr310}} extends JavaTimeFormatter{{/jsr310}} {
         accept,
         contentType,
         authNames,
-        response -> processHeaderResponse(response),
+        response -> processLocationResponse(response),
         false);
   }
 

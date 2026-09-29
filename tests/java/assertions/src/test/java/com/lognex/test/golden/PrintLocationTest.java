@@ -5,7 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.moysklad.remap_1_2.ApiClient;
 import ru.moysklad.remap_1_2.ApiException;
-import ru.moysklad.remap_1_2.HeaderResponse;
+import ru.moysklad.remap_1_2.LocationResponse;
 import ru.moysklad.remap_1_2.api.LabelsApi;
 import ru.moysklad.remap_1_2.model.LabelPrintRequest;
 
@@ -44,7 +44,7 @@ class PrintLocationTest {
         String expected = stub.locationUrl("status");
         stub.enqueue(202, expected, null);
 
-        HeaderResponse result = printLabels();
+        LocationResponse result = printLabels();
 
         assertEquals(202, result.getStatusCode());
         assertEquals(expected, result.getLocation().orElse(null));
@@ -56,7 +56,7 @@ class PrintLocationTest {
         String expected = stub.locationUrl("file.pdf");
         stub.enqueue(303, expected, null);
 
-        HeaderResponse result = printLabels();
+        LocationResponse result = printLabels();
 
         assertEquals(303, result.getStatusCode());
         assertEquals(expected, result.getLocation().orElse(null));
@@ -67,7 +67,7 @@ class PrintLocationTest {
     void reportsMissingLocationAsEmptyValue() throws ApiException {
         stub.enqueue(202, null, null);
 
-        HeaderResponse result = printLabels();
+        LocationResponse result = printLabels();
 
         assertEquals(202, result.getStatusCode());
         assertTrue(result.getLocation().isEmpty());
@@ -83,14 +83,23 @@ class PrintLocationTest {
     }
 
     @Test
-    void readsHeadersRegardlessOfCase() {
-        HeaderResponse result = new HeaderResponse(303, Map.of("location", List.of("/file.pdf")));
+    void treatsUnexpectedRedirectAsError() {
+        stub.enqueue(302, stub.locationUrl("file.pdf"), null);
 
-        assertEquals("/file.pdf", result.getLocation().orElse(null));
-        assertEquals("/file.pdf", result.getHeader("LOCATION").orElse(null));
+        ApiException exception = assertThrows(ApiException.class, this::printLabels);
+
+        assertEquals(302, exception.getCode());
+        assertEquals(0, stub.getLocationHits(), "переход по Location выполняться не должен");
     }
 
-    private HeaderResponse printLabels() throws ApiException {
+    @Test
+    void readsLocationRegardlessOfHeaderCase() {
+        LocationResponse result = LocationResponse.fromHeaders(303, Map.of("location", List.of("/file.pdf")));
+
+        assertEquals("/file.pdf", result.getLocation().orElse(null));
+    }
+
+    private LocationResponse printLabels() throws ApiException {
         return labelsApi.printLabels(ENTITY_ID, "product", new LabelPrintRequest().count(1));
     }
 }

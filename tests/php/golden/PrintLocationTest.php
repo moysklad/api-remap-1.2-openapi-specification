@@ -11,7 +11,7 @@ use GuzzleHttp\Middleware;
 use GuzzleHttp\Psr7\Response;
 use OpenAPI\Client\Api\LabelsApi;
 use OpenAPI\Client\ApiException;
-use OpenAPI\Client\HeaderResponse;
+use OpenAPI\Client\LocationResponse;
 use OpenAPI\Client\Model\Errors;
 use OpenAPI\Client\Model\LabelPrintRequest;
 use PHPUnit\Framework\TestCase;
@@ -52,7 +52,6 @@ final class PrintLocationTest extends TestCase
         $result = $this->printLabels(new Response(303, ['location' => self::FILE_URL]));
 
         self::assertSame(self::FILE_URL, $result->getLocation());
-        self::assertSame(self::FILE_URL, $result->getHeader('LOCATION'));
     }
 
     public function testReportsMissingLocationAsNull(): void
@@ -74,6 +73,17 @@ final class PrintLocationTest extends TestCase
         }
     }
 
+    public function testTreatsUnexpectedRedirectAsError(): void
+    {
+        try {
+            $this->printLabels(new Response(302, ['Location' => self::FILE_URL]));
+            self::fail('Ожидалось ApiException со статусом 302');
+        } catch (ApiException $exception) {
+            self::assertSame(302, $exception->getCode());
+            self::assertCount(1, $this->history, 'переход по Location выполняться не должен');
+        }
+    }
+
     public function testWithHttpInfoDoesNotFollowRedirect(): void
     {
         [$data, $status, $headers] = $this->labelsApi(new Response(303, ['Location' => self::FILE_URL]))
@@ -85,7 +95,7 @@ final class PrintLocationTest extends TestCase
         self::assertCount(1, $this->history);
     }
 
-    private function printLabels(Response $response): HeaderResponse
+    private function printLabels(Response $response): LocationResponse
     {
         return $this->labelsApi($response)->printLabels(self::ENTITY_ID, 'product', $this->printRequest());
     }
