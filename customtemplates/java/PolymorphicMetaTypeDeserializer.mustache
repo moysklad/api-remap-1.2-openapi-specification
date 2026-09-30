@@ -7,20 +7,25 @@ import tools.jackson.databind.DatabindException;
 import tools.jackson.databind.DeserializationContext;
 import tools.jackson.databind.JavaType;
 import tools.jackson.databind.JsonNode;
-import tools.jackson.databind.ObjectMapper;
 import tools.jackson.databind.ValueDeserializer;
-import tools.jackson.databind.annotation.JsonDeserialize;
-import tools.jackson.databind.cfg.ContextAttributes;
+import tools.jackson.databind.deser.BeanDeserializerFactory;
 import {{modelPackage}}.Errors;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 {{>generatedAnnotation}}
 public class PolymorphicMetaTypeDeserializer extends ValueDeserializer<Object> {
+  /**
+   * @deprecated no longer read: concrete classes are deserialized through the current
+   * {@link DeserializationContext}, so ApiClient does not need to attach the ObjectMapper.
+   */
+  @Deprecated
   public static final String OBJECT_MAPPER_ATTRIBUTE = "ru.moysklad.remap_1_2.ObjectMapper";
 
   private final JavaType targetType;
+  private final Map<Class<?>, ValueDeserializer<Object>> beanDeserializers = new ConcurrentHashMap<>();
 
   public PolymorphicMetaTypeDeserializer() {
     this(null);
@@ -50,7 +55,7 @@ public class PolymorphicMetaTypeDeserializer extends ValueDeserializer<Object> {
       resolvedClass = targetClass;
     }
 
-    return readWithoutPolymorphicDeserializer(ctxt, node, resolvedClass);
+    return readAsBean(ctxt, node, resolvedClass);
   }
 
   private Class<?> resolveClass(JsonParser parser, Class<?> targetClass, JsonNode node) {
@@ -165,25 +170,30 @@ public class PolymorphicMetaTypeDeserializer extends ValueDeserializer<Object> {
     return current;
   }
 
-  private Object readWithoutPolymorphicDeserializer(DeserializationContext ctxt, JsonNode node, Class<?> targetClass) {
-    Object attribute = ctxt.getAttribute(OBJECT_MAPPER_ATTRIBUTE);
-    if (!(attribute instanceof ObjectMapper mapper)) {
-      throw DatabindException.from(ctxt.getParser(),
-          "ObjectMapper is not available on DeserializationContext; ApiClient must attach "
-              + OBJECT_MAPPER_ATTRIBUTE);
+  private Object readAsBean(DeserializationContext ctxt, JsonNode node, Class<?> beanClass) {
+    ValueDeserializer<Object> deserializer = beanDeserializer(ctxt, beanClass);
+    try (JsonParser nodeParser = node.traverse(ctxt)) {
+      nodeParser.nextToken();
+      return deserializer.deserialize(nodeParser, ctxt);
     }
-    var builder = mapper.rebuild();
-    for (Class<?> current = targetClass; current != null && current != Object.class; current = current.getSuperclass()) {
-      builder.addMixIn(current, DisablePolymorphicDeserializer.class);
-    }
-    ObjectMapper copy = builder
-        .defaultAttributes(ContextAttributes.getEmpty()
-            .withSharedAttribute(OBJECT_MAPPER_ATTRIBUTE, mapper))
-        .build();
-    return copy.treeToValue(node, targetClass);
   }
 
-  @JsonDeserialize(using = ValueDeserializer.None.class)
-  private abstract static class DisablePolymorphicDeserializer {
+  // The factory bypasses the inherited @JsonDeserialize only for beanClass itself, so nested
+  // polymorphic properties keep using this deserializer.
+  // No computeIfAbsent: resolve() may re-enter while the entry is being built.
+  private ValueDeserializer<Object> beanDeserializer(DeserializationContext ctxt, Class<?> beanClass) {
+    ValueDeserializer<Object> cached = beanDeserializers.get(beanClass);
+    if (cached != null) {
+      return cached;
+    }
+
+    JavaType type = ctxt.constructType(beanClass);
+    ValueDeserializer<Object> deserializer = BeanDeserializerFactory.instance.createBeanDeserializer(
+        ctxt, type, ctxt.lazyIntrospectBeanDescriptionForCreation(type));
+    deserializer.resolve(ctxt);
+    @SuppressWarnings("unchecked")
+    ValueDeserializer<Object> contextual = (ValueDeserializer<Object>) deserializer.createContextual(ctxt, null);
+    beanDeserializers.put(beanClass, contextual);
+    return contextual;
   }
 }
