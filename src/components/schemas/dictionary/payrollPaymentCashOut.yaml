@@ -1,0 +1,5 @@
+type: object
+description: Расходный ордер + linkedSum
+x-polymorphic-parent: PayrollPayment
+allOf:
+  - $ref: '../../../openapi.yaml#/components/schemas/CashOut'

@@ -2500,7 +2500,7 @@ components:
         Элемент массива `operations` расходного ордера / исходящего платежа: документ одного из
         допустимых типов плюс обязательное поле `linkedSum`.
 
-        Допустимые `meta.type`: salesreturn, supply, invoicein, purchaseorder, commissionreportout.
+        Допустимые `meta.type`: salesreturn, supply, invoicein, purchaseorder, commissionreportout, payroll.
       x-polymorphic-discriminator:
         path: meta.type
         mappings:
@@ -2514,6 +2514,8 @@ components:
             componentName: FinanceOutOperationPurchaseOrder
           - type: commissionreportout
             componentName: FinanceOutOperationCommissionReportOut
+          - type: payroll
+            componentName: FinanceOutOperationPayroll
       required:
         - linkedSum
         - meta
@@ -2531,6 +2533,14 @@ components:
       $ref: './components/schemas/dictionary/financeOutOperationPurchaseOrder.yaml'
     FinanceOutOperationCommissionReportOut:
       $ref: './components/schemas/dictionary/financeOutOperationCommissionReportOut.yaml'
+    FinanceOutOperationPayroll:
+      $ref: './components/schemas/dictionary/financeOutOperationPayroll.yaml'
+    PayrollPayment:
+      $ref: './components/schemas/dictionary/payrollPayment.yaml'
+    PayrollPaymentPaymentOut:
+      $ref: './components/schemas/dictionary/payrollPaymentPaymentOut.yaml'
+    PayrollPaymentCashOut:
+      $ref: './components/schemas/dictionary/payrollPaymentCashOut.yaml'
     FinanceInOperationAbstract:
       type: object
       description: |

@@ -399,6 +399,22 @@
         }
       ],
       "linkedSum": 75000
+    },
+    {
+      "meta": {
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/payroll/946f8595-17c3-11f1-4095-ec9f00000001",
+        "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/payroll/metadata",
+        "type": "payroll",
+        "mediaType": "application/json",
+        "uuidHref": "https://online.moysklad.ru/app/#payroll/edit?id=946f8595-17c3-11f1-4095-ec9f00000001"
+      },
+      "id": "946f8595-17c3-11f1-4095-ec9f00000001",
+      "name": "00001",
+      "moment": "2026-03-04 15:13:00.000",
+      "applicable": true,
+      "startPayrollPeriod": "2026-03-03 00:00:00.000",
+      "endPayrollPeriod": "2026-03-04 23:59:59.000",
+      "linkedSum": 30000.0
     }
   ]
 }

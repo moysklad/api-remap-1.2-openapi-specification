@@ -136,6 +136,9 @@ class SerializationTest extends BaseTestCase {
         FIXTURE_MODEL_MAP.put("finance_out_operation_purchase_order", "FinanceOutOperationPurchaseOrder");
         FIXTURE_MODEL_MAP.put("finance_out_operation_sales_return", "FinanceOutOperationSalesReturn");
         FIXTURE_MODEL_MAP.put("finance_out_operation_supply", "FinanceOutOperationSupply");
+        FIXTURE_MODEL_MAP.put("finance_out_operation_payroll", "FinanceOutOperationPayroll");
+        FIXTURE_MODEL_MAP.put("payroll_payment_payment_out", "PayrollPaymentPaymentOut");
+        FIXTURE_MODEL_MAP.put("payroll_payment_cash_out", "PayrollPaymentCashOut");
         FIXTURE_MODEL_MAP.put("payroll", "Payroll");
         FIXTURE_MODEL_MAP.put("payment_in", "PaymentIn");
         FIXTURE_MODEL_MAP.put("payment_out", "PaymentOut");
