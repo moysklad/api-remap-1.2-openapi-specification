@@ -7,3 +7,9 @@ disallowAdditionalPropertiesIfNotPresent: false
 gitHost: github.com
 gitUserId: moysklad
 gitRepoId: remap-1.2-python-sdk
+# files: — шаблоны, которых нет в стандартном наборе генератора; без регистрации они не рендерятся.
+# Путь назначения содержит packageName и при его смене меняется вручную.
+files:
+  location_response.mustache:
+    templateType: SupportingFiles
+    destinationFilename: moysklad_remap_12_sdk/location_response.py
