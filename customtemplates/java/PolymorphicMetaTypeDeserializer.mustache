@@ -9,6 +9,7 @@ import tools.jackson.databind.JavaType;
 import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.ValueDeserializer;
 import tools.jackson.databind.deser.BeanDeserializerFactory;
+import tools.jackson.databind.deser.DeserializerFactory;
 import {{modelPackage}}.Errors;
 
 import java.util.LinkedHashMap;
@@ -23,6 +24,8 @@ public class PolymorphicMetaTypeDeserializer extends ValueDeserializer<Object> {
    */
   @Deprecated
   public static final String OBJECT_MAPPER_ATTRIBUTE = "ru.moysklad.remap_1_2.ObjectMapper";
+
+  public static final String DESERIALIZER_FACTORY_ATTRIBUTE = "ru.moysklad.remap_1_2.DeserializerFactory";
 
   private final JavaType targetType;
   private final Map<Class<?>, ValueDeserializer<Object>> beanDeserializers = new ConcurrentHashMap<>();
@@ -188,7 +191,11 @@ public class PolymorphicMetaTypeDeserializer extends ValueDeserializer<Object> {
     }
 
     JavaType type = ctxt.constructType(beanClass);
-    ValueDeserializer<Object> deserializer = BeanDeserializerFactory.instance.createBeanDeserializer(
+    DeserializerFactory factory = (DeserializerFactory) ctxt.getAttribute(DESERIALIZER_FACTORY_ATTRIBUTE);
+    if (factory == null) {
+      factory = BeanDeserializerFactory.instance;
+    }
+    ValueDeserializer<Object> deserializer = factory.createBeanDeserializer(
         ctxt, type, ctxt.lazyIntrospectBeanDescriptionForCreation(type));
     deserializer.resolve(ctxt);
     @SuppressWarnings("unchecked")

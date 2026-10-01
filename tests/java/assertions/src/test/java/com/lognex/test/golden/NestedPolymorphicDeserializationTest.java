@@ -1,10 +1,21 @@
 package com.lognex.test.golden;
 
 import tools.jackson.core.type.TypeReference;
+import tools.jackson.core.JsonParser;
 import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.BeanDescription;
+import tools.jackson.databind.DeserializationConfig;
+import tools.jackson.databind.DeserializationContext;
+import tools.jackson.databind.ValueDeserializer;
+import tools.jackson.databind.cfg.ContextAttributes;
+import tools.jackson.databind.deser.ValueDeserializerModifier;
+import tools.jackson.databind.deser.std.DelegatingDeserializer;
+import tools.jackson.databind.module.SimpleModule;
 import com.lognex.test.BaseTestCase;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import ru.moysklad.remap_1_2.ApiClient;
 import ru.moysklad.remap_1_2.model.AttributeAbstract;
 import ru.moysklad.remap_1_2.model.AttributeCounterpartyEntity;
@@ -16,6 +27,7 @@ import ru.moysklad.remap_1_2.model.Employee;
 import ru.moysklad.remap_1_2.model.EntityWithMeta;
 import ru.moysklad.remap_1_2.model.Errors;
 import ru.moysklad.remap_1_2.model.Product;
+import ru.moysklad.remap_1_2.model.Organization;
 import ru.moysklad.remap_1_2.model.Task;
 
 import java.io.IOException;
@@ -122,6 +134,77 @@ class NestedPolymorphicDeserializationTest extends BaseTestCase {
         for (int i = 0; i < 3; i++) {
             Product product = MAPPER.readValue(json, Product.class);
             Assertions.assertInstanceOf(Product.class, productAttributeValue(product, 0));
+        }
+    }
+
+    @Test
+    void organizationAttributeWithExpandedCounterpartyResolvesToCounterparty() throws Exception {
+        Organization organization = MAPPER.readValue(
+                fixture("organization_attribute_counterparty_expanded.json"), Organization.class);
+
+        AttributeCounterpartyEntity attribute = Assertions.assertInstanceOf(
+                AttributeCounterpartyEntity.class, organization.getAttributes().get(0));
+        Counterparty linked = Assertions.assertInstanceOf(Counterparty.class, attribute.getValue());
+        Assertions.assertEquals("ООО Головная компания (expand)", linked.getName());
+        Assertions.assertEquals("7736570901", linked.getInn());
+    }
+
+    @ParameterizedTest
+    @ValueSource(booleans = {false, true})
+    void customMapperModifierAppliesToRootAndNestedEntities(boolean rebuildDateFormat) throws Exception {
+        SimpleModule module = new SimpleModule("counterparty-modifier");
+        module.setDeserializerModifier(new ValueDeserializerModifier() {
+            @Override
+            public ValueDeserializer<?> modifyDeserializer(DeserializationConfig config,
+                    BeanDescription.Supplier beanDescription, ValueDeserializer<?> deserializer) {
+                return beanDescription.getBeanClass() == Counterparty.class
+                        ? new CounterpartyNameDeserializer(deserializer) : deserializer;
+            }
+        });
+        ApiClient client = new ApiClient();
+        client.setObjectMapper(client.getObjectMapper().rebuild().addModule(module)
+                .defaultAttributes(ContextAttributes.getEmpty().withSharedAttribute("name-suffix", " (modified)"))
+                .build());
+        // Rebuilding for a date format must retain the user's modules and context attributes.
+        if (rebuildDateFormat) {
+            client.setDateFormat(ApiClient.buildDefaultDateFormat());
+        }
+        ObjectMapper mapper = client.getObjectMapper();
+
+        for (int i = 0; i < 2; i++) {
+            Counterparty root = mapper.readValue(
+                    fixture("counterparty_attribute_counterparty_expanded.json"), Counterparty.class);
+            Assertions.assertEquals("Контрагент с атрибутом-контрагентом (modified)", root.getName());
+            Counterparty nested = Assertions.assertInstanceOf(Counterparty.class,
+                    Assertions.assertInstanceOf(AttributeCounterpartyEntity.class,
+                            root.getAttributes().get(0)).getValue());
+            Assertions.assertEquals("ООО Головная компания (expand) (modified)", nested.getName());
+            Assertions.assertEquals("7736570901", nested.getInn());
+
+            Organization organization = mapper.readValue(
+                    fixture("organization_attribute_counterparty_expanded.json"), Organization.class);
+            Counterparty linked = Assertions.assertInstanceOf(Counterparty.class,
+                    Assertions.assertInstanceOf(AttributeCounterpartyEntity.class,
+                            organization.getAttributes().get(0)).getValue());
+            Assertions.assertEquals("ООО Головная компания (expand) (modified)", linked.getName());
+        }
+    }
+
+    private static class CounterpartyNameDeserializer extends DelegatingDeserializer {
+        CounterpartyNameDeserializer(ValueDeserializer<?> delegate) {
+            super(delegate);
+        }
+
+        @Override
+        protected ValueDeserializer<?> newDelegatingInstance(ValueDeserializer<?> delegate) {
+            return new CounterpartyNameDeserializer(delegate);
+        }
+
+        @Override
+        public Object deserialize(JsonParser parser, DeserializationContext ctxt) {
+            Counterparty counterparty = (Counterparty) super.deserialize(parser, ctxt);
+            counterparty.setName(counterparty.getName() + ctxt.getAttribute("name-suffix"));
+            return counterparty;
         }
     }
 
