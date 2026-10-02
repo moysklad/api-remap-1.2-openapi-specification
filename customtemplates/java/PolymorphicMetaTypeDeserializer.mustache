@@ -18,13 +18,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 {{>generatedAnnotation}}
 public class PolymorphicMetaTypeDeserializer extends ValueDeserializer<Object> {
-  /**
-   * @deprecated no longer read: concrete classes are deserialized through the current
-   * {@link DeserializationContext}, so ApiClient does not need to attach the ObjectMapper.
-   */
-  @Deprecated
-  public static final String OBJECT_MAPPER_ATTRIBUTE = "ru.moysklad.remap_1_2.ObjectMapper";
-
   public static final String DESERIALIZER_FACTORY_ATTRIBUTE = "ru.moysklad.remap_1_2.DeserializerFactory";
 
   private final JavaType targetType;
@@ -200,7 +193,7 @@ public class PolymorphicMetaTypeDeserializer extends ValueDeserializer<Object> {
     deserializer.resolve(ctxt);
     @SuppressWarnings("unchecked")
     ValueDeserializer<Object> contextual = (ValueDeserializer<Object>) deserializer.createContextual(ctxt, null);
-    beanDeserializers.put(beanClass, contextual);
-    return contextual;
+    ValueDeserializer<Object> existing = beanDeserializers.putIfAbsent(beanClass, contextual);
+    return existing != null ? existing : contextual;
   }
 }
