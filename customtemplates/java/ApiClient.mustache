@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.*;
 import tools.jackson.core.JacksonException;
 import tools.jackson.core.type.TypeReference;
 import tools.jackson.databind.*;
-import tools.jackson.databind.cfg.ContextAttributes;
+import tools.jackson.databind.cfg.MapperBuilder;
 import tools.jackson.databind.cfg.DateTimeFeature;
 import tools.jackson.databind.cfg.EnumFeature;
 import tools.jackson.databind.ext.javatime.deser.LocalDateTimeDeserializer;
@@ -167,7 +167,7 @@ public class ApiClient{{#jsr310}} extends JavaTimeFormatter{{/jsr310}} {
         .addModule(new RFC3339JavaTimeModule())
         .defaultDateFormat(ApiClient.buildDefaultDateFormat())
         .build();
-    objectMapper = attachObjectMapperAttribute(jsonMapper);
+    objectMapper = attachDeserializerFactory(jsonMapper);
 
     dateFormat = ApiClient.buildDefaultDateFormat();
 
@@ -213,14 +213,16 @@ public class ApiClient{{#jsr310}} extends JavaTimeFormatter{{/jsr310}} {
    * @return API client
    */
   public ApiClient setObjectMapper(ObjectMapper objectMapper) {
-    this.objectMapper = attachObjectMapperAttribute(objectMapper);
+    this.objectMapper = attachDeserializerFactory(objectMapper);
     return this;
   }
 
-  private static ObjectMapper attachObjectMapperAttribute(ObjectMapper mapper) {
-    return mapper.rebuild()
-        .defaultAttributes(ContextAttributes.getEmpty()
-            .withSharedAttribute(PolymorphicMetaTypeDeserializer.OBJECT_MAPPER_ATTRIBUTE, mapper))
+  private static ObjectMapper attachDeserializerFactory(ObjectMapper mapper) {
+    MapperBuilder<?, ?> builder = mapper.rebuild();
+    // Apply modules before capturing the factory, and preserve the mapper's context attributes.
+    builder.saveStateApplyModules();
+    return builder.defaultAttributes(builder.defaultAttributes().withSharedAttribute(
+        PolymorphicMetaTypeDeserializer.DESERIALIZER_FACTORY_ATTRIBUTE, builder.deserializerFactory()))
         .build();
   }
 
@@ -564,7 +566,7 @@ public class ApiClient{{#jsr310}} extends JavaTimeFormatter{{/jsr310}} {
   public ApiClient setDateFormat(DateFormat dateFormat) {
     this.dateFormat = dateFormat;
     // Also set the date format for model (de)serialization with Date properties.
-    this.objectMapper = attachObjectMapperAttribute(this.objectMapper.rebuild()
+    this.objectMapper = attachDeserializerFactory(this.objectMapper.rebuild()
         .defaultDateFormat((DateFormat) dateFormat.clone())
         .build());
     return this;
