@@ -19,8 +19,6 @@ import java.util.concurrent.ConcurrentHashMap;
 public class PolymorphicMetaTypeDeserializer extends ValueDeserializer<Object> {
   public static final String DESERIALIZER_FACTORY_ATTRIBUTE = "ru.moysklad.remap_1_2.DeserializerFactory";
 
-  public static final String DESERIALIZER_FACTORY_ATTRIBUTE = "ru.moysklad.remap_1_2.DeserializerFactory";
-
   private final JavaType targetType;
   private final Map<Class<?>, ValueDeserializer<Object>> beanDeserializers = new ConcurrentHashMap<>();
 
