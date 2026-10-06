@@ -82,7 +82,7 @@ properties:
       Связанные платежи: Исходящий платеж (paymentout) и Расходный ордер (cashout).
       Каждый элемент содержит метаданные платежа и сумму оплаты `linkedSum`.
     items:
-      $ref: '../../../openapi.yaml#/components/schemas/PayrollPayment'
+      $ref: '../../../openapi.yaml#/components/schemas/PayrollPaymentAbstract'
   positions:
     type: object
     description: Метаданные позиций Начисления зарплаты
