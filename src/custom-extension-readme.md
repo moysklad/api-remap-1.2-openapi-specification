@@ -58,6 +58,30 @@ agent:
 ```
 
 
+## x-location-response
+
+**Предназначение**: операция без тела, данные в `Location` (`202` — статус подготовки, `303` — файл).
+Шаблоны SDK отключают редирект, возвращают для `2xx` и `303` `LocationResponse`
+(`statusCode`, `location`) вместо `void`, остальные статусы — ошибка.
+Заголовки — в `src/components/response-headers.yaml`.
+
+**Структура**: boolean на уровне операции. Только для операций без `content`, иначе SDK не соберётся.
+
+**Пример**
+
+```yaml
+post:
+  operationId: printLabels
+  x-location-response: true
+  responses:
+    '303':
+      description: Печатная форма готова, в Location передана ссылка на файл
+      headers:
+        Location:
+          $ref: '../../../components/response-headers.yaml#/PrintLocation'
+```
+
+
 ## x-polymorphic-discriminator
 
 **Предназначение**: описать полиморфную десериализацию, когда тип объекта лежит не в поле

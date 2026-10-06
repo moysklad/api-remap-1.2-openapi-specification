@@ -23,7 +23,7 @@ get:
       $ref: '../../../components/responses.yaml#/CommonError'
 
 post:
-  operationId: createStoreZones
+  operationId: createStoreZone
   tags:
   - Stores
   summary: Создать зону склада
@@ -41,11 +41,7 @@ post:
     content:
       application/json:
         schema:
-          oneOf:
-            - $ref: '../../../openapi.yaml#/components/schemas/StoreZone'
-            - type: array
-              items:
-                $ref: '../../../openapi.yaml#/components/schemas/StoreZone'
+          $ref: '../../../openapi.yaml#/components/schemas/StoreZone'
   responses:
     '200':
       description: Успешный запрос

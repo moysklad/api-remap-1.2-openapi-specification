@@ -23,7 +23,7 @@ get:
       $ref: '../../../components/responses.yaml#/CommonError'
 
 post:
-  operationId: createStoreSlots
+  operationId: createStoreSlot
   tags:
   - Stores
   summary: Создать ячейку склада
@@ -41,11 +41,7 @@ post:
     content:
       application/json:
         schema:
-          oneOf:
-            - $ref: '../../../openapi.yaml#/components/schemas/StoreSlot'
-            - type: array
-              items:
-                $ref: '../../../openapi.yaml#/components/schemas/StoreSlot'
+          $ref: '../../../openapi.yaml#/components/schemas/StoreSlot'
   responses:
     '200':
       description: Успешный запрос

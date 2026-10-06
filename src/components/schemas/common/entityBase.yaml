@@ -16,6 +16,8 @@ BatchResponseEntity:
     mappings: &entityWithMetaPolymorphicMappings
       - type: bundle
         componentName: Bundle
+      - type: bundlecomponent
+        componentName: BundleComponent
       - type: cashin
         componentName: CashIn
       - type: cashout
@@ -140,8 +142,12 @@ BatchResponseEntity:
         componentName: SalesReturn
       - type: service
         componentName: Service
+      - type: slot
+        componentName: StoreSlot
       - type: store
         componentName: Store
+      - type: storezone
+        componentName: StoreZone
       - type: supply
         componentName: Supply
       - type: supplyposition

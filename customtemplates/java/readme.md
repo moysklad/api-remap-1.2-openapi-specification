@@ -4,6 +4,9 @@
 
 * ApiClient.mustache - кастомный формат дат, Jackson 3 (`JsonMapper`), добавлена поддержка batch-ответов с частичными ошибками: стандартный шаблон обрабатывает ответ как один успешный объект или одну ошибку, что не подходит для batch-операций API.
 * api.mustache - правильные заголовки Accept: application/json;charset=utf-8
+* api.mustache, ApiClient.mustache, LocationResponse.mustache - операции с `x-location-response` (печать, экспорт)
+  отдают ссылку только в заголовке `Location` (202 или 303). Метод возвращает `LocationResponse` вместо `void`,
+  редирект отключён, иначе HttpClient уходит по 303 и `Location` теряется.
 * RequestOptions.mustache, PageOptions.mustache, ListOptions.mustache, AssortmentListOptions.mustache, Filters.mustache, 
   Orders.mustache - удобные overload-методы для query-параметров без длинных позиционных сигнатур
 * pojo.mustache - решение проблем с дискриминатором в полиморфных классах

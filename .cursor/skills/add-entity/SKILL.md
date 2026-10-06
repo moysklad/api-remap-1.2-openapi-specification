@@ -73,10 +73,10 @@ For every top-level entity (dictionary or document) keep two separate endpoints:
 
 This applies even when the MD `### Массовое создание и обновление ...` section uses the same example URL as create. The MD groups operations by behavior, not by URL — Remap exposes them as separate paths (`/batch` for arrays).
 
-**Document positions** follow split create semantics:
+**Document positions and other nested collections** (`returntocommissionerpositions`, bundle `components`, store `zones`/`slots`, product `images`) follow split create semantics:
 
-- `POST /entity/<keyword>/{id}/positions` — **single position create/update** via one `<Position>` object.
-- `POST /entity/<keyword>/{id}/positions/batch` — **mass create/update** via array of `<Position>` (`minItems: 1`, `maxItems: 1000`) with per-item result array (`oneOf: [<Position>, Error]`).
+- `POST /entity/<keyword>/{id}/positions` — **single position create/update** via one `<Position>` object; response is always an array of `<Position>`.
+- `POST /entity/<keyword>/{id}/positions/batch` — **mass create/update** via array of `<Position>` (`minItems: 1`, `maxItems: 1000`) with per-item result array (`items: BatchResponseEntity`; `<Position>` must have `x-polymorphic-parent: EntityWithMeta` and a `meta.type` mapping in `entityBase.yaml`). Do not use inline `oneOf: [<Position>, Errors]` — it generates anonymous `...200ResponseInner` classes.
 
 This applies even when the MD `### Массовое создание и обновление ...` section uses the same example URL as create. The MD groups operations by behavior, not by URL — Remap exposes document position mass operations as a separate `.../positions/batch` path.
 

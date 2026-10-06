@@ -24,7 +24,7 @@ get:
       $ref: '../../../components/responses.yaml#/CommonError'
 
 post:
-  operationId: createBundleComponents
+  operationId: createBundleComponent
   tags:
   - Bundles
   summary: Добавить компонент Комплекта
@@ -39,11 +39,7 @@ post:
     content:
       application/json:
         schema:
-          oneOf:
-          - $ref: '../../../openapi.yaml#/components/schemas/BundleComponent'
-          - type: array
-            items:
-              $ref: '../../../openapi.yaml#/components/schemas/BundleComponent'
+          $ref: '../../../openapi.yaml#/components/schemas/BundleComponent'
   responses:
     '200':
       description: Успешный запрос

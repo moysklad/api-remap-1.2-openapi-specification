@@ -57,9 +57,11 @@ Track these columns while implementing:
 | metadata | `/entity/<keyword>/metadata` | GET | `<entity>-metadata.yaml` or shared metadata path |
 | metadata attributes list/create | `/entity/<keyword>/metadata/attributes` | GET/POST | `<entity>-metadata-attribute.yaml` |
 | metadata attribute by ID | `/entity/<keyword>/metadata/attributes/{id}` | GET/PUT/DELETE | `<entity>-metadata-attribute-by-id.yaml` |
-| metadata states create/batch | `/entity/<keyword>/metadata/states` | POST | `<entity>-metadata-states.yaml` |
+| metadata states create | `/entity/<keyword>/metadata/states` | POST | `<entity>-metadata-states.yaml` |
+| metadata states mass create/update | `/entity/<keyword>/metadata/states/batch` | POST | `<entity>-metadata-states-batch.yaml` |
 | metadata states by ID | `/entity/<keyword>/metadata/states/{id}` | GET/PUT/DELETE | `<entity>-metadata-state-by-id.yaml` |
 | positions list/create | `/entity/<keyword>/{id}/positions` | GET/POST | `<entity>-positions.yaml` |
+| positions mass create/update | `/entity/<keyword>/{id}/positions/batch` | POST | `<entity>-positions-batch.yaml` |
 | position by ID | `/entity/<keyword>/{id}/positions/{positionId}` | GET/PUT/DELETE | `<entity>-position-by-id.yaml` |
 | positions batch delete | `/entity/<keyword>/{id}/positions/delete` | POST | `<entity>-positions-delete.yaml` |
 
@@ -135,12 +137,13 @@ post:
                 $ref: '../../../openapi.yaml#/components/schemas/<Entity>'
 ```
 
-Document positions follow split create semantics:
+Nested collections (document positions, `returntocommissionerpositions`, bundle `components`, store `zones`/`slots`, product `images`) follow split create semantics:
 
-- `POST /entity/<keyword>/{id}/positions` — single `<Position>` create/update.
-- `POST /entity/<keyword>/{id}/positions/batch` — mass create/update with array request and per-item `oneOf: [<Position>, Error]` response.
+- `POST /entity/<keyword>/{id}/<collection>` — single object request (`$ref: <Item>`); response is always an array (`type: array, items: <Item>`), even for one created item. `operationId` is singular (`create<PascalSingular>Position`, `createBundleComponent`, `addProductImage`).
+- `POST /entity/<keyword>/{id}/<collection>/batch` — mass create/update in a separate `<entity>-<collection>-batch.yaml`: array request with `minItems: 1`, `maxItems: 1000`; response `type: array, items: BatchResponseEntity` (not inline `oneOf: [<Item>, Errors]`, which generates anonymous `...200ResponseInner` classes); `<Item>` must have `x-polymorphic-parent: EntityWithMeta` and a `meta.type` mapping in `common/entityBase.yaml`. `operationId` is plural (`create<PascalSingular>Positions`, `createBundleComponents`).
+- Product `images` batch replaces the whole image list: request `maxItems: 10`, response is the array of all `Image` objects (no per-item errors).
 
-Do not combine single+array payloads on the `.../positions` endpoint.
+Do not combine single+array payloads on the nested collection endpoint.
 
 ### Shared result components (required)
 
@@ -792,11 +795,11 @@ post:
       $ref: '../../../components/responses.yaml#/CommonError'
 ```
 
-### Metadata states create/batch (POST) — `<entity>-metadata-states.yaml`
+### Metadata states create/batch (POST) — `<entity>-metadata-states.yaml`, `<entity>-metadata-states-batch.yaml`
 
-**When to create:** if the MD state section describes `Создать статус` or `Массовое создание и обновление Статусов`, and the URL is `/entity/<keyword>/metadata/states`. In this API both single creation and mass create/update can share the same `POST` endpoint, so model them as one OpenAPI operation.
+**When to create:** if the MD state section describes `Создать статус` or `Массовое создание и обновление Статусов`, and the URL is `/entity/<keyword>/metadata/states`. Single creation and mass create/update share the same API URL, but are modeled as two OpenAPI operations: `POST .../metadata/states` (single `State`) and `POST .../metadata/states/batch` (`<entity>-metadata-states-batch.yaml`).
 
-Peer pattern: `src/paths/documents/cashins/cashin-metadata-states.yaml`.
+Peer pattern: `src/paths/documents/cashins/cashin-metadata-states.yaml` and `src/paths/documents/cashins/cashin-metadata-states-batch.yaml`.
 
 ```yaml
 post:
@@ -813,27 +816,52 @@ post:
     content:
       application/json:
         schema:
-          oneOf:
-            - $ref: '../../../openapi.yaml#/components/schemas/State'
-            - type: array
-              items:
-                $ref: '../../../openapi.yaml#/components/schemas/State'
+          $ref: '../../../openapi.yaml#/components/schemas/State'
   responses:
     '200':
       description: Успешный запрос
       content:
         application/json:
           schema:
-            oneOf:
-              - $ref: '../../../openapi.yaml#/components/schemas/State'
-              - type: array
-                items:
-                  $ref: '../../../openapi.yaml#/components/schemas/State'
+            $ref: '../../../openapi.yaml#/components/schemas/State'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
 ```
 
-Do not include `Error` inside the successful array response unless the MD or a peer shows partial per-item errors. For `_states.md`, the successful mass response is an array of status objects only; request-level errors remain covered by `default: CommonError`.
+```yaml
+post:
+  operationId: create<PascalSingular>MetadataStatesBatch
+  tags:
+    - <PascalPlural>
+  summary: Массовое создание и обновление статусов <PascalSingular>
+  parameters:
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            $ref: '../../../openapi.yaml#/components/schemas/State'
+          minItems: 1
+          maxItems: 1000
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../../../openapi.yaml#/components/schemas/StateRowResult'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+```
+
+Register `/entity/<keyword>/metadata/states/batch` in `src/openapi.yaml` next to `/metadata/states/{id}`.
 
 ### Metadata state by ID (GET/PUT/DELETE) — `<entity>-metadata-state-by-id.yaml`
 
