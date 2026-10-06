@@ -1,0 +1,53 @@
+{
+    "name": "moysklad/php-remap-1.2-sdk",
+    "type": "library",
+    "description": "SDK for manipulating entities and creating reports in the MoySklad online service.",
+    "keywords": [
+        "openapitools",
+        "openapi-generator",
+        "openapi",
+        "php",
+        "sdk",
+        "rest",
+        "api",
+        "MoySklad",
+        "JSON API",
+        "Remap 1.2"
+    ],
+    "homepage": "https://dev.moysklad.ru/",
+    "license": "{{{licenseName}}}",
+    "authors": [
+        {
+            "name": "{{{developerOrganization}}}",
+            "homepage": "{{{developerOrganizationUrl}}}",
+            "role": "Code generation tool"
+        },
+        {
+            "name": "Lognex dev team",
+            "role": "API Specification Maintainers"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/moysklad/php-remap-1.2-sdk/issues",
+        "source": "https://github.com/moysklad/php-remap-1.2-sdk",
+        "specification": "https://github.com/moysklad/api-remap-1.2-openapi-specification"
+    },
+    "require": {
+        "php": "^8.1",
+        "ext-curl": "*",
+        "ext-json": "*",
+        "ext-mbstring": "*",
+        "guzzlehttp/guzzle": "^7.3",
+        "guzzlehttp/psr7": "^1.7 || ^2.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.0 || ^9.0",
+        "friendsofphp/php-cs-fixer": "^3.5"
+    },
+    "autoload": {
+        "psr-4": { "{{{escapedInvokerPackage}}}\\" : "{{{srcBasePath}}}/" }
+    },
+    "autoload-dev": {
+        "psr-4": { "{{{escapedInvokerPackage}}}\\Test\\" : "{{{testBasePath}}}/" }
+    }
+}

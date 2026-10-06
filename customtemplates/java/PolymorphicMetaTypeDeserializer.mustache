@@ -1,0 +1,199 @@
+{{>licenseInfo}}
+package {{polymorphicPackage}};
+
+import tools.jackson.core.JsonParser;
+import tools.jackson.databind.BeanProperty;
+import tools.jackson.databind.DatabindException;
+import tools.jackson.databind.DeserializationContext;
+import tools.jackson.databind.JavaType;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.ValueDeserializer;
+import tools.jackson.databind.deser.BeanDeserializerFactory;
+import tools.jackson.databind.deser.DeserializerFactory;
+import {{modelPackage}}.Errors;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+{{>generatedAnnotation}}
+public class PolymorphicMetaTypeDeserializer extends ValueDeserializer<Object> {
+  public static final String DESERIALIZER_FACTORY_ATTRIBUTE = "ru.moysklad.remap_1_2.DeserializerFactory";
+
+  private final JavaType targetType;
+  private final Map<Class<?>, ValueDeserializer<Object>> beanDeserializers = new ConcurrentHashMap<>();
+
+  public PolymorphicMetaTypeDeserializer() {
+    this(null);
+  }
+
+  private PolymorphicMetaTypeDeserializer(JavaType targetType) {
+    this.targetType = targetType;
+  }
+
+  @Override
+  public ValueDeserializer<?> createContextual(DeserializationContext ctxt, BeanProperty property) {
+    JavaType contextualType = property != null ? property.getType() : ctxt.getContextualType();
+    return new PolymorphicMetaTypeDeserializer(unwrapContainer(contextualType));
+  }
+
+  @Override
+  public Object deserialize(JsonParser parser, DeserializationContext ctxt) {
+    if (targetType == null) {
+      return ctxt.readValue(parser, Object.class);
+    }
+
+    JsonNode node = ctxt.readTree(parser);
+    Class<?> targetClass = targetType.getRawClass();
+    Class<?> resolvedClass = resolveClass(parser, targetClass, node);
+
+    if (resolvedClass == null) {
+      resolvedClass = targetClass;
+    }
+
+    return readAsBean(ctxt, node, resolvedClass);
+  }
+
+  private Class<?> resolveClass(JsonParser parser, Class<?> targetClass, JsonNode node) {
+    String path = discriminatorPath(targetClass);
+    if (path == null || path.isEmpty()) {
+      return null;
+    }
+
+    Map<String, Class<?>> mappings = discriminatorMappings(targetClass);
+    JsonNode discriminatorNode = readPath(node, path);
+    Class<?> resolvedClass = null;
+
+    if (discriminatorNode != null && discriminatorNode.isTextual() && mappings != null) {
+      resolvedClass = mappings.get(discriminatorNode.asText());
+      if (resolvedClass == null) {
+        resolvedClass = mappings.get("undefined");
+      }
+    }
+
+    if (resolvedClass == null && useBatchErrorFallback(targetClass) && isBatchErrorPayload(node)) {
+      resolvedClass = Errors.class;
+    }
+
+    if (resolvedClass != null && !targetClass.isAssignableFrom(resolvedClass)) {
+      throw DatabindException.from(parser, "Polymorphic discriminator for " + targetClass.getName()
+          + " points to incompatible class " + resolvedClass.getName());
+    }
+
+    return resolvedClass;
+  }
+
+  private boolean useBatchErrorFallback(Class<?> targetClass) {
+    for (Class<?> current = targetClass; current != null && current != Object.class; current = current.getSuperclass()) {
+      OpenApiPolymorphicTypeInfo typeInfo = current.getAnnotation(OpenApiPolymorphicTypeInfo.class);
+      if (typeInfo != null) {
+        return typeInfo.batchErrorFallback();
+      }
+    }
+
+    return false;
+  }
+
+  private boolean isBatchErrorPayload(JsonNode node) {
+    JsonNode errors = node.get("errors");
+    if (errors == null || !errors.isArray() || errors.isEmpty()) {
+      return false;
+    }
+
+    if (errors.isEmpty() || errors.get(0) == null) {
+        return false;
+    }
+    JsonNode title = errors.get(0).get("error");
+    return title != null && title.isTextual();
+  }
+
+  private String discriminatorPath(Class<?> targetClass) {
+    for (Class<?> current = targetClass; current != null && current != Object.class; current = current.getSuperclass()) {
+      OpenApiPolymorphicTypeInfo typeInfo = current.getAnnotation(OpenApiPolymorphicTypeInfo.class);
+      if (typeInfo != null) {
+        return typeInfo.path();
+      }
+    }
+    return null;
+  }
+
+  private Map<String, Class<?>> discriminatorMappings(Class<?> targetClass) {
+    for (Class<?> current = targetClass; current != null && current != Object.class; current = current.getSuperclass()) {
+      OpenApiPolymorphicSubTypes subTypes = current.getAnnotation(OpenApiPolymorphicSubTypes.class);
+      if (subTypes != null) {
+        Map<String, Class<?>> mappings = new LinkedHashMap<>();
+        for (OpenApiPolymorphicSubTypes.Type type : subTypes.value()) {
+          mappings.put(type.name(), type.value());
+        }
+        return mappings;
+      }
+    }
+    return null;
+  }
+
+  private JsonNode readPath(JsonNode node, String path) {
+    JsonNode current = node;
+    for (String segment : normalizePath(path).split("\\.")) {
+      if (segment.isEmpty()) {
+        continue;
+      }
+      current = current.get(segment);
+      if (current == null || current.isMissingNode()) {
+        return null;
+      }
+    }
+    return current;
+  }
+
+  private String normalizePath(String path) {
+    return path.startsWith("/") ? path.substring(1).replace('/', '.') : path;
+  }
+
+  private static JavaType unwrapContainer(JavaType javaType) {
+    JavaType current = javaType;
+    while (current != null) {
+      if ("org.openapitools.jackson.nullable.JsonNullable".equals(current.getRawClass().getName())
+          && current.containedTypeCount() == 1) {
+        current = current.containedType(0);
+        continue;
+      }
+      if ((current.isCollectionLikeType() || current.isArrayType()) && current.containedTypeCount() == 1) {
+        current = current.containedType(0);
+        continue;
+      }
+      break;
+    }
+    return current;
+  }
+
+  private Object readAsBean(DeserializationContext ctxt, JsonNode node, Class<?> beanClass) {
+    ValueDeserializer<Object> deserializer = beanDeserializer(ctxt, beanClass);
+    try (JsonParser nodeParser = node.traverse(ctxt)) {
+      nodeParser.nextToken();
+      return deserializer.deserialize(nodeParser, ctxt);
+    }
+  }
+
+  // The factory bypasses the inherited @JsonDeserialize only for beanClass itself, so nested
+  // polymorphic properties keep using this deserializer.
+  // No computeIfAbsent: resolve() may re-enter while the entry is being built.
+  private ValueDeserializer<Object> beanDeserializer(DeserializationContext ctxt, Class<?> beanClass) {
+    ValueDeserializer<Object> cached = beanDeserializers.get(beanClass);
+    if (cached != null) {
+      return cached;
+    }
+
+    JavaType type = ctxt.constructType(beanClass);
+    DeserializerFactory factory = (DeserializerFactory) ctxt.getAttribute(DESERIALIZER_FACTORY_ATTRIBUTE);
+    if (factory == null) {
+      factory = BeanDeserializerFactory.instance;
+    }
+    ValueDeserializer<Object> deserializer = factory.createBeanDeserializer(
+        ctxt, type, ctxt.lazyIntrospectBeanDescriptionForCreation(type));
+    deserializer.resolve(ctxt);
+    @SuppressWarnings("unchecked")
+    ValueDeserializer<Object> contextual = (ValueDeserializer<Object>) deserializer.createContextual(ctxt, null);
+    ValueDeserializer<Object> existing = beanDeserializers.putIfAbsent(beanClass, contextual);
+    return existing != null ? existing : contextual;
+  }
+}

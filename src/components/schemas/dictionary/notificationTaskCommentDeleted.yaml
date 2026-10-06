@@ -1,0 +1,12 @@
+type: object
+description: Уведомление об удалении комментария к задаче
+x-polymorphic-parent: NotificationAbstract
+properties:
+  noteContent:
+    type: string
+    maxLength: 4096
+    description: Содержимое удаленного комментария
+  performedBy:
+    $ref: '../../../openapi.yaml#/components/schemas/NotificationNamedEntity'
+  task:
+    $ref: '../../../openapi.yaml#/components/schemas/NotificationTask'

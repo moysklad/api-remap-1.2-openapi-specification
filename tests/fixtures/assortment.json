@@ -1,0 +1,41 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/product/35427052-36e7-11e7-8a7f-40d0000000d1",
+    "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/product/metadata",
+    "type": "product",
+    "mediaType": "application/json"
+  },
+  "id": "35427052-36e7-11e7-8a7f-40d0000000d7",
+  "accountId": "103bff1b-36e7-11e7-8a7f-40d000000004",
+  "owner": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/employee/105a788e-36e7-11e7-8a7f-40d000000069",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/employee/metadata",
+      "type": "employee",
+      "mediaType": "application/json"
+    }
+  },
+  "shared": true,
+  "group": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/group/103cca6f-36e7-11e7-8a7f-40d000000005",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/group/metadata",
+      "type": "group",
+      "mediaType": "application/json"
+    }
+  },
+  "updated": "2017-05-12 10:47:11",
+  "name": "product",
+  "code": "00001",
+  "externalCode": "LsAGeHdbgyQ3oSlTzZUvH0",
+  "archived": false,
+  "pathName": "",
+  "useParentVat": false,
+  "vat": 18,
+  "vatEnabled": true,
+  "stock": 0,
+  "reserve": 0,
+  "inTransit": 0,
+  "quantity": 0
+}
+

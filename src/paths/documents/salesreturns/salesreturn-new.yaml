@@ -1,0 +1,27 @@
+put:
+  operationId: getSalesReturnTemplate
+  tags:
+    - SalesReturns
+  summary: Шаблон Возврата покупателя
+  description: |
+    Предзаполненный шаблон Возврата покупателя.
+    Пустое тело возвращает стандартный шаблон, а переданный `demand` позволяет получить шаблон на основе отгрузки.
+  requestBody:
+    required: false
+    content:
+      application/json:
+        schema:
+          type: object
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/SalesReturn'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+  parameters:
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'

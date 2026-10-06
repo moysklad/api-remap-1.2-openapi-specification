@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/assortment/settings",
+    "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/assortment/metadata",
+    "type": "assortmentsettings",
+    "mediaType": "application/json"
+  },
+  "barcodeRules": {
+    "fillEAN13Barcode": true,
+    "weightBarcode": false,
+    "weightBarcodePrefix": 20
+  },
+  "uniqueCodeRules": {
+    "checkUniqueCode": true,
+    "fillUniqueCode": false
+  },
+  "createdShared": true
+}

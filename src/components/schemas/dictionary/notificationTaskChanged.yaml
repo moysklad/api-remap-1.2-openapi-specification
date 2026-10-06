@@ -1,0 +1,10 @@
+type: object
+description: Уведомление об изменении задачи
+x-polymorphic-parent: NotificationAbstract
+properties:
+  diff:
+    $ref: '../../../openapi.yaml#/components/schemas/NotificationTaskDiff'
+  performedBy:
+    $ref: '../../../openapi.yaml#/components/schemas/NotificationNamedEntity'
+  task:
+    $ref: '../../../openapi.yaml#/components/schemas/NotificationTask'

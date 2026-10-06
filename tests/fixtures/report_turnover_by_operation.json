@@ -1,0 +1,55 @@
+{
+  "assortment": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/variant/3e32ef51-c1f1-11eb-c0a8-800c00000003",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/variant/metadata",
+      "type": "variant",
+      "mediaType": "application/json",
+      "uuidHref": "https://online.moysklad.ru/app/#feature/edit?id=3e3278e5-c1f1-11eb-c0a8-800c00000001"
+    },
+    "name": "2 (char)",
+    "uom": {
+      "meta": {
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/uom/af3b8110-5a23-4839-b3f7-a486f771a315",
+        "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/uom/metadata",
+        "type": "uom",
+        "mediaType": "application/json"
+      },
+      "name": "10^6 м3"
+    }
+  },
+  "store": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/store/9238b396-b719-11eb-c0a8-800c00000074",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/store/metadata",
+      "type": "store",
+      "mediaType": "application/json",
+      "uuidHref": "https://online.moysklad.ru/app/#warehouse/edit?id=9238b396-b719-11eb-c0a8-800c00000074"
+    },
+    "name": "Основной склад"
+  },
+  "operation": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/supply/5588e522-c1f1-11eb-c0a8-800c0000000c",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/supply/metadata",
+      "type": "supply",
+      "mediaType": "application/json",
+      "uuidHref": "https://online.moysklad.ru/app/#supply/edit?id=5588e522-c1f1-11eb-c0a8-800c0000000c"
+    },
+    "name": "00002",
+    "moment": "2021-05-31 12:19:00.000",
+    "agent": {
+      "meta": {
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/923916c6-b719-11eb-c0a8-800c00000075",
+        "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/metadata",
+        "type": "counterparty",
+        "mediaType": "application/json",
+        "uuidHref": "https://online.moysklad.ru/app/#company/edit?id=923916c6-b719-11eb-c0a8-800c00000075"
+      },
+      "name": "ООО \"Поставщик\""
+    }
+  },
+  "quantity": 3.0,
+  "cost": 10000.0,
+  "sum": 30000.0
+}
