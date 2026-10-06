@@ -3,7 +3,6 @@ package {{polymorphicPackage}};
 
 import tools.jackson.core.JsonParser;
 import tools.jackson.databind.BeanProperty;
-import tools.jackson.databind.DatabindException;
 import tools.jackson.databind.DeserializationContext;
 import tools.jackson.databind.JavaType;
 import tools.jackson.databind.JsonNode;
@@ -52,16 +51,24 @@ public class PolymorphicMetaTypeDeserializer extends ValueDeserializer<Object> {
 
     JsonNode node = ctxt.readTree(parser);
     Class<?> targetClass = targetType.getRawClass();
-    Class<?> resolvedClass = resolveClass(parser, targetClass, node);
+    Class<?> resolvedClass = resolveClass(targetClass, node);
 
     if (resolvedClass == null) {
       resolvedClass = targetClass;
+    } else if (!targetClass.isAssignableFrom(resolvedClass)) {
+      // A known type that the property cannot hold is skipped: null keeps the property absent on
+      // serialization, and PolymorphicJsonNullableModule turns it into JsonNullable.undefined().
+      return null;
     }
 
     return readAsBean(ctxt, node, resolvedClass);
   }
 
-  private Class<?> resolveClass(JsonParser parser, Class<?> targetClass, JsonNode node) {
+  /**
+   * Returns the class mapped to the discriminator even if it is incompatible with targetClass,
+   * a compatible fallback class, or null when the declared class should be used.
+   */
+  private Class<?> resolveClass(Class<?> targetClass, JsonNode node) {
     String path = discriminatorPath(targetClass);
     if (path == null || path.isEmpty()) {
       return null;
@@ -69,25 +76,24 @@ public class PolymorphicMetaTypeDeserializer extends ValueDeserializer<Object> {
 
     Map<String, Class<?>> mappings = discriminatorMappings(targetClass);
     JsonNode discriminatorNode = readPath(node, path);
-    Class<?> resolvedClass = null;
 
     if (discriminatorNode != null && discriminatorNode.isTextual() && mappings != null) {
-      resolvedClass = mappings.get(discriminatorNode.asText());
-      if (resolvedClass == null) {
-        resolvedClass = mappings.get("undefined");
+      Class<?> mappedClass = mappings.get(discriminatorNode.asText());
+      if (mappedClass != null) {
+        return mappedClass;
+      }
+      Class<?> undefinedClass = mappings.get("undefined");
+      if (undefinedClass != null && targetClass.isAssignableFrom(undefinedClass)) {
+        return undefinedClass;
       }
     }
 
-    if (resolvedClass == null && useBatchErrorFallback(targetClass) && isBatchErrorPayload(node)) {
-      resolvedClass = Errors.class;
+    if (useBatchErrorFallback(targetClass) && targetClass.isAssignableFrom(Errors.class)
+        && isBatchErrorPayload(node)) {
+      return Errors.class;
     }
 
-    if (resolvedClass != null && !targetClass.isAssignableFrom(resolvedClass)) {
-      throw DatabindException.from(parser, "Polymorphic discriminator for " + targetClass.getName()
-          + " points to incompatible class " + resolvedClass.getName());
-    }
-
-    return resolvedClass;
+    return null;
   }
 
   private boolean useBatchErrorFallback(Class<?> targetClass) {

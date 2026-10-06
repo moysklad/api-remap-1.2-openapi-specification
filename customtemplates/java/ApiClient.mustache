@@ -74,6 +74,9 @@ import java.text.DateFormat;
 import {{invokerPackage}}.auth.Authentication;
 import {{modelPackage}}.BatchResponseEntity;
 import {{modelPackage}}.Errors;
+{{#openApiNullable}}
+import {{polymorphicPackage}}.PolymorphicJsonNullableModule;
+{{/openApiNullable}}
 import {{polymorphicPackage}}.PolymorphicMetaTypeDeserializer;
 {{#hasHttpBasicMethods}}
 import {{invokerPackage}}.auth.HttpBasicAuth;
@@ -218,6 +221,10 @@ public class ApiClient{{#jsr310}} extends JavaTimeFormatter{{/jsr310}} {
 
   private static ObjectMapper attachDeserializerFactory(ObjectMapper mapper) {
     MapperBuilder<?, ?> builder = mapper.rebuild();
+    {{#openApiNullable}}
+    // Re-adding moves the module last, so it overrides JsonNullableJackson3Module even in user mappers.
+    builder.addModule(new PolymorphicJsonNullableModule());
+    {{/openApiNullable}}
     // Apply modules before capturing the factory, and preserve the mapper's context attributes.
     builder.saveStateApplyModules();
     return builder.defaultAttributes(builder.defaultAttributes().withSharedAttribute(
