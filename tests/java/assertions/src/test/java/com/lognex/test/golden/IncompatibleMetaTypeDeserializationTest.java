@@ -12,6 +12,8 @@ import ru.moysklad.remap_1_2.model.Counterparty;
 import ru.moysklad.remap_1_2.model.CustomerOrder;
 import ru.moysklad.remap_1_2.model.Employee;
 import ru.moysklad.remap_1_2.model.EmployeeList;
+import ru.moysklad.remap_1_2.model.SalesReturn;
+import ru.moysklad.remap_1_2.model.SalesReturnPosition;
 import tools.jackson.core.JacksonException;
 import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.ObjectMapper;
@@ -75,17 +77,17 @@ class IncompatibleMetaTypeDeserializationTest extends BaseTestCase {
     }
 
     @Test
-    void unknownMetaTypeFallsBackToDeclaredClass() throws Exception {
-        CustomerOrder order = MAPPER.readValue(
-                "{\"owner\":{\"meta\":{\"type\":\"futuretype\"},\"name\":\"Будущий тип\"}}", CustomerOrder.class);
+    void unmappedMetaTypeKeepsDeclaredClassFallback() throws Exception {
+        SalesReturn salesReturn = MAPPER.readValue(
+                "{\"positions\":{\"rows\":[{\"meta\":{\"type\":\"salesreturnposition\"}}]}}", SalesReturn.class);
 
-        Employee owner = Assertions.assertInstanceOf(Employee.class, order.getOwner());
-        Assertions.assertEquals("futuretype", owner.getMeta().getType());
-        Assertions.assertEquals("Будущий тип", owner.getName());
+        SalesReturnPosition position = Assertions.assertInstanceOf(
+                SalesReturnPosition.class, salesReturn.getPositions().getRows().get(0));
+        Assertions.assertEquals("salesreturnposition", position.getMeta().getType());
     }
 
     @Test
-    void missingDiscriminatorFallsBackToDeclaredClass() throws Exception {
+    void missingMetaTypeKeepsDeclaredClassFallback() throws Exception {
         CustomerOrder order = MAPPER.readValue("{\"owner\":{\"name\":\"Без meta\"}}", CustomerOrder.class);
 
         Employee owner = Assertions.assertInstanceOf(Employee.class, order.getOwner());
