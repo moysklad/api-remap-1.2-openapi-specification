@@ -29,7 +29,6 @@ import ru.moysklad.remap_1_2.model.Errors;
 import ru.moysklad.remap_1_2.model.Product;
 import ru.moysklad.remap_1_2.model.Organization;
 import ru.moysklad.remap_1_2.model.Task;
-import ru.moysklad.remap_1_2.model.UnknownEntity;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -69,12 +68,13 @@ class NestedPolymorphicDeserializationTest extends BaseTestCase {
     }
 
     @Test
-    void productAttributeWithUnknownMetaTypeFallsBackToUnknownEntity() throws Exception {
+    void productAttributeWithUnknownMetaTypeFallsBackToEntityWithMeta() throws Exception {
         Product product = MAPPER.readValue(fixture("product_attribute_product_expanded.json"), Product.class);
 
-        UnknownEntity value = Assertions.assertInstanceOf(UnknownEntity.class, productAttributeValue(product, 2));
+        EntityWithMeta value = productAttributeValue(product, 2);
+        Assertions.assertNotNull(value);
+        Assertions.assertEquals(EntityWithMeta.class, value.getClass());
         Assertions.assertEquals("futuretype", value.getMeta().getType());
-        Assertions.assertEquals("Будущая сущность", value.getProperties().get("name"));
     }
 
     @Test

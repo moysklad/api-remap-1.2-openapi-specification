@@ -10,7 +10,6 @@ import tools.jackson.databind.ValueDeserializer;
 import tools.jackson.databind.deser.BeanDeserializerFactory;
 import tools.jackson.databind.deser.DeserializerFactory;
 import {{modelPackage}}.Errors;
-import {{modelPackage}}.UnknownEntity;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -91,12 +90,13 @@ public class PolymorphicMetaTypeDeserializer extends ValueDeserializer<Object> {
   private Class<?> unknownTypeClass(Class<?> targetClass, Map<String, Class<?>> mappings) {
     boolean polymorphicParent = mappings.values().stream()
         .anyMatch(mapped -> mapped != targetClass && targetClass.isAssignableFrom(mapped));
-    if (polymorphicParent) {
-      return targetClass.isAssignableFrom(UnknownEntity.class) ? UnknownEntity.class : targetClass;
-    }
-    // The declared class has its own mapped type, so an unknown type is a different entity.
+    // A polymorphic parent keeps only its own fields, so client code stays valid once the type
+    // gets its own subclass. A declared class with its own mapped type cannot hold another entity.
     // Otherwise mappings miss the declared class's type and the value may still be of that class.
-    return mappings.containsValue(targetClass) ? null : targetClass;
+    if (polymorphicParent || !mappings.containsValue(targetClass)) {
+      return targetClass;
+    }
+    return null;
   }
 
   private boolean useBatchErrorFallback(Class<?> targetClass) {

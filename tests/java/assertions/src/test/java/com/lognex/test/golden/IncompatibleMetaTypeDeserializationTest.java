@@ -8,6 +8,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.openapitools.jackson.nullable.JsonNullableJackson3Module;
 import ru.moysklad.remap_1_2.ApiClient;
+import ru.moysklad.remap_1_2.model.Agent;
 import ru.moysklad.remap_1_2.model.BatchResponseEntity;
 import ru.moysklad.remap_1_2.model.Counterparty;
 import ru.moysklad.remap_1_2.model.CustomerOrder;
@@ -16,7 +17,6 @@ import ru.moysklad.remap_1_2.model.EmployeeList;
 import ru.moysklad.remap_1_2.model.Product;
 import ru.moysklad.remap_1_2.model.SalesReturn;
 import ru.moysklad.remap_1_2.model.SalesReturnPosition;
-import ru.moysklad.remap_1_2.model.UnknownEntity;
 import tools.jackson.core.JacksonException;
 import tools.jackson.core.type.TypeReference;
 import tools.jackson.databind.JsonNode;
@@ -93,15 +93,26 @@ class IncompatibleMetaTypeDeserializationTest extends BaseTestCase {
     }
 
     @Test
-    void unknownMetaTypeInParentTypedCollectionIsUnknownEntity() throws Exception {
-        String unknown = "{\"meta\":{\"type\":\"application\"},\"name\":\"Решение\",\"appUid\":\"app-1\"}";
-        List<BatchResponseEntity> rows = MAPPER.readValue(
-                "[{\"meta\":{\"type\":\"product\"}}," + unknown + "]", new TypeReference<List<BatchResponseEntity>>() {});
+    void unknownMetaTypeInParentTypedCollectionKeepsMeta() throws Exception {
+        List<BatchResponseEntity> rows = MAPPER.readValue("[{\"meta\":{\"type\":\"product\"}},"
+                + "{\"meta\":{\"type\":\"application\"},\"name\":\"Решение\"}]",
+                new TypeReference<List<BatchResponseEntity>>() {});
 
         Assertions.assertInstanceOf(Product.class, rows.get(0));
-        UnknownEntity entity = Assertions.assertInstanceOf(UnknownEntity.class, rows.get(1));
-        Assertions.assertEquals("application", entity.getMeta().getType());
-        Assertions.assertEquals(MAPPER.readTree(unknown), MAPPER.readTree(MAPPER.writeValueAsString(entity)));
+        Assertions.assertEquals(BatchResponseEntity.class, rows.get(1).getClass());
+        Assertions.assertEquals("application", rows.get(1).getMeta().getType());
+    }
+
+    @Test
+    void unknownMetaTypeInAgentKeepsMetaOnSerialization() throws Exception {
+        CustomerOrder order = MAPPER.readValue("{\"agent\":{\"meta\":{\"href\":\"https://api.moysklad.ru/api/remap/1.2/"
+                + "entity/application/1\",\"type\":\"application\"},\"name\":\"Решение\"}}", CustomerOrder.class);
+
+        Assertions.assertEquals(Agent.class, order.getAgent().getClass());
+        JsonNode json = MAPPER.readTree(MAPPER.writeValueAsString(order));
+        Assertions.assertEquals("application", json.at("/agent/meta/type").asText());
+        Assertions.assertTrue(json.at("/agent/meta/href").asText().endsWith("/entity/application/1"));
+        Assertions.assertFalse(json.get("agent").has("name"), json.toString());
     }
 
     @Test
