@@ -10,6 +10,7 @@ import tools.jackson.databind.ValueDeserializer;
 import tools.jackson.databind.deser.BeanDeserializerFactory;
 import tools.jackson.databind.deser.DeserializerFactory;
 import {{modelPackage}}.Errors;
+import {{modelPackage}}.UnknownEntity;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -47,9 +48,7 @@ public class PolymorphicMetaTypeDeserializer extends ValueDeserializer<Object> {
     Class<?> resolvedClass = resolveClass(targetClass, node);
 
     if (resolvedClass == null) {
-      resolvedClass = targetClass;
-    } else if (!targetClass.isAssignableFrom(resolvedClass)) {
-      // A known type that the property cannot hold is skipped: null keeps the property absent on
+      // A type that the property cannot hold is skipped: null keeps the property absent on
       // serialization, and PolymorphicJsonNullableModule turns it into JsonNullable.undefined().
       return null;
     }
@@ -58,22 +57,22 @@ public class PolymorphicMetaTypeDeserializer extends ValueDeserializer<Object> {
   }
 
   /**
-   * Returns the class mapped to the discriminator even if it is incompatible with targetClass,
-   * a compatible fallback class, or null when the declared class should be used.
+   * Returns the class to read the node as, or null when the property cannot hold the value.
    */
   private Class<?> resolveClass(Class<?> targetClass, JsonNode node) {
     String path = discriminatorPath(targetClass);
     if (path == null || path.isEmpty()) {
-      return null;
+      return targetClass;
     }
 
     Map<String, Class<?>> mappings = discriminatorMappings(targetClass);
     JsonNode discriminatorNode = readPath(node, path);
+    boolean hasDiscriminator = discriminatorNode != null && discriminatorNode.isTextual() && mappings != null;
 
-    if (discriminatorNode != null && discriminatorNode.isTextual() && mappings != null) {
+    if (hasDiscriminator) {
       Class<?> mappedClass = mappings.get(discriminatorNode.asText());
       if (mappedClass != null) {
-        return mappedClass;
+        return targetClass.isAssignableFrom(mappedClass) ? mappedClass : null;
       }
       Class<?> undefinedClass = mappings.get("undefined");
       if (undefinedClass != null && targetClass.isAssignableFrom(undefinedClass)) {
@@ -86,7 +85,18 @@ public class PolymorphicMetaTypeDeserializer extends ValueDeserializer<Object> {
       return Errors.class;
     }
 
-    return null;
+    return hasDiscriminator ? unknownTypeClass(targetClass, mappings) : targetClass;
+  }
+
+  private Class<?> unknownTypeClass(Class<?> targetClass, Map<String, Class<?>> mappings) {
+    boolean polymorphicParent = mappings.values().stream()
+        .anyMatch(mapped -> mapped != targetClass && targetClass.isAssignableFrom(mapped));
+    if (polymorphicParent) {
+      return targetClass.isAssignableFrom(UnknownEntity.class) ? UnknownEntity.class : targetClass;
+    }
+    // The declared class has its own mapped type, so an unknown type is a different entity.
+    // Otherwise mappings miss the declared class's type and the value may still be of that class.
+    return mappings.containsValue(targetClass) ? null : targetClass;
   }
 
   private boolean useBatchErrorFallback(Class<?> targetClass) {

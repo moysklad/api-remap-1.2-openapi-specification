@@ -36,6 +36,9 @@ files:
   PolymorphicJsonNullableModule.mustache:
     templateType: SupportingFiles
     destinationFilename: src/main/java/ru/moysklad/remap_1_2/deserialize/PolymorphicJsonNullableModule.java
+  UnknownEntity.mustache:
+    templateType: SupportingFiles
+    destinationFilename: src/main/java/ru/moysklad/remap_1_2/model/UnknownEntity.java
   MetaEntity.mustache:
     templateType: SupportingFiles
     destinationFilename: src/main/java/ru/moysklad/remap_1_2/model/MetaEntity.java

@@ -8,13 +8,17 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.openapitools.jackson.nullable.JsonNullableJackson3Module;
 import ru.moysklad.remap_1_2.ApiClient;
+import ru.moysklad.remap_1_2.model.BatchResponseEntity;
 import ru.moysklad.remap_1_2.model.Counterparty;
 import ru.moysklad.remap_1_2.model.CustomerOrder;
 import ru.moysklad.remap_1_2.model.Employee;
 import ru.moysklad.remap_1_2.model.EmployeeList;
+import ru.moysklad.remap_1_2.model.Product;
 import ru.moysklad.remap_1_2.model.SalesReturn;
 import ru.moysklad.remap_1_2.model.SalesReturnPosition;
+import ru.moysklad.remap_1_2.model.UnknownEntity;
 import tools.jackson.core.JacksonException;
+import tools.jackson.core.type.TypeReference;
 import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.ObjectMapper;
 import tools.jackson.databind.json.JsonMapper;
@@ -24,6 +28,7 @@ import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 
 /**
  * Известный meta.type, несовместимый с объявленным типом поля, не должен ломать десериализацию:
@@ -74,6 +79,29 @@ class IncompatibleMetaTypeDeserializationTest extends BaseTestCase {
         Assertions.assertEquals("Владелец", owner.getName());
         JsonNode json = MAPPER.readTree(MAPPER.writeValueAsString(order));
         Assertions.assertEquals("employee", json.at("/owner/meta/type").asText());
+    }
+
+    @Test
+    void unknownMetaTypeInFieldWithKnownTypeIsSkipped() throws Exception {
+        CustomerOrder order = MAPPER.readValue("{\"name\":\"00018\",\"owner\":{\"meta\":{\"type\":\"application\"},"
+                + "\"name\":\"Решение\",\"salary\":100}}", CustomerOrder.class);
+
+        Assertions.assertNull(order.getOwner());
+        Assertions.assertFalse(order.getOwner_JsonNullable().isPresent());
+        JsonNode json = MAPPER.readTree(MAPPER.writeValueAsString(order));
+        Assertions.assertFalse(json.has("owner"), json.toString());
+    }
+
+    @Test
+    void unknownMetaTypeInParentTypedCollectionIsUnknownEntity() throws Exception {
+        String unknown = "{\"meta\":{\"type\":\"application\"},\"name\":\"Решение\",\"appUid\":\"app-1\"}";
+        List<BatchResponseEntity> rows = MAPPER.readValue(
+                "[{\"meta\":{\"type\":\"product\"}}," + unknown + "]", new TypeReference<List<BatchResponseEntity>>() {});
+
+        Assertions.assertInstanceOf(Product.class, rows.get(0));
+        UnknownEntity entity = Assertions.assertInstanceOf(UnknownEntity.class, rows.get(1));
+        Assertions.assertEquals("application", entity.getMeta().getType());
+        Assertions.assertEquals(MAPPER.readTree(unknown), MAPPER.readTree(MAPPER.writeValueAsString(entity)));
     }
 
     @Test

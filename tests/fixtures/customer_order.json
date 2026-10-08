@@ -281,8 +281,8 @@
   "demands": [
     {
       "meta": {
-        "href": "https://api.moysklad.ru/api/remap/1.2/entity/demands/f4a5b6c7-1234-1234-1234-f4a5b6c7d8e9",
-        "type": "demands",
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/demand/f4a5b6c7-1234-1234-1234-f4a5b6c7d8e9",
+        "type": "demand",
         "mediaType": "application/json"
       }
     }
