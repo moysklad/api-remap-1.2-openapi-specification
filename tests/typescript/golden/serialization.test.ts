@@ -153,6 +153,9 @@ const FIXTURE_MODEL_MAP: Readonly<Record<string, string>> = {
     finance_out_operation_purchase_order: 'FinanceOutOperationPurchaseOrder',
     finance_out_operation_sales_return: 'FinanceOutOperationSalesReturn',
     finance_out_operation_supply: 'FinanceOutOperationSupply',
+    finance_out_operation_payroll: 'FinanceOutOperationPayroll',
+    payroll_payment_payment_out: 'PayrollPaymentPaymentOut',
+    payroll_payment_cash_out: 'PayrollPaymentCashOut',
     payroll: 'Payroll',
     payment_in: 'PaymentIn',
     payment_out: 'PaymentOut',
@@ -263,3 +266,19 @@ for (const [fixtureName, modelName] of Object.entries(FIXTURE_MODEL_MAP)) {
         );
     });
 }
+
+test('Payroll payments: типы и суммы читаются, readOnly-связи не отправляются', () => {
+    const fixture = loadFixture('payroll');
+    const model = asObject(getFromJson(sdk, 'Payroll')(fixture), 'Payroll не создан');
+    assert.ok(Array.isArray(model['payments']));
+    assert.deepEqual(
+        model['payments'].map((value: unknown) => {
+            const payment = asObject(value, 'Платеж не создан');
+            const meta = asObject(payment['meta'], 'Нет метаданных платежа');
+            return [meta['type'], payment['linkedSum']];
+        }),
+        [['paymentout', 30000], ['cashout', 30000]],
+    );
+    const serialized = asObject(getToJson(sdk, 'Payroll')(model), 'Payroll не сериализован');
+    assert.equal('payments' in serialized, false);
+});

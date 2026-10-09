@@ -73,5 +73,25 @@
         }
     },
     "startPayrollPeriod": "2026-03-03 00:00:00.000",
-    "endPayrollPeriod": "2026-03-04 23:59:59.000"
+    "endPayrollPeriod": "2026-03-04 23:59:59.000",
+    "payments": [
+        {
+            "meta": {
+                "href": "https://api.moysklad.ru/api/remap/1.2/entity/paymentout/abe08a4a-1dfe-11f1-0a80-0c2500000001",
+                "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/paymentout/metadata",
+                "type": "paymentout",
+                "mediaType": "application/json"
+            },
+            "linkedSum": 30000.0
+        },
+        {
+            "meta": {
+                "href": "https://api.moysklad.ru/api/remap/1.2/entity/cashout/c238d5de-1dfe-11f1-0a80-0c2500000002",
+                "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/cashout/metadata",
+                "type": "cashout",
+                "mediaType": "application/json"
+            },
+            "linkedSum": 30000.0
+        }
+    ]
 }

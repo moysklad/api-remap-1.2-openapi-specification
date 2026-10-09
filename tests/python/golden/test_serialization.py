@@ -109,6 +109,9 @@ FIXTURE_MODEL_MAP = {
     "finance_out_operation_purchase_order": "FinanceOutOperationPurchaseOrder",
     "finance_out_operation_sales_return": "FinanceOutOperationSalesReturn",
     "finance_out_operation_supply": "FinanceOutOperationSupply",
+    "finance_out_operation_payroll": "FinanceOutOperationPayroll",
+    "payroll_payment_payment_out": "PayrollPaymentPaymentOut",
+    "payroll_payment_cash_out": "PayrollPaymentCashOut",
     "payroll": "Payroll",
     "payment_in": "PaymentIn",
     "payment_out": "PaymentOut",
@@ -301,3 +304,24 @@ def test_batch_error_fallback_requires_error_markers() -> None:
     }
     model = model_class("BatchResponseEntity").from_dict(data)
     assert type(model) is model_class("BatchResponseEntity")
+
+
+@pytest.mark.parametrize("fixture_name", ["payment_out", "cash_out"])
+def test_payroll_operation_resolves_typed_model(fixture_name: str) -> None:
+    original = json.loads((FIXTURES / f"{fixture_name}.json").read_text())
+    model = model_class(FIXTURE_MODEL_MAP[fixture_name]).from_dict(original)
+    operation = next(item for item in model.operations if item.meta.type == "payroll")
+    assert isinstance(operation, model_class("FinanceOutOperationPayroll"))
+    assert operation.linked_sum == 30000
+    assert operation.start_payroll_period == "2026-03-03 00:00:00.000"
+
+
+def test_payroll_payments_resolve_typed_models() -> None:
+    original = json.loads((FIXTURES / "payroll.json").read_text())
+    model = model_class("Payroll").from_dict(original)
+    assert len(model.payments) == 2
+    for payment, expected in zip(
+        model.payments, ["PayrollPaymentPaymentOut", "PayrollPaymentCashOut"]
+    ):
+        assert isinstance(payment, model_class(expected))
+        assert payment.linked_sum == 30000
