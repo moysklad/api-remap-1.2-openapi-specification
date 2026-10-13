@@ -1,0 +1,13 @@
+type: object
+description: |
+  Тело HTTP POST, которое МойСклад отправляет на url вебхука при событии.
+  Параметр query requestId идентифицирует уведомление (сохраняется при повторных попытках).
+properties:
+  auditContext:
+    description: Контекст аудита, соответствующий событию
+    $ref: '../../../openapi.yaml#/components/schemas/WebhookAuditContext'
+  events:
+    type: array
+    description: Данные о событии или нескольких событиях
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/WebhookEvent'

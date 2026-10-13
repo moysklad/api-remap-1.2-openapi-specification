@@ -1,0 +1,70 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/product/7944ef04-f831-11e5-7a69-971500188b19",
+    "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/product/metadata",
+    "type": "product",
+    "mediaType": "application/json"
+  },
+  "id": "7944ef04-f831-11e5-7a69-971500188b19",
+  "name": "Товар с атрибутами-ссылками",
+  "attributes": [
+    {
+      "meta": {
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/product/metadata/attributes/0c3a4b2e-9a8f-11e8-9107-5048000c1a01",
+        "type": "attributemetadata",
+        "mediaType": "application/json"
+      },
+      "id": "0c3a4b2e-9a8f-11e8-9107-5048000c1a01",
+      "name": "Связанный товар",
+      "type": "product",
+      "value": {
+        "meta": {
+          "href": "https://api.moysklad.ru/api/remap/1.2/entity/product/2b4f5a68-9a8f-11e8-9107-5048000c1b02",
+          "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/product/metadata",
+          "type": "product",
+          "mediaType": "application/json"
+        },
+        "id": "2b4f5a68-9a8f-11e8-9107-5048000c1b02",
+        "name": "Связанный товар (expand)",
+        "code": "00042",
+        "archived": false
+      }
+    },
+    {
+      "meta": {
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/product/metadata/attributes/0c3a4b2e-9a8f-11e8-9107-5048000c1a02",
+        "type": "attributemetadata",
+        "mediaType": "application/json"
+      },
+      "id": "0c3a4b2e-9a8f-11e8-9107-5048000c1a02",
+      "name": "Товар без expand",
+      "type": "product",
+      "value": {
+        "meta": {
+          "href": "https://api.moysklad.ru/api/remap/1.2/entity/product/2b4f5a68-9a8f-11e8-9107-5048000c1b03",
+          "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/product/metadata",
+          "type": "product",
+          "mediaType": "application/json"
+        }
+      }
+    },
+    {
+      "meta": {
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/product/metadata/attributes/0c3a4b2e-9a8f-11e8-9107-5048000c1a03",
+        "type": "attributemetadata",
+        "mediaType": "application/json"
+      },
+      "id": "0c3a4b2e-9a8f-11e8-9107-5048000c1a03",
+      "name": "Неизвестный тип",
+      "type": "product",
+      "value": {
+        "meta": {
+          "href": "https://api.moysklad.ru/api/remap/1.2/entity/futuretype/2b4f5a68-9a8f-11e8-9107-5048000c1b04",
+          "type": "futuretype",
+          "mediaType": "application/json"
+        },
+        "name": "Будущая сущность"
+      }
+    }
+  ]
+}

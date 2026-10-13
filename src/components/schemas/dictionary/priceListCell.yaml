@@ -1,0 +1,11 @@
+type: object
+description: Ячейка позиции Прайс-листа
+properties:
+  column:
+    type: string
+    maxLength: 255
+    description: Название столбца, к которому относится данная ячейка
+  sum:
+    type: integer
+    format: int64
+    description: Числовое значение ячейки

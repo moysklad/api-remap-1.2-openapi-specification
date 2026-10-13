@@ -1,0 +1,29 @@
+{
+  "context": {
+    "employee": {
+      "meta": {
+        "href": "https://api.moysklad.ru/api/remap/1.2/context/employee",
+        "metadataHref": "https://api.moysklad.ru/api/remap/1.2/employee/metadata",
+        "type": "employee",
+        "mediaType": "application/json"
+      }
+    }
+  },
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/report/orders/plotseries?momentFrom=2018-09-06%2000:00:00&momentTo=2018-09-06%2001:00:01&interval=hour",
+    "type": "ordersplotseries",
+    "mediaType": "application/json"
+  },
+  "series": [
+    {
+      "date": "2018-09-06 00:00:00",
+      "quantity": 3,
+      "sum": 600
+    },
+    {
+      "date": "2018-09-06 01:00:00",
+      "quantity": 2,
+      "sum": 200
+    }
+  ]
+}

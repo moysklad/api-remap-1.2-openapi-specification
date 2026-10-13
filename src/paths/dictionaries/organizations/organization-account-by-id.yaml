@@ -1,0 +1,85 @@
+get:
+  operationId: getOrganizationAccountById
+  tags:
+    - Organizations
+  summary: Получить счёт юрлица по ID
+  description: Запрос на получение отдельного счета юрлица
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - name: accountId
+      in: path
+      required: true
+      description: ID счёта юрлица
+      schema:
+        type: string
+        format: uuid
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/Account'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+put:
+  operationId: updateOrganizationAccount
+  tags:
+    - Organizations
+  summary: Обновить счёт юрлица
+  description: Обновление отдельного счета юрлица с указанным id
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - name: accountId
+      in: path
+      required: true
+      description: ID счёта юрлица
+      schema:
+        type: string
+        format: uuid
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../openapi.yaml#/components/schemas/Account'
+  responses:
+    '200':
+      description: Счёт успешно обновлён
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/Account'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+delete:
+  operationId: deleteOrganizationAccount
+  tags:
+    - Organizations
+  summary: Удалить счёт юрлица
+  description: Запрос на удаление счета юрлица с указанным id.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - name: accountId
+      in: path
+      required: true
+      description: ID счёта юрлица
+      schema:
+        type: string
+        format: uuid
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

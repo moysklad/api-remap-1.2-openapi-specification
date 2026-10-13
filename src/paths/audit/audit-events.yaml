@@ -1,0 +1,27 @@
+get:
+  operationId: getAuditContextEvents
+  tags:
+    - Audit
+  summary: Получить события по контексту аудита
+  description: Возвращает список событий аудита для указанного контекста.
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: ID контекста аудита
+      schema:
+        type: string
+        format: uuid
+    - $ref: '../../components/parameters.yaml#/limit'
+    - $ref: '../../components/parameters.yaml#/offset'
+    - $ref: '../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос. JSON представление списка событий аудита
+      content:
+        application/json:
+          schema:
+            $ref: '../../openapi.yaml#/components/schemas/AuditEventList'
+    default:
+      $ref: '../../components/responses.yaml#/CommonError'

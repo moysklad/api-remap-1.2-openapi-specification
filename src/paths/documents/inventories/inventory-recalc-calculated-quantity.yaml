@@ -1,0 +1,15 @@
+put:
+  operationId: recalculateInventoryCalculatedQuantity
+  tags:
+    - Inventories
+  summary: Пересчитать расчетный остаток в Инвентаризации
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  responses:
+    '201':
+      description: Успешный запрос
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

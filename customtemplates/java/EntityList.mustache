@@ -1,0 +1,14 @@
+{{>licenseInfo}}
+package {{modelPackage}};
+
+import java.util.List;
+
+/**
+ * Interface for entity list.
+ */
+public interface EntityList {
+
+    Context getContext();
+    <T> List<T> getRows();
+    MetaList getMeta();
+}

@@ -1,0 +1,34 @@
+type: object
+description: Настройки ассортимента
+properties:
+  meta:
+    $ref: '../common/meta.yaml'
+    description: Метаданные Настроек ассортимента
+  barcodeRules:
+    type: object
+    description: Настройки правил штрихкодов для сущностей ассортимента
+    properties:
+      fillEAN13Barcode:
+        type: boolean
+        description: Автоматически создавать штрихкод EAN13
+      weightBarcode:
+        type: boolean
+        description: Использовать префиксы штрихкодов для весовых товаров
+      weightBarcodePrefix:
+        type: integer
+        format: int32
+        description: Префикс штрихкодов для весовых товаров
+  uniqueCodeRules:
+    type: object
+    description: Настройки уникальности кода для сущностей ассортимента
+    properties:
+      checkUniqueCode:
+        type: boolean
+        description: Проверка уникальности кода сущностей ассортимента
+      fillUniqueCode:
+        type: boolean
+        description: Устанавливать уникальный код при создании сущностей ассортимента
+  createdShared:
+    type: boolean
+    description: Создавать новые элементы с меткой "Общий"
+

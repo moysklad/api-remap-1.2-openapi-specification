@@ -1,0 +1,11 @@
+type: object
+description: Метаданные Настроек компании (companysettings/metadata)
+properties:
+  meta:
+    description: Метаданные Настроек компании
+    $ref: '../common/meta.yaml'
+  customEntities:
+    type: array
+    description: Список пользовательских справочников
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/CustomEntityMetadata'

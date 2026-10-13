@@ -1,0 +1,18 @@
+type: object
+description: |
+  Строка отчета «Остатки по складам».
+
+  Тип номенклатуры в строке задается `meta.type` (product, variant или consignment).
+  Параметр запроса `groupBy` определяет набор возможных типов в выдаче:
+  `product` — только товары; `variant` — товары и модификации;
+  `consignment` — товары, модификации и партии.
+properties:
+  meta:
+    description: Метаданные позиции, по которой выдается остаток
+    $ref: '../common/meta.yaml'
+  stockByStore:
+    type: array
+    description: |
+      Остатки по складам. Размерность массива равна количеству складов в системе.
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/StockByStoreItem'

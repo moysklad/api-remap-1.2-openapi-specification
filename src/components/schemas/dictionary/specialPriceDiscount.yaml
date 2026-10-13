@@ -1,0 +1,48 @@
+type: object
+x-polymorphic-parent: DiscountAbstract
+description: Специальная цена (specialpricediscount)
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "specialpricediscount"
+    - param: "id"
+  type: "specialpricediscount"
+properties:
+  id:
+    type: string
+    format: uuid
+    description: ID дополнительного поля
+    readOnly: true
+  meta:
+    description: Метаданные скидки
+    $ref: '../common/meta.yaml'
+  productFolders:
+    type: array
+    description: Группы товаров со скидкой
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/ProductFolder'
+  usePriceType:
+    type: boolean
+    description: Использовать ли специальную цену
+  discount:
+    type: number
+    format: double
+    nullable: true
+    description: Процент скидки (используется при usePriceType=false)
+  specialPrice:
+    type: object
+    nullable: true
+    description: Спец. цена (используется при usePriceType=true)
+    properties:
+      value:
+        type: number
+        format: double
+        description: Значение цены
+      meta:
+        description: Метаданные цены
+        $ref: '../common/meta.yaml'
+      priceType:
+        $ref: '../../../openapi.yaml#/components/schemas/PriceType'
+

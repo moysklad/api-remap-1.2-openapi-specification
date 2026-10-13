@@ -1,0 +1,37 @@
+type: object
+description: Адрес
+properties:
+  addInfo:
+    type: string
+    maxLength: 255
+    description: Другое
+  apartment:
+    type: string
+    maxLength: 30
+    description: Квартира
+  city:
+    type: string
+    maxLength: 255
+    description: Город
+  comment:
+    type: string
+    maxLength: 255
+    description: Комментарий
+  country:
+    description: Метаданные Страны
+    $ref: '../../../openapi.yaml#/components/schemas/Country'
+  house:
+    type: string
+    maxLength: 30
+    description: Дом
+  postalCode:
+    type: string
+    maxLength: 6
+    description: Почтовый индекс
+  region:
+    description: Метаданные региона
+    $ref: '../../../openapi.yaml#/components/schemas/Region'
+  street:
+    type: string
+    maxLength: 255
+    description: Улица

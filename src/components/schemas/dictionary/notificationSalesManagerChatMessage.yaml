@@ -1,0 +1,4 @@
+allOf:
+  - $ref: './notificationAbstract.yaml'
+description: Уведомление о новом сообщении от менеджера отдела продаж
+x-polymorphic-parent: NotificationAbstract

@@ -1,0 +1,7 @@
+type: string
+description: Действие, которое отслеживается вебхуком или действие в уведомлении
+enum:
+  - CREATE
+  - UPDATE
+  - DELETE
+  - PROCESSED

@@ -1,0 +1,38 @@
+{{>licenseInfo}}
+package {{apiPackage}};
+
+/**
+ * Optional parameters for endpoints that support pagination.
+ */
+public class PageOptions extends RequestOptions {
+  protected PageOptions(Builder<?> builder) {
+    super(builder);
+  }
+
+  public static Builder<?> builder() {
+    return new Builder<>();
+  }
+
+  public static PageOptions limit(Integer limit) {
+    return builder().limit(limit).build();
+  }
+
+  public static PageOptions offset(Integer offset) {
+    return builder().offset(offset).build();
+  }
+
+  public static class Builder<T extends Builder<T>> extends RequestOptions.Builder<T> {
+    public T limit(Integer limit) {
+      return queryParam("limit", limit);
+    }
+
+    public T offset(Integer offset) {
+      return queryParam("offset", offset);
+    }
+
+    @Override
+    public PageOptions build() {
+      return new PageOptions(this);
+    }
+  }
+}
