@@ -14,6 +14,8 @@ BatchResponseEntity:
     path: meta.type
     batchErrorFallback: true
     mappings: &entityWithMetaPolymorphicMappings
+      - type: account
+        componentName: Account
       - type: bundle
         componentName: Bundle
       - type: bundlecomponent
@@ -34,6 +36,8 @@ BatchResponseEntity:
         componentName: CommissionReportOutPosition
       - type: consignment
         componentName: Consignment
+      - type: contactperson
+        componentName: ContactPerson
       - type: contract
         componentName: Contract
       - type: counterparty
@@ -76,10 +80,14 @@ BatchResponseEntity:
         componentName: Loss
       - type: lossposition
         componentName: LossPosition
+      - type: minimumstock
+        componentName: StoreBalance
       - type: move
         componentName: Move
       - type: moveposition
         componentName: MovePosition
+      - type: note
+        componentName: Note
       - type: organization
         componentName: Organization
       - type: paymentin
@@ -108,6 +116,14 @@ BatchResponseEntity:
         componentName: ProcessingPlan
       - type: processingplanfolder
         componentName: ProcessingPlanFolder
+      - type: processingplanmaterial
+        componentName: ProcessingPlanMaterial
+      - type: processingplanresult
+        componentName: ProcessingPlanProduct
+      - type: processingpositionmaterial
+        componentName: ProcessingMaterial
+      - type: processingpositionresult
+        componentName: ProcessingProduct
       - type: processingprocess
         componentName: ProcessingProcess
       - type: processingprocessposition
