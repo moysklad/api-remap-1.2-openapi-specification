@@ -30,10 +30,10 @@ get:
       $ref: '../../../components/responses.yaml#/CommonError'
 
 post:
-  operationId: updateOrganizationAccounts
+  operationId: createOrganizationAccount
   tags:
     - Organizations
-  summary: Изменить счета юрлица
+  summary: Создать счёт юрлица
   description: Создание нового счёта у данного юрлица
   parameters:
     - $ref: '../../../components/parameters.yaml#/entityId'
@@ -48,7 +48,7 @@ post:
           $ref: '../../../openapi.yaml#/components/schemas/Account'
   responses:
     '200':
-      description: Счета успешно изменены
+      description: Счёт успешно создан
       content:
         application/json:
           schema:

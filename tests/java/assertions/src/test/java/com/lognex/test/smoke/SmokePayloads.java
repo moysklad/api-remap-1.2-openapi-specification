@@ -30,7 +30,11 @@ final class SmokePayloads {
 
     private static final String NESTED_POSITIONS_BATCH = array(obj(field("quantity", "1")));
 
+    private static final String STAGES_BATCH = array(obj(field("cost", "1")));
+
     private static final String IMAGE = obj(str("filename", "test.png"), str("content", PNG_BASE64));
+
+    private static final String IMAGES = array(IMAGE);
 
     private static final String MOVE = obj(
             ref("sourceStore", "store", "/entity/store"),
@@ -111,6 +115,8 @@ final class SmokePayloads {
             rule(methods("POST").and(pathEndsWith("/storebalances/batch")), STORE_BALANCES_BATCH),
             rule(methods("POST").and(pathEndsWith("/materials/batch")), NESTED_POSITIONS_BATCH),
             rule(methods("POST").and(pathEndsWith("/products/batch")), NESTED_POSITIONS_BATCH),
+            rule(methods("POST").and(pathEndsWith("/stages/batch")), STAGES_BATCH),
+            rule(methods("POST").and(pathEndsWith("/images/batch")), IMAGES),
             rule(methods("POST").and(pathEndsWith("/images")), IMAGE),
             rule(methods("POST").and(pathIn("/entity/move")), MOVE),
             rule(methods("POST").and(pathIn("/entity/loss")), LOSS),

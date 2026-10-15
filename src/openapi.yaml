@@ -119,6 +119,18 @@ paths:
     $ref: './paths/dictionaries/tasks/task-note-by-id.yaml'
   /entity/task/{id}/notes/delete:
     $ref: './paths/dictionaries/tasks/task-notes-delete.yaml'
+  /entity/task/{id}/files:
+    $ref: './paths/dictionaries/tasks/task-files.yaml'
+  /entity/task/{id}/files/batch:
+    $ref: './paths/dictionaries/tasks/task-files-batch.yaml'
+  /entity/task/{id}/files/{fileId}:
+    $ref: './paths/dictionaries/tasks/task-file-by-id.yaml'
+  /entity/task/{id}/notes/{noteId}/files:
+    $ref: './paths/dictionaries/tasks/task-note-files.yaml'
+  /entity/task/{id}/notes/{noteId}/files/batch:
+    $ref: './paths/dictionaries/tasks/task-note-files-batch.yaml'
+  /entity/task/{id}/notes/{noteId}/files/{fileId}:
+    $ref: './paths/dictionaries/tasks/task-note-file-by-id.yaml'
   /entity/task/metadata:
     $ref: './paths/dictionaries/tasks/task-metadata.yaml'
   /entity/task/metadata/states:
@@ -317,6 +329,8 @@ paths:
     $ref: './paths/dictionaries/processingplans/processingplans-batch.yaml'
   /entity/processingplan/{id}/stages:
     $ref: './paths/dictionaries/processingplans/processingplan-stages.yaml'
+  /entity/processingplan/{id}/stages/batch:
+    $ref: './paths/dictionaries/processingplans/processingplan-stages-batch.yaml'
   /entity/processingplan/{id}/stages/{positionId}:
     $ref: './paths/dictionaries/processingplans/processingplan-stage-by-id.yaml'
   /entity/processingplan/{id}/materials:
@@ -633,11 +647,41 @@ paths:
     $ref: './paths/dictionaries/bundles/bundle-component-by-id.yaml'
   /entity/bundle/{id}/components/delete:
     $ref: './paths/dictionaries/bundles/bundle-components-delete.yaml'
+  /entity/bundle/{id}/images:
+    $ref: './paths/dictionaries/bundles/bundle-images.yaml'
+  /entity/bundle/{id}/images/batch:
+    $ref: './paths/dictionaries/bundles/bundle-images-batch.yaml'
+  /entity/bundle/{id}/images/{imageId}:
+    $ref: './paths/dictionaries/bundles/bundle-image-by-id.yaml'
+  /entity/bundle/{id}/images/delete:
+    $ref: './paths/dictionaries/bundles/bundle-images-delete.yaml'
+  /entity/bundle/{id}/files:
+    $ref: './paths/dictionaries/bundles/bundle-files.yaml'
+  /entity/bundle/{id}/files/batch:
+    $ref: './paths/dictionaries/bundles/bundle-files-batch.yaml'
+  /entity/bundle/{id}/files/{fileId}:
+    $ref: './paths/dictionaries/bundles/bundle-file-by-id.yaml'
   # Variants
   /entity/variant:
     $ref: './paths/dictionaries/variants/variants.yaml'
   /entity/variant/{id}:
     $ref: './paths/dictionaries/variants/variant-by-id.yaml'
+  /entity/variant/{id}/images:
+    $ref: './paths/dictionaries/variants/variant-images.yaml'
+  /entity/variant/{id}/images/batch:
+    $ref: './paths/dictionaries/variants/variant-images-batch.yaml'
+  /entity/variant/{id}/images/{imageId}:
+    $ref: './paths/dictionaries/variants/variant-image-by-id.yaml'
+  /entity/variant/{id}/images/delete:
+    $ref: './paths/dictionaries/variants/variant-images-delete.yaml'
+  /entity/variant/{id}/storebalances:
+    $ref: './paths/dictionaries/variants/variant-storebalances.yaml'
+  /entity/variant/{id}/storebalances/batch:
+    $ref: './paths/dictionaries/variants/variant-storebalances-batch.yaml'
+  /entity/variant/{id}/storebalances/{storeBalanceId}:
+    $ref: './paths/dictionaries/variants/variant-storebalance-by-id.yaml'
+  /entity/variant/{id}/storebalances/delete:
+    $ref: './paths/dictionaries/variants/variant-storebalances-delete.yaml'
   /entity/variant/delete:
     $ref: './paths/dictionaries/variants/variants-delete.yaml'
   /entity/variant/batch:
@@ -686,6 +730,12 @@ paths:
     $ref: './paths/documents/internalorders/internalorder-by-id.yaml'
   /entity/internalorder/{id}/trash:
     $ref: './paths/documents/internalorders/internalorder-trash.yaml'
+  /entity/internalorder/{id}/files:
+    $ref: './paths/documents/internalorders/internalorder-files.yaml'
+  /entity/internalorder/{id}/files/batch:
+    $ref: './paths/documents/internalorders/internalorder-files-batch.yaml'
+  /entity/internalorder/{id}/files/{fileId}:
+    $ref: './paths/documents/internalorders/internalorder-file-by-id.yaml'
   /entity/internalorder/delete:
     $ref: './paths/documents/internalorders/internalorders-delete.yaml'
   /entity/internalorder/batch:
@@ -805,6 +855,12 @@ paths:
     $ref: './paths/documents/customerorders/customerorder-by-id.yaml'
   /entity/customerorder/{id}/trash:
     $ref: './paths/documents/customerorders/customerorder-trash.yaml'
+  /entity/customerorder/{id}/files:
+    $ref: './paths/documents/customerorders/customerorder-files.yaml'
+  /entity/customerorder/{id}/files/batch:
+    $ref: './paths/documents/customerorders/customerorder-files-batch.yaml'
+  /entity/customerorder/{id}/files/{fileId}:
+    $ref: './paths/documents/customerorders/customerorder-file-by-id.yaml'
   /entity/customerorder/delete:
     $ref: './paths/documents/customerorders/customerorders-delete.yaml'
   /entity/customerorder/batch:
@@ -946,6 +1002,12 @@ paths:
     $ref: './paths/documents/demands/demand-by-id.yaml'
   /entity/demand/{id}/trash:
     $ref: './paths/documents/demands/demand-trash.yaml'
+  /entity/demand/{id}/files:
+    $ref: './paths/documents/demands/demand-files.yaml'
+  /entity/demand/{id}/files/batch:
+    $ref: './paths/documents/demands/demand-files-batch.yaml'
+  /entity/demand/{id}/files/{fileId}:
+    $ref: './paths/documents/demands/demand-file-by-id.yaml'
   /entity/demand/delete:
     $ref: './paths/documents/demands/demands-delete.yaml'
   /entity/demand/batch:
@@ -979,6 +1041,12 @@ paths:
     $ref: './paths/documents/retaildemands/retaildemand-by-id.yaml'
   /entity/retaildemand/{id}/trash:
     $ref: './paths/documents/retaildemands/retaildemand-trash.yaml'
+  /entity/retaildemand/{id}/files:
+    $ref: './paths/documents/retaildemands/retaildemand-files.yaml'
+  /entity/retaildemand/{id}/files/batch:
+    $ref: './paths/documents/retaildemands/retaildemand-files-batch.yaml'
+  /entity/retaildemand/{id}/files/{fileId}:
+    $ref: './paths/documents/retaildemands/retaildemand-file-by-id.yaml'
   /entity/retaildemand/delete:
     $ref: './paths/documents/retaildemands/retaildemands-delete.yaml'
   /entity/retaildemand/batch:
@@ -1078,6 +1146,12 @@ paths:
     $ref: './paths/documents/salesreturns/salesreturn-by-id.yaml'
   /entity/salesreturn/{id}/trash:
     $ref: './paths/documents/salesreturns/salesreturn-trash.yaml'
+  /entity/salesreturn/{id}/files:
+    $ref: './paths/documents/salesreturns/salesreturn-files.yaml'
+  /entity/salesreturn/{id}/files/batch:
+    $ref: './paths/documents/salesreturns/salesreturn-files-batch.yaml'
+  /entity/salesreturn/{id}/files/{fileId}:
+    $ref: './paths/documents/salesreturns/salesreturn-file-by-id.yaml'
   /entity/salesreturn/delete:
     $ref: './paths/documents/salesreturns/salesreturns-delete.yaml'
   /entity/salesreturn/batch:
@@ -1107,6 +1181,12 @@ paths:
     $ref: './paths/documents/losses/loss-by-id.yaml'
   /entity/loss/{id}/trash:
     $ref: './paths/documents/losses/loss-trash.yaml'
+  /entity/loss/{id}/files:
+    $ref: './paths/documents/losses/loss-files.yaml'
+  /entity/loss/{id}/files/batch:
+    $ref: './paths/documents/losses/loss-files-batch.yaml'
+  /entity/loss/{id}/files/{fileId}:
+    $ref: './paths/documents/losses/loss-file-by-id.yaml'
   /entity/loss/delete:
     $ref: './paths/documents/losses/losses-delete.yaml'
   /entity/loss/batch:
@@ -1315,6 +1395,12 @@ paths:
     $ref: './paths/documents/prepaymentreturns/prepaymentreturn-by-id.yaml'
   /entity/prepaymentreturn/{id}/trash:
     $ref: './paths/documents/prepaymentreturns/prepaymentreturn-trash.yaml'
+  /entity/prepaymentreturn/{id}/files:
+    $ref: './paths/documents/prepaymentreturns/prepaymentreturn-files.yaml'
+  /entity/prepaymentreturn/{id}/files/batch:
+    $ref: './paths/documents/prepaymentreturns/prepaymentreturn-files-batch.yaml'
+  /entity/prepaymentreturn/{id}/files/{fileId}:
+    $ref: './paths/documents/prepaymentreturns/prepaymentreturn-file-by-id.yaml'
   /entity/prepaymentreturn/metadata:
     $ref: './paths/documents/prepaymentreturns/prepaymentreturn-metadata.yaml'
   /entity/prepaymentreturn/metadata/attributes:
@@ -1377,6 +1463,12 @@ paths:
     $ref: './paths/documents/purchaseorders/purchaseorder-by-id.yaml'
   /entity/purchaseorder/{id}/trash:
     $ref: './paths/documents/purchaseorders/purchaseorder-trash.yaml'
+  /entity/purchaseorder/{id}/files:
+    $ref: './paths/documents/purchaseorders/purchaseorder-files.yaml'
+  /entity/purchaseorder/{id}/files/batch:
+    $ref: './paths/documents/purchaseorders/purchaseorder-files-batch.yaml'
+  /entity/purchaseorder/{id}/files/{fileId}:
+    $ref: './paths/documents/purchaseorders/purchaseorder-file-by-id.yaml'
   /entity/purchaseorder/delete:
     $ref: './paths/documents/purchaseorders/purchaseorders-delete.yaml'
   /entity/purchaseorder/batch:
@@ -1445,6 +1537,12 @@ paths:
     $ref: './paths/documents/commissionreportins/commissionreportin-by-id.yaml'
   /entity/commissionreportin/{id}/trash:
     $ref: './paths/documents/commissionreportins/commissionreportin-trash.yaml'
+  /entity/commissionreportin/{id}/files:
+    $ref: './paths/documents/commissionreportins/commissionreportin-files.yaml'
+  /entity/commissionreportin/{id}/files/batch:
+    $ref: './paths/documents/commissionreportins/commissionreportin-files-batch.yaml'
+  /entity/commissionreportin/{id}/files/{fileId}:
+    $ref: './paths/documents/commissionreportins/commissionreportin-file-by-id.yaml'
   /entity/commissionreportin/delete:
     $ref: './paths/documents/commissionreportins/commissionreportins-delete.yaml'
   /entity/commissionreportin/batch:
@@ -1555,6 +1653,12 @@ paths:
     $ref: './paths/documents/cashins/cashin-by-id.yaml'
   /entity/cashin/{id}/trash:
     $ref: './paths/documents/cashins/cashin-trash.yaml'
+  /entity/cashin/{id}/files:
+    $ref: './paths/documents/cashins/cashin-files.yaml'
+  /entity/cashin/{id}/files/batch:
+    $ref: './paths/documents/cashins/cashin-files-batch.yaml'
+  /entity/cashin/{id}/files/{fileId}:
+    $ref: './paths/documents/cashins/cashin-file-by-id.yaml'
   /entity/cashin/delete:
     $ref: './paths/documents/cashins/cashins-delete.yaml'
   /entity/cashin/batch:
@@ -1653,6 +1757,12 @@ paths:
     $ref: './paths/documents/factureins/facturein-by-id.yaml'
   /entity/facturein/{id}/trash:
     $ref: './paths/documents/factureins/facturein-trash.yaml'
+  /entity/facturein/{id}/files:
+    $ref: './paths/documents/factureins/facturein-files.yaml'
+  /entity/facturein/{id}/files/batch:
+    $ref: './paths/documents/factureins/facturein-files-batch.yaml'
+  /entity/facturein/{id}/files/{fileId}:
+    $ref: './paths/documents/factureins/facturein-file-by-id.yaml'
   /entity/facturein/delete:
     $ref: './paths/documents/factureins/factureins-delete.yaml'
   /entity/facturein/batch:
@@ -1679,6 +1789,12 @@ paths:
     $ref: './paths/documents/factureouts/factureout-by-id.yaml'
   /entity/factureout/{id}/trash:
     $ref: './paths/documents/factureouts/factureout-trash.yaml'
+  /entity/factureout/{id}/files:
+    $ref: './paths/documents/factureouts/factureout-files.yaml'
+  /entity/factureout/{id}/files/batch:
+    $ref: './paths/documents/factureouts/factureout-files-batch.yaml'
+  /entity/factureout/{id}/files/{fileId}:
+    $ref: './paths/documents/factureouts/factureout-file-by-id.yaml'
   /entity/factureout/delete:
     $ref: './paths/documents/factureouts/factureouts-delete.yaml'
   /entity/factureout/batch:
@@ -1805,6 +1921,12 @@ paths:
     $ref: './paths/documents/retailshifts/retailshift-by-id.yaml'
   /entity/retailshift/{id}/trash:
     $ref: './paths/documents/retailshifts/retailshift-trash.yaml'
+  /entity/retailshift/{id}/files:
+    $ref: './paths/documents/retailshifts/retailshift-files.yaml'
+  /entity/retailshift/{id}/files/batch:
+    $ref: './paths/documents/retailshifts/retailshift-files-batch.yaml'
+  /entity/retailshift/{id}/files/{fileId}:
+    $ref: './paths/documents/retailshifts/retailshift-file-by-id.yaml'
   /entity/retailshift/metadata:
     $ref: './paths/documents/retailshifts/retailshift-metadata.yaml'
   /entity/retailshift/metadata/attributes:
@@ -1819,6 +1941,12 @@ paths:
     $ref: './paths/documents/cashouts/cashout-by-id.yaml'
   /entity/cashout/{id}/trash:
     $ref: './paths/documents/cashouts/cashout-trash.yaml'
+  /entity/cashout/{id}/files:
+    $ref: './paths/documents/cashouts/cashout-files.yaml'
+  /entity/cashout/{id}/files/batch:
+    $ref: './paths/documents/cashouts/cashout-files-batch.yaml'
+  /entity/cashout/{id}/files/{fileId}:
+    $ref: './paths/documents/cashouts/cashout-file-by-id.yaml'
   /entity/cashout/delete:
     $ref: './paths/documents/cashouts/cashouts-delete.yaml'
   /entity/cashout/batch:

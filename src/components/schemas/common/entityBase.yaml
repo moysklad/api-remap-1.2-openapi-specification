@@ -120,6 +120,8 @@ BatchResponseEntity:
         componentName: ProcessingPlanMaterial
       - type: processingplanresult
         componentName: ProcessingPlanProduct
+      - type: processingplanstages
+        componentName: ProcessingPlanStage
       - type: processingpositionmaterial
         componentName: ProcessingMaterial
       - type: processingpositionresult

@@ -1,0 +1,29 @@
+delete:
+  operationId: deleteTaskNoteFile
+  tags:
+    - Tasks
+  summary: Удалить файл комментария к Задаче
+  description: Удаление Файла комментария к Задаче.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - name: noteId
+      in: path
+      required: true
+      description: ID комментария к Задаче
+      schema:
+        type: string
+        format: uuid
+    - name: fileId
+      in: path
+      required: true
+      description: ID файла
+      schema:
+        type: string
+        format: uuid
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Файл успешно удалён
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
