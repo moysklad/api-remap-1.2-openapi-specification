@@ -56,7 +56,7 @@ check-token-expiration:
         exit 1
       fi
 
-      message=$(printf '@aivchenko Токен для деплоя в npmjs.com истекает через %s дней (дата: %s). Необходимо выпустить новый токен, положить его в переменную [NPM_TOKEN](https://git.company.lognex/moysklad/misc/remap-api-specification/-/settings/ci_cd) и обновить дату экспирации [NPM_TOKEN_EXPIRATION_DATE](https://git.company.lognex/moysklad/misc/remap-api-specification/-/settings/ci_cd)' \
+      message=$(printf '@aivchenko @segorov Токен для деплоя в npmjs.com истекает через %s дней (дата: %s). Необходимо выпустить новый токен, положить его в переменную [NPM_TOKEN](https://git.company.lognex/moysklad/misc/remap-api-specification/-/settings/ci_cd) и обновить дату экспирации [NPM_TOKEN_EXPIRATION_DATE](https://git.company.lognex/moysklad/misc/remap-api-specification/-/settings/ci_cd)' \
         "$days_left" "$NPM_TOKEN_EXPIRATION_DATE")
 
       curl -X POST --data-urlencode 'payload={"channel":"team-api-forge", "username":"Token_notifier", "text":"'"$message"'", "icon_emoji":":waiting_mr-bean_time:", "mrkdwn":true }' $SLACK_WEBHOOK
