@@ -56,13 +56,9 @@ check-token-expiration:
         exit 1
       fi
 
-      text=$(printf '@aivchenko токен NPM истекает через %s дней (дата: %s). Проект: %s' \
+      message=$(printf '@aivchenko токен NPM истекает через %s дней (дата: %s). Проект: %s' \
         "$days_left" "$TOKEN_EXPIRATION_DATE" "${CI_PROJECT_PATH:-unknown}")
 
-      curl --fail --silent --show-error --output /dev/null \
-        --request POST \
-        --header 'Content-Type: application/json' \
-        --data "$(printf '{"text":"%s"}' "$text")" \
-        "$SLACK_WEBHOOK"
+      curl -X POST --data-urlencode 'payload={"channel":"team-api-forge", "username":"Token_notifier", "text":"'"$message"'", "icon_emoji":":waiting_mr-bean_time:", "mrkdwn":true }' $SLACK_WEBHOOK
 
       echo "Notification sent (${days_left} days left)"
