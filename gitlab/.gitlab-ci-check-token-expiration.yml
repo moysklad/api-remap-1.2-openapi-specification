@@ -56,8 +56,8 @@ check-token-expiration:
         exit 1
       fi
 
-      message=$(printf '@aivchenko токен NPM истекает через %s дней (дата: %s). Проект: %s' \
-        "$days_left" "$TOKEN_EXPIRATION_DATE" "${CI_PROJECT_PATH:-unknown}")
+      message=$(printf '@aivchenko [NPM_TOKEN](https://git.company.lognex/moysklad/misc/remap-api-specification/-/settings/ci_cd) истекает через %s дней (дата: %s). Необходимо выпустить новый' \
+        "$days_left" "$TOKEN_EXPIRATION_DATE")
 
       curl -X POST --data-urlencode 'payload={"channel":"team-api-forge", "username":"Token_notifier", "text":"'"$message"'", "icon_emoji":":waiting_mr-bean_time:", "mrkdwn":true }' $SLACK_WEBHOOK
 
