@@ -1,6 +1,6 @@
 {{#vendorExtensions}}
 {{#x-entity-static-builder}}
-  public static {{classname}} createWithMeta({{#methodParams}}{{#.}}UUID {{.}}{{^-last}}, {{/-last}}{{/.}}{{/methodParams}}) {
+  public static {{classname}} createWithMeta({{#entityTypeParams}}String {{.}}, {{/entityTypeParams}}{{#methodParams}}{{#.}}UUID {{.}}{{^-last}}, {{/-last}}{{/.}}{{/methodParams}}) {
     {{classname}} o = new {{classname}}();
     Meta meta = new Meta();
     meta.setType("{{type}}");

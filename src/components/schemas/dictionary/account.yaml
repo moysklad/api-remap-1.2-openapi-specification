@@ -3,8 +3,9 @@ description: Счета контрагентов/юрлиц
 x-implements: MetaEntity
 x-polymorphic-parent: EntityWithMeta
 x-entity-static-builder:
-  methodParams:
+  entityTypeParams:
     - "entityType"
+  methodParams:
     - "parentId"
     - "id"
   href:

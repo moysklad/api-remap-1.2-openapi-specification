@@ -2,8 +2,9 @@ type: object
 description: Событие в Ленте документа
 x-implements: MetaEntity
 x-entity-static-builder:
-  methodParams:
+  entityTypeParams:
     - "documentType"
+  methodParams:
     - "parentId"
     - "id"
   href:

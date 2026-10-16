@@ -3,12 +3,14 @@ description: Неснижаемый остаток по складу
 x-implements: MetaEntity
 x-polymorphic-parent: EntityWithMeta
 x-entity-static-builder:
+  entityTypeParams:
+    - "entityType"
   methodParams:
     - "parentId"
     - "id"
   href:
     - path: "entity"
-    - path: "product"
+    - param: "entityType"
     - param: "parentId"
     - path: "storebalances"
     - param: "id"

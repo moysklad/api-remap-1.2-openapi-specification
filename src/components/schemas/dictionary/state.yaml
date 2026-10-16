@@ -2,8 +2,9 @@ type: object
 description: Статус
 x-implements: MetaEntity
 x-entity-static-builder:
-  methodParams:
+  entityTypeParams:
     - "entityType"
+  methodParams:
     - "id"
   href:
     - path: "entity"
