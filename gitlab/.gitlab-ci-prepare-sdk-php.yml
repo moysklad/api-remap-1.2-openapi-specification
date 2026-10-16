@@ -58,6 +58,12 @@ prep-branch-and-mr-php:
       else
         echo "CHANGELOG.md not found in spec repo; skipping copy."
       fi
+      if [ -d "../.github" ]; then
+        mkdir -p ./.github
+        rsync -a --delete ../.github/ ./.github/
+      else
+        echo ".github not found in spec repo; skipping copy."
+      fi
 
       git add -A
       if git diff --staged --quiet; then
@@ -150,6 +156,12 @@ merge-branch-php:
         cp ../CHANGELOG.md ./CHANGELOG.md
       else
         echo "CHANGELOG.md not found in spec repo; skipping copy."
+      fi
+      if [ -d "../.github" ]; then
+        mkdir -p ./.github
+        rsync -a --delete ../.github/ ./.github/
+      else
+        echo ".github not found in spec repo; skipping copy."
       fi
 
       git add -A

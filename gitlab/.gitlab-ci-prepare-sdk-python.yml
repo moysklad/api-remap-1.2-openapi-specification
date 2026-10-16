@@ -57,6 +57,12 @@ prep-branch-and-mr-python:
       else
         echo "CHANGELOG.md not found in spec repo; skipping copy."
       fi
+      if [ -d "../.github" ]; then
+        mkdir -p ./.github
+        rsync -a --delete ../.github/ ./.github/
+      else
+        echo ".github not found in spec repo; skipping copy."
+      fi
 
       git add -A
       if git diff --staged --quiet; then
@@ -151,6 +157,12 @@ merge-branch-python:
       else
         echo "CHANGELOG.md not found in spec repo."
         exit 1
+      fi
+      if [ -d "spec-repo/.github" ]; then
+        mkdir -p sdk-repo/.github
+        rsync -a --delete spec-repo/.github/ sdk-repo/.github/
+      else
+        echo ".github not found in spec repo; skipping copy."
       fi
 
       cd sdk-repo
