@@ -14,4 +14,6 @@
   и заполнять много полей сперва по созданию meta, затем подстановку этой meta в готовый объект
 * pom.mustache - адаптация стандартного pom.xml для проекта, Jackson 3.
 * apiException.mustache - добавлен десериализованный объект ошибок, если ApiException выброшен когда получили ошибку от api
+* README.mustache - стандартный README описывает генератор, все эндпоинты и модели и использует координаты
+  `openapi-java-client`. Публикуемому SDK нужны координаты Maven Central (включая `-fat`), авторизация и базовый пример запроса.
 * RFC3339DateFormat.mustache, RFC3339InstantDeserializer.mustache, RFC3339JavaTimeModule.mustache, BaseApi.mustache, build.gradle.mustache - Jackson 3 пакеты (`tools.jackson`) вместо встроенных шаблонов генератора 7.14.0. 

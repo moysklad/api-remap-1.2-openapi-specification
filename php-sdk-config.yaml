@@ -7,3 +7,4 @@ files:
     destinationFilename: lib/LocationResponse.php
 additionalProperties:
   phpVersion: "8.1"
+  licenseName: "Apache-2.0"
