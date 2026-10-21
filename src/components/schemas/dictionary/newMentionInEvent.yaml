@@ -1,0 +1,9 @@
+type: object
+description: Уведомление о новом упоминании в ленте событий
+x-polymorphic-parent: NotificationAbstract
+properties:
+  operation:
+    description: Объект, в ленте которого добавлено событие с упоминанием
+    readOnly: true
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/NotificationNamedEntity'

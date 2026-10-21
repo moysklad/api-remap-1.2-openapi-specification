@@ -1,0 +1,24 @@
+[
+  {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/product/12345678-1234-1234-1234-123456789012",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/product/metadata",
+      "type": "product",
+      "mediaType": "application/json"
+    },
+    "id": "12345678-1234-1234-1234-123456789012",
+    "name": "Тестовый товар",
+    "code": "00001",
+    "archived": false,
+    "shared": true
+  },
+  {
+    "errors": [
+      {
+        "error": "Ошибка в структуре JSON передаваемого запроса",
+        "code": 1000,
+        "error_message": "Некорректное значение поля name"
+      }
+    ]
+  }
+]

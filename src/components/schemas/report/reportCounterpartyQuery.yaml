@@ -1,0 +1,17 @@
+type: object
+description: Запрос выборочных показателей контрагентов
+required:
+  - counterparties
+properties:
+  counterparties:
+    type: array
+    description: Массив контрагентов, по которым требуются отчеты
+    minItems: 1
+    items:
+      type: object
+      properties:
+        counterparty:
+          type: object
+          description: Контрагент, по которому требуется отчет
+          allOf:
+            - $ref: '../../../openapi.yaml#/components/schemas/Counterparty'

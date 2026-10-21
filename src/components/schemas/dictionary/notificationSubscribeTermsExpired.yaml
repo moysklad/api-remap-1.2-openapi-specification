@@ -1,0 +1,7 @@
+type: object
+description: Уведомление об истечении условий подписки
+x-polymorphic-parent: NotificationAbstract
+properties:
+  daysLeft:
+    type: integer
+    description: Количество оставшихся дней подписки

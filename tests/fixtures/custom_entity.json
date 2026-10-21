@@ -1,0 +1,10 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/customentity/3f9a2f30-76af-11e7-6adb-ede50000000b",
+    "type": "customentity",
+    "mediaType": "application/json"
+  },
+  "id": "3f9a2f30-76af-11e7-6adb-ede50000000b",
+  "name": "custom dictionary"
+}
+

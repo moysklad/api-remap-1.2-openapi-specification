@@ -1,0 +1,22 @@
+type: object
+description: Отчет о движении денежных средств
+properties:
+  context:
+    description: Метаданные о сотруднике, выполнившем запрос
+    $ref: '../common/context.yaml'
+  meta:
+    description: Метаданные отчета о движении денежных средств
+    $ref: '../common/meta.yaml'
+  credit:
+    type: number
+    format: double
+    description: Доход за весь период отчета
+  debit:
+    type: number
+    format: double
+    description: Расход за весь период отчета
+  series:
+    type: array
+    description: Массив показателей движения денежных средств
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/ReportMoneyPlotSeriesItem'

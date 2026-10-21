@@ -1,0 +1,88 @@
+{{>licenseInfo}}
+{{#openApiNullable}}
+package {{polymorphicPackage}};
+
+import org.openapitools.jackson.nullable.JsonNullable;
+import org.openapitools.jackson.nullable.JsonNullableJackson3Deserializer;
+import tools.jackson.core.Version;
+import tools.jackson.databind.BeanDescription;
+import tools.jackson.databind.DeserializationConfig;
+import tools.jackson.databind.JacksonModule;
+import tools.jackson.databind.JavaType;
+import tools.jackson.databind.ValueDeserializer;
+import tools.jackson.databind.deser.Deserializers;
+import tools.jackson.databind.deser.ValueInstantiator;
+import tools.jackson.databind.deser.std.ReferenceTypeDeserializer;
+import tools.jackson.databind.jsontype.TypeDeserializer;
+import tools.jackson.databind.type.ReferenceType;
+
+/**
+ * Keeps a {@link JsonNullable} property undefined when {@link PolymorphicMetaTypeDeserializer} skips
+ * a value whose discriminator points to an incompatible class, so serializing the model omits the
+ * property instead of sending an explicit {@code null}. Must be registered after
+ * {@code JsonNullableJackson3Module} to take precedence over its deserializer.
+ */
+{{>generatedAnnotation}}
+public class PolymorphicJsonNullableModule extends JacksonModule {
+
+  @Override
+  public String getModuleName() {
+    return "PolymorphicJsonNullableModule";
+  }
+
+  @Override
+  public Version version() {
+    return Version.unknownVersion();
+  }
+
+  @Override
+  public void setupModule(SetupContext context) {
+    context.addDeserializers(new Deserializers.Base() {
+      @Override
+      public ValueDeserializer<?> findReferenceDeserializer(ReferenceType refType, DeserializationConfig config,
+          BeanDescription.Supplier beanDescRef, TypeDeserializer contentTypeDeserializer,
+          ValueDeserializer<?> contentDeserializer) {
+        return refType.hasRawClass(JsonNullable.class)
+            ? new PolymorphicJsonNullableDeserializer(refType, null, contentTypeDeserializer, contentDeserializer)
+            : null;
+      }
+
+      @Override
+      public boolean hasDeserializerFor(DeserializationConfig config, Class<?> valueType) {
+        return JsonNullable.class.equals(valueType);
+      }
+    });
+  }
+
+  static class PolymorphicJsonNullableDeserializer extends JsonNullableJackson3Deserializer {
+
+    PolymorphicJsonNullableDeserializer(JavaType fullType, ValueInstantiator valueInstantiator,
+        TypeDeserializer typeDeserializer, ValueDeserializer<?> valueDeserializer) {
+      super(fullType, valueInstantiator, typeDeserializer, valueDeserializer);
+    }
+
+    @Override
+    protected ReferenceTypeDeserializer<JsonNullable<Object>> withResolved(TypeDeserializer typeDeserializer,
+        ValueDeserializer<?> valueDeserializer) {
+      return new PolymorphicJsonNullableDeserializer(_fullType, _valueInstantiator, typeDeserializer,
+          valueDeserializer);
+    }
+
+    // Contents are deserialized only for non-null tokens: JSON null goes through getNullValue()
+    // and still yields JsonNullable.of(null).
+    @Override
+    public JsonNullable<Object> referenceValue(Object contents) {
+      return isSkipped(contents) ? JsonNullable.undefined() : super.referenceValue(contents);
+    }
+
+    @Override
+    public JsonNullable<Object> updateReference(JsonNullable<Object> reference, Object contents) {
+      return isSkipped(contents) ? reference : super.updateReference(reference, contents);
+    }
+
+    private boolean isSkipped(Object contents) {
+      return contents == null && _valueDeserializer instanceof PolymorphicMetaTypeDeserializer;
+    }
+  }
+}
+{{/openApiNullable}}

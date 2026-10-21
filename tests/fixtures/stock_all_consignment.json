@@ -1,0 +1,38 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/consignment/656c4032-8552-11e6-8a84-bae500000044?expand=product.supplier",
+    "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/consignment/metadata",
+    "type": "consignment",
+    "mediaType": "application/json"
+  },
+  "stock": 4,
+  "inTransit": 0,
+  "reserve": 0,
+  "quantity": 4,
+  "name": "ТОварИщ (10) / 0001",
+  "code": "00214/0001",
+  "article": "Артикулс",
+  "price": 50260.86956521739,
+  "salePrice": 123000.0,
+  "stockDays": 45,
+  "uom": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/uom/c6bc9273-2c83-11e6-8a84-bae5000000a3",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/uom/metadata",
+      "type": "uom",
+      "mediaType": "application/json"
+    },
+    "name": "шт"
+  },
+  "folder": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/productfolder/0c78adde-ffe3-11e5-9464-e4de000000a2",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/productFolder/metadata",
+      "type": "productfolder",
+      "mediaType": "application/json"
+    },
+    "name": "Товары Из кастомной группы",
+    "pathName": "Группа"
+  },
+  "externalCode": "ibWbdtWWhXiIwfZVEal6z2"
+}

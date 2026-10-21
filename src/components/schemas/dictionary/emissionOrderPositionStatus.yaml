@@ -1,0 +1,11 @@
+type: string
+description: Известные значения статуса кодов
+enum:
+  - EMISSION_NOT_SEND
+  - EMISSION_SEND
+  - EMISSION_ACTIVE
+  - EMISSION_ERROR
+  - EMISSION_RECEIVED
+  - EMISSION_PRINTED_PARTLY
+  - EMISSION_PRINTED_FULLY
+  - EMISSION_COMPLETED

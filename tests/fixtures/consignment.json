@@ -1,0 +1,71 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/consignment/c66f4b17-36e7-11e7-8a7f-40d000000113",
+    "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/consignment/metadata",
+    "type": "consignment",
+    "mediaType": "application/json"
+  },
+  "id": "c66f4b17-36e7-11e7-8a7f-40d000000113",
+  "accountId": "103bff1b-36e7-11e7-8a7f-40d000000004",
+  "updated": "2017-05-12 10:51:15",
+  "name": "product / consignment",
+  "code": "1012",
+  "archived": false,
+  "attributes": [
+    {
+      "meta": {
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/consignment/metadata/attributes/83dc3e6c-3bbf-11e7-8a7f-40d000000001",
+        "type": "attributemetadata",
+        "mediaType": "application/json"
+      },
+      "id": "83dc3e6c-3bbf-11e7-8a7f-40d000000001",
+      "name": "string",
+      "type": "string",
+      "value": "consignment attribute value"
+    },
+    {
+      "meta": {
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/consignment/metadata/attributes/958b275e-3bbf-11e7-8a7f-40d000000004",
+        "type": "attributemetadata",
+        "mediaType": "application/json"
+      },
+      "id": "958b275e-3bbf-11e7-8a7f-40d000000004",
+      "name": "number",
+      "type": "long",
+      "value": 42
+    }
+  ],
+  "description": "Партии товаров с таким названием лучше отслеживать",
+  "expiryDate": "2017-12-31 00:00:00",
+  "externalCode": "g9BOLNRZglk9NMOHxcrVV0",
+  "label": "consignment",
+  "barcodes": [
+    {
+      "ean8": "20000000"
+    },
+    {
+      "ean13": "2000000000000"
+    },
+    {
+      "code128": "code128 barcode"
+    }
+  ],
+  "images": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/product/35427052-36e7-11e7-8a7f-40d0000000d1/images",
+      "type": "image",
+      "mediaType": "application/json",
+      "size": 1,
+      "limit": 1000,
+      "offset": 0
+    }
+  },
+  "assortment": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/product/35427052-36e7-11e7-8a7f-40d0000000d1",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/product/metadata",
+      "type": "product",
+      "mediaType": "application/json"
+    }
+  }
+}

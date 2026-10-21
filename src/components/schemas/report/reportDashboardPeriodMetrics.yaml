@@ -1,0 +1,15 @@
+type: object
+description: Показатели продаж или заказов за период
+properties:
+  count:
+    type: integer
+    format: int64
+    description: Количество продаж
+  amount:
+    type: number
+    format: double
+    description: Прибыль
+  movementAmount:
+    type: number
+    format: double
+    description: Дельта по сравнению с прошлым аналогичным периодом

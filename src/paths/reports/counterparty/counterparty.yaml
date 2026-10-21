@@ -1,0 +1,47 @@
+get:
+  operationId: getReportCounterparty
+  tags:
+    - Reports
+  summary: Получить показатели контрагентов
+  description: Запрос отчета «Показатели контрагентов» по всем контрагентам.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/limit'
+    - $ref: '../../../components/parameters.yaml#/offset'
+    - $ref: '../../../components/parameters.yaml#/filter'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос. Результат - JSON представление отчета по контрагентам
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/ReportCounterpartyList'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+post:
+  operationId: queryReportCounterparty
+  tags:
+    - Reports
+  summary: Получить выборочные показатели контрагентов
+  description: Запрос отчета «Показатели контрагентов» по указанным контрагентам.
+  parameters:
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../openapi.yaml#/components/schemas/ReportCounterpartyQuery'
+  responses:
+    '200':
+      description: Успешный запрос. Результат - JSON представление отчета по указанным контрагентам
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/ReportCounterpartyList'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
