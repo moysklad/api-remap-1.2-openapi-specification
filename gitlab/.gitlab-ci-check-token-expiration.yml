@@ -1,0 +1,64 @@
+# Проверка срока действия токена по расписанию GitLab.
+#
+# CI/CD variables:
+#   NPM_TOKEN_EXPIRATION_DATE — дата протухания, формат DD-MM-YY
+#   SLACK_WEBHOOK — URL incoming webhook для уведомления
+#
+# Уведомление уходит, только если до даты осталось ровно 10, 5 или 1 день.
+check-token-expiration:
+  image: alpine:3.20
+  stage: test
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+  script:
+    - apk add --no-cache curl
+    - |
+      set -eu
+
+      if [ -z "${NPM_TOKEN_EXPIRATION_DATE:-}" ]; then
+        echo "CI/CD variable NPM_TOKEN_EXPIRATION_DATE is not set (expected DD-MM-YY)"
+        exit 1
+      fi
+
+      if ! printf '%s' "$NPM_TOKEN_EXPIRATION_DATE" | grep -Eq '^[0-9]{2}-[0-9]{2}-[0-9]{2}$'; then
+        echo "NPM_TOKEN_EXPIRATION_DATE must match DD-MM-YY, got: ${NPM_TOKEN_EXPIRATION_DATE}"
+        exit 1
+      fi
+
+      normalized=$(date -u -D '%d-%m-%y' -d "$NPM_TOKEN_EXPIRATION_DATE" +%d-%m-%y) || {
+        echo "Failed to parse NPM_TOKEN_EXPIRATION_DATE=${NPM_TOKEN_EXPIRATION_DATE}"
+        exit 1
+      }
+      if [ "$normalized" != "$NPM_TOKEN_EXPIRATION_DATE" ]; then
+        echo "NPM_TOKEN_EXPIRATION_DATE is not a real calendar date: ${NPM_TOKEN_EXPIRATION_DATE}"
+        exit 1
+      fi
+
+      today=$(date -u +%d-%m-%y)
+      today_epoch=$(date -u -D '%d-%m-%y' -d "$today" +%s)
+      exp_epoch=$(date -u -D '%d-%m-%y' -d "$NPM_TOKEN_EXPIRATION_DATE" +%s)
+      days_left=$(( (exp_epoch - today_epoch) / 86400 ))
+
+      echo "Today (UTC): ${today}"
+      echo "Token expiration: ${NPM_TOKEN_EXPIRATION_DATE}"
+      echo "Days left: ${days_left}"
+
+      case "$days_left" in
+        10|5|1) ;;
+        *)
+          echo "Notification is sent only when 10, 5 or 1 day remains"
+          exit 0
+          ;;
+      esac
+
+      if [ -z "${SLACK_WEBHOOK:-}" ]; then
+        echo "CI/CD variable SLACK_WEBHOOK is not set"
+        exit 1
+      fi
+
+      message=$(printf '@aivchenko @segorov Токен для деплоя в npmjs.com истекает через %s дней (дата: %s). Необходимо выпустить новый токен, положить его в переменную [NPM_TOKEN](https://git.company.lognex/moysklad/misc/remap-api-specification/-/settings/ci_cd) и обновить дату экспирации [NPM_TOKEN_EXPIRATION_DATE](https://git.company.lognex/moysklad/misc/remap-api-specification/-/settings/ci_cd)' \
+        "$days_left" "$NPM_TOKEN_EXPIRATION_DATE")
+
+      curl -X POST --data-urlencode 'payload={"channel":"team-api-forge", "username":"Token_notifier", "text":"'"$message"'", "icon_emoji":":waiting_mr-bean_time:", "mrkdwn":true }' $SLACK_WEBHOOK
+
+      echo "Notification sent (${days_left} days left)"

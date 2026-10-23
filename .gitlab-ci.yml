@@ -163,6 +163,11 @@ include:
       - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_TAG == null'
       - if: '$CI_PIPELINE_SOURCE == "web" && $CI_COMMIT_TAG == null'
 
+  # Срок действия токена — только scheduled pipeline
+  - local: 'gitlab/.gitlab-ci-check-token-expiration.yml'
+    rules:
+      - if: '$CI_PIPELINE_SOURCE == "schedule"'
+
 stages:
   - changes-check          # Ранний этап: проверка изменений OpenAPI относительно последнего тега
   - verify                 # Проверка спецификации, окружения
