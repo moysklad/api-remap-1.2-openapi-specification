@@ -2,8 +2,9 @@ type: object
 description: Шаблон печатной формы
 x-implements: MetaEntity
 x-entity-static-builder:
-  methodParams:
+  entityTypeParams:
     - "type"
+  methodParams:
     - "id"
   href:
     - path: "entity"

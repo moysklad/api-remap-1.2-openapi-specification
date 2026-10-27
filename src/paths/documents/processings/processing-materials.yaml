@@ -37,14 +37,14 @@ post:
       application/json:
         schema:
           $ref: '../../../openapi.yaml#/components/schemas/ProcessingMaterial'
-          minItems: 1
-          maxItems: 1000
   responses:
     '200':
       description: Успешный запрос
       content:
         application/json:
           schema:
-            $ref: '../../../openapi.yaml#/components/schemas/ProcessingMaterial'
+            type: array
+            items:
+              $ref: '../../../openapi.yaml#/components/schemas/ProcessingMaterial'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'

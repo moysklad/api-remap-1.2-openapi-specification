@@ -28,12 +28,12 @@ get:
       $ref: '../../../components/responses.yaml#/CommonError'
 
 post:
-  operationId: addSupplyFiles
+  operationId: addSupplyFile
   tags:
     - Supplies
-  summary: Добавить файлы к Приемке
+  summary: Добавить файл к Приемке
   description: |
-    Добавить новые Файлы к Приемке. В одном запросе можно добавить максимум 10 Файлов.
+    Добавить новый Файл к Приемке.
     В поле `content` нужно указать файл, закодированный в Base64, в поле `filename` — имя файла с расширением.
   parameters:
     - $ref: '../../../components/parameters.yaml#/entityId'
@@ -45,13 +45,10 @@ post:
     content:
       application/json:
         schema:
-          type: array
-          maxItems: 10
-          items:
-            $ref: '../../../openapi.yaml#/components/schemas/FileUpload'
+          $ref: '../../../openapi.yaml#/components/schemas/FileUpload'
   responses:
     '200':
-      description: Файлы успешно добавлены. Результат — массив всех Файлов Приемки.
+      description: Файл успешно добавлен. Результат — массив всех Файлов Приемки.
       content:
         application/json:
           schema:

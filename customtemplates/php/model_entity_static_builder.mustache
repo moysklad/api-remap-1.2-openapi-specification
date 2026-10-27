@@ -1,6 +1,6 @@
 {{#vendorExtensions}}
 {{#x-entity-static-builder}}
-    public static function createWithMeta({{#methodParams}}{{#.}}string ${{.}}{{^-last}}, {{/-last}}{{/.}}{{/methodParams}}) : {{classname}} {
+    public static function createWithMeta({{#entityTypeParams}}string ${{.}}, {{/entityTypeParams}}{{#methodParams}}{{#.}}string ${{.}}{{^-last}}, {{/-last}}{{/.}}{{/methodParams}}) : {{classname}} {
         $o = new {{classname}}();
         $config = \OpenAPI\Client\Configuration::getDefaultConfiguration();
         $meta = new Meta();

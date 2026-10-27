@@ -31,12 +31,12 @@ get:
     
 
 post:
-  operationId: addCounterpartyFiles
+  operationId: addCounterpartyFile
   tags:
     - Counterparties
-  summary: Добавить файлы к контрагенту
+  summary: Добавить файл к контрагенту
   description: |
-    Добавить новые Файлы к Контрагенту. В одном запросе можно добавить максимум 10 Файлов.
+    Добавить новый Файл к Контрагенту.
     В поле `content` нужно указать файл, закодированный в Base64, в поле `filename` — имя файла с расширением.
   parameters:
     - $ref: '../../../components/parameters.yaml#/entityId'
@@ -48,16 +48,13 @@ post:
     content:
       application/json:
         schema:
-          type: array
-          maxItems: 10
-          items:
-            $ref: '../../../openapi.yaml#/components/schemas/FileUpload'
+          $ref: '../../../openapi.yaml#/components/schemas/FileUpload'
         example:
-          - filename: "doc.pdf"
-            content: "SGVsbG8gV29ybGQ="
+          filename: "doc.pdf"
+          content: "SGVsbG8gV29ybGQ="
   responses:
     '200':
-      description: Файлы успешно добавлены. Результат — массив всех Файлов Контрагента.
+      description: Файл успешно добавлен. Результат — массив всех Файлов Контрагента.
       content:
         application/json:
           schema:

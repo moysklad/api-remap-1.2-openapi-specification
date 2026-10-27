@@ -183,7 +183,7 @@ def test_every_static_builder_sets_id_meta_and_href(
 
     values = {
         parameter: f"{parameter}-00000000-0000-0000-0000-000000000001"
-        for parameter in extension["methodParams"]
+        for parameter in extension.get("entityTypeParams", []) + extension["methodParams"]
     }
     entity = model_class(name).create_with_meta(**values)
 

@@ -14,9 +14,27 @@ final class SmokePayloads {
 
     private static final String EMPTY_ARRAY = "[]";
 
-    private static final String FILES = array(obj(str("filename", "doc.pdf"), str("content", "SGVsbG8gV29ybGQ=")));
+    private static final String FILE = obj(str("filename", "doc.pdf"), str("content", "SGVsbG8gV29ybGQ="));
+
+    private static final String FILES = array(FILE);
+
+    private static final String ACCOUNTS_BATCH = array(obj(str("accountNumber", "40702810100000000001")));
+
+    private static final String NOTES_BATCH = array(obj(str("description", "текст")));
+
+    private static final String CONTACT_PERSONS_BATCH = array(obj(str("name", "Петр")));
+
+    private static final String STORE_BALANCES_BATCH = array(obj(
+            ref("store", "store", "/entity/store"),
+            field("quantity", "5")));
+
+    private static final String NESTED_POSITIONS_BATCH = array(obj(field("quantity", "1")));
+
+    private static final String STAGES_BATCH = array(obj(field("cost", "1")));
 
     private static final String IMAGE = obj(str("filename", "test.png"), str("content", PNG_BASE64));
+
+    private static final String IMAGES = array(IMAGE);
 
     private static final String MOVE = obj(
             ref("sourceStore", "store", "/entity/store"),
@@ -89,7 +107,16 @@ final class SmokePayloads {
 
     private static final List<Rule> RULES = Arrays.asList(
             rule(methods("POST", "PUT").and(pathEndsWith("/delete")), EMPTY_ARRAY),
-            rule(methods("POST").and(pathEndsWith("/files")), FILES),
+            rule(methods("POST").and(pathEndsWith("/files/batch")), FILES),
+            rule(methods("POST").and(pathEndsWith("/files")), FILE),
+            rule(methods("POST").and(pathEndsWith("/accounts/batch")), ACCOUNTS_BATCH),
+            rule(methods("POST").and(pathEndsWith("/notes/batch")), NOTES_BATCH),
+            rule(methods("POST").and(pathEndsWith("/contactpersons/batch")), CONTACT_PERSONS_BATCH),
+            rule(methods("POST").and(pathEndsWith("/storebalances/batch")), STORE_BALANCES_BATCH),
+            rule(methods("POST").and(pathEndsWith("/materials/batch")), NESTED_POSITIONS_BATCH),
+            rule(methods("POST").and(pathEndsWith("/products/batch")), NESTED_POSITIONS_BATCH),
+            rule(methods("POST").and(pathEndsWith("/stages/batch")), STAGES_BATCH),
+            rule(methods("POST").and(pathEndsWith("/images/batch")), IMAGES),
             rule(methods("POST").and(pathEndsWith("/images")), IMAGE),
             rule(methods("POST").and(pathIn("/entity/move")), MOVE),
             rule(methods("POST").and(pathIn("/entity/loss")), LOSS),

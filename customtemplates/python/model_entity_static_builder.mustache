@@ -2,6 +2,9 @@
     @classmethod
     def create_with_meta(
         cls,
+{{#entityTypeParams}}
+        {{.}}: str,
+{{/entityTypeParams}}
 {{#methodParams}}
         {{.}}: str,
 {{/methodParams}}

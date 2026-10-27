@@ -28,12 +28,12 @@ get:
       $ref: '../../../components/responses.yaml#/CommonError'
 
 post:
-  operationId: addPurchaseReturnFiles
+  operationId: addPurchaseReturnFile
   tags:
     - PurchaseReturns
-  summary: Добавить файлы к возврату поставщику
+  summary: Добавить файл к возврату поставщику
   description: |
-    Добавить новые Файлы к Возврату поставщику. В одном запросе можно добавить максимум 10 Файлов.
+    Добавить новый Файл к Возврату поставщику.
     В поле `content` нужно указать файл, закодированный в Base64, в поле `filename` — имя файла с расширением.
   parameters:
     - $ref: '../../../components/parameters.yaml#/entityId'
@@ -45,13 +45,10 @@ post:
     content:
       application/json:
         schema:
-          type: array
-          maxItems: 10
-          items:
-            $ref: '../../../openapi.yaml#/components/schemas/FileUpload'
+          $ref: '../../../openapi.yaml#/components/schemas/FileUpload'
   responses:
     '200':
-      description: Файлы успешно добавлены. Результат — массив всех Файлов Возврата поставщику.
+      description: Файл успешно добавлен. Результат — массив всех Файлов Возврата поставщику.
       content:
         application/json:
           schema:
