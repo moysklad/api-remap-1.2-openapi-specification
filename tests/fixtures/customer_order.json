@@ -87,7 +87,7 @@
     "meta": {
       "href": "https://api.moysklad.ru/api/remap/1.2/entity/agentaccount/c340bf60-26ae-11f1-0a83-1f25000000a1",
       "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/agentaccount/metadata",
-      "type": "agentaccount",
+      "type": "account",
       "mediaType": "application/json",
       "uuidHref": "https://online.moysklad.ru/app/#mycompany/edit?id=c340bf60-26ae-11f1-0a83-1f25000000a1"
     }
@@ -105,7 +105,7 @@
     "meta": {
       "href": "https://api.moysklad.ru/api/remap/1.2/entity/agentaccount/c340bf60-26ae-11f1-0a83-1f25000000a1",
       "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/agentaccount/metadata",
-      "type": "agentaccount",
+      "type": "account",
       "mediaType": "application/json",
       "uuidHref": "https://online.moysklad.ru/app/#mycompany/edit?id=c340bf60-26ae-11f1-0a83-1f25000000a1"
     }

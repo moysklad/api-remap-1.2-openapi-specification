@@ -64,7 +64,7 @@
     "meta": {
       "href": "https://api.moysklad.ru/api/remap/1.2/entity/agentaccount/850c8195-f504-11e5-8a84-bae50000015e",
       "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/agentaccount/metadata",
-      "type": "agentaccount",
+      "type": "account",
       "mediaType": "application/json"
     }
   },
@@ -104,7 +104,7 @@
     "meta": {
       "href": "https://api.moysklad.ru/api/remap/1.2/entity/agentaccount/8518d001-f504-11e5-8a84-bae50000016a",
       "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/agentaccount/metadata",
-      "type": "agentaccount",
+      "type": "account",
       "mediaType": "application/json"
     }
   },
