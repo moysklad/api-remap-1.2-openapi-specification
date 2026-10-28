@@ -1,0 +1,27 @@
+{
+  "isActive": true,
+  "login": "example@lognex",
+  "email": "example@example.ru",
+  "group": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/group/f4b74c5e-443a-11eb-ac12-001000000002",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/group/metadata",
+      "type": "group",
+      "mediaType": "application/json"
+    },
+    "id": "f4b74c5e-443a-11eb-ac12-001000000002",
+    "name": "Основной"
+  },
+  "authorizedHosts": [
+    "1.15.15.5"
+  ],
+  "authorizedIpNetwork": "80.8.8.8",
+  "authorizedIpNetmask": "1.8.8.8",
+  "role": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/role/individual",
+      "type": "individualrole",
+      "mediaType": "application/json"
+    }
+  }
+}

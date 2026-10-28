@@ -1,0 +1,23 @@
+/* tslint:disable */
+/* eslint-disable */
+{{>licenseInfo}}
+
+/**
+ * Ответ вызова, полезные данные которого передаются в заголовке Location,
+ * а тело ответа отсутствует. Значения принадлежат конкретному вызову.
+ */
+export class LocationResponse {
+    constructor(
+        public readonly statusCode: number,
+        /** Значение заголовка Location или undefined, если заголовка нет. */
+        public readonly location: string | undefined,
+    ) {
+    }
+
+    /**
+     * Имя заголовка Location сравнивается без учета регистра.
+     */
+    static fromHeaders(statusCode: number, headers: Headers): LocationResponse {
+        return new LocationResponse(statusCode, headers.get('Location') ?? undefined);
+    }
+}

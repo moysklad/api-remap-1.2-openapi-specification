@@ -1,0 +1,61 @@
+type: object
+description: Контекст аудита
+properties:
+  meta:
+    $ref: '../meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID контекста аудита
+    readOnly: true
+  uid:
+    type: string
+    maxLength: 255
+    description: Логин сотрудника
+    readOnly: true
+  source:
+    type: string
+    description: Источник изменения. Известные значения описаны в AuditSourceType
+    readOnly: true
+  moment:
+    type: string
+    description: Момент изменения
+    readOnly: true
+  info:
+    type: object
+    nullable: true
+    description: Краткое описание контекста
+    additionalProperties: true
+    readOnly: true
+  objectCount:
+    type: integer
+    description: Количество измененных объектов
+    readOnly: true
+  eventType:
+    type: string
+    nullable: true
+    description: Тип события. Известные значения описаны в AuditEventType
+    readOnly: true
+  entityType:
+    type: string
+    nullable: true
+    description: Тип сущности
+    readOnly: true
+  objectType:
+    type: string
+    nullable: true
+    description: Тип сущностей для специальных настроечных контекстов
+    readOnly: true
+  supportAccess:
+    type: boolean
+    nullable: true
+    description: Признак доступа поддержки от имени пользователя
+    readOnly: true
+  events:
+    type: object
+    nullable: true
+    description: Метаданные списка связанных событий аудита
+    readOnly: true
+    properties:
+      meta:
+        $ref: '../metaList.yaml'

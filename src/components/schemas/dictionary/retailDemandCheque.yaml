@@ -1,0 +1,28 @@
+type: object
+description: Фискальные данные продажи
+readOnly: true
+properties:
+  fnNumber:
+    type: string
+    description: Номер фискального накопителя
+    readOnly: true
+  fiscalDocSign:
+    type: string
+    description: Фискальный признак документа
+    readOnly: true
+  fiscalDocNumber:
+    type: string
+    description: Номер фискального документа
+    readOnly: true
+  kktRegNumber:
+    type: string
+    description: Регистрационный номер
+    readOnly: true
+  time:
+    type: string
+    description: Время фискализации
+    readOnly: true
+  receipt:
+    type: string
+    description: Электронный чек
+    readOnly: true

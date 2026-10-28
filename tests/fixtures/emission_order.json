@@ -1,0 +1,99 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/emissionorder/33c8ac0b-a670-11ef-ac12-000d00000111",
+    "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/emissionorder/metadata",
+    "type": "emissionorder",
+    "mediaType": "application/json",
+    "uuidHref": "https://online.moysklad.ru/app/#emissionorder/edit?id=33c8ac0b-a670-11ef-ac12-000d00000111"
+  },
+  "id": "33c8ac0b-a670-11ef-ac12-000d00000111",
+  "accountId": "b9c9f2e4-a66f-11ef-ac12-000f00000001",
+  "owner": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/employee/bc5114ab-a66f-11ef-ac12-000d00000050",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/employee/metadata",
+      "type": "employee",
+      "mediaType": "application/json",
+      "uuidHref": "https://online.moysklad.ru/app/#employee/edit?id=bc5114ab-a66f-11ef-ac12-000d00000050"
+    }
+  },
+  "shared": false,
+  "group": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/group/b9cfe2fd-a66f-11ef-ac12-000f00000002",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/group/metadata",
+      "type": "group",
+      "mediaType": "application/json"
+    }
+  },
+  "updated": "2024-11-19 15:39:27.860",
+  "name": "00001",
+  "externalCode": "RIahRnZIjek-CeER27IjF0",
+  "state": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/emissionorder/metadata/states/4f75f276-a673-11ef-ac12-000d00000002",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/emissionorder/metadata",
+      "type": "state",
+      "mediaType": "application/json"
+    }
+  },
+  "printed": false,
+  "published": false,
+  "created": "2024-11-19 15:17:10.711",
+  "moment": "2024-11-19 15:16:00.000",
+  "organization": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/organization/bcbee227-a66f-11ef-ac12-000d00000099",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/organization/metadata",
+      "type": "organization",
+      "mediaType": "application/json",
+      "uuidHref": "https://online.moysklad.ru/app/#mycompany/edit?id=bcbee227-a66f-11ef-ac12-000d00000099"
+    }
+  },
+  "emissionType": "LOCAL",
+  "trackingType": "MILK",
+  "documentState": "CREATED",
+  "positions": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/emissionorder/33c8ac0b-a670-11ef-ac12-000d00000111/positions",
+      "type": "emissionorderposition",
+      "mediaType": "application/json",
+      "size": 1,
+      "limit": 1000,
+      "offset": 0
+    },
+    "rows": [
+      {
+        "meta": {
+          "href": "https://api.moysklad.ru/api/remap/1.2/entity/emissionorder/33c8ac0b-a670-11ef-ac12-000d00000111/positions/34b7de2d-a670-11ef-ac12-000d00000112",
+          "type": "emissionorderposition",
+          "mediaType": "application/json"
+        },
+        "id": "34b7de2d-a670-11ef-ac12-000d00000112",
+        "accountId": "b9c9f2e4-a66f-11ef-ac12-000f00000001",
+        "assortment": {
+          "meta": {
+            "href": "https://api.moysklad.ru/api/remap/1.2/entity/product/6cf63dc2-a66f-11ef-ac12-000d00000074",
+            "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/product/metadata",
+            "type": "product",
+            "mediaType": "application/json",
+            "uuidHref": "https://online.moysklad.ru/app/#good/edit?id=6cf63dc2-a66f-11ef-ac12-000d00000074"
+          }
+        },
+        "quantity": 1.0,
+        "status": "EMISSION_NOT_SEND"
+      }
+    ]
+  },
+  "productionTasks": [
+    {
+      "meta": {
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/productiontask/ea3e91db-a66f-11ef-ac12-000d000000bf",
+        "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/productiontask/metadata",
+        "type": "productiontask",
+        "mediaType": "application/json",
+        "uuidHref": "https://online.moysklad.ru/app/#productiontask/edit?id=ea3e91db-a66f-11ef-ac12-000d000000bf"
+      }
+    }
+  ]
+}

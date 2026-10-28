@@ -1,0 +1,10 @@
+type: object
+description: Метаданные модификации
+properties:
+  meta:
+    $ref: '../common/meta.yaml'
+  characteristics:
+    type: array
+    description: Характеристики Модификации
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/VariantCharacteristic'

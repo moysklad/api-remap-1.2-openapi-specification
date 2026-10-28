@@ -1,0 +1,18 @@
+type: object
+description: Штрихкод
+properties:
+  ean13:
+    type: string
+    description: Штрихкод в формате EAN13
+  ean8:
+    type: string
+    description: Штрихкод в формате EAN8
+  code128:
+    type: string
+    description: Штрихкод в формате Code128
+  gtin:
+    type: string
+    description: Штрихкод в формате GTIN
+  upc:
+    type: string
+    description: Штрихкод в формате UPC

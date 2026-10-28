@@ -1,0 +1,39 @@
+type: object
+description: Позиция Начисления зарплаты
+x-implements: MetaEntity
+x-polymorphic-parent: EntityWithMeta
+x-entity-static-builder:
+  methodParams:
+    - "parentId"
+    - "id"
+  href:
+    - path: "entity"
+    - path: "payroll"
+    - param: "parentId"
+    - path: "positions"
+    - param: "id"
+  type: "payrollposition"
+properties:
+  meta:
+    description: Метаданные позиции начисления зарплаты
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID позиции
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  employee:
+    description: Метаданные сотрудника, который получает начисление зарплаты
+    $ref: '../../../openapi.yaml#/components/schemas/Employee'
+  baseSalary:
+    type: number
+    format: double
+    description: Начисления по окладу сотрудника
+  pieceworkSalary:
+    type: number
+    format: double
+    description: Начисления сдельной оплаты сотрудника

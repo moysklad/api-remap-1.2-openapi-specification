@@ -1,0 +1,4 @@
+allOf:
+  - $ref: './notificationAbstract.yaml'
+description: Уведомление о зачислении бонусных денег
+x-polymorphic-parent: NotificationAbstract

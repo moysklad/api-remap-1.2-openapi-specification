@@ -1,0 +1,72 @@
+# {{{projectName}}}
+
+Официальный Python SDK для [МойСклад JSON API 1.2](https://dev.moysklad.ru/doc/api/remap/1.2/).
+
+* PyPI: https://pypi.org/project/{{{projectName}}}/
+* GitHub: https://{{{gitHost}}}/{{{gitUserId}}}/{{{gitRepoId}}}
+* OpenAPI-спецификация: https://github.com/moysklad/api-remap-1.2-openapi-specification
+
+Код SDK генерируется из OpenAPI-спецификации, поэтому правки нужно вносить в спецификацию, а не в этот репозиторий.
+
+## Требования
+
+* Python 3.10+
+
+## Установка
+
+```bash
+pip install {{{projectName}}}
+```
+
+Пакет импортируется как `{{{packageName}}}`.
+
+## Авторизация
+
+МойСклад поддерживает Bearer-токен и Basic Auth. Учётные данные передаются в `Configuration`.
+
+Токен доступа:
+
+```python
+import os
+
+from {{{packageName}}} import Configuration
+
+configuration = Configuration(access_token=os.environ["MOYSKLAD_TOKEN"])
+```
+
+Логин и пароль:
+
+```python
+configuration = Configuration(
+    username=os.environ["MOYSKLAD_LOGIN"],
+    password=os.environ["MOYSKLAD_PASSWORD"],
+)
+```
+
+По умолчанию запросы идут на `https://api.moysklad.ru/api/remap/1.2`. Другой адрес задаётся параметром `host`.
+
+## Пример запроса
+
+```python
+import os
+
+from {{{packageName}}} import ApiClient, ApiException, Configuration, ProductsApi
+
+configuration = Configuration(access_token=os.environ["MOYSKLAD_TOKEN"])
+
+with ApiClient(configuration) as api_client:
+    products_api = ProductsApi(api_client)
+
+    try:
+        products = products_api.get_products(limit=10)
+        for product in products.rows or []:
+            print(product.id, product.name)
+    except ApiException as e:
+        print(e.status, e.body)
+```
+
+Ошибки API возбуждают `ApiException` с HTTP-статусом в `status` и телом ответа в `body`.
+
+## Лицензия
+
+Apache-2.0, см. [текст лицензии](https://www.apache.org/licenses/LICENSE-2.0).

@@ -1,0 +1,27 @@
+type: object
+description: Скидка (discount)
+x-polymorphic-parent: DiscountAbstract
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "discount"
+    - param: "id"
+  type: "discount"
+properties:
+  id:
+    type: string
+    format: uuid
+    description: ID дополнительного поля
+    readOnly: true
+  meta:
+    description: Метаданные скидки
+    $ref: '../common/meta.yaml'
+  productFolders:
+    type: array
+    description: Массив метаданных Групп товаров
+    nullable: true
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/ProductFolder'
+

@@ -1,0 +1,11 @@
+type: string
+description: Известные значения типа Канала продаж
+enum:
+  - MESSENGER
+  - SOCIAL_NETWORK
+  - MARKETPLACE
+  - ECOMMERCE
+  - CLASSIFIED_ADS
+  - DIRECT_SALES
+  - RETAIL_SALES
+  - OTHER

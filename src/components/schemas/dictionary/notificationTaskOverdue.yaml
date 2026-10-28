@@ -1,0 +1,6 @@
+type: object
+description: Уведомление о просроченной задаче
+x-polymorphic-parent: NotificationAbstract
+properties:
+  task:
+    $ref: '../../../openapi.yaml#/components/schemas/NotificationTask'

@@ -1,0 +1,29 @@
+{
+  "context": {
+    "employee": {
+      "meta": {
+        "href": "https://api.moysklad.ru/api/remap/1.2/context/employee",
+        "metadataHref": "https://api.moysklad.ru/api/remap/1.2/employee/metadata",
+        "type": "employee",
+        "mediaType": "application/json"
+      }
+    }
+  },
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/report/sales/plotseries?momentFrom=2018-09-06%2000:00:00&momentTo=2018-09-10%2001:00:01&interval=hour&filter=retailStore=https://api.moysklad.ru/api/remap/1.2/entity/retailstore/d9a8a213-6703-11e7-9464-e4de00000060&project=https://api.moysklad.ru/api/remap/1.2/entity/project/d9a8a213-6703-11e7-9464-e4de00000060&store=https://api.moysklad.ru/api/remap/1.2/entity/store/d9a8a213-6703-11e7-9464-e4de00000060&organization=https://api.moysklad.ru/api/remap/1.2/entity/organization/d9a8a213-6703-11e7-9464-e4de00000060",
+    "type": "salesplotseries",
+    "mediaType": "application/json"
+  },
+  "series": [
+    {
+      "date": "2018-09-06 00:00:00",
+      "quantity": 3,
+      "sum": 900
+    },
+    {
+      "date": "2018-09-06 01:00:00",
+      "quantity": 4,
+      "sum": 400
+    }
+  ]
+}
