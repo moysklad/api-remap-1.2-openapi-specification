@@ -20,6 +20,9 @@ post:
           allProducts: true
           allAgents: true
           agentTags: []
+          levels:
+            - amount: 100000.0
+              discount: 10.0
   responses:
     '200':
       description: Накопительная скидка успешно создана
