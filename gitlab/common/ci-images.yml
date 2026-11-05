@@ -4,7 +4,7 @@
 
 variables:
   CI_IMAGE_OPENAPITOOLS: $GLOBAL_DOCKER_URL/docker-openapitools-common:1.6-release
-  CI_IMAGE_PHP_TEST: $GLOBAL_DOCKER_URL/docker-openapitools-php-test:1.5-release
+  CI_IMAGE_PHP_TEST: $GLOBAL_DOCKER_URL/docker-openapitools-php-test:1.7-release
   CI_IMAGE_PYTHON: $GLOBAL_DOCKER_URL/docker-openapitools-python:1.6-release
   CI_IMAGE_SCHEMATHESIS: $GLOBAL_DOCKER_URL/docker-openapitools-schemathesis:1.5-release
   CI_IMAGE_MAVEN_JDK17: $GLOBAL_DOCKER_URL/docker-openapitools-java-maven-jdk17:1.5-release
