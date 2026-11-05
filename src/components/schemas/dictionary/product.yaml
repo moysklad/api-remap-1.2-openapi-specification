@@ -212,6 +212,11 @@ properties:
     nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
+  minimumBalance:
+    type: number
+    format: double
+    readOnly: true
+    description: Неснижаемый остаток, возвращаемый сервером
   minimumStock:
     description: |
       Неснижаемый остаток. Не выводится по умолчанию.
