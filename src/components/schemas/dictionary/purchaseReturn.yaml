@@ -193,6 +193,4 @@ properties:
     nullable: true
     description: Массив ссылок на связанные платежи
     items:
-      anyOf:
-        - $ref: '../../../openapi.yaml#/components/schemas/PaymentIn'
-        - $ref: '../../../openapi.yaml#/components/schemas/CashIn'
+      $ref: '../../../openapi.yaml#/components/schemas/PurchaseReturnPayment'

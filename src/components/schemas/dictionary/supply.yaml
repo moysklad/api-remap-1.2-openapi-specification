@@ -204,9 +204,7 @@ properties:
     nullable: true
     description: Массив ссылок на связанные платежи
     items:
-      anyOf:
-        - $ref: '../../../openapi.yaml#/components/schemas/PaymentOut'
-        - $ref: '../../../openapi.yaml#/components/schemas/PaymentIn'
+      $ref: '../../../openapi.yaml#/components/schemas/SupplyPayment'
   productionTask:
     description: Связанное производственное задание
     nullable: true
@@ -216,10 +214,7 @@ properties:
   returns:
     type: array
     description: |
-      Массив ссылок на связанные возвраты
+      Массив ссылок на связанные возвраты поставщику
     nullable: true
     items:
-      anyOf:
-        - $ref: '../../../openapi.yaml#/components/schemas/SalesReturn'
-        - $ref: '../../../openapi.yaml#/components/schemas/PurchaseReturn'
-        - $ref: '../../../openapi.yaml#/components/schemas/PrepaymentReturn'
+      $ref: '../../../openapi.yaml#/components/schemas/PurchaseReturn'

@@ -1,0 +1,19 @@
+type: object
+description: |
+  Элемент массива `payments` возврата поставщику.
+  Допустимые `meta.type`: paymentin, cashin. Поле `linkedSum` сохраняется у элемента связи.
+x-polymorphic-discriminator:
+  path: meta.type
+  mappings:
+    - type: paymentin
+      componentName: PurchaseReturnPaymentPaymentIn
+    - type: cashin
+      componentName: PurchaseReturnPaymentCashIn
+properties:
+  meta:
+    $ref: '../common/meta.yaml'
+required:
+  - meta
+  - linkedSum
+allOf:
+  - $ref: '../../../openapi.yaml#/components/schemas/OperationLinkedSum'

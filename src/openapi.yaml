@@ -2658,6 +2658,12 @@ components:
       $ref: './components/schemas/dictionary/supply.yaml'
     SupplyList:
       $ref: './components/schemas/dictionary/supplyList.yaml'
+    SupplyPaymentPaymentOut:
+      $ref: './components/schemas/dictionary/supplyPaymentPaymentOut.yaml'
+    SupplyPaymentCashOut:
+      $ref: './components/schemas/dictionary/supplyPaymentCashOut.yaml'
+    SupplyPayment:
+      $ref: './components/schemas/dictionary/supplyPayment.yaml'
     SupplyPosition:
       $ref: './components/schemas/dictionary/supplyPosition.yaml'
     SupplyPositionList:
@@ -2714,6 +2720,12 @@ components:
       $ref: './components/schemas/dictionary/payrollPaymentPaymentOut.yaml'
     PayrollPaymentCashOut:
       $ref: './components/schemas/dictionary/payrollPaymentCashOut.yaml'
+    PurchaseReturnPayment:
+      $ref: './components/schemas/dictionary/purchaseReturnPayment.yaml'
+    PurchaseReturnPaymentPaymentIn:
+      $ref: './components/schemas/dictionary/purchaseReturnPaymentPaymentIn.yaml'
+    PurchaseReturnPaymentCashIn:
+      $ref: './components/schemas/dictionary/purchaseReturnPaymentCashIn.yaml'
     FinanceInOperationAbstract:
       $ref: './components/schemas/dictionary/financeInOperationAbstract.yaml'
     FinanceInOperationCustomerOrder:
