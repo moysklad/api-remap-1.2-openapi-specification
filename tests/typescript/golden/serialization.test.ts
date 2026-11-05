@@ -282,3 +282,17 @@ test('Payroll payments: типы и суммы читаются, readOnly-свя
     const serialized = asObject(getToJson(sdk, 'Payroll')(model), 'Payroll не сериализован');
     assert.equal('payments' in serialized, false);
 });
+
+
+test('Loss expenseItem сохраняется в исходящем JSON', () => {
+    const fixture = loadFixture('loss');
+    const model = asObject(getFromJson(sdk, 'Loss')(fixture), 'Loss не создан');
+    const serialized = asObject(getToJson(sdk, 'Loss')(model), 'Loss не сериализован');
+
+    assert.ok(fixture['expenseItem'], 'Фикстура должна содержать статью расходов');
+    assert.deepEqual(
+        normalizeForComparison(serialized['expenseItem']),
+        normalizeForComparison(fixture['expenseItem']),
+        'Статья расходов должна передаваться при создании и изменении Списания',
+    );
+});
