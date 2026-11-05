@@ -45,4 +45,9 @@ properties:
         $ref: '../common/meta.yaml'
       priceType:
         $ref: '../../../openapi.yaml#/components/schemas/PriceType'
-
+  assortment:
+    type: array
+    description: Массив метаданных товаров, услуг и модификаций
+    nullable: true
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/DiscountAssortmentItem'

@@ -36,3 +36,9 @@ properties:
           type: number
           format: double
           description: Процент скидки, соответствующий данной сумме
+  assortment:
+    type: array
+    description: Массив метаданных товаров, услуг и модификаций
+    nullable: true
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/DiscountAssortmentItem'

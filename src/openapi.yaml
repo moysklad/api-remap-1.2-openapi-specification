@@ -1515,8 +1515,6 @@ paths:
     $ref: './paths/documents/emissionorders/emissionorders.yaml'
   /entity/emissionorder/{id}:
     $ref: './paths/documents/emissionorders/emissionorder-by-id.yaml'
-  /entity/emissionorder/{id}/trash:
-    $ref: './paths/documents/emissionorders/emissionorder-trash.yaml'
   /entity/emissionorder/batch:
     $ref: './paths/documents/emissionorders/emissionorders-batch.yaml'
   /entity/emissionorder/metadata:
