@@ -1,4 +1,5 @@
 post:
+  x-batch-response: true
   operationId: createFactureInMetadataStatesBatch
   tags:
     - FactureIns
@@ -26,5 +27,13 @@ post:
             type: array
             items:
               $ref: '../../../openapi.yaml#/components/schemas/StateRowResult'
+    '400':
+      $ref: '../../../components/responses.yaml#/BatchStateError'
+    '404':
+      $ref: '../../../components/responses.yaml#/BatchStateError'
+    '409':
+      $ref: '../../../components/responses.yaml#/BatchStateError'
+    '412':
+      $ref: '../../../components/responses.yaml#/BatchStateError'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'

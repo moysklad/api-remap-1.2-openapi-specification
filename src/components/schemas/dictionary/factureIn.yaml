@@ -1,4 +1,5 @@
 type: object
+x-polymorphic-parent: EntityWithMeta
 description: Счет-фактура полученный (facturein)
 x-implements: MetaEntity
 x-entity-static-builder:

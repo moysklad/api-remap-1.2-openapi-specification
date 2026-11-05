@@ -109,3 +109,39 @@ PayloadTooLarge:
     application/json:
       schema:
         $ref: '../openapi.yaml#/components/schemas/Errors'
+
+BatchEntityError:
+  description: |
+    Ошибка массовой операции: объект errors или массив результатов по каждому элементу
+  content:
+    application/json:
+      schema:
+        oneOf:
+          - $ref: '../openapi.yaml#/components/schemas/Errors'
+          - type: array
+            items:
+              $ref: '../openapi.yaml#/components/schemas/BatchResponseEntity'
+
+
+BatchDeleteError:
+  description: |
+    Ошибка массовой операции: объект errors или массив результатов по каждому элементу
+  content:
+    application/json:
+      schema:
+        oneOf:
+          - $ref: '../openapi.yaml#/components/schemas/Errors'
+          - type: array
+            items:
+              $ref: '../openapi.yaml#/components/schemas/DeleteRowResult'
+
+BatchStateError:
+  description: Ошибка массового изменения статусов, объект errors или массив результатов
+  content:
+    application/json:
+      schema:
+        oneOf:
+          - $ref: '../openapi.yaml#/components/schemas/Errors'
+          - type: array
+            items:
+              $ref: '../openapi.yaml#/components/schemas/StateRowResult'

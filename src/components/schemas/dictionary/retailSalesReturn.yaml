@@ -1,4 +1,5 @@
 type: object
+x-polymorphic-parent: EntityWithMeta
 description: Розничный возврат
 x-implements: MetaEntity
 x-entity-static-builder:

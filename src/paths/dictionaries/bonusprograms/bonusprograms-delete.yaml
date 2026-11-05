@@ -1,4 +1,5 @@
 post:
+  x-batch-response: true
   operationId: deleteBonusProgramsBatch
   tags:
     - BonusPrograms
@@ -27,6 +28,10 @@ post:
             type: array
             items:
               $ref: '../../../openapi.yaml#/components/schemas/DeleteRowResult'
+    '404':
+      $ref: '../../../components/responses.yaml#/BatchDeleteError'
+    '412':
+      $ref: '../../../components/responses.yaml#/BatchDeleteError'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
 
