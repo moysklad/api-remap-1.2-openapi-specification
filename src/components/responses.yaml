@@ -14,9 +14,6 @@ CommonError:
     application/json:
       schema:
         $ref: '../openapi.yaml#/components/schemas/Errors'
-    text/html;charset=UTF-8:
-      schema:
-        type: string
 
 # Для массовых операций: тело 400 может быть объектом или массивом объектов ошибок
 BatchBadRequest:
