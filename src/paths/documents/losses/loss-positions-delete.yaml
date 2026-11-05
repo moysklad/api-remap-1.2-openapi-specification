@@ -1,5 +1,4 @@
 post:
-  x-batch-response: true
   operationId: deleteLossPositionsBatch
   tags:
     - Losses

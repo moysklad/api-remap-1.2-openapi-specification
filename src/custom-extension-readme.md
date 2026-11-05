@@ -147,14 +147,3 @@ x-polymorphic-parent: FinanceInOperationAbstract
 allOf:
   - $ref: '../../../openapi.yaml#/components/schemas/Demand'
 ```
-
-
-## x-batch-response
-
-Помечает операцию, у которой массив результатов по элементам может прийти с ошибочным
-HTTP-статусом. Схемы ответов явно описывают объект `Errors` либо массив
-`BatchResponseEntity`, `DeleteRowResult` или `StateRowResult`.
-
-TypeScript-шаблон для такой операции возвращает массив при HTTP 400, 404, 409 или 412
-через обычный типизированный разбор ответа. Объект ошибки по-прежнему вызывает
-`ResponseError`. Прочие операции и статусы сохраняют обычную обработку ошибок.
