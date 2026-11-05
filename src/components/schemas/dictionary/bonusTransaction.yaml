@@ -1,5 +1,6 @@
 type: object
 description: Бонусная операция (bonustransaction)
+x-polymorphic-parent: EntityWithMeta
 x-implements: MetaEntity
 x-entity-static-builder:
   methodParams:
@@ -39,12 +40,10 @@ properties:
     $ref: '../../../openapi.yaml#/components/schemas/Organization'
   parentDocument:
     description: Метаданные связанного документа бонусной операции
-#   todo retaildemand or retailsalesreturn
     nullable: true
     type: object
-    properties:
-      meta:
-        $ref: '../common/meta.yaml'
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/BonusTransactionParentDocument'
   applicable:
     type: boolean
     description: Отметка о проведении

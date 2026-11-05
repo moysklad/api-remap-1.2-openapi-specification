@@ -2111,6 +2111,12 @@ components:
       $ref: './components/schemas/dictionary/bonusProgram.yaml'
     BonusProgramList:
       $ref: './components/schemas/dictionary/bonusProgramList.yaml'
+    BonusTransactionParentDocument:
+      $ref: './components/schemas/dictionary/bonusTransactionParentDocument.yaml'
+    BonusTransactionParentRetailDemand:
+      $ref: './components/schemas/dictionary/bonusTransactionParentRetailDemand.yaml'
+    BonusTransactionParentRetailSalesReturn:
+      $ref: './components/schemas/dictionary/bonusTransactionParentRetailSalesReturn.yaml'
     BonusTransaction:
       $ref: './components/schemas/dictionary/bonusTransaction.yaml'
     BonusTransactionList:
