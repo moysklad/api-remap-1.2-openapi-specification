@@ -1,0 +1,25 @@
+description: |
+  Элемент массива `operations` розничной смены.
+  Допустимые `meta.type`: retaildemand, retailsalesreturn, retaildrawercashin,
+  retaildrawercashout, prepayment, prepaymentreturn.
+type: object
+properties:
+  meta:
+    $ref: '../../../openapi.yaml#/components/schemas/Meta'
+x-polymorphic-discriminator:
+  path: meta.type
+  mappings:
+    - type: retaildemand
+      componentName: RetailShiftOperationRetailDemand
+    - type: retailsalesreturn
+      componentName: RetailShiftOperationRetailSalesReturn
+    - type: retaildrawercashin
+      componentName: RetailShiftOperationRetailDrawerCashIn
+    - type: retaildrawercashout
+      componentName: RetailShiftOperationRetailDrawerCashOut
+    - type: prepayment
+      componentName: RetailShiftOperationPrepayment
+    - type: prepaymentreturn
+      componentName: RetailShiftOperationPrepaymentReturn
+required:
+  - meta

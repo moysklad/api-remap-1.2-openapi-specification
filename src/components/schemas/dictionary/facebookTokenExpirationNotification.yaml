@@ -1,0 +1,11 @@
+type: object
+description: Уведомление об окончании доступа к аккаунту Facebook
+x-polymorphic-parent: NotificationAbstract
+properties:
+  connectorName:
+    type: string
+    maxLength: 4096
+    description: Название коннектора
+  daysLeftToExpiration:
+    type: integer
+    description: Количество дней до окончания доступа

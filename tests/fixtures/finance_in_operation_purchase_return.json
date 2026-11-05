@@ -1,0 +1,50 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/purchasereturn/0ea5ec6c-58f3-11f1-0a83-1c0f00000817",
+    "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/purchasereturn/metadata",
+    "type": "purchasereturn",
+    "mediaType": "application/json"
+  },
+  "id": "0ea5ec6c-58f3-11f1-0a83-1c0f00000817",
+  "accountId": "f976ed28-2e58-11e6-8a84-bae500000001",
+  "name": "00001",
+  "moment": "2016-07-04 08:54:00",
+  "applicable": true,
+  "positions": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/purchasereturn/0ea5ec6c-58f3-11f1-0a83-1c0f00000817/positions",
+      "type": "purchasereturnposition",
+      "mediaType": "application/json",
+      "size": 1,
+      "limit": 1000,
+      "offset": 0
+    }
+  },
+  "supply": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/supply/90ba347d-6b8b-11e6-8a84-bae5000000bd",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/supply/metadata",
+      "type": "supply",
+      "mediaType": "application/json"
+    }
+  },
+  "payments": [
+    {
+      "meta": {
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/paymentin/ad1ffc02-3f8e-11e6-8a84-bae5000000fa",
+        "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/paymentin/metadata",
+        "type": "paymentin",
+        "mediaType": "application/json"
+      }
+    },
+    {
+      "meta": {
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/cashin/4b4552e8-3f7f-11e6-8a84-bae500000075",
+        "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/cashin/metadata",
+        "type": "cashin",
+        "mediaType": "application/json"
+      }
+    }
+  ],
+  "linkedSum": 45000
+}

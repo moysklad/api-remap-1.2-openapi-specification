@@ -1,0 +1,51 @@
+get:
+  operationId: getProcessingPlanFolders
+  tags:
+    - ProcessingPlanFolders
+  summary: Получить список групп техкарт
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/limit'
+    - $ref: '../../../components/parameters.yaml#/offset'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/ProcessingPlanFolderList'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+post:
+  operationId: createProcessingPlanFolder
+  tags:
+    - ProcessingPlanFolders
+  summary: Создать группу техкарт
+  parameters:
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../openapi.yaml#/components/schemas/ProcessingPlanFolder'
+        example:
+          name: "Группа 1"
+          description: "Группа техкарт из примера OpenAPI"
+          shared: true
+          archived: false
+          externalCode: "ppf-openapi-1"
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/ProcessingPlanFolder'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

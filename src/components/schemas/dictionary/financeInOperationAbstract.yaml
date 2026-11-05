@@ -1,0 +1,26 @@
+type: object
+description: |
+  Элемент массива `operations` приходного ордера / входящего платежа.
+
+  Допустимые `meta.type`: customerorder, purchasereturn, demand, invoiceout,
+  commissionreportin, retailshift.
+x-polymorphic-discriminator:
+  path: meta.type
+  mappings:
+    - type: customerorder
+      componentName: FinanceInOperationCustomerOrder
+    - type: purchasereturn
+      componentName: FinanceInOperationPurchaseReturn
+    - type: demand
+      componentName: FinanceInOperationDemand
+    - type: invoiceout
+      componentName: FinanceInOperationInvoiceOut
+    - type: commissionreportin
+      componentName: FinanceInOperationCommissionReportIn
+    - type: retailshift
+      componentName: FinanceInOperationRetailShift
+required:
+  - linkedSum
+  - meta
+allOf:
+  - $ref: '../../../openapi.yaml#/components/schemas/OperationLinkedSum'

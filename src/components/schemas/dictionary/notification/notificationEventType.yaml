@@ -1,0 +1,6 @@
+type: string
+description: Известные значения типа события сценария
+enum:
+  - ADD
+  - MODIFY
+  - CHANGE_STATUS

@@ -1,0 +1,7 @@
+type: object
+description: Краткое представление удаленной задачи
+properties:
+  name:
+    type: string
+    maxLength: 255
+    description: Наименование задачи

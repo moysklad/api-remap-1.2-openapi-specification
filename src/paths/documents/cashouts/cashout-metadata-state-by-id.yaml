@@ -1,0 +1,63 @@
+get:
+  operationId: getCashOutMetadataStateById
+  tags:
+    - CashOuts
+  summary: Отдельный статус CashOut
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/State'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+put:
+  operationId: updateCashOutMetadataStateById
+  tags:
+    - CashOuts
+  summary: Обновить отдельный статус CashOut
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../openapi.yaml#/components/schemas/State'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/State'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+delete:
+  operationId: deleteCashOutMetadataStateById
+  tags:
+    - CashOuts
+  summary: Удалить отдельный статус CashOut
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  responses:
+    '200':
+      description: Успешный запрос
+    '404':
+      $ref: '../../../components/responses.yaml#/NotFoundEmpty'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

@@ -1,0 +1,61 @@
+get:
+  operationId: getVariantImages
+  tags:
+    - Variants
+  summary: Получить изображения Модификации
+  description: Запрос на получение всех Изображений Модификации.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/parameters.yaml#/limit'
+    - $ref: '../../../components/parameters.yaml#/offset'
+    - $ref: '../../../components/parameters.yaml#/fields'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              meta:
+                $ref: '../../../openapi.yaml#/components/schemas/MetaList'
+              rows:
+                type: array
+                items:
+                  $ref: '../../../openapi.yaml#/components/schemas/Image'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+post:
+  operationId: addVariantImage
+  tags:
+    - Variants
+  summary: Добавить изображение к Модификации
+  description: |
+    Добавить новое Изображение к Модификации.
+    В поле `content` нужно указать изображение, закодированное в Base64, в поле `filename` — имя файла с расширением.
+    У Модификации может быть не более 10 Изображений.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../openapi.yaml#/components/schemas/FileUpload'
+  responses:
+    '200':
+      description: Изображение успешно добавлено. Результат — массив всех Изображений Модификации.
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../../../openapi.yaml#/components/schemas/Image'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

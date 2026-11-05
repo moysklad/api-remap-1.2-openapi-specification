@@ -1,0 +1,76 @@
+# moysklad/remap-1.2-php-sdk
+
+Официальный PHP SDK для [МойСклад JSON API 1.2](https://dev.moysklad.ru/doc/api/remap/1.2/).
+
+* Packagist: https://packagist.org/packages/moysklad/remap-1.2-php-sdk
+* GitHub: https://github.com/moysklad/php-remap-1.2-sdk
+* OpenAPI-спецификация: https://github.com/moysklad/api-remap-1.2-openapi-specification
+
+Код SDK генерируется из OpenAPI-спецификации, поэтому правки нужно вносить в спецификацию, а не в этот репозиторий.
+
+## Требования
+
+* PHP 8.1+
+* Расширения `curl`, `json`, `mbstring`
+
+## Установка
+
+```bash
+composer require moysklad/remap-1.2-php-sdk
+```
+
+Классы SDK находятся в пространстве имён `{{{invokerPackage}}}` и подключаются через автозагрузчик Composer.
+
+## Авторизация
+
+МойСклад поддерживает Bearer-токен и Basic Auth. Учётные данные задаются в `Configuration`.
+
+Токен доступа:
+
+```php
+$config = (new \{{{invokerPackage}}}\Configuration())
+    ->setAccessToken(getenv('MOYSKLAD_TOKEN'));
+```
+
+Логин и пароль:
+
+```php
+$config = (new \{{{invokerPackage}}}\Configuration())
+    ->setUsername(getenv('MOYSKLAD_LOGIN'))
+    ->setPassword(getenv('MOYSKLAD_PASSWORD'));
+```
+
+По умолчанию запросы идут на `https://api.moysklad.ru/api/remap/1.2`. Другой адрес задаётся через `$config->setHost(...)`.
+
+## Пример запроса
+
+```php
+<?php
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+use GuzzleHttp\Client;
+use {{{invokerPackage}}}\Api\ProductsApi;
+use {{{invokerPackage}}}\ApiException;
+use {{{invokerPackage}}}\Configuration;
+
+$config = (new Configuration())
+    ->setAccessToken(getenv('MOYSKLAD_TOKEN'));
+
+$productsApi = new ProductsApi(new Client(), $config);
+
+try {
+    $products = $productsApi->getProducts(limit: 10);
+    foreach ($products->getRows() ?? [] as $product) {
+        echo $product->getId(), ' ', $product->getName(), PHP_EOL;
+    }
+} catch (ApiException $e) {
+    echo $e->getCode(), ' ', $e->getResponseBody(), PHP_EOL;
+}
+```
+
+Ошибки API выбрасывают `ApiException` с HTTP-статусом в `getCode()` и телом ответа в `getResponseBody()`.
+
+## Лицензия
+
+{{{licenseName}}}, см. [текст лицензии](https://www.apache.org/licenses/LICENSE-2.0).

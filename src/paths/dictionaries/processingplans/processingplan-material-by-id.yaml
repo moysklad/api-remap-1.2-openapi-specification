@@ -1,0 +1,69 @@
+get:
+  operationId: getProcessingPlanMaterialById
+  tags:
+    - ProcessingPlans
+  summary: Получить материал Техкарты
+  description: Запрос на получение отдельного материала Техкарты с указанным id
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/parameters.yaml#/positionId'
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/ProcessingPlanMaterial'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+put:
+  operationId: updateProcessingPlanMaterial
+  tags:
+    - ProcessingPlans
+  summary: Изменить материал Техкарты
+  description: Запрос на обновление отдельного материала Техкарты
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/parameters.yaml#/positionId'
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../openapi.yaml#/components/schemas/ProcessingPlanMaterial'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../../../openapi.yaml#/components/schemas/ProcessingPlanMaterial'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+delete:
+  operationId: deleteProcessingPlanMaterial
+  tags:
+    - ProcessingPlans
+  summary: Удалить материал Техкарты
+  description: Запрос на удаление материала Техкарты с указанным id
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/parameters.yaml#/positionId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Материал Техкарты успешно удален
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

@@ -1,0 +1,34 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/12a8b923-692c-11e6-8a84-bae500000053",
+    "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/metadata",
+    "type": "counterparty",
+    "mediaType": "application/json"
+  },
+  "id": "12a8b923-692c-11e6-8a84-bae500000053",
+  "name": "Контрагент с атрибутом-контрагентом",
+  "attributes": [
+    {
+      "meta": {
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/metadata/attributes/5c1b3e7a-9a90-11e8-9107-5048000c2a01",
+        "type": "attributemetadata",
+        "mediaType": "application/json"
+      },
+      "id": "5c1b3e7a-9a90-11e8-9107-5048000c2a01",
+      "name": "Головная компания",
+      "type": "counterparty",
+      "value": {
+        "meta": {
+          "href": "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/6d2c4f8b-9a90-11e8-9107-5048000c2b02",
+          "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/metadata",
+          "type": "counterparty",
+          "mediaType": "application/json"
+        },
+        "id": "6d2c4f8b-9a90-11e8-9107-5048000c2b02",
+        "name": "ООО Головная компания (expand)",
+        "companyType": "legal",
+        "inn": "7736570901"
+      }
+    }
+  ]
+}

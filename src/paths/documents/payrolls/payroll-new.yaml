@@ -1,0 +1,27 @@
+put:
+  operationId: getPayrollTemplate
+  tags:
+    - Payrolls
+  summary: Шаблон Начисления зарплаты
+  description: |
+    Предзаполненный шаблон Начисления зарплаты.
+    Тело запроса обязательно; пустой объект `{}` возвращает стандартный шаблон без привязки к документу.
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/Payroll'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+  parameters:
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'

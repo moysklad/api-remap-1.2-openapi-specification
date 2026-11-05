@@ -1,0 +1,83 @@
+get:
+  operationId: getVariantStoreBalanceById
+  tags:
+    - Variants
+  summary: Получить НСО модификации по складу
+  description: Запрос на получение отдельного Неснижаемого остатка Модификации по складу.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - name: storeBalanceId
+      in: path
+      required: true
+      description: ID неснижаемого остатка
+      schema:
+        type: string
+        format: uuid
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/StoreBalance'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+put:
+  operationId: updateVariantStoreBalance
+  tags:
+    - Variants
+  summary: Изменить НСО модификации по складу
+  description: Обновление Неснижаемого остатка Модификации для склада.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - name: storeBalanceId
+      in: path
+      required: true
+      description: ID неснижаемого остатка
+      schema:
+        type: string
+        format: uuid
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../openapi.yaml#/components/schemas/StoreBalance'
+  responses:
+    '200':
+      description: НСО успешно обновлён
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/StoreBalance'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+delete:
+  operationId: deleteVariantStoreBalance
+  tags:
+    - Variants
+  summary: Удалить НСО модификации по складу
+  description: Удаление Неснижаемого остатка Модификации для склада.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - name: storeBalanceId
+      in: path
+      required: true
+      description: ID неснижаемого остатка
+      schema:
+        type: string
+        format: uuid
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: НСО успешно удалён
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

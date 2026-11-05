@@ -1,0 +1,90 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/customerorder/metadata?expand=attributes",
+    "mediaType": "application/json"
+  },
+  "attributes": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/customerorder/metadata/attributes",
+      "type": "attributemetadata",
+      "mediaType": "application/json",
+      "size": 72,
+      "limit": 1000,
+      "offset": 0
+    },
+    "rows": [
+      {
+        "meta": {
+          "href": "https://api.moysklad.ru/api/remap/1.2/entity/customerorder/metadata/attributes/bcd0f613-ac02-11ef-0a80-081100581927",
+          "type": "attributemetadata",
+          "mediaType": "application/json"
+        },
+        "id": "bcd0f613-ac02-11ef-0a80-081100581927",
+        "name": "Файл",
+        "type": "file",
+        "required": false,
+        "show": true
+      },
+      {
+        "meta": {
+          "href": "https://api.moysklad.ru/api/remap/1.2/entity/customerorder/metadata/attributes/789ff0be-cb75-11e6-7a69-8f55000b65ae",
+          "type": "attributemetadata",
+          "mediaType": "application/json"
+        },
+        "id": "789ff0be-cb75-11e6-7a69-8f55000b65ae",
+        "name": "Д-Ссылка",
+        "type": "link",
+        "required": false,
+        "show": true
+      },
+      {
+        "meta": {
+          "href": "https://api.moysklad.ru/api/remap/1.2/entity/customerorder/metadata/attributes/789fe018-cb75-11e6-7a69-8f55000b65a7",
+          "type": "attributemetadata",
+          "mediaType": "application/json"
+        },
+        "customEntityMeta": {
+          "href": "https://api.moysklad.ru/api/remap/1.2/entity/customentity/6e40efcf-80d9-11e7-7a31-d0fd00194dc8/metadata",
+          "type": "customentitymetadata",
+          "mediaType": "application/json"
+        },
+        "id": "789fe018-cb75-11e6-7a69-8f55000b65a7",
+        "name": "Д-Число-целое2",
+        "type": "customentity",
+        "required": true,
+        "show": true
+      }
+    ]
+  },
+  "states": [
+    {
+      "meta": {
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/customerorder/metadata/states/5744b022-13f9-11ed-0a80-04540011d8e3",
+        "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/customerorder/metadata",
+        "type": "state",
+        "mediaType": "application/json"
+      },
+      "id": "5744b022-13f9-11ed-0a80-04540011d8e3",
+      "accountId": "45eb22e0-0e7b-11e2-1c31-3c4a92f3a0a7",
+      "name": "только что созданныйтолько что созданный только что созданный только что созданный",
+      "color": 15280409,
+      "stateType": "Regular",
+      "entityType": "customerorder"
+    },
+    {
+      "meta": {
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/customerorder/metadata/states/9a7350d2-9e35-11e2-1dba-001b21d91495",
+        "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/customerorder/metadata",
+        "type": "state",
+        "mediaType": "application/json"
+      },
+      "id": "9a7350d2-9e35-11e2-1dba-001b21d91495",
+      "accountId": "45eb22e0-0e7b-11e2-1c31-3c4a92f3a0a7",
+      "name": "Принят",
+      "color": 10667543,
+      "stateType": "Regular",
+      "entityType": "customerorder"
+    }
+  ],
+  "createShared": true
+}

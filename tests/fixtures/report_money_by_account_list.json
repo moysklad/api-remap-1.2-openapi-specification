@@ -1,0 +1,64 @@
+{
+  "context": {
+    "employee": {
+      "meta": {
+        "href": "https://api.moysklad.ru/api/remap/1.2/context/employee",
+        "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/employee/metadata",
+        "type": "employee",
+        "mediaType": "application/json"
+      }
+    }
+  },
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/report/money/byaccount",
+    "type": "moneyreport",
+    "mediaType": "application/json"
+  },
+  "rows": [
+    {
+      "organization": {
+        "meta": {
+          "href": "https://api.moysklad.ru/api/remap/1.2/entity/organization/850c8195-f504-11e5-8a84-bae50000015e",
+          "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/organization/metadata",
+          "type": "organization",
+          "mediaType": "application/json"
+        },
+        "name": "OOO Ромашка"
+      },
+      "balance": 100
+    },
+    {
+      "organization": {
+        "meta": {
+          "href": "https://api.moysklad.ru/api/remap/1.2/entity/organization/850c8195-f504-11e5-8a84-bae50000015e",
+          "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/organization/metadata",
+          "type": "organization",
+          "mediaType": "application/json"
+        },
+        "name": "OOO Серьезное Юридическое Лицо"
+      },
+      "balance": 100
+    },
+    {
+      "account": {
+        "meta": {
+          "href": "https://api.moysklad.ru/api/remap/1.2/entity/organization/4b9d5bec-0575-11e6-9464-e4de00000008/accounts/4b9d69b7-0575-11e6-9464-e4de00000009",
+          "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/organization/metadata",
+          "type": "account",
+          "mediaType": "application/json"
+        },
+        "name": "00000"
+      },
+      "organization": {
+        "meta": {
+          "href": "https://api.moysklad.ru/api/remap/1.2/entity/organization/850c8195-f504-11e5-8a84-bae50000015e",
+          "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/organization/metadata",
+          "type": "organization",
+          "mediaType": "application/json"
+        },
+        "name": "OOO Серьезное Юридическое Лицо"
+      },
+      "balance": 200
+    }
+  ]
+}

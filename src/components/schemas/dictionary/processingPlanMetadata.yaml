@@ -1,0 +1,10 @@
+type: object
+description: Метаданные Техкарты
+properties:
+  meta:
+    $ref: '../common/meta.yaml'
+  attributes:
+    $ref: '../common/attributeMetaInfoList.yaml'
+  createShared:
+    type: boolean
+    description: Создавать новые Техкарты с меткой "Общий"

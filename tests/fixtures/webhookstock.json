@@ -1,0 +1,26 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/webhookstock/7944ef04-f831-11e5-7a69-971500188b19",
+    "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/webhookstock/metadata",
+    "type": "webhookstock",
+    "mediaType": "application/json"
+  },
+  "authorApplication": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/application/9e1ad712-3e45-4679-8896-7159973a8ef5",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/application/metadata",
+      "type": "application",
+      "mediaType": "application/json"
+    },
+    "id": "9e1ad712-3e45-4679-8896-7159973a8ef5",
+    "account_id": "b8b74698-9128-11e6-8a84-bae500000001",
+    "name": "Тестовое решение",
+    "appUid": "test-app-uid"
+  },
+  "id": "7944ef04-f831-11e5-7a69-971500188b19",
+  "accountId": "b8b74698-9128-11e6-8a84-bae500000001",
+  "stockType": "stock",
+  "reportType": "bystore",
+  "url": "http://www.example.com",
+  "enabled": true
+}

@@ -1,0 +1,25 @@
+type: object
+description: Метаданные пользовательского справочника (customentity/metadata)
+properties:
+  meta:
+    $ref: '../common/meta.yaml'
+    description: Метаданные пользовательского справочника
+  entityMeta:
+    description: Метаданные ссылки на связанный пользовательский справочник (`type` — `customentity`).
+    allOf:
+      - $ref: '../common/meta.yaml'
+  attributes:
+    $ref: '../common/attributeMetaInfoList.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID пользовательского справочника
+    readOnly: true
+  name:
+    type: string
+    maxLength: 255
+    description: Наименование пользовательского справочника
+  createShared:
+    type: boolean
+    description: Создавать новые элементы с меткой "Общий"
+

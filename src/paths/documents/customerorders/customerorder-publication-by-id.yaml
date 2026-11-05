@@ -1,0 +1,37 @@
+get:
+  operationId: getCustomerOrderPublicationById
+  tags:
+    - CustomerOrders
+  summary: Получить Публикацию Заказа покупателя
+  description: Запрос на получение Публикации Заказа покупателя по идентификатору.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/parameters.yaml#/publicationId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/Publication'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+delete:
+  operationId: deleteCustomerOrderPublication
+  tags:
+    - CustomerOrders
+  summary: Удалить Публикацию Заказа покупателя
+  description: Запрос на удаление Публикации Заказа покупателя по идентификатору.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/parameters.yaml#/publicationId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '204':
+      description: Публикация успешно удалена
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

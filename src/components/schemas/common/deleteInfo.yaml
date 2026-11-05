@@ -1,0 +1,6 @@
+type: object
+description: Результат удаления сущности
+properties:
+  info:
+    type: string
+    description: Информационное сообщение об удалении сущности

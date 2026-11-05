@@ -1,0 +1,27 @@
+put:
+  operationId: getLossTemplate
+  tags:
+    - Losses
+  summary: Шаблон Списания
+  description: |
+    Предзаполненный шаблон Списания.
+    Пустое тело возвращает стандартный шаблон, а переданный `salesReturn` позволяет получить шаблон на основе возврата покупателя.
+  requestBody:
+    required: false
+    content:
+      application/json:
+        schema:
+          type: object
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/Loss'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+  parameters:
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'

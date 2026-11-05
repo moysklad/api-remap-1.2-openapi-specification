@@ -1,0 +1,14 @@
+type: object
+description: Краткое представление связанного с уведомлением объекта
+properties:
+  meta:
+    description: Метаданные объекта
+    $ref: '../../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID объекта
+  name:
+    type: string
+    maxLength: 255
+    description: Наименование объекта

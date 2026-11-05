@@ -1,0 +1,64 @@
+get:
+  operationId: getProcessingOrderPositionById
+  tags:
+  - ProcessingOrders
+  summary: Получить позицию ProcessingOrder
+  parameters:
+  - $ref: '../../../components/parameters.yaml#/entityId'
+  - $ref: '../../../components/parameters.yaml#/expand'
+  - $ref: '../../../components/parameters.yaml#/positionId'
+  - $ref: '../../../components/headers.yaml#/AcceptHeader'
+  - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/ProcessingOrderPosition'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+put:
+  operationId: updateProcessingOrderPosition
+  tags:
+  - ProcessingOrders
+  summary: Изменить позицию ProcessingOrder
+  parameters:
+  - $ref: '../../../components/parameters.yaml#/entityId'
+  - $ref: '../../../components/parameters.yaml#/expand'
+  - $ref: '../../../components/parameters.yaml#/positionId'
+  - $ref: '../../../components/headers.yaml#/AcceptHeader'
+  - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../openapi.yaml#/components/schemas/ProcessingOrderPosition'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/ProcessingOrderPosition'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+delete:
+  operationId: deleteProcessingOrderPosition
+  tags:
+  - ProcessingOrders
+  summary: Удалить позицию ProcessingOrder
+  parameters:
+  - $ref: '../../../components/parameters.yaml#/entityId'
+  - $ref: '../../../components/parameters.yaml#/positionId'
+  - $ref: '../../../components/headers.yaml#/AcceptHeader'
+  - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

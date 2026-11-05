@@ -1,0 +1,10 @@
+type: object
+description: Метаданные складов
+properties:
+  meta:
+    $ref: '../common/meta.yaml'
+  attributes:
+    $ref: '../common/attributeMetaInfoList.yaml'
+  createShared:
+    type: boolean
+    description: Создавать новые склады с меткой "Общий"

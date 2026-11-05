@@ -1,0 +1,51 @@
+get:
+  operationId: getPriceLists
+  tags:
+    - PriceLists
+  summary: Получить список Прайс-листов
+  description: Запрос всех Прайс-листов на данной учетной записи
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/limit'
+    - $ref: '../../../components/parameters.yaml#/offset'
+    - $ref: '../../../components/parameters.yaml#/search'
+    - $ref: '../../../components/parameters.yaml#/filter'
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/parameters.yaml#/order'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/PriceListList'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+post:
+  operationId: createPriceList
+  tags:
+    - PriceLists
+  summary: Создать Прайс-лист
+  description: Создание Прайс-листа
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../openapi.yaml#/components/schemas/PriceList'
+  responses:
+    '200':
+      description: Прайс-лист успешно создан
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/PriceList'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

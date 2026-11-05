@@ -1,0 +1,13 @@
+type: object
+description: Уведомление из сценария
+x-polymorphic-parent: NotificationAbstract
+properties:
+  eventType:
+    type: string
+    description: Тип события сценария. Известные значения описаны в NotificationEventType
+    readOnly: true
+  entity:
+    description: Объект, на который сработал сценарий
+    readOnly: true
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/NotificationNamedEntity'

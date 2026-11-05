@@ -1,0 +1,33 @@
+post:
+  operationId: createOrganizationAccounts
+  tags:
+    - Organizations
+  summary: Массовое создание и обновление счетов юрлица
+  description: >-
+    В теле запроса передается массив счетов. Для создания счета требуется accountNumber, для обновления — метаданные (meta). Валюту существующего счета изменить нельзя.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            $ref: '../../../openapi.yaml#/components/schemas/Account'
+          minItems: 1
+          maxItems: 1000
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../../../openapi.yaml#/components/schemas/BatchResponseEntity'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

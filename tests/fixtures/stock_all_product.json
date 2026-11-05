@@ -1,0 +1,27 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/product/c02e3a5c-007e-11e6-9464-e4de00000006?expand=supplier",
+    "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/product/metadata",
+    "type": "product",
+    "mediaType": "application/json"
+  },
+  "stock": -30,
+  "inTransit": 0,
+  "reserve": 0,
+  "quantity": -30,
+  "name": "Товар",
+  "code": "one1",
+  "article": "Ar23",
+  "price": 0.0,
+  "salePrice": 346347237000.0,
+  "uom": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/uom/c6bc9273-2c83-11e6-8a84-bae5000000a3",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/uom/metadata",
+      "type": "uom",
+      "mediaType": "application/json"
+    },
+    "name": "шт"
+  },
+  "externalCode": "ibWbdtWWhXiIwfZVEal6z2"
+}

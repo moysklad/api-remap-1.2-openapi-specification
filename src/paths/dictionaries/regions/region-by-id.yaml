@@ -1,0 +1,20 @@
+get:
+  operationId: getRegionById
+  tags:
+    - Regions
+  summary: Получить регион по ID
+  description: Запрос на получение отдельного региона с указанным id
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/Region'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

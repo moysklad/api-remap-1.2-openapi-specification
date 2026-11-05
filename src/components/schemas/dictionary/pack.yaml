@@ -1,0 +1,30 @@
+type: object
+description: Упаковка товара
+properties:
+  meta:
+    description: Метаданные упаковки товара
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID упаковки товара. Обязательное при ответе
+    readOnly: true
+  uom:
+    description: |
+      Метаданные единиц измерения. Обязательное при ответе. Поддерживает expand.
+      Единица измерения упаковки не должна совпадать с единицей измерения товара.
+    $ref: '../../../openapi.yaml#/components/schemas/Uom'
+  quantity:
+    type: number
+    minimum: 0
+    format: double
+    description: Количество товаров в упаковке. Обязательное при ответе
+  barcodes:
+    type: array
+    description: |
+      Штрихкоды упаковки (не более одного). Без штрихкода поле не выводится.
+      При обновлении переданный массив полностью заменяет штрихкоды упаковки.
+    maxItems: 1
+    nullable: true
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/Barcode'

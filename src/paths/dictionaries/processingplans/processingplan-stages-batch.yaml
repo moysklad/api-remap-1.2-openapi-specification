@@ -1,0 +1,34 @@
+post:
+  operationId: updateProcessingPlanStages
+  tags:
+    - ProcessingPlans
+  summary: Массовое изменение этапов Техкарты
+  description: >-
+    В теле запроса передается массив этапов Техкарты с метаданными (meta). Этапы Техкарты соответствуют этапам позиций привязанного техпроцесса, поэтому создать новый этап нельзя — только изменить существующий.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            $ref: '../../../openapi.yaml#/components/schemas/ProcessingPlanStage'
+          minItems: 1
+          maxItems: 1000
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../../../openapi.yaml#/components/schemas/BatchResponseEntity'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

@@ -1,0 +1,16 @@
+type: object
+description: |
+  Связанный платеж Начисления зарплаты с суммой оплаты `linkedSum`.
+  Допустимые `meta.type`: paymentout, cashout.
+x-polymorphic-discriminator:
+  path: meta.type
+  mappings:
+    - type: paymentout
+      componentName: PayrollPaymentPaymentOut
+    - type: cashout
+      componentName: PayrollPaymentCashOut
+required:
+  - meta
+  - linkedSum
+allOf:
+  - $ref: '../../../openapi.yaml#/components/schemas/OperationLinkedSum'

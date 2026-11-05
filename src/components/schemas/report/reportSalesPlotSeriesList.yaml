@@ -1,0 +1,13 @@
+type: object
+description: Показатели продаж
+properties:
+  context:
+    $ref: '../common/context.yaml'
+  meta:
+    description: Метаданные отчета показателей продаж
+    $ref: '../common/meta.yaml'
+  series:
+    type: array
+    description: Массив показателей продаж
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/ReportPlotSeries'

@@ -1,0 +1,18 @@
+get:
+  operationId: getSubscription
+  tags:
+    - Subscriptions
+  summary: Получить Подписку компании
+  description: Запрос на получение действующей подписки компании
+  parameters:
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос. Результат - JSON представление Подписки компании
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/Subscription'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

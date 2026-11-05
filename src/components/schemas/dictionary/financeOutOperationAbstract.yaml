@@ -1,0 +1,26 @@
+type: object
+description: |
+  Элемент массива `operations` расходного ордера / исходящего платежа: документ одного из
+  допустимых типов плюс обязательное поле `linkedSum`.
+
+  Допустимые `meta.type`: salesreturn, supply, invoicein, purchaseorder, commissionreportout, payroll.
+x-polymorphic-discriminator:
+  path: meta.type
+  mappings:
+    - type: salesreturn
+      componentName: FinanceOutOperationSalesReturn
+    - type: supply
+      componentName: FinanceOutOperationSupply
+    - type: invoicein
+      componentName: FinanceOutOperationInvoiceIn
+    - type: purchaseorder
+      componentName: FinanceOutOperationPurchaseOrder
+    - type: commissionreportout
+      componentName: FinanceOutOperationCommissionReportOut
+    - type: payroll
+      componentName: FinanceOutOperationPayroll
+required:
+  - linkedSum
+  - meta
+allOf:
+  - $ref: '../../../openapi.yaml#/components/schemas/OperationLinkedSum'

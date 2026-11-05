@@ -1,0 +1,49 @@
+get:
+  operationId: getStockAll
+  tags:
+    - ReportsStockAll
+  summary: Получить Расширенный отчет об остатках
+  description: |
+    Запрос Расширенного отчета об остатках по всей номенклатуре учетной записи.
+    Тип объектов в выдаче задается параметром `groupBy`: товары (product), товары и модификации
+    (variant), товары, модификации и партии (consignment).
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/limit'
+    - $ref: '../../../components/parameters.yaml#/offset'
+    - $ref: '../../../components/parameters.yaml#/filter'
+    - $ref: '../../../components/parameters.yaml#/order'
+    - name: groupBy
+      in: query
+      required: false
+      description: |
+        Тип, по которому нужно сгруппировать выдачу. Значение по умолчанию `variant`.
+        - `product` — выдает только товары
+        - `variant` — выдает товары и модификации
+        - `consignment` — выдает товары, модификации, партии
+      schema:
+        type: string
+        enum:
+          - product
+          - variant
+          - consignment
+    - name: includeRelated
+      in: query
+      required: false
+      description: |
+        Вывод остатков по модификациям и партиям товаров. Обязательное условие применения —
+        наличие фильтрации по товарам или модификациям или их комбинации.
+        При использовании параметра устанавливается группировка `groupBy=consignment`,
+        переданные значения `groupBy` игнорируются.
+      schema:
+        type: boolean
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос. Результат - JSON представление отчета
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/StockAllList'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

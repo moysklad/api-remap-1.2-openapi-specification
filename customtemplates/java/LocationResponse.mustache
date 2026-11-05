@@ -1,0 +1,59 @@
+{{>licenseInfo}}
+package {{invokerPackage}};
+
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+/**
+ * Response of a call whose payload is carried by the Location header and whose body is empty.
+ * Values belong to a single call and are never shared between requests.
+ */
+public class LocationResponse {
+  private final int statusCode;
+  private final String location;
+
+  public LocationResponse(int statusCode, String location) {
+    this.statusCode = statusCode;
+    this.location = location;
+  }
+
+  /**
+   * Builds the response from raw headers; the Location header is looked up without regard to case.
+   *
+   * @param statusCode HTTP status code
+   * @param headers response headers
+   * @return response with the first Location value, if any
+   */
+  public static LocationResponse fromHeaders(int statusCode, Map<String, List<String>> headers) {
+    String location = null;
+    if (headers != null) {
+      for (Map.Entry<String, List<String>> header : headers.entrySet()) {
+        if ("Location".equalsIgnoreCase(header.getKey()) && header.getValue() != null && !header.getValue().isEmpty()) {
+          location = header.getValue().get(0);
+          break;
+        }
+      }
+    }
+
+    return new LocationResponse(statusCode, location);
+  }
+
+  public int getStatusCode() {
+    return statusCode;
+  }
+
+  /**
+   * Value of the Location header, empty if the response did not carry one.
+   *
+   * @return Location header value
+   */
+  public Optional<String> getLocation() {
+    return Optional.ofNullable(location);
+  }
+
+  @Override
+  public String toString() {
+    return "LocationResponse{statusCode=" + statusCode + ", location=" + location + "}";
+  }
+}

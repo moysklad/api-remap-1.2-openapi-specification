@@ -1,0 +1,22 @@
+type: object
+description: Уведомление о завершении импорта
+x-polymorphic-parent: NotificationAbstract
+properties:
+  createdDocumentName:
+    type: string
+    maxLength: 255
+    description: Имя созданного документа
+  errorMessage:
+    type: string
+    maxLength: 255
+    description: Сообщение об ошибке
+  message:
+    type: string
+    maxLength: 255
+    description: Сообщение о завершении импорта
+  taskState:
+    type: string
+    description: Статус завершения. Известные значения описаны в NotificationTaskState
+  taskType:
+    type: string
+    description: Тип импорта. Известные значения описаны в NotificationImportType

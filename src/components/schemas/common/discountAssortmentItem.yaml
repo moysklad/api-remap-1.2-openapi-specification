@@ -1,0 +1,8 @@
+type: object
+description: |
+  Элемент массива assortment в скидках: метаданные товара, услуги или модификации.
+  В JSON API в `meta.type` встречаются `product`, `service`, `variant` (см. документацию по скидкам).
+oneOf:
+  - $ref: '../../../openapi.yaml#/components/schemas/Product'
+  - $ref: '../../../openapi.yaml#/components/schemas/Service'
+  - $ref: '../../../openapi.yaml#/components/schemas/Variant'

@@ -1,0 +1,35 @@
+get:
+  operationId: getNotificationById
+  tags:
+    - Notifications
+  summary: Получить уведомление
+  description: Запрос на получение уведомления с указанным id
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос. JSON представление уведомления
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/NotificationAbstract'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+delete:
+  operationId: deleteNotification
+  tags:
+    - Notifications
+  summary: Удалить уведомление
+  description: Удаление уведомления текущего пользователя с указанным id
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Уведомление успешно удалено
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

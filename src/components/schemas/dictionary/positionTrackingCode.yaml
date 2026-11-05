@@ -1,0 +1,16 @@
+type: object
+description: Код маркировки товара или транспортной упаковки в позиции Отгрузки
+properties:
+  cis:
+    type: string
+    description: Значение кода маркировки
+  type:
+    type: string
+    description: Тип кода маркировки. Известные значения описаны в PositionTrackingCodeType
+  trackingCodes:
+    type: array
+    description: |
+      Вложенные коды маркировки. Может присутствовать только если type имеет значения `consumerpack` или `transportpack`.
+      Допустима вложенность кодов маркировки товаров в транспортные упаковки; транспортные упаковки не могут иметь вложенных упаковок.
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/PositionTrackingCode'

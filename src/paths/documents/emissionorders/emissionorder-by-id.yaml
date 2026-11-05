@@ -1,0 +1,49 @@
+get:
+  operationId: getEmissionOrderById
+  tags:
+  - EmissionOrders
+  summary: Получить Заказ кодов маркировки
+  parameters:
+  - $ref: '../../../components/parameters.yaml#/entityId'
+  - $ref: '../../../components/parameters.yaml#/expand'
+  - $ref: '../../../components/parameters.yaml#/fields'
+  - $ref: '../../../components/headers.yaml#/AcceptHeader'
+  - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/EmissionOrder'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+put:
+  operationId: updateEmissionOrder
+  tags:
+  - EmissionOrders
+  summary: Изменить Заказ кодов маркировки
+  parameters:
+  - $ref: '../../../components/parameters.yaml#/entityId'
+  - $ref: '../../../components/parameters.yaml#/expand'
+  - $ref: '../../../components/parameters.yaml#/fields'
+  - $ref: '../../../components/headers.yaml#/AcceptHeader'
+  - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../openapi.yaml#/components/schemas/EmissionOrder'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/EmissionOrder'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+

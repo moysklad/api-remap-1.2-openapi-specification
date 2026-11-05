@@ -1,0 +1,27 @@
+put:
+  operationId: updateDiscountRoundingById
+  tags:
+    - Discounts
+  summary: Изменить округление копеек
+  description: Запрос на изменение округления копеек
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../openapi.yaml#/components/schemas/Discount'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/Discount'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+

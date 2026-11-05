@@ -1,0 +1,65 @@
+type: object
+description: Строка отчета «Показатели контрагентов»
+properties:
+  meta:
+    description: Метаданные отчета по данному контрагенту
+    $ref: '../common/meta.yaml'
+  counterparty:
+    description: Контрагент, по которому выдаются показатели
+    $ref: '../../../openapi.yaml#/components/schemas/Counterparty'
+  firstDemandDate:
+    type: string
+    nullable: true
+    description: Дата первой продажи
+  lastDemandDate:
+    type: string
+    nullable: true
+    description: Дата последней продажи
+  demandsCount:
+    type: integer
+    format: int64
+    description: Количество продаж
+  demandsSum:
+    type: number
+    format: double
+    description: Сумма продаж
+  averageReceipt:
+    type: number
+    format: double
+    description: Средний чек
+  returnsCount:
+    type: integer
+    format: int64
+    description: Количество возвратов
+  returnsSum:
+    type: number
+    format: double
+    description: Сумма возвратов
+  discountsSum:
+    type: number
+    format: double
+    description: Сумма скидок
+  balance:
+    type: number
+    format: double
+    description: Баланс
+  bonusBalance:
+    type: number
+    format: double
+    description: Баллы
+  profit:
+    type: number
+    format: double
+    description: Прибыль
+  lastEventDate:
+    type: string
+    nullable: true
+    description: Дата последнего события
+  lastEventText:
+    type: string
+    maxLength: 255
+    nullable: true
+    description: Текст последнего события
+  updated:
+    type: string
+    description: Момент последнего изменения контрагента

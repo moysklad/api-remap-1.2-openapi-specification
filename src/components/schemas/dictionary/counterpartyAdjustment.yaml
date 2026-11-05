@@ -1,0 +1,101 @@
+type: object
+description: Корректировка взаиморасчетов
+x-polymorphic-parent: EntityWithMeta
+x-implements: MetaEntity
+x-entity-static-builder:
+  methodParams:
+    - "id"
+  href:
+    - path: "entity"
+    - path: "counterpartyadjustment"
+    - param: "id"
+  type: "counterpartyadjustment"
+properties:
+  meta:
+    description: Метаданные Корректировки взаиморасчетов
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID Корректировки взаиморасчетов
+    readOnly: true
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  agent:
+    description: Метаданные контрагента или сотрудника
+    x-agent-reference: true
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Agent'
+  applicable:
+    type: boolean
+    description: Отметка о проведении
+  attributes:
+    type: array
+    description: Коллекция метаданных доп. полей
+    nullable: true
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
+  created:
+    type: string
+    description: Дата создания
+    readOnly: true
+  deleted:
+    type: string
+    description: Момент последнего удаления Корректировки взаиморасчетов
+    readOnly: true
+  description:
+    type: string
+    maxLength: 4096
+    nullable: true
+    description: Комментарий Корректировки взаиморасчетов
+  externalCode:
+    type: string
+    maxLength: 255
+    description: Внешний код Корректировки взаиморасчетов
+  files:
+    description: Метаданные массива Файлов (максимум 100)
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/FileList'
+  group:
+    description: Отдел сотрудника
+    $ref: '../../../openapi.yaml#/components/schemas/Group'
+  moment:
+    type: string
+    description: Дата документа
+  name:
+    type: string
+    maxLength: 255
+    description: Наименование Корректировки взаиморасчетов
+  organization:
+    description: Метаданные юрлица
+    $ref: '../../../openapi.yaml#/components/schemas/Organization'
+  owner:
+    description: Владелец (Сотрудник)
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Employee'
+  printed:
+    type: boolean
+    description: Напечатан ли документ
+    readOnly: true
+  published:
+    type: boolean
+    description: Опубликован ли документ
+    readOnly: true
+  shared:
+    type: boolean
+    description: Общий доступ
+  sum:
+    type: number
+    format: double
+    description: Сумма Корректировки взаиморасчетов в копейках
+  updated:
+    type: string
+    description: Момент последнего обновления Корректировки взаиморасчетов
+    readOnly: true

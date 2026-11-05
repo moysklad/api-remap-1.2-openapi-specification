@@ -1,0 +1,18 @@
+type: string
+description: Известные значения типа экспорта
+enum:
+  - export_csv_good
+  - export_csv_agent
+  - export_ms_xml
+  - export_1c_v2_xml
+  - export_unisender
+  - export_1c_v3_xml
+  - export_subscribepro
+  - export_1c_client_bank
+  - export_alfa_payments
+  - export_tochka_payments
+  - export_modulbank_payments
+  - export_1c_enterprise_data
+  - export_tinkoff_payments
+  - export_good
+  - export_custom_entity

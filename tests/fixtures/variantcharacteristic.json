@@ -1,0 +1,11 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/variant/metadata/characteristics/d8f5dcfe-4951-4180-bdb5-504dfc9aec8d",
+    "type": "attributemetadata",
+    "mediaType": "application/json"
+  },
+  "id": "d8f5dcfe-4951-4180-bdb5-504dfc9aec8d",
+  "name": "Размер",
+  "type": "string",
+  "required": false
+}

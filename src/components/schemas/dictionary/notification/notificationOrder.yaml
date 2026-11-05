@@ -1,0 +1,16 @@
+type: object
+description: Краткое представление заказа покупателя в уведомлении
+allOf:
+  - $ref: '../../../../openapi.yaml#/components/schemas/NotificationNamedEntity'
+  - type: object
+    properties:
+      agentName:
+        type: string
+        maxLength: 255
+        description: Имя контрагента
+      deliveryPlannedMoment:
+        type: string
+        description: Планируемое время отгрузки
+      sum:
+        type: integer
+        description: Сумма заказа

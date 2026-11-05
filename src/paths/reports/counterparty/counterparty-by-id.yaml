@@ -1,0 +1,19 @@
+get:
+  operationId: getReportCounterpartyById
+  tags:
+    - Reports
+  summary: Получить показатели контрагента
+  description: Запрос отчета «Показатели контрагентов» по контрагенту с указанным id.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос. Результат - JSON представление отчета по контрагенту
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/ReportCounterparty'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

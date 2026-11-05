@@ -1,0 +1,215 @@
+{{>licenseInfo}}
+package {{polymorphicPackage}};
+
+import tools.jackson.core.JsonParser;
+import tools.jackson.databind.BeanProperty;
+import tools.jackson.databind.DeserializationContext;
+import tools.jackson.databind.JavaType;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.ValueDeserializer;
+import tools.jackson.databind.deser.BeanDeserializerFactory;
+import tools.jackson.databind.deser.DeserializerFactory;
+import {{modelPackage}}.Errors;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+{{>generatedAnnotation}}
+public class PolymorphicMetaTypeDeserializer extends ValueDeserializer<Object> {
+  public static final String DESERIALIZER_FACTORY_ATTRIBUTE = "ru.moysklad.remap_1_2.DeserializerFactory";
+
+  private final JavaType targetType;
+  private final Map<Class<?>, ValueDeserializer<Object>> beanDeserializers = new ConcurrentHashMap<>();
+
+  public PolymorphicMetaTypeDeserializer() {
+    this(null);
+  }
+
+  private PolymorphicMetaTypeDeserializer(JavaType targetType) {
+    this.targetType = targetType;
+  }
+
+  @Override
+  public ValueDeserializer<?> createContextual(DeserializationContext ctxt, BeanProperty property) {
+    JavaType contextualType = property != null ? property.getType() : ctxt.getContextualType();
+    return new PolymorphicMetaTypeDeserializer(unwrapContainer(contextualType));
+  }
+
+  @Override
+  public Object deserialize(JsonParser parser, DeserializationContext ctxt) {
+    if (targetType == null) {
+      return ctxt.readValue(parser, Object.class);
+    }
+
+    JsonNode node = ctxt.readTree(parser);
+    Class<?> targetClass = targetType.getRawClass();
+    Class<?> resolvedClass = resolveClass(targetClass, node);
+
+    if (resolvedClass == null) {
+      // A type that the property cannot hold is skipped: null keeps the property absent on
+      // serialization, and PolymorphicJsonNullableModule turns it into JsonNullable.undefined().
+      return null;
+    }
+
+    return readAsBean(ctxt, node, resolvedClass);
+  }
+
+  /**
+   * Returns the class to read the node as, or null when the property cannot hold the value.
+   */
+  private Class<?> resolveClass(Class<?> targetClass, JsonNode node) {
+    String path = discriminatorPath(targetClass);
+    if (path == null || path.isEmpty()) {
+      return targetClass;
+    }
+
+    Map<String, Class<?>> mappings = discriminatorMappings(targetClass);
+    JsonNode discriminatorNode = readPath(node, path);
+    boolean hasDiscriminator = discriminatorNode != null && discriminatorNode.isTextual() && mappings != null;
+
+    if (hasDiscriminator) {
+      Class<?> mappedClass = mappings.get(discriminatorNode.asText());
+      if (mappedClass != null) {
+        return targetClass.isAssignableFrom(mappedClass) ? mappedClass : null;
+      }
+      Class<?> undefinedClass = mappings.get("undefined");
+      if (undefinedClass != null && targetClass.isAssignableFrom(undefinedClass)) {
+        return undefinedClass;
+      }
+    }
+
+    if (useBatchErrorFallback(targetClass) && targetClass.isAssignableFrom(Errors.class)
+        && isBatchErrorPayload(node)) {
+      return Errors.class;
+    }
+
+    return hasDiscriminator ? unknownTypeClass(targetClass, mappings) : targetClass;
+  }
+
+  private Class<?> unknownTypeClass(Class<?> targetClass, Map<String, Class<?>> mappings) {
+    boolean polymorphicParent = mappings.values().stream()
+        .anyMatch(mapped -> mapped != targetClass && targetClass.isAssignableFrom(mapped));
+    // A polymorphic parent keeps only its own fields, so client code stays valid once the type
+    // gets its own subclass. A declared class with its own mapped type cannot hold another entity.
+    // Otherwise mappings miss the declared class's type and the value may still be of that class.
+    if (polymorphicParent || !mappings.containsValue(targetClass)) {
+      return targetClass;
+    }
+    return null;
+  }
+
+  private boolean useBatchErrorFallback(Class<?> targetClass) {
+    for (Class<?> current = targetClass; current != null && current != Object.class; current = current.getSuperclass()) {
+      OpenApiPolymorphicTypeInfo typeInfo = current.getAnnotation(OpenApiPolymorphicTypeInfo.class);
+      if (typeInfo != null) {
+        return typeInfo.batchErrorFallback();
+      }
+    }
+
+    return false;
+  }
+
+  private boolean isBatchErrorPayload(JsonNode node) {
+    JsonNode errors = node.get("errors");
+    if (errors == null || !errors.isArray() || errors.isEmpty()) {
+      return false;
+    }
+
+    if (errors.isEmpty() || errors.get(0) == null) {
+        return false;
+    }
+    JsonNode title = errors.get(0).get("error");
+    return title != null && title.isTextual();
+  }
+
+  private String discriminatorPath(Class<?> targetClass) {
+    for (Class<?> current = targetClass; current != null && current != Object.class; current = current.getSuperclass()) {
+      OpenApiPolymorphicTypeInfo typeInfo = current.getAnnotation(OpenApiPolymorphicTypeInfo.class);
+      if (typeInfo != null) {
+        return typeInfo.path();
+      }
+    }
+    return null;
+  }
+
+  private Map<String, Class<?>> discriminatorMappings(Class<?> targetClass) {
+    for (Class<?> current = targetClass; current != null && current != Object.class; current = current.getSuperclass()) {
+      OpenApiPolymorphicSubTypes subTypes = current.getAnnotation(OpenApiPolymorphicSubTypes.class);
+      if (subTypes != null) {
+        Map<String, Class<?>> mappings = new LinkedHashMap<>();
+        for (OpenApiPolymorphicSubTypes.Type type : subTypes.value()) {
+          mappings.put(type.name(), type.value());
+        }
+        return mappings;
+      }
+    }
+    return null;
+  }
+
+  private JsonNode readPath(JsonNode node, String path) {
+    JsonNode current = node;
+    for (String segment : normalizePath(path).split("\\.")) {
+      if (segment.isEmpty()) {
+        continue;
+      }
+      current = current.get(segment);
+      if (current == null || current.isMissingNode()) {
+        return null;
+      }
+    }
+    return current;
+  }
+
+  private String normalizePath(String path) {
+    return path.startsWith("/") ? path.substring(1).replace('/', '.') : path;
+  }
+
+  private static JavaType unwrapContainer(JavaType javaType) {
+    JavaType current = javaType;
+    while (current != null) {
+      if ("org.openapitools.jackson.nullable.JsonNullable".equals(current.getRawClass().getName())
+          && current.containedTypeCount() == 1) {
+        current = current.containedType(0);
+        continue;
+      }
+      if ((current.isCollectionLikeType() || current.isArrayType()) && current.containedTypeCount() == 1) {
+        current = current.containedType(0);
+        continue;
+      }
+      break;
+    }
+    return current;
+  }
+
+  private Object readAsBean(DeserializationContext ctxt, JsonNode node, Class<?> beanClass) {
+    ValueDeserializer<Object> deserializer = beanDeserializer(ctxt, beanClass);
+    try (JsonParser nodeParser = node.traverse(ctxt)) {
+      nodeParser.nextToken();
+      return deserializer.deserialize(nodeParser, ctxt);
+    }
+  }
+
+  // The factory bypasses the inherited @JsonDeserialize only for beanClass itself, so nested
+  // polymorphic properties keep using this deserializer.
+  // No computeIfAbsent: resolve() may re-enter while the entry is being built.
+  private ValueDeserializer<Object> beanDeserializer(DeserializationContext ctxt, Class<?> beanClass) {
+    ValueDeserializer<Object> cached = beanDeserializers.get(beanClass);
+    if (cached != null) {
+      return cached;
+    }
+
+    JavaType type = ctxt.constructType(beanClass);
+    DeserializerFactory factory = (DeserializerFactory) ctxt.getAttribute(DESERIALIZER_FACTORY_ATTRIBUTE);
+    if (factory == null) {
+      factory = BeanDeserializerFactory.instance;
+    }
+    ValueDeserializer<Object> deserializer = factory.createBeanDeserializer(
+        ctxt, type, ctxt.lazyIntrospectBeanDescriptionForCreation(type));
+    deserializer.resolve(ctxt);
+    @SuppressWarnings("unchecked")
+    ValueDeserializer<Object> contextual = (ValueDeserializer<Object>) deserializer.createContextual(ctxt, null);
+    ValueDeserializer<Object> existing = beanDeserializers.putIfAbsent(beanClass, contextual);
+    return existing != null ? existing : contextual;
+  }
+}

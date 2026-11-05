@@ -1,0 +1,32 @@
+post:
+  operationId: deleteBundleImages
+  tags:
+    - Bundles
+  summary: Массовое удаление изображений Комплекта
+  description: Массовое удаление Изображений Комплекта.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            type: object
+            properties:
+              meta:
+                $ref: '../../../openapi.yaml#/components/schemas/Meta'
+        example:
+          - meta:
+              href: "https://api.moysklad.ru/api/remap/1.2/entity/bundle/c21646cf-ee08-11e6-8af5-581e00000023/images/f2728180-6afd-4d37-8a13-f3b48069bbb6"
+              type: "image"
+              mediaType: "application/json"
+  responses:
+    '200':
+      description: Изображения успешно удалены
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

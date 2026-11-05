@@ -1,0 +1,27 @@
+put:
+  operationId: getPurchaseReturnTemplate
+  tags:
+    - PurchaseReturns
+  summary: Шаблон Возврата поставщику
+  description: |
+    Предзаполненный шаблон Возврата поставщику.
+    Пустое тело возвращает стандартный шаблон без привязки к документу. В теле можно передать, например, `supply`, что позволит получить шаблон на основе документа.
+  requestBody:
+    required: false
+    content:
+      application/json:
+        schema:
+          type: object
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/PurchaseReturn'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+  parameters:
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
