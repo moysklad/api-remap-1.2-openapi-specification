@@ -1388,6 +1388,8 @@ paths:
   # Documents - Prepayments
   /entity/prepayment/metadata/attributes:
     $ref: './paths/documents/prepayments/prepayment-metadata-attribute.yaml'
+  /entity/prepayment/metadata/attributes/{id}:
+    $ref: './paths/documents/prepayments/prepayment-metadata-attribute-by-id.yaml'
   # Documents - Prepayment Returns
   /entity/prepaymentreturn:
     $ref: './paths/documents/prepaymentreturns/prepaymentreturns.yaml'
@@ -1506,6 +1508,8 @@ paths:
   # Documents - Production Tasks
   /entity/productiontask/metadata/attributes:
     $ref: './paths/documents/productiontasks/productiontask-metadata-attribute.yaml'
+  /entity/productiontask/metadata/attributes/{id}:
+    $ref: './paths/documents/productiontasks/productiontask-metadata-attribute-by-id.yaml'
   # Documents - Emission Orders
   /entity/emissionorder:
     $ref: './paths/documents/emissionorders/emissionorders.yaml'

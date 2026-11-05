@@ -1,18 +1,62 @@
 get:
   operationId: getStoreMetadataAttributeById
   tags:
-  - Stores
-  summary: Отдельное доп. поле Склада
+    - Stores
+  summary: Получить доп. поле склада по ID
+  description: Запрос на получение отдельного доп. поля
   parameters:
-  - $ref: '../../../components/parameters.yaml#/entityId'
-  - $ref: '../../../components/headers.yaml#/AcceptHeader'
-  - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
   responses:
     '200':
       description: Успешный запрос
       content:
         application/json:
           schema:
-            $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfoList'
+            $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfo'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+put:
+  operationId: updateStoreMetadataAttributeById
+  tags:
+    - Stores
+  summary: Обновить доп. поле склада
+  description: Обновление доп. поля склада
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfo'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/AttributeMetaInfo'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+delete:
+  operationId: deleteStoreMetadataAttributeById
+  tags:
+    - Stores
+  summary: Удалить доп. поле склада
+  description: Удаление доп. поля склада
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
