@@ -270,7 +270,7 @@ def test_from_dict_builds_nested_typed_model() -> None:
     ("wrapper_name", "entity_type"),
     [
         ("RetailShiftPaymentsInner", "paymentin"),
-        ("SupplyPaymentsInner", "paymentout"),
+        ("SupplyPayment", "paymentout"),
     ],
 )
 def test_payment_union_roundtrip(wrapper_name: str, entity_type: str) -> None:
@@ -325,3 +325,21 @@ def test_payroll_payments_resolve_typed_models() -> None:
     ):
         assert isinstance(payment, model_class(expected))
         assert payment.linked_sum == 30000
+
+
+@pytest.mark.parametrize("entity_type", ["product", "service", "variant"])
+def test_discount_assortment_reference_uses_meta_type(entity_type: str) -> None:
+    data = {
+        "meta": {
+            "type": entity_type,
+            "mediaType": "application/json",
+            "href": (
+                "https://api.moysklad.ru/api/remap/1.2/entity/"
+                f"{entity_type}/00000000-0000-0000-0000-000000000001"
+            ),
+        }
+    }
+    wrapper = model_class("DiscountAssortmentItem").from_dict(data)
+
+    assert isinstance(wrapper.actual_instance, model_class(entity_type.title()))
+    assert normalize(wrapper.to_dict()) == normalize(data)

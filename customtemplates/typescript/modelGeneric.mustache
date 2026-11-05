@@ -13,7 +13,7 @@ import {
 {{/hasImports}}
 {{#discriminator}}
 {{#discriminator.mappedModels}}
-import { type {{modelName}}, {{modelName}}FromJSONTyped, {{modelName}}ToJSON, {{modelName}}ToJSONTyped } from './{{modelName}}{{importFileExtension}}';
+import * as {{classname}}Discriminator{{mappingName}} from './{{modelName}}{{importFileExtension}}';
 {{/discriminator.mappedModels}}
 {{/discriminator}}
 {{#vendorExtensions.x-polymorphic-parent}}
@@ -91,7 +91,7 @@ export function {{classname}}FromJSONTyped(json: any, ignoreDiscriminator: boole
     if (!ignoreDiscriminator) {
 {{#discriminator.mappedModels}}
         if (json['{{discriminator.propertyBaseName}}'] === '{{mappingName}}') {
-            return {{modelName}}FromJSONTyped(json, ignoreDiscriminator);
+            return {{classname}}Discriminator{{mappingName}}.{{modelName}}FromJSONTyped(json, true);
         }
 {{/discriminator.mappedModels}}
     }
@@ -201,7 +201,7 @@ export function {{classname}}ToJSONTyped(value?: {{#hasReadOnly}}Omit<{{classnam
         switch (value['{{discriminator.propertyName}}']) {
 {{#discriminator.mappedModels}}
             case '{{mappingName}}':
-                return {{modelName}}ToJSONTyped(value as {{modelName}}, ignoreDiscriminator);
+                return {{classname}}Discriminator{{mappingName}}.{{modelName}}ToJSONTyped(value as {{classname}}Discriminator{{mappingName}}.{{modelName}}, true);
 {{/discriminator.mappedModels}}
             default:
                 return value;

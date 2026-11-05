@@ -282,3 +282,24 @@ test('Payroll payments: типы и суммы читаются, readOnly-свя
     const serialized = asObject(getToJson(sdk, 'Payroll')(model), 'Payroll не сериализован');
     assert.equal('payments' in serialized, false);
 });
+
+for (const type of ['product', 'service', 'bundle', 'productfolder', 'counterparty', 'organization']) {
+    test(`attribute discriminator alias survives roundtrip: ${type}`, () => {
+        const original = { type, value: null };
+        const model = getFromJson(sdk, 'AttributeAbstract')(original);
+        const serialized = asObject(getToJson(sdk, 'AttributeAbstract')(model), 'Attribute не сериализован');
+        assert.equal(serialized['type'], type);
+    });
+}
+
+for (const [modelName, original] of [
+    ['DeleteRowResult', { errors: [{ error: 'Not found', code: 1021 }] }],
+    ['InlineObject', [{ info: 'Deleted' }, { errors: [{ error: 'Not found', code: 1021 }] }]],
+    ['InlineObject2', [{ name: 'Ready' }, { errors: [{ error: 'Invalid state', code: 3000 }] }]],
+] as const) {
+    test(`mixed batch result preserves success and errors: ${modelName}`, () => {
+        const model = getFromJson(sdk, modelName)(original);
+        const serialized = getToJson(sdk, modelName)(model);
+        assert.deepEqual(JSON.parse(JSON.stringify(serialized)), original);
+    });
+}

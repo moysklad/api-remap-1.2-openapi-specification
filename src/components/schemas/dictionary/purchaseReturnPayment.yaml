@@ -12,8 +12,9 @@ x-polymorphic-discriminator:
 properties:
   meta:
     $ref: '../common/meta.yaml'
+  linkedSum:
+    type: number
+    format: double
+    description: Сумма, оплаченная по данному документу; может отсутствовать у ссылки
 required:
   - meta
-  - linkedSum
-allOf:
-  - $ref: '../../../openapi.yaml#/components/schemas/OperationLinkedSum'

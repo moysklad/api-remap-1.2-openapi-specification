@@ -45,6 +45,17 @@ class NestedPolymorphicDeserializationTest extends BaseTestCase {
 
     private static final ObjectMapper MAPPER = new ApiClient().getObjectMapper();
 
+    @ParameterizedTest
+    @ValueSource(strings = {"product", "service", "bundle", "productfolder", "counterparty", "organization"})
+    void attributeDiscriminatorAliasesSurviveRoundtrip(String type) throws Exception {
+        String json = "{\"type\":\"" + type + "\",\"value\":null}";
+
+        AttributeAbstract attribute = MAPPER.readValue(json, AttributeAbstract.class);
+        String serialized = MAPPER.writeValueAsString(attribute);
+
+        Assertions.assertEquals(type, MAPPER.readTree(serialized).get("type").asString());
+    }
+
     @Test
     void productAttributeWithExpandedProductResolvesToProduct() throws Exception {
         Product product = MAPPER.readValue(fixture("product_attribute_product_expanded.json"), Product.class);

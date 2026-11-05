@@ -1,0 +1,144 @@
+{{#hasImports}}
+{{#imports}}
+import type { {{{.}}} } from './{{.}}{{importFileExtension}}';
+import {
+    instanceOf{{{.}}},
+    {{{.}}}FromJSON,
+    {{{.}}}FromJSONTyped,
+    {{{.}}}ToJSON,
+} from './{{.}}{{importFileExtension}}';
+{{/imports}}
+
+{{/hasImports}}
+{{>modelOneOfInterfaces}}
+
+export function instanceOf{{classname}}(value: object): value is {{classname}} {
+{{#oneOfModels}}
+    if (instanceOf{{{.}}}(value)) return true;
+{{/oneOfModels}}
+{{#oneOfArrays}}
+    if (Array.isArray(value) && value.every(item => item != null && typeof item === 'object' && instanceOf{{{.}}}(item))) return true;
+{{/oneOfArrays}}
+    return false;
+}
+
+
+export function {{classname}}FromJSON(json: any): {{classname}} {
+    return {{classname}}FromJSONTyped(json, false);
+}
+
+export function {{classname}}FromJSONTyped(json: any, ignoreDiscriminator: boolean): {{classname}} {
+    if (json == null) {
+        return json;
+    }
+{{#discriminator}}
+    switch (json['{{discriminator.propertyBaseName}}']) {
+{{#discriminator.mappedModels}}
+        case '{{mappingName}}':
+            return Object.assign({}, {{modelName}}FromJSONTyped(json, true), { {{discriminator.propertyName}}: '{{mappingName}}' } as const);
+{{/discriminator.mappedModels}}
+        default:
+            return json;
+    }
+{{/discriminator}}
+{{^discriminator}}
+    const converters: Record<string, (value: any) => any> = {
+{{#oneOfModels}}
+        ['{{{.}}}'.toLowerCase()]: {{{.}}}FromJSON,
+{{/oneOfModels}}
+    };
+    const entityConverter = converters[json?.meta?.type];
+    if (typeof json?.meta?.type === 'string' && entityConverter !== undefined) {
+        return entityConverter(json);
+    }
+    if (Array.isArray(json?.errors) && converters['errors'] !== undefined) {
+        return converters['errors'](json);
+    }
+    {{#oneOfModels}}
+    {{#-first}}
+    if (typeof json !== 'object') {
+        return json;
+    }
+    {{/-first}}
+    if (instanceOf{{{.}}}(json)) {
+        return {{{.}}}FromJSONTyped(json, true);
+    }
+    {{/oneOfModels}}
+    {{#oneOfArrays}}
+    {{#-first}}
+    if (Array.isArray(json)) {
+        if (json.every(item => typeof item === 'object')) {
+    {{/-first}}
+            if (json.every(item => instanceOf{{{.}}}(item))) {
+                return json.map(value => {{{.}}}FromJSONTyped(value, true));
+            }
+    {{#-last}}
+        }
+        return json;
+    }
+    {{/-last}}
+    {{/oneOfArrays}}
+
+    return {} as any;
+{{/discriminator}}
+}
+
+export function {{classname}}ToJSON(json: any): any {
+    return {{classname}}ToJSONTyped(json, false);
+}
+
+export function {{classname}}ToJSONTyped(value?: {{classname}} | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
+    }
+{{#discriminator}}
+    switch (value['{{discriminator.propertyName}}']) {
+{{#discriminator.mappedModels}}
+        case '{{mappingName}}':
+            return Object.assign({}, {{modelName}}ToJSON(value), { {{discriminator.propertyName}}: '{{mappingName}}' } as const);
+{{/discriminator.mappedModels}}
+        default:
+            return value;
+    }
+{{/discriminator}}
+{{^discriminator}}
+    const converters: Record<string, (value: any) => any> = {
+{{#oneOfModels}}
+        ['{{{.}}}'.toLowerCase()]: {{{.}}}ToJSON,
+{{/oneOfModels}}
+    };
+    const entityConverter = converters[(value as any)?.meta?.type];
+    if (typeof (value as any)?.meta?.type === 'string' && entityConverter !== undefined) {
+        return entityConverter(value);
+    }
+    if (Array.isArray((value as any)?.errors) && converters['errors'] !== undefined) {
+        return converters['errors'](value);
+    }
+    {{#oneOfModels}}
+    {{#-first}}
+    if (typeof value !== 'object') {
+        return value;
+    }
+    {{/-first}}
+    if (instanceOf{{{.}}}(value)) {
+        return {{{.}}}ToJSON(value as {{{.}}});
+    }
+    {{/oneOfModels}}
+    {{#oneOfArrays}}
+    {{#-first}}
+    if (Array.isArray(value)) {
+        if (value.every(item => typeof item === 'object')) {
+    {{/-first}}
+            if (value.every(item => instanceOf{{{.}}}(item))) {
+                return value.map(value => {{{.}}}ToJSON(value as {{{.}}}));
+            }
+    {{#-last}}
+        }
+        return value;
+    }
+    {{/-last}}
+    {{/oneOfArrays}}
+
+    return {};
+{{/discriminator}}
+}
