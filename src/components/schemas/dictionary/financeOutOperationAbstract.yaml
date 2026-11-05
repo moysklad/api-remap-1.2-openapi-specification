@@ -19,6 +19,9 @@ x-polymorphic-discriminator:
       componentName: FinanceOutOperationCommissionReportOut
     - type: payroll
       componentName: FinanceOutOperationPayroll
+properties:
+  meta:
+    $ref: '../common/meta.yaml'
 required:
   - linkedSum
   - meta
