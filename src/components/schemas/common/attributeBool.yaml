@@ -7,4 +7,5 @@ properties:
     type: string
     enum: [boolean]
   value:
+    nullable: true
     type: boolean

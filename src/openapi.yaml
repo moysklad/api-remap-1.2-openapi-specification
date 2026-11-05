@@ -2047,8 +2047,12 @@ components:
           customentity: '#/components/schemas/AttributeCustomEntity'
           contract: '#/components/schemas/AttributeContractEntity'
           counterparty: '#/components/schemas/AttributeCounterpartyEntity'
+          organization: '#/components/schemas/AttributeCounterpartyEntity'
           employee: '#/components/schemas/AttributeEmployeeEntity'
           product: '#/components/schemas/AttributeProductEntity'
+          service: '#/components/schemas/AttributeProductEntity'
+          bundle: '#/components/schemas/AttributeProductEntity'
+          productfolder: '#/components/schemas/AttributeProductEntity'
           project: '#/components/schemas/AttributeProjectEntity'
           store: '#/components/schemas/AttributeStoreEntity'
       allOf:

@@ -7,4 +7,7 @@ properties:
     type: string
     enum: [store]
   value:
-    $ref: '../../../openapi.yaml#/components/schemas/Store'
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Store'

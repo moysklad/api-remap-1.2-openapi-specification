@@ -7,4 +7,5 @@ properties:
     type: string
     enum: [link]
   value:
+    nullable: true
     type: string

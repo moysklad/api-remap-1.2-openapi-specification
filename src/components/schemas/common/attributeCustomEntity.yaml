@@ -7,4 +7,7 @@ properties:
     type: string
     enum: [customentity]
   value:
-    $ref: '../../../openapi.yaml#/components/schemas/CustomEntityElement'
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/CustomEntityElement'

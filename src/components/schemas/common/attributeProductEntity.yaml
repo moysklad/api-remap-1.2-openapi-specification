@@ -5,6 +5,9 @@ allOf:
 properties:
   type:
     type: string
-    enum: [product]
+    enum: [product, service, bundle, productfolder]
   value:
-    $ref: '../../../openapi.yaml#/components/schemas/EntityWithMeta'
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/EntityWithMeta'
