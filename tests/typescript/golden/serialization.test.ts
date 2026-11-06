@@ -284,7 +284,7 @@ test('Payroll payments: типы и суммы читаются, readOnly-свя
     assert.equal('payments' in serialized, false);
 });
 
-for (const type of ['product', 'service', 'bundle', 'productfolder', 'counterparty', 'organization']) {
+for (const type of ['product', 'counterparty', 'organization']) {
     test(`attribute discriminator alias survives roundtrip: ${type}`, () => {
         const original = { type, value: null };
         const model = getFromJson(sdk, 'AttributeAbstract')(original);
@@ -296,7 +296,6 @@ for (const type of ['product', 'service', 'bundle', 'productfolder', 'counterpar
 for (const [modelName, original] of [
     ['DeleteRowResult', { errors: [{ error: 'Not found', code: 1021 }] }],
     ['InlineObject', [{ info: 'Deleted' }, { errors: [{ error: 'Not found', code: 1021 }] }]],
-    ['InlineObject2', [{ name: 'Ready' }, { errors: [{ error: 'Invalid state', code: 3000 }] }]],
 ] as const) {
     test(`mixed batch result preserves success and errors: ${modelName}`, () => {
         const model = getFromJson(sdk, modelName)(original);

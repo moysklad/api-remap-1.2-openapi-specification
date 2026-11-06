@@ -125,14 +125,3 @@ BatchDeleteError:
           - type: array
             items:
               $ref: '../openapi.yaml#/components/schemas/DeleteRowResult'
-
-BatchStateError:
-  description: Ошибка массового изменения статусов, объект errors или массив результатов
-  content:
-    application/json:
-      schema:
-        oneOf:
-          - $ref: '../openapi.yaml#/components/schemas/Errors'
-          - type: array
-            items:
-              $ref: '../openapi.yaml#/components/schemas/StateRowResult'

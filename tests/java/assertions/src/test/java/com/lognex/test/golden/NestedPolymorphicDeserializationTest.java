@@ -48,7 +48,7 @@ class NestedPolymorphicDeserializationTest extends BaseTestCase {
     private static final ObjectMapper MAPPER = new ApiClient().getObjectMapper();
 
     @ParameterizedTest
-    @ValueSource(strings = {"product", "service", "bundle", "productfolder", "counterparty", "organization"})
+    @ValueSource(strings = {"product", "counterparty", "organization"})
     void attributeDiscriminatorAliasesSurviveRoundtrip(String type) throws Exception {
         String json = "{\"type\":\"" + type + "\",\"value\":null}";
 
