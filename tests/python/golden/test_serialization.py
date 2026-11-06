@@ -130,6 +130,7 @@ FIXTURE_MODEL_MAP = {
     "special_price_discount": "SpecialPriceDiscount",
     "bonus_program": "BonusProgram",
     "bonus_transaction": "BonusTransaction",
+    "bonus_transaction_expanded": "BonusTransaction",
     "custom_entity": "CustomEntity",
     "custom_entity_element": "CustomEntityElement",
     "commission_report_in": "CommissionReportIn",
@@ -314,6 +315,17 @@ def test_payroll_operation_resolves_typed_model(fixture_name: str) -> None:
     assert isinstance(operation, model_class("FinanceOutOperationPayroll"))
     assert operation.linked_sum == 30000
     assert operation.start_payroll_period == "2026-03-03 00:00:00.000"
+
+
+def test_bonus_transaction_expanded_parent_resolves_to_retail_demand() -> None:
+    original = json.loads((FIXTURES / "bonus_transaction_expanded.json").read_text())
+    model = model_class("BonusTransaction").from_dict(original)
+    parent = model.parent_document
+    assert isinstance(parent, model_class("BonusTransactionParentRetailDemand"))
+    assert parent.id == "22591b08-2859-11f1-0a83-1f2500000247"
+    assert parent.name == "00002"
+    assert parent.sum == 1800
+    assert parent.meta.type == "retaildemand"
 
 
 def test_payroll_payments_resolve_typed_models() -> None:

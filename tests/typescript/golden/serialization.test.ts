@@ -174,6 +174,7 @@ const FIXTURE_MODEL_MAP: Readonly<Record<string, string>> = {
     special_price_discount: 'SpecialPriceDiscount',
     bonus_program: 'BonusProgram',
     bonus_transaction: 'BonusTransaction',
+    bonus_transaction_expanded: 'BonusTransaction',
     custom_entity: 'CustomEntity',
     custom_entity_element: 'CustomEntityElement',
     commission_report_in: 'CommissionReportIn',

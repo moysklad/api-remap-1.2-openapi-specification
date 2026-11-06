@@ -21,6 +21,8 @@ import ru.moysklad.remap_1_2.model.AttributeAbstract;
 import ru.moysklad.remap_1_2.model.AttributeCounterpartyEntity;
 import ru.moysklad.remap_1_2.model.AttributeProductEntity;
 import ru.moysklad.remap_1_2.model.BatchResponseEntity;
+import ru.moysklad.remap_1_2.model.BonusTransaction;
+import ru.moysklad.remap_1_2.model.BonusTransactionParentRetailDemand;
 import ru.moysklad.remap_1_2.model.Counterparty;
 import ru.moysklad.remap_1_2.model.CustomerOrder;
 import ru.moysklad.remap_1_2.model.Employee;
@@ -111,6 +113,19 @@ class NestedPolymorphicDeserializationTest extends BaseTestCase {
         Assertions.assertEquals(Boolean.TRUE, order.getApplicable());
         Counterparty agent = Assertions.assertInstanceOf(Counterparty.class, order.getAgent());
         Assertions.assertEquals("counterparty", agent.getMeta().getType());
+    }
+
+    @Test
+    void bonusTransactionExpandedParentResolvesToRetailDemand() throws Exception {
+        Path path = getFixturesPath().resolve("bonus_transaction_expanded.json");
+        BonusTransaction transaction = MAPPER.readValue(path.toFile(), BonusTransaction.class);
+
+        BonusTransactionParentRetailDemand parent = Assertions.assertInstanceOf(
+                BonusTransactionParentRetailDemand.class, transaction.getParentDocument());
+        Assertions.assertEquals("22591b08-2859-11f1-0a83-1f2500000247", parent.getId());
+        Assertions.assertEquals("00002", parent.getName());
+        Assertions.assertEquals(1800.0, parent.getSum());
+        Assertions.assertEquals("retaildemand", parent.getMeta().getType());
     }
 
     @Test

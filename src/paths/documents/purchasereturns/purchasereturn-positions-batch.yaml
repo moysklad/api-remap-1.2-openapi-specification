@@ -27,8 +27,10 @@ post:
           schema:
             type: array
             items:
-              oneOf:
-                - $ref: '../../../openapi.yaml#/components/schemas/PurchaseReturnPosition'
-                - $ref: '../../../openapi.yaml#/components/schemas/Errors'
+              $ref: '../../../openapi.yaml#/components/schemas/BatchResponseEntity'
+    '404':
+      $ref: '../../../components/responses.yaml#/BatchEntityError'
+    '412':
+      $ref: '../../../components/responses.yaml#/BatchEntityError'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'

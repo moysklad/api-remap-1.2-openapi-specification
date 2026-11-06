@@ -50,11 +50,11 @@
   },
   "parentDocument":  {
     "meta": {
-      "href": "https://api.moysklad.ru/api/remap/1.2/entity/customerorder/22591b08-2859-11f1-0a83-1f2500000247",
-      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/customerorder/metadata",
-      "type": "customerorder",
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/retaildemand/22591b08-2859-11f1-0a83-1f2500000247",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/retaildemand/metadata",
+      "type": "retaildemand",
       "mediaType": "application/json",
-      "uuidHref": "https://online.moysklad.ru/app/#customerorder/edit?id=22591b08-2859-11f1-0a83-1f2500000247"
+      "uuidHref": "https://online.moysklad.ru/app/#retaildemand/edit?id=22591b08-2859-11f1-0a83-1f2500000247"
     }
   },
   "created": "2018-09-13 12:36:26",

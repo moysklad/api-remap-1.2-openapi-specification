@@ -832,6 +832,14 @@ final class SmokeEndpointCatalog {
                 // /entity/productiontask and /entity/retaildemand
                 Arguments.of(new SmokeEndpointCase("testGetProductionTaskMetadataAttributes#1", "GET", "/entity/productiontask/metadata/attributes", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testCreateProductionTaskMetadataAttribute#1", "POST", "/entity/productiontask/metadata/attributes", SmokeEndpointCase.Expectation.NOT_404, true)),
+                Arguments.of(new SmokeEndpointCase("testGetProductionTaskMetadataAttributeById#1", "GET", "/entity/productiontask/metadata/attributes/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
+                Arguments.of(new SmokeEndpointCase("testUpdateProductionTaskMetadataAttributeById#1", "PUT", "/entity/productiontask/metadata/attributes/{id}", SmokeEndpointCase.Expectation.BY_ID, true)),
+                Arguments.of(new SmokeEndpointCase("testDeleteProductionTaskMetadataAttributeById#1", "DELETE", "/entity/productiontask/metadata/attributes/{id}", SmokeEndpointCase.Expectation.DELETE, false)),
+
+                // /entity/prepayment
+                Arguments.of(new SmokeEndpointCase("testGetPrepaymentMetadataAttributeById#1", "GET", "/entity/prepayment/metadata/attributes/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
+                Arguments.of(new SmokeEndpointCase("testUpdatePrepaymentMetadataAttributeById#1", "PUT", "/entity/prepayment/metadata/attributes/{id}", SmokeEndpointCase.Expectation.BY_ID, true)),
+                Arguments.of(new SmokeEndpointCase("testDeletePrepaymentMetadataAttributeById#1", "DELETE", "/entity/prepayment/metadata/attributes/{id}", SmokeEndpointCase.Expectation.DELETE, false)),
                 Arguments.of(new SmokeEndpointCase("testCreateRetailDemandMetadataState#1", "POST", "/entity/retaildemand/metadata/states", SmokeEndpointCase.Expectation.NOT_404, true)),
 
                 // /entity/retailshift

@@ -4,9 +4,6 @@ BadRequest:
     application/json:
       schema:
         $ref: '../openapi.yaml#/components/schemas/Errors'
-    text/html;charset=UTF-8:
-      schema:
-        type: string
 
 CommonError:
   description: Ошибка запроса (тело — объект с полем errors)
@@ -22,9 +19,6 @@ BatchBadRequest:
     application/json:
       schema:
         $ref: '../openapi.yaml#/components/schemas/Errors'
-    text/html;charset=UTF-8:
-      schema:
-        type: string
 
 Unauthorized:
   description: Имя и/или пароль пользователя указаны неверно или заблокированы
@@ -79,9 +73,6 @@ UnsupportedMediaType:
     application/json:
       schema:
         $ref: '../openapi.yaml#/components/schemas/Errors'
-    text/html;charset=UTF-8:
-      schema:
-        type: string
 
 MethodNotAllowed:
   description: Метод не поддерживается для данного ресурса
