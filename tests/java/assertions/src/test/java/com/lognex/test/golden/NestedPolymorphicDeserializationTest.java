@@ -38,6 +38,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Вложенные полиморфные поля (EntityWithMeta / Agent / ProductMarker внутри сущности того же
@@ -122,7 +123,7 @@ class NestedPolymorphicDeserializationTest extends BaseTestCase {
 
         BonusTransactionParentRetailDemand parent = Assertions.assertInstanceOf(
                 BonusTransactionParentRetailDemand.class, transaction.getParentDocument());
-        Assertions.assertEquals("22591b08-2859-11f1-0a83-1f2500000247", parent.getId());
+        Assertions.assertEquals(UUID.fromString("22591b08-2859-11f1-0a83-1f2500000247"), parent.getId());
         Assertions.assertEquals("00002", parent.getName());
         Assertions.assertEquals(1800.0, parent.getSum());
         Assertions.assertEquals("retaildemand", parent.getMeta().getType());
