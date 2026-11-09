@@ -24,7 +24,7 @@ import * as {{classname}}PolymorphicParent from './{{.}}{{importFileExtension}}'
 import * as {{classname}}Polymorphic{{componentName}} from './{{componentName}}{{importFileExtension}}';
 {{/mappings}}
 {{#batchErrorFallback}}
-import * as {{classname}}PolymorphicBatchError from './ModelError{{importFileExtension}}';
+import * as {{classname}}PolymorphicBatchError from './Errors{{importFileExtension}}';
 {{/batchErrorFallback}}
 {{/vendorExtensions.x-polymorphic-discriminator}}
 {{>modelGenericInterfaces}}
@@ -81,7 +81,7 @@ export function {{classname}}FromJSONTyped(json: any, ignoreDiscriminator: boole
         }
 {{#batchErrorFallback}}
         if (is{{classname}}PolymorphicBatchError(json)) {
-            return {{classname}}PolymorphicBatchError.ModelErrorFromJSON(json) as {{classname}};
+            return {{classname}}PolymorphicBatchError.ErrorsFromJSON(json) as {{classname}};
         }
 {{/batchErrorFallback}}
     }
@@ -190,7 +190,7 @@ export function {{classname}}ToJSONTyped(value?: {{#hasReadOnly}}Omit<{{classnam
         }
 {{#batchErrorFallback}}
         if (is{{classname}}PolymorphicBatchError(value)) {
-            return {{classname}}PolymorphicBatchError.ModelErrorToJSON(value);
+            return {{classname}}PolymorphicBatchError.ErrorsToJSON(value);
         }
 {{/batchErrorFallback}}
     }
@@ -339,3 +339,6 @@ export const {{classname}}AdditionalPropertiesValidationAttributes: { maxPropert
 }
 {{/isAdditionalPropertiesTrue}}
 {{/validationAttributes}}
+
+/** Entity discriminator used when selecting a oneOf/anyOf branch. */
+export const {{classname}}EntityType: string | undefined = {{#vendorExtensions.x-entity-static-builder}}'{{type}}'{{/vendorExtensions.x-entity-static-builder}}{{^vendorExtensions.x-entity-static-builder}}undefined{{/vendorExtensions.x-entity-static-builder}};

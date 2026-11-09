@@ -176,10 +176,37 @@ export class {{classname}} extends runtime.BaseAPI {
         {{^isArray}}
         if (requestParameters['{{paramName}}'] != null) {
             headerParameters['{{baseName}}'] = String(requestParameters['{{paramName}}']);
-        }
+        }{{#defaultValue}} else {
+            const configuredHeader = Object.keys(this.configuration.headers ?? {}).find(
+                name => name.toLowerCase() === '{{baseName}}'.toLowerCase(),
+            );
+            headerParameters['{{baseName}}'] = configuredHeader === undefined
+                ? {{{defaultValue}}}
+                : this.configuration.headers![configuredHeader];
+        }{{/defaultValue}}
 
         {{/isArray}}
         {{/headerParams}}
+        {{^bodyParam}}
+        if (headerParameters['Content-Type'] == null && ['POST', 'PUT', 'PATCH'].indexOf('{{httpMethod}}') >= 0) {
+            headerParameters['Content-Type'] = 'application/json';
+        }
+
+        {{/bodyParam}}
+        // Use the configured spelling so fetch does not combine Accept and accept.
+        for (const name of Object.keys(headerParameters)) {
+            if (name.toLowerCase() !== 'accept' && name.toLowerCase() !== 'accept-encoding') {
+                continue;
+            }
+            const configuredName = Object.keys(this.configuration.headers ?? {}).find(
+                key => key.toLowerCase() === name.toLowerCase(),
+            );
+            if (configuredName !== undefined && configuredName !== name) {
+                headerParameters[configuredName] = headerParameters[name];
+                delete headerParameters[name];
+            }
+        }
+
         {{#authMethods}}
         {{#isBasic}}
         {{#isBasicBasic}}
@@ -341,7 +368,15 @@ export class {{classname}} extends runtime.BaseAPI {
             {{#hasFormParams}}
             body: formParams,
             {{/hasFormParams}}
-        }, {{^vendorExtensions.x-location-response}}initOverrides);{{/vendorExtensions.x-location-response}}{{#vendorExtensions.x-location-response}}async (requestContext) => ({
+        }, {{^vendorExtensions.x-location-response}}initOverrides){{#returnType}}{{#isArray}}.catch(async (error: unknown) => {
+            if (error instanceof runtime.ResponseError) {
+                const payload = await error.response.clone().json().catch(() => undefined);
+                if (Array.isArray(payload)) {
+                    return error.response;
+                }
+            }
+            throw error;
+        }){{/isArray}}{{/returnType}};{{/vendorExtensions.x-location-response}}{{#vendorExtensions.x-location-response}}async (requestContext) => ({
             ...(typeof initOverrides === 'function' ? await initOverrides(requestContext) : initOverrides),
             // при автоматическом переходе Location ответа 3xx теряется
             redirect: 'manual',

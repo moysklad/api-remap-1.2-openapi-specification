@@ -7,7 +7,16 @@
 * modelGeneric.mustache - реализует проектные расширения `x-polymorphic-parent` и
   `x-polymorphic-discriminator`: объединяет сериализацию полей родительской цепочки,
   выбирает дочерние `FromJSON`/`ToJSON` по вложенному пути (`meta.type`), поддерживает
-  mapping `undefined` и batch-error fallback.
+  mapping `undefined` и batch-error fallback на контейнер `Errors`.
+  Экспортирует `<Model>EntityType` для выбора ветки `oneOf`/`anyOf` по `meta.type`.
+
+* apis.mustache - подставляет значения заголовков по умолчанию из спецификации,
+  сохраняет явно заданный Accept без склейки заголовков разного регистра,
+  добавляет Content-Type у POST/PUT/PATCH без тела и разбирает массивы batch-ответов
+  при ошибочном HTTP-статусе (включая 404/412).
+
+* modelOneOf.mustache - сначала выбирает контейнер `Errors`, затем модель по
+  `meta.type` (в том числе Product/Variant), после этого использует `instanceOf`.
 
 * modelGenericInterfaces.mustache - discriminator-поле родителя объявлено как required (`AttributeAbstract.type`),
   но в наследниках по allOf генератор выводит его как optional. TypeScript на это отвечает
