@@ -369,7 +369,9 @@ export class {{classname}} extends runtime.BaseAPI {
             body: formParams,
             {{/hasFormParams}}
         }, {{^vendorExtensions.x-location-response}}initOverrides){{#returnType}}{{#isArray}}.catch(async (error: unknown) => {
-            if (error instanceof runtime.ResponseError) {
+            if (error instanceof runtime.ResponseError
+                && [404, 412].indexOf(error.response.status) >= 0
+                && ['BatchResponseEntity', 'DeleteRowResult'].indexOf('{{returnBaseType}}') >= 0) {
                 const payload = await error.response.clone().json().catch(() => undefined);
                 if (Array.isArray(payload)) {
                     return error.response;

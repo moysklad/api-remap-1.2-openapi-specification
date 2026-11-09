@@ -50,6 +50,7 @@ const errors = { errors: [{ error: 'partial failure', code: 1000 }] };
 
 test('batch fallback и oneOf сохраняют контейнер Errors', () => {
     assert.deepEqual(wire((sdk.BatchResponseEntityFromJSON(errors) as Sdk.Errors).errors), errors.errors);
+    assert.deepEqual(wire(sdk.BatchResponseEntityToJSON(sdk.BatchResponseEntityFromJSON(errors))), errors);
     const row = sdk.DeleteRowResultFromJSON(errors);
     assert.deepEqual(wire(sdk.DeleteRowResultToJSON(row)), errors);
 });
@@ -80,3 +81,40 @@ test('ассортимент скидки выбирает Variant по meta.typ
     assert.deepEqual(wire(variant.characteristics), input.characteristics);
     assert.deepEqual(wire(sdk.DiscountAssortmentItemToJSON(variant).characteristics), input.characteristics);
 });
+
+for (const status of [403, 500]) {
+    test(`batch-массив при статусе ${status} остаётся исключением`, async () => {
+        const stub = client(status, [{ info: 'deleted' }, errors]);
+        await assert.rejects(
+            new sdk.ProductsApi(stub.configuration).deleteProductsBatch({ product: [] }),
+            sdk.ResponseError,
+        );
+    });
+}
+
+test('массив обычной операции при 412 остаётся исключением', async () => {
+    const stub = client(412, [errors]);
+    await assert.rejects(
+        new sdk.ProductsApi(stub.configuration).addProductFiles({ id: 'test-id', fileUpload: [] }),
+        sdk.ResponseError,
+    );
+});
+
+test('batch создания при 412 сохраняет сущность и Errors', async () => {
+    const product = { meta: { type: 'product' }, name: 'test product' };
+    const stub = client(412, [product, errors]);
+    const result = await new sdk.ProductsApi(stub.configuration).createProductsBatch({ product: [] });
+    assert.deepEqual(wire(result.map(sdk.BatchResponseEntityToJSON)), [product, errors]);
+});
+
+for (const type of ['product', 'service']) {
+    test(`ассортимент скидки выбирает ${type} по meta.type`, () => {
+        const input = {
+            meta: { type, href: `https://example.test/entity/${type}/id` },
+            name: 'test',
+            ...(type === 'product' ? { article: 'test article' } : {}),
+        };
+        const item = sdk.DiscountAssortmentItemFromJSON(input);
+        assert.deepEqual(wire(sdk.DiscountAssortmentItemToJSON(item)), input);
+    });
+}

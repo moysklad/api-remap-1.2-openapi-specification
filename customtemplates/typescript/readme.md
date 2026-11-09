@@ -13,7 +13,7 @@
 * apis.mustache - подставляет значения заголовков по умолчанию из спецификации,
   сохраняет явно заданный Accept без склейки заголовков разного регистра,
   добавляет Content-Type у POST/PUT/PATCH без тела и разбирает массивы batch-ответов
-  при ошибочном HTTP-статусе (включая 404/412).
+  с элементами `BatchResponseEntity` / `DeleteRowResult` при HTTP-статусах 404/412.
 
 * modelOneOf.mustache - сначала выбирает контейнер `Errors`, затем модель по
   `meta.type` (в том числе Product/Variant), после этого использует `instanceOf`.
