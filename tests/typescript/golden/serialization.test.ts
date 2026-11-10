@@ -172,6 +172,7 @@ const FIXTURE_MODEL_MAP: Readonly<Record<string, string>> = {
     accumulation_discount: 'AccumulationDiscount',
     personal_discount: 'PersonalDiscount',
     special_price_discount: 'SpecialPriceDiscount',
+    special_price_discount_percent: 'SpecialPriceDiscount',
     bonus_program: 'BonusProgram',
     bonus_transaction: 'BonusTransaction',
     custom_entity: 'CustomEntity',
