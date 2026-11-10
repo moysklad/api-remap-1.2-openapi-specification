@@ -200,6 +200,10 @@ class {{classname}}:
 {{#headerParams}}
         if {{paramName}} is not None:
             _header_params['{{baseName}}'] = {{paramName}}
+        {{#defaultValue}}
+        elif not any(_header_name.lower() == '{{baseName}}'.lower() for _header_name in _header_params):
+            _header_params['{{baseName}}'] = {{#isEnum}}'{{{defaultValue}}}'{{/isEnum}}{{^isEnum}}{{{defaultValue}}}{{/isEnum}}
+        {{/defaultValue}}
 {{/headerParams}}
         # process the form parameters
 {{#formParams}}
@@ -243,7 +247,9 @@ class {{classname}}:
 
         {{#hasProduces}}
         # set the HTTP header `Accept`
-        if 'Accept' not in _header_params:
+        # Имя сравнивается без учета регистра: явный заголовок accept не должен
+        # оставаться рядом со стандартным Accept из списка produces.
+        if not any(_header_name.lower() == 'accept' for _header_name in _header_params):
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [{{#produces}}
                     '{{{mediaType}}}'{{^-last}}, {{/-last}}{{/produces}}
