@@ -8,21 +8,16 @@
   Для сохранения ОС для старых версий сдк нужно добавить маппер на новые неизвестные типы. 
   Если в будущем в OpeanApi будет добавлен дефолтный тип маппера то данные правки можно убрать
 * ObjectSerializer. Заменен формат даты
-* api.mustache - явно заданные заголовки имеют приоритет над HeaderSelector без учёта регистра имени.
-  Значения Accept `application/json;charset=utf-8` и Accept-Encoding `gzip` приходят из параметров спецификации.
-* api.mustache - поддержка смешанных batch-ответов `BatchResponseEntity[]` и `DeleteRowResult[]`
-  при HTTP 404/412 в синхронных и асинхронных методах. Глобальный объект ошибки и остальные ошибочные
-  статусы остаются `ApiException`, тело и HTTP-статус сохраняются даже при некорректном контейнере `errors`.
-* Configuration.mustache - стандартный шаблон генератора 7.14.0 с единственным изменением:
-  boolean query-параметры по умолчанию передаются как `true`/`false` (`BOOLEAN_FORMAT_STRING`).
-* model_generic.mustache, model_composed_types.mustache, ObjectSerializer.mustache - выбор моделей
-  `oneOf`/`anyOf`, в том числе вложенных в `allOf`, по `meta.type` и типам из `x-entity-static-builder`.
-  Поддержаны ассортимент, ассортимент скидок и вложенные платежи. В batch-удалении выбираются `DeleteInfo` / `Errors`,
-  при наличии ошибок `Errors` имеет приоритет над `info`.
-  Поля составной схемы, отсутствующие в выбранной модели (например, остатки Assortment у Product),
-  сохраняются через ArrayAccess и при сериализации; удаление через `unset()` также учитывается. Неизвестные поля не добавляются.
-* ObjectSerializer.mustache - `property_exists()` различает отсутствующее nullable-поле и явный `null`:
-  отсутствующее поле не добавляется при сериализации, явный `null` сохраняется для очистки допполей и файла.
+* api.mustache - явные заголовки приоритетнее HeaderSelector независимо от регистра; значения Accept
+  и Accept-Encoding по умолчанию берутся из спецификации.
+* api.mustache - смешанные batch-ответы `BatchResponseEntity[]` / `DeleteRowResult[]` при 404/412
+  разбираются синхронно и асинхронно. Остальные ошибки остаются `ApiException` с исходными статусом и телом.
+* Configuration.mustache - boolean query-параметры передаются как `true`/`false` (`BOOLEAN_FORMAT_STRING`).
+* model_generic.mustache, model_composed_types.mustache, ObjectSerializer.mustache - выбор `oneOf`/`anyOf`
+  по `meta.type`, включая вложенные `allOf`; в batch-удалении `Errors` приоритетнее `DeleteInfo`.
+  Поля составной схемы сохраняются через ArrayAccess и при сериализации, с учётом `unset()`.
+* ObjectSerializer.mustache - `property_exists()` различает отсутствие поля и явный `null`:
+  лишние null-поля не добавляются, очистка допполей и файла сохраняется.
 * api.mustache, LocationResponse.mustache - операции с `x-location-response` (печать, экспорт)
   отдают ссылку только в заголовке `Location` (202 или 303). Метод возвращает `LocationResponse` вместо `void`,
   `allow_redirects = false` в синхронном и асинхронном вызове, иначе Guzzle уходит по 303 и `Location` теряется.
