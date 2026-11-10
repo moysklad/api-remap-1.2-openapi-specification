@@ -193,17 +193,13 @@ export class {{classname}} extends runtime.BaseAPI {
         }
 
         {{/bodyParam}}
-        // Use the configured spelling so fetch does not combine Accept and accept.
+        // Keep one spelling per header. runtime removes undefined entries after merging
+        // configuration headers; Content-Type must stay canonical for JSON serialization.
         for (const name of Object.keys(headerParameters)) {
-            if (name.toLowerCase() !== 'accept' && name.toLowerCase() !== 'accept-encoding') {
-                continue;
-            }
-            const configuredName = Object.keys(this.configuration.headers ?? {}).find(
-                key => key.toLowerCase() === name.toLowerCase(),
-            );
-            if (configuredName !== undefined && configuredName !== name) {
-                headerParameters[configuredName] = headerParameters[name];
-                delete headerParameters[name];
+            for (const configuredName of Object.keys(this.configuration.headers ?? {})) {
+                if (configuredName !== name && configuredName.toLowerCase() === name.toLowerCase()) {
+                    headerParameters[configuredName] = undefined;
+                }
             }
         }
 
@@ -373,7 +369,20 @@ export class {{classname}} extends runtime.BaseAPI {
                 && [404, 412].indexOf(error.response.status) >= 0
                 && ['BatchResponseEntity', 'DeleteRowResult'].indexOf('{{returnBaseType}}') >= 0) {
                 const payload = await error.response.clone().json().catch(() => undefined);
-                if (Array.isArray(payload)) {
+                const isObject = (value: any): boolean => value !== null
+                    && typeof value === 'object' && !Array.isArray(value);
+                if (Array.isArray(payload) && payload.length > 0 && payload.every(row => {
+                    if (!isObject(row)) {
+                        return false;
+                    }
+                    if ('errors' in row) {
+                        return Array.isArray(row.errors) && row.errors.length > 0
+                            && row.errors.every((item: any) => isObject(item) && typeof item.error === 'string');
+                    }
+                    return ['DeleteRowResult'].indexOf('{{returnBaseType}}') >= 0
+                        ? typeof row.info === 'string'
+                        : isObject(row.meta) && typeof row.meta.type === 'string' && row.meta.type.length > 0;
+                })) {
                     return error.response;
                 }
             }

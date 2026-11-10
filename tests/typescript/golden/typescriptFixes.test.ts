@@ -18,7 +18,7 @@ function client(status: number, payload: unknown, headers?: Sdk.HTTPHeaders) {
             });
         },
     });
-    return { configuration, headers: () => new Headers(captured?.headers) };
+    return { configuration, headers: () => new Headers(captured?.headers), body: () => captured?.body };
 }
 
 test('заголовки по умолчанию берутся из спецификации', async () => {
@@ -44,6 +44,30 @@ test('POST без тела отправляет Content-Type', async () => {
     assert.equal(stub.headers().get('content-type'), 'application/json');
 });
 
+for (const headerName of ['content-type', 'Content-Type', 'CONTENT-TYPE']) {
+    test(`POST без тела сохраняет ${headerName} без склейки, параметр метода имеет приоритет`, async () => {
+        const stub = client(204, null, { [headerName]: 'application/custom' });
+        const api = new sdk.SuppliesApi(stub.configuration);
+        await api.moveSupplyToTrash({ id: 'test-id' });
+        assert.equal(stub.headers().get('content-type'), 'application/custom');
+        await api.moveSupplyToTrash({ id: 'test-id', contentType: 'application/json' });
+        assert.equal(stub.headers().get('content-type'), 'application/json');
+    });
+
+    test(`нормализация ${headerName} сохраняет JSON-сериализацию тела`, async () => {
+        const stub = client(200, [], { [headerName]: 'application/json' });
+        await new sdk.ProductsApi(stub.configuration).createProductsBatch({ product: [{ name: 'test' }] });
+        assert.equal(stub.headers().get('content-type'), 'application/json');
+        assert.equal(stub.body(), '[{"name":"test"}]');
+    });
+}
+
+test('несколько вариантов регистра Accept не склеиваются', async () => {
+    const stub = client(200, { rows: [] }, { Accept: 'application/first', accept: 'application/second' });
+    await new sdk.ProductsApi(stub.configuration).getProducts({ accept: 'application/explicit' });
+    assert.equal(stub.headers().get('accept'), 'application/explicit');
+});
+
 const wire = (value: unknown): unknown => JSON.parse(JSON.stringify(value));
 
 const errors = { errors: [{ error: 'partial failure', code: 1000 }] };
@@ -62,6 +86,33 @@ for (const status of [404, 412]) {
         const result = await new sdk.ProductsApi(stub.configuration).deleteProductsBatch({ product: [] });
         assert.deepEqual(wire(result.map(sdk.DeleteRowResultToJSON)), [success, errors]);
     });
+
+    const invalidPayloads = [
+        [], [null], [42], [[]], [{ unexpected: 'not a batch row' }],
+        [{ errors: 'invalid' }], [{ errors: [] }], [{ errors: [null] }],
+        [{ errors: [{ code: 1000 }] }],
+        [{ errors: [{ error: 'failure' }, null] }],
+        [{ meta: { type: 'product' } }, { errors: 'invalid' }],
+    ];
+    for (const [index, payload] of invalidPayloads.entries()) {
+        for (const operation of ['delete', 'create'] as const) {
+            test(`некорректный batch ${operation} ${status}, случай ${index}: исходный ResponseError сохраняется`, async () => {
+                const stub = client(status, payload);
+                const api = new sdk.ProductsApi(stub.configuration);
+                await assert.rejects(
+                    operation === 'delete'
+                        ? api.deleteProductsBatch({ product: [] })
+                        : api.createProductsBatch({ product: [] }),
+                    asyncError => {
+                        assert.ok(asyncError instanceof sdk.ResponseError);
+                        assert.equal(asyncError.response.status, status);
+                        assert.equal(asyncError.response.bodyUsed, false);
+                        return true;
+                    },
+                );
+            });
+        }
+    }
 }
 
 test('обычная ошибка 412 остаётся исключением', async () => {
