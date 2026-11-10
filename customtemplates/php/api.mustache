@@ -243,9 +243,9 @@ use {{invokerPackage}}\ObjectSerializer;
         $request = $this->{{operationId}}Request({{^vendorExtensions.x-group-parameters}}{{#allParams}}${{paramName}}, {{/allParams}}{{#servers}}{{#-first}}$hostIndex, $variables, {{/-first}}{{/servers}}$contentType{{/vendorExtensions.x-group-parameters}}{{#vendorExtensions.x-group-parameters}}$associative_array{{/vendorExtensions.x-group-parameters}});
         try {
             $options = $this->createHttpClientOption();
-            {{#returnProperty.mostInnerItems.vendorExtensions.x-polymorphic-discriminator.batchErrorFallback}}
-            $options[RequestOptions::HTTP_ERRORS] = false;
-            {{/returnProperty.mostInnerItems.vendorExtensions.x-polymorphic-discriminator.batchErrorFallback}}
+            if ($this->isBatchResponseType('{{{returnType}}}')) {
+                $options[RequestOptions::HTTP_ERRORS] = false;
+            }
             {{#vendorExtensions.x-location-response}}
             $options[RequestOptions::ALLOW_REDIRECTS] = false;
             {{/vendorExtensions.x-location-response}}
@@ -270,14 +270,13 @@ use {{invokerPackage}}\ObjectSerializer;
             $statusCode = $response->getStatusCode();
 
             {{#returnType}}
-            {{#returnProperty.mostInnerItems.vendorExtensions.x-polymorphic-discriminator.batchErrorFallback}}
-            return $this->handleResponseMassWithDataType(
-                '{{{returnType}}}',
-                $request,
-                $response,
-            );
-            {{/returnProperty.mostInnerItems.vendorExtensions.x-polymorphic-discriminator.batchErrorFallback}}
-            {{^returnProperty.mostInnerItems.vendorExtensions.x-polymorphic-discriminator.batchErrorFallback}}
+            if ($this->isBatchResponseType('{{{returnType}}}')) {
+                return $this->handleResponseMassWithDataType(
+                    '{{{returnType}}}',
+                    $request,
+                    $response
+                );
+            }
 
             {{#responses}}
             {{#-first}}
@@ -324,7 +323,6 @@ use {{invokerPackage}}\ObjectSerializer;
                 $request,
                 $response
             );
-            {{/returnProperty.mostInnerItems.vendorExtensions.x-polymorphic-discriminator.batchErrorFallback}}
             {{/returnType}}
             {{^returnType}}
             {{#vendorExtensions.x-location-response}}
@@ -345,6 +343,9 @@ use {{invokerPackage}}\ObjectSerializer;
             return [null, $statusCode, $response->getHeaders()];
             {{/returnType}}
         } catch (ApiException $e) {
+            if ($e->getResponseObject() !== null) {
+                throw $e;
+            }
             switch ($e->getCode()) {
         {{#responses}}
             {{#dataType}}
@@ -492,9 +493,9 @@ use {{invokerPackage}}\ObjectSerializer;
         $returnType = '{{{returnType}}}';
         $request = $this->{{operationId}}Request({{^vendorExtensions.x-group-parameters}}{{#allParams}}${{paramName}}, {{/allParams}}{{#servers}}{{#-first}}$hostIndex, $variables, {{/-first}}{{/servers}}$contentType{{/vendorExtensions.x-group-parameters}}{{#vendorExtensions.x-group-parameters}}$associative_array{{/vendorExtensions.x-group-parameters}});
         $options = $this->createHttpClientOption();
-        {{#returnProperty.mostInnerItems.vendorExtensions.x-polymorphic-discriminator.batchErrorFallback}}
-        $options[RequestOptions::HTTP_ERRORS] = false;
-        {{/returnProperty.mostInnerItems.vendorExtensions.x-polymorphic-discriminator.batchErrorFallback}}
+        if ($this->isBatchResponseType('{{{returnType}}}')) {
+            $options[RequestOptions::HTTP_ERRORS] = false;
+        }
         {{#vendorExtensions.x-location-response}}
         $options[RequestOptions::ALLOW_REDIRECTS] = false;
         {{/vendorExtensions.x-location-response}}
@@ -504,14 +505,13 @@ use {{invokerPackage}}\ObjectSerializer;
             ->then(
                 function ($response) use ($returnType, $request) {
                     {{#returnType}}
-                    {{#returnProperty.mostInnerItems.vendorExtensions.x-polymorphic-discriminator.batchErrorFallback}}
-                    return $this->handleResponseMassWithDataType(
-                        $returnType,
-                        $request,
-                        $response,
-                    );
-                    {{/returnProperty.mostInnerItems.vendorExtensions.x-polymorphic-discriminator.batchErrorFallback}}
-                    {{^returnProperty.mostInnerItems.vendorExtensions.x-polymorphic-discriminator.batchErrorFallback}}
+                    if ($this->isBatchResponseType($returnType)) {
+                        return $this->handleResponseMassWithDataType(
+                            $returnType,
+                            $request,
+                            $response
+                        );
+                    }
                     if ($returnType === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
                     } else {
@@ -526,7 +526,6 @@ use {{invokerPackage}}\ObjectSerializer;
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
-                    {{/returnProperty.mostInnerItems.vendorExtensions.x-polymorphic-discriminator.batchErrorFallback}}
                     {{/returnType}}
                     {{^returnType}}
                     {{#vendorExtensions.x-location-response}}
@@ -812,10 +811,10 @@ use {{invokerPackage}}\ObjectSerializer;
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
         }
 
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
+        // Explicit header parameters override selected headers, regardless of name casing.
+        $headers = array_replace(
+            array_change_key_case(array_merge($defaultHeaders, $headers), CASE_LOWER),
+            array_change_key_case($headerParams, CASE_LOWER)
         );
 
         {{#servers.0}}
@@ -936,13 +935,22 @@ use {{invokerPackage}}\ObjectSerializer;
         ];
     }
 
+    private function isBatchResponseType(string $dataType): bool
+    {
+        return in_array($dataType, [
+            '\{{invokerPackage}}\Model\BatchResponseEntity[]',
+            '\{{invokerPackage}}\Model\DeleteRowResult[]',
+        ], true);
+    }
+
     private function handleResponseMassWithDataType(
         string $dataType,
         RequestInterface $request,
         ResponseInterface $response
     ): array {
         $rawContent = (string) $response->getBody();
-        if ($rawContent === '') {
+        $statusCode = $response->getStatusCode();
+        if ($rawContent === '' && $statusCode >= 200 && $statusCode <= 299) {
             return [null, $response->getStatusCode(), $response->getHeaders()];
         }
 
@@ -960,30 +968,23 @@ use {{invokerPackage}}\ObjectSerializer;
             );
         }
 
-        if ($response->getStatusCode() < 200 || $response->getStatusCode() > 299) {
-            if (is_object($content)) {
-                $errorsClass = '\{{invokerPackage}}\Model\Errors';
-                $error = ObjectSerializer::deserialize($content, $errorsClass, $response->getHeaders());
-                throw new ApiException(
-                    (string) $error,
-                    $response->getStatusCode(),
-                    $response->getHeaders(),
-                    $rawContent
-                );
+        if (($statusCode < 200 || $statusCode > 299)
+            && !(in_array($statusCode, [404, 412], true) && is_array($content))
+        ) {
+            $exception = new ApiException(
+                sprintf('[%d] Error connecting to the API (%s)', $statusCode, $request->getUri()),
+                $statusCode,
+                $response->getHeaders(),
+                $rawContent
+            );
+            if (is_object($content) && property_exists($content, 'errors')) {
+                $exception->setResponseObject(ObjectSerializer::deserialize(
+                    $content,
+                    '\{{invokerPackage}}\Model\Errors',
+                    $response->getHeaders()
+                ));
             }
-
-            if (!is_array($content)) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $response->getStatusCode(),
-                        (string) $request->getUri()
-                    ),
-                    $response->getStatusCode(),
-                    $response->getHeaders(),
-                    $rawContent
-                );
-            }
+            throw $exception;
         }
 
         return [

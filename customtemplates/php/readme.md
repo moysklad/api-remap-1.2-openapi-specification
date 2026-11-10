@@ -8,7 +8,20 @@
   Для сохранения ОС для старых версий сдк нужно добавить маппер на новые неизвестные типы. 
   Если в будущем в OpeanApi будет добавлен дефолтный тип маппера то данные правки можно убрать
 * ObjectSerializer. Заменен формат даты
-* api.mustache - поддержка batch-ответов с частичными ошибками: стандартный шаблон Guzzle бросает exception на 400+ до разбора тела ответа, а batch-операции могут возвращать массив результата с таким статусом.
+* api.mustache - явно заданные заголовки имеют приоритет над HeaderSelector без учёта регистра имени.
+  Значения Accept `application/json;charset=utf-8` и Accept-Encoding `gzip` приходят из параметров спецификации.
+* api.mustache - поддержка смешанных batch-ответов `BatchResponseEntity[]` и `DeleteRowResult[]`
+  при HTTP 404/412 в синхронных и асинхронных методах. Глобальный объект ошибки и остальные ошибочные
+  статусы остаются `ApiException`, тело и HTTP-статус сохраняются.
+* Configuration.mustache - стандартный шаблон генератора 7.14.0 с единственным изменением:
+  boolean query-параметры по умолчанию передаются как `true`/`false` (`BOOLEAN_FORMAT_STRING`).
+* model_generic.mustache, model_composed_types.mustache, ObjectSerializer.mustache - выбор моделей
+  `oneOf`/`anyOf`, в том числе вложенных в `allOf`, по `meta.type` и типам из `x-entity-static-builder`.
+  Поддержаны ассортимент, ассортимент скидок и вложенные платежи. В batch-удалении выбираются `DeleteInfo` / `Errors`.
+  Поля составной схемы, отсутствующие в выбранной модели (например, остатки Assortment у Product),
+  сохраняются через ArrayAccess и при сериализации. Неизвестные поля не добавляются.
+* ObjectSerializer.mustache - `property_exists()` различает отсутствующее nullable-поле и явный `null`:
+  отсутствующее поле не добавляется при сериализации, явный `null` сохраняется для очистки допполей и файла.
 * api.mustache, LocationResponse.mustache - операции с `x-location-response` (печать, экспорт)
   отдают ссылку только в заголовке `Location` (202 или 303). Метод возвращает `LocationResponse` вместо `void`,
   `allow_redirects = false` в синхронном и асинхронном вызове, иначе Guzzle уходит по 303 и `Location` теряется.

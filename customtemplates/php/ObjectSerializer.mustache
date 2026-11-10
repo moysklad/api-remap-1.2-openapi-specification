@@ -138,6 +138,11 @@ class ObjectSerializer
         if (is_object($data)) {
             $values = [];
             if ($data instanceof ModelInterface) {
+                if (is_callable([$data, 'getComposedSchemaValues'])) {
+                    foreach ($data->getComposedSchemaValues() as $property => $value) {
+                        $values[$property] = self::sanitizeForSerialization($value);
+                    }
+                }
                 $formats = $data::openAPIFormats();
                 foreach ($data::openAPITypes() as $property => $openAPIType) {
                     $getter = $data::getters()[$property];
@@ -555,6 +560,26 @@ class ObjectSerializer
                 $data = (object)$data;
             }
 
+            $declaredTypes = $class::openAPITypes();
+            $declaredNames = $class::attributeMap();
+
+            // Select only alternatives declared by the schema. Structural matching cannot
+            // distinguish meta-only references or Product from Variant reliably.
+            if (is_callable([$class, 'openAPIComposedTypes'])) {
+                $alternatives = $class::openAPIComposedTypes();
+                $entityType = self::readPath($data, 'meta.type');
+                foreach ($alternatives as $alternative) {
+                    if (($alternative === '\{{invokerPackage}}\Model\Errors' && self::isBatchErrorPayload($data))
+                        || ($alternative === '\{{invokerPackage}}\Model\DeleteInfo' && isset($data->info))
+                        || (is_string($entityType) && defined($alternative . '::ENTITY_TYPE')
+                            && $alternative::ENTITY_TYPE === $entityType)
+                    ) {
+                        $class = $alternative;
+                        break;
+                    }
+                }
+            }
+
             $polymorphicDiscriminatorPath = is_callable([$class, 'openAPIPolymorphicDiscriminatorPath'])
                 ? $class::openAPIPolymorphicDiscriminatorPath()
                 : null;
@@ -618,17 +643,23 @@ class ObjectSerializer
                     continue;
                 }
 
-                if (!isset($data->{$instance::attributeMap()[$property]})) {
-                    if ($instance::isNullable($property)) {
-                        $instance->$propertySetter(null);
-                    }
-
-                    continue;
+                $jsonProperty = $instance::attributeMap()[$property];
+                if (is_object($data) && property_exists($data, $jsonProperty)
+                    && ($data->{$jsonProperty} !== null || $instance::isNullable($property))
+                ) {
+                    $instance->$propertySetter(self::deserialize($data->{$jsonProperty}, $type, null));
                 }
-
-                if (isset($data->{$instance::attributeMap()[$property]})) {
-                    $propertyValue = $data->{$instance::attributeMap()[$property]};
-                    $instance->$propertySetter(self::deserialize($propertyValue, $type, null));
+            }
+            // Keep fields declared by the composed schema but absent from the selected
+            // model, e.g. Assortment.stock/reserve/inTransit/quantity on Product.
+            foreach (array_diff_key($declaredTypes, $instance::openAPITypes()) as $property => $type) {
+                $jsonProperty = $declaredNames[$property];
+                if (is_object($data) && property_exists($data, $jsonProperty)) {
+                    $instance->setComposedSchemaValue(
+                        $property,
+                        $jsonProperty,
+                        self::deserialize($data->{$jsonProperty}, $type, null)
+                    );
                 }
             }
             return $instance;
