@@ -343,7 +343,7 @@ use {{invokerPackage}}\ObjectSerializer;
             return [null, $statusCode, $response->getHeaders()];
             {{/returnType}}
         } catch (ApiException $e) {
-            if ($e->getResponseObject() !== null) {
+            if ($this->isBatchResponseType('{{{returnType}}}') || $e->getResponseObject() !== null) {
                 throw $e;
             }
             switch ($e->getCode()) {
@@ -978,11 +978,15 @@ use {{invokerPackage}}\ObjectSerializer;
                 $rawContent
             );
             if (is_object($content) && property_exists($content, 'errors')) {
-                $exception->setResponseObject(ObjectSerializer::deserialize(
-                    $content,
-                    '\{{invokerPackage}}\Model\Errors',
-                    $response->getHeaders()
-                ));
+                try {
+                    $exception->setResponseObject(ObjectSerializer::deserialize(
+                        $content,
+                        '\{{invokerPackage}}\Model\Errors',
+                        $response->getHeaders()
+                    ));
+                } catch (\InvalidArgumentException | \TypeError $deserializationException) {
+                    // Preserve the HTTP exception and raw response even if Errors is malformed.
+                }
             }
             throw $exception;
         }

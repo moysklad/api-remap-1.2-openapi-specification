@@ -13,11 +13,11 @@ use OpenAPI\Client\Api\ProductsApi;
 use OpenAPI\Client\ApiException;
 use OpenAPI\Client\Configuration;
 use OpenAPI\Client\Model\BatchResponseEntity;
-use OpenAPI\Client\Model\Errors;
 use OpenAPI\Client\Model\DeleteInfo;
-use PHPUnit\Framework\Attributes\DataProvider;
+use OpenAPI\Client\Model\Errors;
 use OpenAPI\Client\Model\Product;
 use OpenAPI\Client\ObjectSerializer;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * Поведение batch-ответов:
@@ -123,6 +123,15 @@ class BatchResponseHandlingTest extends TestCase
         } catch (ApiException $e) {
             $this->assertSame($status, $e->getCode());
             $this->assertSame($body, $e->getResponseBody());
+            $this->assertSame(['application/json'], $e->getResponseHeaders()['Content-Type']);
+            $payload = json_decode($body);
+            if (is_object($payload) && isset($payload->errors)) {
+                if (is_array($payload->errors)) {
+                    $this->assertInstanceOf(Errors::class, $e->getResponseObject());
+                } else {
+                    $this->assertNull($e->getResponseObject());
+                }
+            }
         }
     }
 
@@ -133,6 +142,8 @@ class BatchResponseHandlingTest extends TestCase
             [500, '[{"errors":[{"error":"Server error","code":1000}]}]'],
             [404, '{"errors":[{"error":"Not found","code":1000}]}'],
             [412, '{"errors":[{"error":"Validation error","code":1000}]}'],
+            [404, '{"errors":"invalid container"}'],
+            [412, '{"errors":"invalid container"}'],
             [404, 'null'],
             [404, ''],
             [412, 'invalid JSON'],

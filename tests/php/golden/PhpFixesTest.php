@@ -12,7 +12,9 @@ use OpenAPI\Client\HeaderSelector;
 use OpenAPI\Client\Model\Assortment;
 use OpenAPI\Client\Model\AttributeFile;
 use OpenAPI\Client\Model\AttributeString;
+use OpenAPI\Client\Model\DeleteRowResult;
 use OpenAPI\Client\Model\DiscountAssortmentItem;
+use OpenAPI\Client\Model\Errors;
 use OpenAPI\Client\Model\Product;
 use OpenAPI\Client\Model\RetailShift;
 use OpenAPI\Client\Model\SpecialPriceDiscount;
@@ -91,6 +93,25 @@ class PhpFixesTest extends TestCase
         $this->assertInstanceOf(Product::class, $product);
         $this->assertSame(3.5, $product['stock']);
         $this->assertEquals($payload, json_decode(json_encode(ObjectSerializer::sanitizeForSerialization($product)), true));
+    }
+
+    public function testRemovedComposedFieldStaysAbsentDuringSerialization(): void
+    {
+        $product = ObjectSerializer::deserialize('{"meta":{"type":"product"},"stock":3.5}', Assortment::class);
+        unset($product['stock']);
+
+        $this->assertObjectNotHasProperty('stock', ObjectSerializer::sanitizeForSerialization($product));
+    }
+
+    public function testBatchErrorTakesPriorityOverDeletionInfo(): void
+    {
+        $result = ObjectSerializer::deserialize(
+            '{"info":"Details","errors":[{"error":"Not found","code":1000}]}',
+            DeleteRowResult::class
+        );
+
+        $this->assertInstanceOf(Errors::class, $result);
+        $this->assertSame(1000, $result->getErrors()[0]->getCode());
     }
 
     #[DataProvider('discountProvider')]

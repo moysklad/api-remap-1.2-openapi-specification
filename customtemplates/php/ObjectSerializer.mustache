@@ -568,14 +568,18 @@ class ObjectSerializer
             if (is_callable([$class, 'openAPIComposedTypes'])) {
                 $alternatives = $class::openAPIComposedTypes();
                 $entityType = self::readPath($data, 'meta.type');
-                foreach ($alternatives as $alternative) {
-                    if (($alternative === '\{{invokerPackage}}\Model\Errors' && self::isBatchErrorPayload($data))
-                        || ($alternative === '\{{invokerPackage}}\Model\DeleteInfo' && isset($data->info))
-                        || (is_string($entityType) && defined($alternative . '::ENTITY_TYPE')
-                            && $alternative::ENTITY_TYPE === $entityType)
-                    ) {
-                        $class = $alternative;
-                        break;
+                $errorsClass = '\{{invokerPackage}}\Model\Errors';
+                if (in_array($errorsClass, $alternatives, true) && self::isBatchErrorPayload($data)) {
+                    $class = $errorsClass;
+                } else {
+                    foreach ($alternatives as $alternative) {
+                        if (($alternative === '\{{invokerPackage}}\Model\DeleteInfo' && isset($data->info))
+                            || (is_string($entityType) && defined($alternative . '::ENTITY_TYPE')
+                                && $alternative::ENTITY_TYPE === $entityType)
+                        ) {
+                            $class = $alternative;
+                            break;
+                        }
                     }
                 }
             }

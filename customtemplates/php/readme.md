@@ -12,14 +12,15 @@
   Значения Accept `application/json;charset=utf-8` и Accept-Encoding `gzip` приходят из параметров спецификации.
 * api.mustache - поддержка смешанных batch-ответов `BatchResponseEntity[]` и `DeleteRowResult[]`
   при HTTP 404/412 в синхронных и асинхронных методах. Глобальный объект ошибки и остальные ошибочные
-  статусы остаются `ApiException`, тело и HTTP-статус сохраняются.
+  статусы остаются `ApiException`, тело и HTTP-статус сохраняются даже при некорректном контейнере `errors`.
 * Configuration.mustache - стандартный шаблон генератора 7.14.0 с единственным изменением:
   boolean query-параметры по умолчанию передаются как `true`/`false` (`BOOLEAN_FORMAT_STRING`).
 * model_generic.mustache, model_composed_types.mustache, ObjectSerializer.mustache - выбор моделей
   `oneOf`/`anyOf`, в том числе вложенных в `allOf`, по `meta.type` и типам из `x-entity-static-builder`.
-  Поддержаны ассортимент, ассортимент скидок и вложенные платежи. В batch-удалении выбираются `DeleteInfo` / `Errors`.
+  Поддержаны ассортимент, ассортимент скидок и вложенные платежи. В batch-удалении выбираются `DeleteInfo` / `Errors`,
+  при наличии ошибок `Errors` имеет приоритет над `info`.
   Поля составной схемы, отсутствующие в выбранной модели (например, остатки Assortment у Product),
-  сохраняются через ArrayAccess и при сериализации. Неизвестные поля не добавляются.
+  сохраняются через ArrayAccess и при сериализации; удаление через `unset()` также учитывается. Неизвестные поля не добавляются.
 * ObjectSerializer.mustache - `property_exists()` различает отсутствующее nullable-поле и явный `null`:
   отсутствующее поле не добавляется при сериализации, явный `null` сохраняется для очистки допполей и файла.
 * api.mustache, LocationResponse.mustache - операции с `x-location-response` (печать, экспорт)
