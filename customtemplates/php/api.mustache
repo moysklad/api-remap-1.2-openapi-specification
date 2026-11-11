@@ -343,7 +343,7 @@ use {{invokerPackage}}\ObjectSerializer;
             return [null, $statusCode, $response->getHeaders()];
             {{/returnType}}
         } catch (ApiException $e) {
-            if ($this->isBatchResponseType('{{{returnType}}}') || $e->getResponseObject() !== null) {
+            if ($this->isBatchResponseType('{{{returnType}}}')) {
                 throw $e;
             }
             switch ($e->getCode()) {
@@ -991,11 +991,21 @@ use {{invokerPackage}}\ObjectSerializer;
             throw $exception;
         }
 
-        return [
-            ObjectSerializer::deserialize($content, $dataType, []),
-            $response->getStatusCode(),
-            $response->getHeaders()
-        ];
+        try {
+            $result = ObjectSerializer::deserialize($content, $dataType, $response->getHeaders());
+        } catch (\InvalidArgumentException | \TypeError $exception) {
+            if ($statusCode >= 200 && $statusCode <= 299) {
+                throw $exception;
+            }
+            throw new ApiException(
+                sprintf('Error deserializing batch response (%s): %s', $request->getUri(), $exception->getMessage()),
+                $statusCode,
+                $response->getHeaders(),
+                $rawContent
+            );
+        }
+
+        return [$result, $statusCode, $response->getHeaders()];
     }
 
     private function responseWithinRangeCode(

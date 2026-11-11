@@ -61,21 +61,6 @@ class BatchResponseHandlingTest extends TestCase
         }
     }
 
-    public function testPartialSuccessAt404ReturnsBatchWithoutException(): void
-    {
-        $body = $this->loadBatchFixtureRaw('product_batch_partial.json');
-        $api = $this->productsApiWithResponse(404, $body);
-
-        $result = $api->createProductsBatch([$this->minimalProduct()]);
-
-        $this->assertIsArray($result);
-        $this->assertCount(2, $result);
-        $this->assertContainsOnlyInstancesOf(BatchResponseEntity::class, $result);
-        $this->assertInstanceOf(Product::class, $result[0]);
-        $this->assertInstanceOf(Errors::class, $result[1]);
-        $this->assertSame(1000, $result[1]->getErrors()[0]->getCode());
-    }
-
     #[DataProvider('mixedResponseProvider')]
     public function testMixedResponsesPreserveSuccessAndErrors(int $status, bool $async, bool $delete): void
     {
@@ -91,6 +76,9 @@ class BatchResponseHandlingTest extends TestCase
         }
 
         $this->assertCount(2, $result);
+        if (!$delete) {
+            $this->assertContainsOnlyInstancesOf(BatchResponseEntity::class, $result);
+        }
         $this->assertInstanceOf($delete ? DeleteInfo::class : Product::class, $result[0]);
         $this->assertInstanceOf(Errors::class, $result[1]);
         $this->assertSame(1000, $result[1]->getErrors()[0]->getCode());
@@ -105,6 +93,31 @@ class BatchResponseHandlingTest extends TestCase
                         => [$status, $async, $delete];
                 }
             }
+        }
+    }
+
+    #[DataProvider('mixedResponseProvider')]
+    public function testMalformedBatchRowPreservesHttpException(int $status, bool $async, bool $delete): void
+    {
+        $body = $delete
+            ? '[{"info":"Deleted","errors":"invalid container"}]'
+            : '[{"meta":{"type":"product"},"salePrices":"invalid container"}]';
+        $api = $this->productsApiWithResponse($status, $body);
+        $method = $delete ? 'deleteProductsBatch' : 'createProductsBatch';
+
+        // On successful HTTP responses, keep the serializer's validation exception.
+        $this->expectException($status === 200 ? \InvalidArgumentException::class : ApiException::class);
+        try {
+            if ($async) {
+                $api->{$method . 'Async'}([$this->minimalProduct()])->wait();
+            } else {
+                $api->{$method}([$this->minimalProduct()]);
+            }
+        } catch (ApiException $e) {
+            $this->assertSame($status, $e->getCode());
+            $this->assertSame($body, $e->getResponseBody());
+            $this->assertSame(['application/json'], $e->getResponseHeaders()['Content-Type']);
+            throw $e;
         }
     }
 
