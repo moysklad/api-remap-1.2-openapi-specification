@@ -81,6 +81,18 @@ def test_default_headers_come_from_specification(capture: HeaderCapture) -> None
     assert capture.values("accept-encoding") == ["gzip"]
 
 
+def test_client_accept_is_not_duplicated_by_specification_default(capture: HeaderCapture) -> None:
+    client = _client(capture)
+    client.set_default_header("accept", "application/custom")
+    try:
+        ProductsApi(client).get_products(limit=1)
+    except Exception:
+        pass
+
+    assert capture.values("accept") == ["application/custom"]
+    assert capture.values("accept-encoding") == ["gzip"]
+
+
 def test_explicit_accept_replaces_default_header(capture: HeaderCapture) -> None:
     try:
         ProductsApi(_client(capture)).get_products(
