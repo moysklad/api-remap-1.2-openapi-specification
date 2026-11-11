@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MoySklad\Tests\Golden;
 
+use GuzzleHttp\Client;
 use MoySklad\Tests\TestCase;
 use OpenAPI\Client\Api\ProductsApi;
 use OpenAPI\Client\Api\ReportsStockCurrentApi;
@@ -29,6 +30,24 @@ class PhpFixesTest extends TestCase
 
         $this->assertSame('application/json;charset=utf-8', $request->getHeaderLine('Accept'));
         $this->assertSame('gzip', $request->getHeaderLine('Accept-Encoding'));
+    }
+
+    #[DataProvider('headerCaseProvider')]
+    public function testClientHeadersArePreservedAndExplicitParametersWin(string $accept, string $encoding): void
+    {
+        $api = new ProductsApi(new Client(['headers' => [$accept => 'application/custom', $encoding => 'identity']]));
+        $request = $api->getProductsRequest();
+        $this->assertSame(['application/custom'], $request->getHeader('Accept'));
+        $this->assertSame(['identity'], $request->getHeader('Accept-Encoding'));
+
+        $request = $api->getProductsRequest(accept: 'application/json;charset=utf-8', accept_encoding: 'gzip');
+        $this->assertSame(['application/json;charset=utf-8'], $request->getHeader('Accept'));
+        $this->assertSame(['gzip'], $request->getHeader('Accept-Encoding'));
+    }
+
+    public static function headerCaseProvider(): array
+    {
+        return [['Accept', 'Accept-Encoding'], ['accept', 'accept-encoding'], ['aCcEpT', 'aCcEpT-EnCoDiNg']];
     }
 
     public function testExplicitHeadersOverrideSelectorRegardlessOfCasing(): void
