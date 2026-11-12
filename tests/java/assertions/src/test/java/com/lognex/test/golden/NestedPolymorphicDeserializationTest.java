@@ -59,6 +59,26 @@ class NestedPolymorphicDeserializationTest extends BaseTestCase {
         Assertions.assertEquals(type, MAPPER.readTree(serialized).get("type").asString());
     }
 
+    @ParameterizedTest
+    @ValueSource(strings = {"counterparty", "organization"})
+    void organizationAttributeResolvesValueByMetaType(String entityType) {
+        for (boolean expanded : new boolean[] {false, true}) {
+            String json = "{\"attributes\":[{\"type\":\"organization\",\"value\":{\"meta\":{\"type\":\""
+                    + entityType + "\"}" + (expanded ? ",\"name\":\"Компания\"" : "") + "}}]}";
+            Counterparty owner = MAPPER.readValue(json, Counterparty.class);
+            AttributeCounterpartyEntity attribute = Assertions.assertInstanceOf(
+                    AttributeCounterpartyEntity.class, owner.getAttributes().get(0));
+            Object value = attribute.getValue();
+            Class<?> expectedClass = entityType.equals("organization") ? Organization.class : Counterparty.class;
+            Assertions.assertInstanceOf(expectedClass, value);
+            Assertions.assertEquals(entityType, ((EntityWithMeta) value).getMeta().getType());
+            Assertions.assertEquals(expanded ? "Компания" : null,
+                    entityType.equals("organization") ? ((Organization) value).getName() : ((Counterparty) value).getName());
+            Assertions.assertEquals("organization", MAPPER.readTree(MAPPER.writeValueAsString(owner))
+                    .get("attributes").get(0).get("type").asString());
+        }
+    }
+
     @Test
     void productAttributeWithExpandedProductResolvesToProduct() throws Exception {
         Product product = MAPPER.readValue(fixture("product_attribute_product_expanded.json"), Product.class);
