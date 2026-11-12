@@ -1,0 +1,13 @@
+{{!
+ Containers stay absent until assigned. Writable empty collections are preserved for clearing;
+ empty readOnly collections are omitted, including collections wrapped in JsonNullable.
+ Scalar inclusion and nullable map entries follow the upstream template.
+ }}
+  @JsonProperty(JSON_PROPERTY_{{nameInSnakeCase}})
+  @JsonInclude({{#vendorExtensions.x-is-jackson-optional-nullable}}{{#isContainer}}{{#isReadOnly}}content = JsonInclude.Include.NON_EMPTY, {{/isReadOnly}}{{/isContainer}}{{/vendorExtensions.x-is-jackson-optional-nullable}}{{#isMap}}{{#items.isNullable}}{{^isReadOnly}}content = JsonInclude.Include.ALWAYS, {{/isReadOnly}}{{#isReadOnly}}{{^vendorExtensions.x-is-jackson-optional-nullable}}content = JsonInclude.Include.ALWAYS, {{/vendorExtensions.x-is-jackson-optional-nullable}}{{/isReadOnly}}{{/items.isNullable}}{{/isMap}}value = JsonInclude.Include.{{#isContainer}}{{#isReadOnly}}NON_EMPTY{{/isReadOnly}}{{^isReadOnly}}NON_NULL{{/isReadOnly}}{{/isContainer}}{{^isContainer}}{{#required}}ALWAYS{{/required}}{{^required}}USE_DEFAULTS{{/required}}{{/isContainer}})
+{{#withXml}}
+  @JacksonXmlProperty(localName = "{{items.xmlName}}{{^items.xmlName}}{{xmlName}}{{^xmlName}}{{baseName}}{{/xmlName}}{{/items.xmlName}}"{{#isXmlAttribute}}, isAttribute = true{{/isXmlAttribute}}{{#xmlNamespace}}, namespace = "{{.}}"{{/xmlNamespace}})
+  {{#isContainer}}
+  @JacksonXmlElementWrapper({{#isXmlWrapped}}localName = "{{xmlName}}{{^xmlName}}{{baseName}}{{/xmlName}}", {{#xmlNamespace}}namespace = "{{.}}", {{/xmlNamespace}}{{/isXmlWrapped}}useWrapping = {{isXmlWrapped}})
+  {{/isContainer}}
+{{/withXml}}
