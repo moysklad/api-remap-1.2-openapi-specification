@@ -3,6 +3,9 @@ apiPackage: "ru.moysklad.remap_1_2.api"
 modelPackage: "ru.moysklad.remap_1_2.model"
 polymorphicPackage: "ru.moysklad.remap_1_2.deserialize"
 files:
+  EmptyReadOnlyCollectionFilter.mustache:
+    templateType: SupportingFiles
+    destinationFilename: src/main/java/ru/moysklad/remap_1_2/EmptyReadOnlyCollectionFilter.java
   RequestOptions.mustache:
     templateType: SupportingFiles
     destinationFilename: src/main/java/ru/moysklad/remap_1_2/api/RequestOptions.java

@@ -56,6 +56,36 @@ class CollectionSerializationTest {
         assertTrue(json(store).get("createAgentsTags").isNull());
     }
 
+    @Test
+    void nonemptyReadonlyMapsKeepNullAndEmptyValues() {
+        String values = "{\"removed\":null,\"name\":\"\",\"tags\":[],\"details\":{},"
+                + "\"enabled\":false,\"count\":0,\"nested\":{\"value\":null}}";
+        Audit audit = MAPPER.readValue("{\"info\":" + values + "}", Audit.class);
+        AuditEvent event = MAPPER.readValue("{\"diff\":" + values + "}", AuditEvent.class);
+
+        assertEquals(MAPPER.readTree(values), json(audit).get("info"));
+        assertEquals(MAPPER.readTree(values), json(event).get("diff"));
+    }
+
+    @Test
+    void emptyReadonlyMapsAreOmitted() {
+        for (String value : new String[] {"{}", "null"}) {
+            Audit audit = MAPPER.readValue("{\"info\":" + value + "}", Audit.class);
+            AuditEvent event = MAPPER.readValue("{\"diff\":" + value + "}", AuditEvent.class);
+            assertFalse(json(audit).has("info"));
+            assertFalse(json(event).has("diff"));
+        }
+    }
+
+    @Test
+    void nonemptyReadonlyNullableListsKeepTheirElements() {
+        RetailShift shift = MAPPER.readValue("{\"operations\":[null,{}]}", RetailShift.class);
+        JsonNode operations = json(shift).get("operations");
+        assertEquals(2, operations.size());
+        assertTrue(operations.get(0).isNull());
+        assertTrue(operations.get(1).isObject());
+    }
+
     private JsonNode json(Object value) {
         return MAPPER.readTree(MAPPER.writeValueAsString(value));
     }
