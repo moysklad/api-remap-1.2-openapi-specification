@@ -3,6 +3,7 @@
 import type { {{{.}}} } from './{{.}}{{importFileExtension}}';
 import {
     instanceOf{{{.}}},
+    {{{.}}}EntityType,
     {{{.}}}FromJSON,
     {{{.}}}FromJSONTyped,
     {{{.}}}ToJSON,
@@ -11,6 +12,27 @@ import {
 
 {{/hasImports}}
 {{>modelOneOfInterfaces}}
+
+function is{{classname}}BatchError(value: any): boolean {
+    return Array.isArray(value?.errors)
+        && value.errors.length > 0
+        && typeof value.errors[0]?.error === 'string';
+}
+
+function {{classname}}FromMetaType(json: any, ignoreDiscriminator: boolean): {{classname}} | undefined {
+    const metaType = json?.meta?.type;
+    if (typeof metaType !== 'string') {
+        return undefined;
+    }
+{{#oneOfModels}}
+    if ({{{.}}}EntityType === metaType) {
+        return {{{.}}}FromJSONTyped(json, ignoreDiscriminator);
+    }
+{{/oneOfModels}}
+    return undefined;
+}
+
+export const {{classname}}EntityType: string | undefined = undefined;
 
 export function instanceOf{{classname}}(value: object): value is {{classname}} {
 {{#oneOfModels}}
@@ -21,7 +43,6 @@ export function instanceOf{{classname}}(value: object): value is {{classname}} {
 {{/oneOfArrays}}
     return false;
 }
-
 
 export function {{classname}}FromJSON(json: any): {{classname}} {
     return {{classname}}FromJSONTyped(json, false);
@@ -42,24 +63,27 @@ export function {{classname}}FromJSONTyped(json: any, ignoreDiscriminator: boole
     }
 {{/discriminator}}
 {{^discriminator}}
-    const converters: Record<string, (value: any) => any> = {
-{{#oneOfModels}}
-        ['{{{.}}}'.toLowerCase()]: {{{.}}}FromJSON,
-{{/oneOfModels}}
-    };
-    const entityConverter = converters[json?.meta?.type];
-    if (typeof json?.meta?.type === 'string' && entityConverter !== undefined) {
-        return entityConverter(json);
-    }
-    if (Array.isArray(json?.errors) && converters['errors'] !== undefined) {
-        return converters['errors'](json);
-    }
-    {{#oneOfModels}}
-    {{#-first}}
     if (typeof json !== 'object') {
         return json;
     }
-    {{/-first}}
+    if (!ignoreDiscriminator) {
+        if (is{{classname}}BatchError(json)) {
+            const errorConverters: Record<string, (value: any, ignoreDiscriminator: boolean) => any> = {
+{{#oneOfModels}}
+                '{{{.}}}': {{{.}}}FromJSONTyped,
+{{/oneOfModels}}
+            };
+            const errorConverter = errorConverters['Errors'];
+            if (errorConverter !== undefined) {
+                return errorConverter(json, true);
+            }
+        }
+        const typed = {{classname}}FromMetaType(json, true);
+        if (typed !== undefined) {
+            return typed;
+        }
+    }
+    {{#oneOfModels}}
     if (instanceOf{{{.}}}(json)) {
         return {{{.}}}FromJSONTyped(json, true);
     }
@@ -70,7 +94,7 @@ export function {{classname}}FromJSONTyped(json: any, ignoreDiscriminator: boole
         if (json.every(item => typeof item === 'object')) {
     {{/-first}}
             if (json.every(item => instanceOf{{{.}}}(item))) {
-                return json.map(value => {{{.}}}FromJSONTyped(value, true));
+                return json.map(value => {{{.}}}FromJSON(value));
             }
     {{#-last}}
         }
@@ -102,24 +126,31 @@ export function {{classname}}ToJSONTyped(value?: {{classname}} | null, ignoreDis
     }
 {{/discriminator}}
 {{^discriminator}}
-    const converters: Record<string, (value: any) => any> = {
-{{#oneOfModels}}
-        ['{{{.}}}'.toLowerCase()]: {{{.}}}ToJSON,
-{{/oneOfModels}}
-    };
-    const entityConverter = converters[(value as any)?.meta?.type];
-    if (typeof (value as any)?.meta?.type === 'string' && entityConverter !== undefined) {
-        return entityConverter(value);
-    }
-    if (Array.isArray((value as any)?.errors) && converters['errors'] !== undefined) {
-        return converters['errors'](value);
-    }
-    {{#oneOfModels}}
-    {{#-first}}
     if (typeof value !== 'object') {
         return value;
     }
-    {{/-first}}
+    if (!ignoreDiscriminator) {
+        if (is{{classname}}BatchError(value)) {
+            const errorConverters: Record<string, (item: any) => any> = {
+{{#oneOfModels}}
+                '{{{.}}}': {{{.}}}ToJSON,
+{{/oneOfModels}}
+            };
+            const errorConverter = errorConverters['Errors'];
+            if (errorConverter !== undefined) {
+                return errorConverter(value);
+            }
+        }
+        const metaType = (value as any)?.meta?.type;
+        if (typeof metaType === 'string') {
+{{#oneOfModels}}
+            if ({{{.}}}EntityType === metaType) {
+                return {{{.}}}ToJSON(value as {{{.}}});
+            }
+{{/oneOfModels}}
+        }
+    }
+    {{#oneOfModels}}
     if (instanceOf{{{.}}}(value)) {
         return {{{.}}}ToJSON(value as {{{.}}});
     }

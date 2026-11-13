@@ -176,10 +176,33 @@ export class {{classname}} extends runtime.BaseAPI {
         {{^isArray}}
         if (requestParameters['{{paramName}}'] != null) {
             headerParameters['{{baseName}}'] = String(requestParameters['{{paramName}}']);
-        }
+        }{{#defaultValue}} else {
+            const configuredHeader = Object.keys(this.configuration.headers ?? {}).find(
+                name => name.toLowerCase() === '{{baseName}}'.toLowerCase(),
+            );
+            headerParameters['{{baseName}}'] = configuredHeader === undefined
+                ? {{{defaultValue}}}
+                : this.configuration.headers![configuredHeader];
+        }{{/defaultValue}}
 
         {{/isArray}}
         {{/headerParams}}
+        {{^bodyParam}}
+        if (headerParameters['Content-Type'] == null && ['POST', 'PUT', 'PATCH'].indexOf('{{httpMethod}}') >= 0) {
+            headerParameters['Content-Type'] = 'application/json';
+        }
+
+        {{/bodyParam}}
+        // Keep one spelling per header. runtime removes undefined entries after merging
+        // configuration headers; Content-Type must stay canonical for JSON serialization.
+        for (const name of Object.keys(headerParameters)) {
+            for (const configuredName of Object.keys(this.configuration.headers ?? {})) {
+                if (configuredName !== name && configuredName.toLowerCase() === name.toLowerCase()) {
+                    headerParameters[configuredName] = undefined;
+                }
+            }
+        }
+
         {{#authMethods}}
         {{#isBasic}}
         {{#isBasicBasic}}
@@ -341,7 +364,30 @@ export class {{classname}} extends runtime.BaseAPI {
             {{#hasFormParams}}
             body: formParams,
             {{/hasFormParams}}
-        }, {{^vendorExtensions.x-location-response}}initOverrides);{{/vendorExtensions.x-location-response}}{{#vendorExtensions.x-location-response}}async (requestContext) => ({
+        }, {{^vendorExtensions.x-location-response}}initOverrides){{#returnType}}{{#isArray}}.catch(async (error: unknown) => {
+            if (error instanceof runtime.ResponseError
+                && [404, 412].indexOf(error.response.status) >= 0
+                && ['BatchResponseEntity', 'DeleteRowResult'].indexOf('{{returnBaseType}}') >= 0) {
+                const payload = await error.response.clone().json().catch(() => undefined);
+                const isObject = (value: any): boolean => value !== null
+                    && typeof value === 'object' && !Array.isArray(value);
+                if (Array.isArray(payload) && payload.length > 0 && payload.every(row => {
+                    if (!isObject(row)) {
+                        return false;
+                    }
+                    if ('errors' in row) {
+                        return Array.isArray(row.errors) && row.errors.length > 0
+                            && row.errors.every((item: any) => isObject(item) && typeof item.error === 'string');
+                    }
+                    return ['DeleteRowResult'].indexOf('{{returnBaseType}}') >= 0
+                        ? typeof row.info === 'string'
+                        : isObject(row.meta) && typeof row.meta.type === 'string' && row.meta.type.length > 0;
+                })) {
+                    return error.response;
+                }
+            }
+            throw error;
+        }){{/isArray}}{{/returnType}};{{/vendorExtensions.x-location-response}}{{#vendorExtensions.x-location-response}}async (requestContext) => ({
             ...(typeof initOverrides === 'function' ? await initOverrides(requestContext) : initOverrides),
             // при автоматическом переходе Location ответа 3xx теряется
             redirect: 'manual',
