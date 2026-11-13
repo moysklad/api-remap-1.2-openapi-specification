@@ -13,15 +13,17 @@ use OpenAPI\Client\Api\ProductsApi;
 use OpenAPI\Client\ApiException;
 use OpenAPI\Client\Configuration;
 use OpenAPI\Client\Model\BatchResponseEntity;
+use OpenAPI\Client\Model\DeleteInfo;
 use OpenAPI\Client\Model\Errors;
 use OpenAPI\Client\Model\Product;
 use OpenAPI\Client\ObjectSerializer;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * Поведение batch-ответов:
  * 1) смешанный массив [сущность, Errors] десериализуется в BatchResponseEntity[];
  * 2) HTTP 400+ и объект Errors → ApiException;
- * 3) HTTP 400+ и массив → без ApiException, возвращается список результатов.
+ * 3) HTTP 404/412 и массив → без ApiException, возвращается список результатов.
  */
 class BatchResponseHandlingTest extends TestCase
 {
@@ -59,19 +61,113 @@ class BatchResponseHandlingTest extends TestCase
         }
     }
 
-    public function testPartialSuccessAt400ReturnsBatchWithoutException(): void
+    #[DataProvider('mixedResponseProvider')]
+    public function testMixedResponsesPreserveSuccessAndErrors(int $status, bool $async, bool $delete): void
     {
-        $body = $this->loadBatchFixtureRaw('product_batch_partial.json');
-        $api = $this->productsApiWithResponse(400, $body);
+        $body = $delete
+            ? '[{"info":"Deleted"},{"errors":[{"error":"Not found","code":1000}]}]'
+            : $this->loadBatchFixtureRaw('product_batch_partial.json');
+        $api = $this->productsApiWithResponse($status, $body);
+        $method = $delete ? 'deleteProductsBatch' : 'createProductsBatch';
+        if ($async) {
+            $result = $api->{$method . 'Async'}([$this->minimalProduct()])->wait();
+        } else {
+            $result = $api->{$method}([$this->minimalProduct()]);
+        }
 
-        $result = $api->createProductsBatch([$this->minimalProduct()]);
-
-        $this->assertIsArray($result);
         $this->assertCount(2, $result);
-        $this->assertContainsOnlyInstancesOf(BatchResponseEntity::class, $result);
-        $this->assertInstanceOf(Product::class, $result[0]);
+        if (!$delete) {
+            $this->assertContainsOnlyInstancesOf(BatchResponseEntity::class, $result);
+        }
+        $this->assertInstanceOf($delete ? DeleteInfo::class : Product::class, $result[0]);
         $this->assertInstanceOf(Errors::class, $result[1]);
         $this->assertSame(1000, $result[1]->getErrors()[0]->getCode());
+    }
+
+    public static function mixedResponseProvider(): iterable
+    {
+        foreach ([200, 404, 412] as $status) {
+            foreach ([false, true] as $async) {
+                foreach ([false, true] as $delete) {
+                    yield "$status/" . ($async ? 'async' : 'sync') . '/' . ($delete ? 'delete' : 'create')
+                        => [$status, $async, $delete];
+                }
+            }
+        }
+    }
+
+    #[DataProvider('mixedResponseProvider')]
+    public function testMalformedBatchRowPreservesHttpException(int $status, bool $async, bool $delete): void
+    {
+        $body = $delete
+            ? '[{"info":"Deleted","errors":"invalid container"}]'
+            : '[{"meta":{"type":"product"},"salePrices":"invalid container"}]';
+        $api = $this->productsApiWithResponse($status, $body);
+        $method = $delete ? 'deleteProductsBatch' : 'createProductsBatch';
+
+        // On successful HTTP responses, keep the serializer's validation exception.
+        $this->expectException($status === 200 ? \InvalidArgumentException::class : ApiException::class);
+        try {
+            if ($async) {
+                $api->{$method . 'Async'}([$this->minimalProduct()])->wait();
+            } else {
+                $api->{$method}([$this->minimalProduct()]);
+            }
+        } catch (ApiException $e) {
+            $this->assertSame($status, $e->getCode());
+            $this->assertSame($body, $e->getResponseBody());
+            $this->assertSame(['application/json'], $e->getResponseHeaders()['Content-Type']);
+            throw $e;
+        }
+    }
+
+    #[DataProvider('errorResponseProvider')]
+    public function testOtherErrorResponsesRemainExceptions(int $status, string $body, bool $async, bool $delete): void
+    {
+        $api = $this->productsApiWithResponse($status, $body);
+        $method = $delete ? 'deleteProductsBatch' : 'createProductsBatch';
+        try {
+            if ($async) {
+                $api->{$method . 'Async'}([$this->minimalProduct()])->wait();
+            } else {
+                $api->{$method}([$this->minimalProduct()]);
+            }
+            $this->fail('Expected ApiException');
+        } catch (ApiException $e) {
+            $this->assertSame($status, $e->getCode());
+            $this->assertSame($body, $e->getResponseBody());
+            $this->assertSame(['application/json'], $e->getResponseHeaders()['Content-Type']);
+            $payload = json_decode($body);
+            if (is_object($payload) && isset($payload->errors)) {
+                if (is_array($payload->errors)) {
+                    $this->assertInstanceOf(Errors::class, $e->getResponseObject());
+                } else {
+                    $this->assertNull($e->getResponseObject());
+                }
+            }
+        }
+    }
+
+    public static function errorResponseProvider(): iterable
+    {
+        $cases = [
+            [400, '[{"errors":[{"error":"Bad request","code":1000}]}]'],
+            [500, '[{"errors":[{"error":"Server error","code":1000}]}]'],
+            [404, '{"errors":[{"error":"Not found","code":1000}]}'],
+            [412, '{"errors":[{"error":"Validation error","code":1000}]}'],
+            [404, '{"errors":"invalid container"}'],
+            [412, '{"errors":"invalid container"}'],
+            [404, 'null'],
+            [404, ''],
+            [412, 'invalid JSON'],
+        ];
+        foreach ($cases as [$status, $body]) {
+            foreach ([false, true] as $async) {
+                foreach ([false, true] as $delete) {
+                    yield [$status, $body, $async, $delete];
+                }
+            }
+        }
     }
 
     private function productsApiWithResponse(int $status, string $body): ProductsApi

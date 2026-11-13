@@ -1,6 +1,34 @@
 class {{classname}} {{#parentSchema}}extends {{{parent}}} {{/parentSchema}}{{^parentSchema}}{{#vendorExtensions.x-polymorphic-parent}}extends {{{vendorExtensions.x-polymorphic-parent}}} {{/vendorExtensions.x-polymorphic-parent}}{{/parentSchema}}{{^parentSchema}}{{^vendorExtensions.x-polymorphic-parent}}implements ModelInterface, ArrayAccess, \JsonSerializable{{/vendorExtensions.x-polymorphic-parent}}{{/parentSchema}}
 {
     public const DISCRIMINATOR = {{#discriminator}}'{{discriminatorName}}'{{/discriminator}}{{^discriminator}}null{{/discriminator}};
+    public const ENTITY_TYPE = {{#vendorExtensions.x-entity-static-builder}}'{{type}}'{{/vendorExtensions.x-entity-static-builder}}{{^vendorExtensions.x-entity-static-builder}}null{{/vendorExtensions.x-entity-static-builder}};
+
+    /** @return string[] Model alternatives in oneOf/anyOf, including those nested in allOf. */
+    public static function openAPIComposedTypes(): array
+    {
+        return [
+{{>model_composed_types}}
+        ];
+    }
+
+    /** @var array<string, string> Fields declared by a composed schema outside this model. */
+    protected array $composedSchemaNames = [];
+
+    public function setComposedSchemaValue(string $property, string $jsonProperty, $value): void
+    {
+        $this->composedSchemaNames[$property] = $jsonProperty;
+        $this->container[$property] = $value;
+    }
+
+    public function getComposedSchemaValues(): array
+    {
+        $values = [];
+        foreach ($this->composedSchemaNames as $property => $jsonProperty) {
+            $values[$jsonProperty] = $this->container[$property];
+        }
+        return $values;
+    }
+
     protected static ?string $openAPIPolymorphicDiscriminatorPath = {{#vendorExtensions.x-polymorphic-discriminator}}'{{vendorExtensions.x-polymorphic-discriminator.path}}'{{/vendorExtensions.x-polymorphic-discriminator}}{{^vendorExtensions.x-polymorphic-discriminator}}null{{/vendorExtensions.x-polymorphic-discriminator}};
     protected static bool $openAPIPolymorphicBatchErrorFallback = {{#vendorExtensions.x-polymorphic-discriminator.batchErrorFallback}}true{{/vendorExtensions.x-polymorphic-discriminator.batchErrorFallback}}{{^vendorExtensions.x-polymorphic-discriminator.batchErrorFallback}}false{{/vendorExtensions.x-polymorphic-discriminator.batchErrorFallback}};
 
@@ -101,7 +129,7 @@ class {{classname}} {{#parentSchema}}extends {{{parent}}} {{/parentSchema}}{{^pa
     }
 
     /**
-     * Whether batch-error-shaped payloads should resolve to Error when nested
+     * Whether batch-error-shaped payloads should resolve to Errors when nested
      * discriminator mappings do not match.
      *
      * @return bool
@@ -595,7 +623,7 @@ class {{classname}} {{#parentSchema}}extends {{{parent}}} {{/parentSchema}}{{^pa
      */
     public function offsetUnset($offset): void
     {
-        unset($this->container[$offset]);
+        unset($this->container[$offset], $this->composedSchemaNames[$offset]);
     }
 
     /**
