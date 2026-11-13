@@ -2,6 +2,21 @@ type: object
 deprecated: true
 description: Товар/услуга/модификация/комплект, данная модель уже не поддерживается
 x-implements: MetaEntity
+# Python SDK выбирает Product/Service/Bundle/Variant/Consignment по meta.type.
+# Схема остается allOf/oneOf, чтобы остальные генераторы сохранили плоскую модель.
+x-meta-type-dispatch:
+  path: meta.type
+  mappings:
+    - type: product
+      componentName: Product
+    - type: service
+      componentName: Service
+    - type: bundle
+      componentName: Bundle
+    - type: variant
+      componentName: Variant
+    - type: consignment
+      componentName: Consignment
 allOf:
   - oneOf:
       - $ref: '../../../openapi.yaml#/components/schemas/Product'

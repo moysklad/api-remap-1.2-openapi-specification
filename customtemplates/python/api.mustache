@@ -197,9 +197,20 @@ class {{classname}}:
             {{/isDate}}{{/isDateTime}}
 {{/queryParams}}
         # process the header parameters
+        # default_headers клиента добавляются позже и не сливаются по регистру.
+        # Значение из спецификации не должно создавать второй Accept рядом с accept.
+        def _header_already_set(_name: str) -> bool:
+            return any(
+                _header_name.lower() == _name.lower()
+                for _header_name in (*_header_params, *self.api_client.default_headers)
+            )
 {{#headerParams}}
         if {{paramName}} is not None:
             _header_params['{{baseName}}'] = {{paramName}}
+        {{#defaultValue}}
+        elif not _header_already_set('{{baseName}}'):
+            _header_params['{{baseName}}'] = {{#isEnum}}'{{{defaultValue}}}'{{/isEnum}}{{^isEnum}}{{{defaultValue}}}{{/isEnum}}
+        {{/defaultValue}}
 {{/headerParams}}
         # process the form parameters
 {{#formParams}}
@@ -243,7 +254,9 @@ class {{classname}}:
 
         {{#hasProduces}}
         # set the HTTP header `Accept`
-        if 'Accept' not in _header_params:
+        # Имя сравнивается без учета регистра, включая заголовки клиента:
+        # явный accept не должен оставаться рядом со стандартным Accept.
+        if not _header_already_set('Accept'):
             _header_params['Accept'] = self.api_client.select_header_accept(
                 [{{#produces}}
                     '{{{mediaType}}}'{{^-last}}, {{/-last}}{{/produces}}
