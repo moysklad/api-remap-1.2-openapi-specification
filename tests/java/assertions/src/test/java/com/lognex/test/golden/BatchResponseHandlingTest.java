@@ -6,9 +6,13 @@ import com.lognex.test.BaseTestCase;
 import com.sun.net.httpserver.HttpServer;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import ru.moysklad.remap_1_2.ApiClient;
 import ru.moysklad.remap_1_2.ApiException;
+import ru.moysklad.remap_1_2.api.RetailShiftsApi;
 import ru.moysklad.remap_1_2.model.BatchResponseEntity;
+import ru.moysklad.remap_1_2.model.DeleteRowResult;
 import ru.moysklad.remap_1_2.model.Errors;
 import ru.moysklad.remap_1_2.model.Product;
 
@@ -24,18 +28,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Executors;
 
-/**
- * Поведение batch-ответов:
- * 1) смешанный массив [сущность, Errors] десериализуется в List&lt;BatchResponseEntity&gt;;
- * 2) HTTP 400+ и объект Errors → ApiException;
- * 3) HTTP 400+ и массив → без ApiException, возвращается список результатов.
- *
- * HTTP-сценарии вызывают {@link ApiClient#invokeAPIBatch} напрямую
- * (тот же путь, что у batch API-методов), чтобы не упираться в известный
- * Hibernate Validator конфликт иерархии Product/ProductMarker.
- */
 class BatchResponseHandlingTest extends BaseTestCase {
 
     private static final ObjectMapper MAPPER = new ApiClient().getObjectMapper();
@@ -79,11 +72,12 @@ class BatchResponseHandlingTest extends BaseTestCase {
         }
     }
 
-    @Test
-    void testPartialSuccessAt400ReturnsBatchWithoutException() throws Exception {
+    @ParameterizedTest
+    @ValueSource(ints = {200, 404, 412})
+    void testPartialSuccessReturnsBatchWithoutException(int status) throws Exception {
         String body = loadBatchFixtureRaw("product_batch_partial.json");
 
-        try (LocalBatchServer server = LocalBatchServer.start(400, body)) {
+        try (LocalBatchServer server = LocalBatchServer.start(status, body)) {
             List<BatchResponseEntity> result = invokeProductsBatch(apiClient(server.baseUrl()));
 
             Assertions.assertEquals(2, result.size());
@@ -92,6 +86,81 @@ class BatchResponseHandlingTest extends BaseTestCase {
             Errors errors = (Errors) result.get(1);
             Assertions.assertEquals(1000, errors.getErrors().get(0).getCode());
         }
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {200, 404, 412})
+    void deletionKeepsSuccessAndErrors(int status) throws Exception {
+        String body = "[{\"info\":\"Удалено\"},{\"errors\":[{\"error\":\"Не найдено\",\"code\":1021}]}]";
+        try (LocationStubServer server = new LocationStubServer()) {
+            server.enqueue(status, null, body);
+            ApiClient client = apiClient(server.getBasePath());
+            List<DeleteRowResult> rows = new RetailShiftsApi(client)
+                    .deleteRetailShiftBatch(Collections.emptyList());
+            Assertions.assertEquals(2, rows.size());
+            Assertions.assertEquals("Удалено", rows.get(0).getInfo());
+            Assertions.assertNull(rows.get(0).getErrors());
+            Assertions.assertEquals(1021, rows.get(1).getErrors().get(0).getCode());
+            Assertions.assertEquals(status, client.getStatusCode());
+            Assertions.assertNotNull(client.getResponseHeaders());
+        }
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"invoicein", "invoiceout", "facturein", "factureout", "retailsalesreturn", "retailshift"})
+    void generatedBatchMethodKeepsTypedEntityAt404(String type) throws Exception {
+        String body = "[{\"meta\":{\"type\":\"" + type + "\"},\"name\":\"batch\"},"
+                + "{\"errors\":[{\"error\":\"Не найдено\",\"code\":1021}]}]";
+        Map<String, String> apiNames = Map.of("invoicein", "InvoiceIns", "invoiceout", "InvoiceOuts",
+                "facturein", "FactureIns", "factureout", "FactureOuts",
+                "retailsalesreturn", "RetailSalesReturns", "retailshift", "RetailShifts");
+        Map<String, String> modelNames = Map.of("invoicein", "InvoiceIn", "invoiceout", "InvoiceOut",
+                "facturein", "FactureIn", "factureout", "FactureOut",
+                "retailsalesreturn", "RetailSalesReturn", "retailshift", "RetailShift");
+        try (LocationStubServer server = new LocationStubServer()) {
+            server.enqueue(404, null, body);
+            ApiClient client = apiClient(server.getBasePath());
+            Class<?> apiClass = Class.forName("ru.moysklad.remap_1_2.api." + apiNames.get(type) + "Api");
+            Object api = apiClass.getConstructor(ApiClient.class).newInstance(client);
+            List<?> rows = (List<?>) apiClass.getMethod("create" + (List.of("facturein", "factureout", "retailsalesreturn").contains(type)
+                    ? apiNames.get(type) : modelNames.get(type)) + "Batch", List.class)
+                    .invoke(api, Collections.emptyList());
+            Assertions.assertEquals(modelNames.get(type), rows.get(0).getClass().getSimpleName());
+            Assertions.assertInstanceOf(Errors.class, rows.get(1));
+        }
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {400, 401, 403, 404, 412, 500})
+    void unrelatedErrorsPreserveStatusAndBody(int status) throws Exception {
+        for (String body : List.of("{\"errors\":[{\"error\":\"Ошибка\",\"code\":1056}]}",
+                "[]", "[{}]", "[null]", "[{\"errors\":[]}]", "not json", "")) {
+            try (LocationStubServer server = new LocationStubServer()) {
+                server.enqueue(status, null, body);
+                ApiException error = Assertions.assertThrows(ApiException.class,
+                        () -> invoke(apiClient(server.getBasePath()), new TypeReference<List<DeleteRowResult>>() {}));
+                Assertions.assertEquals(status, error.getCode());
+                Assertions.assertEquals(body, error.getResponseBody());
+            }
+        }
+    }
+
+    @Test
+    void regularListDoesNotAcceptBatchErrors() throws Exception {
+        String body = loadBatchFixtureRaw("product_batch_partial.json");
+        try (LocationStubServer server = new LocationStubServer()) {
+            server.enqueue(404, null, body);
+            ApiException error = Assertions.assertThrows(ApiException.class,
+                    () -> invoke(apiClient(server.getBasePath()), new TypeReference<List<Product>>() {}));
+            Assertions.assertEquals(404, error.getCode());
+            Assertions.assertEquals(body, error.getResponseBody());
+        }
+    }
+
+    private <T> T invoke(ApiClient client, TypeReference<T> type) throws ApiException {
+        return client.invokeAPI(BATCH_PATH, "POST", Collections.emptyList(), Collections.emptyList(), null,
+                Collections.emptyList(), new HashMap<>(), new HashMap<>(), new HashMap<>(),
+                "application/json", "application/json", new String[0], type);
     }
 
     private ApiClient apiClient(String baseUrl) {
@@ -152,7 +221,6 @@ class BatchResponseHandlingTest extends BaseTestCase {
                     exchange.close();
                 }
             });
-            server.setExecutor(Executors.newSingleThreadExecutor());
             server.start();
             String baseUrl = "http://127.0.0.1:" + server.getAddress().getPort();
             return new LocalBatchServer(server, baseUrl);

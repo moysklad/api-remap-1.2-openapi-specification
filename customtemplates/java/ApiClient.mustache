@@ -74,7 +74,7 @@ import java.text.DateFormat;
 
 import {{invokerPackage}}.auth.Authentication;
 import {{modelPackage}}.BatchResponseEntity;
-import {{modelPackage}}.Errors;
+import {{modelPackage}}.DeleteRowResult;
 {{#openApiNullable}}
 import {{polymorphicPackage}}.PolymorphicJsonNullableModule;
 {{/openApiNullable}}
@@ -1232,7 +1232,58 @@ public class ApiClient{{#jsr310}} extends JavaTimeFormatter{{/jsr310}} {
     if (isSuccessfulStatus(statusCode)) {
       return this.deserialize(response, returnType);
     }
+    if ((statusCode == 404 || statusCode == 412) && isBatchReturnType(returnType)) {
+      String content = response.getEntity() == null ? null : EntityUtils.toString(response.getEntity());
+      try {
+        JsonNode node = content == null || content.isEmpty() ? null : objectMapper.readTree(content);
+        if (isBatchPayload(node, returnType)) {
+          return objectMapper.treeToValue(node, returnType);
+        }
+      } catch (JacksonException e) {
+        // Preserve the HTTP status and original body when the error is not a batch result.
+      }
+      throw new ApiException(content, statusCode, responseHeaders, content);
+    }
     throw toApiException(response, statusCode, responseHeaders);
+  }
+
+  private boolean isBatchReturnType(TypeReference<?> returnType) {
+    if (returnType == null) {
+      return false;
+    }
+    JavaType type = objectMapper.constructType(returnType.getType());
+    if (!type.isCollectionLikeType() || type.getContentType() == null) {
+      return false;
+    }
+    Class<?> itemType = type.getContentType().getRawClass();
+    return itemType == BatchResponseEntity.class || itemType == DeleteRowResult.class;
+  }
+
+  private boolean isBatchPayload(JsonNode node, TypeReference<?> returnType) {
+    if (node == null || !node.isArray() || node.isEmpty()) {
+      return false;
+    }
+    boolean deletion = objectMapper.constructType(returnType.getType()).getContentType().getRawClass() == DeleteRowResult.class;
+    for (JsonNode row : node) {
+      if (!row.isObject()) {
+        return false;
+      }
+      if (row.has("errors")) {
+        JsonNode errors = row.get("errors");
+        if (!errors.isArray() || errors.isEmpty()) {
+          return false;
+        }
+        for (JsonNode error : errors) {
+          if (!error.isObject() || !error.path("error").isTextual()) {
+            return false;
+          }
+        }
+      } else if (deletion ? !row.path("info").isTextual()
+          : !row.path("meta").path("type").isTextual() || row.path("meta").path("type").asString().isEmpty()) {
+        return false;
+      }
+    }
+    return true;
   }
 
   protected LocationResponse processLocationResponse(CloseableHttpResponse response) throws ApiException, IOException, ParseException {
@@ -1255,25 +1306,7 @@ public class ApiClient{{#jsr310}} extends JavaTimeFormatter{{/jsr310}} {
   }
 
   protected List<BatchResponseEntity> processResponseBatch(CloseableHttpResponse response) throws ApiException, IOException, ParseException {
-    int statusCode = response.getCode();
-    lastStatusCode.set(statusCode);
-    if (statusCode == HttpStatus.SC_NO_CONTENT) {
-      return null;
-    }
-
-    Map<String, List<String>> responseHeaders = transformResponseHeaders(response.getHeaders());
-    lastResponseHeaders.set(responseHeaders);
-
-    JsonNode node = this.deserializeToJsonNode(response);
-    if (node == null) {
-      return null;
-    }
-    if (!isSuccessfulStatus(statusCode) && node.isObject()) {
-      Errors e = objectMapper.treeToValue(node, Errors.class);
-      throw new ApiException(e.toString(), statusCode, responseHeaders, node.toString());
-    }
-    TypeReference<List<BatchResponseEntity>> returnType = new TypeReference<List<BatchResponseEntity>>() {};
-    return objectMapper.treeToValue(node, returnType);
+    return processResponse(response, new TypeReference<List<BatchResponseEntity>>() {});
   }
 
   /**

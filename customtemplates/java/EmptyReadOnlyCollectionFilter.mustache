@@ -1,0 +1,30 @@
+{{>licenseInfo}}
+{{#openApiNullable}}
+package {{invokerPackage}};
+
+import java.util.Collection;
+import java.util.Map;
+import org.openapitools.jackson.nullable.JsonNullable;
+
+/**
+ * Omits an empty read-only collection as a whole without filtering its entries.
+ * Jackson may compare either the JsonNullable wrapper or its contents with this filter.
+ */
+{{>generatedAnnotation}}
+public class EmptyReadOnlyCollectionFilter {
+  @Override
+  public boolean equals(Object value) {
+    if (value instanceof JsonNullable<?>) {
+      value = ((JsonNullable<?>) value).orElse(null);
+    }
+    return value == null
+        || (value instanceof Collection<?> && ((Collection<?>) value).isEmpty())
+        || (value instanceof Map<?, ?> && ((Map<?, ?>) value).isEmpty());
+  }
+
+  @Override
+  public int hashCode() {
+    return 0;
+  }
+}
+{{/openApiNullable}}
