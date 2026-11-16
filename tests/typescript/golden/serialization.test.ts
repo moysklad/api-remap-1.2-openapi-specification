@@ -295,7 +295,7 @@ for (const type of ['product', 'counterparty', 'organization']) {
 
 for (const [modelName, original] of [
     ['DeleteRowResult', { errors: [{ error: 'Not found', code: 1021 }] }],
-    ['InlineObject', [{ info: 'Deleted' }, { errors: [{ error: 'Not found', code: 1021 }] }]],
+    ['BatchDeleteErrorResponse', [{ info: 'Deleted' }, { errors: [{ error: 'Not found', code: 1021 }] }]],
 ] as const) {
     test(`mixed batch result preserves success and errors: ${modelName}`, () => {
         const model = getFromJson(sdk, modelName)(original);

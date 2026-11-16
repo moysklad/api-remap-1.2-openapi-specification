@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.junit.jupiter.params.provider.CsvSource;
 import ru.moysklad.remap_1_2.ApiClient;
 import ru.moysklad.remap_1_2.ApiException;
 import ru.moysklad.remap_1_2.api.RetailShiftsApi;
@@ -33,6 +34,28 @@ class BatchResponseHandlingTest extends BaseTestCase {
 
     private static final ObjectMapper MAPPER = new ApiClient().getObjectMapper();
     private static final String BATCH_PATH = "/entity/product/batch";
+
+    @ParameterizedTest
+    @CsvSource({
+            "invoicein, invoiceposition, InvoiceInPosition",
+            "invoiceout, invoiceposition, InvoiceOutPosition",
+            "salesreturn, salesreturnposition, SalesReturnPosition",
+            "retailsalesreturn, salesreturnposition, RetailSalesReturnPosition"
+    })
+    void testBatchPositionPreservesTypeAndFields(String entity, String type, String model) throws Exception {
+        String json = "{\"meta\":{\"type\":\"" + type
+                + "\",\"href\":\"https://example.test/entity/" + entity
+                + "/document/positions/position\"},\"quantity\":2,\"price\":100}";
+        BatchResponseEntity position = MAPPER.readValue(json, BatchResponseEntity.class);
+
+        Assertions.assertEquals(model, position.getClass().getSimpleName());
+        var serialized = MAPPER.valueToTree(position);
+        Assertions.assertEquals(2, serialized.path("quantity").asDouble());
+        Assertions.assertEquals(100, serialized.path("price").asDouble());
+        Object concrete = MAPPER.readValue(json, position.getClass());
+        Assertions.assertNotNull(concrete);
+        Assertions.assertEquals(model, concrete.getClass().getSimpleName());
+    }
 
     @Test
     void testMixedBatchResponseDeserializesProductAndErrors() throws Exception {

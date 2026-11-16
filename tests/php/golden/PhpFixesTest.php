@@ -24,6 +24,30 @@ use PHPUnit\Framework\Attributes\DataProvider;
 
 class PhpFixesTest extends TestCase
 {
+    public function testBatchPositionsPreserveTheirConcreteTypesAndFields(): void
+    {
+        foreach ([
+            ['invoicein', 'invoiceposition', 'InvoiceInPosition'],
+            ['invoiceout', 'invoiceposition', 'InvoiceOutPosition'],
+            ['salesreturn', 'salesreturnposition', 'SalesReturnPosition'],
+            ['retailsalesreturn', 'salesreturnposition', 'RetailSalesReturnPosition'],
+        ] as [$entity, $type, $model]) {
+            $payload = (object) [
+                'meta' => (object) [
+                    'type' => $type,
+                    'href' => "https://example.test/entity/$entity/document/positions/position",
+                ],
+                'quantity' => 2,
+                'price' => 100,
+            ];
+            $position = ObjectSerializer::deserialize($payload, \OpenAPI\Client\Model\BatchResponseEntity::class);
+
+            $this->assertSame('OpenAPI\\Client\\Model\\' . $model, $position::class);
+            $this->assertEquals(2, $position->getQuantity());
+            $this->assertEquals(100, $position->getPrice());
+        }
+    }
+
     public function testDefaultHeadersComeFromSpecification(): void
     {
         $request = (new ProductsApi())->getProductsRequest();

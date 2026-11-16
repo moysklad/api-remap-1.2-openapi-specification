@@ -591,7 +591,8 @@ class ObjectSerializer
                 $polymorphicDiscriminatorValue = self::readPath($data, $polymorphicDiscriminatorPath);
                 $discriminatorType = null;
                 if (is_string($polymorphicDiscriminatorValue)) {
-                    $mappings = $class::openAPIPolymorphicDiscriminatorMappings();
+                    $href = self::readPath($data, 'meta.href');
+                    $mappings = $class::openAPIPolymorphicDiscriminatorMappings(is_string($href) ? $href : '');
                     if (array_key_exists($polymorphicDiscriminatorValue, $mappings)) {
                         $discriminatorType = $mappings[$polymorphicDiscriminatorValue];
                     } elseif (array_key_exists('undefined', $mappings)) {

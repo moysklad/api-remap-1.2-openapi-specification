@@ -463,3 +463,36 @@ def test_supply_payment_uses_meta_type(entity_type: str, model_name: str) -> Non
 
     assert isinstance(payment, model_class(model_name))
     assert payment.meta.type == entity_type
+
+
+@pytest.mark.parametrize(
+    ("entity", "meta_type", "model_name"),
+    [
+        ("invoicein", "invoiceposition", "InvoiceInPosition"),
+        ("invoiceout", "invoiceposition", "InvoiceOutPosition"),
+        ("salesreturn", "salesreturnposition", "SalesReturnPosition"),
+        ("retailsalesreturn", "salesreturnposition", "RetailSalesReturnPosition"),
+    ],
+)
+def test_batch_positions_preserve_concrete_type_and_fields(entity, meta_type, model_name):
+    from moysklad_remap_12_sdk.models.batch_response_entity import BatchResponseEntity
+
+    payload = {
+        "meta": {
+            "type": meta_type,
+            "href": f"https://example.test/entity/{entity}/document/positions/position",
+        },
+        "quantity": 2,
+        "price": 100,
+    }
+    position = BatchResponseEntity.from_dict(payload)
+    assert type(position).__name__ == model_name
+    assert position.quantity == 2
+    assert position.price == 100
+
+
+def test_minimum_balance_accepts_value_and_explicit_null():
+    from moysklad_remap_12_sdk.models.product import Product
+
+    for minimum_balance in (5, None):
+        assert Product(minimum_balance=minimum_balance).to_dict()["minimumBalance"] == minimum_balance

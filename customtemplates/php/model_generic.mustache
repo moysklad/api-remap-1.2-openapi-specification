@@ -38,8 +38,8 @@ class {{classname}} {{#parentSchema}}extends {{{parent}}} {{/parentSchema}}{{^pa
       * @var string[]
       */
     protected static array $openAPIPolymorphicDiscriminatorMappings = [
-        {{#vendorExtensions.x-polymorphic-discriminator.mappings}}'{{type}}' => '{{componentName}}'{{^-last}},
-        {{/-last}}{{/vendorExtensions.x-polymorphic-discriminator.mappings}}
+        {{#vendorExtensions.x-polymorphic-discriminator.mappings}}{{^hrefContains}}'{{type}}' => '{{componentName}}',
+        {{/hrefContains}}{{/vendorExtensions.x-polymorphic-discriminator.mappings}}
     ];
 {{>model_entity_static_builder}}
     /**
@@ -123,9 +123,17 @@ class {{classname}} {{#parentSchema}}extends {{{parent}}} {{/parentSchema}}{{^pa
      *
      * @return array
      */
-    public static function openAPIPolymorphicDiscriminatorMappings(): array
+    public static function openAPIPolymorphicDiscriminatorMappings(string $href = ''): array
     {
-        return self::$openAPIPolymorphicDiscriminatorMappings;
+        $mappings = self::$openAPIPolymorphicDiscriminatorMappings;
+{{#vendorExtensions.x-polymorphic-discriminator.mappings}}
+{{#hrefContains}}
+        if (str_contains($href, '{{.}}')) {
+            $mappings['{{type}}'] = '{{componentName}}';
+        }
+{{/hrefContains}}
+{{/vendorExtensions.x-polymorphic-discriminator.mappings}}
+        return $mappings;
     }
 
     /**

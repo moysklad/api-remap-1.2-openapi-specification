@@ -68,9 +68,17 @@ export function {{classname}}FromJSONTyped(json: any, ignoreDiscriminator: boole
 {{#vendorExtensions.x-polymorphic-discriminator}}
     if (!ignoreDiscriminator) {
         const discriminator = read{{classname}}PolymorphicDiscriminator(json);
+{{#mappings}}
+{{#hrefContains}}
+        if (discriminator === '{{type}}' && typeof (json as any)?.meta?.href === 'string'
+            && (json as any).meta.href.includes('{{.}}')) {
+            return {{classname}}Polymorphic{{componentName}}.{{componentName}}FromJSON(json);
+        }
+{{/hrefContains}}
+{{/mappings}}
         const converters: Record<string, (value: any) => any> = {
 {{#mappings}}
-            '{{type}}': {{classname}}Polymorphic{{componentName}}.{{componentName}}FromJSON,
+{{^hrefContains}}            '{{type}}': {{classname}}Polymorphic{{componentName}}.{{componentName}}FromJSON,{{/hrefContains}}
 {{/mappings}}
         };
         const converter = typeof discriminator === 'string'
@@ -177,9 +185,17 @@ export function {{classname}}ToJSONTyped(value?: {{#hasReadOnly}}Omit<{{classnam
 {{#vendorExtensions.x-polymorphic-discriminator}}
     if (!ignoreDiscriminator) {
         const discriminator = read{{classname}}PolymorphicDiscriminator(value);
+{{#mappings}}
+{{#hrefContains}}
+        if (discriminator === '{{type}}' && typeof (value as any)?.meta?.href === 'string'
+            && (value as any).meta.href.includes('{{.}}')) {
+            return {{classname}}Polymorphic{{componentName}}.{{componentName}}ToJSON(value);
+        }
+{{/hrefContains}}
+{{/mappings}}
         const converters: Record<string, (item: any) => any> = {
 {{#mappings}}
-            '{{type}}': {{classname}}Polymorphic{{componentName}}.{{componentName}}ToJSON,
+{{^hrefContains}}            '{{type}}': {{classname}}Polymorphic{{componentName}}.{{componentName}}ToJSON,{{/hrefContains}}
 {{/mappings}}
         };
         const converter = typeof discriminator === 'string'

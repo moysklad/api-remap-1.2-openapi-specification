@@ -215,8 +215,8 @@ properties:
   minimumBalance:
     type: number
     format: double
-    readOnly: true
-    description: Неснижаемый остаток, возвращаемый сервером
+    nullable: true
+    description: Неснижаемый остаток. Для очистки передайте null.
   minimumStock:
     description: |
       Неснижаемый остаток. Не выводится по умолчанию.

@@ -2156,6 +2156,18 @@ components:
       $ref: './components/schemas/dictionary/counterpartyAdjustmentList.yaml'
     CountryList:
       $ref: './components/schemas/dictionary/countryList.yaml'
+    BatchEntityErrorResponse:
+      oneOf:
+        - $ref: '#/components/schemas/Errors'
+        - type: array
+          items:
+            $ref: '#/components/schemas/BatchResponseEntity'
+    BatchDeleteErrorResponse:
+      oneOf:
+        - $ref: '#/components/schemas/Errors'
+        - type: array
+          items:
+            $ref: '#/components/schemas/DeleteRowResult'
     BatchResponseEntity:
       $ref: './components/schemas/common/entityBase.yaml#/BatchResponseEntity'
     EntityWithMeta:

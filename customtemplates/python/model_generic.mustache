@@ -322,9 +322,17 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}{{#vendorExtensions.
                 discriminator = discriminator.get(part)
 
             model_info = {
-                {{#mappings}}"{{type}}": ("{{#lambda.snakecase}}{{componentName}}{{/lambda.snakecase}}", "{{componentName}}"){{^-last}},{{/-last}}
+                {{#mappings}}{{^hrefContains}}"{{type}}": ("{{#lambda.snakecase}}{{componentName}}{{/lambda.snakecase}}", "{{componentName}}"),{{/hrefContains}}
                 {{/mappings}}
             }.get(discriminator)
+            {{#mappings}}
+            {{#hrefContains}}
+            meta = obj.get("meta")
+            href = meta.get("href") if isinstance(meta, dict) else None
+            if discriminator == "{{type}}" and isinstance(href, str) and "{{.}}" in href:
+                model_info = ("{{#lambda.snakecase}}{{componentName}}{{/lambda.snakecase}}", "{{componentName}}")
+            {{/hrefContains}}
+            {{/mappings}}
             if model_info:
                 from importlib import import_module
 

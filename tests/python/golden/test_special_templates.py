@@ -142,6 +142,8 @@ def test_every_nested_discriminator_mapping_dispatches(
     )
 
     payload = nested_discriminator(extension["path"], mapping["type"])
+    if "hrefContains" in mapping:
+        payload["meta"]["href"] = "https://example.test" + mapping["hrefContains"] + "id/positions/id"
     assert model_class(name).from_dict(payload) is sentinel
 
 

@@ -107,11 +107,7 @@ BatchEntityError:
   content:
     application/json:
       schema:
-        oneOf:
-          - $ref: '../openapi.yaml#/components/schemas/Errors'
-          - type: array
-            items:
-              $ref: '../openapi.yaml#/components/schemas/BatchResponseEntity'
+        $ref: '../openapi.yaml#/components/schemas/BatchEntityErrorResponse'
 
 
 BatchDeleteError:
@@ -120,8 +116,4 @@ BatchDeleteError:
   content:
     application/json:
       schema:
-        oneOf:
-          - $ref: '../openapi.yaml#/components/schemas/Errors'
-          - type: array
-            items:
-              $ref: '../openapi.yaml#/components/schemas/DeleteRowResult'
+        $ref: '../openapi.yaml#/components/schemas/BatchDeleteErrorResponse'

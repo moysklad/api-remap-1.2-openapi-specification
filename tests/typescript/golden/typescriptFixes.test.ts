@@ -169,3 +169,26 @@ for (const type of ['product', 'service']) {
         assert.deepEqual(wire(sdk.DiscountAssortmentItemToJSON(item)), input);
     });
 }
+
+for (const [entity, type] of [
+    ['invoicein', 'invoiceposition'],
+    ['invoiceout', 'invoiceposition'],
+    ['salesreturn', 'salesreturnposition'],
+    ['retailsalesreturn', 'salesreturnposition'],
+]) {
+    test(`batch сохраняет поля позиции ${entity}`, () => {
+        const payload = {
+            meta: { type, href: `https://example.test/entity/${entity}/document/positions/position` },
+            quantity: 2,
+            price: 100,
+        };
+        const position = sdk.BatchResponseEntityFromJSON(payload);
+        assert.deepEqual(wire(sdk.BatchResponseEntityToJSON(position)), payload);
+    });
+}
+
+test('minimumBalance отправляется числом и null для очистки', () => {
+    for (const minimumBalance of [5, null]) {
+        assert.deepEqual(wire(sdk.ProductToJSON({ minimumBalance })), { minimumBalance });
+    }
+});

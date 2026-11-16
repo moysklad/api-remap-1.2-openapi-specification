@@ -20,6 +20,18 @@ BatchResponseEntity:
         componentName: InvoiceOut
       - type: invoicein
         componentName: InvoiceIn
+      - type: invoiceposition
+        componentName: InvoiceInPosition
+        hrefContains: /entity/invoicein/
+      - type: invoiceposition
+        componentName: InvoiceOutPosition
+        hrefContains: /entity/invoiceout/
+      - type: salesreturnposition
+        componentName: SalesReturnPosition
+        hrefContains: /entity/salesreturn/
+      - type: salesreturnposition
+        componentName: RetailSalesReturnPosition
+        hrefContains: /entity/retailsalesreturn/
       - type: retailsalesreturn
         componentName: RetailSalesReturn
       - type: facturein

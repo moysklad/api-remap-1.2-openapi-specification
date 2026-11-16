@@ -40,7 +40,7 @@ import {{polymorphicPackage}}.PolymorphicMetaTypeDeserializer;
 @OpenApiPolymorphicTypeInfo(path = "{{vendorExtensions.x-polymorphic-discriminator.path}}"{{#vendorExtensions.x-polymorphic-discriminator.batchErrorFallback}}, batchErrorFallback = true{{/vendorExtensions.x-polymorphic-discriminator.batchErrorFallback}})
 @OpenApiPolymorphicSubTypes({
 {{#vendorExtensions.x-polymorphic-discriminator.mappings}}
-  @OpenApiPolymorphicSubTypes.Type(value = {{componentName}}.class, name = "{{type}}"){{^-last}},
+  @OpenApiPolymorphicSubTypes.Type(value = {{componentName}}.class, name = "{{type}}"{{#hrefContains}}, hrefContains = "{{.}}"{{/hrefContains}}){{^-last}},
 {{/-last}}{{/vendorExtensions.x-polymorphic-discriminator.mappings}}
 })
 @JsonDeserialize(using = PolymorphicMetaTypeDeserializer.class)
