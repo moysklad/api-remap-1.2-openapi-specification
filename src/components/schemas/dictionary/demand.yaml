@@ -211,9 +211,7 @@ properties:
     description: Связанные платежи
     nullable: true
     items:
-      anyOf:
-        - $ref: '../../../openapi.yaml#/components/schemas/PaymentIn'
-        - $ref: '../../../openapi.yaml#/components/schemas/CashIn'
+      $ref: '../../../openapi.yaml#/components/schemas/DemandPayment'
   productionTasks:
     type: array
     description: Связанные производственные задания

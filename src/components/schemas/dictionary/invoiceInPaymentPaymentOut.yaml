@@ -1,0 +1,5 @@
+type: object
+description: PaymentOut, связанный с документом invoiceIn
+x-polymorphic-parent: InvoiceInPayment
+allOf:
+  - $ref: '../../../openapi.yaml#/components/schemas/PaymentOut'

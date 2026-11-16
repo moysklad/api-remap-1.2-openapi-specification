@@ -197,7 +197,7 @@ class PhpFixesTest extends TestCase
 
     public static function retailPaymentProvider(): array
     {
-        return [['cashin', 'CashIn'], ['paymentin', 'PaymentIn']];
+        return [['cashin', 'RetailShiftPaymentCashIn'], ['paymentin', 'RetailShiftPaymentPaymentIn']];
     }
 
     #[DataProvider('nullableFieldProvider')]

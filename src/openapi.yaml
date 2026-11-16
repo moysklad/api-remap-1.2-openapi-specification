@@ -2679,6 +2679,72 @@ components:
       $ref: './components/schemas/dictionary/supply.yaml'
     SupplyList:
       $ref: './components/schemas/dictionary/supplyList.yaml'
+    RetailShiftPayment:
+      $ref: './components/schemas/dictionary/retailShiftPayment.yaml'
+    RetailShiftPaymentPaymentIn:
+      $ref: './components/schemas/dictionary/retailShiftPaymentPaymentIn.yaml'
+    RetailShiftPaymentCashIn:
+      $ref: './components/schemas/dictionary/retailShiftPaymentCashIn.yaml'
+    DemandPayment:
+      $ref: './components/schemas/dictionary/demandPayment.yaml'
+    DemandPaymentPaymentIn:
+      $ref: './components/schemas/dictionary/demandPaymentPaymentIn.yaml'
+    DemandPaymentCashIn:
+      $ref: './components/schemas/dictionary/demandPaymentCashIn.yaml'
+    SalesReturnPayment:
+      $ref: './components/schemas/dictionary/salesReturnPayment.yaml'
+    SalesReturnPaymentPaymentOut:
+      $ref: './components/schemas/dictionary/salesReturnPaymentPaymentOut.yaml'
+    SalesReturnPaymentCashOut:
+      $ref: './components/schemas/dictionary/salesReturnPaymentCashOut.yaml'
+    CustomerOrderPayment:
+      $ref: './components/schemas/dictionary/customerOrderPayment.yaml'
+    CustomerOrderPaymentPaymentIn:
+      $ref: './components/schemas/dictionary/customerOrderPaymentPaymentIn.yaml'
+    CustomerOrderPaymentCashIn:
+      $ref: './components/schemas/dictionary/customerOrderPaymentCashIn.yaml'
+    PurchaseOrderPayment:
+      $ref: './components/schemas/dictionary/purchaseOrderPayment.yaml'
+    PurchaseOrderPaymentPaymentOut:
+      $ref: './components/schemas/dictionary/purchaseOrderPaymentPaymentOut.yaml'
+    PurchaseOrderPaymentCashOut:
+      $ref: './components/schemas/dictionary/purchaseOrderPaymentCashOut.yaml'
+    InvoiceInPayment:
+      $ref: './components/schemas/dictionary/invoiceInPayment.yaml'
+    InvoiceInPaymentPaymentOut:
+      $ref: './components/schemas/dictionary/invoiceInPaymentPaymentOut.yaml'
+    InvoiceInPaymentCashOut:
+      $ref: './components/schemas/dictionary/invoiceInPaymentCashOut.yaml'
+    InvoiceOutPayment:
+      $ref: './components/schemas/dictionary/invoiceOutPayment.yaml'
+    InvoiceOutPaymentPaymentIn:
+      $ref: './components/schemas/dictionary/invoiceOutPaymentPaymentIn.yaml'
+    InvoiceOutPaymentCashIn:
+      $ref: './components/schemas/dictionary/invoiceOutPaymentCashIn.yaml'
+    CommissionReportInPayment:
+      $ref: './components/schemas/dictionary/commissionReportInPayment.yaml'
+    CommissionReportInPaymentPaymentIn:
+      $ref: './components/schemas/dictionary/commissionReportInPaymentPaymentIn.yaml'
+    CommissionReportInPaymentCashIn:
+      $ref: './components/schemas/dictionary/commissionReportInPaymentCashIn.yaml'
+    CommissionReportOutPayment:
+      $ref: './components/schemas/dictionary/commissionReportOutPayment.yaml'
+    CommissionReportOutPaymentPaymentOut:
+      $ref: './components/schemas/dictionary/commissionReportOutPaymentPaymentOut.yaml'
+    CommissionReportOutPaymentCashOut:
+      $ref: './components/schemas/dictionary/commissionReportOutPaymentCashOut.yaml'
+    FactureInPayment:
+      $ref: './components/schemas/dictionary/factureInPayment.yaml'
+    FactureInPaymentPaymentOut:
+      $ref: './components/schemas/dictionary/factureInPaymentPaymentOut.yaml'
+    FactureInPaymentCashOut:
+      $ref: './components/schemas/dictionary/factureInPaymentCashOut.yaml'
+    FactureOutPayment:
+      $ref: './components/schemas/dictionary/factureOutPayment.yaml'
+    FactureOutPaymentPaymentIn:
+      $ref: './components/schemas/dictionary/factureOutPaymentPaymentIn.yaml'
+    FactureOutPaymentCashIn:
+      $ref: './components/schemas/dictionary/factureOutPaymentCashIn.yaml'
     SupplyPaymentPaymentOut:
       $ref: './components/schemas/dictionary/supplyPaymentPaymentOut.yaml'
     SupplyPaymentCashOut:

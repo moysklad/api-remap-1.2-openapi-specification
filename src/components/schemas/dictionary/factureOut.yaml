@@ -162,7 +162,7 @@ properties:
     nullable: true
     description: Связанные входящие платежи (метаданные)
     items:
-      $ref: '../../../openapi.yaml#/components/schemas/PaymentIn'
+      $ref: '../../../openapi.yaml#/components/schemas/FactureOutPayment'
   returns:
     type: array
     description: Связанные возвраты поставщикам (метаданные)

@@ -42,9 +42,7 @@ properties:
     description: Связанные платежи
     nullable: true
     items:
-      anyOf:
-        - $ref: '../../../openapi.yaml#/components/schemas/PaymentIn'
-        - $ref: '../../../openapi.yaml#/components/schemas/CashIn'
+      $ref: '../../../openapi.yaml#/components/schemas/RetailShiftPayment'
   acquire:
     description: Метаданные Банка-эквайера по операциям по карте
     nullable: true

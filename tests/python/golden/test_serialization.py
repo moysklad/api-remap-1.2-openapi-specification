@@ -270,7 +270,7 @@ def test_from_dict_builds_nested_typed_model() -> None:
 @pytest.mark.parametrize(
     ("wrapper_name", "entity_type"),
     [
-        ("RetailShiftPaymentsInner", "paymentin"),
+        ("RetailShiftPayment", "paymentin"),
         ("SupplyPayment", "paymentout"),
     ],
 )
@@ -427,24 +427,6 @@ def test_special_price_discount_assortment_serializes_positions() -> None:
         payload = json.loads(model.to_json())
         assert payload["assortment"] == [{"meta": meta}]
         assert "one_of_schemas" not in json.dumps(payload)
-
-
-@pytest.mark.parametrize(
-    ("entity_type", "model_name"),
-    [("paymentout", "PaymentOut"), ("cashout", "CashOut")],
-)
-def test_anyof_payment_link_uses_meta_type(entity_type: str, model_name: str) -> None:
-    payload = {
-        "meta": {
-            "href": f"https://api.moysklad.ru/api/remap/1.2/entity/{entity_type}/1",
-            "type": entity_type,
-            "mediaType": "application/json",
-        }
-    }
-    item = model_class("SalesReturnPaymentsInner").from_dict(payload)
-
-    assert isinstance(item.actual_instance, model_class(model_name))
-    assert item.actual_instance.meta.type == entity_type
 
 
 @pytest.mark.parametrize(

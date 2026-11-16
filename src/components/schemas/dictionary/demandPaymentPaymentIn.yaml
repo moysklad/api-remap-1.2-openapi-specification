@@ -1,0 +1,5 @@
+type: object
+description: PaymentIn, связанный с документом demand
+x-polymorphic-parent: DemandPayment
+allOf:
+  - $ref: '../../../openapi.yaml#/components/schemas/PaymentIn'

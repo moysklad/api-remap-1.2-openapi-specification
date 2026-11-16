@@ -139,7 +139,7 @@ properties:
     description: Массив ссылок на связанные исходящие платежи
     nullable: true
     items:
-      $ref: '../../../openapi.yaml#/components/schemas/PaymentOut'
+      $ref: '../../../openapi.yaml#/components/schemas/FactureInPayment'
   incomingNumber:
     type: string
     maxLength: 255
