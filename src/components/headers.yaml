@@ -6,6 +6,9 @@ AcceptHeader:
   schema:
     type: string
     default: application/json;charset=utf-8
+    enum:
+      - application/json
+      - application/json;charset=utf-8
 AcceptEncoding:
   name: Accept-Encoding
   in: header

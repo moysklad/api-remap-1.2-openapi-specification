@@ -34,8 +34,8 @@ test('Accept из конфигурации сохраняется; параме�
     await api.getProducts();
     assert.equal(stub.headers().get('accept'), 'application/custom');
     assert.equal(stub.headers().get('accept-encoding'), 'identity');
-    await api.getProducts({ accept: 'application/explicit' });
-    assert.equal(stub.headers().get('accept'), 'application/explicit');
+    await api.getProducts({ accept: 'application/json' });
+    assert.equal(stub.headers().get('accept'), 'application/json');
 });
 
 test('POST без тела отправляет Content-Type', async () => {
@@ -64,8 +64,8 @@ for (const headerName of ['content-type', 'Content-Type', 'CONTENT-TYPE']) {
 
 test('несколько вариантов регистра Accept не склеиваются', async () => {
     const stub = client(200, { rows: [] }, { Accept: 'application/first', accept: 'application/second' });
-    await new sdk.ProductsApi(stub.configuration).getProducts({ accept: 'application/explicit' });
-    assert.equal(stub.headers().get('accept'), 'application/explicit');
+    await new sdk.ProductsApi(stub.configuration).getProducts({ accept: 'application/json' });
+    assert.equal(stub.headers().get('accept'), 'application/json');
 });
 
 const wire = (value: unknown): unknown => JSON.parse(JSON.stringify(value));
