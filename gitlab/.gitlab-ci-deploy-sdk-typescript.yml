@@ -6,43 +6,6 @@
   variables:
     npm_config_registry: $NPM_REGISTRY_URL
 
-deploy-to-npm-prerelease:
-  extends: .deploy-sdk-typescript-base
-  needs:
-    - job: prep-branch-and-mr-typescript
-      artifacts: true
-  rules:
-    # Автоматически при push в ветку (кроме master/release)
-    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH != "master" && $CI_COMMIT_BRANCH != "release" && $CI_COMMIT_TAG == null'
-      when: on_success
-    # В пайплайне, запущенном вручную на ветке (кроме master/release)
-    - if: '$CI_PIPELINE_SOURCE == "web" && $CI_COMMIT_BRANCH != "master" && $CI_COMMIT_BRANCH != "release" && $CI_COMMIT_TAG == null'
-      when: on_success
-    - when: never
-  before_script:
-    - |
-      if [ -z "$NPM_TOKEN" ]; then
-        echo "NPM_TOKEN is not set. Cannot publish to npm."
-        exit 1
-      fi
-    # Auth only in the job user config; never write tokens into the SDK repo or committed .npmrc
-    - npm config set "//registry.npmjs.org/:_authToken" "${NPM_TOKEN}"
-    - cd sdk-repo
-    - export TZ='Europe/Moscow'
-  script:
-    # Same version idea as Java Artifactory ({branch}-{pipeline-id}); npm needs valid semver
-    - RAW_VERSION="${CI_COMMIT_REF_NAME}-${CI_PIPELINE_ID}"
-    - SAFE_PRERELEASE=$(printf '%s' "$RAW_VERSION" | sed 's/[^0-9A-Za-z.-]/-/g')
-    - PACKAGE_VERSION="0.0.0-${SAFE_PRERELEASE}"
-    - DIST_TAG="${CI_COMMIT_REF_SLUG}"
-    - npm pkg set "version=${PACKAGE_VERSION}"
-    - npm install --ignore-scripts --no-audit --no-fund
-    - npm run build
-    - TGZ="$(npm pack | tail -n1)"
-    - node "${CI_PROJECT_DIR}/scripts/verify-typescript-tarball.js" "$TGZ"
-    - npm publish "$TGZ" --tag "$DIST_TAG"
-    - echo "Complete. Version $PACKAGE_VERSION (dist-tag $DIST_TAG)"
-
 deploy-to-npm:
   extends: .deploy-sdk-typescript-base
   needs:

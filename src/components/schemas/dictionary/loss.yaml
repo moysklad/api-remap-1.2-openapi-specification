@@ -52,7 +52,6 @@ properties:
     description: Комментарий Списания
   expenseItem:
     description: Метаданные Статьи расходов
-    readOnly: true
     type: object
     allOf:
       - $ref: '../../../openapi.yaml#/components/schemas/ExpenseItem'

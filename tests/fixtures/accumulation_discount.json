@@ -44,12 +44,12 @@
   ],
   "levels": [
     {
-      "amount": 100000,
-      "discount": 10
+      "amount": 100000.5,
+      "discount": 10.5
     },
     {
-      "amount": 200000,
-      "discount": 15
+      "amount": 200000.25,
+      "discount": 15.5
     }
   ]
 }

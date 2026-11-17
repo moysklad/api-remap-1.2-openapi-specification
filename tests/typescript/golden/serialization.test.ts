@@ -172,6 +172,7 @@ const FIXTURE_MODEL_MAP: Readonly<Record<string, string>> = {
     accumulation_discount: 'AccumulationDiscount',
     personal_discount: 'PersonalDiscount',
     special_price_discount: 'SpecialPriceDiscount',
+    special_price_discount_percent: 'SpecialPriceDiscount',
     bonus_program: 'BonusProgram',
     bonus_transaction: 'BonusTransaction',
     bonus_transaction_expanded: 'BonusTransaction',
@@ -303,3 +304,17 @@ for (const [modelName, original] of [
         assert.deepEqual(JSON.parse(JSON.stringify(serialized)), original);
     });
 }
+
+
+test('Loss expenseItem сохраняется в исходящем JSON', () => {
+    const fixture = loadFixture('loss');
+    const model = asObject(getFromJson(sdk, 'Loss')(fixture), 'Loss не создан');
+    const serialized = asObject(getToJson(sdk, 'Loss')(model), 'Loss не сериализован');
+
+    assert.ok(fixture['expenseItem'], 'Фикстура должна содержать статью расходов');
+    assert.deepEqual(
+        normalizeForComparison(serialized['expenseItem']),
+        normalizeForComparison(fixture['expenseItem']),
+        'Статья расходов должна передаваться при создании и изменении Списания',
+    );
+});

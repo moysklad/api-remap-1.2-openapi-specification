@@ -145,6 +145,7 @@ class SerializationTest extends TestCase
         'accumulation_discount' => 'AccumulationDiscount',
         'personal_discount' => 'PersonalDiscount',
         'special_price_discount' => 'SpecialPriceDiscount',
+        'special_price_discount_percent' => 'SpecialPriceDiscount',
         'bonus_program' => 'BonusProgram',
         'bonus_transaction' => 'BonusTransaction',
         'bonus_transaction_expanded' => 'BonusTransaction',

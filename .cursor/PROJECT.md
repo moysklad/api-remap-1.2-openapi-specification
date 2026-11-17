@@ -57,7 +57,7 @@ gitlab/
   .gitlab-ci-prepare-sdk-typescript.yml # prep-branch-and-mr-typescript + merge-branch-typescript (internal GitLab TypeScript SDK repo; sdk-repo artifacts for npm deploy)
   .gitlab-ci-deploy-sdk-java.yml       # deploy-to-artifactory + deploy-to-maven (Java fat + slim artifact publishing)
   .gitlab-ci-deploy-sdk-python.yml     # TestPyPI/PyPI publishing
-  .gitlab-ci-deploy-sdk-typescript.yml # deploy-to-npm-prerelease + deploy-to-npm (TypeScript npm publishing)
+  .gitlab-ci-deploy-sdk-typescript.yml # deploy-to-npm (TypeScript npm publishing, master push only)
   .gitlab-ci-github-mirror.yml         # mirror-to-github + create-github-release
   version.gitlab-ci.yml                # version:auto (CHANGELOG, tag, push)
   .gitlab-ci-java-sdk.yml              # Legacy Java SDK (USE_OLD_SDK=true)
@@ -104,7 +104,7 @@ CHANGELOG.md                           # Auto-generated changelog (prepended by 
 | `push-sdk`               | `push-sdk-php`                                                                                                                                                                        | web + PUSH_TO_REMOTE=true                                                                 |
 | `mirror`                 | `mirror-to-github`, `create-github-release`                                                                                                                                           | master push                                                                               |
 | `prepare-sdk-repository` | `prep-branch-and-mr-php`, `prep-branch-and-mr-java`, `prep-branch-and-mr-python`, `prep-branch-and-mr-typescript`, `merge-branch-php`, `merge-branch-java`, `merge-branch-typescript` | push/web (branch) / master push                                                           |
-| `deploy-sdk`             | `deploy-to-artifactory`, `deploy-to-maven`, `deploy-to-npm-prerelease`, `deploy-to-npm`                                                                                               | branch push/web (Artifactory / npm prerelease) / master push (Maven Central / npm latest) |
+| `deploy-sdk`             | `deploy-to-artifactory`, `deploy-to-maven`, `deploy-to-npm`                                                                                                                           | branch push/web (Artifactory) / master push (Maven Central / npm latest)                 |
 
 Legacy stages (`prepare`, `deploy-for-space`, `create-user`, `build`, `delete-space`) exist for backward-compatible Java SDK pipeline (USE_OLD_SDK=true).
 
@@ -112,8 +112,8 @@ Legacy stages (`prepare`, `deploy-for-space`, `create-user`, `build`, `delete-sp
 
 ## Pipeline Scenarios (summary)
 
-1. **Push to branch** — lint, bundle, light-bundle, generate PHP/Python/Java/TypeScript SDK, run golden (PHP+Java+TypeScript) and smoke (Java), then prepare branches in all internal SDK, then publish a branch-scoped Java artifact to Artifactory and a TypeScript npm prerelease (non-`latest` dist-tag).
-2. **Manual (web) on branch** — same as push + contract test flow (`deploy-contract-env` → `create-contract-user` → `sdk-contract`, optional `remove-contract-env`) + optional `push-sdk-php` (PUSH_TO_REMOTE=true) + the same PHP/Java/Python/TypeScript internal SDK sync, Java Artifactory, and TypeScript npm prerelease publish steps.
+1. **Push to branch** — lint, bundle, light-bundle, generate PHP/Python/Java/TypeScript SDK, run golden (PHP+Java+TypeScript) and smoke (Java), then prepare branches in all internal SDK, then publish a branch-scoped Java artifact to Artifactory. TypeScript npm package is not published from branches.
+2. **Manual (web) on branch** — same as push + contract test flow (`deploy-contract-env` → `create-contract-user` → `sdk-contract`, optional `remove-contract-env`) + optional `push-sdk-php` (PUSH_TO_REMOTE=true) + the same PHP/Java/Python/TypeScript internal SDK sync and Java Artifactory publish. TypeScript npm package is not published from branches.
 3. **Master merge/push** — checks, contract test flow, SDK generation + tests, `version:auto` (CHANGELOG + tag), `mirror-to-github` + `create-github-release`, manual internal SDK release sync for PHP/Java/Python/TypeScript, then package publication jobs.
 4. **Tag push** — SDK validate flow including Schemathesis `examples`; release/mirror jobs remain tied to master pushes.
 
@@ -123,7 +123,7 @@ Legacy stages (`prepare`, `deploy-for-space`, `create-user`, `build`, `delete-sp
 |----------|---------|
 | `SDK_LANGUAGES` | Comma-separated SDK languages to generate (default: `""` = all available; `php`, `java`, `typescript`) |
 | `NPM_REGISTRY_URL` | npm registry for public `clients/typescript` and `tests/typescript` deps in `sdk-golden-typescript` and npm deploy jobs; default `registry.npmjs.org` |
-| `NPM_TOKEN` | Masked CI token for publishing `@moysklad/remap-1.2-sdk` to npm (`deploy-to-npm-prerelease`, `deploy-to-npm`); never stored in scripts, committed `.npmrc`, or the SDK repo |
+| `NPM_TOKEN` | Masked CI token for publishing `@moysklad/remap-1.2-sdk` to npm (`deploy-to-npm` on master push only); never stored in scripts, committed `.npmrc`, or the SDK repo |
 | `PUSH_TO_REMOTE` | Push SDK to GitHub remote repos (`"true"` / `"false"`, default `"false"`) |
 | `GIT_PASSWORD` | GitHub token (mirror, push-sdk, GitHub release) |
 | `CICD_PAT_PHP` | GitLab token for internal PHP SDK repo (`git.company.lognex/.../php-remap-1.2-sdk`) |
