@@ -77,13 +77,12 @@
 | `deploy-to-maven`          | Публикация Java SDK в Maven Central                                                                                                                            |
 | `deploy-to-artifactory`    | Публикация Java SDK в Artyfactory                                                                                                                              |
 | `deploy-python-to-pypi`    | Публикация проверенного Python wheel/sdist в PyPI                                                                                                              |
-| `deploy-to-npm-prerelease` | Публикация TypeScript SDK в npm (ветка, dist-tag ≠ `latest`)                                                                                                   |
-| `deploy-to-npm`            | Публикация TypeScript SDK в npm (`latest`, после `merge-branch-typescript`)                                                                                    |
+| `deploy-to-npm`            | Публикация TypeScript SDK в npm (`latest`, после `merge-branch-typescript`). С веток пакет не публикуется                                                      |
 
 Java release jobs (`deploy-to-artifactory`, `deploy-to-maven`) описаны в `gitlab/.gitlab-ci-deploy-sdk-java.yml` и выполняются на стадии `deploy-sdk`.
 Основной публикуемый Java runtime-артефакт — JAR с обычным транзитивным резолвом зависимостей.
 Fat-вариант публикуется второй версией с суффиксом `-fat` и собирается Maven-профилем `fat`.
-TypeScript npm jobs (`deploy-to-npm-prerelease`, `deploy-to-npm`) описаны в `gitlab/.gitlab-ci-deploy-sdk-typescript.yml` на той же стадии `deploy-sdk`.
+TypeScript npm job `deploy-to-npm` описана в `gitlab/.gitlab-ci-deploy-sdk-typescript.yml` на той же стадии `deploy-sdk` .
 
 Python repository sync запускается после `generate-sdk-python` и
 `sdk-golden-python`. Общий Java-based `sdk-smoke` также блокирует sync, когда
@@ -190,20 +189,20 @@ SCHEMATHESIS_INCLUDE_OPERATION_ID=createProduct
 
 ### Переменные для Push/Mirror
 
-| Переменная                   | Описание                                                                                                                                                      |
-|------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `GIT_PASSWORD`               | Токен для доступа к GitHub                                                                                                                                    |
-| `GIT_USER`                   | Имя пользователя для git commits                                                                                                                              |
-| `GIT_MAIL`                   | Email для git commits                                                                                                                                         |
-| `CICD_PAT`                   | GitLab token для доступа к внутреннему репозиторию Remap Api Specification (`git.company.lognex/moysklad/misc/remap-api-specification`)                       |
-| `CICD_PAT_PHP`               | GitLab token для доступа к внутреннему репозиторию PHP SDK (`git.company.lognex/moysklad/misc/php-remap-1.2-sdk`)                                             |
-| `CICD_PAT_PYTHON`            | Project access token внутреннего Python SDK репозитория; masked/protected                                                                                     |
-| `PYTHON_SDK_REPOSITORY_PATH` | GitLab path без host и `.git`; по умолчанию `moysklad/misc/remap-1.2-python-sdk`                                                                              |
-| `TEST_PYPI_API_TOKEN`        | Project-scoped токен TestPyPI; masked, для manual branch job                                                                                                  |
-| `PYPI_API_TOKEN`             | Project-scoped токен PyPI; masked/protected, только для production environment                                                                                |
-| `CICD_PAT_JAVA`              | GitLab token для доступа к внутреннему репозиторию Java SDK (`git.company.lognex/moysklad/misc/remap-1.2-java-sdk`)                                           |
-| `CICD_PAT_TYPESCRIPT`        | GitLab token для доступа к внутреннему репозиторию TypeScript SDK (`git.company.lognex/moysklad/misc/remap-1.2-typescript-sdk`)                               |
-| `NPM_TOKEN`                  | Masked/protected token для публикации TypeScript SDK в npm (`deploy-to-npm-prerelease`, `deploy-to-npm`); не хранить в скриптах, `.npmrc` или SDK-репозитории |
+| Переменная                   | Описание                                                                                                                                     |
+|------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------|
+| `GIT_PASSWORD`               | Токен для доступа к GitHub                                                                                                                   |
+| `GIT_USER`                   | Имя пользователя для git commits                                                                                                             |
+| `GIT_MAIL`                   | Email для git commits                                                                                                                        |
+| `CICD_PAT`                   | GitLab token для доступа к внутреннему репозиторию Remap Api Specification (`git.company.lognex/moysklad/misc/remap-api-specification`)      |
+| `CICD_PAT_PHP`               | GitLab token для доступа к внутреннему репозиторию PHP SDK (`git.company.lognex/moysklad/misc/php-remap-1.2-sdk`)                            |
+| `CICD_PAT_PYTHON`            | Project access token внутреннего Python SDK репозитория; masked/protected                                                                    |
+| `PYTHON_SDK_REPOSITORY_PATH` | GitLab path без host и `.git`; по умолчанию `moysklad/misc/remap-1.2-python-sdk`                                                             |
+| `TEST_PYPI_API_TOKEN`        | Project-scoped токен TestPyPI; masked, для manual branch job                                                                                 |
+| `PYPI_API_TOKEN`             | Project-scoped токен PyPI; masked/protected, только для production environment                                                               |
+| `CICD_PAT_JAVA`              | GitLab token для доступа к внутреннему репозиторию Java SDK (`git.company.lognex/moysklad/misc/remap-1.2-java-sdk`)                          |
+| `CICD_PAT_TYPESCRIPT`        | GitLab token для доступа к внутреннему репозиторию TypeScript SDK (`git.company.lognex/moysklad/misc/remap-1.2-typescript-sdk`)              |
+| `NPM_TOKEN`                  | Masked/protected token для публикации TypeScript SDK в npm (`deploy-to-npm`ATK-310); не хранить в скриптах, `.npmrc` или SDK-репозитории     |
 
 ### Переменные для обратной совместимости
 
@@ -229,7 +228,7 @@ SCHEMATHESIS_INCLUDE_OPERATION_ID=createProduct
 | `version`                | Автоматическое версионирование и подготовка CHANGELOG/тегов                                                                                              |
 | `mirror`                 | Зеркалирование в GitHub и GitHub Release                                                                                                                 |
 | `prepare-sdk-repository` | Подготовка внутренних репозиториев SDK (PHP/Java/TypeScript: ветки и релиз master по текущим изменениям)                                                 |
-| `deploy-sdk`             | Публикация SDK артефактов: Java (`deploy-to-artifactory`, `deploy-to-maven`) и TypeScript (`deploy-to-npm-prerelease`, `deploy-to-npm`)                  |
+| `deploy-sdk`             | Публикация SDK артефактов: Java (`deploy-to-artifactory`, `deploy-to-maven`) и TypeScript (`deploy-to-npm`)                                              |
 
 ### Стадии для обратной совместимости (старый Java SDK)
 
