@@ -6,6 +6,8 @@
   При 404/412 проверяет тип и структуру массивов `BatchResponseEntity` / `DeleteRowResult`, сохраняя успехи и ошибки.
   Остальные ошибочные ответы дают `ApiException` с исходными статусом и телом.
 * api.mustache - правильные заголовки Accept: application/json;charset=utf-8
+* api.mustache, model_range_validation.mustache - `minimum`/`maximum` проверяются в query-параметрах (`limit`, `offset`)
+  и сеттерах моделей (`vat`); при нарушении `IllegalArgumentException`, в том числе при десериализации ответа.
 * api.mustache, ApiClient.mustache, LocationResponse.mustache - операции с `x-location-response` (печать, экспорт)
   отдают ссылку только в заголовке `Location` (202 или 303). Метод возвращает `LocationResponse` вместо `void`,
   редирект отключён, иначе HttpClient уходит по 303 и `Location` теряется.

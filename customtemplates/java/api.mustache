@@ -137,6 +137,20 @@ public class {{classname}} extends BaseApi {
       throw new ApiException(400, "Missing the required parameter '{{paramName}}' when calling {{operationId}}");
     }
     {{/required}}{{/allParams}}
+    {{#allParams}}
+    {{^isBodyParam}}
+    {{#minimum}}
+    if ({{paramName}} != null && {{paramName}}.doubleValue() <{{#exclusiveMinimum}}={{/exclusiveMinimum}} {{minimum}}) {
+      throw new IllegalArgumentException("Invalid value for '{{baseName}}' when calling {{operationId}}: must be greater than {{^exclusiveMinimum}}or equal to {{/exclusiveMinimum}}{{minimum}}, got " + {{paramName}});
+    }
+    {{/minimum}}
+    {{#maximum}}
+    if ({{paramName}} != null && {{paramName}}.doubleValue() >{{#exclusiveMaximum}}={{/exclusiveMaximum}} {{maximum}}) {
+      throw new IllegalArgumentException("Invalid value for '{{baseName}}' when calling {{operationId}}: must be less than {{^exclusiveMaximum}}or equal to {{/exclusiveMaximum}}{{maximum}}, got " + {{paramName}});
+    }
+    {{/maximum}}
+    {{/isBodyParam}}
+    {{/allParams}}
     // create path and map variables
     String localVarPath = "{{{path}}}"{{#pathParams}}
       .replaceAll("\\{" + "{{baseName}}" + "\\}", apiClient.escapeString(apiClient.parameterToString({{{paramName}}}))){{/pathParams}};

@@ -1,0 +1,10 @@
+{{#minimum}}
+    if ({{name}} != null && {{name}}.doubleValue() <{{#exclusiveMinimum}}={{/exclusiveMinimum}} {{minimum}}) {
+      throw new IllegalArgumentException("Invalid value for '{{baseName}}': must be greater than {{^exclusiveMinimum}}or equal to {{/exclusiveMinimum}}{{minimum}}, got " + {{name}});
+    }
+{{/minimum}}
+{{#maximum}}
+    if ({{name}} != null && {{name}}.doubleValue() >{{#exclusiveMaximum}}={{/exclusiveMaximum}} {{maximum}}) {
+      throw new IllegalArgumentException("Invalid value for '{{baseName}}': must be less than {{^exclusiveMaximum}}or equal to {{/exclusiveMaximum}}{{maximum}}, got " + {{name}});
+    }
+{{/maximum}}
