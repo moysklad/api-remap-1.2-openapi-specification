@@ -1,0 +1,21 @@
+get:
+  operationId: getReportMoneyByAccount
+  tags:
+    - Reports
+  summary: Получить остатки денежных средств по кассам и счетам
+  description: |
+    Запрос текущих остатков денежных средств по кассам и счетам организаций.
+    Для доступа к отчету требуется право на просмотр показателей `viewDashboard`
+    и право «Видеть остатки денег» `viewMoneyDashboard`.
+  parameters:
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос. JSON представление отчета об остатках денежных средств
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/ReportMoneyByAccountList'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

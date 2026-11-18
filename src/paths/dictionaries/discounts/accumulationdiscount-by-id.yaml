@@ -1,0 +1,63 @@
+get:
+  operationId: getAccumulationDiscountById
+  tags:
+    - Discounts
+  summary: Получить накопительную скидку по ID
+  description: Запрос накопительной скидки с указанным id
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/AccumulationDiscount'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+put:
+  operationId: updateAccumulationDiscount
+  tags:
+    - Discounts
+  summary: Изменить накопительную скидку
+  description: Запрос на изменение накопительной скидки
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../openapi.yaml#/components/schemas/AccumulationDiscount'
+  responses:
+    '200':
+      description: Накопительная скидка успешно обновлена
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/AccumulationDiscount'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+delete:
+  operationId: deleteAccumulationDiscount
+  tags:
+    - Discounts
+  summary: Удалить накопительную скидку
+  description: Удаление накопительной скидки с указанным id
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Накопительная скидка успешно удалена
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+

@@ -1,0 +1,9 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/cashout/c238d5de-1dfe-11f1-0a80-0c2500000002",
+    "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/cashout/metadata",
+    "type": "cashout",
+    "mediaType": "application/json"
+  },
+  "linkedSum": 30000.0
+}

@@ -1,0 +1,93 @@
+# remap-1.2-java-sdk
+
+Официальный Java SDK для [МойСклад JSON API 1.2](https://dev.moysklad.ru/doc/api/remap/1.2/).
+
+* Maven Central: https://central.sonatype.com/artifact/ru.moysklad.api/remap-1.2-java-sdk
+* GitHub: https://github.com/moysklad/remap-1.2-java-sdk
+* OpenAPI-спецификация: https://github.com/moysklad/api-remap-1.2-openapi-specification
+
+Код SDK генерируется из OpenAPI-спецификации, поэтому правки нужно вносить в спецификацию, а не в этот репозиторий.
+
+## Требования
+
+* Java 17+
+
+## Установка
+
+Добавьте зависимость в `pom.xml`, указав вместо `X.Y.Z` версию релиза с [Maven Central](https://central.sonatype.com/artifact/ru.moysklad.api/remap-1.2-java-sdk/versions):
+
+```xml
+<dependency>
+    <groupId>ru.moysklad.api</groupId>
+    <artifactId>remap-1.2-java-sdk</artifactId>
+    <version>X.Y.Z</version>
+</dependency>
+```
+
+Зависимости SDK (Jackson, Apache HttpClient и другие) подтягиваются транзитивно.
+
+Если они конфликтуют с версиями в вашем проекте, используйте самодостаточный fat JAR: все зависимости уже упакованы в него и перенесены в пространство имён SDK. Это тот же артефакт с суффиксом `-fat` в версии:
+
+```xml
+<dependency>
+    <groupId>ru.moysklad.api</groupId>
+    <artifactId>remap-1.2-java-sdk</artifactId>
+    <version>X.Y.Z-fat</version>
+</dependency>
+```
+
+## Авторизация
+
+МойСклад поддерживает Bearer-токен и Basic Auth. Учётные данные задаются в `ApiClient`.
+
+Токен доступа:
+
+```java
+ApiClient apiClient = new ApiClient();
+apiClient.setBearerToken(System.getenv("MOYSKLAD_TOKEN"));
+```
+
+Логин и пароль:
+
+```java
+ApiClient apiClient = new ApiClient();
+apiClient.setUsername(System.getenv("MOYSKLAD_LOGIN"));
+apiClient.setPassword(System.getenv("MOYSKLAD_PASSWORD"));
+```
+
+По умолчанию запросы идут на `https://api.moysklad.ru/api/remap/1.2`. Другой адрес задаётся через `apiClient.setBasePath(...)`.
+
+## Пример запроса
+
+```java
+import {{invokerPackage}}.ApiClient;
+import {{invokerPackage}}.ApiException;
+import {{apiPackage}}.PageOptions;
+import {{apiPackage}}.ProductsApi;
+import {{modelPackage}}.Product;
+import {{modelPackage}}.ProductList;
+
+public class Example {
+    public static void main(String[] args) {
+        ApiClient apiClient = new ApiClient();
+        apiClient.setBearerToken(System.getenv("MOYSKLAD_TOKEN"));
+
+        ProductsApi productsApi = new ProductsApi(apiClient);
+
+        try {
+            ProductList products = productsApi.getProducts(PageOptions.limit(10));
+            for (Product product : products.getRows()) {
+                System.out.println(product.getId() + " " + product.getName());
+            }
+        } catch (ApiException e) {
+            System.err.println(e.getCode() + " " + e.getResponseBody());
+        }
+    }
+}
+```
+
+Ошибки API выбрасывают `ApiException` с HTTP-статусом в `getCode()` и телом ответа в `getResponseBody()`.
+
+## Лицензия
+
+Apache-2.0, см. [текст лицензии](https://www.apache.org/licenses/LICENSE-2.0).

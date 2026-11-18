@@ -1,0 +1,8 @@
+# Заголовки ответа (Header Object). Для заголовков запроса (Parameter Object) — headers.yaml.
+
+# Заголовки ответов операций печати (x-location-response): тело пустое,
+# в Location — ссылка на статус печати (202) или на готовый файл (303).
+PrintLocation:
+  description: Ссылка на статус печати (202) или на готовый файл (303)
+  schema:
+    type: string

@@ -1,0 +1,4 @@
+type: object
+x-polymorphic-parent: BonusTransactionParentDocument
+allOf:
+  - $ref: '../../../openapi.yaml#/components/schemas/RetailDemand'

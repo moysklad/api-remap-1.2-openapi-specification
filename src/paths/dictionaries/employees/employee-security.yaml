@@ -1,0 +1,54 @@
+get:
+  operationId: getEmployeeSecurity
+  tags:
+    - Employees
+  summary: Получить права сотрудника
+  description: Запрос на получение информации о правах Сотрудника. Получать права может только сотрудник с правами Системный администратор.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/EmployeeSecurity'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+    
+    
+    
+
+put:
+  operationId: updateEmployeeSecurity
+  tags:
+    - Employees
+  summary: Изменить права сотрудника
+  description: Запрос на изменение информации о правах Сотрудника. Изменять права может только сотрудник с правами Системный администратор.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../openapi.yaml#/components/schemas/EmployeeSecurity'
+  responses:
+    '200':
+      description: Права успешно обновлены
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/EmployeeSecurity'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+    
+    
+    
+    
+    

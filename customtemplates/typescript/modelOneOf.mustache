@@ -1,0 +1,175 @@
+{{#hasImports}}
+{{#imports}}
+import type { {{{.}}} } from './{{.}}{{importFileExtension}}';
+import {
+    instanceOf{{{.}}},
+    {{{.}}}EntityType,
+    {{{.}}}FromJSON,
+    {{{.}}}FromJSONTyped,
+    {{{.}}}ToJSON,
+} from './{{.}}{{importFileExtension}}';
+{{/imports}}
+
+{{/hasImports}}
+{{>modelOneOfInterfaces}}
+
+function is{{classname}}BatchError(value: any): boolean {
+    return Array.isArray(value?.errors)
+        && value.errors.length > 0
+        && typeof value.errors[0]?.error === 'string';
+}
+
+function {{classname}}FromMetaType(json: any, ignoreDiscriminator: boolean): {{classname}} | undefined {
+    const metaType = json?.meta?.type;
+    if (typeof metaType !== 'string') {
+        return undefined;
+    }
+{{#oneOfModels}}
+    if ({{{.}}}EntityType === metaType) {
+        return {{{.}}}FromJSONTyped(json, ignoreDiscriminator);
+    }
+{{/oneOfModels}}
+    return undefined;
+}
+
+export const {{classname}}EntityType: string | undefined = undefined;
+
+export function instanceOf{{classname}}(value: object): value is {{classname}} {
+{{#oneOfModels}}
+    if (instanceOf{{{.}}}(value)) return true;
+{{/oneOfModels}}
+{{#oneOfArrays}}
+    if (Array.isArray(value) && value.every(item => item != null && typeof item === 'object' && instanceOf{{{.}}}(item))) return true;
+{{/oneOfArrays}}
+    return false;
+}
+
+export function {{classname}}FromJSON(json: any): {{classname}} {
+    return {{classname}}FromJSONTyped(json, false);
+}
+
+export function {{classname}}FromJSONTyped(json: any, ignoreDiscriminator: boolean): {{classname}} {
+    if (json == null) {
+        return json;
+    }
+{{#discriminator}}
+    switch (json['{{discriminator.propertyBaseName}}']) {
+{{#discriminator.mappedModels}}
+        case '{{mappingName}}':
+            return Object.assign({}, {{modelName}}FromJSONTyped(json, true), { {{discriminator.propertyName}}: '{{mappingName}}' } as const);
+{{/discriminator.mappedModels}}
+        default:
+            return json;
+    }
+{{/discriminator}}
+{{^discriminator}}
+    if (typeof json !== 'object') {
+        return json;
+    }
+    if (!ignoreDiscriminator) {
+        if (is{{classname}}BatchError(json)) {
+            const errorConverters: Record<string, (value: any, ignoreDiscriminator: boolean) => any> = {
+{{#oneOfModels}}
+                '{{{.}}}': {{{.}}}FromJSONTyped,
+{{/oneOfModels}}
+            };
+            const errorConverter = errorConverters['Errors'];
+            if (errorConverter !== undefined) {
+                return errorConverter(json, true);
+            }
+        }
+        const typed = {{classname}}FromMetaType(json, true);
+        if (typed !== undefined) {
+            return typed;
+        }
+    }
+    {{#oneOfModels}}
+    if (instanceOf{{{.}}}(json)) {
+        return {{{.}}}FromJSONTyped(json, true);
+    }
+    {{/oneOfModels}}
+    {{#oneOfArrays}}
+    {{#-first}}
+    if (Array.isArray(json)) {
+        if (json.every(item => typeof item === 'object')) {
+    {{/-first}}
+            if (json.every(item => instanceOf{{{.}}}(item))) {
+                return json.map(value => {{{.}}}FromJSON(value));
+            }
+    {{#-last}}
+        }
+        return json;
+    }
+    {{/-last}}
+    {{/oneOfArrays}}
+
+    return {} as any;
+{{/discriminator}}
+}
+
+export function {{classname}}ToJSON(json: any): any {
+    return {{classname}}ToJSONTyped(json, false);
+}
+
+export function {{classname}}ToJSONTyped(value?: {{classname}} | null, ignoreDiscriminator: boolean = false): any {
+    if (value == null) {
+        return value;
+    }
+{{#discriminator}}
+    switch (value['{{discriminator.propertyName}}']) {
+{{#discriminator.mappedModels}}
+        case '{{mappingName}}':
+            return Object.assign({}, {{modelName}}ToJSON(value), { {{discriminator.propertyName}}: '{{mappingName}}' } as const);
+{{/discriminator.mappedModels}}
+        default:
+            return value;
+    }
+{{/discriminator}}
+{{^discriminator}}
+    if (typeof value !== 'object') {
+        return value;
+    }
+    if (!ignoreDiscriminator) {
+        if (is{{classname}}BatchError(value)) {
+            const errorConverters: Record<string, (item: any) => any> = {
+{{#oneOfModels}}
+                '{{{.}}}': {{{.}}}ToJSON,
+{{/oneOfModels}}
+            };
+            const errorConverter = errorConverters['Errors'];
+            if (errorConverter !== undefined) {
+                return errorConverter(value);
+            }
+        }
+        const metaType = (value as any)?.meta?.type;
+        if (typeof metaType === 'string') {
+{{#oneOfModels}}
+            if ({{{.}}}EntityType === metaType) {
+                return {{{.}}}ToJSON(value as {{{.}}});
+            }
+{{/oneOfModels}}
+        }
+    }
+    {{#oneOfModels}}
+    if (instanceOf{{{.}}}(value)) {
+        return {{{.}}}ToJSON(value as {{{.}}});
+    }
+    {{/oneOfModels}}
+    {{#oneOfArrays}}
+    {{#-first}}
+    if (Array.isArray(value)) {
+        if (value.every(item => typeof item === 'object')) {
+    {{/-first}}
+            if (value.every(item => instanceOf{{{.}}}(item))) {
+                return value.map(value => {{{.}}}ToJSON(value as {{{.}}}));
+            }
+    {{#-last}}
+        }
+        return value;
+    }
+    {{/-last}}
+    {{/oneOfArrays}}
+
+    return {};
+{{/discriminator}}
+}

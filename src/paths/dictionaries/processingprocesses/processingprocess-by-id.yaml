@@ -1,0 +1,64 @@
+get:
+  operationId: getProcessingProcessById
+  tags:
+    - ProcessingProcesses
+  summary: Получить Техпроцесс по ID
+  description: Запрос на получение отдельного Техпроцесса с указанным id
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/ProcessingProcess'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+put:
+  operationId: updateProcessingProcess
+  tags:
+    - ProcessingProcesses
+  summary: Обновить Техпроцесс
+  description: Обновление Техпроцесса с указанным id
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../openapi.yaml#/components/schemas/ProcessingProcess'
+  responses:
+    '200':
+      description: Техпроцесс успешно обновлен
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/ProcessingProcess'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+delete:
+  operationId: deleteProcessingProcess
+  tags:
+    - ProcessingProcesses
+  summary: Удалить Техпроцесс
+  description: Удаление Техпроцесса с указанным id
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Техпроцесс успешно удален
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

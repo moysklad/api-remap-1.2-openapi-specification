@@ -1,0 +1,15 @@
+type: object
+description: |
+  Платеж, связанный со счетом-фактурой полученным: исходящий платеж или расходный ордер.
+x-polymorphic-discriminator:
+  path: meta.type
+  mappings:
+    - type: paymentout
+      componentName: FactureInPaymentPaymentOut
+    - type: cashout
+      componentName: FactureInPaymentCashOut
+properties:
+  meta:
+    $ref: '../common/meta.yaml'
+required:
+  - meta

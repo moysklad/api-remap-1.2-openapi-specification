@@ -1,0 +1,44 @@
+get:
+  operationId: getUserSettings
+  tags:
+    - UserSettings
+  summary: Получить настройки пользователя
+  description: Запрос на получение настроек пользователя
+  parameters:
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/UserSettings'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+put:
+  operationId: updateUserSettings
+  tags:
+    - UserSettings
+  summary: Изменить настройки пользователя
+  description: Запрос на изменение настроек пользователя
+  parameters:
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../openapi.yaml#/components/schemas/UserSettings'
+  responses:
+    '200':
+      description: Настройки пользователя успешно обновлены
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/UserSettings'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

@@ -1,0 +1,49 @@
+get:
+  operationId: getInvoiceOutFile
+  tags:
+    - InvoiceOuts
+  summary: Получить файл Счета покупателю
+  description: Получение Файла Счета покупателю.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - name: fileId
+      in: path
+      required: true
+      description: ID файла
+      schema:
+        type: string
+        format: uuid
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/File'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+delete:
+  operationId: deleteInvoiceOutFile
+  tags:
+    - InvoiceOuts
+  summary: Удалить файл Счета покупателю
+  description: Удаление Файла Счета покупателю.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - name: fileId
+      in: path
+      required: true
+      description: ID файла
+      schema:
+        type: string
+        format: uuid
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Файл успешно удалён
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

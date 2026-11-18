@@ -1,0 +1,26 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/bonusprogram/1223d051-ba76-11e8-3353-995e0000005a",
+    "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/bonusprogram/metadata",
+    "type": "bonusprogram",
+    "mediaType": "application/json"
+  },
+  "id": "1223d051-ba76-11e8-3353-995e0000005a",
+  "accountId": "dbb8cfc1-cbfa-11e1-6dfb-889ffa6f49fd",
+  "name": "test",
+  "active": true,
+  "allAgents": true,
+  "agentTags": [
+    "группа агентов"
+  ],
+  "earnRateRoublesToPoint": 1,
+  "spendRatePointsToRouble": 1,
+  "maxPaidRatePercents": 100,
+  "welcomeBonusesEnabled": false,
+  "welcomeBonusesMode": "REGISTRATION",
+  "welcomeBonusesValue": 10,
+  "postponedBonusesDelayDays": 14,
+  "earnWhileRedeeming": true,
+  "allProducts": true
+}
+

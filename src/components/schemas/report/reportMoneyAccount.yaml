@@ -1,0 +1,10 @@
+type: object
+description: Краткое представление счета организации в отчете «Деньги»
+properties:
+  meta:
+    description: Метаданные счета
+    $ref: '../common/meta.yaml'
+  name:
+    type: string
+    maxLength: 255
+    description: Номер счета

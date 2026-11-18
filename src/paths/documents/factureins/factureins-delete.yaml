@@ -1,0 +1,35 @@
+post:
+  operationId: deleteFactureInsBatch
+  tags:
+    - FactureIns
+  summary: Массовое удаление Счетов-фактур полученных
+  description: Массовое удаление Счетов-фактур полученных по их мета-объектам
+  parameters:
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            $ref: '../../../openapi.yaml#/components/schemas/FactureIn'
+          minItems: 1
+          maxItems: 1000
+  responses:
+    '200':
+      description: Результат по каждому элементу (успех или объект ошибки)
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../../../openapi.yaml#/components/schemas/DeleteRowResult'
+    '404':
+      $ref: '../../../components/responses.yaml#/BatchDeleteError'
+    '412':
+      $ref: '../../../components/responses.yaml#/BatchDeleteError'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

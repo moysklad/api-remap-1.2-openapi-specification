@@ -1,0 +1,13 @@
+type: object
+x-implements: Attribute<Store>
+allOf:
+  - $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
+properties:
+  type:
+    type: string
+    enum: [store]
+  value:
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Store'

@@ -1,0 +1,18 @@
+type: object
+description: Показатель движения денежных средств за период отчета
+properties:
+  date:
+    type: string
+    description: Дата показателя в формате YYYY-MM-DD HH:MM:SS
+  credit:
+    type: number
+    format: double
+    description: Доход за период
+  debit:
+    type: number
+    format: double
+    description: Расход за период
+  balance:
+    type: number
+    format: double
+    description: Баланс (доход минус расход)

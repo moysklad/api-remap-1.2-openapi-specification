@@ -1,0 +1,25 @@
+type: object
+description: Список ассортимента
+x-implements: EntityList
+properties:
+  context:
+    description: Метаданные о сотруднике, выполнившем запрос
+    $ref: '../common/context.yaml'
+  meta:
+    description: Метаданные о выдаче
+    $ref: '../common/metaList.yaml'
+  rows:
+    type: array
+    description: Массив элементов ассортимента
+    # Python from_dict у Assortment возвращает Product и другие модели.
+    # Список должен принимать их вместе с самим Assortment.
+    x-python-dispatched-items:
+      models:
+        - Assortment
+        - Product
+        - Service
+        - Bundle
+        - Variant
+        - Consignment
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/Assortment'

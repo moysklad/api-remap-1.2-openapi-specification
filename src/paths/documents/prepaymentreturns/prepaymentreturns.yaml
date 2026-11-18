@@ -1,0 +1,22 @@
+get:
+  operationId: getPrepaymentReturnList
+  tags:
+    - PrepaymentReturns
+  summary: Получить список Возвратов предоплаты
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/limit'
+    - $ref: '../../../components/parameters.yaml#/offset'
+    - $ref: '../../../components/parameters.yaml#/search'
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/parameters.yaml#/fields'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/PrepaymentReturnList'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

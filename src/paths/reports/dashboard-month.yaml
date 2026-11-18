@@ -1,0 +1,20 @@
+get:
+  operationId: getReportDashboardMonth
+  tags:
+    - Reports
+  summary: Получить показатели за месяц
+  description: |
+    Запрос показателей за месяц.
+    Для доступа к отчету требуется право на просмотр показателей `viewDashboard`.
+  parameters:
+    - $ref: '../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос. JSON представление показателей за месяц
+      content:
+        application/json:
+          schema:
+            $ref: '../../openapi.yaml#/components/schemas/ReportDashboard'
+    default:
+      $ref: '../../components/responses.yaml#/CommonError'

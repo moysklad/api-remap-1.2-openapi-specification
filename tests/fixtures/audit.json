@@ -1,0 +1,27 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/audit/83732f4b-792a-11e7-9464-d04800000005",
+    "type": "audit",
+    "mediaType": "application/json"
+  },
+  "id": "83732f4b-792a-11e7-9464-d04800000005",
+  "uid": "admin@11",
+  "source": "app",
+  "moment": "2017-08-04 18:35:15",
+  "info": {
+    "loginInfo" : "Вход в МойСклад"
+  },
+  "objectCount": 1,
+  "eventType": "create",
+  "entityType": "customerorder",
+  "events": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/audit/83732f4b-792a-11e7-9464-d04800000005/events",
+      "type": "auditevent",
+      "mediaType": "application/json",
+      "size": 1,
+      "limit": 25,
+      "offset": 0
+    }
+  }
+}

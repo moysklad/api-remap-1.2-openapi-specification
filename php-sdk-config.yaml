@@ -1,0 +1,10 @@
+# Конфигурация генерации PHP SDK (generator: php).
+# Запускается через npm run generate-php / make generate-php.
+# files: — шаблоны, которых нет в стандартном наборе генератора (LocationResponse для x-location-response).
+files:
+  LocationResponse.mustache:
+    templateType: SupportingFiles
+    destinationFilename: lib/LocationResponse.php
+additionalProperties:
+  phpVersion: "8.1"
+  licenseName: "Apache-2.0"

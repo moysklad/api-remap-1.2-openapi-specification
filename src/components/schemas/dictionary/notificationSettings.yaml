@@ -1,0 +1,23 @@
+type: object
+description: Настройки уведомлений текущего пользователя
+properties:
+  customerOrder:
+    $ref: '../../../openapi.yaml#/components/schemas/NotificationGroupSettings'
+  dataExchange:
+    $ref: '../../../openapi.yaml#/components/schemas/NotificationGroupSettings'
+  invoice:
+    $ref: '../../../openapi.yaml#/components/schemas/NotificationGroupSettings'
+  retail:
+    $ref: '../../../openapi.yaml#/components/schemas/NotificationGroupSettings'
+  scripts:
+    $ref: '../../../openapi.yaml#/components/schemas/NotificationGroupSettings'
+  stock:
+    $ref: '../../../openapi.yaml#/components/schemas/NotificationGroupSettings'
+  task:
+    $ref: '../../../openapi.yaml#/components/schemas/NotificationGroupSettings'
+  mentions:
+    $ref: '../../../openapi.yaml#/components/schemas/NotificationGroupSettings'
+  onlineStores:
+    $ref: '../../../openapi.yaml#/components/schemas/NotificationGroupSettings'
+  followedEvents:
+    $ref: '../../../openapi.yaml#/components/schemas/NotificationGroupSettings'

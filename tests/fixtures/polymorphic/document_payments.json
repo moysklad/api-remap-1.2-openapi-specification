@@ -1,0 +1,138 @@
+[
+  {
+    "document": "RetailShift",
+    "base": "RetailShiftPayment",
+    "variant": "RetailShiftPaymentPaymentIn",
+    "type": "paymentin"
+  },
+  {
+    "document": "RetailShift",
+    "base": "RetailShiftPayment",
+    "variant": "RetailShiftPaymentCashIn",
+    "type": "cashin"
+  },
+  {
+    "document": "Demand",
+    "base": "DemandPayment",
+    "variant": "DemandPaymentPaymentIn",
+    "type": "paymentin"
+  },
+  {
+    "document": "Demand",
+    "base": "DemandPayment",
+    "variant": "DemandPaymentCashIn",
+    "type": "cashin"
+  },
+  {
+    "document": "SalesReturn",
+    "base": "SalesReturnPayment",
+    "variant": "SalesReturnPaymentPaymentOut",
+    "type": "paymentout"
+  },
+  {
+    "document": "SalesReturn",
+    "base": "SalesReturnPayment",
+    "variant": "SalesReturnPaymentCashOut",
+    "type": "cashout"
+  },
+  {
+    "document": "CustomerOrder",
+    "base": "CustomerOrderPayment",
+    "variant": "CustomerOrderPaymentPaymentIn",
+    "type": "paymentin"
+  },
+  {
+    "document": "CustomerOrder",
+    "base": "CustomerOrderPayment",
+    "variant": "CustomerOrderPaymentCashIn",
+    "type": "cashin"
+  },
+  {
+    "document": "PurchaseOrder",
+    "base": "PurchaseOrderPayment",
+    "variant": "PurchaseOrderPaymentPaymentOut",
+    "type": "paymentout"
+  },
+  {
+    "document": "PurchaseOrder",
+    "base": "PurchaseOrderPayment",
+    "variant": "PurchaseOrderPaymentCashOut",
+    "type": "cashout"
+  },
+  {
+    "document": "InvoiceIn",
+    "base": "InvoiceInPayment",
+    "variant": "InvoiceInPaymentPaymentOut",
+    "type": "paymentout"
+  },
+  {
+    "document": "InvoiceIn",
+    "base": "InvoiceInPayment",
+    "variant": "InvoiceInPaymentCashOut",
+    "type": "cashout"
+  },
+  {
+    "document": "InvoiceOut",
+    "base": "InvoiceOutPayment",
+    "variant": "InvoiceOutPaymentPaymentIn",
+    "type": "paymentin"
+  },
+  {
+    "document": "InvoiceOut",
+    "base": "InvoiceOutPayment",
+    "variant": "InvoiceOutPaymentCashIn",
+    "type": "cashin"
+  },
+  {
+    "document": "CommissionReportIn",
+    "base": "CommissionReportInPayment",
+    "variant": "CommissionReportInPaymentPaymentIn",
+    "type": "paymentin"
+  },
+  {
+    "document": "CommissionReportIn",
+    "base": "CommissionReportInPayment",
+    "variant": "CommissionReportInPaymentCashIn",
+    "type": "cashin"
+  },
+  {
+    "document": "CommissionReportOut",
+    "base": "CommissionReportOutPayment",
+    "variant": "CommissionReportOutPaymentPaymentOut",
+    "type": "paymentout"
+  },
+  {
+    "document": "CommissionReportOut",
+    "base": "CommissionReportOutPayment",
+    "variant": "CommissionReportOutPaymentCashOut",
+    "type": "cashout"
+  },
+  {
+    "document": "FactureIn",
+    "base": "FactureInPayment",
+    "variant": "FactureInPaymentPaymentOut",
+    "type": "paymentout",
+    "linkedSum": false
+  },
+  {
+    "document": "FactureIn",
+    "base": "FactureInPayment",
+    "variant": "FactureInPaymentCashOut",
+    "type": "cashout",
+    "linkedSum": false
+  },
+  {
+    "document": "FactureOut",
+    "base": "FactureOutPayment",
+    "variant": "FactureOutPaymentPaymentIn",
+    "type": "paymentin",
+    "linkedSum": false
+  },
+  {
+    "document": "FactureOut",
+    "base": "FactureOutPayment",
+    "variant": "FactureOutPaymentCashIn",
+    "type": "cashin",
+    "linkedSum": false
+  }
+]

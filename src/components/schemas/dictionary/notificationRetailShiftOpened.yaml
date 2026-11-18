@@ -1,0 +1,10 @@
+type: object
+description: Уведомление об открытии розничной смены
+x-polymorphic-parent: NotificationAbstract
+properties:
+  user:
+    $ref: '../../../openapi.yaml#/components/schemas/NotificationNamedEntity'
+  retailStore:
+    $ref: '../../../openapi.yaml#/components/schemas/NotificationNamedEntity'
+  retailShift:
+    $ref: '../../../openapi.yaml#/components/schemas/NotificationRetailShift'

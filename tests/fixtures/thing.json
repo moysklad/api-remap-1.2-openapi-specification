@@ -1,0 +1,11 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/thing/123",
+    "type": "thing",
+    "mediaType": "application/json"
+  },
+  "id": "12345678-1234-1234-1234-123456789012",
+  "accountId": "12345678-1234-1234-1234-123456789012",
+  "name": "SN-1",
+  "description": "serial"
+}

@@ -1,0 +1,24 @@
+type: object
+description: Строка отчета «Обороты по товару с детализацией по документам»
+properties:
+  assortment:
+    description: Краткое представление номенклатуры в отчете
+    $ref: '../../../openapi.yaml#/components/schemas/ReportTurnoverAssortment'
+  store:
+    description: Склад
+    $ref: '../../../openapi.yaml#/components/schemas/Store'
+  operation:
+    description: Документ, связанный с номенклатурой
+    $ref: '../../../openapi.yaml#/components/schemas/ReportTurnoverOperation'
+  quantity:
+    type: number
+    format: double
+    description: Количество номенклатуры в документе
+  cost:
+    type: number
+    format: double
+    description: Себестоимость номенклатуры в копейках в документе
+  sum:
+    type: number
+    format: double
+    description: Сумма себестоимостей в копейках

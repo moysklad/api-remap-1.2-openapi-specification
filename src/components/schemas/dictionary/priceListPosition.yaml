@@ -1,0 +1,38 @@
+type: object
+description: Позиция Прайс-листа
+x-implements: MetaEntity
+x-polymorphic-parent: EntityWithMeta
+x-entity-static-builder:
+  methodParams:
+    - "parentId"
+    - "id"
+  href:
+    - path: "entity"
+    - path: "pricelist"
+    - param: "parentId"
+    - path: "positions"
+    - param: "id"
+  type: "pricelistrow"
+properties:
+  meta:
+    description: Метаданные позиции
+    $ref: '../common/meta.yaml'
+  id:
+    type: string
+    format: uuid
+    description: ID позиции
+  accountId:
+    type: string
+    format: uuid
+    description: ID учетной записи
+    readOnly: true
+  assortment:
+    type: object
+    description: Метаданные номенклатуры, которую представляет собой позиция
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/ProductMarker'
+  cells:
+    type: array
+    description: Массив значений столбцов в позиции Прайс-листа
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/PriceListCell'

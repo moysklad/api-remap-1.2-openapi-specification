@@ -1,0 +1,13 @@
+type: object
+description: Строка отчета об остатках денежных средств по кассам и счетам
+properties:
+  account:
+    description: Счет организации. Не выводится для остатка кассы, так как касса одна на организацию.
+    $ref: '../../../openapi.yaml#/components/schemas/ReportMoneyAccount'
+  organization:
+    description: Метаданные юрлица
+    $ref: '../../../openapi.yaml#/components/schemas/Organization'
+  balance:
+    type: number
+    format: double
+    description: Текущий остаток денежных средств в валюте счета

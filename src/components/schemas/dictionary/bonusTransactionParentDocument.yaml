@@ -1,0 +1,15 @@
+type: object
+description: |
+  Документ бонусной операции: розничная продажа или розничный возврат.
+x-polymorphic-discriminator:
+  path: meta.type
+  mappings:
+    - type: retaildemand
+      componentName: BonusTransactionParentRetailDemand
+    - type: retailsalesreturn
+      componentName: BonusTransactionParentRetailSalesReturn
+properties:
+  meta:
+    $ref: '../common/meta.yaml'
+required:
+  - meta

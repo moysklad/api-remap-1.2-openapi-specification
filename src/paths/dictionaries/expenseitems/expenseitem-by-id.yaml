@@ -1,0 +1,64 @@
+get:
+  operationId: getExpenseItemById
+  tags:
+    - ExpenseItems
+  summary: Получить статью расходов по ID
+  description: Запрос на получение Статьи расходов с указанным id
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/ExpenseItem'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+put:
+  operationId: updateExpenseItem
+  tags:
+    - ExpenseItems
+  summary: Обновить статью расходов
+  description: Обновление Статьи расходов с указанным id
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../openapi.yaml#/components/schemas/ExpenseItem'
+  responses:
+    '200':
+      description: Статья расходов успешно обновлена
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/ExpenseItem'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+delete:
+  operationId: deleteExpenseItem
+  tags:
+    - ExpenseItems
+  summary: Удалить статью расходов
+  description: Удаление Статьи расходов с указанным id
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Статья расходов успешно удалена
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

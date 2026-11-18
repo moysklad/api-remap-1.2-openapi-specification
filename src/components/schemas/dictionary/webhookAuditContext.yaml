@@ -1,0 +1,14 @@
+type: object
+description: Контекст аудита во входящем теле уведомления вебхука (POST на URL подписчика)
+properties:
+  meta:
+    $ref: '../common/meta.yaml'
+  moment:
+    type: string
+    description: Дата изменения
+    readOnly: true
+  uid:
+    type: string
+    maxLength: 255
+    description: Логин сотрудника
+    readOnly: true

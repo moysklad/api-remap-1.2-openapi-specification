@@ -1,0 +1,20 @@
+get:
+  operationId: getNotifications
+  tags:
+    - Notifications
+  summary: Получить ленту уведомлений
+  description: Запрос на получение ленты уведомлений текущего пользователя
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/limit'
+    - $ref: '../../../components/parameters.yaml#/offset'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос. JSON представление списка уведомлений
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/NotificationList'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

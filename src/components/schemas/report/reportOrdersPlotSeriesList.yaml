@@ -1,0 +1,13 @@
+type: object
+description: Показатели заказов покупателей
+properties:
+  context:
+    $ref: '../common/context.yaml'
+  meta:
+    description: Метаданные отчета показателей заказов
+    $ref: '../common/meta.yaml'
+  series:
+    type: array
+    description: Массив показателей заказов
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/ReportPlotSeries'

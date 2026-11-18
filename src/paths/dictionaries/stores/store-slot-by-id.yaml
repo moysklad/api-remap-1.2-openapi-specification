@@ -1,0 +1,91 @@
+get:
+  operationId: getStoreSlotById
+  tags:
+  - Stores
+  summary: Получить ячейку склада
+  parameters:
+  - name: storeId
+    in: path
+    required: true
+    schema:
+      type: string
+      format: uuid
+  - name: id
+    in: path
+    required: true
+    schema:
+      type: string
+      format: uuid
+  - $ref: '../../../components/headers.yaml#/AcceptHeader'
+  - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/StoreSlot'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+put:
+  operationId: updateStoreSlot
+  tags:
+  - Stores
+  summary: Изменить ячейку склада
+  parameters:
+  - name: storeId
+    in: path
+    required: true
+    schema:
+      type: string
+      format: uuid
+  - name: id
+    in: path
+    required: true
+    schema:
+      type: string
+      format: uuid
+  - $ref: '../../../components/headers.yaml#/AcceptHeader'
+  - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../openapi.yaml#/components/schemas/StoreSlot'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/StoreSlot'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+delete:
+  operationId: deleteStoreSlot
+  tags:
+  - Stores
+  summary: Удалить ячейку склада
+  parameters:
+  - name: storeId
+    in: path
+    required: true
+    schema:
+      type: string
+      format: uuid
+  - name: id
+    in: path
+    required: true
+    schema:
+      type: string
+      format: uuid
+  - $ref: '../../../components/headers.yaml#/AcceptHeader'
+  - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

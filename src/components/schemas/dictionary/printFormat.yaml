@@ -1,0 +1,8 @@
+type: string
+description: Известные значения правил печати документов
+enum:
+  - pdf
+  - xls
+  - ods
+  - ""
+  - pdf_open

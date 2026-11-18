@@ -1,0 +1,26 @@
+put:
+  operationId: getFactureInTemplate
+  tags:
+    - FactureIns
+  summary: Шаблон Счета-фактуры полученного
+  description: |
+    Предзаполненный шаблон Счета-фактуры полученного на основе приемки или исходящего платежа.
+  parameters:
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/FactureIn'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

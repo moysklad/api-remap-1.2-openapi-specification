@@ -1,0 +1,5 @@
+type: string
+description: Известные значения языка системы
+enum:
+  - ru_RU
+  - en_US

@@ -1,0 +1,182 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/salesreturn/a8b8e1e3-3f85-11e6-8a84-bae50000008d",
+    "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/salesreturn/metadata",
+    "type": "salesreturn",
+    "mediaType": "application/json"
+  },
+  "id": "a8b8e1e3-3f85-11e6-8a84-bae50000008d",
+  "accountId": "f976ed28-2e58-11e6-8a84-bae500000001",
+  "name": "00033",
+  "description": "Гневный возврат бракованного робота",
+  "code": "k12eer3e21rre451k",
+  "externalCode": "w214t2141f",
+  "moment": "2017-11-21 14:37:00",
+  "applicable": true,
+  "shared": false,
+  "vatEnabled": true,
+  "vatIncluded": true,
+  "sum": 0,
+  "payedSum": 0,
+  "created": "2007-02-07 17:16:41",
+  "updated": "2016-07-01 15:27:18",
+  "printed": true,
+  "published": true,
+  "owner": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/employee/faba7f37-2e58-11e6-8a84-bae500000028",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/employee/metadata",
+      "type": "employee",
+      "mediaType": "application/json"
+    }
+  },
+  "group": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/group/f97aa1fb-2e58-11e6-8a84-bae500000002",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/group/metadata",
+      "type": "group",
+      "mediaType": "application/json"
+    }
+  },
+  "organization": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/organization/fae3561a-2e58-11e6-8a84-bae50000004e",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/organization/metadata",
+      "type": "organization",
+      "mediaType": "application/json"
+    }
+  },
+  "organizationAccount": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/organization/fae3561a-2e58-11e6-8a84-bae50000004e/accounts/fae39d66-2e58-11e6-8a84-bae50000004f",
+      "type": "account",
+      "mediaType": "application/json"
+    }
+  },
+  "agent": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/147c1f1b-32ca-11e6-8a84-bae500000004",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/metadata",
+      "type": "counterparty",
+      "mediaType": "application/json"
+    }
+  },
+  "agentAccount": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/147c1f1b-32ca-11e6-8a84-bae500000004/accounts/147c3231-32ca-11e6-8a84-bae500000005",
+      "type": "account",
+      "mediaType": "application/json"
+    }
+  },
+  "store": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/store/faf3ff5b-2e58-11e6-8a84-bae500000050",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/store/metadata",
+      "type": "store",
+      "mediaType": "application/json"
+    }
+  },
+  "state": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/salesreturn/metadata/states/7073b255-3f81-11e6-8a84-bae5000000e3",
+      "type": "state",
+      "mediaType": "application/json"
+    }
+  },
+  "salesChannel": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/saleschannel/56446e7f-3633-11ec-ac13-000d00000000",
+      "type": "saleschannel",
+      "mediaType": "application/json"
+    }
+  },
+  "rate": {
+    "currency": {
+      "meta": {
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/currency/baac25f0-50ac-11e5-300d-c79b00000055",
+        "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/currency/metadata",
+        "type": "currency",
+        "mediaType": "application/json"
+      }
+    }
+  },
+  "attributes": [
+    {
+      "meta": {
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/salesreturn/metadata/attributes/43dd9fd7-3f81-11e6-8a84-bae5000000db",
+        "type": "attributemetadata",
+        "mediaType": "application/json"
+      },
+      "id": "43dd9fd7-3f81-11e6-8a84-bae5000000db",
+      "name": "AttributeName1",
+      "type": "string",
+      "value": "отломана нога"
+    },
+    {
+      "meta": {
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/salesreturn/metadata/attributes/50463893-3f81-11e6-8a84-bae5000000de",
+        "type": "attributemetadata",
+        "mediaType": "application/json"
+      },
+      "id": "50463893-3f81-11e6-8a84-bae5000000de",
+      "name": "AttributeName2",
+      "type": "boolean",
+      "value": true
+    }
+  ],
+  "demand": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/demand/6b967815-3f84-11e6-8a84-bae5000000ea",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/demand/metadata",
+      "type": "demand",
+      "mediaType": "application/json"
+    }
+  },
+  "positions": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/salesreturn/a8b8e1e3-3f85-11e6-8a84-bae50000008d/positions",
+      "type": "salesreturnposition",
+      "mediaType": "application/json",
+      "size": 1,
+      "limit": 1000,
+      "offset": 0
+    },
+    "rows": [
+      {
+        "meta": {
+          "href": "https://api.moysklad.ru/api/remap/1.2/entity/salesreturn/a8b8e1e3-3f85-11e6-8a84-bae50000008d/positions/90f41a94-3f80-11e6-8a84-bae5000000b0",
+          "type": "salesreturnposition",
+          "mediaType": "application/json"
+        },
+        "id": "90f41a94-3f80-11e6-8a84-bae5000000b0",
+        "accountId": "f976ed28-2e58-11e6-8a84-bae500000001",
+        "quantity": 1,
+        "price": 8600,
+        "discount": 0,
+        "vat": 0,
+        "vatEnabled": false,
+        "assortment": {
+          "meta": {
+            "href": "https://api.moysklad.ru/api/remap/1.2/entity/product/58f32700-3303-11e6-8a84-bae50000853c",
+            "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/product/metadata",
+            "type": "product",
+            "mediaType": "application/json"
+          }
+        },
+        "gtd": {
+          "name": "12345678/121217/1212321"
+        },
+        "country": {
+          "meta": {
+            "href": "https://api.moysklad.ru/api/remap/1.2/entity/country/40e6f69a-991c-4fbc-8be9-d0d906cad180",
+            "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/country/metadata",
+            "type": "country",
+            "mediaType": "application/json"
+          }
+        },
+        "cost": 10,
+        "things": []
+      }
+    ]
+  }
+}

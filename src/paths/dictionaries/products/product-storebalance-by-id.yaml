@@ -1,0 +1,91 @@
+get:
+  operationId: getProductStoreBalanceById
+  tags:
+    - Products
+  summary: Получить НСО товара по складу
+  description: Запрос на получение отдельного Неснижаемого остатка Товара по складу.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - name: storeBalanceId
+      in: path
+      required: true
+      description: ID неснижаемого остатка
+      schema:
+        type: string
+        format: uuid
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/StoreBalance'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+    
+    
+
+put:
+  operationId: updateProductStoreBalance
+  tags:
+    - Products
+  summary: Изменить НСО товара по складу
+  description: Обновление Неснижаемого остатка Товара для склада.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - name: storeBalanceId
+      in: path
+      required: true
+      description: ID неснижаемого остатка
+      schema:
+        type: string
+        format: uuid
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../openapi.yaml#/components/schemas/StoreBalance'
+  responses:
+    '200':
+      description: НСО успешно обновлён
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/StoreBalance'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+    
+    
+    
+    
+
+delete:
+  operationId: deleteProductStoreBalance
+  tags:
+    - Products
+  summary: Удалить НСО товара по складу
+  description: Удаление Неснижаемого остатка Товара для склада.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - name: storeBalanceId
+      in: path
+      required: true
+      description: ID неснижаемого остатка
+      schema:
+        type: string
+        format: uuid
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: НСО успешно удалён
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+    
+    

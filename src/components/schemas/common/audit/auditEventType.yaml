@@ -1,0 +1,18 @@
+type: string
+description: Известные значения действия события аудита
+enum:
+  - registration
+  - bulkoperation
+  - closepublication
+  - create
+  - delete
+  - openpublication
+  - print
+  - puttoarchive
+  - puttorecyclebin
+  - replacetoken
+  - restorefromarchive
+  - restorefromrecyclebin
+  - sendemailfromentity
+  - update
+  - orderpayed

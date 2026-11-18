@@ -1,0 +1,33 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/currency/22222222-2222-2222-2222-222222222222",
+    "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/currency/metadata",
+    "type": "currency",
+    "mediaType": "application/json"
+  },
+  "id": "22222222-2222-2222-2222-222222222222",
+  "name": "Российский рубль",
+  "code": "643",
+  "isoCode": "RUB",
+  "fullName": "Российский рубль",
+  "majorUnit": {
+    "gender": "masculine",
+    "s1": "рубль",
+    "s2": "рубля",
+    "s5": "рублей"
+  },
+  "minorUnit": {
+    "gender": "feminine",
+    "s1": "копейка",
+    "s2": "копейки",
+    "s5": "копеек"
+  },
+  "archived": false,
+  "default": true,
+  "system": true,
+  "rate": 1.0,
+  "multiplicity": 1,
+  "indirect": false,
+  "rateUpdateType": "manual",
+  "margin": 0
+}

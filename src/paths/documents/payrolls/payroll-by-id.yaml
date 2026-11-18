@@ -1,0 +1,64 @@
+get:
+  operationId: getPayrollById
+  tags:
+    - Payrolls
+  summary: Получить Начисление зарплаты по ID
+  description: Запрос Начисления зарплаты с указанным id
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/Payroll'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+put:
+  operationId: updatePayroll
+  tags:
+    - Payrolls
+  summary: Изменить Начисление зарплаты
+  description: Обновление Начисления зарплаты с указанным id
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/parameters.yaml#/expand'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../openapi.yaml#/components/schemas/Payroll'
+  responses:
+    '200':
+      description: Начисление зарплаты успешно обновлено
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/Payroll'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+delete:
+  operationId: deletePayroll
+  tags:
+    - Payrolls
+  summary: Удалить Начисление зарплаты
+  description: Удаление Начисления зарплаты с указанным id
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Начисление зарплаты успешно удалено
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

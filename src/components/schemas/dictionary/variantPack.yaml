@@ -1,0 +1,16 @@
+type: object
+description: Упаковка модификации
+properties:
+  id:
+    type: string
+    format: uuid
+    description: ID упаковки
+    readOnly: true
+  barcodes:
+    type: array
+    description: Штрихкоды упаковки модификации
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/Barcode'
+  parentpack:
+    description: Метаданные родительской упаковки
+    $ref: '../../../openapi.yaml#/components/schemas/Pack'

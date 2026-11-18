@@ -1,0 +1,5 @@
+type: object
+description: Исходящий платеж + linkedSum
+x-polymorphic-parent: PayrollPaymentAbstract
+allOf:
+  - $ref: '../../../openapi.yaml#/components/schemas/PaymentOut'

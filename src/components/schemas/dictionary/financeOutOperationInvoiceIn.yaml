@@ -1,0 +1,5 @@
+type: object
+description: Счет поставщика + linkedSum
+x-polymorphic-parent: FinanceOutOperationAbstract
+allOf:
+  - $ref: '../../../openapi.yaml#/components/schemas/InvoiceIn'

@@ -1,0 +1,22 @@
+get:
+  operationId: getEntityAuditEvents
+  tags:
+    - Audit
+  summary: Получить события аудита сущности
+  description: Возвращает список событий аудита сущности указанного типа и ID.
+  parameters:
+    - $ref: '../../components/parameters.yaml#/entityType'
+    - $ref: '../../components/parameters.yaml#/entityId'
+    - $ref: '../../components/parameters.yaml#/auditLimit'
+    - $ref: '../../components/parameters.yaml#/offset'
+    - $ref: '../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../openapi.yaml#/components/schemas/AuditEventList'
+    default:
+      $ref: '../../components/responses.yaml#/CommonError'

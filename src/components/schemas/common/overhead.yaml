@@ -1,0 +1,11 @@
+type: object
+nullable: true
+description: Накладные расходы на уровне документа
+properties:
+  sum:
+    type: number
+    format: double
+    description: Сумма в копейках
+  distribution:
+    type: string
+    description: Распределение накладных расходов. Возможные значения описаны в OverheadDistribution

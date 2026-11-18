@@ -1,0 +1,11 @@
+type: object
+description: Строка отчета «Обороты по товару с детализацией по складам»
+properties:
+  assortment:
+    description: Краткое представление Товара или Модификации в отчете
+    $ref: '../../../openapi.yaml#/components/schemas/ReportTurnoverAssortment'
+  stockByStore:
+    type: array
+    description: Детализация оборотов по складам
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/ReportTurnoverByStoreItem'

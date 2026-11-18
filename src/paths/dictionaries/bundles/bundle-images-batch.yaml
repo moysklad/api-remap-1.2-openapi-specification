@@ -1,0 +1,35 @@
+post:
+  operationId: addBundleImages
+  tags:
+    - Bundles
+  summary: Изменить список изображений Комплекта
+  description: |
+    Установить список Изображений Комплекта.
+    В теле запроса нужно передать массив Изображений, которые должны быть у Комплекта. Чтобы оставить существующие Изображения, передайте их метаданные.
+    Для новых Изображений в поле `content` нужно указать изображение, закодированное в Base64, в поле `filename` — имя файла с расширением.
+    У Комплекта может быть не более 10 Изображений.
+  parameters:
+    - $ref: '../../../components/parameters.yaml#/entityId'
+    - $ref: '../../../components/headers.yaml#/AcceptHeader'
+    - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+    - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            $ref: '../../../openapi.yaml#/components/schemas/FileUpload'
+          maxItems: 10
+  responses:
+    '200':
+      description: Список Изображений успешно изменен. Результат — массив всех Изображений Комплекта.
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../../../openapi.yaml#/components/schemas/Image'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

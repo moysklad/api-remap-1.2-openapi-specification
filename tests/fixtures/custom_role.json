@@ -1,0 +1,429 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/role/736da682-ad8b-11eb-0a80-17ef000000d4",
+    "type": "customrole",
+    "mediaType": "application/json"
+  },
+  "id": "736da682-ad8b-11eb-0a80-17ef000000d4",
+  "name": "CustomRole",
+  "permissions": {
+    "importData": true,
+    "exportData": true,
+    "onlineShops": true,
+    "apiRequest": true,
+    "sendEmail": true,
+    "viewProductCostAndProfit": true,
+    "viewDashboard": true,
+    "viewRecycleBin": true,
+    "viewAudit": false,
+    "viewSaleProfit": true,
+    "viewCommissionGoods": true,
+    "viewPurchaseFunnel": true,
+    "viewStockReport": true,
+    "viewTurnover": true,
+    "viewSerialNumbers": true,
+    "viewCashFlow": true,
+    "viewCustomerBalanceList": true,
+    "viewProfitAndLoss": true,
+    "viewCompanyCRM": true,
+    "viewMoneyDashboard": false,
+    "restoreFromRecycleBin": true,
+    "deleteFromRecycleBin": true,
+    "editDocumentsOfRestrictedPeriod": false,
+    "editDocumentTemplates": true,
+    "editCurrencyRateOfDocument": true,
+    "subscriptionControl": false,
+    "purchaseControl": true,
+    "listenCalls": true,
+    "ownerAssign": false,
+    "ownerDataUpdate": false,
+    "accountDelete": false,
+    "supply": {
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
+    },
+    "accountAdjustment": {
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL"
+    },
+    "commissionReportIn": {
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
+    },
+    "processingPlan": {
+      "view": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL"
+    },
+    "retailSalesReturn": {
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
+    },
+    "loss": {
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
+    },
+    "cashboxAdjustment": {
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL"
+    },
+    "paymentOut": {
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
+    },
+    "move": {
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
+    },
+    "inventory": {
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL"
+    },
+    "cashOut": {
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
+    },
+    "contract": {
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL"
+    },
+    "project": {
+      "view": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL"
+    },
+    "purchaseOrder": {
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
+    },
+    "customEntity": {
+      "view": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL"
+    },
+    "cashIn": {
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
+    },
+    "salesReturn": {
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
+    },
+    "retailStore": {
+      "view": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL"
+    },
+    "retailShift": {
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL"
+    },
+    "purchaseReturn": {
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
+    },
+    "processingOrder": {
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
+    },
+    "retailDrawerCashIn": {
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
+    },
+    "retailDrawerCashOut": {
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
+    },
+    "factureIn": {
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
+    },
+    "bonusTransaction": {
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
+    },
+    "commissionReportOut": {
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
+    },
+    "demand": {
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
+    },
+    "good": {
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL"
+    },
+    "retailDemand": {
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
+    },
+    "priceList": {
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
+    },
+    "currency": {
+      "view": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL"
+    },
+    "internalOrder": {
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
+    },
+    "myCompany": {
+      "view": "ALL",
+      "create": "NO",
+      "update": "NO",
+      "delete": "NO"
+    },
+    "counterpartyAdjustment": {
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL"
+    },
+    "invoiceIn": {
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
+    },
+    "prepayment": {
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
+    },
+    "processingProcess": {
+      "view": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL"
+    },
+    "employee": {
+      "view": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL"
+    },
+    "processingStage": {
+      "view": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL"
+    },
+    "factureOut": {
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
+    },
+    "processing": {
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
+    },
+    "customerOrder": {
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
+    },
+    "enter": {
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
+    },
+    "paymentIn": {
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
+    },
+    "invoiceOut": {
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
+    },
+    "company": {
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL"
+    },
+    "warehouse": {
+      "view": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL"
+    },
+    "country": {
+      "view": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL"
+    },
+    "uom": {
+      "view": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL"
+    },
+    "prepaymentReturn": {
+      "view": "ALL",
+      "print": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL",
+      "approve": "ALL"
+    },
+    "script": {
+      "view": "AUTHOR_OR_ASSIGNEE",
+      "create": "ALL",
+      "done": "AUTHOR_OR_ASSIGNEE",
+      "update": "AUTHOR",
+      "delete": "AUTHOR"
+    },
+    "expenseitem": {
+      "view": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL"
+    },
+    "taxrate": {
+      "view": "ALL",
+      "create": "ALL",
+      "update": "ALL",
+      "delete": "ALL"
+    }
+  }
+}

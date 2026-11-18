@@ -1,0 +1,481 @@
+from __future__ import annotations
+
+import importlib
+import json
+import re
+from pathlib import Path
+from typing import Any
+
+import pytest
+
+
+FIXTURES = Path(__file__).resolve().parents[2] / "fixtures"
+
+FIXTURE_MODEL_MAP = {
+    "audit_event_list": "AuditEventList",
+    "product": "Product",
+    "product_full": "Product",
+    "pack": "Pack",
+    "product_image": "Image",
+    "product_storebalance": "StoreBalance",
+    "counterparty": "Counterparty",
+    "counterparty_legal": "Counterparty",
+    "counterparty_metadata": "CounterpartyMetadata",
+    "counterparty_metadata_expanded": "CounterpartyMetadata",
+    "counterparty_metadata_minimum": "CounterpartyMetadata",
+    "document_metadata": "DocumentMetadata",
+    "document_metadata_expanded": "DocumentMetadata",
+    "product_metadata": "Metadata",
+    "product_metadata_expanded": "Metadata",
+    "counterparty_account": "Account",
+    "counterparty_contactperson": "ContactPerson",
+    "counterparty_note": "Note",
+    "event_note": "EventNote",
+    "audit": "Audit",
+    "audit_event": "AuditEvent",
+    "audit_filters": "AuditFilters",
+    "counterparty_file": "File",
+    "currency": "Currency",
+    "employee": "Employee",
+    "employee_security": "EmployeeSecurity",
+    "employee_role": "EmployeeRole",
+    "employee_role_individual": "EmployeeRole",
+    "custom_role": "CustomRole",
+    "group": "Group",
+    "entity_with_extra_field": "Group",
+    "entity_with_attributes": "Product",
+    "country": "Country",
+    "region": "Region",
+    "tax_rate": "TaxRate",
+    "product_folder": "ProductFolder",
+    "processing_stage": "ProcessingStage",
+    "processing_process": "ProcessingProcess",
+    "processing_plan": "ProcessingPlan",
+    "processing_plan_expanded": "ProcessingPlan",
+    "service": "Service",
+    "uom": "Uom",
+    "price_type": "PriceType",
+    "sale_platform": "SalePlatform",
+    "store": "Store",
+    "retail_store": "RetailStore",
+    "retail_shift": "RetailShift",
+    "cashier": "Cashier",
+    "bundle": "Bundle",
+    "bundle_component": "BundleComponent",
+    "variant": "Variant",
+    "webhook": "Webhook",
+    "webhookstock": "WebhookStock",
+    "thing": "Thing",
+    "internal_order": "InternalOrder",
+    "processing_order": "ProcessingOrder",
+    "processing": "Processing",
+    "customer_order": "CustomerOrder",
+    "invoice_out": "InvoiceOut",
+    "invoice_in": "InvoiceIn",
+    "demand": "Demand",
+    "move": "Move",
+    "retail_demand": "RetailDemand",
+    "retail_sales_return": "RetailSalesReturn",
+    "enter": "Enter",
+    "sales_return": "SalesReturn",
+    "loss": "Loss",
+    "purchase_order": "PurchaseOrder",
+    "purchase_return": "PurchaseReturn",
+    "supply": "Supply",
+    "prepayment_return": "PrepaymentReturn",
+    "emission_order": "EmissionOrder",
+    "variantcharacteristic": "VariantCharacteristic",
+    "contract": "Contract",
+    "counterparty_adjustment": "CounterpartyAdjustment",
+    "task": "Task",
+    "sales_channel": "SalesChannel",
+    "project": "Project",
+    "consignment": "Consignment",
+    "expense_item": "ExpenseItem",
+    "cash_in": "CashIn",
+    "retail_drawer_cash_in": "RetailDrawerCashIn",
+    "retail_drawer_cash_out": "RetailDrawerCashOut",
+    "inventory": "Inventory",
+    "price_list": "PriceList",
+    "cash_out": "CashOut",
+    "finance_in_operation_commission_report_in": "FinanceInOperationCommissionReportIn",
+    "finance_in_operation_customer_order": "FinanceInOperationCustomerOrder",
+    "finance_in_operation_demand": "FinanceInOperationDemand",
+    "finance_in_operation_invoice_out": "FinanceInOperationInvoiceOut",
+    "finance_in_operation_purchase_return": "FinanceInOperationPurchaseReturn",
+    "finance_in_operation_retail_shift": "FinanceInOperationRetailShift",
+    "finance_out_operation_commission_report_out": "FinanceOutOperationCommissionReportOut",
+    "finance_out_operation_invoice_in": "FinanceOutOperationInvoiceIn",
+    "finance_out_operation_purchase_order": "FinanceOutOperationPurchaseOrder",
+    "finance_out_operation_sales_return": "FinanceOutOperationSalesReturn",
+    "finance_out_operation_supply": "FinanceOutOperationSupply",
+    "finance_out_operation_payroll": "FinanceOutOperationPayroll",
+    "payroll_payment_payment_out": "PayrollPaymentPaymentOut",
+    "payroll_payment_cash_out": "PayrollPaymentCashOut",
+    "payroll": "Payroll",
+    "payment_in": "PaymentIn",
+    "payment_out": "PaymentOut",
+    "facture_in": "FactureIn",
+    "facture_out": "FactureOut",
+    "company_settings": "CompanySettings",
+    "company_settings_metadata": "CompanySettingsMetadata",
+    "user_settings": "UserSettings",
+    "notification_settings": "NotificationSettings",
+    "subscription": "Subscription",
+    "assortment_settings": "AssortmentSettings",
+    "assortment": "Assortment",
+    "discount": "Discount",
+    "accumulation_discount": "AccumulationDiscount",
+    "personal_discount": "PersonalDiscount",
+    "special_price_discount": "SpecialPriceDiscount",
+    "special_price_discount_percent": "SpecialPriceDiscount",
+    "bonus_program": "BonusProgram",
+    "bonus_transaction": "BonusTransaction",
+    "bonus_transaction_expanded": "BonusTransaction",
+    "custom_entity": "CustomEntity",
+    "custom_entity_element": "CustomEntityElement",
+    "commission_report_in": "CommissionReportIn",
+    "commission_report_out": "CommissionReportOut",
+    "report_dashboard": "ReportDashboard",
+    "report_orders_plotseries_list": "ReportOrdersPlotSeriesList",
+    "report_sales_plotseries_list": "ReportSalesPlotSeriesList",
+    "report_profit_assortment": "ReportProfitAssortment",
+    "report_profit_by_product_list": "ReportProfitByProductList",
+    "report_profit_by_variant_list": "ReportProfitByVariantList",
+    "report_profit_by_employee_list": "ReportProfitByEmployeeList",
+    "report_profit_by_counterparty_list": "ReportProfitByCounterpartyList",
+    "report_profit_by_sales_channel_list": "ReportProfitBySalesChannelList",
+    "report_money_plotseries": "ReportMoneyPlotSeries",
+    "report_money_by_account_list": "ReportMoneyByAccountList",
+    "report_counterparty": "ReportCounterparty",
+    "report_turnover": "ReportTurnover",
+    "report_turnover_by_store": "ReportTurnoverByStore",
+    "report_turnover_by_operation": "ReportTurnoverByOperation",
+    "stock_all_product": "StockAll",
+    "stock_all_variant": "StockAll",
+    "stock_all_consignment": "StockAll",
+    "stock_by_store": "StockByStore",
+    "stock_by_operation": "StockByOperation",
+    "stock_current_all": "StockCurrentAll",
+    "stock_current_by_store": "StockCurrentByStore",
+    "stock_current_by_slot": "StockCurrentBySlot",
+    "by_operations_stock": "ByOperationsStock",
+    "by_operations_reserve": "ByOperationsReserve",
+    "by_operations_intransit": "ByOperationsInTransit",
+    "processing_plan_folder": "ProcessingPlanFolder",
+    "organization": "Organization",
+    "organization_account": "Account",
+    "notification_task_changed": "NotificationTaskChanged",
+    "sales_manager_chat_message": "NotificationSalesManagerChatMessage",
+}
+
+IGNORED_FIELDS = {
+    "updated",
+    "created",
+    "accountId",
+    "pathName",
+    "effectiveVat",
+    "effectiveVatEnabled",
+    "variantsCount",
+    "tobacco",
+    "salesAmount",
+    "bonusPoints",
+    "extra_field",
+    "additional_properties",
+}
+
+
+def snake_case(name: str) -> str:
+    return re.sub(r"(?<!^)(?=[A-Z])", "_", name).lower()
+
+
+def model_class(name: str) -> type:
+    module = importlib.import_module(
+        f"moysklad_remap_12_sdk.models.{snake_case(name)}"
+    )
+    return getattr(module, name)
+
+
+def normalize(value: Any) -> Any:
+    if isinstance(value, dict):
+        normalized = {
+            key: normalize(item)
+            for key, item in value.items()
+            if key not in IGNORED_FIELDS and item is not None
+        }
+        if "attributes" in normalized:
+            for attribute in normalized["attributes"]:
+                if isinstance(attribute, dict) and "value" in attribute:
+                    attribute["value"] = normalize_attribute(attribute["value"])
+        return dict(sorted(normalized.items()))
+    if isinstance(value, list):
+        return [normalize(item) for item in value]
+    if isinstance(value, float) and value.is_integer():
+        return int(value)
+    return value
+
+
+def normalize_attribute(value: Any) -> Any:
+    if not isinstance(value, (list, dict)):
+        return value
+    items = list(value.values()) if isinstance(value, dict) else value
+    if len(items) == 1 and isinstance(items[0], (str, int, float, bool)):
+        return items[0]
+    return next(
+        (item for item in items if isinstance(item, (str, int, float, bool))),
+        value,
+    )
+
+
+def coerce_integral_floats(value: Any) -> Any:
+    if isinstance(value, dict):
+        return {key: coerce_integral_floats(item) for key, item in value.items()}
+    if isinstance(value, list):
+        return [coerce_integral_floats(item) for item in value]
+    if isinstance(value, float) and value.is_integer():
+        return int(value)
+    return value
+
+
+def test_mapping_and_fixture_consistency() -> None:
+    fixture_names = {path.stem for path in FIXTURES.glob("*.json")}
+    assert fixture_names == set(FIXTURE_MODEL_MAP)
+    for fixture_name, name in FIXTURE_MODEL_MAP.items():
+        assert model_class(name), f"Model missing for {fixture_name}: {name}"
+
+
+@pytest.mark.parametrize(
+    ("fixture_name", "name"),
+    FIXTURE_MODEL_MAP.items(),
+    ids=FIXTURE_MODEL_MAP.keys(),
+)
+def test_roundtrip_serialization(fixture_name: str, name: str) -> None:
+    original = json.loads((FIXTURES / f"{fixture_name}.json").read_text())
+    model = model_class(name).from_dict(coerce_integral_floats(original))
+    assert model is not None
+    serialized = model.to_dict()
+    assert normalize(serialized) == normalize(original)
+
+
+def test_from_dict_builds_nested_typed_model() -> None:
+    from moysklad_remap_12_sdk.models.currency import Currency
+    from moysklad_remap_12_sdk.models.currency_rate import CurrencyRate
+
+    rate = CurrencyRate.from_dict({"currency": {"name": "Rouble"}})
+
+    assert rate is not None
+    assert isinstance(rate.currency, Currency)
+    assert rate.currency.name == "Rouble"
+
+
+@pytest.mark.parametrize(
+    ("wrapper_name", "entity_type"),
+    [
+        ("RetailShiftPayment", "paymentin"),
+        ("SupplyPayment", "paymentout"),
+    ],
+)
+def test_payment_union_roundtrip(wrapper_name: str, entity_type: str) -> None:
+    data = {
+        "meta": {
+            "href": (
+                "https://api.moysklad.ru/api/remap/1.2/entity/"
+                f"{entity_type}/00000000-0000-0000-0000-000000000001"
+            ),
+            "type": entity_type,
+            "mediaType": "application/json",
+        }
+    }
+    wrapper = model_class(wrapper_name).from_dict(data)
+    assert normalize(wrapper.to_dict()) == normalize(data)
+
+
+def test_batch_error_fallback_resolves_unknown_discriminator() -> None:
+    data = {
+        "meta": {"type": "futuretype"},
+        "errors": [{"error": "Invalid JSON structure", "code": 1000}],
+    }
+    model = model_class("BatchResponseEntity").from_dict(data)
+    assert isinstance(model, model_class("Errors"))
+
+
+def test_batch_error_fallback_requires_error_markers() -> None:
+    data = {
+        "meta": {"type": "futuretype"},
+        "errors": [{"error": 1000}],
+    }
+    model = model_class("BatchResponseEntity").from_dict(data)
+    assert type(model) is model_class("BatchResponseEntity")
+
+
+@pytest.mark.parametrize("fixture_name", ["payment_out", "cash_out"])
+def test_payroll_operation_resolves_typed_model(fixture_name: str) -> None:
+    original = json.loads((FIXTURES / f"{fixture_name}.json").read_text())
+    model = model_class(FIXTURE_MODEL_MAP[fixture_name]).from_dict(original)
+    operation = next(item for item in model.operations if item.meta.type == "payroll")
+    assert isinstance(operation, model_class("FinanceOutOperationPayroll"))
+    assert operation.linked_sum == 30000
+    assert operation.start_payroll_period == "2026-03-03 00:00:00.000"
+
+
+def test_bonus_transaction_expanded_parent_resolves_to_retail_demand() -> None:
+    original = json.loads((FIXTURES / "bonus_transaction_expanded.json").read_text())
+    model = model_class("BonusTransaction").from_dict(original)
+    parent = model.parent_document
+    assert isinstance(parent, model_class("BonusTransactionParentRetailDemand"))
+    assert parent.id == "22591b08-2859-11f1-0a83-1f2500000247"
+    assert parent.name == "00002"
+    assert parent.sum == 1800
+    assert parent.meta.type == "retaildemand"
+
+
+def test_payroll_payments_resolve_typed_models() -> None:
+    original = json.loads((FIXTURES / "payroll.json").read_text())
+    model = model_class("Payroll").from_dict(original)
+    assert len(model.payments) == 2
+    for payment, expected in zip(
+        model.payments, ["PayrollPaymentPaymentOut", "PayrollPaymentCashOut"]
+    ):
+        assert isinstance(payment, model_class(expected))
+        assert payment.linked_sum == 30000
+
+
+@pytest.mark.parametrize("entity_type", ["product", "service", "variant"])
+def test_discount_assortment_reference_uses_meta_type(entity_type: str) -> None:
+    data = {
+        "meta": {
+            "type": entity_type,
+            "mediaType": "application/json",
+            "href": (
+                "https://api.moysklad.ru/api/remap/1.2/entity/"
+                f"{entity_type}/00000000-0000-0000-0000-000000000001"
+            ),
+        }
+    }
+    wrapper = model_class("DiscountAssortmentItem").from_dict(data)
+
+    assert isinstance(wrapper.actual_instance, model_class(entity_type.title()))
+    assert normalize(wrapper.to_dict()) == normalize(data)
+
+
+@pytest.mark.parametrize(
+    "entity_type",
+    ["product", "service", "bundle", "variant", "consignment"],
+)
+def test_assortment_row_uses_meta_type(entity_type: str) -> None:
+    payload = {
+        "meta": {
+            "href": f"https://api.moysklad.ru/api/remap/1.2/entity/{entity_type}/1",
+            "type": entity_type,
+            "mediaType": "application/json",
+        },
+        "name": entity_type,
+        "stock": 1.5,
+    }
+    row = model_class("Assortment").from_dict(payload)
+
+    assert type(row) is model_class(
+        {
+            "product": "Product",
+            "service": "Service",
+            "bundle": "Bundle",
+            "variant": "Variant",
+            "consignment": "Consignment",
+        }[entity_type]
+    )
+    assert row.meta.type == entity_type
+
+
+def test_assortment_list_keeps_dispatched_rows() -> None:
+    entity_types = ("product", "service", "bundle", "variant", "consignment")
+    expected = {
+        "product": "Product",
+        "service": "Service",
+        "bundle": "Bundle",
+        "variant": "Variant",
+        "consignment": "Consignment",
+    }
+    payload = {
+        "rows": [
+            {
+                "meta": {
+                    "href": f"https://api.moysklad.ru/api/remap/1.2/entity/{entity_type}/1",
+                    "type": entity_type,
+                    "mediaType": "application/json",
+                },
+                "name": entity_type,
+                "stock": 1.5,
+            }
+            for entity_type in entity_types
+        ]
+    }
+    rows = model_class("AssortmentList").from_dict(payload).rows
+
+    assert [type(row) for row in rows] == [model_class(expected[entity_type]) for entity_type in entity_types]
+    assert rows[0].meta.type == "product"
+    assert rows[0].stock == 1.5
+
+
+def test_special_price_discount_assortment_serializes_positions() -> None:
+    meta = {
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/product/1",
+        "type": "product",
+        "mediaType": "application/json",
+    }
+    item = model_class("DiscountAssortmentItem")(model_class("Product")(meta=model_class("Meta").from_dict(meta)))
+    for model_name in ("Discount", "SpecialPriceDiscount"):
+        model = model_class(model_name)(name="скидка", assortment=[item])
+        payload = json.loads(model.to_json())
+        assert payload["assortment"] == [{"meta": meta}]
+        assert "one_of_schemas" not in json.dumps(payload)
+
+
+@pytest.mark.parametrize(
+    ("entity_type", "model_name"),
+    [("paymentout", "SupplyPaymentPaymentOut"), ("cashout", "SupplyPaymentCashOut")],
+)
+def test_supply_payment_uses_meta_type(entity_type: str, model_name: str) -> None:
+    payload = {
+        "meta": {
+            "href": f"https://api.moysklad.ru/api/remap/1.2/entity/{entity_type}/1",
+            "type": entity_type,
+            "mediaType": "application/json",
+        }
+    }
+    payment = model_class("SupplyPayment").from_dict(payload)
+
+    assert isinstance(payment, model_class(model_name))
+    assert payment.meta.type == entity_type
+
+
+@pytest.mark.parametrize(
+    ("entity", "meta_type", "model_name"),
+    [
+        ("invoicein", "invoiceposition", "InvoiceInPosition"),
+        ("invoiceout", "invoiceposition", "InvoiceOutPosition"),
+        ("salesreturn", "salesreturnposition", "SalesReturnPosition"),
+        ("retailsalesreturn", "salesreturnposition", "RetailSalesReturnPosition"),
+    ],
+)
+def test_batch_positions_preserve_concrete_type_and_fields(entity, meta_type, model_name):
+    from moysklad_remap_12_sdk.models.batch_response_entity import BatchResponseEntity
+
+    payload = {
+        "meta": {
+            "type": meta_type,
+            "href": f"https://example.test/entity/{entity}/document/positions/position",
+        },
+        "quantity": 2,
+        "price": 100,
+    }
+    position = BatchResponseEntity.from_dict(payload)
+    assert type(position).__name__ == model_name
+    assert position.quantity == 2
+    assert position.price == 100
+
+
+def test_minimum_balance_accepts_value_and_explicit_null():
+    from moysklad_remap_12_sdk.models.product import Product
+
+    for minimum_balance in (5, None):
+        assert Product(minimum_balance=minimum_balance).to_dict()["minimumBalance"] == minimum_balance

@@ -1,0 +1,79 @@
+get:
+  operationId: getBundleComponentById
+  tags:
+  - Bundles
+  summary: Получить компонент
+  parameters:
+  - $ref: '../../../components/parameters.yaml#/entityId'
+  - $ref: '../../../components/parameters.yaml#/expand'
+  - name: componentId
+    in: path
+    required: true
+    schema:
+      type: string
+      format: uuid
+  - $ref: '../../../components/headers.yaml#/AcceptHeader'
+  - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/BundleComponent'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+put:
+  operationId: updateBundleComponent
+  tags:
+  - Bundles
+  summary: Изменить компонент
+  parameters:
+  - $ref: '../../../components/parameters.yaml#/entityId'
+  - $ref: '../../../components/parameters.yaml#/expand'
+  - name: componentId
+    in: path
+    required: true
+    schema:
+      type: string
+      format: uuid
+  - $ref: '../../../components/headers.yaml#/AcceptHeader'
+  - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  - $ref: '../../../components/headers.yaml#/ContentTypeJson'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../../openapi.yaml#/components/schemas/BundleComponent'
+  responses:
+    '200':
+      description: Успешный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '../../../openapi.yaml#/components/schemas/BundleComponent'
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'
+
+delete:
+  operationId: deleteBundleComponent
+  tags:
+  - Bundles
+  summary: Удалить компонент
+  parameters:
+  - $ref: '../../../components/parameters.yaml#/entityId'
+  - name: componentId
+    in: path
+    required: true
+    schema:
+      type: string
+      format: uuid
+  - $ref: '../../../components/headers.yaml#/AcceptHeader'
+  - $ref: '../../../components/headers.yaml#/AcceptEncoding'
+  responses:
+    '200':
+      description: Успешный запрос
+    default:
+      $ref: '../../../components/responses.yaml#/CommonError'

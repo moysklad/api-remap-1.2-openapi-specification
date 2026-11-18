@@ -1,0 +1,5 @@
+type: object
+description: PaymentIn, связанный с документом commissionReportIn
+x-polymorphic-parent: CommissionReportInPayment
+allOf:
+  - $ref: '../../../openapi.yaml#/components/schemas/PaymentIn'

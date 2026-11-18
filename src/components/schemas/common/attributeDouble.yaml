@@ -1,0 +1,12 @@
+type: object
+x-implements: Attribute<Double>
+allOf:
+  - $ref: '../../../openapi.yaml#/components/schemas/AttributeAbstract'
+properties:
+  type:
+    type: string
+    enum: [double]
+  value:
+    nullable: true
+    type: number
+    format: double

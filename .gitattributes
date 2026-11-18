@@ -1,0 +1,2 @@
+# Keep shell scripts LF so Docker/Alpine sh can run them on Windows checkouts
+*.sh text eol=lf

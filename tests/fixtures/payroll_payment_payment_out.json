@@ -1,0 +1,9 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/paymentout/abe08a4a-1dfe-11f1-0a80-0c2500000001",
+    "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/paymentout/metadata",
+    "type": "paymentout",
+    "mediaType": "application/json"
+  },
+  "linkedSum": 30000.0
+}

@@ -1,0 +1,5 @@
+type: object
+description: Расходный ордер, связанный с приемкой
+x-polymorphic-parent: SupplyPayment
+allOf:
+  - $ref: '../../../openapi.yaml#/components/schemas/CashOut'

@@ -1,0 +1,32 @@
+{
+  "meta": {
+    "href": "https://api.moysklad.ru/api/remap/1.2/entity/task/cfe5a6ae-8b87-11e8-d9ce-84d900000001",
+    "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/task/metadata",
+    "type": "task",
+    "mediaType": "application/json"
+  },
+  "id": "cfe5a6ae-8b87-11e8-d9ce-84d900000001",
+  "description": "Проверить заказ покупателя",
+  "done": false,
+  "operation": {
+    "meta": {
+      "href": "https://api.moysklad.ru/api/remap/1.2/entity/customerorder/8e5f1a2b-9a91-11e8-9107-5048000c3a01",
+      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/customerorder/metadata",
+      "type": "customerorder",
+      "mediaType": "application/json"
+    },
+    "id": "8e5f1a2b-9a91-11e8-9107-5048000c3a01",
+    "name": "00017",
+    "moment": "2018-07-19 22:10:00.000",
+    "sum": 150000.0,
+    "applicable": true,
+    "agent": {
+      "meta": {
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/992b6965-8aa1-11e8-7210-075e00000057",
+        "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/metadata",
+        "type": "counterparty",
+        "mediaType": "application/json"
+      }
+    }
+  }
+}
