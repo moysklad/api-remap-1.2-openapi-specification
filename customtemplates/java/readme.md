@@ -2,16 +2,22 @@
 
 Почему были добавлены кастомные шаблоны:
 
-* ApiClient.mustache - кастомный формат дат, Jackson 3 (`JsonMapper`), добавлена поддержка batch-ответов с частичными ошибками: стандартный шаблон обрабатывает ответ как один успешный объект или одну ошибку, что не подходит для batch-операций API.
+* ApiClient.mustache - формат дат, Jackson 3 (`JsonMapper`); общий разбор batch в `invokeAPI`/`invokeAPIBatch`.
+  При 404/412 проверяет тип и структуру массивов `BatchResponseEntity` / `DeleteRowResult`, сохраняя успехи и ошибки.
+  Остальные ошибочные ответы дают `ApiException` с исходными статусом и телом.
 * api.mustache - правильные заголовки Accept: application/json;charset=utf-8
+* api.mustache, model_range_validation.mustache - `minimum`/`maximum` проверяются в query-параметрах (`limit`, `offset`)
+  и сеттерах моделей (`vat`); при нарушении `IllegalArgumentException`, в том числе при десериализации ответа.
 * api.mustache, ApiClient.mustache, LocationResponse.mustache - операции с `x-location-response` (печать, экспорт)
   отдают ссылку только в заголовке `Location` (202 или 303). Метод возвращает `LocationResponse` вместо `void`,
   редирект отключён, иначе HttpClient уходит по 303 и `Location` теряется.
 * RequestOptions.mustache, PageOptions.mustache, ListOptions.mustache, AssortmentListOptions.mustache, Filters.mustache, 
   Orders.mustache - удобные overload-методы для query-параметров без длинных позиционных сигнатур
-* pojo.mustache - решение проблем с дискриминатором в полиморфных классах
-* model_entity_static_builder.mustache появился для удобства создания объектов с заполненной meta. Причина - приходится вручную конструировать 
-  и заполнять много полей сперва по созданию meta, затем подстановку этой meta в готовый объект
+* pojo.mustache - полиморфные дискриминаторы; коллекции инициализируются только при присваивании или добавлении.
+* jackson_annotations.mustache, EmptyReadOnlyCollectionFilter.mustache - исключают незаданные коллекции
+  и пустые readOnly, включая `JsonNullable`. Явные пустые списки и `null` у writable nullable-полей сохраняются для очистки.
+  Содержимое непустых карт сохраняется полностью.
+* model_entity_static_builder.mustache - создание объектов с `meta`: `entityTypeParams` — строки, ID — UUID.
 * pom.mustache - адаптация стандартного pom.xml для проекта, Jackson 3.
 * apiException.mustache - добавлен десериализованный объект ошибок, если ApiException выброшен когда получили ошибку от api
 * README.mustache - стандартный README описывает генератор, все эндпоинты и модели и использует координаты

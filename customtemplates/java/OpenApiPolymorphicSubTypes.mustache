@@ -22,5 +22,7 @@ public @interface OpenApiPolymorphicSubTypes {
     Class<?> value();
 
     String name();
+
+    String hrefContains() default "";
   }
 }

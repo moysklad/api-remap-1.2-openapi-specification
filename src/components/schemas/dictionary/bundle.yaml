@@ -152,21 +152,12 @@ properties:
     nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/Barcode'
-  packs:
-    type: array
-    description: Упаковки Комплекта
-    nullable: true
-    items:
-      $ref: '../../../openapi.yaml#/components/schemas/Pack'
   salePrices:
     type: array
     description: Цены продажи
     nullable: true
     items:
       $ref: '../../../openapi.yaml#/components/schemas/SalePrice'
-  buyPrice:
-    description: Закупочная цена
-    $ref: '../../../openapi.yaml#/components/schemas/Price'
   minPrice:
     description: Минимальная цена
     $ref: '../../../openapi.yaml#/components/schemas/Price'

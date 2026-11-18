@@ -19,6 +19,9 @@ x-polymorphic-discriminator:
       componentName: FinanceInOperationCommissionReportIn
     - type: retailshift
       componentName: FinanceInOperationRetailShift
+properties:
+  meta:
+    $ref: '../common/meta.yaml'
 required:
   - linkedSum
   - meta

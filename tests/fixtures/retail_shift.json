@@ -31,8 +31,6 @@
   "created": "2016-08-25 19:55:00",
   "printed": true,
   "published": true,
-  "vatEnabled": true,
-  "vatIncluded": true,
   "organization": {
     "meta": {
       "href": "https://api.moysklad.ru/api/remap/1.2/entity/organization/850c8195-f504-11e5-8a84-bae50000015e",
@@ -51,14 +49,6 @@
     "meta": {
       "href": "https://api.moysklad.ru/api/remap/1.2/account/3a30e844-016f-11e6-9464-e4de00000068",
       "type": "account",
-      "mediaType": "application/json"
-    }
-  },
-  "contract": {
-    "meta": {
-      "href": "https://api.moysklad.ru/api/remap/1.2/entity/contract/2b34d43f-3f52-11e6-8a84-bae500000066",
-      "metadataHref": "https://api.moysklad.ru/api/remap/1.2/entity/contract/metadata",
-      "type": "contract",
       "mediaType": "application/json"
     }
   },

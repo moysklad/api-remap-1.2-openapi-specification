@@ -200,8 +200,8 @@
   "payments": [
     {
       "meta": {
-        "href": "https://api.moysklad.ru/api/remap/1.2/entity/paymentin/a5b6c7d8-1234-1234-1234-a5b6c7d8e9f0",
-        "type": "paymentin",
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/paymentout/a5b6c7d8-1234-1234-1234-a5b6c7d8e9f0",
+        "type": "paymentout",
         "mediaType": "application/json"
       }
     }

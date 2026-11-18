@@ -11,5 +11,15 @@ properties:
   rows:
     type: array
     description: Массив элементов ассортимента
+    # Python from_dict у Assortment возвращает Product и другие модели.
+    # Список должен принимать их вместе с самим Assortment.
+    x-python-dispatched-items:
+      models:
+        - Assortment
+        - Product
+        - Service
+        - Bundle
+        - Variant
+        - Consignment
     items:
       $ref: '../../../openapi.yaml#/components/schemas/Assortment'

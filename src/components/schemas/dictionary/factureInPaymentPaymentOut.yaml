@@ -1,0 +1,5 @@
+type: object
+description: Исходящий платеж, связанный со счетом-фактурой полученным
+x-polymorphic-parent: FactureInPayment
+allOf:
+  - $ref: '../../../openapi.yaml#/components/schemas/PaymentOut'

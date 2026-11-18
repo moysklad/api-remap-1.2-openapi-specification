@@ -105,6 +105,7 @@ post:
   (`errors` - массив объектов, где есть строковое поле `error`) и десериализует
   такой объект в компонент `Errors`.
 * mappings - массив соответствий `{type, componentName}` для генерации SDK 
+  Необязательный `hrefContains` ограничивает соответствие подстрокой `meta.href`, когда разные сущности имеют одинаковый `meta.type` (например, позиции входящего и исходящего счета).
   * `type` — значение дискриминатора 
   * `componentName` — имя компонента из `components.schemas`.
 
@@ -146,4 +147,30 @@ description: Отгрузка + linkedSum
 x-polymorphic-parent: FinanceInOperationAbstract
 allOf:
   - $ref: '../../../openapi.yaml#/components/schemas/Demand'
+```
+
+
+## x-meta-type-dispatch
+
+**Предназначение**: в Python SDK `from_dict` выбирает конкретную модель по вложенному значению,
+обычно `meta.type`, и возвращает ее. Схема при этом может остаться `allOf`/`oneOf`, чтобы
+остальные генераторы по-прежнему собирали плоскую модель.
+
+Расширение не заменяет `x-polymorphic-discriminator`: для него не требуется
+`x-polymorphic-parent` у перечисленных моделей. Его читает только шаблон Python.
+
+**Структура**: как у `x-polymorphic-discriminator` — `path` и `mappings` из `{type, componentName}`.
+
+Поле-массив, в котором лежат такие значения, в Python помечается `x-python-dispatched-items`.
+Иначе список остаётся типизирован родительской моделью и не принимает выбранные классы.
+`models` перечисляет родительскую модель и все классы из `mappings`. Расширение читает только шаблон Python.
+
+**Пример**
+
+```yaml
+x-meta-type-dispatch:
+  path: meta.type
+  mappings:
+    - type: product
+      componentName: Product
 ```

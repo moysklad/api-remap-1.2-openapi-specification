@@ -1,4 +1,5 @@
 type: object
+x-polymorphic-parent: EntityWithMeta
 description: Счет покупателя
 x-implements: MetaEntity
 x-entity-static-builder:
@@ -196,6 +197,4 @@ properties:
     description: Массив ссылок на связанные операции
     nullable: true
     items:
-      anyOf:
-        - $ref: '../../../openapi.yaml#/components/schemas/PaymentIn'
-        - $ref: '../../../openapi.yaml#/components/schemas/CashIn'
+      $ref: '../../../openapi.yaml#/components/schemas/InvoiceOutPayment'

@@ -1,4 +1,5 @@
 type: object
+x-polymorphic-parent: EntityWithMeta
 description: Розничная смена
 x-implements: MetaEntity
 x-entity-static-builder:
@@ -41,9 +42,7 @@ properties:
     description: Связанные платежи
     nullable: true
     items:
-      anyOf:
-        - $ref: '../../../openapi.yaml#/components/schemas/PaymentIn'
-        - $ref: '../../../openapi.yaml#/components/schemas/CashIn'
+      $ref: '../../../openapi.yaml#/components/schemas/RetailShiftPayment'
   acquire:
     description: Метаданные Банка-эквайера по операциям по карте
     nullable: true
@@ -84,13 +83,6 @@ properties:
     type: string
     nullable: true
     description: Дата закрытия смены
-  contract:
-    description: Метаданные договора
-    nullable: true
-    readOnly: true
-    type: object
-    allOf:
-      - $ref: '../../../openapi.yaml#/components/schemas/Contract'
   created:
     type: string
     description: Дата создания
@@ -210,10 +202,3 @@ properties:
     type: string
     description: Момент последнего обновления Розничной смены
     readOnly: true
-  vatEnabled:
-    type: boolean
-    description: Учитывается ли НДС
-    readOnly: true
-  vatIncluded:
-    type: boolean
-    description: Включен ли НДС в цену

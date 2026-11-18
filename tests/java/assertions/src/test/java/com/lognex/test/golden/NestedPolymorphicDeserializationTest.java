@@ -21,6 +21,8 @@ import ru.moysklad.remap_1_2.model.AttributeAbstract;
 import ru.moysklad.remap_1_2.model.AttributeCounterpartyEntity;
 import ru.moysklad.remap_1_2.model.AttributeProductEntity;
 import ru.moysklad.remap_1_2.model.BatchResponseEntity;
+import ru.moysklad.remap_1_2.model.BonusTransaction;
+import ru.moysklad.remap_1_2.model.BonusTransactionParentRetailDemand;
 import ru.moysklad.remap_1_2.model.Counterparty;
 import ru.moysklad.remap_1_2.model.CustomerOrder;
 import ru.moysklad.remap_1_2.model.Employee;
@@ -36,6 +38,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Вложенные полиморфные поля (EntityWithMeta / Agent / ProductMarker внутри сущности того же
@@ -44,6 +47,37 @@ import java.util.List;
 class NestedPolymorphicDeserializationTest extends BaseTestCase {
 
     private static final ObjectMapper MAPPER = new ApiClient().getObjectMapper();
+
+    @ParameterizedTest
+    @ValueSource(strings = {"product", "counterparty", "organization"})
+    void attributeDiscriminatorAliasesSurviveRoundtrip(String type) throws Exception {
+        String json = "{\"type\":\"" + type + "\",\"value\":null}";
+
+        AttributeAbstract attribute = MAPPER.readValue(json, AttributeAbstract.class);
+        String serialized = MAPPER.writeValueAsString(attribute);
+
+        Assertions.assertEquals(type, MAPPER.readTree(serialized).get("type").asString());
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"counterparty", "organization"})
+    void organizationAttributeResolvesValueByMetaType(String entityType) {
+        for (boolean expanded : new boolean[] {false, true}) {
+            String json = "{\"attributes\":[{\"type\":\"organization\",\"value\":{\"meta\":{\"type\":\""
+                    + entityType + "\"}" + (expanded ? ",\"name\":\"Компания\"" : "") + "}}]}";
+            Counterparty owner = MAPPER.readValue(json, Counterparty.class);
+            AttributeCounterpartyEntity attribute = Assertions.assertInstanceOf(
+                    AttributeCounterpartyEntity.class, owner.getAttributes().get(0));
+            Object value = attribute.getValue();
+            Class<?> expectedClass = entityType.equals("organization") ? Organization.class : Counterparty.class;
+            Assertions.assertInstanceOf(expectedClass, value);
+            Assertions.assertEquals(entityType, ((EntityWithMeta) value).getMeta().getType());
+            Assertions.assertEquals(expanded ? "Компания" : null,
+                    entityType.equals("organization") ? ((Organization) value).getName() : ((Counterparty) value).getName());
+            Assertions.assertEquals("organization", MAPPER.readTree(MAPPER.writeValueAsString(owner))
+                    .get("attributes").get(0).get("type").asString());
+        }
+    }
 
     @Test
     void productAttributeWithExpandedProductResolvesToProduct() throws Exception {
@@ -100,6 +134,19 @@ class NestedPolymorphicDeserializationTest extends BaseTestCase {
         Assertions.assertEquals(Boolean.TRUE, order.getApplicable());
         Counterparty agent = Assertions.assertInstanceOf(Counterparty.class, order.getAgent());
         Assertions.assertEquals("counterparty", agent.getMeta().getType());
+    }
+
+    @Test
+    void bonusTransactionExpandedParentResolvesToRetailDemand() throws Exception {
+        Path path = getFixturesPath().resolve("bonus_transaction_expanded.json");
+        BonusTransaction transaction = MAPPER.readValue(path.toFile(), BonusTransaction.class);
+
+        BonusTransactionParentRetailDemand parent = Assertions.assertInstanceOf(
+                BonusTransactionParentRetailDemand.class, transaction.getParentDocument());
+        Assertions.assertEquals(UUID.fromString("22591b08-2859-11f1-0a83-1f2500000247"), parent.getId());
+        Assertions.assertEquals("00002", parent.getName());
+        Assertions.assertEquals(1800.0, parent.getSum());
+        Assertions.assertEquals("retaildemand", parent.getMeta().getType());
     }
 
     @Test

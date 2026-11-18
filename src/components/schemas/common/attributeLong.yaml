@@ -7,5 +7,6 @@ properties:
     type: string
     enum: [long]
   value:
+    nullable: true
     type: integer
     format: int64

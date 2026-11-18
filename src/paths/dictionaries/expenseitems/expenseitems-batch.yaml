@@ -35,5 +35,9 @@ post:
             type: array
             items:
               $ref: '../../../openapi.yaml#/components/schemas/BatchResponseEntity'
+    '404':
+      $ref: '../../../components/responses.yaml#/BatchEntityError'
+    '412':
+      $ref: '../../../components/responses.yaml#/BatchEntityError'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'

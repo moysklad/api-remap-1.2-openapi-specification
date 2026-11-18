@@ -4,9 +4,6 @@ BadRequest:
     application/json:
       schema:
         $ref: '../openapi.yaml#/components/schemas/Errors'
-    text/html;charset=UTF-8:
-      schema:
-        type: string
 
 CommonError:
   description: Ошибка запроса (тело — объект с полем errors)
@@ -14,9 +11,6 @@ CommonError:
     application/json:
       schema:
         $ref: '../openapi.yaml#/components/schemas/Errors'
-    text/html;charset=UTF-8:
-      schema:
-        type: string
 
 # Для массовых операций: тело 400 может быть объектом или массивом объектов ошибок
 BatchBadRequest:
@@ -25,9 +19,6 @@ BatchBadRequest:
     application/json:
       schema:
         $ref: '../openapi.yaml#/components/schemas/Errors'
-    text/html;charset=UTF-8:
-      schema:
-        type: string
 
 Unauthorized:
   description: Имя и/или пароль пользователя указаны неверно или заблокированы
@@ -82,9 +73,6 @@ UnsupportedMediaType:
     application/json:
       schema:
         $ref: '../openapi.yaml#/components/schemas/Errors'
-    text/html;charset=UTF-8:
-      schema:
-        type: string
 
 MethodNotAllowed:
   description: Метод не поддерживается для данного ресурса
@@ -112,3 +100,20 @@ PayloadTooLarge:
     application/json:
       schema:
         $ref: '../openapi.yaml#/components/schemas/Errors'
+
+BatchEntityError:
+  description: |
+    Ошибка массовой операции: объект errors или массив результатов по каждому элементу
+  content:
+    application/json:
+      schema:
+        $ref: '../openapi.yaml#/components/schemas/BatchEntityErrorResponse'
+
+
+BatchDeleteError:
+  description: |
+    Ошибка массовой операции: объект errors или массив результатов по каждому элементу
+  content:
+    application/json:
+      schema:
+        $ref: '../openapi.yaml#/components/schemas/BatchDeleteErrorResponse'

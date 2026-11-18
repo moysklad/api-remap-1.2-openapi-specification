@@ -64,7 +64,7 @@ properties:
     type: object
     allOf:
       - $ref: '../../../openapi.yaml#/components/schemas/Employee'
-  processingplanfolder:
+  parent:
     description: Родительская Группа техкарт. Для смены иерархии и поля pathName обновите эту ссылку
     nullable: true
     type: object

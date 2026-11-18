@@ -1,0 +1,9 @@
+{{! Preserve the actual discriminator value: several aliases can select the same model. }}
+{{#jackson}}
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "{{{discriminator.propertyBaseName}}}", visible = true)
+@JsonSubTypes({
+{{#discriminator.mappedModels}}
+  @JsonSubTypes.Type(value = {{modelName}}.class, name = "{{mappingName}}"){{^-last}},{{/-last}}
+{{/discriminator.mappedModels}}
+})
+{{/jackson}}

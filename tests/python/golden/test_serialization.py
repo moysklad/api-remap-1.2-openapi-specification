@@ -131,6 +131,7 @@ FIXTURE_MODEL_MAP = {
     "special_price_discount_percent": "SpecialPriceDiscount",
     "bonus_program": "BonusProgram",
     "bonus_transaction": "BonusTransaction",
+    "bonus_transaction_expanded": "BonusTransaction",
     "custom_entity": "CustomEntity",
     "custom_entity_element": "CustomEntityElement",
     "commission_report_in": "CommissionReportIn",
@@ -270,8 +271,8 @@ def test_from_dict_builds_nested_typed_model() -> None:
 @pytest.mark.parametrize(
     ("wrapper_name", "entity_type"),
     [
-        ("RetailShiftPaymentsInner", "paymentin"),
-        ("SupplyPaymentsInner", "paymentout"),
+        ("RetailShiftPayment", "paymentin"),
+        ("SupplyPayment", "paymentout"),
     ],
 )
 def test_payment_union_roundtrip(wrapper_name: str, entity_type: str) -> None:
@@ -317,6 +318,17 @@ def test_payroll_operation_resolves_typed_model(fixture_name: str) -> None:
     assert operation.start_payroll_period == "2026-03-03 00:00:00.000"
 
 
+def test_bonus_transaction_expanded_parent_resolves_to_retail_demand() -> None:
+    original = json.loads((FIXTURES / "bonus_transaction_expanded.json").read_text())
+    model = model_class("BonusTransaction").from_dict(original)
+    parent = model.parent_document
+    assert isinstance(parent, model_class("BonusTransactionParentRetailDemand"))
+    assert parent.id == "22591b08-2859-11f1-0a83-1f2500000247"
+    assert parent.name == "00002"
+    assert parent.sum == 1800
+    assert parent.meta.type == "retaildemand"
+
+
 def test_payroll_payments_resolve_typed_models() -> None:
     original = json.loads((FIXTURES / "payroll.json").read_text())
     model = model_class("Payroll").from_dict(original)
@@ -326,3 +338,144 @@ def test_payroll_payments_resolve_typed_models() -> None:
     ):
         assert isinstance(payment, model_class(expected))
         assert payment.linked_sum == 30000
+
+
+@pytest.mark.parametrize("entity_type", ["product", "service", "variant"])
+def test_discount_assortment_reference_uses_meta_type(entity_type: str) -> None:
+    data = {
+        "meta": {
+            "type": entity_type,
+            "mediaType": "application/json",
+            "href": (
+                "https://api.moysklad.ru/api/remap/1.2/entity/"
+                f"{entity_type}/00000000-0000-0000-0000-000000000001"
+            ),
+        }
+    }
+    wrapper = model_class("DiscountAssortmentItem").from_dict(data)
+
+    assert isinstance(wrapper.actual_instance, model_class(entity_type.title()))
+    assert normalize(wrapper.to_dict()) == normalize(data)
+
+
+@pytest.mark.parametrize(
+    "entity_type",
+    ["product", "service", "bundle", "variant", "consignment"],
+)
+def test_assortment_row_uses_meta_type(entity_type: str) -> None:
+    payload = {
+        "meta": {
+            "href": f"https://api.moysklad.ru/api/remap/1.2/entity/{entity_type}/1",
+            "type": entity_type,
+            "mediaType": "application/json",
+        },
+        "name": entity_type,
+        "stock": 1.5,
+    }
+    row = model_class("Assortment").from_dict(payload)
+
+    assert type(row) is model_class(
+        {
+            "product": "Product",
+            "service": "Service",
+            "bundle": "Bundle",
+            "variant": "Variant",
+            "consignment": "Consignment",
+        }[entity_type]
+    )
+    assert row.meta.type == entity_type
+
+
+def test_assortment_list_keeps_dispatched_rows() -> None:
+    entity_types = ("product", "service", "bundle", "variant", "consignment")
+    expected = {
+        "product": "Product",
+        "service": "Service",
+        "bundle": "Bundle",
+        "variant": "Variant",
+        "consignment": "Consignment",
+    }
+    payload = {
+        "rows": [
+            {
+                "meta": {
+                    "href": f"https://api.moysklad.ru/api/remap/1.2/entity/{entity_type}/1",
+                    "type": entity_type,
+                    "mediaType": "application/json",
+                },
+                "name": entity_type,
+                "stock": 1.5,
+            }
+            for entity_type in entity_types
+        ]
+    }
+    rows = model_class("AssortmentList").from_dict(payload).rows
+
+    assert [type(row) for row in rows] == [model_class(expected[entity_type]) for entity_type in entity_types]
+    assert rows[0].meta.type == "product"
+    assert rows[0].stock == 1.5
+
+
+def test_special_price_discount_assortment_serializes_positions() -> None:
+    meta = {
+        "href": "https://api.moysklad.ru/api/remap/1.2/entity/product/1",
+        "type": "product",
+        "mediaType": "application/json",
+    }
+    item = model_class("DiscountAssortmentItem")(model_class("Product")(meta=model_class("Meta").from_dict(meta)))
+    for model_name in ("Discount", "SpecialPriceDiscount"):
+        model = model_class(model_name)(name="скидка", assortment=[item])
+        payload = json.loads(model.to_json())
+        assert payload["assortment"] == [{"meta": meta}]
+        assert "one_of_schemas" not in json.dumps(payload)
+
+
+@pytest.mark.parametrize(
+    ("entity_type", "model_name"),
+    [("paymentout", "SupplyPaymentPaymentOut"), ("cashout", "SupplyPaymentCashOut")],
+)
+def test_supply_payment_uses_meta_type(entity_type: str, model_name: str) -> None:
+    payload = {
+        "meta": {
+            "href": f"https://api.moysklad.ru/api/remap/1.2/entity/{entity_type}/1",
+            "type": entity_type,
+            "mediaType": "application/json",
+        }
+    }
+    payment = model_class("SupplyPayment").from_dict(payload)
+
+    assert isinstance(payment, model_class(model_name))
+    assert payment.meta.type == entity_type
+
+
+@pytest.mark.parametrize(
+    ("entity", "meta_type", "model_name"),
+    [
+        ("invoicein", "invoiceposition", "InvoiceInPosition"),
+        ("invoiceout", "invoiceposition", "InvoiceOutPosition"),
+        ("salesreturn", "salesreturnposition", "SalesReturnPosition"),
+        ("retailsalesreturn", "salesreturnposition", "RetailSalesReturnPosition"),
+    ],
+)
+def test_batch_positions_preserve_concrete_type_and_fields(entity, meta_type, model_name):
+    from moysklad_remap_12_sdk.models.batch_response_entity import BatchResponseEntity
+
+    payload = {
+        "meta": {
+            "type": meta_type,
+            "href": f"https://example.test/entity/{entity}/document/positions/position",
+        },
+        "quantity": 2,
+        "price": 100,
+    }
+    position = BatchResponseEntity.from_dict(payload)
+    assert type(position).__name__ == model_name
+    assert position.quantity == 2
+    assert position.price == 100
+
+
+def test_minimum_balance_accepts_value_and_explicit_null():
+    from moysklad_remap_12_sdk.models.product import Product
+
+    for minimum_balance in (5, None):
+        assert Product(minimum_balance=minimum_balance).to_dict()["minimumBalance"] == minimum_balance

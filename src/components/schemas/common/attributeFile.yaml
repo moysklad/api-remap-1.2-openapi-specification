@@ -8,6 +8,12 @@ properties:
     enum: [ file ]
   value:
     type: string
+  file:
+    description: Файл для загрузки. Для очистки передается null.
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/FileUpload'
   download:
     type: object
     properties:

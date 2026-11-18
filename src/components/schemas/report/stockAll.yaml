@@ -52,7 +52,8 @@ properties:
     format: double
     description: Доступно
   stockDays:
-    type: integer
+    type: number
+    format: double
     description: Количество дней на складе
   price:
     type: number

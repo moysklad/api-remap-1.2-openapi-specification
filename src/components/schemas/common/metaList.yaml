@@ -2,7 +2,6 @@ type: object
 description: Метаданные списка
 required:
   - href
-  - type
   - mediaType
 properties:
   href:

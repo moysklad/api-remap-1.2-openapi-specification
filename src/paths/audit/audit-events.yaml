@@ -12,7 +12,7 @@ get:
       schema:
         type: string
         format: uuid
-    - $ref: '../../components/parameters.yaml#/limit'
+    - $ref: '../../components/parameters.yaml#/auditLimit'
     - $ref: '../../components/parameters.yaml#/offset'
     - $ref: '../../components/headers.yaml#/AcceptHeader'
     - $ref: '../../components/headers.yaml#/AcceptEncoding'

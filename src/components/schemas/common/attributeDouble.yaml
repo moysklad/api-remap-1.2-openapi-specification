@@ -7,5 +7,6 @@ properties:
     type: string
     enum: [double]
   value:
+    nullable: true
     type: number
     format: double

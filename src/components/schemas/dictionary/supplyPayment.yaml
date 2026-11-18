@@ -1,0 +1,15 @@
+type: object
+description: |
+  Платеж, связанный с приемкой: исходящий платеж или расходный ордер.
+x-polymorphic-discriminator:
+  path: meta.type
+  mappings:
+    - type: paymentout
+      componentName: SupplyPaymentPaymentOut
+    - type: cashout
+      componentName: SupplyPaymentCashOut
+properties:
+  meta:
+    $ref: '../common/meta.yaml'
+required:
+  - meta

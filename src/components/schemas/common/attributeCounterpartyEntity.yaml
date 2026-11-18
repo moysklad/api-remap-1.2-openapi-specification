@@ -5,6 +5,9 @@ allOf:
 properties:
   type:
     type: string
-    enum: [counterparty]
+    enum: [counterparty, organization]
   value:
-    $ref: '../../../openapi.yaml#/components/schemas/Agent'
+    nullable: true
+    type: object
+    allOf:
+      - $ref: '../../../openapi.yaml#/components/schemas/Agent'

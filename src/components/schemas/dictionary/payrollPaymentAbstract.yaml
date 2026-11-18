@@ -9,6 +9,9 @@ x-polymorphic-discriminator:
       componentName: PayrollPaymentPaymentOut
     - type: cashout
       componentName: PayrollPaymentCashOut
+properties:
+  meta:
+    $ref: '../common/meta.yaml'
 required:
   - meta
   - linkedSum

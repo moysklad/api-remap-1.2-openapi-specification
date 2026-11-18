@@ -40,7 +40,7 @@ import {{polymorphicPackage}}.PolymorphicMetaTypeDeserializer;
 @OpenApiPolymorphicTypeInfo(path = "{{vendorExtensions.x-polymorphic-discriminator.path}}"{{#vendorExtensions.x-polymorphic-discriminator.batchErrorFallback}}, batchErrorFallback = true{{/vendorExtensions.x-polymorphic-discriminator.batchErrorFallback}})
 @OpenApiPolymorphicSubTypes({
 {{#vendorExtensions.x-polymorphic-discriminator.mappings}}
-  @OpenApiPolymorphicSubTypes.Type(value = {{componentName}}.class, name = "{{type}}"){{^-last}},
+  @OpenApiPolymorphicSubTypes.Type(value = {{componentName}}.class, name = "{{type}}"{{#hrefContains}}, hrefContains = "{{.}}"{{/hrefContains}}){{^-last}},
 {{/-last}}{{/vendorExtensions.x-polymorphic-discriminator.mappings}}
 })
 @JsonDeserialize(using = PolymorphicMetaTypeDeserializer.class)
@@ -103,7 +103,7 @@ public class {{classname}} {{#parent}}extends {{{.}}} {{/parent}}{{^parent}}{{#v
   {{/vendorExtensions.x-is-jackson-optional-nullable}}
   {{^vendorExtensions.x-is-jackson-optional-nullable}}
   {{#isContainer}}
-  {{#hasChildren}}protected{{/hasChildren}}{{^hasChildren}}private{{/hasChildren}} {{{datatypeWithEnum}}} {{name}}{{#defaultValue}} = {{{.}}}{{/defaultValue}};
+  {{#hasChildren}}protected{{/hasChildren}}{{^hasChildren}}private{{/hasChildren}} {{{datatypeWithEnum}}} {{name}};
   {{/isContainer}}
   {{^isContainer}}
   {{#hasChildren}}protected{{/hasChildren}}{{^hasChildren}}private{{/hasChildren}} {{{datatypeWithEnum}}} {{name}}{{#defaultValue}} = {{{.}}}{{/defaultValue}};
@@ -160,6 +160,7 @@ public class {{classname}} {{#parent}}extends {{{.}}} {{/parent}}{{^parent}}{{#v
 {{#vars}}
   {{^isReadOnly}}
   public {{classname}} {{name}}({{>nullable_var_annotations}} {{{datatypeWithEnum}}} {{name}}) {
+{{>model_range_validation}}
     {{#vendorExtensions.x-is-jackson-optional-nullable}}this.{{name}} = JsonNullable.<{{{datatypeWithEnum}}}>of({{name}});{{/vendorExtensions.x-is-jackson-optional-nullable}}
     {{^vendorExtensions.x-is-jackson-optional-nullable}}this.{{name}} = {{name}};{{/vendorExtensions.x-is-jackson-optional-nullable}}
     return this;
@@ -300,6 +301,7 @@ public class {{classname}} {{#parent}}extends {{{.}}} {{/parent}}{{^parent}}{{#v
   {{^isReadOnly}}
 {{#vendorExtensions.x-setter-extra-annotation}}  {{{vendorExtensions.x-setter-extra-annotation}}}
 {{/vendorExtensions.x-setter-extra-annotation}}{{#jackson}}{{^vendorExtensions.x-is-jackson-optional-nullable}}{{> jackson_annotations}}{{/vendorExtensions.x-is-jackson-optional-nullable}}{{/jackson}}  public void {{setter}}({{>nullable_var_annotations}} {{{datatypeWithEnum}}} {{name}}) {
+{{>model_range_validation}}
     {{#vendorExtensions.x-is-jackson-optional-nullable}}
     this.{{name}} = JsonNullable.<{{{datatypeWithEnum}}}>of({{name}});
     {{/vendorExtensions.x-is-jackson-optional-nullable}}

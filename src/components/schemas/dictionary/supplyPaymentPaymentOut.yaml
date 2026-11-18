@@ -1,0 +1,5 @@
+type: object
+description: Исходящий платеж, связанный с приемкой
+x-polymorphic-parent: SupplyPayment
+allOf:
+  - $ref: '../../../openapi.yaml#/components/schemas/PaymentOut'

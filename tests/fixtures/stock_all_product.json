@@ -14,6 +14,7 @@
   "article": "Ar23",
   "price": 0.0,
   "salePrice": 346347237000.0,
+  "stockDays": 0.0,
   "uom": {
     "meta": {
       "href": "https://api.moysklad.ru/api/remap/1.2/entity/uom/c6bc9273-2c83-11e6-8a84-bae5000000a3",

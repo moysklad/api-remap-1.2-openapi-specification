@@ -1,0 +1,15 @@
+{{#composedSchemas}}
+{{#oneOf}}
+{{#ref}}
+            '{{{dataType}}}',
+{{/ref}}
+{{/oneOf}}
+{{#anyOf}}
+{{#ref}}
+            '{{{dataType}}}',
+{{/ref}}
+{{/anyOf}}
+{{#allOf}}
+{{>model_composed_types}}
+{{/allOf}}
+{{/composedSchemas}}

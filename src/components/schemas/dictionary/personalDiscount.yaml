@@ -22,3 +22,9 @@ properties:
     description: Группы товаров со скидкой
     items:
       $ref: '../../../openapi.yaml#/components/schemas/ProductFolder'
+  assortment:
+    type: array
+    description: Массив метаданных товаров, услуг и модификаций
+    nullable: true
+    items:
+      $ref: '../../../openapi.yaml#/components/schemas/DiscountAssortmentItem'

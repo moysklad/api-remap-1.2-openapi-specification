@@ -1,0 +1,5 @@
+type: object
+description: Входящий платеж + linkedSum
+x-polymorphic-parent: PurchaseReturnPayment
+allOf:
+  - $ref: '../../../openapi.yaml#/components/schemas/PaymentIn'

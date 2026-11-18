@@ -263,12 +263,16 @@ function validateDiscriminatorMappings(componentName, discriminator, schemas, sc
             return;
         }
 
+        if (mapping.hrefContains !== undefined && !isNonEmptyString(mapping.hrefContains)) {
+            addError(componentName, `${POLYMORPHIC_DISCRIMINATOR}.mappings[${index}].hrefContains должен быть непустой строкой`);
+        }
+        const mappingKey = JSON.stringify([mapping.type, mapping.hrefContains || ""]);
         if (!isNonEmptyString(mapping.type)) {
             addError(componentName, `${POLYMORPHIC_DISCRIMINATOR}.mappings[${index}].type должен быть непустой строкой`);
-        } else if (seenTypes.has(mapping.type)) {
-            addError(componentName, `${POLYMORPHIC_DISCRIMINATOR}.mappings содержит повторяющийся type "${mapping.type}"`);
+        } else if (seenTypes.has(mappingKey)) {
+            addError(componentName, `${POLYMORPHIC_DISCRIMINATOR}.mappings содержит повторяющееся соответствие type "${mapping.type}" и hrefContains "${mapping.hrefContains || ""}"`);
         } else {
-            seenTypes.add(mapping.type);
+            seenTypes.add(mappingKey);
         }
 
         if (!isNonEmptyString(mapping.componentName)) {

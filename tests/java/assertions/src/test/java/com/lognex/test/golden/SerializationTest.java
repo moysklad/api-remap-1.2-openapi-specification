@@ -160,6 +160,7 @@ class SerializationTest extends BaseTestCase {
         FIXTURE_MODEL_MAP.put("special_price_discount_percent", "SpecialPriceDiscount");
         FIXTURE_MODEL_MAP.put("bonus_program", "BonusProgram");
         FIXTURE_MODEL_MAP.put("bonus_transaction", "BonusTransaction");
+        FIXTURE_MODEL_MAP.put("bonus_transaction_expanded", "BonusTransaction");
         FIXTURE_MODEL_MAP.put("custom_entity", "CustomEntity");
         FIXTURE_MODEL_MAP.put("custom_entity_element", "CustomEntityElement");
         FIXTURE_MODEL_MAP.put("commission_report_in", "CommissionReportIn");

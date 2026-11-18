@@ -7,7 +7,7 @@ get:
     Возвращает общую ленту изменений (контексты аудита).
     Поддерживает пагинацию и фильтрацию через параметр `filter`.
   parameters:
-    - $ref: '../../components/parameters.yaml#/limit'
+    - $ref: '../../components/parameters.yaml#/auditLimit'
     - $ref: '../../components/parameters.yaml#/offset'
     - $ref: '../../components/parameters.yaml#/filter'
     - $ref: '../../components/headers.yaml#/AcceptHeader'

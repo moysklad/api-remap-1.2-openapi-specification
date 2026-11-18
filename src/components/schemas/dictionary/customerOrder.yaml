@@ -221,9 +221,7 @@ properties:
     description: Массив ссылок на связанные платежи
     nullable: true
     items:
-      anyOf:
-        - $ref: '../../../openapi.yaml#/components/schemas/PaymentIn'
-        - $ref: '../../../openapi.yaml#/components/schemas/CashIn'
+      $ref: '../../../openapi.yaml#/components/schemas/CustomerOrderPayment'
   prepayments:
     type: array
     description: Массив ссылок на связанные предоплаты

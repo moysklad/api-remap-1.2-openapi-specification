@@ -16,9 +16,7 @@ get:
       content:
         application/json:
           schema:
-            type: array
-            items:
-              $ref: '../../../openapi.yaml#/components/schemas/ProcessingOrderPosition'
+            $ref: '../../../openapi.yaml#/components/schemas/ProcessingOrderPositionList'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'
 

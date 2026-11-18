@@ -26,8 +26,10 @@ post:
           schema:
             type: array
             items:
-              oneOf:
-                - $ref: '../../../openapi.yaml#/components/schemas/DeleteInfo'
-                - $ref: '../../../openapi.yaml#/components/schemas/Errors'
+              $ref: '../../../openapi.yaml#/components/schemas/DeleteRowResult'
+    '404':
+      $ref: '../../../components/responses.yaml#/BatchDeleteError'
+    '412':
+      $ref: '../../../components/responses.yaml#/BatchDeleteError'
     default:
       $ref: '../../../components/responses.yaml#/CommonError'

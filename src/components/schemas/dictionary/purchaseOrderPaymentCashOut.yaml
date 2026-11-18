@@ -1,0 +1,5 @@
+type: object
+description: CashOut, связанный с документом purchaseOrder
+x-polymorphic-parent: PurchaseOrderPayment
+allOf:
+  - $ref: '../../../openapi.yaml#/components/schemas/CashOut'

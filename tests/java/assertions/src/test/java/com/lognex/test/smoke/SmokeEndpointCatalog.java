@@ -832,6 +832,14 @@ final class SmokeEndpointCatalog {
                 // /entity/productiontask and /entity/retaildemand
                 Arguments.of(new SmokeEndpointCase("testGetProductionTaskMetadataAttributes#1", "GET", "/entity/productiontask/metadata/attributes", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testCreateProductionTaskMetadataAttribute#1", "POST", "/entity/productiontask/metadata/attributes", SmokeEndpointCase.Expectation.NOT_404, true)),
+                Arguments.of(new SmokeEndpointCase("testGetProductionTaskMetadataAttributeById#1", "GET", "/entity/productiontask/metadata/attributes/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
+                Arguments.of(new SmokeEndpointCase("testUpdateProductionTaskMetadataAttributeById#1", "PUT", "/entity/productiontask/metadata/attributes/{id}", SmokeEndpointCase.Expectation.BY_ID, true)),
+                Arguments.of(new SmokeEndpointCase("testDeleteProductionTaskMetadataAttributeById#1", "DELETE", "/entity/productiontask/metadata/attributes/{id}", SmokeEndpointCase.Expectation.DELETE, false)),
+
+                // /entity/prepayment
+                Arguments.of(new SmokeEndpointCase("testGetPrepaymentMetadataAttributeById#1", "GET", "/entity/prepayment/metadata/attributes/{id}", SmokeEndpointCase.Expectation.BY_ID, false)),
+                Arguments.of(new SmokeEndpointCase("testUpdatePrepaymentMetadataAttributeById#1", "PUT", "/entity/prepayment/metadata/attributes/{id}", SmokeEndpointCase.Expectation.BY_ID, true)),
+                Arguments.of(new SmokeEndpointCase("testDeletePrepaymentMetadataAttributeById#1", "DELETE", "/entity/prepayment/metadata/attributes/{id}", SmokeEndpointCase.Expectation.DELETE, false)),
                 Arguments.of(new SmokeEndpointCase("testCreateRetailDemandMetadataState#1", "POST", "/entity/retaildemand/metadata/states", SmokeEndpointCase.Expectation.NOT_404, true)),
 
                 // /entity/retailshift
@@ -1002,7 +1010,6 @@ final class SmokeEndpointCatalog {
                 Arguments.of(new SmokeEndpointCase("testGetByOperationsInTransit#1", "GET", "/report/byoperations/intransit?filter=assortment=https://api.moysklad.ru/api/remap/1.2/entity/product/bb1865dc-32e1-11ef-ac16-001100000003", SmokeEndpointCase.Expectation.NOT_404, false)),
 
                 // document trash (entities without existing DELETE-by-id smoke row)
-                Arguments.of(new SmokeEndpointCase("testMoveEmissionOrderToTrash#1", "POST", "/entity/emissionorder/{id}/trash", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testMoveFactureInToTrash#1", "POST", "/entity/facturein/{id}/trash", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testMoveFactureOutToTrash#1", "POST", "/entity/factureout/{id}/trash", SmokeEndpointCase.Expectation.NOT_404, false)),
                 Arguments.of(new SmokeEndpointCase("testMoveInventoryToTrash#1", "POST", "/entity/inventory/{id}/trash", SmokeEndpointCase.Expectation.NOT_404, false)),

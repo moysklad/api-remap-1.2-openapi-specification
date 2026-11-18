@@ -1388,6 +1388,8 @@ paths:
   # Documents - Prepayments
   /entity/prepayment/metadata/attributes:
     $ref: './paths/documents/prepayments/prepayment-metadata-attribute.yaml'
+  /entity/prepayment/metadata/attributes/{id}:
+    $ref: './paths/documents/prepayments/prepayment-metadata-attribute-by-id.yaml'
   # Documents - Prepayment Returns
   /entity/prepaymentreturn:
     $ref: './paths/documents/prepaymentreturns/prepaymentreturns.yaml'
@@ -1506,13 +1508,13 @@ paths:
   # Documents - Production Tasks
   /entity/productiontask/metadata/attributes:
     $ref: './paths/documents/productiontasks/productiontask-metadata-attribute.yaml'
+  /entity/productiontask/metadata/attributes/{id}:
+    $ref: './paths/documents/productiontasks/productiontask-metadata-attribute-by-id.yaml'
   # Documents - Emission Orders
   /entity/emissionorder:
     $ref: './paths/documents/emissionorders/emissionorders.yaml'
   /entity/emissionorder/{id}:
     $ref: './paths/documents/emissionorders/emissionorder-by-id.yaml'
-  /entity/emissionorder/{id}/trash:
-    $ref: './paths/documents/emissionorders/emissionorder-trash.yaml'
   /entity/emissionorder/batch:
     $ref: './paths/documents/emissionorders/emissionorders-batch.yaml'
   /entity/emissionorder/metadata:
@@ -2047,6 +2049,7 @@ components:
           customentity: '#/components/schemas/AttributeCustomEntity'
           contract: '#/components/schemas/AttributeContractEntity'
           counterparty: '#/components/schemas/AttributeCounterpartyEntity'
+          organization: '#/components/schemas/AttributeCounterpartyEntity'
           employee: '#/components/schemas/AttributeEmployeeEntity'
           product: '#/components/schemas/AttributeProductEntity'
           project: '#/components/schemas/AttributeProjectEntity'
@@ -2107,6 +2110,12 @@ components:
       $ref: './components/schemas/dictionary/bonusProgram.yaml'
     BonusProgramList:
       $ref: './components/schemas/dictionary/bonusProgramList.yaml'
+    BonusTransactionParentDocument:
+      $ref: './components/schemas/dictionary/bonusTransactionParentDocument.yaml'
+    BonusTransactionParentRetailDemand:
+      $ref: './components/schemas/dictionary/bonusTransactionParentRetailDemand.yaml'
+    BonusTransactionParentRetailSalesReturn:
+      $ref: './components/schemas/dictionary/bonusTransactionParentRetailSalesReturn.yaml'
     BonusTransaction:
       $ref: './components/schemas/dictionary/bonusTransaction.yaml'
     BonusTransactionList:
@@ -2147,6 +2156,18 @@ components:
       $ref: './components/schemas/dictionary/counterpartyAdjustmentList.yaml'
     CountryList:
       $ref: './components/schemas/dictionary/countryList.yaml'
+    BatchEntityErrorResponse:
+      oneOf:
+        - $ref: '#/components/schemas/Errors'
+        - type: array
+          items:
+            $ref: '#/components/schemas/BatchResponseEntity'
+    BatchDeleteErrorResponse:
+      oneOf:
+        - $ref: '#/components/schemas/Errors'
+        - type: array
+          items:
+            $ref: '#/components/schemas/DeleteRowResult'
     BatchResponseEntity:
       $ref: './components/schemas/common/entityBase.yaml#/BatchResponseEntity'
     EntityWithMeta:
@@ -2658,6 +2679,78 @@ components:
       $ref: './components/schemas/dictionary/supply.yaml'
     SupplyList:
       $ref: './components/schemas/dictionary/supplyList.yaml'
+    RetailShiftPayment:
+      $ref: './components/schemas/dictionary/retailShiftPayment.yaml'
+    RetailShiftPaymentPaymentIn:
+      $ref: './components/schemas/dictionary/retailShiftPaymentPaymentIn.yaml'
+    RetailShiftPaymentCashIn:
+      $ref: './components/schemas/dictionary/retailShiftPaymentCashIn.yaml'
+    DemandPayment:
+      $ref: './components/schemas/dictionary/demandPayment.yaml'
+    DemandPaymentPaymentIn:
+      $ref: './components/schemas/dictionary/demandPaymentPaymentIn.yaml'
+    DemandPaymentCashIn:
+      $ref: './components/schemas/dictionary/demandPaymentCashIn.yaml'
+    SalesReturnPayment:
+      $ref: './components/schemas/dictionary/salesReturnPayment.yaml'
+    SalesReturnPaymentPaymentOut:
+      $ref: './components/schemas/dictionary/salesReturnPaymentPaymentOut.yaml'
+    SalesReturnPaymentCashOut:
+      $ref: './components/schemas/dictionary/salesReturnPaymentCashOut.yaml'
+    CustomerOrderPayment:
+      $ref: './components/schemas/dictionary/customerOrderPayment.yaml'
+    CustomerOrderPaymentPaymentIn:
+      $ref: './components/schemas/dictionary/customerOrderPaymentPaymentIn.yaml'
+    CustomerOrderPaymentCashIn:
+      $ref: './components/schemas/dictionary/customerOrderPaymentCashIn.yaml'
+    PurchaseOrderPayment:
+      $ref: './components/schemas/dictionary/purchaseOrderPayment.yaml'
+    PurchaseOrderPaymentPaymentOut:
+      $ref: './components/schemas/dictionary/purchaseOrderPaymentPaymentOut.yaml'
+    PurchaseOrderPaymentCashOut:
+      $ref: './components/schemas/dictionary/purchaseOrderPaymentCashOut.yaml'
+    InvoiceInPayment:
+      $ref: './components/schemas/dictionary/invoiceInPayment.yaml'
+    InvoiceInPaymentPaymentOut:
+      $ref: './components/schemas/dictionary/invoiceInPaymentPaymentOut.yaml'
+    InvoiceInPaymentCashOut:
+      $ref: './components/schemas/dictionary/invoiceInPaymentCashOut.yaml'
+    InvoiceOutPayment:
+      $ref: './components/schemas/dictionary/invoiceOutPayment.yaml'
+    InvoiceOutPaymentPaymentIn:
+      $ref: './components/schemas/dictionary/invoiceOutPaymentPaymentIn.yaml'
+    InvoiceOutPaymentCashIn:
+      $ref: './components/schemas/dictionary/invoiceOutPaymentCashIn.yaml'
+    CommissionReportInPayment:
+      $ref: './components/schemas/dictionary/commissionReportInPayment.yaml'
+    CommissionReportInPaymentPaymentIn:
+      $ref: './components/schemas/dictionary/commissionReportInPaymentPaymentIn.yaml'
+    CommissionReportInPaymentCashIn:
+      $ref: './components/schemas/dictionary/commissionReportInPaymentCashIn.yaml'
+    CommissionReportOutPayment:
+      $ref: './components/schemas/dictionary/commissionReportOutPayment.yaml'
+    CommissionReportOutPaymentPaymentOut:
+      $ref: './components/schemas/dictionary/commissionReportOutPaymentPaymentOut.yaml'
+    CommissionReportOutPaymentCashOut:
+      $ref: './components/schemas/dictionary/commissionReportOutPaymentCashOut.yaml'
+    FactureInPayment:
+      $ref: './components/schemas/dictionary/factureInPayment.yaml'
+    FactureInPaymentPaymentOut:
+      $ref: './components/schemas/dictionary/factureInPaymentPaymentOut.yaml'
+    FactureInPaymentCashOut:
+      $ref: './components/schemas/dictionary/factureInPaymentCashOut.yaml'
+    FactureOutPayment:
+      $ref: './components/schemas/dictionary/factureOutPayment.yaml'
+    FactureOutPaymentPaymentIn:
+      $ref: './components/schemas/dictionary/factureOutPaymentPaymentIn.yaml'
+    FactureOutPaymentCashIn:
+      $ref: './components/schemas/dictionary/factureOutPaymentCashIn.yaml'
+    SupplyPaymentPaymentOut:
+      $ref: './components/schemas/dictionary/supplyPaymentPaymentOut.yaml'
+    SupplyPaymentCashOut:
+      $ref: './components/schemas/dictionary/supplyPaymentCashOut.yaml'
+    SupplyPayment:
+      $ref: './components/schemas/dictionary/supplyPayment.yaml'
     SupplyPosition:
       $ref: './components/schemas/dictionary/supplyPosition.yaml'
     SupplyPositionList:
@@ -2714,6 +2807,12 @@ components:
       $ref: './components/schemas/dictionary/payrollPaymentPaymentOut.yaml'
     PayrollPaymentCashOut:
       $ref: './components/schemas/dictionary/payrollPaymentCashOut.yaml'
+    PurchaseReturnPayment:
+      $ref: './components/schemas/dictionary/purchaseReturnPayment.yaml'
+    PurchaseReturnPaymentPaymentIn:
+      $ref: './components/schemas/dictionary/purchaseReturnPaymentPaymentIn.yaml'
+    PurchaseReturnPaymentCashIn:
+      $ref: './components/schemas/dictionary/purchaseReturnPaymentCashIn.yaml'
     FinanceInOperationAbstract:
       $ref: './components/schemas/dictionary/financeInOperationAbstract.yaml'
     FinanceInOperationCustomerOrder:

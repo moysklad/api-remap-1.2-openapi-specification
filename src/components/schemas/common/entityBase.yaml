@@ -14,6 +14,32 @@ BatchResponseEntity:
     path: meta.type
     batchErrorFallback: true
     mappings: &entityWithMetaPolymorphicMappings
+      - type: bonustransaction
+        componentName: BonusTransaction
+      - type: invoiceout
+        componentName: InvoiceOut
+      - type: invoicein
+        componentName: InvoiceIn
+      - type: invoiceposition
+        componentName: InvoiceInPosition
+        hrefContains: /entity/invoicein/
+      - type: invoiceposition
+        componentName: InvoiceOutPosition
+        hrefContains: /entity/invoiceout/
+      - type: salesreturnposition
+        componentName: SalesReturnPosition
+        hrefContains: /entity/salesreturn/
+      - type: salesreturnposition
+        componentName: RetailSalesReturnPosition
+        hrefContains: /entity/retailsalesreturn/
+      - type: retailsalesreturn
+        componentName: RetailSalesReturn
+      - type: facturein
+        componentName: FactureIn
+      - type: factureout
+        componentName: FactureOut
+      - type: retailshift
+        componentName: RetailShift
       - type: account
         componentName: Account
       - type: bundle
@@ -274,9 +300,3 @@ DiscountAbstract:
     allProducts:
       type: boolean
       description: Действует ли скидка на все товары
-    assortment:
-      type: array
-      description: Массив метаданных товаров, услуг и модификаций
-      nullable: true
-      items:
-        $ref: '../../../openapi.yaml#/components/schemas/DiscountAssortmentItem'

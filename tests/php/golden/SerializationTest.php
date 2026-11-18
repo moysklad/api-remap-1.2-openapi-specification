@@ -148,6 +148,7 @@ class SerializationTest extends TestCase
         'special_price_discount_percent' => 'SpecialPriceDiscount',
         'bonus_program' => 'BonusProgram',
         'bonus_transaction' => 'BonusTransaction',
+        'bonus_transaction_expanded' => 'BonusTransaction',
         'custom_entity' => 'CustomEntity',
         'custom_entity_element' => 'CustomEntityElement',
         'commission_report_in' => 'CommissionReportIn',

@@ -191,9 +191,7 @@ properties:
     nullable: true
     description: Массив ссылок на связанные платежи
     items:
-      anyOf:
-        - $ref: '../../../openapi.yaml#/components/schemas/PaymentOut'
-        - $ref: '../../../openapi.yaml#/components/schemas/CashOut'
+      $ref: '../../../openapi.yaml#/components/schemas/SalesReturnPayment'
   factureOut:
     description: Счет-фактура выданный, с которым связан этот возврат
     nullable: true

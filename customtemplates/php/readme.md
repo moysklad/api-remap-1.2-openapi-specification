@@ -8,7 +8,16 @@
   Для сохранения ОС для старых версий сдк нужно добавить маппер на новые неизвестные типы. 
   Если в будущем в OpeanApi будет добавлен дефолтный тип маппера то данные правки можно убрать
 * ObjectSerializer. Заменен формат даты
-* api.mustache - поддержка batch-ответов с частичными ошибками: стандартный шаблон Guzzle бросает exception на 400+ до разбора тела ответа, а batch-операции могут возвращать массив результата с таким статусом.
+* api.mustache - явные заголовки приоритетнее HeaderSelector независимо от регистра; значения Accept
+  и Accept-Encoding по умолчанию берутся из спецификации.
+* api.mustache - смешанные batch-ответы `BatchResponseEntity[]` / `DeleteRowResult[]` при 404/412
+  разбираются синхронно и асинхронно. Остальные ошибки остаются `ApiException` с исходными статусом и телом.
+* Configuration.mustache - boolean query-параметры передаются как `true`/`false` (`BOOLEAN_FORMAT_STRING`).
+* model_generic.mustache, model_composed_types.mustache, ObjectSerializer.mustache - выбор `oneOf`/`anyOf`
+  по `meta.type`, включая вложенные `allOf`; в batch-удалении `Errors` приоритетнее `DeleteInfo`.
+  Поля составной схемы сохраняются через ArrayAccess и при сериализации, с учётом `unset()`.
+* ObjectSerializer.mustache - `property_exists()` различает отсутствие поля и явный `null`:
+  лишние null-поля не добавляются, очистка допполей и файла сохраняется.
 * api.mustache, LocationResponse.mustache - операции с `x-location-response` (печать, экспорт)
   отдают ссылку только в заголовке `Location` (202 или 303). Метод возвращает `LocationResponse` вместо `void`,
   `allow_redirects = false` в синхронном и асинхронном вызове, иначе Guzzle уходит по 303 и `Location` теряется.
